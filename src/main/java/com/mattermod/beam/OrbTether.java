@@ -243,6 +243,8 @@ public final class OrbTether {
                 if (d.length() > 2) {
                     b.hooked.setDeltaMovement(d.normalize().scale(-0.6).add(0, 0.1, 0));
                     b.hooked.hurtMarked = true;
+                    // a hooked creature can't run off (a hurt pig panics away and halves the reel)
+                    if (b.hooked instanceof net.minecraft.world.entity.Mob m) m.getNavigation().stop();
                     b.hooked.resetFallDistance();
                 } else {
                     b.reelFull = false;

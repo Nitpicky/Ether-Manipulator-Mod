@@ -792,7 +792,8 @@ public final class PlaytestBootstrap {
                                 + " left the stone");
             }
             case 1100 -> opts.keyAttack.setDown(false);
-            case 1110 -> {
+            case 1113 -> {
+                // the client hears about the removed light blocks a few ticks late
                 var left = lightSpots(mc);
                 left.removeAll(lightsBefore);
                 log(
