@@ -334,7 +334,12 @@ public final class ManipulatorAnimations {
 
     private static PlayState predicate(AnimationState<MatterManipulatorItem> state) {
         ItemStack stack = state.getData(DataTickets.ITEMSTACK);
-        Player holder = holder(stack);
+        // only a tool in a hand follows its holder: an icon drawn meanwhile (creative tab, slot, frame) must not
+        // consume the holder's restarts and ring state, or both spin erratically
+        var ctx = state.getData(DataTickets.ITEM_RENDER_PERSPECTIVE);
+        boolean inHand = ctx == null || ctx.firstPerson() || ctx == net.minecraft.world.item.ItemDisplayContext.THIRD_PERSON_RIGHT_HAND
+                || ctx == net.minecraft.world.item.ItemDisplayContext.THIRD_PERSON_LEFT_HAND;
+        Player holder = inHand ? holder(stack) : null;
         RawAnimation next = pick(holder, stack);
         AnimationController<MatterManipulatorItem> c = state.getController();
         RawAnimation last = LAST.get(c);

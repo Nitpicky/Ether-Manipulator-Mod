@@ -179,8 +179,8 @@ public final class GolemControl {
         float hp = p.getPersistentData().contains(TAG_HEALTH) ? p.getPersistentData().getFloat(TAG_HEALTH) : RedstoneGolem.MAX_HEALTH;
         g.setHealth(Math.max(1, Math.min(RedstoneGolem.MAX_HEALTH, hp)));
         if (p.getTeam() != null) sl.getScoreboard().addPlayerToTeam(g.getScoreboardName(), p.getTeam());
+        g.assembled();      // before it is sent: its first frame is already the summon's, under the ground
         sl.addFreshEntity(g);
-        g.assembled();
         GOLEMS.put(p.getUUID(), g.getUUID());
     }
 

@@ -74,6 +74,12 @@ public class ManipulatorItemModel extends GeoModel<MatterManipulatorItem> {
         }
         var ring = getAnimationProcessor().getBone("prongs");
         if (ring == null) return;
+        // the ring's inertia belongs to a tool in a hand: an icon (a creative tab, a slot, an item frame) rendering in the
+        // same frame would feed the holder's ring a second motor angle and set both spinning erratically
+        boolean inHand = firstPerson
+                || ctx == ItemDisplayContext.THIRD_PERSON_RIGHT_HAND
+                || ctx == ItemDisplayContext.THIRD_PERSON_LEFT_HAND;
+        if (!inHand) return;
         boolean blending = false;
         var manager = animatable.getAnimatableInstanceCache().getManagerForId(instanceId);
         if (manager != null) {

@@ -25,6 +25,10 @@ public final class RedstoneGolemRenderer extends GeoEntityRenderer<RedstoneGolem
     @Override
     public void render(RedstoneGolem golem, float yaw, float partialTick, com.mojang.blaze3d.vertex.PoseStack pose,
             net.minecraft.client.renderer.MultiBufferSource buffers, int light) {
+        // its first two ticks after a (re)assembly: the summon pose may not be applied yet, and it would flash up
+        // standing on the ground before sinking into it to rise
+        long since = golem.level().getGameTime() - golem.builtAt();
+        if (since >= 0 && since < 2 || golem.tickCount < 2) return;
         super.render(golem, yaw, partialTick, pose, buffers, light);
         var body = getGeoModel().getBone("body").orElse(null);
         if (body == null || !golem.isVehicle()) {

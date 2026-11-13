@@ -178,6 +178,22 @@ public final class MovementPhysics {
         return true;
     }
 
+    /** Back to normal gravity where the player is, without moving them: mounting something erases a gravity shift
+     *  (a teleport would throw them off the mount again). */
+    public static void clearGravity(ServerPlayer p) {
+        if (down(p) == Direction.DOWN) return;
+        long start = p.level().getGameTime();
+        beginTurn(p, Direction.DOWN, start);
+        p.getPersistentData().putInt("mm_gravity", Direction.DOWN.get3DDataValue());
+        p.refreshDimensions();
+        p.resetFallDistance();
+        p.setNoGravity(false);
+        net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingEntityAndSelf(
+                p,
+                new com.mattermod.network.payload.ModulePayloads.Gravity(
+                        p.getId(), Direction.DOWN.get3DDataValue(), start));
+    }
+
     public static void input(ServerPlayer p, int flags) {
         p.getPersistentData().putInt("mm_motion", flags);
     }
@@ -493,6 +509,7 @@ public final class MovementPhysics {
     public static void tick(PlayerTickEvent.Post ev) {
         if (!(ev.getEntity() instanceof ServerPlayer p)) return;
         var st = Manipulator.stack(p);
+        if (down(p) != Direction.DOWN && p.isPassenger()) clearGravity(p);   // riding anything ends a gravity shift
         if (down(p) != Direction.DOWN
                 && (!p.isAlive()
                         || !Traits.hasLine(st, Traits.MOBILITY)
