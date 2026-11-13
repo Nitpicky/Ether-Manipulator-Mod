@@ -20,19 +20,28 @@ public final class RedstoneGolemRenderer extends GeoEntityRenderer<RedstoneGolem
         shadowRadius = 1.0f;
     }
 
-    /** Tracks the body bone so a rider can sit on its seat as it is animated. */
+    /** Seats a rider on the body's top as it is animated: the seat point is carried through the body bone and its
+     *  parents (GeckoLib order: position, pivot, rotate Z-Y-X, back from the pivot), then turned with the body yaw. */
     @Override
     public void render(RedstoneGolem golem, float yaw, float partialTick, com.mojang.blaze3d.vertex.PoseStack pose,
             net.minecraft.client.renderer.MultiBufferSource buffers, int light) {
-        var body = getGeoModel().getBone("body").orElse(null);
-        if (body != null) body.setTrackingMatrices(true);
         super.render(golem, yaw, partialTick, pose, buffers, light);
-        if (body != null && golem.isVehicle()) {
-            // the tracked matrix sits at the bone's pivot (10 units up), not at the model origin
-            org.joml.Vector4f p = body.getLocalSpaceMatrix()
-                    .transform(new org.joml.Vector4f(0, (float) (RedstoneGolem.SEAT_Y - body.getPivotY() / 16.0), 0, 1));
-            golem.seatOffset = new net.minecraft.world.phys.Vec3(p.x(), p.y(), p.z());
-        } else golem.seatOffset = null;
+        var body = getGeoModel().getBone("body").orElse(null);
+        if (body == null || !golem.isVehicle()) {
+            golem.seatOffset = null;
+            return;
+        }
+        org.joml.Vector3f p = new org.joml.Vector3f(0, (float) (RedstoneGolem.SEAT_Y * 16), 0);   // model units
+        for (var b = body; b != null; b = b.getParent()) {
+            org.joml.Vector3f piv = new org.joml.Vector3f(b.getPivotX(), b.getPivotY(), b.getPivotZ());
+            p.sub(piv);
+            new org.joml.Quaternionf().rotationZYX(b.getRotZ(), b.getRotY(), b.getRotX()).transform(p);
+            p.add(piv).add(-b.getPosX(), b.getPosY(), b.getPosZ());
+        }
+        p.div(16);
+        float bodyYaw = net.minecraft.util.Mth.rotLerp(partialTick, golem.yBodyRotO, golem.yBodyRot);
+        new org.joml.Quaternionf().rotationY((float) Math.toRadians(180 - bodyYaw)).transform(p);
+        golem.seatOffset = new net.minecraft.world.phys.Vec3(p.x(), p.y(), p.z());
     }
 
     /** The break-down animation tips it over; vanilla's death roll would do it twice. */

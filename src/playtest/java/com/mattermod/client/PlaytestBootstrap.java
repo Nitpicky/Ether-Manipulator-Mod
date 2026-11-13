@@ -1041,7 +1041,12 @@ public final class PlaytestBootstrap {
             case 1410 -> {
                 var v = mc.player.getVehicle();
                 log("golem seat: player feet " + (v == null ? "not riding" : String.format("%.3f", mc.player.getY() - v.getY()))
-                        + " above the Golem (body top " + String.format("%.3f", com.mattermod.entity.RedstoneGolem.SEAT_Y) + ")");
+                        + " above the Golem (seat " + String.format("%.3f", com.mattermod.entity.RedstoneGolem.SEAT_Y)
+                        + ", animated seat " + (v instanceof com.mattermod.entity.RedstoneGolem rg && rg.seatOffset != null ? String.format("%.3f", rg.seatOffset.y) : "none")
+                        + ", vehicle attachment " + String.format("%.3f", v == null ? 0 : mc.player.getVehicleAttachmentPoint(v).y) + ")");
+                double feet = v == null ? 9 : mc.player.getY() - v.getY();
+                log((Math.abs(feet - (com.mattermod.entity.RedstoneGolem.SEAT_Y - .6)) < .3 ? "PASS" : "FAIL")
+                        + " golem: the rider sits on the seat (feet " + String.format("%.2f", feet) + ")");
             }
             case 1412 -> shot(mc, "36_golem_ride");
             case 1414 -> sideCamera(mc, false);
@@ -1051,7 +1056,7 @@ public final class PlaytestBootstrap {
                         var g = com.mattermod.entity.GolemControl.golem(p);
                         if (g != null) g.recall();
                     });
-            case 1445 ->
+            case 1470 ->
                     server(
                             mc,
                             (s, p) -> {
@@ -1059,7 +1064,7 @@ public final class PlaytestBootstrap {
                                         + " golem: recall put the Golem away");
                                 run(s, "difficulty peaceful");
                             });
-            case 1455 -> finish(mc);
+            case 1480 -> finish(mc);
             default -> {}
         }
     }

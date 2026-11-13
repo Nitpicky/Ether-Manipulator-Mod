@@ -107,9 +107,9 @@ public final class Ministrosity extends PathfinderMob implements GeoEntity {
     public void tick() {
         super.tick();
         if (level().isClientSide) {
-            // lit redstone sheds dust like a powered wire
+            // lit redstone sheds dust like a powered wire, in its Golem's heat colours
             if (isAlive() && getRandom().nextInt(6) == 0)
-                level().addParticle(RedstoneGolem.wireDust(8 + getRandom().nextInt(8), .8f),
+                level().addParticle(linkedGolem() instanceof RedstoneGolem g ? g.stageDust(.8f) : RedstoneGolem.wireDust(8 + getRandom().nextInt(8), .8f),
                         getX() + (getRandom().nextDouble() - .5) * getBbWidth(), getY() + getRandom().nextDouble() * getBbHeight(),
                         getZ() + (getRandom().nextDouble() - .5) * getBbWidth(), 0, 0, 0);
             return;

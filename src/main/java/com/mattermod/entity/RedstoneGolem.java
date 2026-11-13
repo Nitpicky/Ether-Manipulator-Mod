@@ -262,6 +262,24 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         return Mth.clamp(.5 + .7 * pace / top, .5, 1.2);
     }
 
+    /** GolemSignalLayer's tones, dark to bright: signal stages 0..5 (0 = the texture's own redstone), the flash, the step after. */
+    private static final int[][] TONES = {
+            {0x6C1005, 0x851607, 0xA71D08, 0xCC200A},
+            {0x731304, 0x8F1B06, 0xB22608, 0xD83009},
+            {0x7C1704, 0x9A2305, 0xBF3308, 0xE64707},
+            {0x851D03, 0xA72C04, 0xCD4307, 0xF66305},
+            {0x8F2301, 0xB53702, 0xDC5507, 0xFC850D},
+            {0x9A2A00, 0xC44400, 0xEC6A06, 0xFFA61A},
+            {0xFFC890, 0xFFDCB4, 0xFFEEDC, 0xFFFFFF},
+            {0xCC7948, 0xE2905A, 0xF6AC71, 0xFFD28C}};
+
+    /** Client: redstone dust in the colours the redstone shows right now (its stage, or the flash), mostly the bright tones. */
+    public DustParticleOptions stageDust(float size) {
+        int[] row = flashing() ? TONES[6] : afterglow() ? TONES[7] : TONES[Math.min(5, Math.round(signal(1) * 5))];
+        int c = row[1 + getRandom().nextInt(3)];
+        return new DustParticleOptions(new Vector3f((c >> 16 & 255) / 255f, (c >> 8 & 255) / 255f, (c & 255) / 255f), size);
+    }
+
     /** Client: the Super Move cooldown, 0 (just used) to 1 (ready). */
     public float superReady(float partialTick) {
         long left = entityData.get(SUPER_READY) - level().getGameTime();
@@ -1155,7 +1173,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         }
         // lit redstone sheds dust like a powered wire
         if (!recalling() && r.nextInt(3) == 0)
-            level().addParticle(wireDust(8 + r.nextInt(8), 1f), getX() + (r.nextDouble() - .5) * getBbWidth(), getY() + r.nextDouble() * getBbHeight(),
+            level().addParticle(stageDust(1f), getX() + (r.nextDouble() - .5) * getBbWidth(), getY() + r.nextDouble() * getBbHeight(),
                     getZ() + (r.nextDouble() - .5) * getBbWidth(), 0, 0, 0);
         if (overheated() && r.nextInt(2) == 0) {
             level().addParticle(ParticleTypes.FLAME, getX() + (r.nextDouble() - .5) * 1.6, getY() + 1.4 + r.nextDouble(), getZ() + (r.nextDouble() - .5) * 1.6, 0, .04, 0);
