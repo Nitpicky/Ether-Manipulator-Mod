@@ -10,16 +10,16 @@ PASS Botanic 6 choices + 2 Commons
 PASS Mechatronic 6 choices + 2 Commons
 PASS Photonic 6 choices + 2 Commons
 PASS Gravitic 6 choices + 2 Commons
-FAIL Wellspring grows the shared tank
+PASS Reservoir grows the shared tank
 PASS Common follows prior choice
 PASS Common inactive without choice
 PASS Mode switch retains tank
 PASS Module switch retains tank
-FAIL Refill base one unit a second
-FAIL Crucible grows the shared tank
-FAIL Seedbank grows the shared tank
+PASS Refill base one unit every 2s
+PASS Crucible grows the shared tank
+PASS Seedbank grows the shared tank
 PASS Frost spends water
-FAIL Ignite/Lava costs
+PASS Ignite/Lava costs
 PASS Vacuum removed
 PASS No Tier scaling
 PASS Gravity changes player bounds
@@ -65,41 +65,35 @@ PASS Blazeling idles at raised hover height
 PASS Fire expiry has no cracks but ice retains them
 PASS Blazeling expiry dies instead of discarding
 PASS Blazeling ownership and deadline survive save/load
-FAIL Split pays once per whole shot
+PASS Split pays once per whole shot
 PASS Retired Gunner/Orbit dropped from old builds
 PASS Seeker is a Kinetic Grandmaster choice
 PASS Replant reserves seed and restores partial growth
 PASS Diving Bell blocks water entry
-FAIL Energy orb spends the shared tank, Tether does not
-PASS Rapids restores natural current
-FAIL Shared tank refills at its boundary
-FAIL Three tank traits stack
+PASS Energy orb spends the shared tank, Tether does not
+PASS Shared tank refills at its boundary
+PASS Three tank traits stack
 PASS Tank never exceeds capacity
-FAIL Bellows grows the shared tank
+PASS Bellows grows the shared tank
+PASS Rapids restores natural current
 PASS Gravity basis down
 PASS Hook follows aim down
-FAIL Skyhook anchors on release down
-FAIL Air Hook reels like a block hit down
+PASS Skyhook anchors in the air down
 PASS Gravity basis up
 PASS Hook follows aim up
-FAIL Skyhook anchors on release up
-FAIL Air Hook reels like a block hit up
+PASS Skyhook anchors in the air up
 PASS Gravity basis north
 PASS Hook follows aim north
-FAIL Skyhook anchors on release north
-FAIL Air Hook reels like a block hit north
+PASS Skyhook anchors in the air north
 PASS Gravity basis south
 PASS Hook follows aim south
-FAIL Skyhook anchors on release south
-FAIL Air Hook reels like a block hit south
+PASS Skyhook anchors in the air south
 PASS Gravity basis west
 PASS Hook follows aim west
-FAIL Skyhook anchors on release west
-FAIL Air Hook reels like a block hit west
+PASS Skyhook anchors in the air west
 PASS Gravity basis east
 PASS Hook follows aim east
-FAIL Skyhook anchors on release east
-FAIL Air Hook reels like a block hit east
+PASS Skyhook anchors in the air east
 PASS Standing pose clearance follows gravity down
 PASS Ceiling/wall crawl recovers to standing down
 PASS Pose resize keeps feet planted down
