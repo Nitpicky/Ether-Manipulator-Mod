@@ -1,60 +1,60 @@
 {
   "name": "Mechatronic",
-  "description": "Builds a [color=#E92031]Redstone Golem[/color] that fights beside you. [color=#E92031]Golem Mode[/color]: right click summons it or uses its Super Move, left click gives orders, Sneak + right click recalls it.",
+  "description": "Builds a [color=#E92031]Redstone Golem[/color], a walking war machine of stone and redstone. [color=#E92031]Golem Mode[/color]: right click to summon it or use its Super Move, left click to give orders, Sneak + right click to recall it.",
   "color": "#E92031",
   "icon": "minecraft:redstone",
   "order": 7,
   "badge": {
     "id": "mechatronic.badge",
     "name": "Redstone Golem",
-    "description": "Summons a [color=#E92031]Redstone Golem[/color]. Enemies within 12 blocks target it instead of you, and it wears your armor. [color=#E92031]Golem Mode[/color]: right click summons it or uses its Super Move; left click orders it (creature: attack, block: hold, Sneak: follow); Sneak + right click recalls it. Running straight, it drops to all fours and builds speed (Stride). Hold Jump in the air to rocket up, keep holding to glide. Rebuilt 60s after it breaks down."
+    "description": "Summons the [color=#E92031]Redstone Golem[/color]. It draws the attention of enemies within 12 blocks and wears your armor. Left click orders it: a creature to attack, a block to hold, Sneak to follow. Running straight, it drops to all fours and gathers speed. Hold Jump in the air to rocket up, then glide. Broken down, it is rebuilt after 60s."
   },
   "commons": [
     {
       "id": "mechatronic.redstone_furnace",
       "name": "Redstone Furnace",
-      "description": "Hits and Super Moves heat its redstone. At full signal it overheats for 6s: 50% faster, and its blows set targets on fire."
+      "description": "Its blows stoke the furnace. Fully stoked, it blows: a roar, then 6s 50% faster, setting targets on fire. Left alone, the heat drains away."
     },
     {
       "id": "mechatronic.saddle",
       "name": "Saddle",
-      "description": "Right click the Golem to ride it. Jump: jump or rocket. Left click: its lift. Right click: its Super Move. Sneak: get off."
+      "description": "Right click the Golem to ride it. Left click: its lift. Right click: its Super Move. Jump: jump, then rocket. Sneak: get off."
     }
   ],
   "adept": [
     {
       "id": "mechatronic.piston_arm",
       "name": "Piston Arm",
-      "description": "Super Move: a powered two-fist slam, 14 damage to everything within 4 blocks in front. Cooldown 6s."
+      "description": "Super Move: both fists come down like pistons, 14 damage to everything within 4 blocks in front. Cooldown 6s."
     },
     {
       "id": "mechatronic.dispenser_arm",
       "name": "Dispenser Arm",
-      "description": "Super Move: a bolt from each arm cannon, 6 damage, homing on the target and the enemy nearest it. Cooldown 5s."
+      "description": "Super Move: its arms become cannons, one homing bolt each, 6 damage. Cooldown 5s."
     }
   ],
   "master": [
     {
       "id": "mechatronic.ministrosities",
       "name": "Ministrosities",
-      "description": "Each overheat builds 3 Ministrosities that fight beside it (3 at most). They fall apart when it is recalled or breaks down."
+      "description": "When it blows, 3 Ministrosities scramble up out of the ground to fight beside it. They crumble when it goes."
     },
     {
-      "id": "mechatronic.redstone_arcs",
-      "name": "Redstone Arcs",
-      "description": "While overheated, its hits arc to up to 3 more enemies within 6 blocks for 4 damage."
+      "id": "mechatronic.supercharged",
+      "name": "Supercharged",
+      "description": "When it blows, it crackles with arcs: every blow it lands bursts in a redstone blast, 50% more damage, and it takes 30% less."
     }
   ],
   "grandmaster": [
     {
       "id": "mechatronic.stride_servos",
       "name": "Stride Servos",
-      "description": "Stride builds faster and goes further: 1.9x speed in 1.2s (1.5x in 2s without)."
+      "description": "Its stride gathers faster and runs further: 1.9x speed in 1.2s (1.5x in 2s without)."
     },
     {
       "id": "mechatronic.rocket_boots",
       "name": "Rocket Boots",
-      "description": "Rockets fire longer and climb faster: 2.4s of thrust (1.6s without)."
+      "description": "Its rockets burn longer and climb harder: 2.4s of thrust (1.6s without)."
     }
   ]
 }

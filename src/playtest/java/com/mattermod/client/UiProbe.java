@@ -397,6 +397,10 @@ public final class UiProbe {
                                                 .EYES,
                                         net.minecraft.world.phys.Vec3.atCenterOf(at));
                                 check(
+                                        "Golem tree: Supercharged replaces Redstone Arcs",
+                                        TraitChoices.accepts("mechatronic", 1, "mechatronic.supercharged")
+                                                && !TraitChoices.accepts("mechatronic", 1, "mechatronic.redstone_arcs"));
+                                check(
                                         "Golem tree: Piston Arm offered, retired Latch rejected",
                                         TraitChoices.accepts("mechatronic", 0, "mechatronic.piston_arm")
                                                 && !TraitChoices.accepts(

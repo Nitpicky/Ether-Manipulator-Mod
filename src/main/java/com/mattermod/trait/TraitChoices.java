@@ -21,7 +21,7 @@ public final class TraitChoices {
             case "excavation" -> new String[][] {{"excavation.momentum", "excavation.steady_hand"}, {"excavation.fortune", "excavation.silk_touch"}, {"excavation.vein_miner", "excavation.mass_pickup"}};
             case "pneumatic" -> new String[][] {{"pneumatic.gale_force", "pneumatic.bellows"}, {"pneumatic.bunny_hop", "pneumatic.ground_slam"}, {"pneumatic.stasis", "pneumatic.rebound"}};
             case "cultivation" -> new String[][] {{"cultivation.overgrowth", "cultivation.seedbank"}, {"cultivation.groundskeeper", "cultivation.herder"}, {"cultivation.bountiful", "cultivation.cross_pollination"}};
-            case "mechatronic" -> new String[][] {{"mechatronic.piston_arm", "mechatronic.dispenser_arm"}, {"mechatronic.ministrosities", "mechatronic.redstone_arcs"}, {"mechatronic.stride_servos", "mechatronic.rocket_boots"}};
+            case "mechatronic" -> new String[][] {{"mechatronic.piston_arm", "mechatronic.dispenser_arm"}, {"mechatronic.ministrosities", "mechatronic.supercharged"}, {"mechatronic.stride_servos", "mechatronic.rocket_boots"}};
             case "photonic" -> new String[][] {{"photonic.flare", "photonic.radiance"}, {"photonic.daybreak", "photonic.mirage"}, {"photonic.constellation", "photonic.supernova"}};
             case "mobility" -> new String[][] {{"mobility.blink", "mobility.gravity_shift"}, {"mobility.skyhook", "mobility.zipline"}, {"mobility.airwalk", "mobility.flight"}};
             default -> new String[0][];

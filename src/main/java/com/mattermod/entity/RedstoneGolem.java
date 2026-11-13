@@ -86,7 +86,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
             SynchedEntityData.defineId(RedstoneGolem.class, EntityDataSerializers.INT);
 
     private static final int F_BOOSTING = 1, F_RECALLING = 2, F_OVERHEATED = 4, F_MINIS = 8, F_SADDLE = 16, F_STRIDE = 32,
-            F_ROCKETS = 64, F_ARCS = 128, F_STRIDING = 256, F_GLIDING = 512, F_VENTING = 1024, F_LIFTING = 2048;
+            F_ROCKETS = 64, F_CHARGE = 128, F_STRIDING = 256, F_GLIDING = 512, F_VENTING = 1024, F_LIFTING = 2048;
 
     // ---- tuning ---------------------------------------------------------------------------
     public static final float MAX_HEALTH = 100, SWEEP_DAMAGE = 10, PISTON_DAMAGE = 14, BOLT_DAMAGE = 6;
@@ -107,9 +107,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
      *  over STRIDE_BUILD ticks, like Gravity Skate but much milder; stopping or a sharp turn sheds it. */
     static final double STRIDE_TOP = 1.5, STRIDE_TOP_UP = 1.9;
     static final int STRIDE_BUILD = 40, STRIDE_BUILD_UP = 24;
-    static final int MINI_CAP = 3, ARC_TARGETS = 3;
-    static final float ARC_DAMAGE = 4;
-    static final double ARC_RANGE = 6;
+    static final int MINI_CAP = 3;
     static final int FURNACE_HITS = 10, OVERHEAT_TICKS = 120;
     /** The overheat animation (frames): the Golem does nothing else meanwhile, and the overheat's time starts as it ends. */
     static final int OVERHEAT_LEN = 64, OVERHEAT_SCREAM = 17;
@@ -308,8 +306,8 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         return flag(F_MINIS);
     }
 
-    public boolean hasArcs() {
-        return flag(F_ARCS);
+    public boolean hasCharge() {
+        return flag(F_CHARGE);
     }
 
     public int fuel() {
@@ -382,6 +380,8 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
     }
 
     private int landing, risen, clientRecall;
+    /** Client: -1..1, how much it is stepping to its left (-) or right (+) rather than walking ahead. */
+    private double lateral;
 
     private boolean assembling() {
         long since = level().getGameTime() - builtAt();
@@ -393,7 +393,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         var st = Manipulator.stack(owner);
         setFlag(F_SADDLE, hasCommon(owner, 1));
         setFlag(F_MINIS, Traits.has(st, "mechatronic.ministrosities"));
-        setFlag(F_ARCS, Traits.has(st, "mechatronic.redstone_arcs"));
+        setFlag(F_CHARGE, Traits.has(st, "mechatronic.supercharged"));
         setFlag(F_STRIDE, Traits.has(st, "mechatronic.stride_servos"));
         setFlag(F_ROCKETS, Traits.has(st, "mechatronic.rocket_boots"));
     }
@@ -503,6 +503,10 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
             // Stride: how fast it really moves sets the gallop's pace; leaving it plays the push back upright
             double moved = Math.hypot(getX() - xo, getZ() - zo);
             pace += (moved - pace) * .2;
+            // sideways against its facing: the heavy sidestep plays instead of the walk
+            double yaw = Math.toRadians(yBodyRot), dx = getX() - xo, dz = getZ() - zo;
+            double fwd = -Math.sin(yaw) * dx + Math.cos(yaw) * dz, right = -Math.cos(yaw) * dx - Math.sin(yaw) * dz;
+            lateral += ((Math.abs(right) > Math.abs(fwd) * 1.2 && Math.abs(right) > .01 ? Math.signum(right) : 0) - lateral) * .35;
             boolean str = striding();
             if (wasStriding && !str) runStopUntil = tickCount + 8;
             if (str) runStopUntil = 0;
@@ -832,14 +836,14 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
             double d = to.length();
             if (d > LIFT_REACH + e.getBbWidth() / 2 + getBbWidth() / 2) continue;
             if (d > .01 && to.normalize().dot(fwd) < .2) continue;          // in front only
-            if (!e.hurt(damageSources().mobAttack(this), (float) getAttributeValue(Attributes.ATTACK_DAMAGE))) continue;
+            if (!e.hurt(damageSources().mobAttack(this), dealt((float) getAttributeValue(Attributes.ATTACK_DAMAGE)))) continue;
             e.setDeltaMovement(fwd.x * .12, 1.15, fwd.z * .12);   // straight up, like the iron golem's toss
             e.hurtMarked = true;
             if (overheated()) e.igniteForSeconds(4);
-            arc(owner, e);
             hits++;
         }
         if (hits > 0) stoke(owner, hits);
+        blast(owner, position().add(fwd.scale(1.8)).add(0, .6, 0));     // the heave goes off in front of it
         if (level() instanceof ServerLevel sl) {
             var below = level().getBlockState(blockPosition().below());
             if (!below.isAir())
@@ -859,15 +863,15 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
             Vec3 to = e.position().subtract(c).multiply(1, 0, 1);
             double d = to.length();
             if (d > SLAM_RADIUS + e.getBbWidth() / 2 || Math.abs(e.getY() - getY()) > 2.5) continue;
-            if (!e.hurt(damageSources().mobAttack(this), PISTON_DAMAGE)) continue;
+            if (!e.hurt(damageSources().mobAttack(this), dealt(PISTON_DAMAGE))) continue;
             Vec3 push = (d > .01 ? to.normalize() : fwd).scale(1.5 - .2 * d);
             e.setDeltaMovement(e.getDeltaMovement().add(push.x, .7, push.z));
             e.hurtMarked = true;
             if (overheated()) e.igniteForSeconds(4);
-            arc(owner, e);
             hits++;
         }
         if (hits > 0) stoke(owner, hits);
+        blast(owner, c.add(0, .3, 0));
         if (level() instanceof ServerLevel sl) {
             var below = level().getBlockState(BlockPos.containing(c).below());
             if (!below.isAir())
@@ -914,7 +918,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
 
     /** Called when a bolt hits: it stokes the furnace too. */
     void boltHit(ServerPlayer owner, LivingEntity hit) {
-        arc(owner, hit);
+        blast(owner, hit.getBoundingBox().getCenter());
         stoke(owner, 1);
     }
 
@@ -992,26 +996,56 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         playSound(SoundEvents.PISTON_EXTEND, 1, 1.4f);
     }
 
-    /** Redstone Arcs: while overheated, a hit jumps on to up to 3 more enemies within 6 blocks. */
-    void arc(ServerPlayer owner, LivingEntity from) {
-        if (!hasArcs() || !overheated() || !(level() instanceof ServerLevel sl)) return;
-        var near = level().getEntitiesOfClass(LivingEntity.class, from.getBoundingBox().inflate(ARC_RANGE),
-                e -> e != from && canHit(owner, e) && (e instanceof Enemy || e == getTarget()));
-        near.sort(java.util.Comparator.comparingDouble(e -> e.distanceToSqr(from)));
-        var dust = new DustParticleOptions(new Vector3f(1f, .15f, .05f), 1f);
-        Vec3 a = from.getBoundingBox().getCenter();
-        for (int i = 0; i < Math.min(ARC_TARGETS, near.size()); i++) {
-            LivingEntity e = near.get(i);
-            Vec3 b = e.getBoundingBox().getCenter();
-            int steps = (int) Math.ceil(a.distanceTo(b) * 3);
-            for (int k = 0; k <= steps; k++) {
-                Vec3 p = a.lerp(b, k / (double) steps);
-                double j = k == 0 || k == steps ? 0 : .18;
-                sl.sendParticles(dust, p.x + (getRandom().nextDouble() - .5) * j, p.y + (getRandom().nextDouble() - .5) * j, p.z + (getRandom().nextDouble() - .5) * j, 1, 0, 0, 0, 0);
-            }
-            e.hurt(damageSources().indirectMagic(this, owner), ARC_DAMAGE);
+    /** Supercharged: while overheated it crackles with arcs, every blow it lands goes off as a redstone blast, it hits
+     *  harder, shrugs off a share of the damage and can't be knocked about. */
+    static final double BLAST_RADIUS = 2.5;
+    static final float BLAST_DAMAGE = 4, CHARGED_HIT = 1.5f, CHARGED_TAKEN = .7f;
+
+    /** Supercharged and overheated right now. */
+    public boolean charged() {
+        return hasCharge() && overheated();
+    }
+
+    /** One redstone blast at {@code at}: hurts and throws back what it may hit; breaks blocks only if the config and the
+     *  mobGriefing rule both allow it. */
+    void blast(ServerPlayer owner, Vec3 at) {
+        if (!charged() || !(level() instanceof ServerLevel sl)) return;
+        for (var e : level().getEntitiesOfClass(LivingEntity.class, new AABB(at, at).inflate(BLAST_RADIUS), e -> canHit(owner, e))) {
+            Vec3 to = e.getBoundingBox().getCenter().subtract(at);
+            double d = to.length();
+            if (d > BLAST_RADIUS + e.getBbWidth() / 2) continue;
+            e.hurt(damageSources().explosion(this, owner), BLAST_DAMAGE);
+            Vec3 push = (d > .01 ? to.normalize() : Vec3.directionFromRotation(0, getYRot())).scale(.9 * (1 - d / (BLAST_RADIUS + 1)));
+            e.setDeltaMovement(e.getDeltaMovement().add(push.x, .25 + push.y * .3, push.z));
+            e.hurtMarked = true;
         }
-        if (!near.isEmpty()) sl.playSound(null, from.getX(), from.getY(), from.getZ(), com.mattermod.registry.ModSounds.GOLEM_SPARK_HIT.get(), SoundSource.HOSTILE, 1, 1);
+        boolean breaks = com.mattermod.config.MatterConfig.CHARGED_BREAKS_BLOCKS.get()
+                && sl.getGameRules().getBoolean(net.minecraft.world.level.GameRules.RULE_MOBGRIEFING);
+        if (breaks) {
+            // the blocks only: it never hurts or pushes the owner, the Golem, its allies (the damage is done above)
+            var calc = new net.minecraft.world.level.ExplosionDamageCalculator() {
+                @Override
+                public boolean shouldDamageEntity(net.minecraft.world.level.Explosion ex, Entity e) {
+                    return false;
+                }
+
+                @Override
+                public float getKnockbackMultiplier(Entity e) {
+                    return 0;
+                }
+            };
+            sl.explode(this, null, calc, at.x, at.y, at.z, 1.6f, false, net.minecraft.world.level.Level.ExplosionInteraction.MOB);
+        } else {
+            sl.sendParticles(ParticleTypes.EXPLOSION, at.x, at.y, at.z, 1, 0, 0, 0, 0);
+            sl.playSound(null, at.x, at.y, at.z, SoundEvents.GENERIC_EXPLODE.value(), SoundSource.HOSTILE, .8f, 1.3f);
+        }
+        sl.sendParticles(new DustParticleOptions(new Vector3f(1f, .5f, .1f), 1.6f), at.x, at.y, at.z, 24, .8, .5, .8, 0);
+        sl.playSound(null, at.x, at.y, at.z, com.mattermod.registry.ModSounds.GOLEM_SPARK_HIT.get(), SoundSource.HOSTILE, 1, .9f);
+    }
+
+    /** Damage dealt, with the Supercharge. */
+    private float dealt(float base) {
+        return charged() ? base * CHARGED_HIT : base;
     }
 
     // ---- Rocket Boots -----------------------------------------------------------------------
@@ -1134,6 +1168,17 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         return (float) (BASE_SPEED * strideMult() * (overheated() ? OVERHEAT_FACTOR : 1) * .9);
     }
 
+    /** Heavy: its head turns less far than most mobs' before the body follows, and the body turns slowly. */
+    @Override
+    public int getMaxHeadYRot() {
+        return 40;
+    }
+
+    @Override
+    public int getHeadRotSpeed() {
+        return 6;
+    }
+
     /** Sideways speed against forward, for the rider and the stride check. */
     static final float SIDESTEP = .3f;
 
@@ -1163,6 +1208,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         if (source.getEntity() != null && ownerId().map(source.getEntity().getUUID()::equals).orElse(false))
             return false;
         if (source.getEntity() == this) return false;
+        if (charged()) amount *= CHARGED_TAKEN;
         boolean hit = super.hurt(source, amount);
         if (hit && !level().isClientSide) {
             lastDamageTick = tickCount;
@@ -1356,6 +1402,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
     static final RawAnimation RUN = RawAnimation.begin().thenPlay("animation.monstrosity.run_start").thenLoop("animation.monstrosity.run"),
             STOP_WALK = RawAnimation.begin().thenPlay("animation.monstrosity.run_stop").thenLoop("animation.monstrosity.walk"),
             STOP_IDLE = RawAnimation.begin().thenPlay("animation.monstrosity.run_stop").thenLoop("animation.monstrosity.idle");
+    static final RawAnimation STRAFE_RIGHT = anim("strafe_right"), STRAFE_LEFT = anim("strafe_left");
     static final RawAnimation IDLE = anim("idle"), WALK = anim("walk"), ROCKET = anim("rocket"),
             SUMMON = hold("summon"), RECALL = hold("recall"), BREAK_DOWN = hold("break_down");
 
@@ -1380,6 +1427,8 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
                             if (g.boosting()) return state.setAndContinue(ROCKET);
                             if (g.striding()) return state.setAndContinue(RUN);
                             if (g.tickCount < g.runStopUntil) return state.setAndContinue(state.isMoving() ? STOP_WALK : STOP_IDLE);
+                            if (state.isMoving() && Math.abs(g.lateral) > .5)
+                                return state.setAndContinue(g.lateral > 0 ? STRAFE_RIGHT : STRAFE_LEFT);
                             if (state.isMoving()) return state.setAndContinue(WALK);
                             return state.setAndContinue(IDLE);
                         });

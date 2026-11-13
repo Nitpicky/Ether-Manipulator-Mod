@@ -13,7 +13,7 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public final class MinistrosityRenderer extends GeoEntityRenderer<Ministrosity> {
 
     public MinistrosityRenderer(EntityRendererProvider.Context ctx) {
-        super(ctx, new DefaultedEntityGeoModel<>(ResourceLocation.fromNamespaceAndPath(MatterMod.MODID, "ministrosity")));
+        super(ctx, new DefaultedEntityGeoModel<>(ResourceLocation.fromNamespaceAndPath(MatterMod.MODID, "ministrosity"), true));
         addRenderLayer(new GolemSignalLayer<>(this, "ministrosity", Ministrosity::linkedGolem));
         addRenderLayer(new EyePulseLayer<>(this, "ministrosity_eyes.png", 30));
         shadowRadius = .4f;

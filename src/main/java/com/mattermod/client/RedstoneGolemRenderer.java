@@ -30,6 +30,7 @@ public final class RedstoneGolemRenderer extends GeoEntityRenderer<RedstoneGolem
         long since = golem.level().getGameTime() - golem.builtAt();
         if (since >= 0 && since < 2 || golem.tickCount < 2) return;
         super.render(golem, yaw, partialTick, pose, buffers, light);
+        GolemArcs.render(golem, getGeoModel().getBakedModel(getGeoModel().getModelResource(golem)), partialTick, pose, buffers);
         var body = getGeoModel().getBone("body").orElse(null);
         if (body == null || !golem.isVehicle()) {
             golem.seatOffset = null;
@@ -84,6 +85,14 @@ public final class RedstoneGolemRenderer extends GeoEntityRenderer<RedstoneGolem
             super.setCustomAnimations(golem, instanceId, state);
             var lamp = getAnimationProcessor().getBone("lamp");
             if (lamp != null) lamp.setHidden(true);
+            // like vanilla mobs, the head turns to what it looks at (on top of its animation); not while it rises, blows
+            // its furnace, folds away or breaks down, when the animation owns the head
+            var head = getAnimationProcessor().getBone("head");
+            var data = state.getData(software.bernie.geckolib.constant.DataTickets.ENTITY_MODEL_DATA);
+            if (head != null && data != null && !golem.busy() && !golem.isDeadOrDying()) {
+                head.setRotY(head.getRotY() + data.netHeadYaw() * net.minecraft.util.Mth.DEG_TO_RAD);
+                head.setRotX(head.getRotX() + data.headPitch() * .6f * net.minecraft.util.Mth.DEG_TO_RAD);
+            }
         }
     }
 }
