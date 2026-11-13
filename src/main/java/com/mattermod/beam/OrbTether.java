@@ -37,7 +37,7 @@ public final class OrbTether {
      * Returns true while the hook is still flying (so normal flight continues).
      */
     /** The endpoint is a virtual block hit, not a separate hanging-rope or Zipline anchor. */
-    static void hookAir(BeamBallEntity b) {
+    public static void hookAir(BeamBallEntity b) {
         if (!(b.getOwner() instanceof ServerPlayer sp)) return;
         b.virtualHit = true;
         b.airReelAfterRelease = !sp.isUsingItem();

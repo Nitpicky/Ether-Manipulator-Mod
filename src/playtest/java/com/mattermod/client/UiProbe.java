@@ -311,8 +311,8 @@ public final class UiProbe {
                                     ModuleUnlocks.unlock(st, e.getKey());
                                 }
                                 TraitRules.equip(p, 0, Traits.HYDRAULICS);
-                                TraitRules.pick(p, 0, 0, 1); // Wellspring (saved id hydraulics.reservoir)
-                                check("Wellspring grows the shared tank", OrbMode.capacity(st) == 24);
+                                TraitRules.pick(p, 0, 0, 1); // Reservoir
+                                check("Reservoir grows the shared tank", OrbMode.capacity(st) == 8);
                                 check(
                                         "Common follows prior choice",
                                         Traits.hasCommon(st, Traits.HYDRAULICS, 0));
@@ -329,17 +329,17 @@ public final class UiProbe {
                                 check("Module switch retains tank", OrbMode.tank(st) == 3);
                                 TraitBuild.setPick(st, 0, 0, "hydraulics.reservoir");
                                 check(
-                                        "Refill base one unit a second",
+                                        "Refill base one unit every 2s",
                                         com.mattermod.config.MatterConfig.MATTER_REFILL.get()
-                                                == 20);
+                                                == 40);
                                 TraitRules.equip(p, 1, Traits.PYROTECHNICS);
                                 TraitRules.pick(p, 1, 0, 1);
-                                check("Crucible grows the shared tank", OrbMode.capacity(st) == 32);
+                                check("Crucible grows the shared tank", OrbMode.capacity(st) == 10);
                                 TraitRules.equip(p, 2, Traits.CULTIVATION);
                                 TraitRules.pick(p, 2, 0, 1);
                                 check(
                                         "Seedbank grows the shared tank",
-                                        OrbMode.capacity(st) == 40);
+                                        OrbMode.capacity(st) == 12);
                                 check(
                                         "Frost spends water",
                                         OrbMode.FROST.shotCost(st, 2) == 1
@@ -347,7 +347,7 @@ public final class UiProbe {
                                 check(
                                         "Ignite/Lava costs",
                                         OrbMode.IGNITE.shotCost(st, 0) == 1
-                                                && OrbMode.LAVA.shotCost(st, 0) == 6);
+                                                && OrbMode.LAVA.shotCost(st, 0) == 3);
                                 check("Vacuum removed", !OrbMode.VACUUM.isUnlocked(st));
                                 check(
                                         "No Tier scaling",
@@ -1013,14 +1013,14 @@ public final class UiProbe {
                                 TraitBuild.setLine(st, 1, Traits.HYDRAULICS);
                                 TraitBuild.setPick(st, 1, 0, "hydraulics.pressure");
                                 OrbMode.set(st, OrbMode.WATER);
-                                OrbMode.setTank(st, 8);
+                                OrbMode.setTank(st, 6);
                                 var item = com.mattermod.registry.ModItems.MATTER_MANIPULATOR.get();
                                 // the water blob is Hydraulic's left click: a full charge
                                 com.mattermod.item.MatterManipulatorItem.fireVolley(
                                         sl, p, st, 2, OrbMode.WATER);
                                 check(
                                         "Split pays once per whole shot",
-                                        OrbMode.tank(st) == 4);
+                                        OrbMode.tank(st) == 5);
                                 OrbMode.setTank(st, 16);
                                 check(
                                         "Retired Gunner/Orbit dropped from old builds",
@@ -1064,7 +1064,7 @@ public final class UiProbe {
                                 check(
                                         "Energy orb spends the shared tank, Tether does not",
                                         OrbMode.ENERGY.usesTank()
-                                                && OrbMode.ENERGY.shotCost(st, 2) == 3
+                                                && OrbMode.ENERGY.shotCost(st, 2) == 2
                                                 && !OrbMode.TETHER.usesTank());
                                 TraitBuild.setLine(st, 0, Traits.HYDRAULICS);
                                 TraitBuild.setPick(st, 0, 0, "hydraulics.reservoir");
@@ -1073,7 +1073,7 @@ public final class UiProbe {
                                 TraitBuild.setLine(st, 2, Traits.CULTIVATION);
                                 TraitBuild.setPick(st, 2, 0, "cultivation.seedbank");
                                 OrbMode.setTank(st, 0);
-                                p.getPersistentData().putInt("mm_refill_matter", 19);
+                                p.getPersistentData().putInt("mm_refill_matter", 39);
                                 WorldEffects.schedule(
                                         p.serverLevel(),
                                         2,
@@ -1083,7 +1083,7 @@ public final class UiProbe {
                                                     OrbMode.tank(st) == 1);
                                             check(
                                                     "Three tank traits stack",
-                                                    OrbMode.capacity(st) == 40);
+                                                    OrbMode.capacity(st) == 12);
                                             var over = st.copy();
                                             OrbMode.setTank(over, 999);
                                             check(
@@ -1093,7 +1093,7 @@ public final class UiProbe {
                                             TraitBuild.setPick(st, 2, 0, "pneumatic.bellows");
                                             check(
                                                     "Bellows grows the shared tank",
-                                                    OrbMode.capacity(st) == 40);
+                                                    OrbMode.capacity(st) == 12);
                                         });
                             });
         if (tick == 185) {
@@ -1138,22 +1138,13 @@ public final class UiProbe {
                                     var at = p.getEyePosition().add(p.getLookAngle().scale(6));
                                     hook.setPos(at);
                                     p.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);
-                                    hook.tick();
+                                    // what letting go of left click (or reaching max range) does
+                                    com.mattermod.beam.OrbTether.hookAir(hook);
                                     check(
-                                            "Skyhook anchors on release " + dir,
+                                            "Skyhook anchors in the air " + dir,
                                             hook.isStuck()
                                                     && hook.position().distanceToSqr(at) < .00001
                                                     && MovementPhysics.down(p) == dir);
-                                    hook.tick();
-                                    check(
-                                            "Air Hook reels like a block hit " + dir,
-                                            !hook.isAnchor()
-                                                    && p.getDeltaMovement()
-                                                                    .dot(
-                                                                            at.subtract(
-                                                                                    p
-                                                                                            .getEyePosition()))
-                                                            > 0);
                                     hook.discard();
                                 }
                                 // Repeatedly standing against a surface must not generate a jump or

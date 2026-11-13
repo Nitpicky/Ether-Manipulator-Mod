@@ -65,16 +65,22 @@ public final class GemLootModifier extends LootModifier {
         if (origin != null && !guaranteeIn.isEmpty()) {
             BlockPos pos = BlockPos.containing(origin);
             var structures = level.registryAccess().registryOrThrow(Registries.STRUCTURE);
+            String key = null;
             for (ResourceLocation id : guaranteeIn) {
                 var structure = structures.get(id);
                 if (structure == null) continue;
                 var start = level.structureManager().getStructureWithPieceAt(pos, structure);
                 if (!start.isValid()) continue;
-                if ((!hidden || nearStickyPiston(level, pos))
-                        && GemGuarantees.get(level).claim(id + "@" + start.getChunkPos().toLong() + "/" + BuiltInRegistries.ITEM.getKey(gem)))
-                    give = true;
+                key = id + "@" + start.getChunkPos().toLong();
                 break;
             }
+            // No registered structure here (placed with /place, or by another mod): the chest's
+            // loot table already names the structure, so the guarantee goes once per 4x4 chunk area
+            if (key == null)
+                key = guaranteeIn.get(0) + "@placed" + (pos.getX() >> 6) + "," + (pos.getZ() >> 6);
+            if ((!hidden || nearStickyPiston(level, pos))
+                    && GemGuarantees.get(level).claim(key + "/" + BuiltInRegistries.ITEM.getKey(gem)))
+                give = true;
         }
         if (!give && chance > 0 && ctx.getRandom().nextFloat() < chance) give = true;
         if (give) loot.add(new ItemStack(gem));

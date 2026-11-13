@@ -682,7 +682,8 @@ public final class PlaytestBootstrap {
                                                 + (bx + 6) + " " + (y + 6) + " " + (bz + 20)
                                                 + " air");
                                 run(s, "tp @p " + bx + ".5 " + y + " " + bz + ".5 0 0");
-                                run(s, "summon pig " + bx + ".5 " + y + " " + (bz + 6) + ".5");
+                                // a pig that stands still (the grenade only has to latch on and burst)
+                                run(s, "summon pig " + bx + ".5 " + y + " " + (bz + 6) + ".5 {NoAI:1b}");
                                 orbMode(p, com.mattermod.item.OrbMode.GUST);
                                 bursts = com.mattermod.beam.GustGrenade.bursts;
                             });
@@ -728,11 +729,11 @@ public final class PlaytestBootstrap {
                                 run(s, "effect give @e[type=pig] minecraft:slowness 60 3 true");
                                 orbMode(p, com.mattermod.item.OrbMode.TETHER);
                             });
-            case 1020 -> {
-                mc.player.setYRot(0);
-                mc.player.setXRot(5); // at the pig's middle 12 blocks out (7 degrees landed the hook in the grass behind it)
+            // aim right at the pig, wherever it wandered (a fixed pitch landed the hook in the grass, reeling the player)
+            case 1020, 1022 -> {
+                aimAtPig(mc);
+                if (t == 1022) opts.keyAttack.setDown(true);
             }
-            case 1022 -> opts.keyAttack.setDown(true);
             case 1024 -> opts.keyAttack.setDown(false);
             case 1030 -> opts.keyUse.setDown(true);
             case 1032 -> opts.keyUse.setDown(false);
@@ -1084,6 +1085,21 @@ public final class PlaytestBootstrap {
         }
     }
 
+    /** Turns the player to look at the middle of the nearest pig. */
+    private static void aimAtPig(Minecraft mc) {
+        net.minecraft.world.entity.Entity best = null;
+        for (var e : mc.level.entitiesForRendering())
+            if (e instanceof net.minecraft.world.entity.animal.Pig
+                    && (best == null || e.distanceToSqr(mc.player) < best.distanceToSqr(mc.player))) best = e;
+        if (best == null) {
+            log("tether: no pig to aim at");
+            return;
+        }
+        mc.player.lookAt(net.minecraft.commands.arguments.EntityAnchorArgument.Anchor.EYES, best.getBoundingBox().getCenter());
+        log("tether: aiming at the pig " + String.format("%.1f", best.distanceTo(mc.player)) + " blocks out, pitch "
+                + String.format("%.1f", mc.player.getXRot()));
+    }
+
     /** Views the scene from the "mmcam" armor stand, or back from the player. */
     private static void sideCamera(Minecraft mc, boolean on) {
         // hide the HUD and first-person hand while looking from the stand
@@ -1180,8 +1196,18 @@ public final class PlaytestBootstrap {
     private static void checkGemGuarantee(MinecraftServer s, ServerPlayer p, String structure, String gem, boolean hidden) {
         var level = p.serverLevel();
         var at = p.blockPosition().offset(0, 0, structure.contains("jungle") ? -40 : 40);
-        s.getCommands().performPrefixedCommand(s.createCommandSourceStack().withSuppressedOutput(),
-                "place structure minecraft:" + structure + " " + at.getX() + " " + at.getY() + " " + at.getZ());
+        if (structure.equals("desert_pyramid")) {
+            // its treasure room sits 11 blocks down, under the superflat bedrock: build the room's
+            // four chests with the pyramid's loot table instead
+            for (var d : net.minecraft.core.Direction.Plane.HORIZONTAL) {
+                var c = at.relative(d, 2);
+                level.setBlockAndUpdate(c, net.minecraft.world.level.block.Blocks.CHEST.defaultBlockState());
+                if (level.getBlockEntity(c) instanceof net.minecraft.world.level.block.entity.ChestBlockEntity chest)
+                    chest.setLootTable(net.minecraft.world.level.storage.loot.BuiltInLootTables.DESERT_PYRAMID, 7L + d.ordinal());
+            }
+        } else
+            s.getCommands().performPrefixedCommand(s.createCommandSourceStack().withSuppressedOutput(),
+                    "place structure minecraft:" + structure + " " + at.getX() + " " + at.getY() + " " + at.getZ());
         var item = com.mattermod.registry.ModItems.GEMS.get(gem).get();
         int chests = 0, withGem = 0, stickyWithGem = 0;
         StringBuilder where = new StringBuilder();

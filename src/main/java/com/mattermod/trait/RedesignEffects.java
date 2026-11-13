@@ -104,13 +104,8 @@ public final class RedesignEffects {
             if (Traits.hasLine(st, Traits.PYROTECHNICS)) p.clearFire();
         }
         boolean changed = false;
-        // The shared tank: one unit per refill period; each of Wellspring, Stoke and Compost
-        // adds the base speed again
-        int faster = 1;
-        for (String t :
-                new String[] {"hydraulics.wellspring", "pyrotechnics.stoke", "cultivation.compost"})
-            if (Traits.has(st, t)) faster++;
-        int rate = Math.max(1, com.mattermod.config.MatterConfig.MATTER_REFILL.get() / faster);
+        // The shared tank: one unit per refill period
+        int rate = Math.max(1, com.mattermod.config.MatterConfig.MATTER_REFILL.get());
         if (OrbMode.tank(st) < OrbMode.capacity(st)) {
             var data = p.getPersistentData();
             String key = "mm_refill_matter";
