@@ -723,8 +723,9 @@ public final class PlaytestBootstrap {
                                         s,
                                         "summon pig " + bx + ".5 " + y + " " + (bz + 12) + ".5");
                                 // a NoAI pig never moves (no travel at all), so the reel could
-                                // not pull it; a slowed pig stands still but can be pulled
-                                run(s, "effect give @e[type=pig] minecraft:slowness 60 255 true");
+                                // not pull it; Slowness 255 drags every pull down to a third too, so
+                                // a mildly slowed pig: it barely wanders, and the reel moves it freely
+                                run(s, "effect give @e[type=pig] minecraft:slowness 60 3 true");
                                 orbMode(p, com.mattermod.item.OrbMode.TETHER);
                             });
             case 1020 -> {
