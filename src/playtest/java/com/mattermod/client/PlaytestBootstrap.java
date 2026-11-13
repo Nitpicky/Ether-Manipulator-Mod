@@ -1018,19 +1018,33 @@ public final class PlaytestBootstrap {
                         var g = com.mattermod.entity.GolemControl.golem(p);
                         if (g != null) log("golem overheat: " + g.debugOverheat(p));
                     });
-            case 1378, 1382 ->
+            case 1434, 1438 ->
                     server(mc, (s, p) -> {
                         var g = com.mattermod.entity.GolemControl.golem(p);
                         log("golem minis at t" + t + ": " + (g == null ? "no golem" : com.mattermod.entity.Ministrosity.of(g).size()));
                     });
-            case 1388 -> shot(mc, "35_ministrosities");
-            case 1389 ->
+            // the overheat is a state: nothing else while the furnace blows, its time starts after
+            case 1420 ->
+                    server(mc, (s, p) -> {
+                        var g = com.mattermod.entity.GolemControl.golem(p);
+                        boolean ok = g != null && g.venting() && g.overheated() && !g.sweep(null);
+                        log((ok ? "PASS" : "FAIL") + " golem: blowing its furnace it does nothing else (venting "
+                                + (g != null && g.venting()) + ")");
+                    });
+            case 1452 ->
+                    server(mc, (s, p) -> {
+                        var g = com.mattermod.entity.GolemControl.golem(p);
+                        boolean ok = g != null && !g.venting() && g.overheated();
+                        log((ok ? "PASS" : "FAIL") + " golem: back in action and still overheated after the animation");
+                    });
+            case 1444 -> shot(mc, "35_ministrosities");
+            case 1445 ->
                     server(mc, (s, p) -> {
                         var g = com.mattermod.entity.GolemControl.golem(p);
                         int n = g == null ? 0 : com.mattermod.entity.Ministrosity.of(g).size();
                         log((n == 3 ? "PASS" : "FAIL") + " golem: an overheat built " + n + " Ministrosities (want 3)");
                     });
-            case 1390 ->
+            case 1446 ->
                     server(
                             mc,
                             (s, p) -> {
@@ -1039,10 +1053,10 @@ public final class PlaytestBootstrap {
                                         + " golem: Dispenser Arm bolts hit the far target");
                                 if (h != null) h.discard();
                             });
-            case 1391 -> server(mc, (s, p) -> checkGemLoot(s, p));
-            case 1393 -> server(mc, (s, p) -> checkGemGuarantee(s, p, "desert_pyramid", "atenite", false));
-            case 1395 -> server(mc, (s, p) -> checkGemGuarantee(s, p, "jungle_pyramid", "quetzalite", true));
-            case 1398 ->
+            case 1447 -> server(mc, (s, p) -> checkGemLoot(s, p));
+            case 1449 -> server(mc, (s, p) -> checkGemGuarantee(s, p, "desert_pyramid", "atenite", false));
+            case 1451 -> server(mc, (s, p) -> checkGemGuarantee(s, p, "jungle_pyramid", "quetzalite", true));
+            case 1454 ->
                     server(
                             mc,
                             (s, p) -> {
@@ -1058,8 +1072,8 @@ public final class PlaytestBootstrap {
                                 run(s, "summon armor_stand " + (bx + 6.5) + " " + (y - 0.4) + " " + (bz + 3.5)
                                         + " {Invisible:1b,NoGravity:1b,CustomName:'\"mmcam\"',Rotation:[90f,8f]}");
                             });
-            case 1404 -> sideCamera(mc, true);
-            case 1410 -> {
+            case 1460 -> sideCamera(mc, true);
+            case 1466 -> {
                 var v = mc.player.getVehicle();
                 log("golem seat: player feet " + (v == null ? "not riding" : String.format("%.3f", mc.player.getY() - v.getY()))
                         + " above the Golem (seat " + String.format("%.3f", com.mattermod.entity.RedstoneGolem.SEAT_Y)
@@ -1069,15 +1083,15 @@ public final class PlaytestBootstrap {
                 log((Math.abs(feet - (com.mattermod.entity.RedstoneGolem.SEAT_Y - .6)) < .3 ? "PASS" : "FAIL")
                         + " golem: the rider sits on the seat (feet " + String.format("%.2f", feet) + ")");
             }
-            case 1412 -> shot(mc, "36_golem_ride");
-            case 1414 -> sideCamera(mc, false);
-            case 1416 ->
+            case 1468 -> shot(mc, "36_golem_ride");
+            case 1470 -> sideCamera(mc, false);
+            case 1472 ->
                     server(mc, (s, p) -> {
                         p.stopRiding();
                         var g = com.mattermod.entity.GolemControl.golem(p);
                         if (g != null) g.recall();
                     });
-            case 1470 ->
+            case 1526 ->
                     server(
                             mc,
                             (s, p) -> {
@@ -1085,7 +1099,7 @@ public final class PlaytestBootstrap {
                                         + " golem: recall put the Golem away");
                                 run(s, "difficulty peaceful");
                             });
-            case 1480 -> finish(mc);
+            case 1536 -> finish(mc);
             default -> {}
         }
     }

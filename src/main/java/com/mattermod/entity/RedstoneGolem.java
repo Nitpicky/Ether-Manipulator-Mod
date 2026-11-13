@@ -86,7 +86,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
             SynchedEntityData.defineId(RedstoneGolem.class, EntityDataSerializers.INT);
 
     private static final int F_BOOSTING = 1, F_RECALLING = 2, F_OVERHEATED = 4, F_MINIS = 8, F_SADDLE = 16, F_STRIDE = 32,
-            F_ROCKETS = 64, F_ARCS = 128, F_STRIDING = 256, F_GLIDING = 512;
+            F_ROCKETS = 64, F_ARCS = 128, F_STRIDING = 256, F_GLIDING = 512, F_VENTING = 1024;
 
     // ---- tuning ---------------------------------------------------------------------------
     public static final float MAX_HEALTH = 100, SWEEP_DAMAGE = 10, PISTON_DAMAGE = 14, BOLT_DAMAGE = 6;
@@ -111,6 +111,8 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
     static final float ARC_DAMAGE = 4;
     static final double ARC_RANGE = 6;
     static final int FURNACE_HITS = 10, OVERHEAT_TICKS = 120;
+    /** The overheat animation (frames): the Golem does nothing else meanwhile, and the overheat's time starts as it ends. */
+    static final int OVERHEAT_LEN = 64, OVERHEAT_SCREAM = 17;
     /** A Super Move stokes the furnace by this many hits as it is used. */
     static final int SUPER_HEAT = 3;
     /** Client: the overheat animation's scream (frames 17..26 at 1.5x speed) flashes the redstone to the eyes' white. */
@@ -120,7 +122,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
     // ---- server state ---------------------------------------------------------------------
     enum Order { FOLLOW, ATTACK, HOLD }
 
-    enum Action { NONE, SWEEP, PISTON, DISPENSER }
+    enum Action { NONE, SWEEP, PISTON, DISPENSER, OVERHEAT }
 
     Order order = Order.FOLLOW;
     LivingEntity orderTarget;
@@ -287,6 +289,16 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         return Mth.clamp(1 - (left - partialTick) / Math.max(1, entityData.get(SUPER_LEN)), 0, 1);
     }
 
+    /** Blowing its furnace (the overheat animation): it can't move, attack or be steered. */
+    public boolean venting() {
+        return flag(F_VENTING);
+    }
+
+    /** Rising out of the ground, venting or folding away: nothing else can start. */
+    public boolean busy() {
+        return venting() || recalling() || assembling();
+    }
+
     public boolean overheated() {
         return flag(F_OVERHEATED);
     }
@@ -360,11 +372,12 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
     /** Marks a fresh assembly: the summon animation plays and the Golem stands still meanwhile. */
     public void assembled() {
         entityData.set(BUILT_AT, level().getGameTime());
-        playSound(com.mattermod.registry.ModSounds.GOLEM_EYES.get(), 1, 1);
-        landing = 8;
+        playSound(com.mattermod.registry.ModSounds.GOLEM_ARM.get(), 1.2f, .7f);    // stone grinding up out of the ground
+        landing = 9;
+        risen = 21;
     }
 
-    private int landing, clientRecall;
+    private int landing, risen, clientRecall;
 
     private boolean assembling() {
         long since = level().getGameTime() - builtAt();
@@ -494,10 +507,11 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
             return;
         }
         if (!isAlive()) return;
-        if (landing > 0 && --landing == 0) {      // the summon drop lands
-            playSound(com.mattermod.registry.ModSounds.GOLEM_LAND.get(), 1.6f, .9f);
-            playSound(com.mattermod.registry.ModSounds.GOLEM_SLAM.get(), 1.4f, 1);
+        if (landing > 0 && --landing == 0)
             playSound(com.mattermod.registry.ModSounds.GOLEM_AWAKEN.get(), 1.6f, 1);   // the roar peaks 2s in: at the summon's roar (frame 49)
+        if (risen > 0 && --risen == 0) {          // fully out of the ground: it powers up
+            playSound(com.mattermod.registry.ModSounds.GOLEM_LAND.get(), 1.2f, .8f);
+            playSound(com.mattermod.registry.ModSounds.GOLEM_EYES.get(), 1, 1);
         }
         ServerPlayer owner = owner();
         if (owner == null || owner.level() != level() || !Traits.hasLine(Manipulator.stack(owner), Traits.MECHATRONIC)) {
@@ -526,18 +540,19 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         if (attr != null && attr.getBaseValue() != speed) attr.setBaseValue(speed);
 
         // now and then, while standing guard, it looks around
-        if (action == Action.NONE && getNavigation().isDone() && getDeltaMovement().horizontalDistanceSqr() < 1e-3
-                && random.nextInt(400) == 0) {
+        boolean still = !isVehicle() && getNavigation().isDone() && getDeltaMovement().horizontalDistanceSqr() < 1e-3
+                && Math.abs(getX() - xo) + Math.abs(getZ() - zo) < 1e-3 && onGround();
+        if (action == Action.NONE && still && !assembling() && !overheatPending && random.nextInt(400) == 0) {
             triggerAnim("main", "idle_break");
             idleBreakUntil = tickCount + 64;
             cue(20, com.mattermod.registry.ModSounds.GOLEM_LAUGH.get(), 1.2f, 1);   // its first big "HA" is frame 27
-        } else if (idleBreakUntil > tickCount && (!getNavigation().isDone() || action != Action.NONE)) {
+        } else if (idleBreakUntil > tickCount && (!still || action != Action.NONE)) {
             if (action == Action.NONE) stopTriggeredAnim("main", "idle_break");
             idleBreakUntil = 0;
         }
 
         // Redstone Furnace: the overheat runs out
-        if (overheatTicks > 0 && --overheatTicks == 0) setFlag(F_OVERHEATED, false);
+        if (overheatTicks > 0 && action != Action.OVERHEAT && --overheatTicks == 0) setFlag(F_OVERHEATED, false);
 
         // slow repair once out of the fight
         if (tickCount % 40 == 0 && tickCount - lastDamageTick > 100 && getHealth() < getMaxHealth()) heal(1);
@@ -560,6 +575,12 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
             if (!onGround() && (thrusting || gliding)) hurtMarked = true;
             setFlag(F_BOOSTING, thrusting || gliding);
             setFlag(F_GLIDING, gliding);
+        }
+        // the furnace blows as soon as the Golem is free: nothing else until it is done
+        if (action == Action.NONE && overheatPending && !assembling()) {
+            overheatPending = false;
+            queuedUntil = 0;
+            start(Action.OVERHEAT, null, null);
         }
         if (action == Action.NONE && queuedUntil > 0) {
             if (tickCount <= queuedUntil) armsMove(owner, queuedTarget != null && queuedTarget.isAlive() ? queuedTarget : null, queuedAim);
@@ -638,7 +659,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
 
     /** Starts the arm sweep (order or rider), if it isn't busy or cooling down. */
     public boolean sweep(LivingEntity target) {
-        if (action != Action.NONE || sweepCooldown > 0 || recalling()) return false;
+        if (action != Action.NONE || sweepCooldown > 0 || recalling() || assembling() || overheatPending) return false;
         start(Action.SWEEP, target, null);
         return true;
     }
@@ -648,7 +669,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
     public boolean armsMove(ServerPlayer owner, LivingEntity target, Vec3 aim) {
         boolean piston = hasTrait(owner, "mechatronic.piston_arm");
         if (!piston && !hasTrait(owner, "mechatronic.dispenser_arm")) return false;
-        if (armsCooldown > 0 || recalling() || assembling()) return false;
+        if (armsCooldown > 0 || recalling() || assembling() || overheatPending || action == Action.OVERHEAT) return false;
         if (action != Action.NONE) {
             if (action != Action.SWEEP) return false;
             queuedTarget = target;
@@ -701,10 +722,19 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         actionAim = aim;
         getNavigation().stop();
         if (a == Action.SWEEP) sweepCooldown = Math.round(SWEEP_LEN / animSpeed());
+        if (a == Action.OVERHEAT) {
+            setFlag(F_OVERHEATED, true);
+            setFlag(F_VENTING, true);
+            setDeltaMovement(0, getDeltaMovement().y, 0);
+            stopTriggeredAnim("main", "idle_break");
+            playSound(com.mattermod.registry.ModSounds.GOLEM_OVERHEAT.get(), 1.5f, 1);
+            cue(8, com.mattermod.registry.ModSounds.GOLEM_SCREAM.get(), 1.6f, 1);   // the scream, frames 17..42 at 1.5x
+        }
         triggerAnim("main", switch (a) {
             case SWEEP -> "sweep";
             case PISTON -> "piston";
             case DISPENSER -> "dispenser";
+            case OVERHEAT -> "overheat";
             default -> "sweep";
         });
         if (a == Action.PISTON) playSound(SoundEvents.PISTON_CONTRACT, 1, .6f);
@@ -765,6 +795,15 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
                     playSound(com.mattermod.registry.ModSounds.GOLEM_STEP.get(), 1.2f, .95f);
                 }
                 if (f >= DISPENSER_LEN) action = Action.NONE;
+            }
+            case OVERHEAT -> {
+                getNavigation().stop();
+                if (crossed(f, prev, OVERHEAT_SCREAM) && hasMinis()) buildMinis(owner);   // they come up as it screams
+                if (f >= OVERHEAT_LEN) {
+                    action = Action.NONE;
+                    setFlag(F_VENTING, false);
+                    overheatTicks = OVERHEAT_TICKS;      // the overheat's time starts once it is back in action
+                }
             }
             default -> action = Action.NONE;
         }
@@ -868,19 +907,16 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
 
     // ---- Redstone Furnace -------------------------------------------------------------------
 
+    private boolean overheatPending;
+
     private void stoke(ServerPlayer owner, int hits) {
-        if (!hasCommon(owner, 0) || overheated()) return;
+        if (!hasCommon(owner, 0) || overheated() || overheatPending) return;
         heat += hits;
         entityData.set(HEAT, Math.min(heat, FURNACE_HITS));
         if (heat >= FURNACE_HITS) {
             heat = 0;
             entityData.set(HEAT, 0);
-            overheatTicks = OVERHEAT_TICKS;
-            setFlag(F_OVERHEATED, true);
-            playSound(com.mattermod.registry.ModSounds.GOLEM_OVERHEAT.get(), 1.5f, 1);
-            cue(8, com.mattermod.registry.ModSounds.GOLEM_SCREAM.get(), 1.6f, 1);   // the scream, frames 17..42 at 1.5x
-            if (action == Action.NONE) triggerAnim("main", "overheat");
-            if (hasMinis()) buildMinis(owner);
+            overheatPending = true;      // blows once the current move is over (see tick)
         }
     }
 
@@ -1048,7 +1084,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         yRotO = yBodyRot = yHeadRot = getYRot();
         // the rider's client simulates the ride: Jump jumps, held in the air it fires the boots
         if (level().isClientSide) {
-            boolean jump = com.mattermod.client.GolemRiding.jumpHeld(player);
+            boolean jump = com.mattermod.client.GolemRiding.jumpHeld(player) && !busy();
             if (jump && !jumpWas && onGround()) jumpFromGround();
             rocketTick(jump && !onGround());
             strideTick();
@@ -1058,6 +1094,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
 
     @Override
     protected Vec3 getRiddenInput(Player player, Vec3 input) {
+        if (busy()) return Vec3.ZERO;      // rising, venting or folding away: it stands its ground
         float side = player.xxa * .5f, fwd = player.zza;
         if (fwd <= 0) fwd *= .25f;
         return new Vec3(side, 0, fwd);
@@ -1104,8 +1141,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
     @Override
     public void die(DamageSource source) {
         if (!level().isClientSide) {
-            action = Action.NONE;
-            for (String a : new String[] {"sweep", "piston", "dispenser", "idle_break", "overheat"}) stopTriggeredAnim("main", a);
+            stopActions();
             GolemControl.brokeDown(this);
         }
         super.die(source);
@@ -1125,11 +1161,22 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         return false;
     }
 
+    /** Drops whatever it was doing (and its animation), for the recall and the breakdown. */
+    private void stopActions() {
+        if (action == Action.OVERHEAT) overheatTicks = OVERHEAT_TICKS;
+        action = Action.NONE;
+        overheatPending = false;
+        queuedUntil = 0;
+        idleBreakUntil = 0;
+        setFlag(F_VENTING, false);
+        for (String a : new String[] {"sweep", "piston", "dispenser", "idle_break", "overheat"}) stopTriggeredAnim("main", a);
+    }
+
     /** Starts the recall: it folds up and vanishes, keeping its health. */
     public void recall() {
         if (recalling()) return;
         ejectPassengers();
-        action = Action.NONE;
+        stopActions();
         recallTicks = 0;
         setFlag(F_RECALLING, true);
         getNavigation().stop();
@@ -1229,13 +1276,18 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
             level().addParticle(ParticleTypes.FLAME, getX() + (r.nextDouble() - .5) * 1.6, getY() + 1.4 + r.nextDouble(), getZ() + (r.nextDouble() - .5) * 1.6, 0, .04, 0);
             if (r.nextInt(3) == 0) level().addParticle(ParticleTypes.LARGE_SMOKE, getX(), getY() + 2.6, getZ(), 0, .06, 0);
         }
-        // summon: it drops out of the sky and lands at frame 8
+        // summon: it rises out of the ground (out by frame 20), the reverse of the recall
         long since = level().getGameTime() - builtAt();
-        if (since == 8)
-            for (int i = 0; i < 40; i++) {
-                double a = r.nextDouble() * Math.PI * 2, v = .25 + r.nextDouble() * .3;
-                level().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, getX(), getY() + .1, getZ(), Math.cos(a) * v, .02, Math.sin(a) * v);
+        if (since >= 0 && since < 22) {
+            var under = level().getBlockState(blockPosition().below());
+            for (int i = 0; i < 5; i++) {
+                double a = r.nextDouble() * Math.PI * 2;
+                if (!under.isAir())
+                    level().addParticle(new net.minecraft.core.particles.BlockParticleOption(ParticleTypes.BLOCK, under),
+                            getX() + Math.cos(a) * 1.2, getY() + .1, getZ() + Math.sin(a) * 1.2, 0, .15, 0);
+                level().addParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, getX() + Math.cos(a), getY(), getZ() + Math.sin(a), 0, .01, 0);
             }
+        }
         // recall: it powers down on all fours and sinks into the ground from frame 18
         clientRecall = recalling() ? clientRecall + 1 : 0;
         if (clientRecall >= 18) {

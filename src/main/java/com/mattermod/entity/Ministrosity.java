@@ -108,6 +108,14 @@ public final class Ministrosity extends PathfinderMob implements GeoEntity {
     public void tick() {
         super.tick();
         if (level().isClientSide) {
+            // it digs itself up out of the ground, spinning
+            if (tickCount < 14) {
+                var under = level().getBlockState(blockPosition().below());
+                if (!under.isAir())
+                    for (int i = 0; i < 3; i++)
+                        level().addParticle(new net.minecraft.core.particles.BlockParticleOption(net.minecraft.core.particles.ParticleTypes.BLOCK, under),
+                                getX() + (getRandom().nextDouble() - .5) * .8, getY() + .1, getZ() + (getRandom().nextDouble() - .5) * .8, 0, .2, 0);
+            }
             // lit redstone sheds dust like a powered wire, in its Golem's heat colours
             if (isAlive() && getRandom().nextInt(6) == 0)
                 level().addParticle(linkedGolem() instanceof RedstoneGolem g ? g.stageDust(.8f) : RedstoneGolem.wireDust(8 + getRandom().nextInt(8), .8f),
