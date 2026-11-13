@@ -15,7 +15,7 @@ public final class RedstoneGolemRenderer extends GeoEntityRenderer<RedstoneGolem
 
     public RedstoneGolemRenderer(EntityRendererProvider.Context ctx) {
         super(ctx, new Model());
-        addRenderLayer(new software.bernie.geckolib.renderer.layer.AutoGlowingGeoLayer<>(this));
+        addRenderLayer(new GlowMaskLayer<>(this, "monstrosity_glowmask.png"));
         addRenderLayer(new EyePulseLayer<>(this, "monstrosity_eyes.png", 60));
         addRenderLayer(new GolemHeatLayer(this));
         shadowRadius = 1.0f;
@@ -29,7 +29,9 @@ public final class RedstoneGolemRenderer extends GeoEntityRenderer<RedstoneGolem
         if (body != null) body.setTrackingMatrices(true);
         super.render(golem, yaw, partialTick, pose, buffers, light);
         if (body != null && golem.isVehicle()) {
-            org.joml.Vector4f p = body.getLocalSpaceMatrix().transform(new org.joml.Vector4f(0, (float) RedstoneGolem.SEAT_Y, 0, 1));
+            // the tracked matrix sits at the bone's pivot (10 units up), not at the model origin
+            org.joml.Vector4f p = body.getLocalSpaceMatrix()
+                    .transform(new org.joml.Vector4f(0, (float) (RedstoneGolem.SEAT_Y - body.getPivotY() / 16.0), 0, 1));
             golem.seatOffset = new net.minecraft.world.phys.Vec3(p.x(), p.y(), p.z());
         } else golem.seatOffset = null;
     }

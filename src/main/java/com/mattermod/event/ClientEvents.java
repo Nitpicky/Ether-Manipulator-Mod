@@ -36,7 +36,6 @@ public class ClientEvents {
         NeoForge.EVENT_BUS.register(com.mattermod.client.ModeWheel.class);
         NeoForge.EVENT_BUS.register(com.mattermod.client.ClientMobility.class);
         NeoForge.EVENT_BUS.register(com.mattermod.client.AirwalkTiles.class);
-        NeoForge.EVENT_BUS.register(com.mattermod.client.GolemLaserDot.class);
         com.mattermod.trait.RapidsCurrents.clientLevel =
                 () -> net.minecraft.client.Minecraft.getInstance().level;
         NeoForge.EVENT_BUS.register(com.mattermod.client.GravityRender.class);
@@ -101,7 +100,6 @@ public class ClientEvents {
         event.registerEntityRenderer(
                 ModEntities.MINISTROSITY.get(), com.mattermod.client.MinistrosityRenderer::new);
         event.registerEntityRenderer(
-                ModEntities.REDSTONE_BOLT.get(),
-                net.minecraft.client.renderer.entity.ThrownItemRenderer::new);
+                ModEntities.REDSTONE_BOLT.get(), com.mattermod.beam.RedstoneBoltRenderer::new);
     }
 }

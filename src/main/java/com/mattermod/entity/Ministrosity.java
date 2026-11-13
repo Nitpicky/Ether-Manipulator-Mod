@@ -83,7 +83,15 @@ public final class Ministrosity extends PathfinderMob implements GeoEntity {
     @Override
     public void tick() {
         super.tick();
-        if (level().isClientSide || !isAlive()) return;
+        if (level().isClientSide) {
+            // lit redstone sheds dust like a powered wire
+            if (isAlive() && getRandom().nextInt(6) == 0)
+                level().addParticle(RedstoneGolem.wireDust(8 + getRandom().nextInt(8), .8f),
+                        getX() + (getRandom().nextDouble() - .5) * getBbWidth(), getY() + getRandom().nextDouble() * getBbHeight(),
+                        getZ() + (getRandom().nextDouble() - .5) * getBbWidth(), 0, 0, 0);
+            return;
+        }
+        if (!isAlive()) return;
         RedstoneGolem g = golem();
         ServerPlayer owner = g == null ? null : g.owner();
         if (g == null || owner == null) {

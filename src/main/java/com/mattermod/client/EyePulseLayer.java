@@ -51,7 +51,7 @@ public final class EyePulseLayer<T extends Entity & GeoAnimatable> extends GeoRe
         double x = k * (TINT.length - 1);
         int i = Math.min(TINT.length - 2, (int) x);
         int rgb = mix(TINT[i], TINT[i + 1], x - i);
-        RenderType rt = RenderType.entityTranslucentEmissive(mask);
+        RenderType rt = GlowMaskLayer.type(mask);
         getRenderer().reRender(bakedModel, poseStack, bufferSource, entity, rt, bufferSource.getBuffer(rt), partialTick,
                 LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, 0xFF << 24 | rgb);
     }

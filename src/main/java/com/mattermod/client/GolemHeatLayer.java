@@ -24,8 +24,8 @@ public final class GolemHeatLayer extends GeoRenderLayer<RedstoneGolem> {
 
     private static final ResourceLocation HEAT =
             ResourceLocation.fromNamespaceAndPath(MatterMod.MODID, "textures/entity/monstrosity_heat.png");
-    /** The redstone red, hue-shifted step by step up to the eyes' colours: deep orange, then amber at full heat. */
-    private static final int[] RAMP = {0xCC200A, 0xE2350A, 0xF75200, 0xFC7A0E, 0xFFA61A};
+    /** Full-signal redstone, hue-shifted step by step up to the eyes' colours: deep orange, then amber at full heat. */
+    private static final int[] RAMP = {0xFF3300, 0xFB4200, 0xF75200, 0xFC7A0E, 0xFFA61A};
 
     public GolemHeatLayer(GeoRenderer<RedstoneGolem> renderer) {
         super(renderer);
@@ -42,12 +42,12 @@ public final class GolemHeatLayer extends GeoRenderLayer<RedstoneGolem> {
     public void render(PoseStack poseStack, RedstoneGolem golem, BakedGeoModel bakedModel, RenderType renderType,
             MultiBufferSource bufferSource, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay) {
         float h = golem.heatGlow(partialTick);
-        if (h <= 0.01f) return;
+        if (h <= 0.05f) return;
         double x = Math.min(1, h) * (RAMP.length - 1);
         int i = Math.min(RAMP.length - 2, (int) x);
         int rgb = mix(RAMP[i], RAMP[i + 1], x - i);
-        int alpha = (int) (255 * Math.min(1, h * 2));
-        RenderType rt = RenderType.entityTranslucentEmissive(HEAT);
+        int alpha = 255;
+        RenderType rt = GlowMaskLayer.type(HEAT);
         getRenderer().reRender(bakedModel, poseStack, bufferSource, golem, rt, bufferSource.getBuffer(rt), partialTick,
                 LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, alpha << 24 | rgb);
     }

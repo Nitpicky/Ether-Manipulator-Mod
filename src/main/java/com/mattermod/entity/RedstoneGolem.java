@@ -78,7 +78,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
             SynchedEntityData.defineId(RedstoneGolem.class, EntityDataSerializers.LONG);
 
     private static final int F_BOOSTING = 1, F_RECALLING = 2, F_OVERHEATED = 4, F_MINIS = 8, F_SADDLE = 16, F_STRIDE = 32,
-            F_ROCKETS = 64, F_ARCS = 128, F_STRIDING = 256;
+            F_ROCKETS = 64, F_ARCS = 128, F_STRIDING = 256, F_GLIDING = 512;
 
     // ---- tuning ---------------------------------------------------------------------------
     public static final float MAX_HEALTH = 100, SWEEP_DAMAGE = 10, PISTON_DAMAGE = 14, BOLT_DAMAGE = 6;
@@ -185,8 +185,34 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         if (n != b) entityData.set(FLAGS, n);
     }
 
+    /** Jump held in the air: the rocket animation plays, fuelled or not. */
     public boolean boosting() {
-        return flag(F_BOOSTING) || (level().isClientSide && thrusting);
+        return flag(F_BOOSTING) || (level().isClientSide && (thrusting || gliding));
+    }
+
+    /** Boosting with the fuel spent: barely a signal comes out of the boots. */
+    public boolean gliding() {
+        return flag(F_GLIDING) || (level().isClientSide && gliding);
+    }
+
+    /** Vanilla's redstone wire colour at a signal strength 0..15 (RedStoneWireBlock), as dust. */
+    public static DustParticleOptions wireDust(float power, float size) {
+        float f = power / 15f;
+        return new DustParticleOptions(new Vector3f(f * .6f + (f > 0 ? .4f : .3f), Mth.clamp(f * f * .7f - .5f, 0, 1),
+                Mth.clamp(f * f * .6f - .7f, 0, 1)), size);
+    }
+
+    /** The overheat ramp (GolemHeatLayer): full-signal red hue-shifting up to the eyes' amber, as dust. */
+    private static DustParticleOptions heatDust(float t, float size) {
+        int[] ramp = {0xFF3300, 0xF75200, 0xFC7A0E, 0xFFA61A};
+        double x = Mth.clamp(t, 0, 1) * (ramp.length - 1);
+        int i = Math.min(ramp.length - 2, (int) x);
+        double k = x - i;
+        int a = ramp[i], b = ramp[i + 1];
+        return new DustParticleOptions(new Vector3f(
+                (float) (((a >> 16 & 255) + ((b >> 16 & 255) - (a >> 16 & 255)) * k) / 255),
+                (float) (((a >> 8 & 255) + ((b >> 8 & 255) - (a >> 8 & 255)) * k) / 255),
+                (float) (((a & 255) + ((b & 255) - (a & 255)) * k) / 255)), size);
     }
 
     public boolean recalling() {
@@ -449,16 +475,18 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
             boolean want = wantsThrust();
             if (want && onGround()) jumpFromGround();
             rocketTick(want);
-            if (rocketGoal != null && !onGround() && thrusting) {
+            if (rocketGoal != null && !onGround() && (thrusting || gliding)) {
+                // climb first, then cross over to the goal once level with it
                 Vec3 flat = rocketGoal.subtract(position()).multiply(1, 0, 1);
                 Vec3 v = getDeltaMovement();
                 if (flat.lengthSqr() > .5) {
-                    Vec3 d = flat.normalize().scale(.16);
+                    Vec3 d = flat.normalize().scale(getY() > rocketGoal.y - 1 ? .2 : .04);
                     setDeltaMovement(d.x, v.y, d.z);
                 }
             }
             if (!onGround() && (thrusting || gliding)) hurtMarked = true;
-            setFlag(F_BOOSTING, thrusting);
+            setFlag(F_BOOSTING, thrusting || gliding);
+            setFlag(F_GLIDING, gliding);
         }
         if (action == Action.NONE && queuedUntil > 0) {
             if (tickCount <= queuedUntil) armsMove(owner, queuedTarget != null && queuedTarget.isAlive() ? queuedTarget : null, queuedAim);
@@ -486,8 +514,8 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         if (following && toOwner > FOLLOW_DISTANCE * FOLLOW_DISTANCE * 4 && getNavigation().isDone()) stuckTicks++;
         else stuckTicks = 0;
         if (order != Order.HOLD && (toOwner > CATCH_UP_DISTANCE * CATCH_UP_DISTANCE || stuckTicks > 60)) {
-            if (fuel == maxFuel() && onGround() && toOwner < 14 * 14 && owner.getY() > getY() + 2) {
-                rocketGoal = owner.position();
+            if (toOwner < 14 * 14 && rocketTo(owner.position())) {
+                // flying up to where it can't walk
             } else if (GolemControl.teleportNear(this, owner)) {
                 stuckTicks = 0;
                 return;
@@ -496,8 +524,8 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
 
         if (target != null) {
             // Rocket Boots: up to flying or perched targets
-            if (fuel == maxFuel() && onGround() && target.getY() > getY() + 2.5
-                    && horizontalDistance(target.position()) < 10) rocketGoal = target.position();
+            if (target.getY() > getY() + 2.5 && horizontalDistance(target.position()) < 10 && tickCount % 10 == 0)
+                rocketTo(target.position());
             getLookControl().setLookAt(target, 30, 30);
             double reach = REACH + target.getBbWidth() / 2;
             if (distanceToSqr(target) > reach * reach) {
@@ -862,14 +890,37 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
 
     // ---- Rocket Boots -----------------------------------------------------------------------
 
+    /** Ticks before the AI may take off again after a flight, so it never hops about in a loop. */
+    private int rocketRest;
+
+    /**
+     * The AI only flies when it has to: the goal is well above it, its boots are full and rested, and walking can't get
+     * it there (no path reaches it). Returns true when it takes off.
+     */
+    private boolean rocketTo(Vec3 goal) {
+        if (rocketGoal != null || rocketRest > 0 || !onGround() || fuel < maxFuel() || goal.y < getY() + 2) return false;
+        var path = getNavigation().createPath(net.minecraft.core.BlockPos.containing(goal), 1);
+        if (path != null && path.canReach()) return false;
+        rocketGoal = goal;
+        return true;
+    }
+
     /** The AI's hold on Jump: up toward its rocket goal, gliding on once the fuel is spent, let go above the goal. */
     private boolean wantsThrust() {
+        if (rocketRest > 0) rocketRest--;
         if (rocketGoal == null) return false;
         if (onGround() && fuel < maxFuel()) {   // it took off and came down again
             rocketGoal = null;
+            rocketRest = 100;
             return false;
         }
-        return getY() <= rocketGoal.y + 1.2;
+        if (getY() > rocketGoal.y + 1.2 && horizontalDistance(rocketGoal) < 1.5) {
+            // above the ledge: let go and drop onto it
+            rocketGoal = null;
+            rocketRest = 100;
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -1050,12 +1101,24 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         if (boosting()) {
             Vec3 fwd = Vec3.directionFromRotation(0, yBodyRot);
             Vec3 side = new Vec3(fwd.z, 0, -fwd.x);
+            boolean empty = gliding();
             for (int s : new int[] {-1, 1}) {
                 Vec3 p = position().add(side.scale(.6 * s));
-                level().addParticle(ParticleTypes.FLAME, p.x, p.y + .1, p.z, (r.nextDouble() - .5) * .05, -.25, (r.nextDouble() - .5) * .05);
-                if (r.nextInt(3) == 0) level().addParticle(ParticleTypes.SMOKE, p.x, p.y, p.z, 0, -.1, 0);
+                if (empty) {
+                    // fuel spent: barely a signal, and a wisp of smoke
+                    if (r.nextInt(3) == 0) level().addParticle(wireDust(1 + r.nextInt(2), .8f), p.x, p.y + .1, p.z, 0, -.15, 0);
+                    if (r.nextInt(4) == 0) level().addParticle(ParticleTypes.SMOKE, p.x, p.y, p.z, 0, -.05, 0);
+                } else
+                    // thrust: a full signal of redstone, burning through the overheat colours
+                    for (int k = 0; k < 3; k++)
+                        level().addParticle(heatDust(r.nextFloat(), 1.2f), p.x + (r.nextDouble() - .5) * .3, p.y + .1, p.z + (r.nextDouble() - .5) * .3,
+                                (r.nextDouble() - .5) * .05, -.3, (r.nextDouble() - .5) * .05);
             }
         }
+        // lit redstone sheds dust like a powered wire
+        if (!recalling() && r.nextInt(3) == 0)
+            level().addParticle(wireDust(8 + r.nextInt(8), 1f), getX() + (r.nextDouble() - .5) * getBbWidth(), getY() + r.nextDouble() * getBbHeight(),
+                    getZ() + (r.nextDouble() - .5) * getBbWidth(), 0, 0, 0);
         if (overheated() && r.nextInt(2) == 0) {
             level().addParticle(ParticleTypes.FLAME, getX() + (r.nextDouble() - .5) * 1.6, getY() + 1.4 + r.nextDouble(), getZ() + (r.nextDouble() - .5) * 1.6, 0, .04, 0);
             if (r.nextInt(3) == 0) level().addParticle(ParticleTypes.LARGE_SMOKE, getX(), getY() + 2.6, getZ(), 0, .06, 0);

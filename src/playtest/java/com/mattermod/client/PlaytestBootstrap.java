@@ -736,11 +736,19 @@ public final class PlaytestBootstrap {
             case 1030 -> opts.keyUse.setDown(true);
             case 1032 -> opts.keyUse.setDown(false);
             case 1040 -> shot(mc, "27_tether_pull");
-            case 1050 ->
+            // the hook still has to fly 12 blocks and clamp before it reels: sample the pig's distance as it comes
+            case 1034, 1038, 1042, 1046, 1050 ->
                     server(
                             mc,
                             (s, p) -> {
-                                double far = 99;
+                                for (var pig : pigs(p)) tetherClosest = Math.min(tetherClosest, pig.distanceTo(p));
+                                log("tether pig at " + String.format("%.1f", tetherClosest));
+                            });
+            case 1054 ->
+                    server(
+                            mc,
+                            (s, p) -> {
+                                double far = tetherClosest;
                                 for (var pig : pigs(p)) far = Math.min(far, pig.distanceTo(p));
                                 log(
                                         (far < 8 ? "PASS" : "FAIL")
@@ -760,6 +768,7 @@ public final class PlaytestBootstrap {
                                 orbMode(p, com.mattermod.item.OrbMode.LIGHT);
                             });
             case 1058 -> {
+                lightsBefore = lightSpots(mc); // lights already there (the Light orb's earlier bounces) are not the Beacon's
                 mc.player.setYRot(0);
                 mc.player.setXRot(8);
             }
@@ -783,11 +792,13 @@ public final class PlaytestBootstrap {
             }
             case 1100 -> opts.keyAttack.setDown(false);
             case 1110 -> {
+                var left = lightSpots(mc);
+                left.removeAll(lightsBefore);
                 log(
-                        (lights(mc) == 0 ? "PASS" : "FAIL")
+                        (left.isEmpty() ? "PASS" : "FAIL")
                                 + " light: the Beacon's light goes with it ("
-                                + lights(mc)
-                                + " left)");
+                                + left.size()
+                                + " left " + left + ", " + lightsBefore.size() + " were there before)");
                 server(mc, (s, p) -> run(s, "time set 6000"));
             }
             // Botanic: left click harvests the ripe crops around the aim
@@ -1159,6 +1170,9 @@ public final class PlaytestBootstrap {
 
     private static int harvested;
 
+    /** The closest the reeled pig came to the player. */
+    private static double tetherClosest = 99;
+
     private static List<net.minecraft.world.entity.animal.Pig> pigs(ServerPlayer p) {
         return p.serverLevel()
                 .getEntitiesOfClass(
@@ -1167,6 +1181,16 @@ public final class PlaytestBootstrap {
     }
 
     /** Light blocks around the Beacon's target in the left-click field (client view). */
+    private static java.util.Set<BlockPos> lightsBefore = new java.util.HashSet<>();
+
+    private static java.util.Set<BlockPos> lightSpots(Minecraft mc) {
+        int bx = base.getX() + 60, y = base.getY(), bz = base.getZ();
+        var out = new java.util.HashSet<BlockPos>();
+        for (BlockPos q : BlockPos.betweenClosed(bx - 2, y - 1, bz + 4, bx + 2, y + 3, bz + 9))
+            if (mc.level.getBlockState(q).is(net.minecraft.world.level.block.Blocks.LIGHT)) out.add(q.immutable());
+        return out;
+    }
+
     private static int lights(Minecraft mc) {
         int bx = base.getX() + 60, y = base.getY(), bz = base.getZ(), n = 0;
         for (BlockPos q : BlockPos.betweenClosed(bx - 2, y - 1, bz + 4, bx + 2, y + 3, bz + 9))
