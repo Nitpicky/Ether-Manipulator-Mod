@@ -162,6 +162,9 @@ public class BeamBallEntity extends Projectile {
     /** Tether: what the hook caught, if a creature or item (Recall). */
     Entity hooked;
 
+    /** Where the hook struck what it caught, in that body's own frame (null: its middle). */
+    Vec3 hookOffset;
+
     /** Tether with Swing: the rope's length while swinging. */
     double ropeLength;
 

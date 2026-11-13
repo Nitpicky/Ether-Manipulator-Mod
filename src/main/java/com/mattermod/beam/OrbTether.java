@@ -175,7 +175,7 @@ public final class OrbTether {
                 b.hooked.hurtMarked = true;
                 b.hooked.resetFallDistance();
                 if (b.hooked instanceof net.minecraft.world.entity.Mob m) m.getNavigation().stop();
-                b.setPos(b.hooked.getX(), b.hooked.getY(0.6), b.hooked.getZ());
+                b.setPos(hookPoint(b));
                 if (b.lifeTicks % 8 == 0)
                     sl.playSound(
                             null,
@@ -188,10 +188,7 @@ public final class OrbTether {
                             1.6f);
                 return false;
             }
-            b.setPos(
-                    b.hooked.getX(),
-                    b.hooked.getY(b.hooked instanceof LivingEntity ? 0.6 : 0.5),
-                    b.hooked.getZ());
+            b.setPos(hookPoint(b));
             Vec3 d = b.position().subtract(hands);
             boolean light =
                     false
@@ -492,8 +489,33 @@ public final class OrbTether {
                 0.7f);
     }
 
+    /** Where the hook sits on what it caught: the struck spot, turning with the body. */
+    static Vec3 hookPoint(BeamBallEntity b) {
+        Entity e = b.hooked;
+        if (b.hookOffset == null)
+            return new Vec3(e.getX(), e.getY(e instanceof LivingEntity ? 0.6 : 0.5), e.getZ());
+        return e.position().add(b.hookOffset.yRot(-turn(e)));
+    }
+
+    /** The body's facing in radians (a creature's body, anything else its own yaw). */
+    private static float turn(Entity e) {
+        return (float) Math.toRadians(e instanceof LivingEntity le ? le.yBodyRot : e.getYRot());
+    }
+
+    private static Vec3 unturn(Vec3 v, float yaw) {
+        return v.yRot(yaw);
+    }
+
     /** Tether: the hook catches a creature or item. */
     static void catchEntity(BeamBallEntity b, Entity e, ServerPlayer owner) {
+        // the hook holds on where it struck the body, not at its middle
+        Vec3 from = b.position(), to = from.add(b.getDeltaMovement());
+        var box = e.getBoundingBox();
+        Vec3 at = box.clip(from, to).or(() -> box.inflate(0.3).clip(from, to))
+                .orElse(new Vec3(Math.max(box.minX, Math.min(box.maxX, from.x)),
+                        Math.max(box.minY, Math.min(box.maxY, from.y)),
+                        Math.max(box.minZ, Math.min(box.maxZ, from.z))));
+        b.hookOffset = unturn(at.subtract(e.position()), turn(e));
         b.hooked = e;
         b.getEntityData().set(b.STUCK, true);
         b.setDeltaMovement(Vec3.ZERO);
