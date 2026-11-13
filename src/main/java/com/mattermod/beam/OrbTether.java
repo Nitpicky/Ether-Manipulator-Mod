@@ -18,7 +18,6 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.List;
 
 /**
  * Tether mode: grapple hook, rope reeling, Swing, Recall, Hammer Throw and Zipline anchoring. Split
@@ -99,15 +98,6 @@ public final class OrbTether {
             return false;
         }
         if (!b.isStuck()) {
-            // Recall: the flying hook snags items it passes
-            if (b.has("mobility.pursuit")) {
-                List<Entity> items =
-                        sl.getEntities(
-                                b,
-                                b.getBoundingBox().inflate(0.8),
-                                e -> e instanceof ItemEntity || e instanceof ExperienceOrb);
-                if (!items.isEmpty()) OrbTether.catchEntity(b, items.get(0), sp);
-            }
             return !b.isStuck();
         }
         if (++b.idleTicks > 20 * 30 && !held && !b.reelFull) {

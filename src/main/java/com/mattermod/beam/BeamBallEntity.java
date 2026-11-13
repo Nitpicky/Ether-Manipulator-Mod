@@ -613,9 +613,7 @@ public class BeamBallEntity extends Projectile {
         // them too (nothing in the way is broken), so a leaf hit is looked past
         java.util.function.Predicate<Entity> canHit =
                 e ->
-                        canHitEntity(e)
-                                && !pierced.contains(e.getId())
-                                && (getMode() != OrbMode.TETHER || has("mobility.pursuit"));
+                        canHitEntity(e) && !pierced.contains(e.getId());
         HitResult hit = ProjectileUtil.getHitResultOnMoveVector(this, canHit);
         if (leaves(hit) && movement.lengthSqr() > 1e-6) {
             Vec3 end = position().add(movement), dir = movement.normalize();
