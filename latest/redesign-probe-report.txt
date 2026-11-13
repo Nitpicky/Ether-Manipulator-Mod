@@ -71,11 +71,11 @@ PASS Seeker is a Kinetic Grandmaster choice
 PASS Replant reserves seed and restores partial growth
 PASS Diving Bell blocks water entry
 FAIL Energy orb spends the shared tank, Tether does not
+PASS Rapids restores natural current
 FAIL Shared tank refills at its boundary
 FAIL Three tank traits stack
 PASS Tank never exceeds capacity
 FAIL Bellows grows the shared tank
-PASS Rapids restores natural current
 PASS Gravity basis down
 PASS Hook follows aim down
 FAIL Skyhook anchors on release down
