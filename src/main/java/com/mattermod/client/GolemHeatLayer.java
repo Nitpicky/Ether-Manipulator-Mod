@@ -16,7 +16,7 @@ import software.bernie.geckolib.renderer.GeoRenderer;
 import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
 
 /**
- * Overheat (Redstone Furnace): only the redstone heats up, red to orange to bright yellow, and cools
+ * Overheat (Redstone Furnace): only the redstone heats up, red, hue-shifting through the eyes' deep orange up to their amber, and cools
  * back down when the overheat ends; the rock stays grey. monstrosity_heat.png holds the redstone
  * texels only (grey, keeping their light/dark steps), drawn glowing over the model in the heat colour.
  */
@@ -24,8 +24,8 @@ public final class GolemHeatLayer extends GeoRenderLayer<RedstoneGolem> {
 
     private static final ResourceLocation HEAT =
             ResourceLocation.fromNamespaceAndPath(MatterMod.MODID, "textures/entity/monstrosity_heat.png");
-    /** red, orange, yellow at heat 0, .5, 1 (same ramp as golem-model/v3/anim.py) */
-    private static final int[] RAMP = {0xCC200A, 0xFF8014, 0xFFE246};
+    /** The redstone red, hue-shifted step by step up to the eyes' colours: deep orange, then amber at full heat. */
+    private static final int[] RAMP = {0xCC200A, 0xE2350A, 0xF75200, 0xFC7A0E, 0xFFA61A};
 
     public GolemHeatLayer(GeoRenderer<RedstoneGolem> renderer) {
         super(renderer);
@@ -43,7 +43,9 @@ public final class GolemHeatLayer extends GeoRenderLayer<RedstoneGolem> {
             MultiBufferSource bufferSource, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay) {
         float h = golem.heatGlow(partialTick);
         if (h <= 0.01f) return;
-        int rgb = h < .5f ? mix(RAMP[0], RAMP[1], h / .5) : mix(RAMP[1], RAMP[2], (h - .5) / .5);
+        double x = Math.min(1, h) * (RAMP.length - 1);
+        int i = Math.min(RAMP.length - 2, (int) x);
+        int rgb = mix(RAMP[i], RAMP[i + 1], x - i);
         int alpha = (int) (255 * Math.min(1, h * 2));
         RenderType rt = RenderType.entityTranslucentEmissive(HEAT);
         getRenderer().reRender(bakedModel, poseStack, bufferSource, golem, rt, bufferSource.getBuffer(rt), partialTick,

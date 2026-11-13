@@ -16,8 +16,22 @@ public final class RedstoneGolemRenderer extends GeoEntityRenderer<RedstoneGolem
     public RedstoneGolemRenderer(EntityRendererProvider.Context ctx) {
         super(ctx, new Model());
         addRenderLayer(new software.bernie.geckolib.renderer.layer.AutoGlowingGeoLayer<>(this));
+        addRenderLayer(new EyePulseLayer<>(this, "monstrosity_eyes.png", 60));
         addRenderLayer(new GolemHeatLayer(this));
         shadowRadius = 1.0f;
+    }
+
+    /** Tracks the body bone so a rider can sit on its seat as it is animated. */
+    @Override
+    public void render(RedstoneGolem golem, float yaw, float partialTick, com.mojang.blaze3d.vertex.PoseStack pose,
+            net.minecraft.client.renderer.MultiBufferSource buffers, int light) {
+        var body = getGeoModel().getBone("body").orElse(null);
+        if (body != null) body.setTrackingMatrices(true);
+        super.render(golem, yaw, partialTick, pose, buffers, light);
+        if (body != null && golem.isVehicle()) {
+            org.joml.Vector4f p = body.getLocalSpaceMatrix().transform(new org.joml.Vector4f(0, (float) RedstoneGolem.SEAT_Y, 0, 1));
+            golem.seatOffset = new net.minecraft.world.phys.Vec3(p.x(), p.y(), p.z());
+        } else golem.seatOffset = null;
     }
 
     /** The break-down animation tips it over; vanilla's death roll would do it twice. */

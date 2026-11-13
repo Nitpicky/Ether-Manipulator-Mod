@@ -16,6 +16,7 @@ public final class MinistrosityRenderer extends GeoEntityRenderer<Ministrosity> 
     public MinistrosityRenderer(EntityRendererProvider.Context ctx) {
         super(ctx, new DefaultedEntityGeoModel<>(ResourceLocation.fromNamespaceAndPath(MatterMod.MODID, "ministrosity")));
         addRenderLayer(new AutoGlowingGeoLayer<>(this));
+        addRenderLayer(new EyePulseLayer<>(this, "ministrosity_eyes.png", 30));
         shadowRadius = .4f;
     }
 }

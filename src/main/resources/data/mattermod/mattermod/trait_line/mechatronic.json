@@ -7,7 +7,7 @@
   "badge": {
     "id": "mechatronic.badge",
     "name": "Redstone Golem",
-    "description": "Builds a [color=#E92031]Redstone Golem[/color] that fights beside you. Hostile mobs within 12 blocks turn on it instead of you, and it gets your armor and armor toughness. [color=#E92031]Golem Mode[/color]: right click summons it or uses its Arms move, left click gives orders (aim at a creature: attack it; at a block: hold there; Sneak: follow me), Sneak + right click recalls it. Rebuilt 60s after it breaks down."
+    "description": "Builds a [color=#E92031]Redstone Golem[/color] that fights beside you. Hostile mobs within 12 blocks turn on it instead of you, and it gets your armor and armor toughness. [color=#E92031]Golem Mode[/color]: right click summons it or uses its Arms move, left click gives orders (aim at a creature: attack it; at a block: hold there; Sneak: follow me), Sneak + right click recalls it. It wears Rocket Boots (hold Jump in the air to fly up, keep holding to glide) and Stride (it speeds up running in a steady line). Rebuilt 60s after it breaks down."
   },
   "commons": [
     {
@@ -49,12 +49,12 @@
     {
       "id": "mechatronic.stride_servos",
       "name": "Stride Servos",
-      "description": "The Golem walks 60% faster and keeps up with you sprinting."
+      "description": "Stride builds faster and goes further: running in a steady line takes the Golem up to 1.9x speed in 1.2s (1.5x in 2s without)."
     },
     {
       "id": "mechatronic.rocket_boots",
       "name": "Rocket Boots",
-      "description": "3s of thrust: hold Jump in the air to fly up (the Golem does it on its own to reach you or high targets). Once it is spent, the Golem floats down slowly. Refills on the ground."
+      "description": "Stronger boots: 2.4s of thrust (1.6s without) and a faster climb. Hold Jump in the air to fly up; once spent, keep holding to glide down. Refills on landing."
     }
   ]
 }

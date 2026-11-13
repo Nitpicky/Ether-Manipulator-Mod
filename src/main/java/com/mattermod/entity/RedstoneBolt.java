@@ -12,6 +12,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 
 import org.joml.Vector3f;
 
@@ -19,6 +20,12 @@ import org.joml.Vector3f;
 public final class RedstoneBolt extends ThrowableItemProjectile {
     private static final DustParticleOptions DUST = new DustParticleOptions(new Vector3f(1, .08f, .03f), 1.2f);
     private ServerPlayer player;
+    /** Steers toward this one while it lives (server side). */
+    private LivingEntity homing;
+
+    void home(LivingEntity target) {
+        homing = target;
+    }
 
     public RedstoneBolt(EntityType<? extends RedstoneBolt> type, Level level) {
         super(type, level);
@@ -46,7 +53,15 @@ public final class RedstoneBolt extends ThrowableItemProjectile {
             level().addParticle(DUST, getX(), getY(), getZ(), 0, 0, 0);
             return;
         }
-        if (tickCount > 16) {
+        if (homing != null && homing.isAlive() && !homing.isRemoved()) {
+            // homing: turns most of the way toward the target every tick, at the same speed
+            Vec3 v = getDeltaMovement();
+            double speed = Math.max(1.2, v.length());
+            Vec3 want = homing.getBoundingBox().getCenter().subtract(position()).normalize();
+            setDeltaMovement(v.normalize().scale(.45).add(want.scale(.55)).normalize().scale(speed));
+            hasImpulse = true;
+        }
+        if (tickCount > (homing != null ? 30 : 16)) {
             com.mattermod.MatterMod.LOGGER.debug("redstone bolt expired at {}", position());
             discard();
         }

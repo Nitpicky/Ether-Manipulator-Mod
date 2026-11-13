@@ -71,18 +71,18 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
     private static final EntityDataAccessor<Optional<UUID>> OWNER =
             SynchedEntityData.defineId(RedstoneGolem.class, EntityDataSerializers.OPTIONAL_UUID);
     /** Trait and state bits, see the F_ constants. */
-    private static final EntityDataAccessor<Byte> FLAGS =
-            SynchedEntityData.defineId(RedstoneGolem.class, EntityDataSerializers.BYTE);
+    private static final EntityDataAccessor<Integer> FLAGS =
+            SynchedEntityData.defineId(RedstoneGolem.class, EntityDataSerializers.INT);
     /** Game time of the last (re)assembly: the client plays the summon animation from it. */
     private static final EntityDataAccessor<Long> BUILT_AT =
             SynchedEntityData.defineId(RedstoneGolem.class, EntityDataSerializers.LONG);
 
     private static final int F_BOOSTING = 1, F_RECALLING = 2, F_OVERHEATED = 4, F_MINIS = 8, F_SADDLE = 16, F_STRIDE = 32,
-            F_ROCKETS = 64, F_ARCS = 128;
+            F_ROCKETS = 64, F_ARCS = 128, F_STRIDING = 256;
 
     // ---- tuning ---------------------------------------------------------------------------
     public static final float MAX_HEALTH = 100, SWEEP_DAMAGE = 10, PISTON_DAMAGE = 14, BOLT_DAMAGE = 6;
-    public static final double BASE_SPEED = .25, STRIDE_FACTOR = 1.6, OVERHEAT_FACTOR = 1.5;
+    public static final double BASE_SPEED = .25, OVERHEAT_FACTOR = 1.5;
     public static final int SUMMON_FRAMES = 56, RECALL_FRAMES = 40, BREAKDOWN_FRAMES = 24;
     /** Basic attack = the lift up (anim "sweep"); Piston trait = the powered slam (anim "piston"). */
     static final int SWEEP_LEN = 32, SWEEP_HIT = 10, PISTON_LEN = 60, PISTON_HIT = 30, DISPENSER_LEN = 60;
@@ -91,7 +91,16 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
     /** Entity events: the redstone burns bright through a powered slam / a cannon charge (see heatGlow). */
     static final byte EV_BURN_PISTON = 70, EV_BURN_DISPENSER = 71;
     static final double SLAM_RADIUS = 4, LIFT_REACH = 3.2;
-    static final int PISTON_COOLDOWN = 120, DISPENSER_COOLDOWN = 100, ROCKET_FUEL = 60;
+    static final int PISTON_COOLDOWN = 120, DISPENSER_COOLDOWN = 100;
+    /** Rocket Boots (always fitted; the Rocket Boots trait upgrades them): Terraria style. Holding Jump in the air thrusts up,
+     *  accelerating to a top climb speed while the fuel lasts; spent, holding Jump glides down slowly (as Gust does), letting
+     *  go falls; the fuel refills the moment it lands. Fuel in ticks, thrust and climb in blocks/tick. */
+    static final int ROCKET_FUEL = 32, ROCKET_FUEL_UP = 48;
+    static final double THRUST = .10, THRUST_UP = .12, CLIMB = .5, CLIMB_UP = .62, GLIDE = -.12;
+    /** Stride (always on; the Stride Servos trait upgrades it): running in a steady line builds speed up to STRIDE_TOP x walk
+     *  over STRIDE_BUILD ticks, like Gravity Skate but much milder; stopping or a sharp turn sheds it. */
+    static final double STRIDE_TOP = 1.5, STRIDE_TOP_UP = 1.9;
+    static final int STRIDE_BUILD = 40, STRIDE_BUILD_UP = 24;
     static final int MINI_CAP = 3, ARC_TARGETS = 3;
     static final float ARC_DAMAGE = 4;
     static final double ARC_RANGE = 6;
@@ -111,9 +120,11 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
     private LivingEntity actionTarget;
     private Vec3 actionAim;
     private int sweepCooldown, armsCooldown, recallTicks, stuckTicks, heat, overheatTicks, lastDamageTick;
-    /** Rocket Boots: thrust ticks left; once spent, it floats down until it lands. */
+    /** Rocket Boots: thrust ticks left; spent, holding Jump glides down. */
     private int fuel = ROCKET_FUEL;
-    private boolean spent, thrusting, jumpWas;
+    private boolean gliding, thrusting, jumpWas;
+    /** Stride: built-up speed, 0..1, and the heading it was built along (degrees). */
+    private float strideCharge, strideHeading;
     private Vec3 rocketGoal;
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -140,7 +151,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
     protected void defineSynchedData(SynchedEntityData.Builder b) {
         super.defineSynchedData(b);
         b.define(OWNER, Optional.empty());
-        b.define(FLAGS, (byte) 0);
+        b.define(FLAGS, 0);
         b.define(BUILT_AT, 0L);
     }
 
@@ -169,8 +180,8 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
     }
 
     private void setFlag(int f, boolean on) {
-        byte b = entityData.get(FLAGS);
-        byte n = (byte) (on ? b | f : b & ~f);
+        int b = entityData.get(FLAGS);
+        int n = on ? b | f : b & ~f;
         if (n != b) entityData.set(FLAGS, n);
     }
 
@@ -210,12 +221,42 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         return flag(F_SADDLE);
     }
 
+    /** The Stride Servos trait: Stride builds faster and higher. */
     public boolean hasStride() {
         return flag(F_STRIDE);
     }
 
+    /** The Rocket Boots trait: more fuel and a stronger climb. */
     public boolean hasRockets() {
         return flag(F_ROCKETS);
+    }
+
+    /** Running at a good part of its built-up Stride speed (the run animation plays). */
+    public boolean striding() {
+        return flag(F_STRIDING) || (level().isClientSide && isVehicle() && strideCharge > .5f);
+    }
+
+    private int maxFuel() {
+        return hasRockets() ? ROCKET_FUEL_UP : ROCKET_FUEL;
+    }
+
+    private double strideMult() {
+        return 1 + ((hasStride() ? STRIDE_TOP_UP : STRIDE_TOP) - 1) * strideCharge;
+    }
+
+    /** One tick of Stride where the Golem is simulated: a steady line builds it, stopping or turning sharply sheds it. */
+    private void strideTick() {
+        Vec3 v = getDeltaMovement();
+        double sp = v.horizontalDistance();
+        if (sp < .05 || !onGround() && strideCharge == 0) {
+            strideCharge = Math.max(0, strideCharge - .2f);
+            return;
+        }
+        float heading = (float) (Mth.atan2(v.z, v.x) * Mth.RAD_TO_DEG);
+        float turn = Math.abs(Mth.wrapDegrees(heading - strideHeading));
+        strideHeading = heading;
+        if (turn > 35) strideCharge *= .4f;
+        else if (onGround()) strideCharge = Math.min(1, strideCharge + 1f / (hasStride() ? STRIDE_BUILD_UP : STRIDE_BUILD));
     }
 
     /** One line of state for the playtest log. */
@@ -379,8 +420,10 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         if (sweepCooldown > 0) sweepCooldown--;
         if (armsCooldown > 0) armsCooldown--;
 
-        // speed: Stride Servos and the overheat
-        double speed = BASE_SPEED * (hasStride() ? STRIDE_FACTOR : 1) * (overheated() ? OVERHEAT_FACTOR : 1);
+        // speed: Stride's built-up speed and the overheat
+        if (!isVehicle()) strideTick();
+        setFlag(F_STRIDING, strideCharge > .5f);
+        double speed = BASE_SPEED * strideMult() * (overheated() ? OVERHEAT_FACTOR : 1);
         var attr = getAttribute(Attributes.MOVEMENT_SPEED);
         if (attr != null && attr.getBaseValue() != speed) attr.setBaseValue(speed);
 
@@ -414,7 +457,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
                     setDeltaMovement(d.x, v.y, d.z);
                 }
             }
-            if (!onGround() && (thrusting || spent)) hurtMarked = true;
+            if (!onGround() && (thrusting || gliding)) hurtMarked = true;
             setFlag(F_BOOSTING, thrusting);
         }
         if (action == Action.NONE && queuedUntil > 0) {
@@ -443,7 +486,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         if (following && toOwner > FOLLOW_DISTANCE * FOLLOW_DISTANCE * 4 && getNavigation().isDone()) stuckTicks++;
         else stuckTicks = 0;
         if (order != Order.HOLD && (toOwner > CATCH_UP_DISTANCE * CATCH_UP_DISTANCE || stuckTicks > 60)) {
-            if (hasRockets() && fuel == ROCKET_FUEL && onGround() && toOwner < 14 * 14 && owner.getY() > getY() + 2) {
+            if (fuel == maxFuel() && onGround() && toOwner < 14 * 14 && owner.getY() > getY() + 2) {
                 rocketGoal = owner.position();
             } else if (GolemControl.teleportNear(this, owner)) {
                 stuckTicks = 0;
@@ -453,7 +496,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
 
         if (target != null) {
             // Rocket Boots: up to flying or perched targets
-            if (hasRockets() && fuel == ROCKET_FUEL && onGround() && target.getY() > getY() + 2.5
+            if (fuel == maxFuel() && onGround() && target.getY() > getY() + 2.5
                     && horizontalDistance(target.position()) < 10) rocketGoal = target.position();
             getLookControl().setLookAt(target, 30, 30);
             double reach = REACH + target.getBbWidth() / 2;
@@ -618,8 +661,10 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
             }
             case DISPENSER -> {
                 if (crossed(f, prev, DISPENSER_FIRE)) {
-                    fireBolt(owner, aim, true);
-                    fireBolt(owner, aim, false);
+                    // both bolts home: on the target, and the second on the enemy closest to it when there is one
+                    LivingEntity first = boltTarget(owner, aim, null), second = first == null ? null : boltTarget(owner, first.getBoundingBox().getCenter(), first);
+                    fireBolt(owner, aim, true, first);
+                    fireBolt(owner, aim, false, second != null ? second : first);
                     recoilStep(.36);           // the recoil drives it two heavy steps back, sliding a little
                     playSound(SoundEvents.IRON_GOLEM_STEP, 1.2f, .6f);
                     playSound(SoundEvents.GENERIC_EXPLODE.value(), .6f, 1.2f);
@@ -699,12 +744,28 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
     }
 
     /** One bolt out of the right or the left fist, held level as a cannon. */
-    private void fireBolt(ServerPlayer owner, Vec3 aim, boolean right) {
+    /** The bolt's homing target: the action target if it is still alive, else the hittable enemy closest to {@code near}
+     *  (within 8 blocks), never {@code not}. */
+    private LivingEntity boltTarget(ServerPlayer owner, Vec3 near, LivingEntity not) {
+        if (not == null && actionTarget != null && actionTarget.isAlive()) return actionTarget;
+        if (near == null) return null;
+        LivingEntity best = null;
+        double bd = 8 * 8;
+        for (LivingEntity e : level().getEntitiesOfClass(LivingEntity.class, new net.minecraft.world.phys.AABB(near, near).inflate(8),
+                e -> e != not && e.isAlive() && canHit(owner, e) && (e instanceof Enemy || e == getTarget()))) {
+            double d = e.getBoundingBox().getCenter().distanceToSqr(near);
+            if (d < bd) { bd = d; best = e; }
+        }
+        return best;
+    }
+
+    private void fireBolt(ServerPlayer owner, Vec3 aim, boolean right, LivingEntity homing) {
         Vec3 fwd = Vec3.directionFromRotation(0, getYRot());
         Vec3 left = new Vec3(fwd.z, 0, -fwd.x);
         Vec3 from = position().add(fwd.scale(2.0)).add(left.scale(right ? -1.15 : 1.15)).add(0, 1.75, 0);
-        Vec3 to = aim != null ? aim : from.add(fwd.scale(24));
+        Vec3 to = homing != null ? homing.getBoundingBox().getCenter() : aim != null ? aim : from.add(fwd.scale(24));
         var bolt = new RedstoneBolt(level(), this, owner);
+        bolt.home(homing);
         bolt.setPos(from.x, from.y, from.z);
         bolt.setDeltaMovement(to.subtract(from).normalize().scale(1.6));
         level().addFreshEntity(bolt);
@@ -801,39 +862,40 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
 
     // ---- Rocket Boots -----------------------------------------------------------------------
 
-    /** The AI's wish to fly: up toward its rocket goal while the fuel lasts. */
+    /** The AI's hold on Jump: up toward its rocket goal, gliding on once the fuel is spent, let go above the goal. */
     private boolean wantsThrust() {
-        if (rocketGoal == null || !hasRockets()) return false;
-        if (spent || fuel <= 0 || getY() > rocketGoal.y + 1.2 || (onGround() && fuel < ROCKET_FUEL)) {
-            if (onGround()) rocketGoal = null;
+        if (rocketGoal == null) return false;
+        if (onGround() && fuel < maxFuel()) {   // it took off and came down again
+            rocketGoal = null;
             return false;
         }
-        return true;
+        return getY() <= rocketGoal.y + 1.2;
     }
 
     /**
-     * One tick of the boots where the Golem is simulated (server, or the rider's client): thrust up
-     * while it is wanted in the air and fuel is left; spent, it floats down until it lands; the
-     * fuel refills on the ground.
+     * One tick of the boots where the Golem is simulated (server, or the rider's client), Terraria style: Jump held in the
+     * air thrusts up, accelerating to the top climb speed, while the fuel lasts; spent, Jump held glides down slowly and
+     * letting go falls; the fuel refills the moment it lands.
      */
-    private void rocketTick(boolean want) {
+    private void rocketTick(boolean held) {
         Vec3 v = getDeltaMovement();
         boolean was = thrusting;
-        thrusting = false;
+        thrusting = gliding = false;
         if (onGround()) {
-            spent = false;
-            fuel = Math.min(ROCKET_FUEL, fuel + 2);
+            fuel = maxFuel();
             return;
         }
-        if (want && hasRockets() && !spent && fuel > 0) {
+        if (!held) return;
+        if (fuel > 0) {
             thrusting = true;
             fuel--;
-            setDeltaMovement(v.x, Math.min(v.y + .16, .45), v.z);
+            double climb = hasRockets() ? CLIMB_UP : CLIMB;
+            setDeltaMovement(v.x, Math.min(Math.max(v.y, -.2) + (hasRockets() ? THRUST_UP : THRUST), climb), v.z);
             fallDistance = 0;
             if (!was) playSound(SoundEvents.FIREWORK_ROCKET_LAUNCH, 1.2f, .6f);
-            if (fuel == 0) spent = true;
-        } else if (spent) {
-            if (v.y < -.12) setDeltaMovement(v.x, -.12, v.z);
+        } else {
+            gliding = true;
+            if (v.y < GLIDE) setDeltaMovement(v.x, GLIDE, v.z);
             fallDistance = 0;
         }
     }
@@ -875,6 +937,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
             boolean jump = com.mattermod.client.GolemRiding.jumpHeld(player);
             if (jump && !jumpWas && onGround()) jumpFromGround();
             rocketTick(jump && !onGround());
+            strideTick();
             jumpWas = jump;
         }
     }
@@ -888,12 +951,24 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
 
     @Override
     protected float getRiddenSpeed(Player player) {
-        return (float) getAttributeValue(Attributes.MOVEMENT_SPEED) * .9f;
+        return (float) (BASE_SPEED * strideMult() * (overheated() ? OVERHEAT_FACTOR : 1) * .9);
     }
+
+    /** The seat: the stone square in the middle of the body's top face (31 units up). */
+    public static final double SEAT_Y = 31 / 16.0;
+    /** Client: where the seat is this frame, from the animated body bone (set by the renderer), relative to the Golem. */
+    public Vec3 seatOffset;
 
     @Override
     protected Vec3 getPassengerAttachmentPoint(Entity passenger, EntityDimensions dims, float scale) {
-        return new Vec3(0, 2.3 * scale, 0);
+        return new Vec3(0, SEAT_Y * scale, 0);
+    }
+
+    /** The rider sits on the animated body, so it rises, dips and tilts with it (on the client, where it is drawn). */
+    @Override
+    public Vec3 getPassengerRidingPosition(Entity passenger) {
+        if (level().isClientSide && seatOffset != null) return position().add(seatOffset);
+        return super.getPassengerRidingPosition(passenger);
     }
 
     // ---- damage, breakdown -----------------------------------------------------------------
@@ -1040,7 +1115,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
                             long since = g.level().getGameTime() - g.builtAt();
                             if (since >= 0 && since < SUMMON_FRAMES) return state.setAndContinue(SUMMON);
                             if (g.boosting()) return state.setAndContinue(ROCKET);
-                            if (state.isMoving()) return state.setAndContinue(g.hasStride() ? RUN : WALK);
+                            if (state.isMoving()) return state.setAndContinue(g.striding() ? RUN : WALK);
                             return state.setAndContinue(IDLE);
                         });
         main.setAnimationSpeedHandler(g -> g.overheated() ? OVERHEAT_FACTOR : 1.0);
