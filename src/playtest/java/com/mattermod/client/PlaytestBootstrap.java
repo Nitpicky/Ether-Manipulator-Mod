@@ -1031,7 +1031,7 @@ public final class PlaytestBootstrap {
                         log((ok ? "PASS" : "FAIL") + " golem: blowing its furnace it does nothing else (venting "
                                 + (g != null && g.venting()) + ")");
                     });
-            case 1452 ->
+            case 1463 ->   // the dispenser runs to 1413, then the furnace blows for 43 ticks
                     server(mc, (s, p) -> {
                         var g = com.mattermod.entity.GolemControl.golem(p);
                         boolean ok = g != null && !g.venting() && g.overheated();
