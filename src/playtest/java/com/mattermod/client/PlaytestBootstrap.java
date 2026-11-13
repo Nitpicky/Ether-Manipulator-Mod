@@ -1017,12 +1017,40 @@ public final class PlaytestBootstrap {
                                 log((h == null || h.getHealth() < h.getMaxHealth() ? "PASS" : "FAIL")
                                         + " golem: Dispenser Arm bolts hit the far target");
                                 if (h != null) h.discard();
-                                var g = com.mattermod.entity.GolemControl.golem(p);
-                                if (g != null) g.recall();
                             });
             case 1391 -> server(mc, (s, p) -> checkGemLoot(s, p));
             case 1393 -> server(mc, (s, p) -> checkGemGuarantee(s, p, "desert_pyramid", "atenite", false));
             case 1395 -> server(mc, (s, p) -> checkGemGuarantee(s, p, "jungle_pyramid", "quetzalite", true));
+            case 1398 ->
+                    server(
+                            mc,
+                            (s, p) -> {
+                                int bx = base.getX() + 84, y = base.getY(), bz = base.getZ();
+                                var g = com.mattermod.entity.GolemControl.golem(p);
+                                if (g == null) return;
+                                for (var m : com.mattermod.entity.Ministrosity.of(g)) m.discard();
+                                g.teleportTo(bx + .5, y, bz + 3.5);
+                                g.setYRot(0);
+                                g.setYBodyRot(0);
+                                p.startRiding(g, true);
+                                run(s, "kill @e[type=armor_stand,name=mmcam]");
+                                run(s, "summon armor_stand " + (bx + 6.5) + " " + (y - 0.4) + " " + (bz + 3.5)
+                                        + " {Invisible:1b,NoGravity:1b,CustomName:'\"mmcam\"',Rotation:[90f,8f]}");
+                            });
+            case 1404 -> sideCamera(mc, true);
+            case 1410 -> {
+                var v = mc.player.getVehicle();
+                log("golem seat: player feet " + (v == null ? "not riding" : String.format("%.3f", mc.player.getY() - v.getY()))
+                        + " above the Golem (body top " + String.format("%.3f", com.mattermod.entity.RedstoneGolem.SEAT_Y) + ")");
+            }
+            case 1412 -> shot(mc, "36_golem_ride");
+            case 1414 -> sideCamera(mc, false);
+            case 1416 ->
+                    server(mc, (s, p) -> {
+                        p.stopRiding();
+                        var g = com.mattermod.entity.GolemControl.golem(p);
+                        if (g != null) g.recall();
+                    });
             case 1445 ->
                     server(
                             mc,

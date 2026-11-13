@@ -10,14 +10,13 @@ import software.bernie.geckolib.animation.AnimationState;
 import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
-/** The Redstone Golem (the user's x0.318 model, 1 texel per unit), eyes glowing through monstrosity_glowmask.png. */
+/** The Redstone Golem (the user's x0.318 model, 1 texel per unit), its redstone lit by GolemSignalLayer. */
 public final class RedstoneGolemRenderer extends GeoEntityRenderer<RedstoneGolem> {
 
     public RedstoneGolemRenderer(EntityRendererProvider.Context ctx) {
         super(ctx, new Model());
-        addRenderLayer(new GlowMaskLayer<>(this, "monstrosity_glowmask.png"));
+        addRenderLayer(new GolemSignalLayer(this));
         addRenderLayer(new EyePulseLayer<>(this, "monstrosity_eyes.png", 60));
-        addRenderLayer(new GolemHeatLayer(this));
         shadowRadius = 1.0f;
     }
 

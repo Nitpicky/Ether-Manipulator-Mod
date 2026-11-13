@@ -407,7 +407,7 @@ public final class UiProbe {
                                 if (golem != null) {
                                     check("Golem counts as an ally", RedesignEffects.ally(p, golem));
                                     check(
-                                            "Golem has no Arms move without an Arms trait",
+                                            "Golem has no Super Move without a Super Move trait",
                                             !golem.armsMove(p, null, p.getLookAngle()));
                                     com.mattermod.entity.GolemControl.putAway(golem, true);
                                 }

@@ -17,7 +17,7 @@ import software.bernie.geckolib.renderer.GeoRenderer;
 import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
 
 /**
- * Lit redstone: the glow mask (redstone in vanilla's powered-wire colours, plus the eyes) drawn over the model at full
+ * Lit redstone: the glow mask (the texture's own redstone tones, plus the eyes) drawn over the model at full
  * brightness with a cutout render type. Emissive (translucent) types turn see-through under shader packs; a cutout one
  * stays solid there and still ignores the darkness.
  */

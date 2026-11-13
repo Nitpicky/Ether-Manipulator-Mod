@@ -113,7 +113,7 @@ public class MatterManipulatorItem extends Item implements GeoItem {
         OrbMode mode = OrbMode.get(stack);
         // the projectile this tool charges on right click (Hydraulic: the ice shard)
         OrbMode shot = mode.rmbShot();
-        // Golem mode: right click summons the Golem, uses its Arms move, or (sneaking) recalls it
+        // Golem mode: right click summons the Golem, uses its Super Move, or (sneaking) recalls it
         if (mode == OrbMode.GOLEM) {
             if (player instanceof ServerPlayer sp) com.mattermod.entity.GolemControl.rightClick(sp);
             return InteractionResultHolder.fail(stack);

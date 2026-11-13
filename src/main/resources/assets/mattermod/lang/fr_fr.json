@@ -86,7 +86,7 @@
   "message.mattermod.golem_hold": "Golem : reste ici",
   "message.mattermod.golem_follow": "Golem : suis-moi",
   "message.mattermod.golem_recall": "Golem : rappelé",
-  "message.mattermod.golem_no_arms": "Le Golem n'a pas encore de technique de bras",
+  "message.mattermod.golem_no_arms": "Le Golem n'a pas encore de Super Coup",
   "message.mattermod.golem_rebuilding": "Le Golem pourra être reconstruit dans %s s",
   "message.mattermod.golem_broke": "Votre Golem est tombé en panne",
   "message.mattermod.golem_no_room": "Pas assez de place pour le Golem ici",

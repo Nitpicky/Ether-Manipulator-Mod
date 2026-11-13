@@ -30,12 +30,12 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * Golem mode (Mechatronic): summoning, orders and the Arms move of each player's Redstone Golem.
+ * Golem mode (Mechatronic): summoning, orders and the Super Move of each player's Redstone Golem.
  *
- * <p>Right click: summon it where you aim (no Golem out), otherwise its Arms move on what you aim
+ * <p>Right click: summon it where you aim (no Golem out), otherwise its Super Move on what you aim
  * at; Sneak + right click recalls it. Left click: aim at a creature to make it attack, at a block to
  * make it hold there; Sneak + left click: follow me. Riding it (Saddle), left click is its sweep and
- * right click its Arms move.
+ * right click its Super Move.
  *
  * <p>The Golem is never saved with the world: it is put away (keeping its health in the player's
  * data) when its owner logs out, changes dimension or unequips the Module. When it breaks down it

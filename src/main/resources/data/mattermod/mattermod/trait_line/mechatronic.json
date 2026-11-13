@@ -1,60 +1,60 @@
 {
   "name": "Mechatronic",
-  "description": "Builds a [color=#E92031]Redstone Golem[/color] that fights beside you. [color=#E92031]Golem Mode[/color]: right click summons it or uses its Arms move, left click gives orders, Sneak + right click recalls it.",
+  "description": "Builds a [color=#E92031]Redstone Golem[/color] that fights beside you. [color=#E92031]Golem Mode[/color]: right click summons it or uses its Super Move, left click gives orders, Sneak + right click recalls it.",
   "color": "#E92031",
   "icon": "minecraft:redstone",
   "order": 7,
   "badge": {
     "id": "mechatronic.badge",
     "name": "Redstone Golem",
-    "description": "Builds a [color=#E92031]Redstone Golem[/color] that fights beside you. Hostile mobs within 12 blocks turn on it instead of you, and it gets your armor and armor toughness. [color=#E92031]Golem Mode[/color]: right click summons it or uses its Arms move, left click gives orders (aim at a creature: attack it; at a block: hold there; Sneak: follow me), Sneak + right click recalls it. It wears Rocket Boots (hold Jump in the air to fly up, keep holding to glide) and Stride (it speeds up running in a steady line). Rebuilt 60s after it breaks down."
+    "description": "Summons a [color=#E92031]Redstone Golem[/color]. Enemies within 12 blocks target it instead of you, and it wears your armor. [color=#E92031]Golem Mode[/color]: right click summons it or uses its Super Move; left click orders it (creature: attack, block: hold, Sneak: follow); Sneak + right click recalls it. Running straight, it drops to all fours and builds speed (Stride). Hold Jump in the air to rocket up, keep holding to glide. Rebuilt 60s after it breaks down."
   },
   "commons": [
     {
       "id": "mechatronic.redstone_furnace",
       "name": "Redstone Furnace",
-      "description": "Every hit the Golem lands stokes its furnace. At 10 hits it overheats for 6s: it moves and attacks 50% faster and its sweep sets targets on fire."
+      "description": "Hits and Super Moves heat its redstone. At full signal it overheats for 6s: 50% faster, and its blows set targets on fire."
     },
     {
       "id": "mechatronic.saddle",
       "name": "Saddle",
-      "description": "Right click the Golem to ride it. Jump: it jumps. Left click: its sweep. Right click: its Arms move. Sneak to get off."
+      "description": "Right click the Golem to ride it. Jump: jump or rocket. Left click: its lift. Right click: its Super Move. Sneak: get off."
     }
   ],
   "adept": [
     {
       "id": "mechatronic.piston_arm",
       "name": "Piston Arm",
-      "description": "Arms move: the Golem braces, dashes 3 blocks and uppercuts for 14 damage, launching the target up and away. Cooldown 6s."
+      "description": "Super Move: a powered two-fist slam, 14 damage to everything within 4 blocks in front. Cooldown 6s."
     },
     {
       "id": "mechatronic.dispenser_arm",
       "name": "Dispenser Arm",
-      "description": "Arms move: the Golem fires 3 redstone bolts, 6 damage each, up to 24 blocks. Cooldown 5s."
+      "description": "Super Move: a bolt from each arm cannon, 6 damage, homing on the target and the enemy nearest it. Cooldown 5s."
     }
   ],
   "master": [
     {
       "id": "mechatronic.ministrosities",
       "name": "Ministrosities",
-      "description": "Each overheat builds 3 Ministrosities, little redstone fighters that join the Golem's fight, up to 3 at a time. They fall apart when the Golem is recalled or breaks down."
+      "description": "Each overheat builds 3 Ministrosities that fight beside it (3 at most). They fall apart when it is recalled or breaks down."
     },
     {
       "id": "mechatronic.redstone_arcs",
       "name": "Redstone Arcs",
-      "description": "While overheated, every hit the Golem lands arcs to up to 3 more enemies within 6 blocks, 4 damage each."
+      "description": "While overheated, its hits arc to up to 3 more enemies within 6 blocks for 4 damage."
     }
   ],
   "grandmaster": [
     {
       "id": "mechatronic.stride_servos",
       "name": "Stride Servos",
-      "description": "Stride builds faster and goes further: running in a steady line takes the Golem up to 1.9x speed in 1.2s (1.5x in 2s without)."
+      "description": "Stride builds faster and goes further: 1.9x speed in 1.2s (1.5x in 2s without)."
     },
     {
       "id": "mechatronic.rocket_boots",
       "name": "Rocket Boots",
-      "description": "Stronger boots: 2.4s of thrust (1.6s without) and a faster climb. Hold Jump in the air to fly up; once spent, keep holding to glide down. Refills on landing."
+      "description": "Rockets fire longer and climb faster: 2.4s of thrust (1.6s without)."
     }
   ]
 }

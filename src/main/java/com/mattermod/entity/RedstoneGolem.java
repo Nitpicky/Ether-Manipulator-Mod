@@ -76,6 +76,14 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
     /** Game time of the last (re)assembly: the client plays the summon animation from it. */
     private static final EntityDataAccessor<Long> BUILT_AT =
             SynchedEntityData.defineId(RedstoneGolem.class, EntityDataSerializers.LONG);
+    /** Redstone Furnace heat, 0..FURNACE_HITS: the client shows it as the redstone's signal strength. */
+    private static final EntityDataAccessor<Integer> HEAT =
+            SynchedEntityData.defineId(RedstoneGolem.class, EntityDataSerializers.INT);
+    /** Super Move cooldown: game time it is ready again, and its length in ticks (the HUD's attack indicator). */
+    private static final EntityDataAccessor<Long> SUPER_READY =
+            SynchedEntityData.defineId(RedstoneGolem.class, EntityDataSerializers.LONG);
+    private static final EntityDataAccessor<Integer> SUPER_LEN =
+            SynchedEntityData.defineId(RedstoneGolem.class, EntityDataSerializers.INT);
 
     private static final int F_BOOSTING = 1, F_RECALLING = 2, F_OVERHEATED = 4, F_MINIS = 8, F_SADDLE = 16, F_STRIDE = 32,
             F_ROCKETS = 64, F_ARCS = 128, F_STRIDING = 256, F_GLIDING = 512;
@@ -88,8 +96,6 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
     static final int SWEEP_LEN = 32, SWEEP_HIT = 10, PISTON_LEN = 60, PISTON_HIT = 30, DISPENSER_LEN = 60;
     /** Dispenser: both arm cannons fire at once after a heavy charge, and the recoil knocks the Golem back. */
     static final int DISPENSER_FIRE = 32;
-    /** Entity events: the redstone burns bright through a powered slam / a cannon charge (see heatGlow). */
-    static final byte EV_BURN_PISTON = 70, EV_BURN_DISPENSER = 71;
     static final double SLAM_RADIUS = 4, LIFT_REACH = 3.2;
     static final int PISTON_COOLDOWN = 120, DISPENSER_COOLDOWN = 100;
     /** Rocket Boots (always fitted; the Rocket Boots trait upgrades them): Terraria style. Holding Jump in the air thrusts up,
@@ -105,6 +111,10 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
     static final float ARC_DAMAGE = 4;
     static final double ARC_RANGE = 6;
     static final int FURNACE_HITS = 10, OVERHEAT_TICKS = 120;
+    /** A Super Move stokes the furnace by this many hits as it is used. */
+    static final int SUPER_HEAT = 3;
+    /** Client: the overheat animation's scream (frames 17..26 at 1.5x speed) flashes the redstone to the eyes' white. */
+    static final int FLASH_FROM = 11, FLASH_TO = 17, AFTERGLOW_TO = 22;
     static final double FOLLOW_DISTANCE = 4, CATCH_UP_DISTANCE = 24, GUARD_RANGE = 12, REACH = 3.4;
 
     // ---- server state ---------------------------------------------------------------------
@@ -153,6 +163,9 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         b.define(OWNER, Optional.empty());
         b.define(FLAGS, 0);
         b.define(BUILT_AT, 0L);
+        b.define(HEAT, 0);
+        b.define(SUPER_READY, 0L);
+        b.define(SUPER_LEN, 1);
     }
 
     @Override
@@ -202,9 +215,9 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
                 Mth.clamp(f * f * .6f - .7f, 0, 1)), size);
     }
 
-    /** The overheat ramp (GolemHeatLayer): full-signal red hue-shifting up to the eyes' amber, as dust. */
+    /** The signal ramp's bright tone (GolemSignalLayer): the texture's red hue-shifting up to the eyes' amber, as dust. */
     private static DustParticleOptions heatDust(float t, float size) {
-        int[] ramp = {0xFF3300, 0xF75200, 0xFC7A0E, 0xFFA61A};
+        int[] ramp = {0xCC200A, 0xDE3C06, 0xEC6A06, 0xFFA61A};
         double x = Mth.clamp(t, 0, 1) * (ramp.length - 1);
         int i = Math.min(ramp.length - 2, (int) x);
         double k = x - i;
@@ -219,12 +232,41 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         return flag(F_RECALLING);
     }
 
-    private float heatGlow, heatGlowPrev;
+    private float signal, signalPrev;
+    /** Client: smoothed blocks per tick, for the gallop's pace; the run_stop window after a Stride. */
+    private double pace;
+    private boolean wasStriding;
+    int runStopUntil;
+    private int flashTicks = -1;
+    private boolean wasHot;
     private int idleBreakUntil;
 
-    /** Client: how hot the redstone looks, 0 (red) to 1 (yellow), see GolemHeatLayer. */
-    public float heatGlow(float partialTick) {
-        return heatGlowPrev + (heatGlow - heatGlowPrev) * partialTick;
+    /** Client: the redstone's signal, 0 (the texture's own tones) to 1 (signal 15, ready to blow), see GolemSignalLayer. */
+    public float signal(float partialTick) {
+        return signalPrev + (signal - signalPrev) * partialTick;
+    }
+
+    /** Client: the moment of the overheat when the redstone flashes to the eyes' white. */
+    public boolean flashing() {
+        return flashTicks >= FLASH_FROM && flashTicks < FLASH_TO;
+    }
+
+    /** Client: just after the flash, a step halfway back to signal 15 so it does not cut straight back. */
+    public boolean afterglow() {
+        return flashTicks >= FLASH_TO && flashTicks < AFTERGLOW_TO;
+    }
+
+    /** Client: the gallop loop's speed: slow as it drops onto its fists, full tilt at Stride's top speed. */
+    double gallopRate() {
+        double top = BASE_SPEED * STRIDE_TOP_UP * .45;   // roughly blocks per tick at full Stride
+        return Mth.clamp(.5 + .7 * pace / top, .5, 1.2);
+    }
+
+    /** Client: the Super Move cooldown, 0 (just used) to 1 (ready). */
+    public float superReady(float partialTick) {
+        long left = entityData.get(SUPER_READY) - level().getGameTime();
+        if (left <= 0) return 1;
+        return Mth.clamp(1 - (left - partialTick) / Math.max(1, entityData.get(SUPER_LEN)), 0, 1);
     }
 
     public boolean overheated() {
@@ -306,7 +348,6 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
     }
 
     private int landing, clientRecall;
-    private float burnFrame = -1, burnPeak = 1, burnLen = 1;
 
     private boolean assembling() {
         long since = level().getGameTime() - builtAt();
@@ -417,11 +458,21 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
     public void tick() {
         super.tick();
         if (level().isClientSide) {
-            heatGlowPrev = heatGlow;
-            // overheat colour: the redstone heats up over 1.5s, then cools back down over 2.5s when it ends
-            heatGlow = overheated() ? Math.min(1, heatGlow + 1 / 30f) : Math.max(0, heatGlow - 1 / 50f);
-            if (burnFrame >= 0) burnFrame += animSpeed();
-            heatGlow = Math.max(heatGlow, burn());
+            // the furnace's heat as signal: climbs quickly with each hit, cools slowly (2.5s from full) after an overheat
+            signalPrev = signal;
+            boolean hot = overheated();
+            if (hot && !wasHot) flashTicks = 0;
+            wasHot = hot;
+            float target = hot ? 1 : entityData.get(HEAT) / (float) FURNACE_HITS;
+            signal += target > signal ? Math.min(target - signal, 1 / 10f) : Math.max(target - signal, -1 / 50f);
+            if (flashTicks >= 0 && ++flashTicks >= AFTERGLOW_TO) flashTicks = -1;
+            // Stride: how fast it really moves sets the gallop's pace; leaving it plays the push back upright
+            double moved = Math.hypot(getX() - xo, getZ() - zo);
+            pace += (moved - pace) * .2;
+            boolean str = striding();
+            if (wasStriding && !str) runStopUntil = tickCount + 8;
+            if (str) runStopUntil = 0;
+            wasStriding = str;
             clientFx();
             return;
         }
@@ -570,7 +621,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         return true;
     }
 
-    /** The Arms move on {@code target} (or toward {@code aim}): Piston uppercut or Dispenser bolts.
+    /** The Super Move on {@code target} (or toward {@code aim}): Piston uppercut or Dispenser bolts.
      * Asked mid-sweep, it is queued and starts as soon as the sweep ends (within 1.5s). */
     public boolean armsMove(ServerPlayer owner, LivingEntity target, Vec3 aim) {
         boolean piston = hasTrait(owner, "mechatronic.piston_arm");
@@ -592,6 +643,9 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
             start(Action.DISPENSER, target, aim);
             armsCooldown = DISPENSER_COOLDOWN;
         }
+        entityData.set(SUPER_LEN, armsCooldown);
+        entityData.set(SUPER_READY, level().getGameTime() + armsCooldown);
+        stoke(owner, SUPER_HEAT);
         return true;
     }
 
@@ -632,25 +686,6 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
             default -> "sweep";
         });
         if (a == Action.PISTON) playSound(SoundEvents.PISTON_CONTRACT, 1, .6f);
-        if (a == Action.PISTON || a == Action.DISPENSER)
-            level().broadcastEntityEvent(this, a == Action.PISTON ? EV_BURN_PISTON : EV_BURN_DISPENSER);
-    }
-
-    @Override
-    public void handleEntityEvent(byte id) {
-        if (id == EV_BURN_PISTON || id == EV_BURN_DISPENSER) {
-            burnFrame = 0;
-            burnPeak = id == EV_BURN_PISTON ? 22 : DISPENSER_FIRE;
-            burnLen = id == EV_BURN_PISTON ? PISTON_LEN : DISPENSER_LEN;
-        } else super.handleEntityEvent(id);
-    }
-
-    /** Client: the burn of a powered slam or a cannon charge: up to full heat by the peak, held, cooled by the end. */
-    private float burn() {
-        if (burnFrame < 0 || burnFrame >= burnLen) return 0;
-        if (burnFrame < burnPeak) return burnFrame / burnPeak;
-        if (burnFrame < burnPeak + 10) return 1;
-        return Math.max(0, 1 - (burnFrame - burnPeak - 10) / (burnLen - burnPeak - 10));
     }
 
     private Vec3 aimPoint() {
@@ -811,8 +846,10 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
     private void stoke(ServerPlayer owner, int hits) {
         if (!hasCommon(owner, 0) || overheated()) return;
         heat += hits;
+        entityData.set(HEAT, Math.min(heat, FURNACE_HITS));
         if (heat >= FURNACE_HITS) {
             heat = 0;
+            entityData.set(HEAT, 0);
             overheatTicks = OVERHEAT_TICKS;
             setFlag(F_OVERHEATED, true);
             playSound(SoundEvents.FIRECHARGE_USE, 1.2f, .6f);
@@ -1005,8 +1042,9 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         return (float) (BASE_SPEED * strideMult() * (overheated() ? OVERHEAT_FACTOR : 1) * .9);
     }
 
-    /** The seat: the stone square in the middle of the body's top face (31 units up). */
-    public static final double SEAT_Y = 31 / 16.0;
+    /** The seat: the stone square in the middle of the body's top face (31 units up), sunk 2 units so the rider sits down
+     *  between the shoulder towers with the thighs just over the head (its top is at 29). */
+    public static final double SEAT_Y = 29 / 16.0;
     /** Client: where the seat is this frame, from the animated body bone (set by the renderer), relative to the Golem. */
     public Vec3 seatOffset;
 
@@ -1161,7 +1199,11 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         return RawAnimation.begin().thenPlayAndHold("animation.monstrosity." + name);
     }
 
-    static final RawAnimation IDLE = anim("idle"), WALK = anim("walk"), RUN = anim("run"), ROCKET = anim("rocket"),
+    /** Stride: it drops onto its fists and knuckle-gallops (faster as Stride builds), then pushes back upright. */
+    static final RawAnimation RUN = RawAnimation.begin().thenPlay("animation.monstrosity.run_start").thenLoop("animation.monstrosity.run"),
+            STOP_WALK = RawAnimation.begin().thenPlay("animation.monstrosity.run_stop").thenLoop("animation.monstrosity.walk"),
+            STOP_IDLE = RawAnimation.begin().thenPlay("animation.monstrosity.run_stop").thenLoop("animation.monstrosity.idle");
+    static final RawAnimation IDLE = anim("idle"), WALK = anim("walk"), ROCKET = anim("rocket"),
             SUMMON = hold("summon"), RECALL = hold("recall"), BREAK_DOWN = hold("break_down");
 
     @Override
@@ -1178,10 +1220,12 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
                             long since = g.level().getGameTime() - g.builtAt();
                             if (since >= 0 && since < SUMMON_FRAMES) return state.setAndContinue(SUMMON);
                             if (g.boosting()) return state.setAndContinue(ROCKET);
-                            if (state.isMoving()) return state.setAndContinue(g.striding() ? RUN : WALK);
+                            if (g.striding()) return state.setAndContinue(RUN);
+                            if (g.tickCount < g.runStopUntil) return state.setAndContinue(state.isMoving() ? STOP_WALK : STOP_IDLE);
+                            if (state.isMoving()) return state.setAndContinue(WALK);
                             return state.setAndContinue(IDLE);
                         });
-        main.setAnimationSpeedHandler(g -> g.overheated() ? OVERHEAT_FACTOR : 1.0);
+        main.setAnimationSpeedHandler(g -> (g.overheated() ? OVERHEAT_FACTOR : 1.0) * (g.striding() ? g.gallopRate() : 1.0));
         main.triggerableAnim("sweep", once("sweep"))
                 .triggerableAnim("piston", once("piston"))
                 .triggerableAnim("dispenser", once("dispenser"))
