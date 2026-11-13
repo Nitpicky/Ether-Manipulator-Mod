@@ -742,7 +742,12 @@ public final class PlaytestBootstrap {
                     server(
                             mc,
                             (s, p) -> {
-                                for (var pig : pigs(p)) tetherClosest = Math.min(tetherClosest, pig.distanceTo(p));
+                                for (var pig : pigs(p)) {
+                                    tetherClosest = Math.min(tetherClosest, pig.distanceTo(p));
+                                    var hook = com.mattermod.beam.OrbTether.activeHook(p);
+                                    log("tether pig v=" + String.format("%.2f", pig.getDeltaMovement().horizontalDistance())
+                                            + " onGround=" + pig.onGround() + " hook=" + (hook == null ? "none" : hook.debugTether()));
+                                }
                                 log("tether pig at " + String.format("%.1f", tetherClosest));
                             });
             case 1054 ->
@@ -801,6 +806,11 @@ public final class PlaytestBootstrap {
                                 + " light: the Beacon's light goes with it ("
                                 + left.size()
                                 + " left " + left + ", " + lightsBefore.size() + " were there before)");
+                var leftover = new java.util.ArrayList<>(left);
+                server(mc, (s, p) -> {
+                    for (var q : leftover)
+                        log("light leftover " + q + ": server has " + s.overworld().getBlockState(q));
+                });
                 server(mc, (s, p) -> run(s, "time set 6000"));
             }
             // Botanic: left click harvests the ripe crops around the aim

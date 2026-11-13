@@ -66,6 +66,8 @@ public final class LeftClick {
 
     /** The Beacon's lights right now, by player: they go out as soon as the aim moves on. */
     private static final Map<UUID, java.util.Set<BlockPos>> LIT = new HashMap<>();
+    /** Every light this Beacon hold has placed: letting go clears them all, even ones the aim tracking lost. */
+    private static final Map<UUID, java.util.Set<BlockPos>> LIT_ALL = new HashMap<>();
 
     public static final double BEACON_RANGE = 48;
     public static final double PULL_RANGE = 24;
@@ -134,6 +136,8 @@ public final class LeftClick {
     private static Hold stop(ServerPlayer p) {
         var lit = LIT.remove(p.getUUID());
         if (lit != null) unlight(p.serverLevel(), lit, java.util.Set.of());
+        var all = LIT_ALL.remove(p.getUUID());
+        if (all != null) unlight(p.serverLevel(), all, java.util.Set.of());
         Hold h = HOLDS.remove(p.getUUID());
         if (h != null && h.mode == OrbMode.LIGHT) com.mattermod.event.ModEvents.showBeam(p, false);
         return h;
@@ -247,6 +251,7 @@ public final class LeftClick {
                     } else if (before.contains(q)) lit.add(q);   // still ours: keep tracking it so letting go clears it
                 });
         LIT.put(p.getUUID(), lit);
+        LIT_ALL.computeIfAbsent(p.getUUID(), k -> new java.util.HashSet<>()).addAll(lit);
         if (ticks % 4 != 0) return;
         // creatures in the light are outlined for a moment
         for (var e :

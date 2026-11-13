@@ -123,6 +123,12 @@ public class BeamBallEntity extends Projectile {
     /** Tether reeling: a tap reels all the way (reelFull), holding reels while held (reeling). */
     boolean reelFull, reeling, jumpWas;
 
+    /** Playtest: the tether's reel state. */
+    public String debugTether() {
+        return "stuck=" + isStuck() + " hooked=" + (hooked == null ? "none" : hooked.getType().toShortString()) + " hookAt=" + hookAt
+                + " reeling=" + reeling + " full=" + reelFull;
+    }
+
     /** Gravity Shift: carrying its owner onto the caught face (game time it started, or -1). */
     long landingSince = -1;
 
