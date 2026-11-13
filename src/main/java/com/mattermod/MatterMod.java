@@ -28,6 +28,7 @@ public class MatterMod {
         ModEntities.register(modEventBus);
         com.mattermod.loot.ModLoot.register(modEventBus);
         com.mattermod.registry.ModParticles.register(modEventBus);
+        com.mattermod.registry.ModSounds.register(modEventBus);
         ModCreativeTabs.register(modEventBus);
         ModAttachments.register(modEventBus);
 

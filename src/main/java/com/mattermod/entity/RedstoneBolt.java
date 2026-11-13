@@ -90,6 +90,8 @@ public final class RedstoneBolt extends ThrowableItemProjectile {
         if (level() instanceof ServerLevel sl) {
             com.mattermod.MatterMod.LOGGER.debug("redstone bolt hit {} at {} after {} ticks", result instanceof EntityHitResult eh ? eh.getEntity().getType().toShortString() : result.getType(), result.getLocation(), tickCount);
             sl.sendParticles(DUST, getX(), getY(), getZ(), 10, .2, .2, .2, 0);
+            sl.playSound(null, getX(), getY(), getZ(), com.mattermod.registry.ModSounds.GOLEM_SPARK_HIT.get(),
+                    net.minecraft.sounds.SoundSource.NEUTRAL, 1, 1);
             discard();
         }
     }

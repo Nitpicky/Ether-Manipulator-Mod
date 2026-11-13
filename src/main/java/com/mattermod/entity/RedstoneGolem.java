@@ -360,8 +360,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
     /** Marks a fresh assembly: the summon animation plays and the Golem stands still meanwhile. */
     public void assembled() {
         entityData.set(BUILT_AT, level().getGameTime());
-        playSound(SoundEvents.IRON_GOLEM_REPAIR, 1, .7f);
-        playSound(SoundEvents.PISTON_EXTEND, .6f, .6f);
+        playSound(com.mattermod.registry.ModSounds.GOLEM_EYES.get(), 1, 1);
         landing = 8;
     }
 
@@ -496,8 +495,9 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         }
         if (!isAlive()) return;
         if (landing > 0 && --landing == 0) {      // the summon drop lands
-            playSound(SoundEvents.GENERIC_EXPLODE.value(), .8f, .6f);
-            playSound(SoundEvents.ANVIL_LAND, .8f, .5f);
+            playSound(com.mattermod.registry.ModSounds.GOLEM_LAND.get(), 1.6f, .9f);
+            playSound(com.mattermod.registry.ModSounds.GOLEM_SLAM.get(), 1.4f, 1);
+            playSound(com.mattermod.registry.ModSounds.GOLEM_AWAKEN.get(), 1.6f, 1);   // the roar peaks 2s in: at the summon's roar (frame 49)
         }
         ServerPlayer owner = owner();
         if (owner == null || owner.level() != level() || !Traits.hasLine(Manipulator.stack(owner), Traits.MECHATRONIC)) {
@@ -506,8 +506,8 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         }
         if (recalling()) {
             getNavigation().stop();
-            if (++recallTicks == 12) playSound(SoundEvents.BEACON_DEACTIVATE, 1, .6f);
-            if (recallTicks == 18) playSound(SoundEvents.GRAVEL_BREAK, 1.4f, .5f);
+            if (++recallTicks == 10) playSound(com.mattermod.registry.ModSounds.GOLEM_POWER_DOWN.get(), 1.2f, 1);
+            if (recallTicks == 18) playSound(com.mattermod.registry.ModSounds.GOLEM_LAND.get(), 1.2f, .7f);
             if (recallTicks >= RECALL_FRAMES) GolemControl.putAway(this, false);
             return;
         }
@@ -518,6 +518,9 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         // speed: Stride's built-up speed and the overheat
         if (!isVehicle()) strideTick();
         setFlag(F_STRIDING, strideCharge > .5f);
+        footsteps();
+        playCues();
+        if (overheated() && random.nextInt(50) == 0) playSound(com.mattermod.registry.ModSounds.GOLEM_SPARKS.get(), .8f, 1);
         double speed = BASE_SPEED * strideMult() * (overheated() ? OVERHEAT_FACTOR : 1);
         var attr = getAttribute(Attributes.MOVEMENT_SPEED);
         if (attr != null && attr.getBaseValue() != speed) attr.setBaseValue(speed);
@@ -527,6 +530,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
                 && random.nextInt(400) == 0) {
             triggerAnim("main", "idle_break");
             idleBreakUntil = tickCount + 64;
+            cue(20, com.mattermod.registry.ModSounds.GOLEM_LAUGH.get(), 1.2f, 1);   // its first big "HA" is frame 27
         } else if (idleBreakUntil > tickCount && (!getNavigation().isDone() || action != Action.NONE)) {
             if (action == Action.NONE) stopTriggeredAnim("main", "idle_break");
             idleBreakUntil = 0;
@@ -732,27 +736,33 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         if (early) face(aim);
         switch (action) {
             case SWEEP -> {
+                if (crossed(f, prev, 1)) playSound(com.mattermod.registry.ModSounds.GOLEM_VOICE_SHORT.get(), 1.2f, 1);
+                if (crossed(f, prev, SWEEP_HIT - 4)) playSound(com.mattermod.registry.ModSounds.GOLEM_SWIPE.get(), 1.3f, .9f);   // peaks 0.2s in: on the hit
                 if (crossed(f, prev, SWEEP_HIT)) sweepHit(owner);
                 if (f >= SWEEP_LEN - 10) action = Action.NONE;
             }
             case PISTON -> {
+                if (crossed(f, prev, 4)) playSound(com.mattermod.registry.ModSounds.GOLEM_ARM.get(), 1.2f, 1);        // the shoulders turn
+                if (crossed(f, prev, 15)) playSound(com.mattermod.registry.ModSounds.GOLEM_CHARGE.get(), 1.4f, 1);    // it rears up, roaring
                 if (crossed(f, prev, PISTON_HIT - 4)) playSound(SoundEvents.PISTON_EXTEND, 1.2f, .6f);
                 if (crossed(f, prev, PISTON_HIT)) pistonHit(owner);
                 if (f >= PISTON_LEN - 8) action = Action.NONE;
             }
             case DISPENSER -> {
+                if (crossed(f, prev, 1)) playSound(com.mattermod.registry.ModSounds.GOLEM_LOAD.get(), 1.3f, 1);
+                if (crossed(f, prev, 14)) playSound(com.mattermod.registry.ModSounds.GOLEM_CHARGE.get(), 1.2f, 1.1f);
+                if (crossed(f, prev, DISPENSER_FIRE - 2)) playSound(com.mattermod.registry.ModSounds.GOLEM_SHOOT.get(), 1.6f, 1);   // peaks 0.13s in
                 if (crossed(f, prev, DISPENSER_FIRE)) {
                     // both bolts home: on the target, and the second on the enemy closest to it when there is one
                     LivingEntity first = boltTarget(owner, aim, null), second = first == null ? null : boltTarget(owner, first.getBoundingBox().getCenter(), first);
                     fireBolt(owner, aim, true, first);
                     fireBolt(owner, aim, false, second != null ? second : first);
                     recoilStep(.36);           // the recoil drives it two heavy steps back, sliding a little
-                    playSound(SoundEvents.IRON_GOLEM_STEP, 1.2f, .6f);
-                    playSound(SoundEvents.GENERIC_EXPLODE.value(), .6f, 1.2f);
+                    playSound(com.mattermod.registry.ModSounds.GOLEM_STEP.get(), 1.2f, 1);
                 }
                 if (crossed(f, prev, DISPENSER_FIRE + 3)) {
                     recoilStep(.3);
-                    playSound(SoundEvents.IRON_GOLEM_STEP, 1.2f, .55f);
+                    playSound(com.mattermod.registry.ModSounds.GOLEM_STEP.get(), 1.2f, .95f);
                 }
                 if (f >= DISPENSER_LEN) action = Action.NONE;
             }
@@ -762,8 +772,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
 
     /** Basic attack, the lift up: both arms heave up through the front, everything in a 3-block arc ahead is hit and thrown up. */
     private void sweepHit(ServerPlayer owner) {
-        playSound(SoundEvents.IRON_GOLEM_ATTACK, 1.2f, .55f);
-        playSound(SoundEvents.RAVAGER_ROAR, .6f, 1.3f);
+        playSound(com.mattermod.registry.ModSounds.GOLEM_LAND.get(), .8f, 1.2f);
         Vec3 fwd = Vec3.directionFromRotation(0, getYRot());
         int hits = 0;
         for (var e : level().getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(LIFT_REACH, 1.5, LIFT_REACH), e -> canHit(owner, e))) {
@@ -789,9 +798,8 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
 
     /** Piston trait, the powered slam: both fists crash down in front, everything around is hit hard and thrown away. */
     private void pistonHit(ServerPlayer owner) {
-        playSound(SoundEvents.IRON_GOLEM_ATTACK, 1.4f, .45f);
-        playSound(SoundEvents.GENERIC_EXPLODE.value(), .9f, .7f);
-        playSound(SoundEvents.ANVIL_LAND, .7f, .5f);
+        playSound(com.mattermod.registry.ModSounds.GOLEM_SLAM.get(), 1.8f, .9f);
+        playSound(com.mattermod.registry.ModSounds.GOLEM_LAND.get(), 1.6f, .85f);
         Vec3 fwd = Vec3.directionFromRotation(0, getYRot());
         Vec3 c = position().add(fwd.scale(1.6));
         int hits = 0;
@@ -850,7 +858,6 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         bolt.setPos(from.x, from.y, from.z);
         bolt.setDeltaMovement(to.subtract(from).normalize().scale(1.6));
         level().addFreshEntity(bolt);
-        playSound(SoundEvents.DISPENSER_LAUNCH, 1, .8f);
     }
 
     /** Called when a bolt hits: it stokes the furnace too. */
@@ -870,7 +877,8 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
             entityData.set(HEAT, 0);
             overheatTicks = OVERHEAT_TICKS;
             setFlag(F_OVERHEATED, true);
-            playSound(SoundEvents.FIRECHARGE_USE, 1.2f, .6f);
+            playSound(com.mattermod.registry.ModSounds.GOLEM_OVERHEAT.get(), 1.5f, 1);
+            cue(8, com.mattermod.registry.ModSounds.GOLEM_SCREAM.get(), 1.6f, 1);   // the scream, frames 17..42 at 1.5x
             if (action == Action.NONE) triggerAnim("main", "overheat");
             if (hasMinis()) buildMinis(owner);
         }
@@ -940,7 +948,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
             }
             e.hurt(damageSources().indirectMagic(this, owner), ARC_DAMAGE);
         }
-        if (!near.isEmpty()) sl.playSound(null, from.getX(), from.getY(), from.getZ(), SoundEvents.REDSTONE_TORCH_BURNOUT, SoundSource.HOSTILE, 1, 1.6f);
+        if (!near.isEmpty()) sl.playSound(null, from.getX(), from.getY(), from.getZ(), com.mattermod.registry.ModSounds.GOLEM_SPARK_HIT.get(), SoundSource.HOSTILE, 1, 1);
     }
 
     // ---- Rocket Boots -----------------------------------------------------------------------
@@ -1125,29 +1133,71 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         recallTicks = 0;
         setFlag(F_RECALLING, true);
         getNavigation().stop();
-        playSound(SoundEvents.PISTON_CONTRACT, 1, .5f);
+        playSound(com.mattermod.registry.ModSounds.GOLEM_ARM.get(), 1, .9f);
     }
 
     // ---- sounds ------------------------------------------------------------------------------
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.IRON_GOLEM_HURT;
+        return com.mattermod.registry.ModSounds.GOLEM_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.IRON_GOLEM_DEATH;
+        return com.mattermod.registry.ModSounds.GOLEM_DEATH.get();
     }
 
     @Override
-    protected void playStepSound(BlockPos pos, BlockState state) {
-        playSound(SoundEvents.IRON_GOLEM_STEP, 1, .8f);
+    protected SoundEvent getAmbientSound() {
+        return com.mattermod.registry.ModSounds.GOLEM_AMBIENT.get();
+    }
+
+    @Override
+    public int getAmbientSoundInterval() {
+        return 200;
+    }
+
+    /** Footfalls follow the animations (see footsteps), not vanilla's distance count. */
+    @Override
+    protected void playStepSound(BlockPos pos, BlockState state) {}
+
+    private float stepClock;
+
+    /** Server: a stomp on each footfall of the walk (two per 40-frame cycle), a gallop beat for each fist and foot pair
+     *  of the run (two per 20-frame loop, faster as Stride builds). */
+    private void footsteps() {
+        boolean moving = onGround() && getDeltaMovement().horizontalDistanceSqr() > 2.5e-3 && action == Action.NONE;
+        if (!moving) {
+            stepClock = 0;
+            return;
+        }
+        boolean run = strideCharge > .5f;
+        float before = stepClock;
+        stepClock += (float) (animSpeed() * (run ? .5 + .7 * strideCharge : 1));
+        int period = run ? 10 : 20;
+        if ((int) (before / period) != (int) (stepClock / period) || before == 0)
+            playSound(run ? com.mattermod.registry.ModSounds.GOLEM_GALLOP.get() : com.mattermod.registry.ModSounds.GOLEM_STEP.get(), run ? 1.1f : 1.2f, .95f + random.nextFloat() * .1f);
+    }
+
+    /** Server: sounds that land on a later animation frame. */
+    private final java.util.List<Object[]> cues = new java.util.ArrayList<>();
+
+    private void cue(int ticks, SoundEvent sound, float volume, float pitch) {
+        cues.add(new Object[] {tickCount + ticks, sound, volume, pitch});
+    }
+
+    private void playCues() {
+        cues.removeIf(c -> {
+            if (tickCount < (int) c[0]) return false;
+            playSound((SoundEvent) c[1], (float) c[2], (float) c[3]);
+            return true;
+        });
     }
 
     @Override
     public float getVoicePitch() {
-        return .8f;
+        return .95f + random.nextFloat() * .1f;
     }
 
     // ---- client effects ---------------------------------------------------------------------

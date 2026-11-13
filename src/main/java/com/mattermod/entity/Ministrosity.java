@@ -85,6 +85,7 @@ public final class Ministrosity extends PathfinderMob implements GeoEntity {
     void bind(RedstoneGolem golem, ServerPlayer owner) {
         golemId = golem.getUUID();
         entityData.set(GOLEM, golem.getId());
+        playSound(com.mattermod.registry.ModSounds.MINI_SPAWN.get(), 1, 1);
         ownerId = owner.getUUID();
         // counts as the owner's ally everywhere (beam, orbs, Golem)
         getPersistentData().putUUID("mm_summoner", ownerId);
@@ -147,6 +148,7 @@ public final class Ministrosity extends PathfinderMob implements GeoEntity {
                     attackCooldown = ATTACK_COOLDOWN;
                     hitIn = ATTACK_HIT;
                     triggerAnim("main", "attack");
+                    playSound(com.mattermod.registry.ModSounds.MINI_SWING.get(), .9f, 1.3f);
                 }
             }
             return;
@@ -183,7 +185,7 @@ public final class Ministrosity extends PathfinderMob implements GeoEntity {
             Vec3 push = t.position().subtract(position()).multiply(1, 0, 1);
             if (push.lengthSqr() > 1e-4) push = push.normalize().scale(.35);
             t.push(push.x, .1, push.z);
-            playSound(SoundEvents.IRON_GOLEM_ATTACK, .6f, 1.7f);
+            playSound(com.mattermod.registry.ModSounds.MINI_ATTACK.get(), .9f, 1.3f);
         }
     }
 
@@ -232,22 +234,33 @@ public final class Ministrosity extends PathfinderMob implements GeoEntity {
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.IRON_GOLEM_HURT;
+        return com.mattermod.registry.ModSounds.MINI_HURT.get();
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.IRON_GOLEM_DAMAGE;
+        return com.mattermod.registry.ModSounds.MINI_DEATH.get();
     }
 
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
-        playSound(SoundEvents.IRON_GOLEM_STEP, .3f, 1.8f);
+        playSound(com.mattermod.registry.ModSounds.MINI_STEP.get(), .6f, 1);
     }
 
     @Override
     public float getVoicePitch() {
-        return 1.8f;
+        return 1.4f + random.nextFloat() * .15f;   // the big Redstone Golem's voice, small
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return com.mattermod.registry.ModSounds.MINI_AMBIENT.get();
+    }
+
+    /** Its own giggles at their own pitch (getVoicePitch raises the borrowed hurt and death voices). */
+    @Override
+    public void playAmbientSound() {
+        playSound(getAmbientSound(), getSoundVolume(), .95f + random.nextFloat() * .1f);
     }
 
     // ---- GeckoLib -------------------------------------------------------------------------------

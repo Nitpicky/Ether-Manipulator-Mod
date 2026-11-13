@@ -46,5 +46,250 @@
         "stream": false
       }
     ]
+  },
+  "golem.step": {
+    "subtitle": "subtitles.mattermod.golem.step",
+    "sounds": [
+      "mattermod:golem/step01",
+      "mattermod:golem/step02",
+      "mattermod:golem/step03",
+      "mattermod:golem/step04"
+    ]
+  },
+  "golem.gallop": {
+    "subtitle": "subtitles.mattermod.golem.gallop",
+    "sounds": [
+      "mattermod:golem/gallop01",
+      "mattermod:golem/gallop02",
+      "mattermod:golem/gallop03",
+      "mattermod:golem/gallop04"
+    ]
+  },
+  "golem.ambient": {
+    "subtitle": "subtitles.mattermod.golem.ambient",
+    "sounds": [
+      "mattermod:golem/ambient01",
+      "mattermod:golem/ambient02",
+      "mattermod:golem/ambient03",
+      "mattermod:golem/ambient04",
+      "mattermod:golem/ambient05",
+      "mattermod:golem/ambient06",
+      "mattermod:golem/ambient07"
+    ]
+  },
+  "golem.laugh": {
+    "subtitle": "subtitles.mattermod.golem.laugh",
+    "sounds": [
+      "mattermod:golem/laugh01",
+      "mattermod:golem/laugh02",
+      "mattermod:golem/laugh03"
+    ]
+  },
+  "golem.hurt": {
+    "subtitle": "subtitles.mattermod.golem.hurt",
+    "sounds": [
+      "mattermod:golem/hurt01",
+      "mattermod:golem/hurt02",
+      "mattermod:golem/hurt03",
+      "mattermod:golem/hurt04"
+    ]
+  },
+  "golem.death": {
+    "subtitle": "subtitles.mattermod.golem.death",
+    "sounds": [
+      "mattermod:golem/death"
+    ]
+  },
+  "golem.awaken": {
+    "subtitle": "subtitles.mattermod.golem.awaken",
+    "sounds": [
+      "mattermod:golem/awaken"
+    ]
+  },
+  "golem.land": {
+    "subtitle": "subtitles.mattermod.golem.land",
+    "sounds": [
+      "mattermod:golem/land01",
+      "mattermod:golem/land02",
+      "mattermod:golem/land03"
+    ]
+  },
+  "golem.voice_short": {
+    "subtitle": "subtitles.mattermod.golem.voice_short",
+    "sounds": [
+      "mattermod:golem/voice_short01",
+      "mattermod:golem/voice_short02"
+    ]
+  },
+  "golem.swipe": {
+    "subtitle": "subtitles.mattermod.golem.swipe",
+    "sounds": [
+      "mattermod:golem/swipe01",
+      "mattermod:golem/swipe02"
+    ]
+  },
+  "golem.arm": {
+    "subtitle": "subtitles.mattermod.golem.arm",
+    "sounds": [
+      "mattermod:golem/arm01",
+      "mattermod:golem/arm02"
+    ]
+  },
+  "golem.charge": {
+    "subtitle": "subtitles.mattermod.golem.charge",
+    "sounds": [
+      "mattermod:golem/charge01",
+      "mattermod:golem/charge02",
+      "mattermod:golem/charge03"
+    ]
+  },
+  "golem.slam": {
+    "subtitle": "subtitles.mattermod.golem.slam",
+    "sounds": [
+      "mattermod:golem/slam01",
+      "mattermod:golem/slam02",
+      "mattermod:golem/slam03",
+      "mattermod:golem/slam04",
+      "mattermod:golem/slam05"
+    ]
+  },
+  "golem.load": {
+    "subtitle": "subtitles.mattermod.golem.load",
+    "sounds": [
+      "mattermod:golem/load"
+    ]
+  },
+  "golem.shoot": {
+    "subtitle": "subtitles.mattermod.golem.shoot",
+    "sounds": [
+      "mattermod:golem/shoot01",
+      "mattermod:golem/shoot02",
+      "mattermod:golem/shoot03"
+    ]
+  },
+  "golem.overheat": {
+    "subtitle": "subtitles.mattermod.golem.overheat",
+    "sounds": [
+      "mattermod:golem/overheat"
+    ]
+  },
+  "golem.scream": {
+    "subtitle": "subtitles.mattermod.golem.scream",
+    "sounds": [
+      "mattermod:golem/scream01",
+      "mattermod:golem/scream02"
+    ]
+  },
+  "golem.sparks": {
+    "subtitle": "subtitles.mattermod.golem.sparks",
+    "sounds": [
+      "mattermod:golem/sparks01",
+      "mattermod:golem/sparks02",
+      "mattermod:golem/sparks03",
+      "mattermod:golem/sparks04",
+      "mattermod:golem/sparks05"
+    ]
+  },
+  "golem.pulse": {
+    "subtitle": "subtitles.mattermod.golem.pulse",
+    "sounds": [
+      "mattermod:golem/pulse01",
+      "mattermod:golem/pulse02",
+      "mattermod:golem/pulse03"
+    ]
+  },
+  "golem.spark_hit": {
+    "subtitle": "subtitles.mattermod.golem.spark_hit",
+    "sounds": [
+      "mattermod:golem/spark_hit01",
+      "mattermod:golem/spark_hit02",
+      "mattermod:golem/spark_hit03",
+      "mattermod:golem/spark_hit04",
+      "mattermod:golem/spark_hit05",
+      "mattermod:golem/spark_hit06"
+    ]
+  },
+  "golem.malfunction": {
+    "subtitle": "subtitles.mattermod.golem.malfunction",
+    "sounds": [
+      "mattermod:golem/malfunction"
+    ]
+  },
+  "golem.power_down": {
+    "subtitle": "subtitles.mattermod.golem.power_down",
+    "sounds": [
+      "mattermod:golem/power_down"
+    ]
+  },
+  "golem.eyes": {
+    "subtitle": "subtitles.mattermod.golem.eyes",
+    "sounds": [
+      "mattermod:golem/eyes"
+    ]
+  },
+  "golem.bolt": {
+    "subtitle": "subtitles.mattermod.golem.bolt",
+    "sounds": [
+      "mattermod:golem/bolt"
+    ]
+  },
+  "mini.step": {
+    "subtitle": "subtitles.mattermod.mini.step",
+    "sounds": [
+      "mattermod:mini/step01",
+      "mattermod:mini/step02",
+      "mattermod:mini/step03",
+      "mattermod:mini/step04"
+    ]
+  },
+  "mini.ambient": {
+    "subtitle": "subtitles.mattermod.mini.ambient",
+    "sounds": [
+      "mattermod:mini/ambient01",
+      "mattermod:mini/ambient02",
+      "mattermod:mini/ambient03"
+    ]
+  },
+  "mini.spawn": {
+    "subtitle": "subtitles.mattermod.mini.spawn",
+    "sounds": [
+      "mattermod:mini/spawn"
+    ]
+  },
+  "mini.attack": {
+    "subtitle": "subtitles.mattermod.mini.attack",
+    "sounds": [
+      "mattermod:mini/attack01",
+      "mattermod:mini/attack02",
+      "mattermod:mini/attack03"
+    ]
+  },
+  "mini.swing": {
+    "subtitle": "subtitles.mattermod.mini.swing",
+    "sounds": [
+      "mattermod:mini/swing01",
+      "mattermod:mini/swing02"
+    ]
+  },
+  "mini.hurt": {
+    "subtitle": "subtitles.mattermod.mini.hurt",
+    "sounds": [
+      "mattermod:mini/hurt01",
+      "mattermod:mini/hurt02",
+      "mattermod:mini/hurt03",
+      "mattermod:mini/hurt04",
+      "mattermod:mini/hurt05",
+      "mattermod:mini/hurt06",
+      "mattermod:mini/hurt07",
+      "mattermod:mini/hurt08"
+    ]
+  },
+  "mini.death": {
+    "subtitle": "subtitles.mattermod.mini.death",
+    "sounds": [
+      "mattermod:mini/death01",
+      "mattermod:mini/death02",
+      "mattermod:mini/death03"
+    ]
   }
 }
