@@ -13,7 +13,19 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public final class MinistrosityRenderer extends GeoEntityRenderer<Ministrosity> {
 
     public MinistrosityRenderer(EntityRendererProvider.Context ctx) {
-        super(ctx, new DefaultedEntityGeoModel<>(ResourceLocation.fromNamespaceAndPath(MatterMod.MODID, "ministrosity"), true));
+        super(ctx, new DefaultedEntityGeoModel<>(ResourceLocation.fromNamespaceAndPath(MatterMod.MODID, "ministrosity")) {
+            /** Its head is its whole body: the "look" bone above it turns to what it looks at, like a vanilla mob's head. */
+            @Override
+            public void setCustomAnimations(Ministrosity m, long id, software.bernie.geckolib.animation.AnimationState<Ministrosity> state) {
+                super.setCustomAnimations(m, id, state);
+                var look = getAnimationProcessor().getBone("look");
+                var data = state.getData(software.bernie.geckolib.constant.DataTickets.ENTITY_MODEL_DATA);
+                if (look == null) return;
+                boolean free = data != null && m.tickCount > Ministrosity.SPAWN_TICKS && !m.isDeadOrDying();
+                look.setRotY(free ? data.netHeadYaw() * net.minecraft.util.Mth.DEG_TO_RAD : 0);
+                look.setRotX(free ? data.headPitch() * .5f * net.minecraft.util.Mth.DEG_TO_RAD : 0);
+            }
+        });
         addRenderLayer(new GolemSignalLayer<>(this, "ministrosity", Ministrosity::linkedGolem));
         addRenderLayer(new EyePulseLayer<>(this, "ministrosity_eyes.png", 30));
         shadowRadius = .4f;

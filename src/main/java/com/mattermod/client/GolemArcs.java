@@ -65,14 +65,19 @@ final class GolemArcs {
         if (st.arcs.isEmpty()) return;
         var cam = mc.gameRenderer.getMainCamera();
         Vector3f right = new Vector3f(cam.getLeftVector()).negate(), up = new Vector3f(cam.getUpVector());
+        Vector3f look = new Vector3f(cam.getLookVector());
         float bodyYaw = Mth.rotLerp(partialTick, golem.yBodyRotO, golem.yBodyRot);
         Quaternionf turn = new Quaternionf().rotationY((float) Math.toRadians(180 - bodyYaw));
-        VertexConsumer vc = buffers.getBuffer(RenderType.lightning());
+        // solid colour, both faces: the additive lightning type washed out on the bright redstone and lost half its quads
+        VertexConsumer vc = buffers.getBuffer(RenderType.debugQuads());
         Matrix4f m = pose.last().pose();
         for (Arc arc : st.arcs) {
             int age = (int) (now - arc.born);
             Vector3f A = world(arc.bone, arc.a, turn), B = world(arc.bone, arc.b, turn);
             Vector3f M = new Vector3f(A).add(B).mul(.5f);
+            // the drawing plane sits just in front of the nearer end, not halfway between them inside the armour
+            float near = Math.min(A.dot(look), B.dot(look));
+            M.sub(new Vector3f(look).mul(M.dot(look) - near + 2 * PX));
             int ax = Math.round(new Vector3f(A).sub(M).dot(right) / PX), ay = Math.round(new Vector3f(A).sub(M).dot(up) / PX);
             int bx = Math.round(new Vector3f(B).sub(M).dot(right) / PX), by = Math.round(new Vector3f(B).sub(M).dot(up) / PX);
             if (ax == bx && ay == by) continue;

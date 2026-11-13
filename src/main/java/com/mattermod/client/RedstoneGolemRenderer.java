@@ -87,11 +87,14 @@ public final class RedstoneGolemRenderer extends GeoEntityRenderer<RedstoneGolem
             if (lamp != null) lamp.setHidden(true);
             // like vanilla mobs, the head turns to what it looks at (on top of its animation); not while it rises, blows
             // its furnace, folds away or breaks down, when the animation owns the head
-            var head = getAnimationProcessor().getBone("head");
+            // (set on its own "look" bone above the head, never added to the head's keyframes: an unanimated bone keeps
+            // what it was given, so adding to it turned the head round and round)
+            var look = getAnimationProcessor().getBone("look");
             var data = state.getData(software.bernie.geckolib.constant.DataTickets.ENTITY_MODEL_DATA);
-            if (head != null && data != null && !golem.busy() && !golem.isDeadOrDying()) {
-                head.setRotY(head.getRotY() + data.netHeadYaw() * net.minecraft.util.Mth.DEG_TO_RAD);
-                head.setRotX(head.getRotX() + data.headPitch() * .6f * net.minecraft.util.Mth.DEG_TO_RAD);
+            if (look != null) {
+                boolean free = data != null && !golem.busy() && !golem.isDeadOrDying();
+                look.setRotY(free ? data.netHeadYaw() * net.minecraft.util.Mth.DEG_TO_RAD : 0);
+                look.setRotX(free ? data.headPitch() * .6f * net.minecraft.util.Mth.DEG_TO_RAD : 0);
             }
         }
     }

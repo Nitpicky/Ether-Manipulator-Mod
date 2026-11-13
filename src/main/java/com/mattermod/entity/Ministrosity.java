@@ -36,7 +36,8 @@ import java.util.UUID;
  */
 public final class Ministrosity extends PathfinderMob implements GeoEntity {
     static final float MAX_HEALTH = 12, DAMAGE = 3;
-    static final int ATTACK_COOLDOWN = 20, ATTACK_HIT = 5, SPAWN_TICKS = 20;
+    static final int ATTACK_COOLDOWN = 20, ATTACK_HIT = 5;
+    public static final int SPAWN_TICKS = 20;
     private static final DustParticleOptions DUST = new DustParticleOptions(new Vector3f(.9f, .1f, .05f), 1f);
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);

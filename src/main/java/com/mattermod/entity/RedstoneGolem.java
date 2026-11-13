@@ -330,33 +330,61 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
 
     /** Running at a good part of its built-up Stride speed (the run animation plays). */
     public boolean striding() {
-        return flag(F_STRIDING) || (level().isClientSide && isVehicle() && strideCharge > .5f);
+        return flag(F_STRIDING) || (level().isClientSide && isVehicle() && strideOn);
     }
+
+    /** Falling (not jumping up, not on its boots): the fall animation plays. Client. */
+    public boolean falling() {
+        return fallTicks > 3 && !boosting();
+    }
+
+    private int fallTicks;
+    private boolean strideOn;
 
     private int maxFuel() {
         return hasRockets() ? ROCKET_FUEL_UP : ROCKET_FUEL;
     }
 
+    /** Walking it is slow; only on all fours (Stride) does it pick up speed, from a little over a walk to the top. */
     private double strideMult() {
-        return 1 + ((hasStride() ? STRIDE_TOP_UP : STRIDE_TOP) - 1) * strideCharge;
+        if (!strideOn) return 1;
+        double top = hasStride() ? STRIDE_TOP_UP : STRIDE_TOP;
+        return 1.15 + (top - 1.15) * strideCharge;
     }
 
-    /** One tick of Stride where the Golem is simulated: a steady line builds it, stopping or turning sharply sheds it. */
-    private void strideTick() {
+    /** The AI drops to all fours when it has ground to cover: its owner sprints away, it is far behind, or its target is. */
+    private boolean aiWantsStride(ServerPlayer owner) {
+        if (action != Action.NONE || order == Order.HOLD && getTarget() == null) return false;
+        LivingEntity t = getTarget();
+        if (t != null) return distanceToSqr(t) > 8 * 8;
+        double d = distanceToSqr(owner);
+        return d > 10 * 10 || owner.isSprinting() && d > FOLLOW_DISTANCE * FOLLOW_DISTANCE * 2;
+    }
+
+    /** Lets its rider sprint, which is what starts the Stride. */
+    @Override
+    public boolean canSprint() {
+        return true;
+    }
+
+    /** One tick of Stride where the Golem is simulated: asked for (rider sprinting ahead, or the AI covering ground) and
+     *  running straight ahead, it goes on all fours and builds speed; anything else (sideways, backing up, a sharp turn,
+     *  stopping, not asked) drops it at once. */
+    private void strideTick(boolean want) {
         Vec3 v = getDeltaMovement();
         double sp = v.horizontalDistance();
-        if (sp < .05 || !onGround() && strideCharge == 0) {
-            strideCharge = Math.max(0, strideCharge - .2f);
-            return;
-        }
         float heading = (float) (Mth.atan2(v.z, v.x) * Mth.RAD_TO_DEG);
         float turn = Math.abs(Mth.wrapDegrees(heading - strideHeading));
         strideHeading = heading;
-        // only running straight ahead builds it: sidestepping or backing up never does, and sheds it fast
         float off = Math.abs(Mth.wrapDegrees(heading - 90 - yBodyRot));
-        if (off > 25) strideCharge = Math.max(0, strideCharge - .25f);
-        else if (turn > 35) strideCharge *= .4f;
-        else if (onGround()) strideCharge = Math.min(1, strideCharge + 1f / (hasStride() ? STRIDE_BUILD_UP : STRIDE_BUILD));
+        boolean ok = want && sp > .05 && off <= 25 && turn <= 35;
+        if (!ok) {
+            strideOn = false;
+            strideCharge = 0;
+            return;
+        }
+        strideOn = true;
+        if (onGround()) strideCharge = Math.min(1, strideCharge + 1f / (hasStride() ? STRIDE_BUILD_UP : STRIDE_BUILD));
     }
 
     /** One line of state for the playtest log. */
@@ -507,6 +535,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
             double yaw = Math.toRadians(yBodyRot), dx = getX() - xo, dz = getZ() - zo;
             double fwd = -Math.sin(yaw) * dx + Math.cos(yaw) * dz, right = -Math.cos(yaw) * dx - Math.sin(yaw) * dz;
             lateral += ((Math.abs(right) > Math.abs(fwd) * 1.2 && Math.abs(right) > .01 ? Math.signum(right) : 0) - lateral) * .35;
+            fallTicks = !onGround() && getY() - yo < -.12 ? fallTicks + 1 : 0;
             boolean str = striding();
             if (wasStriding && !str) runStopUntil = tickCount + 8;
             if (str) runStopUntil = 0;
@@ -538,8 +567,12 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         if (armsCooldown > 0) armsCooldown--;
 
         // speed: Stride's built-up speed and the overheat
-        if (!isVehicle()) strideTick();
-        setFlag(F_STRIDING, strideCharge > .5f);
+        if (!isVehicle()) strideTick(aiWantsStride(owner));
+        else if (getControllingPassenger() instanceof Player rider) {
+            // the rider's client runs the Stride; others see it from here: sprinting, and really moving
+            strideOn = rider.isSprinting() && Math.hypot(getX() - xo, getZ() - zo) > .08;
+        }
+        setFlag(F_STRIDING, strideOn);
         footsteps();
         playCues();
         if (overheated() && random.nextInt(50) == 0) playSound(com.mattermod.registry.ModSounds.GOLEM_SPARKS.get(), .8f, 1);
@@ -730,10 +763,14 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         actionTarget = target;
         actionAim = aim;
         getNavigation().stop();
+        if (a != Action.OVERHEAT) {
+            setFlag(F_LIFTING, true);           // planted for any blow: the rider can't steer it meanwhile
+            setDeltaMovement(0, getDeltaMovement().y, 0);
+        }
         if (a == Action.SWEEP) {
             sweepCooldown = Math.round(SWEEP_LEN / animSpeed());
-            setFlag(F_LIFTING, true);
             strideCharge = 0;
+            strideOn = false;
         }
         if (a == Action.OVERHEAT) {
             setFlag(F_OVERHEATED, true);
@@ -793,7 +830,10 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
                 if (crossed(f, prev, 15)) playSound(com.mattermod.registry.ModSounds.GOLEM_CHARGE.get(), 1.4f, 1);    // it rears up, roaring
                 if (crossed(f, prev, PISTON_HIT - 4)) playSound(SoundEvents.PISTON_EXTEND, 1.2f, .6f);
                 if (crossed(f, prev, PISTON_HIT)) pistonHit(owner);
-                if (f >= PISTON_LEN - 8) action = Action.NONE;
+                if (f >= PISTON_LEN - 8) {
+                    action = Action.NONE;
+                    setFlag(F_LIFTING, false);
+                }
             }
             case DISPENSER -> {
                 if (crossed(f, prev, 1)) playSound(com.mattermod.registry.ModSounds.GOLEM_LOAD.get(), 1.3f, 1);
@@ -811,7 +851,10 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
                     recoilStep(.3);
                     playSound(com.mattermod.registry.ModSounds.GOLEM_STEP.get(), 1.2f, .95f);
                 }
-                if (f >= DISPENSER_LEN) action = Action.NONE;
+                if (f >= DISPENSER_LEN) {
+                    action = Action.NONE;
+                    setFlag(F_LIFTING, false);
+                }
             }
             case OVERHEAT -> {
                 getNavigation().stop();
@@ -950,9 +993,9 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
     }
 
     /** Heat cools once the hits stop: it holds for HEAT_HOLD ticks, then drains faster and faster
-     *  (full heat is gone about 5s later). */
-    static final int HEAT_HOLD = 60;
-    static final float HEAT_DRAIN = .002f;
+     *  (full heat is gone about 10s later). */
+    static final int HEAT_HOLD = 200;
+    static final float HEAT_DRAIN = .0005f;
 
     private void cool() {
         int idle = tickCount - lastStoke - HEAT_HOLD;
@@ -1148,7 +1191,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
             boolean jump = com.mattermod.client.GolemRiding.jumpHeld(player) && !busy();
             if (jump && !jumpWas && onGround()) jumpFromGround();
             rocketTick(jump && !onGround());
-            strideTick();
+            strideTick(player.isSprinting() && player.zza > 0 && Math.abs(player.xxa) < .3f && !busy());
             jumpWas = jump;
         }
     }
@@ -1156,7 +1199,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
     @Override
     protected Vec3 getRiddenInput(Player player, Vec3 input) {
         // rising, venting, folding away or heaving in its basic attack: it stands its ground
-        if (busy() || flag(F_LIFTING)) return Vec3.ZERO;
+        if (busy() || flag(F_LIFTING)) return Vec3.ZERO;      // (F_LIFTING: any attack or Super Move under way)
         // heavy: it steps sideways and backs up slowly
         float side = player.xxa * SIDESTEP, fwd = player.zza;
         if (fwd <= 0) fwd *= .25f;
@@ -1298,7 +1341,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
             stepClock = 0;
             return;
         }
-        boolean run = strideCharge > .5f;
+        boolean run = strideOn;
         float before = stepClock;
         stepClock += (float) (animSpeed() * (run ? .5 + .7 * strideCharge : 1));
         int period = run ? 10 : 20;
@@ -1402,6 +1445,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
     static final RawAnimation RUN = RawAnimation.begin().thenPlay("animation.monstrosity.run_start").thenLoop("animation.monstrosity.run"),
             STOP_WALK = RawAnimation.begin().thenPlay("animation.monstrosity.run_stop").thenLoop("animation.monstrosity.walk"),
             STOP_IDLE = RawAnimation.begin().thenPlay("animation.monstrosity.run_stop").thenLoop("animation.monstrosity.idle");
+    static final RawAnimation FALL = anim("fall");
     static final RawAnimation STRAFE_RIGHT = anim("strafe_right"), STRAFE_LEFT = anim("strafe_left");
     static final RawAnimation IDLE = anim("idle"), WALK = anim("walk"), ROCKET = anim("rocket"),
             SUMMON = hold("summon"), RECALL = hold("recall"), BREAK_DOWN = hold("break_down");
@@ -1425,6 +1469,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
                                 return state.setAndContinue(SUMMON);
                             }
                             if (g.boosting()) return state.setAndContinue(ROCKET);
+                            if (g.falling()) return state.setAndContinue(FALL);
                             if (g.striding()) return state.setAndContinue(RUN);
                             if (g.tickCount < g.runStopUntil) return state.setAndContinue(state.isMoving() ? STOP_WALK : STOP_IDLE);
                             if (state.isMoving() && Math.abs(g.lateral) > .5)

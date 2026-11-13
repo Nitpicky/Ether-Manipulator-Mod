@@ -123,13 +123,22 @@
      ]
     },
     {
+     "name": "look",
+     "parent": "body",
+     "pivot": [
+      0,
+      9,
+      0
+     ]
+    },
+    {
      "name": "head",
      "pivot": [
       0,
       9,
       3.5
      ],
-     "parent": "body",
+     "parent": "look",
      "cubes": [
       {
        "origin": [
