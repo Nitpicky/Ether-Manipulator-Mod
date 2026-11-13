@@ -1,0 +1,240 @@
+package com.mattermod.entity;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
+
+import org.joml.Vector3f;
+
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.RawAnimation;
+import software.bernie.geckolib.util.GeckoLibUtil;
+
+import java.util.List;
+import java.util.UUID;
+
+/**
+ * Ministrosities trait: a little redstone fighter built by the Golem's overheat. It joins the
+ * Golem's fight, guards it otherwise, and falls apart when the Golem is gone. Never saved.
+ */
+public final class Ministrosity extends PathfinderMob implements GeoEntity {
+    static final float MAX_HEALTH = 12, DAMAGE = 3;
+    static final int ATTACK_COOLDOWN = 20, ATTACK_HIT = 5, SPAWN_TICKS = 20;
+    private static final DustParticleOptions DUST = new DustParticleOptions(new Vector3f(.9f, .1f, .05f), 1f);
+
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    private UUID golemId, ownerId;
+    private int attackCooldown, hitIn;
+
+    public Ministrosity(EntityType<? extends Ministrosity> type, Level level) {
+        super(type, level);
+    }
+
+    public static AttributeSupplier.Builder attributes() {
+        return PathfinderMob.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, MAX_HEALTH)
+                .add(Attributes.MOVEMENT_SPEED, .3)
+                .add(Attributes.ATTACK_DAMAGE, DAMAGE)
+                .add(Attributes.FOLLOW_RANGE, 24);
+    }
+
+    @Override
+    protected void registerGoals() {
+        goalSelector.addGoal(0, new FloatGoal(this));
+    }
+
+    void bind(RedstoneGolem golem, ServerPlayer owner) {
+        golemId = golem.getUUID();
+        ownerId = owner.getUUID();
+        // counts as the owner's ally everywhere (beam, orbs, Golem)
+        getPersistentData().putUUID("mm_summoner", ownerId);
+        // summons time out unless they carry an expiry; a Ministrosity lives as long as its Golem
+        getPersistentData().putLong("mm_summon_expires", Long.MAX_VALUE);
+    }
+
+    /** The living Ministrosities of {@code golem}. */
+    public static List<Ministrosity> of(RedstoneGolem golem) {
+        return golem.level().getEntitiesOfClass(Ministrosity.class, golem.getBoundingBox().inflate(48),
+                m -> m.isAlive() && golem.getUUID().equals(m.golemId));
+    }
+
+    private RedstoneGolem golem() {
+        if (golemId == null || !(level() instanceof ServerLevel sl)) return null;
+        return sl.getEntity(golemId) instanceof RedstoneGolem g && g.isAlive() && !g.recalling() ? g : null;
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (level().isClientSide || !isAlive()) return;
+        RedstoneGolem g = golem();
+        ServerPlayer owner = g == null ? null : g.owner();
+        if (g == null || owner == null) {
+            com.mattermod.MatterMod.LOGGER.info("[ministrosity] falls apart at age {}: golem {} owner {}", tickCount, g != null, owner != null);
+            fallApart();
+            return;
+        }
+        if (attackCooldown > 0) attackCooldown--;
+        if (hitIn > 0 && --hitIn == 0) strike(g, owner);
+        if (tickCount < SPAWN_TICKS) {
+            getNavigation().stop();
+            return;
+        }
+        LivingEntity t = pick(g, owner);
+        setTarget(t);
+        setAggressive(t != null);   // synced: the client runs the chase walk
+        if (t != null) {
+            getLookControl().setLookAt(t, 30, 30);
+            double reach = 1.2 + t.getBbWidth() / 2;
+            if (distanceToSqr(t) > reach * reach) {
+                if (tickCount % 8 == 0 || getNavigation().isDone()) getNavigation().moveTo(t, 1.1);
+            } else {
+                getNavigation().stop();
+                if (attackCooldown == 0) {
+                    attackCooldown = ATTACK_COOLDOWN;
+                    hitIn = ATTACK_HIT;
+                    triggerAnim("main", "attack");
+                }
+            }
+            return;
+        }
+        // now and then, while standing around, a little snicker
+        if (getNavigation().isDone() && hitIn == 0 && random.nextInt(240) == 0) triggerAnim("main", "idle_break");
+        if (distanceToSqr(g) > 16) {
+            if (tickCount % 10 == 0 || getNavigation().isDone()) getNavigation().moveTo(g, 1.1);
+        } else getNavigation().stop();
+        if (distanceToSqr(g) > 32 * 32) moveTo(g.getX(), g.getY(), g.getZ());
+    }
+
+    private LivingEntity pick(RedstoneGolem g, ServerPlayer owner) {
+        LivingEntity gt = g.getTarget();
+        if (gt != null && g.canHit(owner, gt)) return gt;
+        LivingEntity mine = getTarget();
+        if (mine != null && g.canHit(owner, mine) && mine.distanceToSqr(g) < 16 * 16) return mine;
+        LivingEntity best = null;
+        double bestD = 8 * 8;
+        for (var e : level().getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(8), e -> e instanceof Enemy && g.canHit(owner, e))) {
+            double d = distanceToSqr(e);
+            if (d < bestD) {
+                bestD = d;
+                best = e;
+            }
+        }
+        return best;
+    }
+
+    private void strike(RedstoneGolem g, ServerPlayer owner) {
+        LivingEntity t = getTarget();
+        if (t == null || !t.isAlive() || distanceToSqr(t) > 2.6 * 2.6) return;
+        if (t.hurt(damageSources().mobAttack(this), DAMAGE)) {
+            Vec3 push = t.position().subtract(position()).multiply(1, 0, 1);
+            if (push.lengthSqr() > 1e-4) push = push.normalize().scale(.35);
+            t.push(push.x, .1, push.z);
+            playSound(SoundEvents.IRON_GOLEM_ATTACK, .6f, 1.7f);
+        }
+    }
+
+    private void fallApart() {
+        if (level() instanceof ServerLevel sl)
+            sl.sendParticles(DUST, getX(), getY() + .4, getZ(), 12, .3, .3, .3, 0);
+        discard();
+    }
+
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        // its own side never hurts it
+        if (ownerId != null && source.getEntity() != null
+                && (ownerId.equals(source.getEntity().getUUID()) || source.getEntity() instanceof RedstoneGolem
+                        || source.getEntity() instanceof Ministrosity)) return false;
+        return super.hurt(source, amount);
+    }
+
+    @Override
+    public void die(DamageSource source) {
+        com.mattermod.MatterMod.LOGGER.info("[ministrosity] died at age {} from {} by {}", tickCount, source.getMsgId(),
+                source.getEntity() == null ? "-" : source.getEntity().getType().toShortString());
+        super.die(source);
+    }
+
+    @Override
+    public void remove(RemovalReason reason) {
+        com.mattermod.MatterMod.LOGGER.info("[ministrosity] removed at age {}: {}", tickCount, reason);
+        super.remove(reason);
+    }
+
+    @Override
+    public boolean shouldBeSaved() {
+        return false;
+    }
+
+    @Override
+    public boolean removeWhenFarAway(double distance) {
+        return false;
+    }
+
+    @Override
+    protected boolean shouldDropLoot() {
+        return false;
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return SoundEvents.IRON_GOLEM_HURT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return SoundEvents.IRON_GOLEM_DAMAGE;
+    }
+
+    @Override
+    protected void playStepSound(BlockPos pos, BlockState state) {
+        playSound(SoundEvents.IRON_GOLEM_STEP, .3f, 1.8f);
+    }
+
+    @Override
+    public float getVoicePitch() {
+        return 1.8f;
+    }
+
+    // ---- GeckoLib -------------------------------------------------------------------------------
+
+    static final RawAnimation IDLE = RawAnimation.begin().thenLoop("animation.ministrosity.idle"),
+            WALK = RawAnimation.begin().thenLoop("animation.ministrosity.walk"),
+            CHASE = RawAnimation.begin().thenLoop("animation.ministrosity.chase"),
+            SPAWN = RawAnimation.begin().thenPlayAndHold("animation.ministrosity.spawn");
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        var main = new AnimationController<>(this, "main", 2, state -> {
+            Ministrosity m = state.getAnimatable();
+            if (m.tickCount < SPAWN_TICKS) return state.setAndContinue(SPAWN);
+            return state.setAndContinue(state.isMoving() ? (m.isAggressive() ? CHASE : WALK) : IDLE);
+        });
+        main.triggerableAnim("attack", RawAnimation.begin().thenPlay("animation.ministrosity.attack"));
+        main.triggerableAnim("idle_break", RawAnimation.begin().thenPlay("animation.ministrosity.idle_break"));
+        controllers.add(main);
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
+    }
+}

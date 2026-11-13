@@ -1,0 +1,15 @@
+{
+  "type": "mattermod:gem",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:chests/underwater_ruin_small"
+    }
+  ],
+  "gem": "mattermod:sirenite",
+  "chance": 0.25,
+  "guarantee_in": [
+    "minecraft:ocean_ruin_cold",
+    "minecraft:ocean_ruin_warm"
+  ]
+}

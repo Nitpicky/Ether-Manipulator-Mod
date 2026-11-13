@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:smithing_transform",
+  "template": { "item": "minecraft:netherite_upgrade_smithing_template" },
+  "base": { "item": "mattermod:upgrade_diamond" },
+  "addition": { "item": "minecraft:netherite_ingot" },
+  "result": { "id": "mattermod:upgrade_netherite", "count": 1 }
+}

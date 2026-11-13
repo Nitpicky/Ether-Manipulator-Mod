@@ -1,0 +1,60 @@
+{
+  "name": "Hydraulic",
+  "description": "Unlocks [color=#2074E9]Hydraulic Mode[/color]: water blob (left click), ice shard (right click), steered by your aim. Swim faster.",
+  "color": "#3F8CFF",
+  "icon": "minecraft:water_bucket",
+  "order": 4,
+  "badge": {
+    "id": "hydraulics.badge",
+    "name": "Tank",
+    "description": "Unlocks [color=#2074E9]Hydraulic Mode[/color]: water blob (left click), ice shard (right click), steered by your aim. Swim faster."
+  },
+  "commons": [
+    {
+      "id": "hydraulics.common_gills",
+      "name": "Gills",
+      "description": "Breathe underwater."
+    },
+    {
+      "id": "hydraulics.common_slipstream",
+      "name": "Slipstream",
+      "description": "Water and Frost shots spend no range underwater."
+    }
+  ],
+  "adept": [
+    {
+      "id": "hydraulics.pressure",
+      "name": "Wellhead",
+      "description": "Placed water touching a block becomes a lasting source. Otherwise it dries up after 8s."
+    },
+    {
+      "id": "hydraulics.reservoir",
+      "name": "Wellspring",
+      "description": "Shared Matter tank +2."
+    }
+  ],
+  "master": [
+    {
+      "id": "hydraulics.glacier",
+      "name": "Glacier",
+      "description": "Frost bridges are wider and last longer while empty."
+    },
+    {
+      "id": "hydraulics.rapids",
+      "name": "Rapids",
+      "description": "Water shots over water raise a surge 2/4/6 wide that carries boats and creatures."
+    }
+  ],
+  "grandmaster": [
+    {
+      "id": "hydraulics.tidecaller",
+      "name": "Tidecaller",
+      "description": "Ride a fully charged Water shot."
+    },
+    {
+      "id": "hydraulics.diving_bell",
+      "name": "Diving Bell",
+      "description": "Water and Frost shots carve air tunnels through water."
+    }
+  ]
+}

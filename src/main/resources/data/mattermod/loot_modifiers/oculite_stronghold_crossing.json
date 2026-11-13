@@ -1,0 +1,14 @@
+{
+  "type": "mattermod:gem",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:chests/stronghold_crossing"
+    }
+  ],
+  "gem": "mattermod:oculite",
+  "chance": 0.08,
+  "guarantee_in": [
+    "minecraft:stronghold"
+  ]
+}

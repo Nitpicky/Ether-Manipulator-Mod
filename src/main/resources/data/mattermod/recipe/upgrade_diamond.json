@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [" D ", "DUD", " D "],
+  "key": {
+    "D": { "item": "minecraft:diamond" },
+    "U": { "item": "mattermod:upgrade_iron" }
+  },
+  "result": { "id": "mattermod:upgrade_diamond", "count": 1 }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "mattermod:gem",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:chests/abandoned_mineshaft"
+    }
+  ],
+  "gem": "mattermod:stratite",
+  "chance": 0.1,
+  "guarantee_in": [
+    "minecraft:mineshaft",
+    "minecraft:mineshaft_mesa"
+  ]
+}

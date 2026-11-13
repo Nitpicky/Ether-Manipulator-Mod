@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "entries": [
+    "mattermod:sirenite_shipwreck_treasure",
+    "mattermod:sirenite_shipwreck_supply",
+    "mattermod:sirenite_shipwreck_map",
+    "mattermod:sirenite_underwater_ruin_big",
+    "mattermod:sirenite_underwater_ruin_small",
+    "mattermod:gehennite_ruined_portal",
+    "mattermod:gehennite_nether_bridge",
+    "mattermod:stratite_abandoned_mineshaft",
+    "mattermod:zephyrite_trial_corridor",
+    "mattermod:zephyrite_trial_entrance",
+    "mattermod:zephyrite_trial_intersection",
+    "mattermod:zephyrite_trial_intersection_barrel",
+    "mattermod:zephyrite_trial_supply",
+    "mattermod:zephyrite_trial_reward",
+    "mattermod:zephyrite_trial_reward_ominous",
+    "mattermod:quetzalite_jungle_temple",
+    "mattermod:tinkerite_pillager_outpost",
+    "mattermod:tinkerite_woodland_mansion",
+    "mattermod:atenite_desert_pyramid",
+    "mattermod:oculite_stronghold_corridor",
+    "mattermod:oculite_stronghold_crossing",
+    "mattermod:oculite_stronghold_library",
+    "mattermod:oculite_end_city_treasure",
+    "mattermod:any_gem_buried_treasure"
+  ]
+}

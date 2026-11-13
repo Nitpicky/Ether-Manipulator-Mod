@@ -1,0 +1,60 @@
+{
+  "name": "Photonic",
+  "description": "Unlocks [color=#E9C820]Light Mode[/color]. You glow, lighting nearby players too. Light shots bounce twice, leaving a light at each bounce.",
+  "color": "#FFE070",
+  "icon": "minecraft:glowstone_dust",
+  "order": 7,
+  "badge": {
+    "id": "photonic.badge",
+    "name": "Lumen Core",
+    "description": "Unlocks [color=#E9C820]Light Mode[/color]. You glow, lighting nearby players too. Light shots bounce twice, leaving a light at each bounce."
+  },
+  "commons": [
+    {
+      "id": "photonic.common_lumen_trail",
+      "name": "Lumen Trail",
+      "description": "Sneak to see the path you walked."
+    },
+    {
+      "id": "photonic.common_clear_sight",
+      "name": "Clear Sight",
+      "description": "Night Vision. Immune to Blindness and Darkness."
+    }
+  ],
+  "adept": [
+    {
+      "id": "photonic.flare",
+      "name": "Flare",
+      "description": "Light projectiles reveal nearby entities through walls."
+    },
+    {
+      "id": "photonic.radiance",
+      "name": "Radiance",
+      "description": "Light shots heal you and nearby allies (doesn't stack)."
+    }
+  ],
+  "master": [
+    {
+      "id": "photonic.daybreak",
+      "name": "Daybreak",
+      "description": "Light shots scare darkness-loving mobs and burn them up close."
+    },
+    {
+      "id": "photonic.mirage",
+      "name": "Mirage",
+      "description": "Light shots leave a decoy of you where they end."
+    }
+  ],
+  "grandmaster": [
+    {
+      "id": "photonic.constellation",
+      "name": "Constellation",
+      "description": "Bounce lights link up, spreading their effects. Mirage leaves a decoy at each."
+    },
+    {
+      "id": "photonic.supernova",
+      "name": "Supernova",
+      "description": "The last impact releases one big Light pulse. Mirage decoys last longer."
+    }
+  ]
+}

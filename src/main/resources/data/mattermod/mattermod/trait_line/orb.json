@@ -1,0 +1,60 @@
+{
+  "name": "Kinetic",
+  "description": "Fully Charged Ranged Damage +3.",
+  "color": "#66E0FF",
+  "icon": "minecraft:amethyst_shard",
+  "order": 3,
+  "badge": {
+    "id": "orb.badge",
+    "name": "Projector",
+    "description": "Fully Charged Ranged Damage +3."
+  },
+  "commons": [
+    {
+      "id": "orb.common_quick_charge",
+      "name": "Quick Charge",
+      "description": "Charge time -20%."
+    },
+    {
+      "id": "orb.common_long_throw",
+      "name": "Long Throw",
+      "description": "Projectile range +16 blocks."
+    }
+  ],
+  "adept": [
+    {
+      "id": "orb.split",
+      "name": "Split",
+      "description": "Fire 1/2/3 projectiles at charge 1/2/3."
+    },
+    {
+      "id": "orb.bank_shot",
+      "name": "Bank Shot",
+      "description": "Projectiles ricochet 1/2/3 times at charge 1/2/3."
+    }
+  ],
+  "master": [
+    {
+      "id": "orb.marksman",
+      "name": "Marksman",
+      "description": "Stand still while charging for faster shots."
+    },
+    {
+      "id": "orb.skirmisher",
+      "name": "Skirmisher",
+      "description": "Move normally while charging."
+    }
+  ],
+  "grandmaster": [
+    {
+      "id": "orb.detonator",
+      "name": "Detonator",
+      "description": "Press the input that fired a projectile again to burst it instantly."
+    },
+    {
+      "id": "orb.seeker",
+      "name": "Seeker",
+      "description": "Projectiles pursue the enemy near your initial aim."
+    }
+  ]
+}

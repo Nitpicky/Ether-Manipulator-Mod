@@ -1,0 +1,50 @@
+{
+  "ui.crystal_note": {
+    "sounds": [
+      {
+        "name": "mattermod:ui/crystal_note",
+        "stream": false
+      }
+    ]
+  },
+  "ui.reverse_tap": {
+    "sounds": [
+      {
+        "name": "mattermod:ui/reverse_tap",
+        "stream": false
+      }
+    ]
+  },
+  "ui.reverse_hit": {
+    "sounds": [
+      {
+        "name": "mattermod:ui/reverse_hit",
+        "stream": false
+      }
+    ]
+  },
+  "ui.reverse_chime": {
+    "sounds": [
+      {
+        "name": "mattermod:ui/reverse_chime",
+        "stream": false
+      }
+    ]
+  },
+  "ui.echo_chime": {
+    "sounds": [
+      {
+        "name": "mattermod:ui/echo_chime",
+        "stream": false
+      }
+    ]
+  },
+  "ui.deep_chime": {
+    "sounds": [
+      {
+        "name": "mattermod:ui/deep_chime",
+        "stream": false
+      }
+    ]
+  }
+}

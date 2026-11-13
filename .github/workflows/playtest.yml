@@ -1,0 +1,80 @@
+name: Playtest
+on:
+  # push only: a pull_request trigger ran every push twice (same commit, two refs)
+  push:
+    branches: ['codex/**', 'claude/**', main]
+    paths-ignore: ['docs/**', '**/*.md']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: playtest-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  playtest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: temurin
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Install virtual display
+        run: sudo apt-get update -q && sudo apt-get install -y -q xvfb libgl1-mesa-dri libglx-mesa0 pulseaudio
+      - name: Run current client/server regression checks
+        env:
+          MATTERMOD_AUTOTEST: '1'
+          LIBGL_ALWAYS_SOFTWARE: '1'
+          MESA_GL_VERSION_OVERRIDE: '4.5'
+        run: xvfb-run -a -s '-screen 0 1280x720x24' timeout 1500 ./gradlew runClient -Pplaytest --no-daemon
+      - name: Require a complete passing report
+        if: always()
+        run: |
+          test -s runs/client/redesign-probe-report.txt
+          cat runs/client/redesign-probe-report.txt
+          ! grep -q '^FAIL ' runs/client/redesign-probe-report.txt
+          test "$(grep -c '^PASS ' runs/client/redesign-probe-report.txt)" -ge 210
+      - name: Screenshot tour (first and third person, animations)
+        if: always()
+        env:
+          MATTERMOD_AUTOTEST: '1'
+          LIBGL_ALWAYS_SOFTWARE: '1'
+          MESA_GL_VERSION_OVERRIDE: '4.5'
+        run: |
+          rm -rf runs/client/saves/mm_autotest
+          xvfb-run -a -s '-screen 0 1280x720x24' timeout 900 ./gradlew runClient -Pplaytest -PmodelShots --no-daemon || true
+          cat runs/client/mattermod-autotest.txt || true
+      - name: Upload report and logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playtest-results
+          path: |
+            runs/client/redesign-probe-report.txt
+            runs/client/logs/latest.log
+          if-no-files-found: warn
+      - name: Publish screenshots to the playtest-results branch
+        if: always() && github.event_name == 'push'
+        run: |
+          mkdir -p out
+          cp runs/client/screenshots/mm_*.png out/ 2>/dev/null || true
+          cp runs/client/redesign-probe-report.txt runs/client/mattermod-autotest.txt out/ 2>/dev/null || true
+          cp runs/client/logs/latest.log out/ 2>/dev/null || true
+          SHA=$(git rev-parse --short HEAD)
+          git config user.name "playtest-bot"
+          git config user.email "playtest-bot@users.noreply.github.com"
+          git fetch origin playtest-results || true
+          if git rev-parse --verify origin/playtest-results >/dev/null 2>&1; then
+            git worktree add /tmp/pr origin/playtest-results
+            cd /tmp/pr && git checkout -B playtest-results
+          else
+            git worktree add --detach /tmp/pr && cd /tmp/pr && git checkout --orphan playtest-results && git rm -rqf .
+          fi
+          rm -rf latest && mkdir -p latest "$SHA"
+          cp $GITHUB_WORKSPACE/out/* latest/ 2>/dev/null || true
+          cp $GITHUB_WORKSPACE/out/* "$SHA"/ 2>/dev/null || true
+          git add -A
+          git commit -qm "Playtest results for $SHA" || true
+          git push -q origin playtest-results

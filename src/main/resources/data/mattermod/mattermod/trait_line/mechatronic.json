@@ -1,0 +1,60 @@
+{
+  "name": "Mechatronic",
+  "description": "Builds a [color=#E92031]Redstone Golem[/color] that fights beside you. [color=#E92031]Golem Mode[/color]: right click summons it or uses its Arms move, left click gives orders, Sneak + right click recalls it.",
+  "color": "#E92031",
+  "icon": "minecraft:redstone",
+  "order": 7,
+  "badge": {
+    "id": "mechatronic.badge",
+    "name": "Redstone Golem",
+    "description": "Builds a [color=#E92031]Redstone Golem[/color] that fights beside you. Hostile mobs within 12 blocks turn on it instead of you, and it gets your armor and armor toughness. [color=#E92031]Golem Mode[/color]: right click summons it or uses its Arms move, left click gives orders (aim at a creature: attack it; at a block: hold there; Sneak: follow me), Sneak + right click recalls it. Rebuilt 60s after it breaks down."
+  },
+  "commons": [
+    {
+      "id": "mechatronic.redstone_furnace",
+      "name": "Redstone Furnace",
+      "description": "Every hit the Golem lands stokes its furnace. At 10 hits it overheats for 6s: it moves and attacks 50% faster and its sweep sets targets on fire."
+    },
+    {
+      "id": "mechatronic.saddle",
+      "name": "Saddle",
+      "description": "Right click the Golem to ride it. Jump: it jumps. Left click: its sweep. Right click: its Arms move. Sneak to get off."
+    }
+  ],
+  "adept": [
+    {
+      "id": "mechatronic.piston_arm",
+      "name": "Piston Arm",
+      "description": "Arms move: the Golem braces, dashes 3 blocks and uppercuts for 14 damage, launching the target up and away. Cooldown 6s."
+    },
+    {
+      "id": "mechatronic.dispenser_arm",
+      "name": "Dispenser Arm",
+      "description": "Arms move: the Golem fires 3 redstone bolts, 6 damage each, up to 24 blocks. Cooldown 5s."
+    }
+  ],
+  "master": [
+    {
+      "id": "mechatronic.ministrosities",
+      "name": "Ministrosities",
+      "description": "Each overheat builds 3 Ministrosities, little redstone fighters that join the Golem's fight, up to 3 at a time. They fall apart when the Golem is recalled or breaks down."
+    },
+    {
+      "id": "mechatronic.redstone_arcs",
+      "name": "Redstone Arcs",
+      "description": "While overheated, every hit the Golem lands arcs to up to 3 more enemies within 6 blocks, 4 damage each."
+    }
+  ],
+  "grandmaster": [
+    {
+      "id": "mechatronic.stride_servos",
+      "name": "Stride Servos",
+      "description": "The Golem walks 60% faster and keeps up with you sprinting."
+    },
+    {
+      "id": "mechatronic.rocket_boots",
+      "name": "Rocket Boots",
+      "description": "3s of thrust: hold Jump in the air to fly up (the Golem does it on its own to reach you or high targets). Once it is spent, the Golem floats down slowly. Refills on the ground."
+    }
+  ]
+}

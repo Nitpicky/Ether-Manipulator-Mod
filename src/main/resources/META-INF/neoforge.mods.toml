@@ -1,0 +1,36 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="All Rights Reserved"
+
+[[mods]]
+modId="mattermod"
+version="${mod_version}"
+displayName="Matter Manipulator"
+description='''
+A Starbound-inspired multitool that replaces every tool: a continuous beam and a charged orb.
+Every player owns one from the start. Summon it with R; equip elemental Modules and progress through Prototype, Calibrated, Augmented and Overclocked Tiers.
+'''
+
+[[mixins]]
+config="mattermod.mixins.json"
+
+[[dependencies.mattermod]]
+    modId="neoforge"
+    type="required"
+    versionRange="[21.1.265,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.mattermod]]
+    modId="minecraft"
+    type="required"
+    versionRange="[1.21.1,1.22)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.mattermod]]
+    modId="geckolib"
+    type="required"
+    versionRange="[4.9.3,)"
+    ordering="AFTER"
+    side="BOTH"

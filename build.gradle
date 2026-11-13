@@ -1,0 +1,102 @@
+plugins {
+    id 'java'
+    id 'net.neoforged.gradle.userdev' version '7.0.165'
+}
+
+group   = 'com.mattermod'
+version = '1.1.0-playtest'
+
+base {
+    archivesName = 'matter-manipulator'
+}
+
+java {
+    toolchain { languageVersion = JavaLanguageVersion.of(21) }
+}
+
+// ---- Force a single ASM version to prevent the dual-classpath conflict ------
+// Two different versions of asm-analysis (9.5 and 9.7) end up on the path
+// when using older NeoForge builds.  Forcing 9.7 everywhere resolves it.
+configurations.all {
+    resolutionStrategy {
+        force 'org.ow2.asm:asm:9.7'
+        force 'org.ow2.asm:asm-commons:9.7'
+        force 'org.ow2.asm:asm-tree:9.7'
+        force 'org.ow2.asm:asm-analysis:9.7'
+        force 'org.ow2.asm:asm-util:9.7'
+    }
+}
+
+runs {
+    configureEach {
+        systemProperty 'forge.logging.markers', 'REGISTRIES'
+        systemProperty 'forge.logging.console.level', 'debug'
+        modSource project.sourceSets.main
+    }
+
+    client {
+        // CI playtest: a fixed 1280x720 window for the screenshots
+        if (System.getenv('MATTERMOD_AUTOTEST') != null) {
+            programArguments.addAll '--width', '1280', '--height', '720'
+        }
+    }
+    server {
+        programArguments.add '--nogui'
+    }
+
+    data {
+        programArguments.addAll '--mod', 'mattermod', '--all',
+                '--output', file('src/generated/resources/').absolutePath,
+                '--existing', file('src/main/resources/').absolutePath
+    }
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+repositories {
+    mavenLocal()
+    maven { url "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/" }
+}
+
+dependencies {
+    implementation "net.neoforged:neoforge:21.1.265"
+    implementation "software.bernie.geckolib:geckolib-neoforge-1.21.1:4.9.3"
+}
+
+tasks.withType(ProcessResources).configureEach {
+    var replaceProperties = [
+            minecraft_version      : '1.21.1',
+            minecraft_version_range: '[1.21.1,1.22)',
+            neo_version            : '21.1.265',
+            neo_version_range      : '[21.1,)',
+            loader_version_range   : '[2,)',
+            mod_id                 : 'mattermod',
+            mod_name               : 'Matter Manipulator',
+            mod_license            : 'MIT',
+            mod_version            : project.version,
+    ]
+    inputs.properties replaceProperties
+    filesMatching(['META-INF/neoforge.mods.toml']) {
+        expand replaceProperties
+    }
+}
+
+// Opt-in runtime checks. These classes are never included in the normal jar.
+sourceSets {
+    playtest {
+        java.srcDir 'src/playtest/java'
+        compileClasspath += sourceSets.main.output + configurations.runtimeClasspath
+        runtimeClasspath += output + compileClasspath
+    }
+}
+if (project.hasProperty('playtest')) {
+    runs.client {
+        modSource sourceSets.playtest
+        systemProperty 'mattermod.playtest', 'true'
+        // -PmodelShots runs the scripted first/third-person screenshot tour instead of the UI probe
+        def shots = project.hasProperty('modelShots')
+        systemProperty 'mattermod.uiProbe', shots ? 'false' : 'true'
+        systemProperty 'mattermod.hoverScreenshots', project.hasProperty('hoverTest') ? 'true' : 'false'
+        systemProperty 'mattermod.noScreenshots', shots ? 'false' : 'true'
+    }
+}

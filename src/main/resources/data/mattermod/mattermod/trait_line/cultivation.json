@@ -1,0 +1,60 @@
+{
+  "name": "Botanic",
+  "description": "Unlocks [color=#31E920]Growth Mode[/color]. Left click harvests ripe crops in a 3x3; right click's pollen grows plants and poisons enemies. Sneak-Beam tills. You never trample farmland.",
+  "color": "#60D060",
+  "icon": "minecraft:wheat",
+  "order": 9,
+  "badge": {
+    "id": "cultivation.badge",
+    "name": "Gardener",
+    "description": "Unlocks [color=#31E920]Growth Mode[/color]. Left click harvests ripe crops in a 3x3; right click's pollen grows plants and poisons enemies. Sneak-Beam tills. You never trample farmland."
+  },
+  "commons": [
+    {
+      "id": "cultivation.common_replant",
+      "name": "Regrowth",
+      "description": "Harvests replant themselves. Spend 1 [b]Matter[/b] to replant them half-grown."
+    },
+    {
+      "id": "cultivation.common_nourishment",
+      "name": "Nourishment",
+      "description": "Hunger consumption is reduced."
+    }
+  ],
+  "adept": [
+    {
+      "id": "cultivation.overgrowth",
+      "name": "Overgrowth",
+      "description": "Harvests spread through every connected ripe crop of the same kind."
+    },
+    {
+      "id": "cultivation.seedbank",
+      "name": "Seedbank",
+      "description": "Shared Matter tank +2."
+    }
+  ],
+  "master": [
+    {
+      "id": "cultivation.groundskeeper",
+      "name": "Groundskeeper",
+      "description": "Sneak-Beam works as shears, on sheep and hives too."
+    },
+    {
+      "id": "cultivation.herder",
+      "name": "Herder",
+      "description": "Sneak-Beam feeds animals from your inventory."
+    }
+  ],
+  "grandmaster": [
+    {
+      "id": "cultivation.bountiful",
+      "name": "Bountiful",
+      "description": "Crops yield extra produce."
+    },
+    {
+      "id": "cultivation.cross_pollination",
+      "name": "Cross-Pollination",
+      "description": "Harvesting grows nearby young crops a stage."
+    }
+  ]
+}
