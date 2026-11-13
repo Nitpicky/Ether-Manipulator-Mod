@@ -755,13 +755,18 @@ public final class PlaytestBootstrap {
                     server(
                             mc,
                             (s, p) -> {
-                                double far = tetherClosest;
-                                for (var pig : pigs(p)) far = Math.min(far, pig.distanceTo(p));
+                                double far = tetherClosest, moved = 0;
+                                var spawn = new net.minecraft.world.phys.Vec3(base.getX() + 60.5, base.getY(), base.getZ() + 12.5);
+                                for (var pig : pigs(p)) {
+                                    far = Math.min(far, pig.distanceTo(p));
+                                    moved = Math.max(moved, pig.position().subtract(spawn).horizontalDistance());
+                                }
+                                // the pig itself has to come (the player being reeled to a hook in the ground also closes the gap)
                                 log(
-                                        (far < 8 ? "PASS" : "FAIL")
+                                        (far < 8 && moved > 3 ? "PASS" : "FAIL")
                                                 + " tether: a right click tap reeled the hooked pig from 12 to "
                                                 + String.format("%.1f", far)
-                                                + " blocks");
+                                                + " blocks (pig pulled " + String.format("%.1f", moved) + ")");
                                 run(s, "kill @e[type=pig]");
                             });
             // Photonic: the Beacon lights where you aim while held, and mines nothing
@@ -1089,7 +1094,7 @@ public final class PlaytestBootstrap {
     private static void aimAtPig(Minecraft mc) {
         net.minecraft.world.entity.Entity best = null;
         for (var e : mc.level.entitiesForRendering())
-            if (e instanceof net.minecraft.world.entity.animal.Pig
+            if (e instanceof net.minecraft.world.entity.animal.Pig pig && pig.isAlive() && pig.deathTime == 0
                     && (best == null || e.distanceToSqr(mc.player) < best.distanceToSqr(mc.player))) best = e;
         if (best == null) {
             log("tether: no pig to aim at");
@@ -1195,7 +1200,8 @@ public final class PlaytestBootstrap {
     /** Places a structure next to the arena and opens all its chests: the guaranteed gem must be in one. */
     private static void checkGemGuarantee(MinecraftServer s, ServerPlayer p, String structure, String gem, boolean hidden) {
         var level = p.serverLevel();
-        var at = p.blockPosition().offset(0, 0, structure.contains("jungle") ? -40 : 40);
+        // the desert's stand-in chests go well away from where the loot-rate rolls already claimed this area's guarantee
+        var at = p.blockPosition().offset(0, 0, structure.contains("jungle") ? -40 : 140);
         if (structure.equals("desert_pyramid")) {
             // its treasure room sits 11 blocks down, under the superflat bedrock: build the room's
             // four chests with the pyramid's loot table instead
