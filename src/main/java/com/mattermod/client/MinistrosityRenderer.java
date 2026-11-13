@@ -9,12 +9,12 @@ import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
-/** Ministrosity: the Golem's little helper, eyes glowing through ministrosity_glowmask.png. */
+/** Ministrosity: the Golem's little helper, its redstone showing its Golem's furnace (GolemSignalLayer). */
 public final class MinistrosityRenderer extends GeoEntityRenderer<Ministrosity> {
 
     public MinistrosityRenderer(EntityRendererProvider.Context ctx) {
         super(ctx, new DefaultedEntityGeoModel<>(ResourceLocation.fromNamespaceAndPath(MatterMod.MODID, "ministrosity")));
-        addRenderLayer(new GlowMaskLayer<>(this, "ministrosity_glowmask.png"));
+        addRenderLayer(new GolemSignalLayer<>(this, "ministrosity", Ministrosity::linkedGolem));
         addRenderLayer(new EyePulseLayer<>(this, "ministrosity_eyes.png", 30));
         shadowRadius = .4f;
     }

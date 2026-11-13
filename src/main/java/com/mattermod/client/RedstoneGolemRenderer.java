@@ -15,7 +15,7 @@ public final class RedstoneGolemRenderer extends GeoEntityRenderer<RedstoneGolem
 
     public RedstoneGolemRenderer(EntityRendererProvider.Context ctx) {
         super(ctx, new Model());
-        addRenderLayer(new GolemSignalLayer(this));
+        addRenderLayer(new GolemSignalLayer<>(this, "monstrosity", g -> g));
         addRenderLayer(new EyePulseLayer<>(this, "monstrosity_eyes.png", 60));
         shadowRadius = 1.0f;
     }

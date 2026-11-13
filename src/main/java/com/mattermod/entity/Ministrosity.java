@@ -41,6 +41,12 @@ public final class Ministrosity extends PathfinderMob implements GeoEntity {
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private UUID golemId, ownerId;
+    /** The Golem's entity id, synced so the client can match its overheat (colours and pace). */
+    private static final net.minecraft.network.syncher.EntityDataAccessor<Integer> GOLEM =
+            net.minecraft.network.syncher.SynchedEntityData.defineId(Ministrosity.class,
+                    net.minecraft.network.syncher.EntityDataSerializers.INT);
+    /** Overheat: they run and strike this much faster, and hit this much harder. */
+    static final double OVERHEAT_FACTOR = RedstoneGolem.OVERHEAT_FACTOR;
     private int attackCooldown, hitIn;
 
     public Ministrosity(EntityType<? extends Ministrosity> type, Level level) {
@@ -56,12 +62,29 @@ public final class Ministrosity extends PathfinderMob implements GeoEntity {
     }
 
     @Override
+    protected void defineSynchedData(net.minecraft.network.syncher.SynchedEntityData.Builder b) {
+        super.defineSynchedData(b);
+        b.define(GOLEM, -1);
+    }
+
+    /** Client or server: its Golem, if loaded. */
+    public RedstoneGolem linkedGolem() {
+        return level().getEntity(entityData.get(GOLEM)) instanceof RedstoneGolem g ? g : null;
+    }
+
+    private boolean hot() {
+        RedstoneGolem g = linkedGolem();
+        return g != null && g.overheated();
+    }
+
+    @Override
     protected void registerGoals() {
         goalSelector.addGoal(0, new FloatGoal(this));
     }
 
     void bind(RedstoneGolem golem, ServerPlayer owner) {
         golemId = golem.getUUID();
+        entityData.set(GOLEM, golem.getId());
         ownerId = owner.getUUID();
         // counts as the owner's ally everywhere (beam, orbs, Golem)
         getPersistentData().putUUID("mm_summoner", ownerId);
@@ -99,7 +122,12 @@ public final class Ministrosity extends PathfinderMob implements GeoEntity {
             fallApart();
             return;
         }
-        if (attackCooldown > 0) attackCooldown--;
+        // the Golem's overheat drives them too: faster on their feet and in the swing
+        boolean hot = g.overheated();
+        var speed = getAttribute(Attributes.MOVEMENT_SPEED);
+        if (speed != null) speed.setBaseValue(hot ? .3 * OVERHEAT_FACTOR : .3);
+        if (attackCooldown > 0) attackCooldown -= hot ? 2 : 1;
+        if (attackCooldown < 0) attackCooldown = 0;
         if (hitIn > 0 && --hitIn == 0) strike(g, owner);
         if (tickCount < SPAWN_TICKS) {
             getNavigation().stop();
@@ -151,7 +179,7 @@ public final class Ministrosity extends PathfinderMob implements GeoEntity {
     private void strike(RedstoneGolem g, ServerPlayer owner) {
         LivingEntity t = getTarget();
         if (t == null || !t.isAlive() || distanceToSqr(t) > 2.6 * 2.6) return;
-        if (t.hurt(damageSources().mobAttack(this), DAMAGE)) {
+        if (t.hurt(damageSources().mobAttack(this), hot() ? (float) (DAMAGE * OVERHEAT_FACTOR) : DAMAGE)) {
             Vec3 push = t.position().subtract(position()).multiply(1, 0, 1);
             if (push.lengthSqr() > 1e-4) push = push.normalize().scale(.35);
             t.push(push.x, .1, push.z);
@@ -236,6 +264,7 @@ public final class Ministrosity extends PathfinderMob implements GeoEntity {
             if (m.tickCount < SPAWN_TICKS) return state.setAndContinue(SPAWN);
             return state.setAndContinue(state.isMoving() ? (m.isAggressive() ? CHASE : WALK) : IDLE);
         });
+        main.setAnimationSpeedHandler(m -> m.hot() ? OVERHEAT_FACTOR : 1.0);
         main.triggerableAnim("attack", RawAnimation.begin().thenPlay("animation.ministrosity.attack"));
         main.triggerableAnim("idle_break", RawAnimation.begin().thenPlay("animation.ministrosity.idle_break"));
         controllers.add(main);
