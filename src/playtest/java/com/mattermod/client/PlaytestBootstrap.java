@@ -730,7 +730,7 @@ public final class PlaytestBootstrap {
                             });
             case 1020 -> {
                 mc.player.setYRot(0);
-                mc.player.setXRot(7);
+                mc.player.setXRot(5); // at the pig's middle 12 blocks out (7 degrees landed the hook in the grass behind it)
             }
             case 1022 -> opts.keyAttack.setDown(true);
             case 1024 -> opts.keyAttack.setDown(false);
@@ -801,6 +801,10 @@ public final class PlaytestBootstrap {
                 // the client hears about the removed light blocks a few ticks late
                 var left = lightSpots(mc);
                 left.removeAll(lightsBefore);
+                // the Photonic badge's own glow follows the player (a level 10 light over the head): not the Beacon's
+                BlockPos head = mc.player.blockPosition();
+                left.removeIf(q -> Math.abs(q.getX() - head.getX()) <= 1 && Math.abs(q.getZ() - head.getZ()) <= 1
+                        && q.getY() - head.getY() >= 0 && q.getY() - head.getY() <= 2);
                 log(
                         (left.isEmpty() ? "PASS" : "FAIL")
                                 + " light: the Beacon's light goes with it ("
