@@ -1,0 +1,104 @@
+shot 01_idle_first_person
+shot 02_mining_first_person
+shot 03_mining_later
+PASS mining: stone ahead broke after 12 ticks of beam
+PASS crystal after mining: e99f20 (want e99f20)
+PASS drops: mined stone gave cobblestone (empty hotbar slot selected: false)
+shot 04_beam_side_view
+shot 05_beam_side_view_later
+shot 06_combat_level1
+shot 07_combat_ramped
+shot 08_orb_charge_phase1
+shot 09_orb_charge_full
+shot 10_orb_fired
+PASS crystal after an Energy orb: 20c1e9 (want 20c1e9)
+shot 11_orb_charge_side_view
+shot 12_orb_fired_side_view
+shot 13_trait_screen
+shot 13b_colours_tab
+shot 13c_loadouts_tab
+shot 15_custom_colour_sweep
+PASS colour: orbs follow the mode (20c1e9), the beam is Plasmic orange (true)
+shot 16_custom_colour_model
+shot 17_sneak_beam
+PASS sneak beam, no water near: grass ahead is now block.minecraft.dirt_path (beamActive=true, sneaking=true, hit=net.minecraft.world.phys.BlockHitResult@2d6dbcec)
+PASS sneak beam, water near: grass ahead is now block.minecraft.farmland
+PASS swing: a sword still swings with the Manipulator put away
+shot 14_sword_swing
+shot 18_beam_water_front
+shot 19_beam_water_first_person
+shot 20a_frost_charging
+PASS frost: charged shard laid an ice bridge over the trench (10/10 blocks)
+shot 20_frost_bridge
+PASS water: a tap placed a water source like a bucket
+shot 21_water_tap
+PASS colour: crystal switched to the Lava colour (ff7020)
+shot 22_lava_mode_crystal
+shot 23a_growth_charging
+shot 23_pollen_cloud
+shot 24_light_bounce
+shot 25_tether_rope
+PASS tether: the hook reeled the player up (2.2 blocks)
+shot 26_gust_grenade_latched
+shot 26b_gust_grenade_burst
+PASS gust: left click threw a grenade that burst (bursts 1, pig hurt true)
+tether pig v=0.00 onGround=true hook=stuck=true hooked=none hookAt=-1 reeling=true full=true
+tether pig at 11.8
+tether pig v=0.00 onGround=true hook=stuck=true hooked=none hookAt=-1 reeling=true full=true
+tether pig at 11.0
+shot 27_tether_pull
+tether pig v=0.00 onGround=true hook=stuck=true hooked=none hookAt=-1 reeling=true full=true
+tether pig at 10.2
+tether pig v=0.00 onGround=true hook=stuck=true hooked=none hookAt=-1 reeling=true full=true
+tether pig at 9.4
+tether pig v=0.00 onGround=true hook=stuck=true hooked=none hookAt=-1 reeling=true full=true
+tether pig at 8.7
+PASS tether: a right click tap reeled the hooked pig from 12 to 7.9 blocks
+shot 28_light_beacon
+PASS light: the Beacon lights where it lands (1 light blocks)
+PASS mining is Beam-only: 20 ticks of left click in Light mode left the stone
+FAIL light: the Beacon's light goes with it (1 left [BlockPos{x=62, y=-59, z=15}], 0 were there before)
+light leftover BlockPos{x=62, y=-59, z=15}: server has Block{minecraft:light}[level=10,waterlogged=false]
+shot 29_harvest
+PASS growth: left click harvested 9 of 9 ripe wheat
+PASS mass driver: left click lifted the stone
+shot 30_mass_throw
+PASS mass driver: right click threw the carried stone
+PASS golem: right click summoned the Redstone Golem
+PASS golem: Ministrosities, Rocket Boots and Saddle reached the Golem
+shot 31_golem_summon
+shot 32_golem_idle
+golem state t1287: pos=89.5,-60.0,11.0 yaw=0 order=ATTACK target=husk@5.4 action=NONE frame=0 navDone=false speed=0.259 assembling=false armsCd=0
+golem state t1293: pos=89.4,-60.0,11.9 yaw=29 order=ATTACK target=husk@4.6 action=NONE frame=0 navDone=false speed=0.278 assembling=false armsCd=0
+golem state t1310: pos=88.9,-60.0,13.0 yaw=43 order=ATTACK target=husk@3.4 action=SWEEP frame=11 navDone=true speed=0.250 assembling=false armsCd=0
+shot 33_golem_sweep
+PASS golem: attack order hit the target
+golem state t1345: pos=88.9,-60.0,13.0 yaw=43 order=ATTACK target=husk@3.4 action=SWEEP frame=14 navDone=true speed=0.250 assembling=false armsCd=0
+golem state t1365: pos=88.9,-60.0,13.0 yaw=16 order=ATTACK target=husk@3.4 action=DISPENSER frame=12 navDone=true speed=0.250 assembling=false armsCd=89
+shot 34_golem_dispenser
+golem state t1375: pos=88.9,-60.0,13.0 yaw=16 order=ATTACK target=husk@3.4 action=DISPENSER frame=22 navDone=true speed=0.250 assembling=false armsCd=79
+golem overheat: furnace=true overheated=false heat=4 minis=true out=0 -> out=3
+golem minis at t1378: 3
+golem minis at t1382: 3
+shot 35_ministrosities
+PASS golem: an overheat built 3 Ministrosities (want 3)
+PASS golem: Dispenser Arm bolts hit the far target
+PASS gems: chests/shipwreck_treasure gave sirenite 92/400, other gems 0
+PASS gems: chests/underwater_ruin_big gave sirenite 151/400, other gems 0
+PASS gems: chests/ruined_portal gave gehennite 400/400, other gems 0
+PASS gems: chests/nether_bridge gave gehennite 50/400, other gems 0
+PASS gems: chests/abandoned_mineshaft gave stratite 34/400, other gems 0
+PASS gems: chests/trial_chambers/reward gave zephyrite 64/400, other gems 0
+PASS gems: chests/jungle_temple gave quetzalite 108/400, other gems 0
+PASS gems: chests/pillager_outpost gave tinkerite 95/400, other gems 0
+PASS gems: chests/woodland_mansion gave tinkerite 237/400, other gems 0
+PASS gems: chests/desert_pyramid gave atenite 41/400, other gems 0
+PASS gems: chests/stronghold_library gave oculite 38/400, other gems 0
+PASS gems: chests/end_city_treasure gave oculite 249/400, other gems 0
+PASS gems: buried treasure held exactly one gem in 100/100
+FAIL gems: placed desert_pyramid, 0 chests, 0 with atenite:
+FAIL gems: placed jungle_pyramid, 4 chests, 0 with quetzalite: -5,-2,1 -3,-3,6 4,-3,7+sticky -3,-2,7
+golem seat: player feet 1.214 above the Golem (seat 1.813, animated seat 1.814, vehicle attachment 0.600)
+PASS golem: the rider sits on the seat (feet 1.21)
+shot 36_golem_ride
+PASS golem: recall put the Golem away
