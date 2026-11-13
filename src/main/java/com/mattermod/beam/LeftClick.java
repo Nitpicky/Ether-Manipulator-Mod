@@ -244,7 +244,7 @@ public final class LeftClick {
                                     && was.is(net.minecraft.world.level.block.Blocks.LIGHT)) {
                         WorldEffects.tempLight(sl, q, level, 20);
                         lit.add(q);
-                    }
+                    } else if (before.contains(q)) lit.add(q);   // still ours: keep tracking it so letting go clears it
                 });
         LIT.put(p.getUUID(), lit);
         if (ticks % 4 != 0) return;
