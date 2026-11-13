@@ -25,6 +25,7 @@ PASS No Tier scaling
 PASS Gravity changes player bounds
 PASS Gravity rotates up toward surface normal
 PASS Gravity reset
+PASS Golem tree: Supercharged replaces Redstone Arcs
 PASS Golem tree: Piston Arm offered, retired Latch rejected
 PASS Golem summoned
 PASS Golem counts as an ally
