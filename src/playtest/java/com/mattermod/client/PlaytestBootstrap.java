@@ -1168,10 +1168,10 @@ public final class PlaytestBootstrap {
                 });
     }
 
-    /** The Manipulator advancement tab: all 15 load, summoning earned the root, picking up a gem earns the gem
+    /** The Manipulator advancement tab: all 14 load, summoning earned the root, picking up a gem earns the gem
      *  hub and that gem's riddle, a gem unlocks its Module directly, and the Upgrades use the new recipes. */
     private static void checkAdvancements(MinecraftServer s, ServerPlayer p) {
-        String[] ids = {"root", "calibrated", "augmented", "overclocked", "gem", "stratite", "sirenite", "atenite", "oculite",
+        String[] ids = {"root", "calibrated", "augmented", "overclocked", "stratite", "sirenite", "atenite", "oculite",
             "zephyrite", "gehennite", "quetzalite", "tinkerite", "dye", "spectrum"};
         int loaded = 0;
         for (String id : ids)
@@ -1186,8 +1186,7 @@ public final class PlaytestBootstrap {
         p.getInventory().add(new net.minecraft.world.item.ItemStack(com.mattermod.registry.ModItems.GEMS.get("sirenite").get()));
         p.containerMenu.broadcastChanges();
         p.inventoryMenu.broadcastChanges();
-        log((done.test("gem") && done.test("sirenite") && !done.test("stratite") ? "PASS" : "FAIL")
-                + " advancements: a Sirenite earns Something Glimmers and Siren Song only");
+        log((!done.test("sirenite") ? "PASS" : "FAIL") + " advancements: only holding a Sirenite earns nothing yet");
         var mm = com.mattermod.manipulator.Manipulator.stack(p);
         var gem = new net.minecraft.world.item.ItemStack(com.mattermod.registry.ModItems.GEMS.get("quetzalite").get());
         p.setItemInHand(net.minecraft.world.InteractionHand.OFF_HAND, gem);
@@ -1196,6 +1195,8 @@ public final class PlaytestBootstrap {
         boolean after = com.mattermod.trait.ModuleUnlocks.known(com.mattermod.manipulator.Manipulator.stack(p),
                 net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("mattermod", "cultivation"));
         log((after ? "PASS" : "FAIL") + " gems: using a Quetzalite unlocks the Botanic Module (before " + before + ")");
+        log((done.test("quetzalite") && !done.test("stratite") ? "PASS" : "FAIL")
+                + " advancements: unlocking the Botanic Module earns Feathered Serpent only");
         p.setItemInHand(net.minecraft.world.InteractionHand.OFF_HAND, net.minecraft.world.item.ItemStack.EMPTY);
         boolean noModules = net.minecraft.core.registries.BuiltInRegistries.ITEM.getOptional(
                 net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("mattermod", "module_hydraulics")).isEmpty();

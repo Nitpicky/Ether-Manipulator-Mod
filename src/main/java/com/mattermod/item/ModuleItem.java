@@ -30,6 +30,7 @@ public final class ModuleItem extends Item {
                 return InteractionResultHolder.fail(item);
             }
             item.consume(1, sp);
+            com.mattermod.advancement.ManipulatorTrigger.fire(sp, "module_" + module.getPath());
             Manipulator.sync(sp);
             sp.displayClientMessage(
                     Component.translatable("message.mattermod.module_unlocked"), true);

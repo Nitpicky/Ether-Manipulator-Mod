@@ -1,5 +1,5 @@
 {
-  "parent": "mattermod:manipulator/gem",
+  "parent": "mattermod:manipulator/root",
   "display": {
     "icon": {
       "id": "mattermod:tinkerite"
@@ -17,13 +17,9 @@
   },
   "criteria": {
     "done": {
-      "trigger": "minecraft:inventory_changed",
+      "trigger": "mattermod:manipulator",
       "conditions": {
-        "items": [
-          {
-            "items": "mattermod:tinkerite"
-          }
-        ]
+        "event": "module_mechatronic"
       }
     }
   },
