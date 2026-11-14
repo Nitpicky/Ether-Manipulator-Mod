@@ -1,7 +1,7 @@
 shot 01_idle_first_person
 shot 02_mining_first_person
 shot 03_mining_later
-PASS mining: stone ahead broke after 12 ticks of beam
+PASS mining: stone ahead broke after 14 ticks of beam
 PASS crystal after mining: e99f20 (want e99f20)
 PASS drops: mined stone gave cobblestone (empty hotbar slot selected: false)
 shot 04_beam_side_view
@@ -21,7 +21,7 @@ shot 15_custom_colour_sweep
 PASS colour: orbs follow the mode (20c1e9), the beam is Plasmic orange (true)
 shot 16_custom_colour_model
 shot 17_sneak_beam
-PASS sneak beam, no water near: grass ahead is now block.minecraft.dirt_path (beamActive=true, sneaking=true, hit=net.minecraft.world.phys.BlockHitResult@389b2c60)
+PASS sneak beam, no water near: grass ahead is now block.minecraft.dirt_path (beamActive=true, sneaking=true, hit=net.minecraft.world.phys.BlockHitResult@27688fc6)
 PASS sneak beam, water near: grass ahead is now block.minecraft.farmland
 PASS swing: a sword still swings with the Manipulator put away
 shot 14_sword_swing
@@ -52,7 +52,7 @@ shot 27_tether_pull
 tether pig v=0.60 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
 tether pig at 6.1
 tether pig v=0.59 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
-tether pig at 4.4
+tether pig at 3.8
 tether pig v=0.48 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=false full=false
 tether pig at 1.7
 PASS tether: a right click tap reeled the hooked pig from 12 to 0.7 blocks (pig pulled 12.2)
@@ -69,15 +69,15 @@ PASS golem: right click summoned the Redstone Golem
 PASS golem: Ministrosities, Rocket Boots and Saddle reached the Golem
 shot 31_golem_summon
 shot 32_golem_idle
-golem state t1287: pos=89.5,-60.0,3.0 yaw=0 order=ATTACK target=husk@5.4 action=NONE frame=0 navDone=false speed=0.250 assembling=false armsCd=0
-golem state t1293: pos=89.4,-60.0,3.8 yaw=28 order=ATTACK target=husk@4.7 action=NONE frame=0 navDone=false speed=0.250 assembling=false armsCd=0
-golem state t1310: pos=89.0,-60.0,4.8 yaw=42 order=ATTACK target=husk@3.7 action=SWEEP frame=8 navDone=true speed=0.250 assembling=false armsCd=0
+golem state t1287: pos=82.5,-60.0,4.0 yaw=0 order=ATTACK target=husk@5.4 action=NONE frame=0 navDone=false speed=0.250 assembling=false armsCd=0
+golem state t1293: pos=82.4,-60.0,4.8 yaw=28 order=ATTACK target=husk@4.7 action=NONE frame=0 navDone=false speed=0.250 assembling=false armsCd=0
+golem state t1310: pos=82.0,-60.0,5.8 yaw=42 order=ATTACK target=husk@3.7 action=SWEEP frame=9 navDone=true speed=0.250 assembling=false armsCd=0
 shot 33_golem_sweep
 PASS golem: attack order hit the target
-golem state t1345: pos=89.0,-60.0,4.8 yaw=42 order=ATTACK target=husk@3.7 action=SWEEP frame=12 navDone=true speed=0.250 assembling=false armsCd=0
-golem state t1365: pos=89.0,-60.0,4.8 yaw=16 order=ATTACK target=husk@3.7 action=DISPENSER frame=10 navDone=true speed=0.250 assembling=false armsCd=91
+golem state t1345: pos=82.0,-60.0,5.8 yaw=42 order=ATTACK target=husk@3.7 action=SWEEP frame=12 navDone=true speed=0.250 assembling=false armsCd=0
+golem state t1365: pos=82.0,-60.0,5.8 yaw=16 order=ATTACK target=husk@3.7 action=DISPENSER frame=10 navDone=true speed=0.250 assembling=false armsCd=91
 shot 34_golem_dispenser
-golem state t1375: pos=89.0,-60.0,4.8 yaw=16 order=ATTACK target=husk@3.7 action=DISPENSER frame=20 navDone=true speed=0.250 assembling=false armsCd=81
+golem state t1375: pos=82.0,-60.0,5.8 yaw=16 order=ATTACK target=husk@3.7 action=DISPENSER frame=20 navDone=true speed=0.250 assembling=false armsCd=81
 golem overheat: furnace=true overheated=false heat=4.0 minis=true out=0 -> out=0
 PASS golem: blowing its furnace it does nothing else (venting true)
 golem minis at t1434: 3
@@ -98,15 +98,16 @@ PASS gems: chests/desert_pyramid gave atenite 42/400, other gems 0
 PASS gems: chests/stronghold_library gave oculite 39/400, other gems 0
 PASS gems: chests/end_city_treasure gave oculite 249/400, other gems 0
 PASS gems: buried treasure held exactly one gem in 100/100
-PASS advancements: 15/15 in the Manipulator tab
+PASS advancements: 24/24 in the Manipulator tab
 PASS advancements: summoning earns the root
-PASS advancements: a Sirenite earns Something Glimmers and Siren Song only
+PASS advancements: only holding a Sirenite earns nothing yet
 PASS gems: using a Quetzalite unlocks the Botanic Module (before false)
+PASS advancements: unlocking the Botanic Module earns Feathered Serpent only
 PASS gems: the Module items are gone
 PASS recipes: upgrade_iron is ingot/block/ingot with the gem in the waist
 PASS recipes: upgrade_diamond is ingot/block/ingot with the gem in the waist
 PASS gems: placed desert_pyramid, 4 chests, 1 with atenite: 0,0,-2+gem -2,0,0 2,0,0 0,0,2
-PASS gems: placed jungle_pyramid, 4 chests, 2 with quetzalite: 7,-2,-7 5,-3,-2+gem -2,-3,-1+gem+sticky 5,-2,-1
+PASS gems: placed jungle_pyramid, 4 chests, 1 with quetzalite: -14,-2,-8 -12,-3,-3 -5,-3,-2+gem+sticky -12,-2,-2
 PASS golem: back in action and still overheated after the animation
 golem seat: player feet 1.212 above the Golem (seat 1.813, animated seat 1.812, vehicle attachment 0.600)
 PASS golem: the rider sits on the seat (feet 1.21)
