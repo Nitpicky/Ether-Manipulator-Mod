@@ -80,9 +80,13 @@ final class OrbMass {
             return;
         }
         Entity owner = b.getOwner();
+        boolean self = target == owner;
+        // your own block coming back at you hurts, but only half as much
         target.hurt(
                 b.damageSources().thrown(b, owner instanceof LivingEntity le ? le : b),
-                OrbMass.massDamage(b));
+                OrbMass.massDamage(b) * (self ? .5f : 1f));
+        if (self && b.massBounces == 0 && owner instanceof net.minecraft.server.level.ServerPlayer sp)
+            com.mattermod.advancement.ManipulatorTrigger.fire(sp, "mass_self");
         Vec3 push = v.normalize().scale(0.4 + 0.2 * b.getPhase());
         target.setDeltaMovement(target.getDeltaMovement().add(push.x, 0.2, push.z));
         target.hurtMarked = true;
