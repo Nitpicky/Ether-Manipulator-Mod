@@ -400,7 +400,7 @@ public class UpgradeScreen extends Screen {
                 active
                         ? List.of(
                                 label(st.next().displayName + " Tier", a().bright()),
-                                label("Requires " + upgradeName() + " Chip.", 0xffedc16e))
+                                label("Requires the " + upgradeName() + " Upgrade.", 0xffedc16e))
                         : List.of();
         control(
                 g,
@@ -498,7 +498,7 @@ public class UpgradeScreen extends Screen {
                             ? List.of(
                                     label("Default", a().accent()),
                                     label(
-                                            "Copper, Iron, Diamond or Netherite, by tier.",
+                                            "Copper, Iron, Gold or Netherite, by tier.",
                                             a().text()))
                             : k == 17 && count < 16
                             ? List.of(

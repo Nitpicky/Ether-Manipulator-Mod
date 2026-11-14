@@ -15,7 +15,7 @@ public final class ModuleItem extends Item {
     private final ResourceLocation module;
 
     public ModuleItem(String module) {
-        super(new Properties().stacksTo(16).rarity(Rarity.UNCOMMON));
+        super(new Properties().rarity(Rarity.UNCOMMON));
         this.module = ResourceLocation.fromNamespaceAndPath("mattermod", module);
     }
 
@@ -35,5 +35,18 @@ public final class ModuleItem extends Item {
                     Component.translatable("message.mattermod.module_unlocked"), true);
         }
         return InteractionResultHolder.sidedSuccess(item, level.isClientSide);
+    }
+
+    @Override
+    public void appendHoverText(
+            ItemStack stack,
+            Item.TooltipContext context,
+            java.util.List<Component> tooltip,
+            net.minecraft.world.item.TooltipFlag flag) {
+        tooltip.add(
+                Component.translatable(
+                                "tooltip.mattermod.gem_unlocks",
+                                Component.translatable("item.mattermod.module_" + module.getPath()))
+                        .withStyle(net.minecraft.ChatFormatting.GRAY));
     }
 }

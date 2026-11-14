@@ -1,0 +1,35 @@
+{
+  "parent": "mattermod:manipulator/gem",
+  "display": {
+    "icon": {
+      "id": "mattermod:atenite"
+    },
+    "title": {
+      "translate": "advancements.mattermod.atenite.title"
+    },
+    "description": {
+      "translate": "advancements.mattermod.atenite.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "mattermod:atenite"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}

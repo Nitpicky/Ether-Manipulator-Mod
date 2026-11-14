@@ -80,6 +80,7 @@ public class TierUpgradeModule extends Item {
         module.consume(1, sp);
         com.mattermod.trait.TraitEnchants.refresh(manipulator, sp.registryAccess());
         ManipulatorStage next = ManipulatorStage.get(manipulator);
+        com.mattermod.advancement.ManipulatorTrigger.fire(sp, "stage_" + next.name().toLowerCase(java.util.Locale.ROOT));
         if (worldSound)
             sp.level()
                     .playSound(

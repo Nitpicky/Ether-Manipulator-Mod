@@ -190,7 +190,7 @@ public final class UiProbe {
                                                                     .FIREWORK_ROCKET,
                                                             64));
                                     for (var module :
-                                            com.mattermod.registry.ModItems.MODULES.values())
+                                            com.mattermod.registry.ModItems.GEMS.values())
                                         p.getInventory()
                                                 .add(
                                                         new net.minecraft.world.item.ItemStack(

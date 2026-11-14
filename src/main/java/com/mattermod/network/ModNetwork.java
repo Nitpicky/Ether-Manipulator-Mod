@@ -183,6 +183,11 @@ public final class ModNetwork {
                         : com.mattermod.item.ManipulatorColors.beamFrom(src);
         if (!com.mattermod.item.ManipulatorColors.unlock(manipulator, body, rgb))
             return; // already unlocked: nothing used up
+        if (body) {
+            com.mattermod.advancement.ManipulatorTrigger.fire(sp, "dye");
+            if (com.mattermod.item.ManipulatorColors.customUnlocked(manipulator))
+                com.mattermod.advancement.ManipulatorTrigger.fire(sp, "all_dyes");
+        }
         if (body) com.mattermod.item.ManipulatorColors.setBody(manipulator, rgb);
         else com.mattermod.item.ManipulatorColors.setBeam(manipulator, rgb);
         if (!sp.getAbilities().instabuild) src.shrink(1);

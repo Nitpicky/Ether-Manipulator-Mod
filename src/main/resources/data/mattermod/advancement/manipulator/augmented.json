@@ -1,0 +1,31 @@
+{
+  "parent": "mattermod:manipulator/calibrated",
+  "display": {
+    "icon": {
+      "id": "mattermod:upgrade_diamond"
+    },
+    "title": {
+      "translate": "advancements.mattermod.augmented.title"
+    },
+    "description": {
+      "translate": "advancements.mattermod.augmented.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "done": {
+      "trigger": "mattermod:manipulator",
+      "conditions": {
+        "event": "stage_diamond"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}

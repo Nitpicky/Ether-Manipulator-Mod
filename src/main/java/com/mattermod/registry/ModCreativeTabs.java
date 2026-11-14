@@ -30,9 +30,6 @@ public final class ModCreativeTabs {
                                                 ModItems.GEMS
                                                         .values()
                                                         .forEach(item -> output.accept(item.get()));
-                                                ModItems.MODULES
-                                                        .values()
-                                                        .forEach(item -> output.accept(item.get()));
                                             })
                                     .build());
 

@@ -1,0 +1,31 @@
+{
+  "parent": "mattermod:manipulator/root",
+  "display": {
+    "icon": {
+      "id": "mattermod:upgrade_iron"
+    },
+    "title": {
+      "translate": "advancements.mattermod.calibrated.title"
+    },
+    "description": {
+      "translate": "advancements.mattermod.calibrated.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "done": {
+      "trigger": "mattermod:manipulator",
+      "conditions": {
+        "event": "stage_iron"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}

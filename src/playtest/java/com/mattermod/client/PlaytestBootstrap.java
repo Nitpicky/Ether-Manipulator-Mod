@@ -1053,7 +1053,7 @@ public final class PlaytestBootstrap {
                                         + " golem: Dispenser Arm bolts hit the far target");
                                 if (h != null) h.discard();
                             });
-            case 1447 -> server(mc, (s, p) -> checkGemLoot(s, p));
+            case 1447 -> server(mc, (s, p) -> { checkGemLoot(s, p); checkAdvancements(s, p); });
             case 1449 -> server(mc, (s, p) -> checkGemGuarantee(s, p, "desert_pyramid", "atenite", false));
             case 1451 -> server(mc, (s, p) -> checkGemGuarantee(s, p, "jungle_pyramid", "quetzalite", true));
             case 1454 ->
@@ -1166,6 +1166,51 @@ public final class PlaytestBootstrap {
                                     : s.getPlayerList().getPlayers().get(0);
                     if (p != null) action.run(s, p);
                 });
+    }
+
+    /** The Manipulator advancement tab: all 15 load, summoning earned the root, picking up a gem earns the gem
+     *  hub and that gem's riddle, a gem unlocks its Module directly, and the Upgrades use the new recipes. */
+    private static void checkAdvancements(MinecraftServer s, ServerPlayer p) {
+        String[] ids = {"root", "calibrated", "augmented", "overclocked", "gem", "stratite", "sirenite", "atenite", "oculite",
+            "zephyrite", "gehennite", "quetzalite", "tinkerite", "dye", "spectrum"};
+        int loaded = 0;
+        for (String id : ids)
+            if (s.getAdvancements().get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("mattermod", "manipulator/" + id)) != null) loaded++;
+        log((loaded == ids.length ? "PASS" : "FAIL") + " advancements: " + loaded + "/" + ids.length + " in the Manipulator tab");
+        java.util.function.Predicate<String> done = id -> {
+            var h = s.getAdvancements().get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("mattermod", "manipulator/" + id));
+            return h != null && p.getAdvancements().getOrStartProgress(h).isDone();
+        };
+        com.mattermod.manipulator.Manipulator.setSummoned(p, true);
+        log((done.test("root") ? "PASS" : "FAIL") + " advancements: summoning earns the root");
+        p.getInventory().add(new net.minecraft.world.item.ItemStack(com.mattermod.registry.ModItems.GEMS.get("sirenite").get()));
+        p.containerMenu.broadcastChanges();
+        p.inventoryMenu.broadcastChanges();
+        log((done.test("gem") && done.test("sirenite") && !done.test("stratite") ? "PASS" : "FAIL")
+                + " advancements: a Sirenite earns Something Glimmers and Siren Song only");
+        var mm = com.mattermod.manipulator.Manipulator.stack(p);
+        var gem = new net.minecraft.world.item.ItemStack(com.mattermod.registry.ModItems.GEMS.get("quetzalite").get());
+        p.setItemInHand(net.minecraft.world.InteractionHand.OFF_HAND, gem);
+        boolean before = com.mattermod.trait.ModuleUnlocks.known(mm, net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("mattermod", "cultivation"));
+        gem.getItem().use(p.serverLevel(), p, net.minecraft.world.InteractionHand.OFF_HAND);
+        boolean after = com.mattermod.trait.ModuleUnlocks.known(com.mattermod.manipulator.Manipulator.stack(p),
+                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("mattermod", "cultivation"));
+        log((after ? "PASS" : "FAIL") + " gems: using a Quetzalite unlocks the Botanic Module (before " + before + ")");
+        p.setItemInHand(net.minecraft.world.InteractionHand.OFF_HAND, net.minecraft.world.item.ItemStack.EMPTY);
+        boolean noModules = net.minecraft.core.registries.BuiltInRegistries.ITEM.getOptional(
+                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("mattermod", "module_hydraulics")).isEmpty();
+        log((noModules ? "PASS" : "FAIL") + " gems: the Module items are gone");
+        for (String[] r : new String[][] {{"upgrade_iron", "minecraft:iron_block", "minecraft:amethyst_shard"}, {"upgrade_diamond", "minecraft:gold_block", "minecraft:diamond"}}) {
+            var rec = s.getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("mattermod", r[0]));
+            boolean ok = rec.isPresent() && rec.get().value().getIngredients().size() == 9
+                    && rec.get().value().getIngredients().get(1).test(new net.minecraft.world.item.ItemStack(
+                            net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse(r[1]))))
+                    && rec.get().value().getIngredients().get(4).test(new net.minecraft.world.item.ItemStack(
+                            net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse(r[2]))))
+                    && rec.get().value().getIngredients().get(3).isEmpty();
+            log((ok ? "PASS" : "FAIL") + " recipes: " + r[0] + " is ingot/block/ingot with the gem in the waist");
+        }
+        p.getInventory().clearOrCountMatchingItems(st -> com.mattermod.registry.ModItems.GEMS.values().stream().anyMatch(g -> st.is(g.get())), -1, p.inventoryMenu.getCraftSlots());
     }
 
     /** Rolls each gem's structure chest 400 times: the gem must show up, and only that structure's gem. */

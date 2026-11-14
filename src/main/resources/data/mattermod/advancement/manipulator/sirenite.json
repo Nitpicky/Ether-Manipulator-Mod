@@ -1,0 +1,35 @@
+{
+  "parent": "mattermod:manipulator/gem",
+  "display": {
+    "icon": {
+      "id": "mattermod:sirenite"
+    },
+    "title": {
+      "translate": "advancements.mattermod.sirenite.title"
+    },
+    "description": {
+      "translate": "advancements.mattermod.sirenite.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "mattermod:sirenite"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}

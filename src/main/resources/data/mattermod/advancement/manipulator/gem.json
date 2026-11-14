@@ -1,0 +1,44 @@
+{
+  "parent": "mattermod:manipulator/root",
+  "display": {
+    "icon": {
+      "id": "mattermod:sirenite"
+    },
+    "title": {
+      "translate": "advancements.mattermod.gem.title"
+    },
+    "description": {
+      "translate": "advancements.mattermod.gem.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "mattermod:stratite",
+              "mattermod:sirenite",
+              "mattermod:atenite",
+              "mattermod:oculite",
+              "mattermod:zephyrite",
+              "mattermod:gehennite",
+              "mattermod:quetzalite",
+              "mattermod:tinkerite"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}

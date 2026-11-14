@@ -1,0 +1,34 @@
+{
+  "parent": "mattermod:manipulator/dye",
+  "display": {
+    "icon": {
+      "id": "minecraft:magenta_dye"
+    },
+    "title": {
+      "translate": "advancements.mattermod.spectrum.title"
+    },
+    "description": {
+      "translate": "advancements.mattermod.spectrum.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "done": {
+      "trigger": "mattermod:manipulator",
+      "conditions": {
+        "event": "all_dyes"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  }
+}

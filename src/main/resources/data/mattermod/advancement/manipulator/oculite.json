@@ -1,0 +1,35 @@
+{
+  "parent": "mattermod:manipulator/gem",
+  "display": {
+    "icon": {
+      "id": "mattermod:oculite"
+    },
+    "title": {
+      "translate": "advancements.mattermod.oculite.title"
+    },
+    "description": {
+      "translate": "advancements.mattermod.oculite.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "done": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "mattermod:oculite"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}

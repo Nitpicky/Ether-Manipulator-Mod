@@ -24,11 +24,11 @@ public final class BodyPalette {
 
     /**
      * The Default colour follows the tier's material: the painted copper at Prototype, then the
-     * vanilla tool tones of iron, diamond and netherite (highlight, neutral, shades 1-3).
+     * vanilla tool tones of iron, gold (Augmented) and netherite (highlight, neutral, shades 1-3).
      */
     private static final int[] IRON = {0xD8D8D8, 0xBEBEBE, 0xAAAAAA, 0x969696, 0x808080};
 
-    private static final int[] DIAMOND = {0x33EBCB, 0x2BC7AC, 0x24A891, 0x1E8A77, 0x1A7666};
+    private static final int[] GOLD = {0xFDFF76, 0xEAEE57, 0xEACF36, 0xE9B115, 0xE2A314};
     private static final int[] NETHERITE = {0x867B86, 0x706770, 0x5D565D, 0x51444E, 0x45393F};
 
     /** The material ramp for a tier's Default colour; null at Prototype (the painted copper). */
@@ -36,7 +36,7 @@ public final class BodyPalette {
         return switch (stage) {
             case STONE -> null;
             case IRON -> IRON.clone();
-            case DIAMOND -> DIAMOND.clone();
+            case DIAMOND -> GOLD.clone();
             case NETHERITE -> NETHERITE.clone();
         };
     }

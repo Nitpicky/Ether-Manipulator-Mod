@@ -30,6 +30,7 @@ public class MatterMod {
         com.mattermod.registry.ModParticles.register(modEventBus);
         com.mattermod.registry.ModSounds.register(modEventBus);
         ModCreativeTabs.register(modEventBus);
+        com.mattermod.advancement.ManipulatorTrigger.register(modEventBus);
         ModAttachments.register(modEventBus);
 
         // Register network payloads via mod event bus
