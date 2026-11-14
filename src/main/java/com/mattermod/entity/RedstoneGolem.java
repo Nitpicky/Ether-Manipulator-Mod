@@ -870,7 +870,17 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
     }
 
     /** Basic attack, the lift up: both arms heave up through the front, everything in a 3-block arc ahead is hit and thrown up. */
+    /** Heavyweight Bout: an Iron Golem caught in a blow is shoved, not hurt, and earns the owner the advancement. */
+    private void bout(ServerPlayer owner, AABB area) {
+        for (var ig : level().getEntitiesOfClass(IronGolem.class, area)) {
+            Vec3 away = ig.position().subtract(position());
+            ig.knockback(.8, -away.x, -away.z);
+            if (owner != null) com.mattermod.advancement.ManipulatorTrigger.fire(owner, "heavyweight");
+        }
+    }
+
     private void sweepHit(ServerPlayer owner) {
+        bout(owner, getBoundingBox().inflate(LIFT_REACH, 1.5, LIFT_REACH));
         playSound(com.mattermod.registry.ModSounds.GOLEM_LAND.get(), .8f, 1.2f);
         Vec3 fwd = Vec3.directionFromRotation(0, getYRot());
         int hits = 0;
@@ -901,6 +911,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         playSound(com.mattermod.registry.ModSounds.GOLEM_LAND.get(), 1.6f, .85f);
         Vec3 fwd = Vec3.directionFromRotation(0, getYRot());
         Vec3 c = position().add(fwd.scale(1.6));
+        bout(owner, new AABB(c, c).inflate(SLAM_RADIUS, 2, SLAM_RADIUS));
         int hits = 0;
         for (var e : level().getEntitiesOfClass(LivingEntity.class, new AABB(c, c).inflate(SLAM_RADIUS, 2, SLAM_RADIUS), e -> canHit(owner, e))) {
             Vec3 to = e.position().subtract(c).multiply(1, 0, 1);

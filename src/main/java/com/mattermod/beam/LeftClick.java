@@ -393,6 +393,7 @@ public final class LeftClick {
                 }
         }
         if (cut.isEmpty()) return;
+        if (cut.size() >= 16) com.mattermod.advancement.ManipulatorTrigger.fire(p, "green_thumb");
         Vec3 right = new Vec3(-look.z, 0, look.x).normalize();
         Vec3 mid = Vec3.atCenterOf(center);
         double most = -1e9;

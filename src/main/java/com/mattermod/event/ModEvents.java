@@ -44,6 +44,7 @@ public class ModEvents {
         NeoForge.EVENT_BUS.register(com.mattermod.trait.RedesignEffects.class);
         NeoForge.EVENT_BUS.register(com.mattermod.trait.MovementPhysics.class);
         NeoForge.EVENT_BUS.register(com.mattermod.trait.GustMotion.class);
+        NeoForge.EVENT_BUS.register(com.mattermod.advancement.SecretAdvancements.class);
         NeoForge.EVENT_BUS.register(com.mattermod.entity.GolemControl.class);
         NeoForge.EVENT_BUS.register(com.mattermod.beam.PhotonicEffects.class);
         NeoForge.EVENT_BUS.register(com.mattermod.beam.MassDriver.class);
@@ -77,6 +78,7 @@ public class ModEvents {
                 // only the pressure carries over; a new beam starts its own work
                 state.ticks = 0;
                 state.lastUtilityPos = Long.MIN_VALUE;
+                com.mattermod.advancement.SecretAdvancements.beamStarted(player);
             }
         } else changed = beamActivePlayers.remove(player.getUUID()) != null;
         if (changed) {
@@ -84,6 +86,11 @@ public class ModEvents {
             PacketDistributor.sendToPlayersTrackingEntity(
                     player, new BeamStatePayload(player.getId(), active));
         }
+    }
+
+    /** True while this player's beam is on. */
+    public static boolean beaming(ServerPlayer player) {
+        return beamActivePlayers.containsKey(player.getUUID());
     }
 
     /** Shows (or hides) this player's beam to the players around, without mining (Redstone). */

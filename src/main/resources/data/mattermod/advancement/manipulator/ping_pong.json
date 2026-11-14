@@ -1,0 +1,34 @@
+{
+  "parent": "mattermod:manipulator/root",
+  "display": {
+    "icon": {
+      "id": "mattermod:module_icon_kinetic"
+    },
+    "title": {
+      "translate": "advancements.mattermod.ping_pong.title"
+    },
+    "description": {
+      "translate": "advancements.mattermod.ping_pong.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "done": {
+      "trigger": "mattermod:manipulator",
+      "conditions": {
+        "event": "ping_pong"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ],
+  "rewards": {
+    "experience": 30
+  }
+}

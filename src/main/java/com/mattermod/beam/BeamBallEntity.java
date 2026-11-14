@@ -558,6 +558,22 @@ public class BeamBallEntity extends Projectile {
             releasedMass = true;
         }
         // SERVER: full physics
+        if ((mode == OrbMode.LAVA || mode == OrbMode.IGNITE) && getOwner() instanceof ServerPlayer pyro)
+            pyro.getPersistentData()
+                    .putLong(com.mattermod.advancement.SecretAdvancements.PYRO_TAG, level().getGameTime() + 1200);
+        // an Energy orb bats a ghast's fireball back, as a punch would (Ping Pong)
+        if (mode == OrbMode.ENERGY && getOwner() instanceof ServerPlayer batter)
+            for (var fb :
+                    level().getEntitiesOfClass(
+                            net.minecraft.world.entity.projectile.LargeFireball.class,
+                            getBoundingBox().inflate(.6),
+                            f -> f.getOwner() instanceof net.minecraft.world.entity.monster.Ghast)) {
+                fb.hurt(batter.damageSources().playerAttack(batter), 1f);
+                com.mattermod.advancement.ManipulatorTrigger.fire(batter, "ping_pong");
+                impactFx(position());
+                discard();
+                return;
+            }
         super.tick();
 
         if (isOrbiting()) {
@@ -865,6 +881,10 @@ public class BeamBallEntity extends Projectile {
         Entity owner = getOwner();
         if (getMode() == OrbMode.WATER)
             ProjectileEffects.waterImpact(this, traits, result.getLocation());
+        if (getMode() == OrbMode.WATER
+                && target instanceof net.minecraft.world.entity.monster.EnderMan
+                && owner instanceof ServerPlayer rain)
+            com.mattermod.advancement.ManipulatorTrigger.fire(rain, "rain_check");
         int ph = getPhase();
         if (owner instanceof ServerPlayer sp
                 && target instanceof LivingEntity le

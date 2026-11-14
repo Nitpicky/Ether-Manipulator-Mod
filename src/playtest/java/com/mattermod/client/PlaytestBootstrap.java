@@ -1168,11 +1168,12 @@ public final class PlaytestBootstrap {
                 });
     }
 
-    /** The Manipulator advancement tab: all 14 load, summoning earned the root, picking up a gem earns the gem
+    /** The Manipulator advancement tab: all 24 load (10 of them secret), summoning earned the root, picking up a gem earns the gem
      *  hub and that gem's riddle, a gem unlocks its Module directly, and the Upgrades use the new recipes. */
     private static void checkAdvancements(MinecraftServer s, ServerPlayer p) {
         String[] ids = {"root", "calibrated", "augmented", "overclocked", "stratite", "sirenite", "atenite", "oculite",
-            "zephyrite", "gehennite", "quetzalite", "tinkerite", "dye", "spectrum"};
+            "zephyrite", "gehennite", "quetzalite", "tinkerite", "dye", "spectrum", "return_to_sender", "rain_check", "this_is_fine",
+            "gone_with_the_wind", "night_light", "fish_out_of_water", "green_thumb", "heavyweight_bout", "let_it_go", "ping_pong"};
         int loaded = 0;
         for (String id : ids)
             if (s.getAdvancements().get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("mattermod", "manipulator/" + id)) != null) loaded++;

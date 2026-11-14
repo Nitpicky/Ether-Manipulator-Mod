@@ -120,6 +120,11 @@ public final class OrbTether {
                 b.discard();
                 return false;
             }
+            // Fish Out of Water: a water creature hauled out onto dry air
+            if ((b.hooked instanceof net.minecraft.world.entity.animal.WaterAnimal
+                            || b.hooked instanceof net.minecraft.world.entity.animal.axolotl.Axolotl)
+                    && !b.hooked.isInWater())
+                com.mattermod.advancement.ManipulatorTrigger.fire(sp, "fish_out");
             boolean mob =
                     b.hooked instanceof LivingEntity
                             && !(b.hooked instanceof net.minecraft.world.entity.player.Player)

@@ -64,6 +64,13 @@ public final class ModItems {
                         GEMS.put(gem, ITEMS.register(gem, () -> new com.mattermod.item.ModuleItem(module))));
     }
 
+    /** Icon-only items for the secret Module advancements (the K screen's Badge sprites); not in any tab. */
+    static {
+        for (String m : new String[] {"tectonic", "hydraulic", "pyrotechnic", "pneumatic", "photonic", "gravitic",
+                "botanic", "mechatronic", "plasmic", "kinetic"})
+            ITEMS.registerSimpleItem("module_icon_" + m, new net.minecraft.world.item.Item.Properties());
+    }
+
     public static void register(IEventBus bus) {
         ITEMS.register(bus);
     }

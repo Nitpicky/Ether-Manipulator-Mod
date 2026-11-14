@@ -13,7 +13,7 @@ public final class GustMotion {
     private static final class Motion {
         LivingEntity mob;
         ServerPlayer owner;
-        Vec3 v;
+        Vec3 v, start;
         int ticks, bounces, cooldown;
         boolean rebound;
 
@@ -21,6 +21,7 @@ public final class GustMotion {
             mob = m;
             owner = o;
             v = m.getDeltaMovement();
+            start = m.position();
             ticks = 80;
             bounces = 6;
             rebound = r;
@@ -46,6 +47,10 @@ public final class GustMotion {
                 continue;
             }
             if (m.cooldown > 0) m.cooldown--;
+            // Gone With the Wind: a creature carried 10 blocks by one Gust
+            if (!(e instanceof net.minecraft.world.entity.player.Player)
+                    && e.position().subtract(m.start).horizontalDistanceSqr() >= 100)
+                com.mattermod.advancement.ManipulatorTrigger.fire(m.owner, "gust_launch");
             var v = e.getDeltaMovement();
             if (m.cooldown == 0 && m.v.lengthSqr() > .16) {
                 var hit =
