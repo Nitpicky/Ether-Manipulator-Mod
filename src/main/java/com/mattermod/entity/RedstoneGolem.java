@@ -589,8 +589,8 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
                 && Math.abs(getX() - xo) + Math.abs(getZ() - zo) < 1e-3 && onGround();
         if (action == Action.NONE && still && !assembling() && !overheatPending && random.nextInt(400) == 0) {
             triggerAnim("main", "idle_break");
-            idleBreakUntil = tickCount + 64;
-            cue(20, com.mattermod.registry.ModSounds.GOLEM_LAUGH.get(), 1.2f, 1);   // its first big "HA" is frame 27
+            idleBreakUntil = tickCount + 80;
+            cue(6, com.mattermod.registry.ModSounds.GOLEM_LAUGH.get(), 1.2f, 1);   // the animation is timed to this laugh starting at frame 6
         } else if (idleBreakUntil > tickCount && (!still || action != Action.NONE)) {
             if (action == Action.NONE) stopTriggeredAnim("main", "idle_break");
             idleBreakUntil = 0;
