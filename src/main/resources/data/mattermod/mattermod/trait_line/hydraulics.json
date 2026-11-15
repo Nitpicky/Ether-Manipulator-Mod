@@ -37,7 +37,7 @@
     {
       "id": "hydraulics.glacier",
       "name": "Glacier",
-      "description": "Frost bridges last 3x longer."
+      "description": "Frost bridges are 3 blocks wide and last 3x longer."
     },
     {
       "id": "hydraulics.rapids",

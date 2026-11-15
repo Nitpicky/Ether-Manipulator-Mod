@@ -4,6 +4,7 @@ import com.mattermod.MatterMod;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
@@ -25,7 +26,23 @@ public final class FxRender {
 
     private static final ResourceLocation WHITE =
             ResourceLocation.fromNamespaceAndPath(MatterMod.MODID, "textures/misc/white.png");
-    private static final RenderType SHADER_SAFE = RenderType.beaconBeam(WHITE, true);
+    /** The translucent beacon-beam type, but drawn from both sides (ribbons face any way). */
+    private static final RenderType SHADER_SAFE =
+            RenderType.create(
+                    "mattermod_fx_shader_safe",
+                    com.mojang.blaze3d.vertex.DefaultVertexFormat.BLOCK,
+                    com.mojang.blaze3d.vertex.VertexFormat.Mode.QUADS,
+                    1536,
+                    false,
+                    true,
+                    RenderType.CompositeState.builder()
+                            .setShaderState(RenderStateShard.RENDERTYPE_BEACON_BEAM_SHADER)
+                            .setTextureState(
+                                    new RenderStateShard.TextureStateShard(WHITE, false, false))
+                            .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
+                            .setCullState(RenderStateShard.NO_CULL)
+                            .setWriteMaskState(RenderStateShard.COLOR_WRITE)
+                            .createCompositeState(false));
 
     public static RenderType type() {
         return ShaderCompat.shadersActive() ? SHADER_SAFE : RenderType.lightning();

@@ -57,13 +57,11 @@ public final class BeamAudio {
                 ensureLoop(
                         mc,
                         p,
-                        () -> {
-                            long held = mc.level.getGameTime() - start;
-                            return held >= 40 ? 3 : held >= 20 ? 2 : 1;
-                        });
+                        () -> RemoteBeams.level(p.getId()));
             }
         }
         LOOPS.values().removeIf(BeamLoop::isStopped);
+        strikes(mc);
 
         tickCharge(mc);
     }
@@ -154,6 +152,54 @@ public final class BeamAudio {
                 false); // power up (was the summon sound)
     }
 
+    private static final Map<Integer, Integer> HEARD = new HashMap<>();
+
+    /**
+     * Each strike of a beam ticks: lightly and low at pressure 1, sharper, higher and louder as it
+     * climbs, so the cadence you hear is the damage you deal. A strike that arcs adds a short
+     * electric snap.
+     */
+    private static void strikes(Minecraft mc) {
+        for (Map.Entry<Integer, BeamLoop> e : LOOPS.entrySet()) {
+            RemoteBeams.Pulse pu = RemoteBeams.pulseOf(e.getKey());
+            if (pu == null) continue;
+            Integer last = HEARD.put(e.getKey(), pu.seed);
+            if (last == null || last == pu.seed) continue;
+            Entity ent = mc.level.getEntity(e.getKey());
+            if (ent == null) continue;
+            int lv = Math.max(1, pu.level) - 1;
+            mc.level.playLocalSound(
+                    ent.getX(),
+                    ent.getEyeY(),
+                    ent.getZ(),
+                    SoundEvents.AMETHYST_BLOCK_HIT,
+                    SoundSource.PLAYERS,
+                    0.3f + 0.1f * lv,
+                    0.8f + 0.25f * lv,
+                    false);
+            if (!pu.arcs.isEmpty())
+                mc.level.playLocalSound(
+                        ent.getX(),
+                        ent.getEyeY(),
+                        ent.getZ(),
+                        com.mattermod.registry.ModSounds.GOLEM_SPARK_HIT.get(),
+                        SoundSource.PLAYERS,
+                        0.25f,
+                        1.2f + 0.1f * lv,
+                        false);
+        }
+        HEARD.keySet().retainAll(LOOPS.keySet());
+    }
+
+    /** Local player's pressure dropped a level while beaming: a soft falling note. */
+    public static void levelDown(int level) {
+        Minecraft.getInstance()
+                .getSoundManager()
+                .play(
+                        SimpleSoundInstance.forUI(
+                                SoundEvents.AMETHYST_BLOCK_CHIME, 0.6f + 0.25f * level, 0.35f));
+    }
+
     /** Local player's combat level went up. */
     public static void levelUp(int level) {
         Minecraft.getInstance()
@@ -217,8 +263,11 @@ public final class BeamAudio {
                 if (fadeOut-- == 0) stop();
                 return;
             }
-            float target = 1.5f + 0.2f * level.getAsInt();
+            // the hum climbs and swells with pressure
+            int lv = Math.max(1, level.getAsInt()) - 1;
+            float target = 1.4f + 0.18f * lv;
             pitch += (target - pitch) * 0.2f;
+            volume += (0.5f + 0.12f * lv - volume) * 0.2f;
         }
 
         @Override

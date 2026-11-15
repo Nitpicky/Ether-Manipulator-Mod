@@ -281,7 +281,7 @@
   "trait.mattermod.hydraulics.common_gills": "Branchies",
   "trait.mattermod.hydraulics.common_gills.desc": "Respirez sous l'eau.",
   "trait.mattermod.hydraulics.glacier": "Glacier",
-  "trait.mattermod.hydraulics.glacier.desc": "Les ponts de givre durent 3 fois plus longtemps.",
+  "trait.mattermod.hydraulics.glacier.desc": "Les ponts de givre font 3 blocs de large et durent 3 fois plus longtemps.",
   "trait.mattermod.hydraulics.rapids": "Rapides",
   "trait.mattermod.hydraulics.rapids.desc": "Les tirs d'eau au-dessus de l'eau lèvent une vague large de 2/4/6 qui porte bateaux et créatures.",
   "trait.mattermod.hydraulics.common_slipstream": "Sillage",
@@ -403,5 +403,7 @@
   "trait.mattermod.cultivation.bountiful": "Abondance",
   "trait.mattermod.cultivation.bountiful.desc": "Les cultures donnent davantage.",
   "trait.mattermod.cultivation.cross_pollination": "Pollinisation croisée",
-  "trait.mattermod.cultivation.cross_pollination.desc": "Récolter fait grandir d'un stade les jeunes cultures voisines."
+  "trait.mattermod.cultivation.cross_pollination.desc": "Récolter fait grandir d'un stade les jeunes cultures voisines.",
+  "death.attack.mattermod.beam": "%1$s s'est fait désintégrer par %2$s",
+  "death.attack.mattermod.beam.item": "%1$s s'est fait désintégrer par %2$s avec %3$s"
 }

@@ -23,6 +23,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -39,10 +40,45 @@ public final class BeamCastHelper {
     private BeamCastHelper() {}
 
     /**
-     * Beam damage per hit is stage.beamTickDamage() scaled by this (hits every 2 ticks, no
-     * i-frames).
+     * Damage of one strike at pressure 1 is stage.beamTickDamage() (+ the Plasmic badge) scaled by
+     * this; pressure raises both the strike and the cadence ({@link BeamState#hitInterval}). No
+     * knockback, no i-frames.
      */
-    private static final float DAMAGE_SCALE = 0.3f;
+    private static final float DAMAGE_SCALE = 1.0f;
+
+    /** Arc: how far a strike can jump from the creature in the beam. */
+    private static final double ARC_RANGE = 5;
+
+    /**
+     * Tells this player and everyone watching the beam's pressure when it changes, and each
+     * strike (with the creatures it arced to), so the beam's look and sound follow the real
+     * numbers.
+     */
+    private static void sync(
+            ServerPlayer player, BeamState state, int level, boolean strike, List<Integer> arcs) {
+        if (!strike && level == state.sentLevel) return;
+        state.sentLevel = level;
+        net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingEntityAndSelf(
+                player,
+                new com.mattermod.network.payload.BeamPulsePayload(
+                        player.getId(), level, strike, arcs));
+    }
+
+    /** The beam's own damage type: no knockback (tagged), credited to the player. */
+    static net.minecraft.world.damagesource.DamageSource beamSource(ServerLevel level, ServerPlayer player) {
+        return new net.minecraft.world.damagesource.DamageSource(
+                level.registryAccess()
+                        .registryOrThrow(net.minecraft.core.registries.Registries.DAMAGE_TYPE)
+                        .getHolderOrThrow(BEAM_DAMAGE),
+                player);
+    }
+
+    public static final net.minecraft.resources.ResourceKey<net.minecraft.world.damagesource.DamageType>
+            BEAM_DAMAGE =
+                    net.minecraft.resources.ResourceKey.create(
+                            net.minecraft.core.registries.Registries.DAMAGE_TYPE,
+                            net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(
+                                    "mattermod", "beam"));
 
     public static Vec3 tickBeam(
             ServerLevel level,
@@ -88,15 +124,19 @@ public final class BeamCastHelper {
                 UtilityBeam.apply(level, player, bh, state);
             }
             tractor(level, player, eye, end);
-            state.trackTarget(-1, interval, tool, level);
+            sync(player, state, state.trackTarget(-1, interval, tool, level), false, List.of());
             return end;
         }
+
+        // --- Strike cadence: pressure sets how often the beam bites ----------
+        state.hitCooldown = Math.max(0, state.hitCooldown - interval);
+        boolean strike = state.hitCooldown == 0;
 
         // --- Foliage-aware block ray-cast ------------------------------------
         lastRefract = null;
         Vec3 hitPos = castThroughFoliage(level, player, eye, look, range);
         // --- Photonic: Refraction, the beam splits behind glass and ice
-        if (lastRefract != null) {
+        if (lastRefract != null && strike) {
             float base = (stage.beamTickDamage() + Traits.beamDamageBonus(tool)) * DAMAGE_SCALE;
             for (Vec3 dir : refractRays(look, Traits.rank(tool, "photonic.refraction"))) {
                 Vec3 from = lastRefract;
@@ -159,6 +199,15 @@ public final class BeamCastHelper {
 
         if (target != null) {
             int combatLevel = state.trackTarget(target.getId(), interval, tool, level);
+            player.getPersistentData().putInt("mm_beam_level", combatLevel);
+            target.getPersistentData().putInt("mm_combat_pressure", combatLevel);
+            if (Traits.has(tool, "pyrotechnics.heat_ray"))
+                com.mattermod.trait.RedesignEffects.burn(target, player, 3, -1);
+            if (!strike) {
+                sync(player, state, combatLevel, false, List.of());
+                return Traits.has(tool, "photonic.laser") ? hitPos : targetPoint;
+            }
+            state.hitCooldown = BeamState.hitInterval(combatLevel);
             float dmg =
                     (stage.beamTickDamage() + Traits.beamDamageBonus(tool))
                             * DAMAGE_SCALE
@@ -167,11 +216,7 @@ public final class BeamCastHelper {
                             * (combatLevel >= 4 && Traits.rank(tool, "combat.overload") >= 2
                                     ? 1.25f
                                     : 1f);
-            player.getPersistentData().putInt("mm_beam_level", combatLevel);
-            target.getPersistentData().putInt("mm_combat_pressure", combatLevel);
             beamHit(level, player, tool, target, dmg);
-            if (Traits.has(tool, "pyrotechnics.heat_ray"))
-                com.mattermod.trait.RedesignEffects.burn(target, player, 3, -1);
             // Photonic: Laser, the beam goes through and hits everything in its line
             if (Traits.has(tool, "photonic.laser")) {
                 final LivingEntity first = target;
@@ -194,14 +239,15 @@ public final class BeamCastHelper {
                 targetPoint = hitPos;
             }
 
-            // Arc: from ramp level 2, chain to one more creature per rank
-            int arc = Traits.rank(tool, "combat.arc");
-            if (combatLevel >= 2 && arc > 0) {
+            // Arc: pressure jumps the strike to the nearest other creatures, one more per level
+            // from level 2 (1 / 2 / 3), each taking half the strike
+            List<Integer> arcs = new java.util.ArrayList<>();
+            if (combatLevel >= 2 && Traits.has(tool, "combat.arc")) {
                 final LivingEntity first = target;
                 level
                         .getEntitiesOfClass(
                                 LivingEntity.class,
-                                target.getBoundingBox().inflate(4 + arc),
+                                target.getBoundingBox().inflate(ARC_RANGE),
                                 e ->
                                         e != first
                                                 && e != player
@@ -209,25 +255,24 @@ public final class BeamCastHelper {
                                                 && e.isPickable()
                                                 && !(e
                                                         instanceof
-                                                        net.minecraft.world.entity.player.Player))
+                                                        net.minecraft.world.entity.player.Player)
+                                                && !(e
+                                                                instanceof
+                                                                net.minecraft.world.entity
+                                                                        .OwnableEntity
+                                                                own
+                                                        && player.getUUID()
+                                                                .equals(own.getOwnerUUID())))
                         .stream()
                         .sorted(Comparator.comparingDouble(e -> e.distanceToSqr(first)))
-                        .limit(arc)
+                        .limit(combatLevel - 1)
                         .forEach(
                                 e -> {
                                     beamHit(level, player, tool, e, dmg * 0.5f);
-                                    level.sendParticles(
-                                            ParticleTypes.ELECTRIC_SPARK,
-                                            e.getX(),
-                                            e.getY(0.5),
-                                            e.getZ(),
-                                            6,
-                                            0.2,
-                                            0.3,
-                                            0.2,
-                                            0.2);
+                                    arcs.add(e.getId());
                                 });
             }
+            sync(player, state, combatLevel, true, arcs);
             return targetPoint;
         }
         boolean mining = hitPos.distanceTo(eye) < range - 0.1;
@@ -238,6 +283,7 @@ public final class BeamCastHelper {
                         ? state.trackMining(interval, tool, level)
                         : state.trackTarget(-1, interval, tool, level);
         if (momentum) player.getPersistentData().putInt("mm_beam_level", pressure);
+        sync(player, state, pressure, false, List.of());
 
         // --- Block mining with ramp ------------------------------------------
         if (mining) {
@@ -459,7 +505,7 @@ public final class BeamCastHelper {
         float before = target.getHealth();
         // A continuous beam: ignore the 10-tick invulnerability window.
         target.invulnerableTime = 0;
-        target.hurt(level.damageSources().playerAttack(player), dmg);
+        target.hurt(beamSource(level, player), dmg);
         target.invulnerableTime = 0;
         target.setDeltaMovement(incomingVelocity);
         float dealt = Math.max(0, before - target.getHealth());

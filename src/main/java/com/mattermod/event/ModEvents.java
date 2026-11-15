@@ -78,6 +78,7 @@ public class ModEvents {
                 // only the pressure carries over; a new beam starts its own work
                 state.ticks = 0;
                 state.lastUtilityPos = Long.MIN_VALUE;
+                state.resync();
                 com.mattermod.advancement.SecretAdvancements.beamStarted(player);
             }
         } else changed = beamActivePlayers.remove(player.getUUID()) != null;

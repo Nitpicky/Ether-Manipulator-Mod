@@ -114,14 +114,33 @@ public final class BeamState {
         return 1;
     }
 
-    /** Damage multiplier per pressure level (1x / 2x / 3x / 4x). */
-    static float levelMultiplier(int level) {
+    /**
+     * Ticks until the beam can strike again. Pressure sets the cadence and the hit: a fresh beam
+     * ticks slowly and lightly, a full one fast and hard (the same climb Momentum gives mining).
+     */
+    int hitCooldown;
+
+    /** Last pressure level and strike told to clients (-1: nothing sent yet). */
+    int sentLevel = -1;
+
+    /** A new beam: tell clients the pressure again. */
+    public void resync() {
+        sentLevel = -1;
+    }
+
+    /** Ticks between strikes per pressure level: 2/s, ~3/s, 4/s, 5/s. */
+    static int hitInterval(int level) {
         return switch (level) {
-            case 4 -> 4.0f;
-            case 3 -> 3.0f;
-            case 2 -> 2.0f;
-            default -> 1.0f;
+            case 4 -> 4;
+            case 3 -> 5;
+            case 2 -> 7;
+            default -> 10;
         };
+    }
+
+    /** Damage per strike per pressure level, x1 / x1.5 / x2 / x2.5 (with the cadence: x1 to x6). */
+    static float levelMultiplier(int level) {
+        return 1f + 0.5f * (Math.max(1, level) - 1);
     }
 
     /** Momentum: mining speed per pressure level, x1 / x1.5 / x2 / x2.5. */

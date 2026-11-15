@@ -281,7 +281,7 @@
   "trait.mattermod.hydraulics.common_gills": "Gills",
   "trait.mattermod.hydraulics.common_gills.desc": "Breathe underwater.",
   "trait.mattermod.hydraulics.glacier": "Glacier",
-  "trait.mattermod.hydraulics.glacier.desc": "Frost bridges last 3x longer.",
+  "trait.mattermod.hydraulics.glacier.desc": "Frost bridges are 3 blocks wide and last 3x longer.",
   "trait.mattermod.hydraulics.rapids": "Rapids",
   "trait.mattermod.hydraulics.rapids.desc": "Water shots over water raise a surge 2/4/6 wide that carries boats and creatures.",
   "trait.mattermod.hydraulics.common_slipstream": "Slipstream",
@@ -403,5 +403,7 @@
   "trait.mattermod.cultivation.bountiful": "Bountiful",
   "trait.mattermod.cultivation.bountiful.desc": "Crops yield extra produce.",
   "trait.mattermod.cultivation.cross_pollination": "Cross-Pollination",
-  "trait.mattermod.cultivation.cross_pollination.desc": "Harvesting grows nearby young crops a stage."
+  "trait.mattermod.cultivation.cross_pollination.desc": "Harvesting grows nearby young crops a stage.",
+  "death.attack.mattermod.beam": "%1$s was disintegrated by %2$s",
+  "death.attack.mattermod.beam.item": "%1$s was disintegrated by %2$s using %3$s"
 }

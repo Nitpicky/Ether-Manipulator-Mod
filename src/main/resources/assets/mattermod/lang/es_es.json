@@ -281,7 +281,7 @@
   "trait.mattermod.hydraulics.common_gills": "Branquias",
   "trait.mattermod.hydraulics.common_gills.desc": "Respira bajo el agua.",
   "trait.mattermod.hydraulics.glacier": "Glaciar",
-  "trait.mattermod.hydraulics.glacier.desc": "Los puentes de escarcha duran el triple.",
+  "trait.mattermod.hydraulics.glacier.desc": "Los puentes de escarcha miden 3 bloques de ancho y duran el triple.",
   "trait.mattermod.hydraulics.rapids": "Rápidos",
   "trait.mattermod.hydraulics.rapids.desc": "Los disparos de agua sobre el agua levantan una ola de 2/4/6 de ancho que arrastra barcos y criaturas.",
   "trait.mattermod.hydraulics.common_slipstream": "Estela",
@@ -403,5 +403,7 @@
   "trait.mattermod.cultivation.bountiful": "Abundancia",
   "trait.mattermod.cultivation.bountiful.desc": "Los cultivos dan una cosecha extra.",
   "trait.mattermod.cultivation.cross_pollination": "Polinización cruzada",
-  "trait.mattermod.cultivation.cross_pollination.desc": "Cosechar hace crecer una fase los cultivos jóvenes cercanos."
+  "trait.mattermod.cultivation.cross_pollination.desc": "Cosechar hace crecer una fase los cultivos jóvenes cercanos.",
+  "death.attack.mattermod.beam": "%1$s ha sido desintegrado por %2$s",
+  "death.attack.mattermod.beam.item": "%1$s ha sido desintegrado por %2$s con %3$s"
 }

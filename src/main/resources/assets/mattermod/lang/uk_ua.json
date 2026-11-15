@@ -281,7 +281,7 @@
   "trait.mattermod.hydraulics.common_gills": "Зябра",
   "trait.mattermod.hydraulics.common_gills.desc": "Дихайте під водою.",
   "trait.mattermod.hydraulics.glacier": "Льодовик",
-  "trait.mattermod.hydraulics.glacier.desc": "Крижані мости тримаються втричі довше.",
+  "trait.mattermod.hydraulics.glacier.desc": "Крижані мости завширшки 3 блоки й тримаються втричі довше.",
   "trait.mattermod.hydraulics.rapids": "Пороги",
   "trait.mattermod.hydraulics.rapids.desc": "Водяні постріли над водою здіймають хвилю завширшки 2/4/6, що несе човни та істот.",
   "trait.mattermod.hydraulics.common_slipstream": "Кільватер",
@@ -403,5 +403,7 @@
   "trait.mattermod.cultivation.bountiful": "Щедрість",
   "trait.mattermod.cultivation.bountiful.desc": "Рослини дають більше врожаю.",
   "trait.mattermod.cultivation.cross_pollination": "Перехресне запилення",
-  "trait.mattermod.cultivation.cross_pollination.desc": "Збір урожаю вирощує сусідні молоді рослини на одну стадію."
+  "trait.mattermod.cultivation.cross_pollination.desc": "Збір урожаю вирощує сусідні молоді рослини на одну стадію.",
+  "death.attack.mattermod.beam": "%2$s дезінтегрував %1$s",
+  "death.attack.mattermod.beam.item": "%2$s дезінтегрував %1$s за допомогою: %3$s"
 }

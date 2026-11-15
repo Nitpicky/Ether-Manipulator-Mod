@@ -339,7 +339,8 @@ public final class RedesignEffects {
     @SubscribeEvent
     public static void hit(LivingDamageEvent.Post ev) {
         if (ev.getSource().getEntity() instanceof ServerPlayer p
-                && ev.getSource().is(net.minecraft.world.damagesource.DamageTypes.PLAYER_ATTACK)
+                && (ev.getSource().is(net.minecraft.world.damagesource.DamageTypes.PLAYER_ATTACK)
+                        || ev.getSource().is(com.mattermod.beam.BeamCastHelper.BEAM_DAMAGE))
                 && Traits.hasCommon(Manipulator.stack(p), Traits.PYROTECHNICS, 0))
             burn(ev.getEntity(), p, 4, -1);
     }

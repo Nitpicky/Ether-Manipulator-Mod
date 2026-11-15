@@ -1,0 +1,66 @@
+name: Shader pack shots
+# Manual: runs the beam part of the screenshot tour with Sodium + Iris and a shader pack, to check
+# that the beam and its effects render under shaders. Shots go to playtest-results under shaders/.
+on:
+  workflow_dispatch:
+    inputs:
+      pack:
+        description: Modrinth slug of the shader pack
+        default: complementary-reimagined
+permissions:
+  contents: write
+jobs:
+  shaders:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Install virtual display
+        run: sudo apt-get update -q && sudo apt-get install -y -q xvfb libgl1-mesa-dri libglx-mesa0 pulseaudio jq
+      - name: Download Sodium, Iris and the shader pack
+        env:
+          PACK: ${{ github.event.inputs.pack }}
+        run: |
+          set -e
+          mkdir -p runs/client/mods runs/client/shaderpacks runs/client/config
+          get() { # slug, loader filter
+            curl -fsSL -A "mattermod-ci" "https://api.modrinth.com/v2/project/$1/version?loaders=%5B%22$2%22%5D&game_versions=%5B%221.21.1%22%5D" \
+              | jq -r '[.[] | select(.version_type=="release")][0] // .[0] | .files[] | select(.primary) | .url + " " + .filename'
+          }
+          read -r url name <<< "$(get sodium neoforge)"; curl -fsSL -o "runs/client/mods/$name" "$url"; echo "Sodium: $name"
+          read -r url name <<< "$(get iris neoforge)"; curl -fsSL -o "runs/client/mods/$name" "$url"; echo "Iris: $name"
+          read -r url name <<< "$(curl -fsSL -A mattermod-ci "https://api.modrinth.com/v2/project/$PACK/version?loaders=%5B%22iris%22%5D" | jq -r '.[0].files[] | select(.primary) | .url + " " + .filename')"
+          curl -fsSL -o "runs/client/shaderpacks/$name" "$url"; echo "Pack: $name"
+          printf 'enableShaders=true\nshaderPack=%s\n' "$name" > runs/client/config/iris.properties
+      - name: Beam shots with shaders
+        env:
+          MATTERMOD_AUTOTEST: '1'
+          LIBGL_ALWAYS_SOFTWARE: '1'
+          MESA_GL_VERSION_OVERRIDE: '4.5'
+          MESA_GLSL_VERSION_OVERRIDE: '450'
+        run: |
+          xvfb-run -a -s '-screen 0 1280x720x24' timeout 1500 ./gradlew runClient -Pplaytest -PmodelShots -PstopAfter=300 --no-daemon || true
+          grep -i -E 'iris|shader' runs/client/logs/latest.log | head -40 || true
+      - name: Publish shots
+        if: always()
+        run: |
+          mkdir -p out
+          cp runs/client/screenshots/mm_*.png out/ 2>/dev/null || true
+          cp runs/client/logs/latest.log out/ 2>/dev/null || true
+          SHA=$(git rev-parse --short HEAD)
+          git config user.name "playtest-bot"
+          git config user.email "playtest-bot@users.noreply.github.com"
+          git fetch origin playtest-results
+          git worktree add /tmp/pr origin/playtest-results
+          cd /tmp/pr && git checkout -B playtest-results
+          rm -rf shaders/latest && mkdir -p shaders/latest "shaders/$SHA"
+          cp $GITHUB_WORKSPACE/out/* shaders/latest/ 2>/dev/null || true
+          cp $GITHUB_WORKSPACE/out/* "shaders/$SHA"/ 2>/dev/null || true
+          git add -A
+          git commit -qm "Shader shots for $SHA" || true
+          git push -q origin playtest-results

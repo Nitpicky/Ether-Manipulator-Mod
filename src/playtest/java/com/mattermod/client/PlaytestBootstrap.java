@@ -121,6 +121,11 @@ public final class PlaytestBootstrap {
             UiProbe.step(mc);
             return;
         }
+        int stopAfter = Integer.getInteger("mattermod.stopAfter", 0);
+        if (stopAfter > 0 && t >= stopAfter) {
+            mc.stop();
+            return;
+        }
         var opts = mc.options;
         if (t > 70 && t < 160) checkMined(mc);
         if (t > 432 && t < 476)

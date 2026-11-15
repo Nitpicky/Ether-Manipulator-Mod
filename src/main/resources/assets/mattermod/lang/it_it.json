@@ -281,7 +281,7 @@
   "trait.mattermod.hydraulics.common_gills": "Branchie",
   "trait.mattermod.hydraulics.common_gills.desc": "Respira sott'acqua.",
   "trait.mattermod.hydraulics.glacier": "Ghiacciaio",
-  "trait.mattermod.hydraulics.glacier.desc": "I ponti di brina durano il triplo.",
+  "trait.mattermod.hydraulics.glacier.desc": "I ponti di brina sono larghi 3 blocchi e durano 3 volte di più.",
   "trait.mattermod.hydraulics.rapids": "Rapide",
   "trait.mattermod.hydraulics.rapids.desc": "I colpi d'acqua sopra l'acqua sollevano un'onda larga 2/4/6 che trasporta barche e creature.",
   "trait.mattermod.hydraulics.common_slipstream": "Scia",
@@ -403,5 +403,7 @@
   "trait.mattermod.cultivation.bountiful": "Abbondanza",
   "trait.mattermod.cultivation.bountiful.desc": "Le colture danno un raccolto extra.",
   "trait.mattermod.cultivation.cross_pollination": "Impollinazione incrociata",
-  "trait.mattermod.cultivation.cross_pollination.desc": "Raccogliere fa crescere di uno stadio le giovani colture vicine."
+  "trait.mattermod.cultivation.cross_pollination.desc": "Raccogliere fa crescere di uno stadio le giovani colture vicine.",
+  "death.attack.mattermod.beam": "%1$s è stato/a disintegrato/a da %2$s",
+  "death.attack.mattermod.beam.item": "%1$s è stato/a disintegrato/a da %2$s con %3$s"
 }

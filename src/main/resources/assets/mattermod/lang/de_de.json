@@ -281,7 +281,7 @@
   "trait.mattermod.hydraulics.common_gills": "Kiemen",
   "trait.mattermod.hydraulics.common_gills.desc": "Atme unter Wasser.",
   "trait.mattermod.hydraulics.glacier": "Gletscher",
-  "trait.mattermod.hydraulics.glacier.desc": "Frostbrücken halten 3-mal länger.",
+  "trait.mattermod.hydraulics.glacier.desc": "Frostbrücken sind 3 Blöcke breit und halten 3-mal so lange.",
   "trait.mattermod.hydraulics.rapids": "Stromschnellen",
   "trait.mattermod.hydraulics.rapids.desc": "Wasserschüsse über Wasser erzeugen eine 2/4/6 Blöcke breite Welle, die Boote und Kreaturen trägt.",
   "trait.mattermod.hydraulics.common_slipstream": "Windschatten",
@@ -403,5 +403,7 @@
   "trait.mattermod.cultivation.bountiful": "Reiche Ernte",
   "trait.mattermod.cultivation.bountiful.desc": "Pflanzen liefern zusätzlichen Ertrag.",
   "trait.mattermod.cultivation.cross_pollination": "Fremdbestäubung",
-  "trait.mattermod.cultivation.cross_pollination.desc": "Ernten lässt junge Pflanzen in der Nähe eine Stufe wachsen."
+  "trait.mattermod.cultivation.cross_pollination.desc": "Ernten lässt junge Pflanzen in der Nähe eine Stufe wachsen.",
+  "death.attack.mattermod.beam": "%1$s wurde von %2$s desintegriert",
+  "death.attack.mattermod.beam.item": "%1$s wurde von %2$s mit %3$s desintegriert"
 }

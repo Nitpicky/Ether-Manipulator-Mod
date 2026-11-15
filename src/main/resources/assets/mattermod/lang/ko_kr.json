@@ -281,7 +281,7 @@
   "trait.mattermod.hydraulics.common_gills": "아가미",
   "trait.mattermod.hydraulics.common_gills.desc": "물속에서 숨을 쉽니다.",
   "trait.mattermod.hydraulics.glacier": "빙하",
-  "trait.mattermod.hydraulics.glacier.desc": "얼음 다리가 3배 더 오래 유지됩니다.",
+  "trait.mattermod.hydraulics.glacier.desc": "얼음 다리의 폭이 3블록이 되고 3배 더 오래 유지됩니다.",
   "trait.mattermod.hydraulics.rapids": "급류",
   "trait.mattermod.hydraulics.rapids.desc": "수면 위의 물 사격이 폭 2/4/6의 파도를 일으켜 보트와 몹을 실어 나릅니다.",
   "trait.mattermod.hydraulics.common_slipstream": "후류",
@@ -403,5 +403,7 @@
   "trait.mattermod.cultivation.bountiful": "풍작",
   "trait.mattermod.cultivation.bountiful.desc": "작물의 수확량이 늘어납니다.",
   "trait.mattermod.cultivation.cross_pollination": "교차 수분",
-  "trait.mattermod.cultivation.cross_pollination.desc": "수확하면 근처의 어린 작물이 한 단계 자랍니다."
+  "trait.mattermod.cultivation.cross_pollination.desc": "수확하면 근처의 어린 작물이 한 단계 자랍니다.",
+  "death.attack.mattermod.beam": "%1$s이(가) %2$s에게 분해당했습니다",
+  "death.attack.mattermod.beam.item": "%1$s이(가) %2$s에게 %3$s(으)로 분해당했습니다"
 }

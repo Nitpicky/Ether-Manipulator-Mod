@@ -281,7 +281,7 @@
   "trait.mattermod.hydraulics.common_gills": "エラ",
   "trait.mattermod.hydraulics.common_gills.desc": "水中で呼吸できる。",
   "trait.mattermod.hydraulics.glacier": "氷河",
-  "trait.mattermod.hydraulics.glacier.desc": "氷の橋が3倍長く持続する。",
+  "trait.mattermod.hydraulics.glacier.desc": "氷の橋が幅3ブロックになり、3倍長く持続する。",
   "trait.mattermod.hydraulics.rapids": "急流",
   "trait.mattermod.hydraulics.rapids.desc": "水面上の水ショットが幅2/4/6の波を起こし、ボートやモブを運ぶ。",
   "trait.mattermod.hydraulics.common_slipstream": "スリップストリーム",
@@ -403,5 +403,7 @@
   "trait.mattermod.cultivation.bountiful": "豊作",
   "trait.mattermod.cultivation.bountiful.desc": "作物の収穫量が増える。",
   "trait.mattermod.cultivation.cross_pollination": "他家受粉",
-  "trait.mattermod.cultivation.cross_pollination.desc": "収穫すると近くの若い作物が1段階育つ。"
+  "trait.mattermod.cultivation.cross_pollination.desc": "収穫すると近くの若い作物が1段階育つ。",
+  "death.attack.mattermod.beam": "%1$sは%2$sに分解された",
+  "death.attack.mattermod.beam.item": "%1$sは%2$sの%3$sで分解された"
 }

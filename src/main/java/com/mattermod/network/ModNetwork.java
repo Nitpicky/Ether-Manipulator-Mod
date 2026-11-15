@@ -140,6 +140,10 @@ public final class ModNetwork {
                 ModNetwork::handleSummonToggle);
         reg.playToServer(OrbModePayload.TYPE, OrbModePayload.CODEC, ModNetwork::handleOrbMode);
         reg.playToClient(
+                com.mattermod.network.payload.BeamPulsePayload.TYPE,
+                com.mattermod.network.payload.BeamPulsePayload.CODEC,
+                (payload, ctx) -> ctx.enqueueWork(() -> RemoteBeams.pulse(payload)));
+        reg.playToClient(
                 BeamStatePayload.TYPE,
                 BeamStatePayload.CODEC,
                 (payload, ctx) ->

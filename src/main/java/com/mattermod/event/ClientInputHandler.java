@@ -145,26 +145,12 @@ public class ClientInputHandler {
         lmbTicks = 0; // (pressure stays and drains on its own, like the server's)
     }
 
-    private static int targetTicks = 0;
-    private static int offTargetTicks = 0, drainFrom = -1;
 
-    /** Mirrors the server's combat ramp (BeamState) for visuals and sound. */
+    /** The beam's pressure, as the server reports it (BeamPulsePayload), for visuals and sound. */
     private static void trackCombatLevel(Minecraft mc) {
-        boolean onTarget =
-                mc.hitResult instanceof net.minecraft.world.phys.EntityHitResult
-                        && !mc.player.isShiftKeyDown();
-        int now = targetTicks >= 40 ? 3 : targetTicks >= 20 ? 2 : 1;
-        if (onTarget) {
-            targetTicks = Math.min(60, targetTicks + 1);
-            drainFrom = -1;
-        } else if (targetTicks > 0) {
-            // drains stage by stage, each faster: x1, then x2, x4, x6 (BeamState)
-            if (drainFrom < 0) drainFrom = now;
-            int lost = drainFrom - now;
-            targetTicks = Math.max(0, targetTicks - (lost == 0 ? 1 : 2 * lost));
-        }
-        int lvl = targetTicks >= 40 ? 3 : targetTicks >= 20 ? 2 : 1;
-        if (lvl > BeamRenderState.combatLevel) BeamAudio.levelUp(lvl);
+        int lvl = com.mattermod.beam.RemoteBeams.level(mc.player.getId());
+        if (lvl > BeamRenderState.combatLevel && lmbTicks > 3) BeamAudio.levelUp(lvl);
+        else if (lvl < BeamRenderState.combatLevel && lmbTicks > 3) BeamAudio.levelDown(lvl);
         BeamRenderState.combatLevel = lvl;
     }
 

@@ -281,7 +281,7 @@
   "trait.mattermod.hydraulics.common_gills": "Skrzela",
   "trait.mattermod.hydraulics.common_gills.desc": "Oddychaj pod wodą.",
   "trait.mattermod.hydraulics.glacier": "Lodowiec",
-  "trait.mattermod.hydraulics.glacier.desc": "Mosty szronu trwają 3 razy dłużej.",
+  "trait.mattermod.hydraulics.glacier.desc": "Mosty szronu mają 3 bloki szerokości i trwają 3 razy dłużej.",
   "trait.mattermod.hydraulics.rapids": "Bystrza",
   "trait.mattermod.hydraulics.rapids.desc": "Strzały wodne nad wodą wznoszą falę szeroką na 2/4/6, która niesie łodzie i stworzenia.",
   "trait.mattermod.hydraulics.common_slipstream": "Kilwater",
@@ -403,5 +403,7 @@
   "trait.mattermod.cultivation.bountiful": "Obfitość",
   "trait.mattermod.cultivation.bountiful.desc": "Uprawy dają dodatkowe plony.",
   "trait.mattermod.cultivation.cross_pollination": "Zapylenie krzyżowe",
-  "trait.mattermod.cultivation.cross_pollination.desc": "Zbiory przyspieszają o etap wzrost pobliskich młodych upraw."
+  "trait.mattermod.cultivation.cross_pollination.desc": "Zbiory przyspieszają o etap wzrost pobliskich młodych upraw.",
+  "death.attack.mattermod.beam": "Gracz %1$s został zdezintegrowany przez %2$s",
+  "death.attack.mattermod.beam.item": "Gracz %1$s został zdezintegrowany przez %2$s za pomocą: %3$s"
 }

@@ -281,7 +281,7 @@
   "trait.mattermod.hydraulics.common_gills": "Žábry",
   "trait.mattermod.hydraulics.common_gills.desc": "Dýchej pod vodou.",
   "trait.mattermod.hydraulics.glacier": "Ledovec",
-  "trait.mattermod.hydraulics.glacier.desc": "Ledové mosty vydrží 3krát déle.",
+  "trait.mattermod.hydraulics.glacier.desc": "Ledové mosty jsou široké 3 bloky a vydrží 3krát déle.",
   "trait.mattermod.hydraulics.rapids": "Peřeje",
   "trait.mattermod.hydraulics.rapids.desc": "Vodní výstřely nad vodou zvednou vlnu širokou 2/4/6, která nese lodě i tvory.",
   "trait.mattermod.hydraulics.common_slipstream": "Úplav",
@@ -403,5 +403,7 @@
   "trait.mattermod.cultivation.bountiful": "Hojnost",
   "trait.mattermod.cultivation.bountiful.desc": "Plodiny dávají větší úrodu.",
   "trait.mattermod.cultivation.cross_pollination": "Křížové opylení",
-  "trait.mattermod.cultivation.cross_pollination.desc": "Sklizeň posune okolní mladé plodiny o jednu fázi růstu."
+  "trait.mattermod.cultivation.cross_pollination.desc": "Sklizeň posune okolní mladé plodiny o jednu fázi růstu.",
+  "death.attack.mattermod.beam": "Hráč %1$s byl rozložen na atomy entitou %2$s",
+  "death.attack.mattermod.beam.item": "Hráč %1$s byl rozložen na atomy entitou %2$s pomocí %3$s"
 }

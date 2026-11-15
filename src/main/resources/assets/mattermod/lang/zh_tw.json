@@ -281,7 +281,7 @@
   "trait.mattermod.hydraulics.common_gills": "鰓",
   "trait.mattermod.hydraulics.common_gills.desc": "可在水下呼吸。",
   "trait.mattermod.hydraulics.glacier": "冰川",
-  "trait.mattermod.hydraulics.glacier.desc": "冰橋持續時間延長至3倍。",
+  "trait.mattermod.hydraulics.glacier.desc": "冰橋寬3格,持續時間延長至3倍。",
   "trait.mattermod.hydraulics.rapids": "激流",
   "trait.mattermod.hydraulics.rapids.desc": "水面上的水射擊會掀起寬2/4/6格的浪,載著船和生物前進。",
   "trait.mattermod.hydraulics.common_slipstream": "尾流",
@@ -403,5 +403,7 @@
   "trait.mattermod.cultivation.bountiful": "豐收",
   "trait.mattermod.cultivation.bountiful.desc": "作物產出更多。",
   "trait.mattermod.cultivation.cross_pollination": "異花授粉",
-  "trait.mattermod.cultivation.cross_pollination.desc": "收穫會使附近的幼年作物生長一個階段。"
+  "trait.mattermod.cultivation.cross_pollination.desc": "收穫會使附近的幼年作物生長一個階段。",
+  "death.attack.mattermod.beam": "%1$s 被 %2$s 分解了",
+  "death.attack.mattermod.beam.item": "%1$s 被 %2$s 用 %3$s 分解了"
 }

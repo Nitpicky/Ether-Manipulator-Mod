@@ -281,7 +281,7 @@
   "trait.mattermod.hydraulics.common_gills": "Solungaçlar",
   "trait.mattermod.hydraulics.common_gills.desc": "Su altında nefes al.",
   "trait.mattermod.hydraulics.glacier": "Buzul",
-  "trait.mattermod.hydraulics.glacier.desc": "Buz köprüleri 3 kat daha uzun dayanır.",
+  "trait.mattermod.hydraulics.glacier.desc": "Buz köprüleri 3 blok geniş olur ve 3 kat daha uzun dayanır.",
   "trait.mattermod.hydraulics.rapids": "Akıntı",
   "trait.mattermod.hydraulics.rapids.desc": "Su üstündeki Su atışları tekneleri ve yaratıkları taşıyan 2/4/6 genişliğinde bir dalga kaldırır.",
   "trait.mattermod.hydraulics.common_slipstream": "Dümen Suyu",
@@ -403,5 +403,7 @@
   "trait.mattermod.cultivation.bountiful": "Bereket",
   "trait.mattermod.cultivation.bountiful.desc": "Ekinler daha fazla ürün verir.",
   "trait.mattermod.cultivation.cross_pollination": "Çapraz Tozlaşma",
-  "trait.mattermod.cultivation.cross_pollination.desc": "Hasat, yakındaki genç ekinleri bir aşama büyütür."
+  "trait.mattermod.cultivation.cross_pollination.desc": "Hasat, yakındaki genç ekinleri bir aşama büyütür.",
+  "death.attack.mattermod.beam": "%1$s, %2$s tarafından parçalarına ayrıldı",
+  "death.attack.mattermod.beam.item": "%1$s, %2$s tarafından %3$s kullanılarak parçalarına ayrıldı"
 }

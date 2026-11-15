@@ -281,7 +281,7 @@
   "trait.mattermod.hydraulics.common_gills": "Жабры",
   "trait.mattermod.hydraulics.common_gills.desc": "Дышите под водой.",
   "trait.mattermod.hydraulics.glacier": "Ледник",
-  "trait.mattermod.hydraulics.glacier.desc": "Ледяные мосты держатся в 3 раза дольше.",
+  "trait.mattermod.hydraulics.glacier.desc": "Ледяные мосты шириной 3 блока и держатся в 3 раза дольше.",
   "trait.mattermod.hydraulics.rapids": "Пороги",
   "trait.mattermod.hydraulics.rapids.desc": "Водяные выстрелы над водой поднимают волну шириной 2/4/6, которая несёт лодки и существ.",
   "trait.mattermod.hydraulics.common_slipstream": "Кильватер",
@@ -403,5 +403,7 @@
   "trait.mattermod.cultivation.bountiful": "Изобилие",
   "trait.mattermod.cultivation.bountiful.desc": "Растения дают больше урожая.",
   "trait.mattermod.cultivation.cross_pollination": "Перекрёстное опыление",
-  "trait.mattermod.cultivation.cross_pollination.desc": "Сбор урожая растит соседние молодые растения на одну стадию."
+  "trait.mattermod.cultivation.cross_pollination.desc": "Сбор урожая растит соседние молодые растения на одну стадию.",
+  "death.attack.mattermod.beam": "%1$s был дезинтегрирован %2$s",
+  "death.attack.mattermod.beam.item": "%1$s был дезинтегрирован %2$s с помощью %3$s"
 }

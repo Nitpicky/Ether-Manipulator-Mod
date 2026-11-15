@@ -98,5 +98,7 @@ if (project.hasProperty('playtest')) {
         systemProperty 'mattermod.uiProbe', shots ? 'false' : 'true'
         systemProperty 'mattermod.hoverScreenshots', project.hasProperty('hoverTest') ? 'true' : 'false'
         systemProperty 'mattermod.noScreenshots', shots ? 'false' : 'true'
+        // -PstopAfter=<tick> ends the screenshot tour early (the shader-pack run only needs the beam)
+        if (project.hasProperty('stopAfter')) systemProperty 'mattermod.stopAfter', project.property('stopAfter')
     }
 }

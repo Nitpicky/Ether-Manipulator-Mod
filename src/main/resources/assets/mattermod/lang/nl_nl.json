@@ -281,7 +281,7 @@
   "trait.mattermod.hydraulics.common_gills": "Kieuwen",
   "trait.mattermod.hydraulics.common_gills.desc": "Adem onder water.",
   "trait.mattermod.hydraulics.glacier": "Gletsjer",
-  "trait.mattermod.hydraulics.glacier.desc": "Vorstbruggen blijven 3 keer zo lang.",
+  "trait.mattermod.hydraulics.glacier.desc": "Vorstbruggen zijn 3 blokken breed en blijven 3x zo lang staan.",
   "trait.mattermod.hydraulics.rapids": "Stroomversnelling",
   "trait.mattermod.hydraulics.rapids.desc": "Waterschoten boven water wekken een golf van 2/4/6 breed die boten en wezens draagt.",
   "trait.mattermod.hydraulics.common_slipstream": "Kielzog",
@@ -403,5 +403,7 @@
   "trait.mattermod.cultivation.bountiful": "Overvloed",
   "trait.mattermod.cultivation.bountiful.desc": "Gewassen leveren extra opbrengst.",
   "trait.mattermod.cultivation.cross_pollination": "Kruisbestuiving",
-  "trait.mattermod.cultivation.cross_pollination.desc": "Oogsten laat jonge gewassen in de buurt een stadium groeien."
+  "trait.mattermod.cultivation.cross_pollination.desc": "Oogsten laat jonge gewassen in de buurt een stadium groeien.",
+  "death.attack.mattermod.beam": "%2$s desintegreerde %1$s",
+  "death.attack.mattermod.beam.item": "%2$s desintegreerde %1$s met %3$s"
 }

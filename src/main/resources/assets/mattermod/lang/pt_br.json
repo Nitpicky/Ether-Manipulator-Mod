@@ -281,7 +281,7 @@
   "trait.mattermod.hydraulics.common_gills": "Guelras",
   "trait.mattermod.hydraulics.common_gills.desc": "Respire debaixo d'água.",
   "trait.mattermod.hydraulics.glacier": "Geleira",
-  "trait.mattermod.hydraulics.glacier.desc": "Pontes de geada duram 3 vezes mais.",
+  "trait.mattermod.hydraulics.glacier.desc": "As pontes de geada têm 3 blocos de largura e duram 3x mais.",
   "trait.mattermod.hydraulics.rapids": "Corredeiras",
   "trait.mattermod.hydraulics.rapids.desc": "Disparos de água sobre a água erguem uma onda de 2/4/6 de largura que leva barcos e criaturas.",
   "trait.mattermod.hydraulics.common_slipstream": "Esteira",
@@ -403,5 +403,7 @@
   "trait.mattermod.cultivation.bountiful": "Fartura",
   "trait.mattermod.cultivation.bountiful.desc": "As plantações rendem colheita extra.",
   "trait.mattermod.cultivation.cross_pollination": "Polinização cruzada",
-  "trait.mattermod.cultivation.cross_pollination.desc": "Colher faz plantações jovens próximas crescerem um estágio."
+  "trait.mattermod.cultivation.cross_pollination.desc": "Colher faz plantações jovens próximas crescerem um estágio.",
+  "death.attack.mattermod.beam": "%2$s desintegrou %1$s",
+  "death.attack.mattermod.beam.item": "%2$s desintegrou %1$s com %3$s"
 }

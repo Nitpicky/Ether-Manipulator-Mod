@@ -281,7 +281,7 @@
   "trait.mattermod.hydraulics.common_gills": "Gälar",
   "trait.mattermod.hydraulics.common_gills.desc": "Andas under vatten.",
   "trait.mattermod.hydraulics.glacier": "Glaciär",
-  "trait.mattermod.hydraulics.glacier.desc": "Frostbroar håller 3 gånger längre.",
+  "trait.mattermod.hydraulics.glacier.desc": "Frostbroar är 3 block breda och håller 3 gånger längre.",
   "trait.mattermod.hydraulics.rapids": "Forsar",
   "trait.mattermod.hydraulics.rapids.desc": "Vattenskott över vatten reser en våg 2/4/6 bred som bär båtar och varelser.",
   "trait.mattermod.hydraulics.common_slipstream": "Kölvatten",
@@ -403,5 +403,7 @@
   "trait.mattermod.cultivation.bountiful": "Riklig skörd",
   "trait.mattermod.cultivation.bountiful.desc": "Grödor ger extra avkastning.",
   "trait.mattermod.cultivation.cross_pollination": "Korspollinering",
-  "trait.mattermod.cultivation.cross_pollination.desc": "Skörd får unga grödor i närheten att växa ett steg."
+  "trait.mattermod.cultivation.cross_pollination.desc": "Skörd får unga grödor i närheten att växa ett steg.",
+  "death.attack.mattermod.beam": "%1$s desintegrerades av %2$s",
+  "death.attack.mattermod.beam.item": "%1$s desintegrerades av %2$s med %3$s"
 }
