@@ -167,7 +167,12 @@ final class GolemArcs {
         }
         for (int attempt = 0; attempt < 8; attempt++) {
             GeoBone bone = bones.get(RNG.nextInt(bones.size()));
-            Vector3f a = surfacePoint(bone), b = surfacePoint(bone);
+            List<GeoCube> cubes = bone.getCubes();
+            GeoCube cube = cubes.get(RNG.nextInt(cubes.size()));
+            GeoQuad[] quads = cube.quads();
+            if (quads.length == 0) continue;
+            GeoQuad q = quads[RNG.nextInt(quads.length)];     // both ends on one face: every side of it gets arcs alike
+            Vector3f a = surfacePoint(cube, q), b = surfacePoint(cube, q);
             if (a == null || b == null) continue;
             float d = a.distance(b);
             if (d < 5 || d > 12) continue;
@@ -183,18 +188,24 @@ final class GolemArcs {
         }
     }
 
-    /** A random point on one of the bone's cube faces, pushed 0.6 units out along the face. */
-    private static Vector3f surfacePoint(GeoBone bone) {
-        List<GeoCube> cubes = bone.getCubes();
-        GeoCube c = cubes.get(RNG.nextInt(cubes.size()));
-        GeoQuad[] quads = c.quads();
-        if (quads.length == 0) return null;
-        GeoQuad q = quads[RNG.nextInt(quads.length)];
+    /** A random point on a cube face, pushed 0.6 units out of the cube. "Out" is measured from the cube's centre, not taken
+     *  from the quad's normal: those pointed inward on some faces, burying the arcs there (one side of the model had none). */
+    private static Vector3f surfacePoint(GeoCube c, GeoQuad q) {
         if (q == null || q.vertices().length < 4) return null;
         float s = RNG.nextFloat(), t = RNG.nextFloat();
         Vector3f p0 = q.vertices()[0].position(), p1 = q.vertices()[1].position(), p2 = q.vertices()[2].position(), p3 = q.vertices()[3].position();
         Vector3f top = new Vector3f(p0).lerp(p1, s), bottom = new Vector3f(p3).lerp(p2, s);
         Vector3f p = top.lerp(bottom, t).mul(vertexScale);
-        return p.add(new Vector3f(q.normal()).mul(.6f));
+        Vector3f centre = new Vector3f(), face = new Vector3f();
+        for (GeoQuad o : c.quads()) if (o != null) for (var v : o.vertices()) centre.add(v.position());
+        int n = 0;
+        for (GeoQuad o : c.quads()) if (o != null) n += o.vertices().length;
+        if (n == 0) return null;
+        centre.div(n).mul(vertexScale);
+        for (var v : q.vertices()) face.add(v.position());
+        face.div(q.vertices().length).mul(vertexScale);
+        Vector3f out = face.sub(centre);
+        if (out.lengthSquared() < 1e-6) return null;
+        return p.add(out.normalize().mul(.6f));
     }
 }

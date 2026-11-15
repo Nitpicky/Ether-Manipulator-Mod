@@ -388,7 +388,10 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
         LivingEntity t = getTarget();
         // anything more than a few steps away, it gallops; it keeps galloping until it is close (no flicker between gaits)
         double go = strideOn ? 4 : 7;
-        if (t != null) return distanceToSqr(t) > go * go;
+        if (t != null) {           // it gallops right into melee: walking the last stretch was far too slow
+            double reach = REACH + t.getBbWidth() / 2 + 1;
+            return distanceToSqr(t) > reach * reach;
+        }
         double d = distanceToSqr(owner);
         return d > (go + 1) * (go + 1) || owner.isSprinting() && d > FOLLOW_DISTANCE * FOLLOW_DISTANCE * 2;
     }
@@ -878,6 +881,12 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
         float prev = actionFrame;
         actionFrame += animSpeed();
         float f = actionFrame;
+        if (action == Action.DISPENSER && owner != null && actionFrame <= DISPENSER_FIRE) {
+            // the cannons follow where its owner is aiming right up to the shot, not where they aimed when they clicked
+            var look = GolemControl.aim(owner, this);
+            actionTarget = GolemControl.target(look);
+            actionAim = look.getLocation();
+        }
         Vec3 aim = aimPoint();
         boolean early = f < (action == Action.SWEEP ? SWEEP_HIT : action == Action.PISTON ? PISTON_HIT - 4 : DISPENSER_FIRE);
         if (early) face(aim);
@@ -975,6 +984,8 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
     private void pistonHit(ServerPlayer owner) {
         playSound(com.mattermod.registry.ModSounds.GOLEM_SLAM.get(), 1, 1);
         playSound(com.mattermod.registry.ModSounds.GOLEM_SPARK_HIT.get(), 1, 1);
+        // the blast itself: as big as a creeper's (vanilla explosion, a little lower and heavier)
+        level().playSound(null, getX(), getY(), getZ(), SoundEvents.GENERIC_EXPLODE.value(), getSoundSource(), 2.5f, .8f + random.nextFloat() * .1f);
         Vec3 fwd = Vec3.directionFromRotation(0, getYRot());
         Vec3 c = position().add(fwd.scale(1.6));
         bout(owner, new AABB(c, c).inflate(SLAM_RADIUS, 2, SLAM_RADIUS));
@@ -1051,7 +1062,14 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
 
     private boolean overheatPending;
 
+    /** Overcharged, each blow that lands keeps it going this much longer (up to the full Overcharge time). */
+    static final int OVERCHARGE_PER_HIT = 30;
+
     private void stoke(ServerPlayer owner, int hits) {
+        if (overheated() && action != Action.OVERHEAT && overheatTicks > 0) {
+            overheatTicks = Math.min(OVERHEAT_TICKS, overheatTicks + OVERCHARGE_PER_HIT * hits);   // keeps fighting, stays charged
+            return;
+        }
         if (!hasCommon(owner, 0) || overheated() || overheatPending) return;
         heat += hits;
         lastStoke = tickCount;
@@ -1448,7 +1466,12 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
             double climb = hasRockets() ? CLIMB_UP : CLIMB;
             setDeltaMovement(v.x, Math.min(Math.max(v.y, -.2) + (hasRockets() ? THRUST_UP : THRUST), climb), v.z);
             fallDistance = 0;
-            if (!was) playSound(com.mattermod.registry.ModSounds.GOLEM_ROCKET.get(), .72f, 1);
+            if (!was) {
+                // ridden, only the rider's client runs the boots: a sound played there must be local (playSound would go
+                // to the server's players only, i.e. nobody)
+                if (level().isClientSide) level().playLocalSound(getX(), getY(), getZ(), com.mattermod.registry.ModSounds.GOLEM_ROCKET.get(), getSoundSource(), .72f * SOUND_GAIN, 1, false);
+                else playSound(com.mattermod.registry.ModSounds.GOLEM_ROCKET.get(), .72f, 1);
+            }
         } else {
             gliding = true;
             if (v.y < GLIDE) setDeltaMovement(v.x, GLIDE, v.z);
