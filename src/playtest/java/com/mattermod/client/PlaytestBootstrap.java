@@ -291,6 +291,9 @@ public final class PlaytestBootstrap {
             case 225 -> opts.keyAttack.setDown(true);
             case 245 -> shot(mc, "06_combat_level1");
             case 290 -> shot(mc, "07_combat_ramped");
+            // the beam swung up into the clouds: effects must draw in front of them
+            case 291 -> mc.player.setXRot(-55);
+            case 294 -> shot(mc, "07b_beam_clouds");
             case 295 -> opts.keyAttack.setDown(false);
 
             // ---- Charge and fire an orb --------------------------------------------

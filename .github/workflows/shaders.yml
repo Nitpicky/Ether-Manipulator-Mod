@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       pack:
-        description: Modrinth slug of the shader pack
+        description: Modrinth slug of the shader pack (none = Sodium + Iris with shaders off)
         default: complementary-reimagined
 permissions:
   contents: write
@@ -34,6 +34,7 @@ jobs:
           }
           read -r url name <<< "$(get sodium neoforge)"; curl -fsSL -o "runs/client/mods/$name" "$url"; echo "Sodium: $name"
           read -r url name <<< "$(get iris neoforge)"; curl -fsSL -o "runs/client/mods/$name" "$url"; echo "Iris: $name"
+          if [ "$PACK" = none ]; then printf 'enableShaders=false\n' > runs/client/config/iris.properties; exit 0; fi
           read -r url name <<< "$(curl -fsSL -A mattermod-ci "https://api.modrinth.com/v2/project/$PACK/version?loaders=%5B%22iris%22%5D" | jq -r '.[0].files[] | select(.primary) | .url + " " + .filename')"
           curl -fsSL -o "runs/client/shaderpacks/$name" "$url"; echo "Pack: $name"
           printf 'enableShaders=true\nshaderPack=%s\n' "$name" > runs/client/config/iris.properties
@@ -58,9 +59,9 @@ jobs:
           git fetch origin playtest-results
           git worktree add /tmp/pr origin/playtest-results
           cd /tmp/pr && git checkout -B playtest-results
-          rm -rf shaders/latest && mkdir -p shaders/latest "shaders/$SHA"
-          cp $GITHUB_WORKSPACE/out/* shaders/latest/ 2>/dev/null || true
-          cp $GITHUB_WORKSPACE/out/* "shaders/$SHA"/ 2>/dev/null || true
+          D="shaders/${{ github.event.inputs.pack }}"
+          rm -rf "$D" && mkdir -p "$D"
+          cp $GITHUB_WORKSPACE/out/* "$D"/ 2>/dev/null || true
           git add -A
           git commit -qm "Shader shots for $SHA" || true
-          git push -q origin playtest-results
+          for i in 1 2 3 4; do git push -q origin playtest-results && break; git pull -q --rebase origin playtest-results; done
