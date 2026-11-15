@@ -1056,6 +1056,14 @@ public final class PlaytestBootstrap {
                         int jumps = g == null || hs.isEmpty() ? 0 : g.chainArcs(p, hs.get(0));
                         log((jumps >= 2 ? "PASS" : "FAIL") + " golem: Supercharged arc chained through " + jumps + " more husks (want 2)");
                     });
+            // the server can lag the client by many ticks here: the arrow starts just outside the wall, crossing at once
+            case 1441 ->
+                    server(mc, (s, p) -> {
+                        var g = com.mattermod.entity.GolemControl.golem(p);
+                        if (g != null)
+                            run(s, String.format(java.util.Locale.ROOT, "summon arrow %.2f %.2f %.2f {Motion:[-1.5d,0.0d,0.0d],Tags:[\"fieldtest\"]}",
+                                    g.getX() + 4.2, g.getY() + 2, g.getZ() + 2.5));
+                    });
             case 1442 -> log((com.mattermod.client.GolemFx.liveChains() > 0 ? "PASS" : "FAIL")
                     + " golem: the client drew the arc chain (" + com.mattermod.client.GolemFx.liveChains() + " live)");
             case 1443 -> shot(mc, "35b_golem_arcs_field");
@@ -1082,16 +1090,13 @@ public final class PlaytestBootstrap {
                 var g = com.mattermod.entity.GolemControl.golem(p);
                 if (g == null) return;
                 log("golem field: overheated=" + g.overheated() + " blocks=" + g.fieldBlocks);
-                run(s, String.format(java.util.Locale.ROOT, "summon arrow %.2f %.2f %.2f {Motion:[-1.5d,0.0d,0.0d],Tags:[\"fieldtest\"]}",
-                        g.getX() + 7, g.getY() + 2, g.getZ() + 2.5));
             });
             case 1452 ->
                     server(mc, (s, p) -> {
                         var g = com.mattermod.entity.GolemControl.golem(p);
                         var arrows = p.serverLevel().getEntitiesOfClass(net.minecraft.world.entity.projectile.AbstractArrow.class,
                                 p.getBoundingBox().inflate(60), a -> a.getTags().contains("fieldtest"));
-                        boolean stopped = g != null && g.fieldBlocks > 0
-                                && arrows.stream().noneMatch(a -> a.getX() < g.getX() + 3);
+                        boolean stopped = g != null && g.fieldBlocks > 0 && arrows.isEmpty();
                         log((stopped ? "PASS" : "FAIL") + " golem: the Cube Field stopped the arrow (blocks "
                                 + (g == null ? -1 : g.fieldBlocks) + ", arrows left " + arrows.size() + ")");
                         arrows.forEach(net.minecraft.world.entity.Entity::discard);
