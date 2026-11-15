@@ -77,7 +77,7 @@ public final class RedesignEffects {
                     p,
                     Attributes.ATTACK_DAMAGE,
                     MELEE,
-                    Traits.hasLine(st, Traits.COMBAT) ? 1 : 0,
+                    meleeBonus(p),
                     AttributeModifier.Operation.ADD_VALUE);
             attribute(
                     p,
@@ -312,14 +312,23 @@ public final class RedesignEffects {
                 && !(e instanceof net.minecraft.world.entity.decoration.ArmorStand);
     }
 
+    /** The Manipulator's melee bonus (Plasmic: Melee Damage +1); the Redstone Golem's blows carry it too. */
+    public static float meleeBonus(ServerPlayer p) {
+        return Traits.hasLine(Manipulator.stack(p), Traits.COMBAT) ? 1 : 0;
+    }
+
+    /** The Manipulator's ranged bonus (Kinetic: Fully Charged Ranged Damage +3); the Golem's Dispenser bolts carry it too. */
+    public static float rangedBonus(ServerPlayer p) {
+        return Traits.hasLine(Manipulator.stack(p), Traits.ORB) ? 3 : 0;
+    }
+
     @SubscribeEvent
     public static void ranged(LivingIncomingDamageEvent ev) {
         if (ev.getSource().getEntity() instanceof ServerPlayer p
                 && ev.getSource().getDirectEntity()
                         instanceof net.minecraft.world.entity.projectile.AbstractArrow arrow
-                && arrow.isCritArrow()
-                && Traits.hasLine(Manipulator.stack(p), Traits.ORB))
-            ev.setAmount(ev.getAmount() + 3);
+                && arrow.isCritArrow())
+            ev.setAmount(ev.getAmount() + rangedBonus(p));
         if (ev.getSource().getEntity() instanceof Mob summon
                 && summon.getPersistentData().hasUUID("mm_summoner")) {
             var owner =

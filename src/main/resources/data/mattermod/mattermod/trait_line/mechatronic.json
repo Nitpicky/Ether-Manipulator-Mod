@@ -13,7 +13,7 @@
     {
       "id": "mechatronic.redstone_furnace",
       "name": "Redstone Furnace",
-      "description": "Its blows stoke the furnace. Fully stoked, it flies into a Primal Rage: a roar raises a Cube Field around it that stops enemy projectiles, then for 6s it moves 50% faster, hits 50% harder, throws foes much further and sets them on fire. Left alone, the heat drains away."
+      "description": "Its blows build up charge. Fully charged, it Overcharges: a roar raises a Cube Field around it that stops enemy projectiles, then for 6s it moves 50% faster, hits 50% harder and throws foes much further. Left alone, the charge drains away."
     },
     {
       "id": "mechatronic.saddle",
@@ -37,12 +37,12 @@
     {
       "id": "mechatronic.ministrosities",
       "name": "Ministrosities",
-      "description": "When it blows, 3 Ministrosities scramble up out of the ground to fight beside it. They crumble when it goes."
+      "description": "When it Overcharges, 3 Ministrosities scramble up out of the ground to fight beside it. They crumble when it goes."
     },
     {
       "id": "mechatronic.supercharged",
       "name": "Supercharged",
-      "description": "In its Primal Rage it crackles with arcs: every blow it lands arcs on to up to 3 more enemies within 5 blocks, 5 damage each, and it takes 30% less damage."
+      "description": "Overcharged, it crackles with arcs: every blow it lands arcs on to up to 3 more enemies within 5 blocks, 5 damage each, and it takes 30% less damage."
     }
   ],
   "grandmaster": [

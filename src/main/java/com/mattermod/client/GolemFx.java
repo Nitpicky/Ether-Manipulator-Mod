@@ -30,7 +30,7 @@ import java.util.Map;
 /**
  * The Redstone Golem's Winston-style effects, client side.
  *
- * <p>Cube Field (Primal Rage): a 7 x 5 x 7 box around the Golem drawn at 16 pixels a block, redrawn every tick into one
+ * <p>Cube Field (Overcharge): a 7-block cube centred on the Golem drawn at 16 pixels a block, redrawn every tick into one
  * texture (four walls stacked, then the roof) and drawn additive and full bright: a faint offset-brick grid (cells 6 x 4
  * px), a bright rim, a shimmer band climbing the walls, cells flickering on; it rises from the ground and the roof closes
  * from the rim as it goes up, a stopped shot sends a square ripple out, and it breaks up pixel by pixel as it goes down.
@@ -166,11 +166,11 @@ public final class GolemFx {
 
     // ---- Cube Field ----------------------------------------------------------------------------
 
-    static final int W = (int) (RedstoneGolem.FIELD_HALF * 32), H = (int) (RedstoneGolem.FIELD_HEIGHT * 16);
-    /** The texture: walls north, south, west, east (W x H each, top row = the top of the wall), then the roof (W x W). */
-    static final int TEX_H = 4 * H + W;
-    static final int DEPLOY = 16, ROOF_FROM = 14, ROOF_LEN = 8, COLLAPSE = 10;
-    /** Ember orange: the Golem's overheat colour; bright pixels run to white-hot. */
+    static final int W = (int) (RedstoneGolem.FIELD_HALF * 32), H = W;
+    /** The texture: walls north, south, west, east (top row = the top of the wall), then the roof and the floor, W x W each. */
+    static final int TEX_H = 6 * W;
+    static final int FLOOR_LEN = 8, DEPLOY = 16, ROOF_FROM = 14, ROOF_LEN = 8, COLLAPSE = 10;
+    /** The field's orange; bright pixels run to white-hot. */
     static final int[] TINT = {255, 84, 24};
 
     private static final Map<Integer, Field> FIELDS = new HashMap<>();
@@ -213,12 +213,12 @@ public final class GolemFx {
         }
 
         void hit(RedstoneGolem g, Vec3 p) {
-            double x = p.x - g.getX(), y = p.y - g.getY(), z = p.z - g.getZ();
-            double hw = RedstoneGolem.FIELD_HALF, top = RedstoneGolem.FIELD_HEIGHT;
+            double x = p.x - g.getX(), y = p.y - g.getY() - g.fieldCentreOffset(), z = p.z - g.getZ();
+            double hw = RedstoneGolem.FIELD_HALF, top = hw;
             int face, u, v;
-            double dRoof = Math.abs(y - top), dx = hw - Math.abs(x), dz = hw - Math.abs(z);
-            if (dRoof < Math.min(dx, dz)) {
-                face = 4;
+            double dCap = hw - Math.abs(y), dx = hw - Math.abs(x), dz = hw - Math.abs(z);
+            if (dCap < Math.min(dx, dz)) {
+                face = y > 0 ? 4 : 5;
                 u = (int) ((x + hw) * 16);
                 v = (int) ((z + hw) * 16);
             } else if (dz <= dx) {
@@ -246,15 +246,16 @@ public final class GolemFx {
             int since = t - g.fieldOnTick, gone = t - g.fieldOffTick;
             float rise = live ? Math.min(1, since / (float) DEPLOY) : 1;
             float roof = live ? Math.max(0, Math.min(1, (since - ROOF_FROM) / (float) ROOF_LEN)) : 1;
+            float floor = live ? Math.min(1, since / (float) FLOOR_LEN) : 1;
             float fade = live ? 1 : Math.max(0, 1 - gone / (float) COLLAPSE);
             NativeImage img = tex.getPixels();
             if (img == null) return;
-            for (int face = 0; face < 5; face++) {
-                boolean isTop = face == 4;
-                int fh = isTop ? W : H, y0 = face * H;
+            for (int face = 0; face < 6; face++) {
+                boolean isTop = face >= 4;
+                int fh = W, y0 = face * W;
                 for (int y = 0; y < fh; y++)
                     for (int x = 0; x < W; x++) {
-                        float a = pixel(face, isTop, x, y, fh, t, rise, roof, fade, live);
+                        float a = pixel(face, isTop, x, y, fh, t, rise, face == 5 ? floor : roof, fade, live);
                         float w = Math.max(0, a - .6f) / .4f;
                         int r = (int) (TINT[0] * a + (255 - TINT[0]) * w * a), gg = (int) (TINT[1] * a + (255 - TINT[1]) * w * a),
                                 b = (int) (TINT[2] * a + (255 - TINT[2]) * w * a);
@@ -321,18 +322,22 @@ public final class GolemFx {
         f.redraw(g);
         VertexConsumer vc = buffers.getBuffer(RenderType.eyes(f.id));
         PoseStack.Pose p = pose.last();
-        float hw = (float) RedstoneGolem.FIELD_HALF, top = (float) RedstoneGolem.FIELD_HEIGHT;
-        float band = H / (float) TEX_H, roofV0 = 4 * band;
+        float hw = (float) RedstoneGolem.FIELD_HALF, mid = (float) g.fieldCentreOffset(), bottom = mid - hw, top = mid + hw;
+        float band = 1 / 6f;
         // walls: corners from the bottom-left as seen from outside, u along the wall, v from the top of the band
-        wall(vc, p, -hw, -hw, hw, -hw, 0, top, 0 * band, band);   // north: x -> +x at z = -hw
-        wall(vc, p, -hw, hw, hw, hw, 0, top, 1 * band, band);     // south
-        wall(vc, p, -hw, -hw, -hw, hw, 0, top, 2 * band, band);   // west: z -> +z at x = -hw
-        wall(vc, p, hw, -hw, hw, hw, 0, top, 3 * band, band);     // east
-        // roof: u along x, v along z
-        float[][] roof = {{-hw, -hw, 0, roofV0}, {hw, -hw, 1, roofV0}, {hw, hw, 1, 1}, {-hw, hw, 0, 1}};
-        for (int n = 0; n < 8; n++) {
-            float[] c = roof[n < 4 ? n : 7 - n];
-            vertex(vc, p, c[0], top, c[1], c[2], c[3]);
+        wall(vc, p, -hw, -hw, hw, -hw, bottom, top, 0 * band, band);   // north: x -> +x at z = -hw
+        wall(vc, p, -hw, hw, hw, hw, bottom, top, 1 * band, band);     // south
+        wall(vc, p, -hw, -hw, -hw, hw, bottom, top, 2 * band, band);   // west: z -> +z at x = -hw
+        wall(vc, p, hw, -hw, hw, hw, bottom, top, 3 * band, band);     // east
+        cap(vc, p, hw, top, 4 * band, band);                           // roof: u along x, v along z
+        cap(vc, p, hw, bottom, 5 * band, band);                        // floor
+    }
+
+    private static void cap(VertexConsumer vc, PoseStack.Pose p, float hw, float y, float v0, float vh) {
+        float[][] q = {{-hw, -hw, 0, v0}, {hw, -hw, 1, v0}, {hw, hw, 1, v0 + vh}, {-hw, hw, 0, v0 + vh}};
+        for (int n = 0; n < 8; n++) {   // both windings
+            float[] c = q[n < 4 ? n : 7 - n];
+            vertex(vc, p, c[0], y, c[1], c[2], c[3]);
         }
     }
 

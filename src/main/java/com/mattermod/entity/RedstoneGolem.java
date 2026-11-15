@@ -60,7 +60,7 @@ import java.util.UUID;
  * GolemControl}), never saved with the world. It follows its owner, defends them, takes orders
  * (attack / hold / follow) and, with its traits, punches (Piston Arm) or shoots (Dispenser Arm),
  * runs (Stride Servos) or flies up (Rocket Boots), can be ridden (Saddle, with a horse-style charged jump), and
- * its overheat is a Primal Rage under a Cube Field that builds Ministrosities or arcs its blows on (Supercharged).
+ * its Overcharge raises a Cube Field that builds Ministrosities or arcs its blows on (Supercharged).
  *
  * <p>Animations come from golem-model/geckolib/export_geckolib.py (20 fps). Attack timings below
  * are in animation frames and run 1.5x faster while the Redstone Furnace is overheated.
@@ -894,12 +894,11 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
             double d = to.length();
             if (d > LIFT_REACH + e.getBbWidth() / 2 + getBbWidth() / 2) continue;
             if (d > .01 && to.normalize().dot(fwd) < .2) continue;          // in front only
-            if (!e.hurt(damageSources().mobAttack(this), dealt((float) getAttributeValue(Attributes.ATTACK_DAMAGE)))) continue;
+            if (!e.hurt(damageSources().mobAttack(this), melee(owner, (float) getAttributeValue(Attributes.ATTACK_DAMAGE)))) continue;
             // straight up, like the iron golem's toss; raging, it hurls them up and away
             double k = knock();
             e.setDeltaMovement(fwd.x * (k > 1 ? .9 : .12), 1.15 * (k > 1 ? 1.2 : 1), fwd.z * (k > 1 ? .9 : .12));
             e.hurtMarked = true;
-            if (overheated()) e.igniteForSeconds(4);
             landed(owner, e);
             hits++;
         }
@@ -924,11 +923,10 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
             Vec3 to = e.position().subtract(c).multiply(1, 0, 1);
             double d = to.length();
             if (d > SLAM_RADIUS + e.getBbWidth() / 2 || Math.abs(e.getY() - getY()) > 2.5) continue;
-            if (!e.hurt(damageSources().mobAttack(this), dealt(PISTON_DAMAGE))) continue;
+            if (!e.hurt(damageSources().mobAttack(this), melee(owner, PISTON_DAMAGE))) continue;
             Vec3 push = (d > .01 ? to.normalize() : fwd).scale((1.5 - .2 * d) * knock());
             e.setDeltaMovement(e.getDeltaMovement().add(push.x, .7 * Math.sqrt(knock()), push.z));
             e.hurtMarked = true;
-            if (overheated()) e.igniteForSeconds(4);
             landed(owner, e);
             hits++;
         }
@@ -1132,29 +1130,50 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
         if (charged()) chainArcs(owner, e);
     }
 
-    /** Primal Rage (overheated): it hits harder and throws foes much further. */
+    /** Overcharge (overheated() in code): it hits harder and throws foes much further. */
     public static final float RAGE_HIT = 1.5f;
     public static final double RAGE_KNOCK = 1.7;
 
-    /** Damage dealt, with the Primal Rage. */
+    /** Damage dealt, with the Overcharge. */
     float dealt(float base) {
         return overheated() ? base * RAGE_HIT : base;
+    }
+
+    /** Its melee blows (the lift, the Piston slam) carry the owner's Matter Manipulator melee bonus. */
+    private float melee(ServerPlayer owner, float base) {
+        return dealt(base + (owner == null ? 0 : com.mattermod.trait.RedesignEffects.meleeBonus(owner)));
+    }
+
+    /** Its Dispenser bolts carry the owner's Matter Manipulator ranged bonus. */
+    float boltDamage(ServerPlayer owner) {
+        return dealt(BOLT_DAMAGE + (owner == null ? 0 : com.mattermod.trait.RedesignEffects.rangedBonus(owner)));
     }
 
     private double knock() {
         return overheated() ? RAGE_KNOCK : 1;
     }
 
-    // ---- Cube Field (Primal Rage) -------------------------------------------------------------
+    // ---- Cube Field (Overcharge) -------------------------------------------------------------
 
-    /** The Cube Field it raises as it blows: 7 x 5 x 7 blocks around its feet, moving with it, for the whole overheat.
+    /** The Cube Field it raises as it overcharges: a 7-block cube centred on it, moving with it, for the whole Overcharge.
      *  Hostile projectiles can't cross it either way; friendly ones (its own, its owner's, players') pass. */
-    public static final double FIELD_HALF = 3.5, FIELD_HEIGHT = 5;
+    public static final double FIELD_HALF = 3.5;
     /** Playtest/debug: projectiles the field has stopped. */
     public int fieldBlocks;
 
+    /** The field: a cube centred on the middle of its body. */
     public AABB fieldBox() {
-        return new AABB(getX() - FIELD_HALF, getY(), getZ() - FIELD_HALF, getX() + FIELD_HALF, getY() + FIELD_HEIGHT, getZ() + FIELD_HALF);
+        double cy = fieldCentreY();
+        return new AABB(getX() - FIELD_HALF, cy - FIELD_HALF, getZ() - FIELD_HALF, getX() + FIELD_HALF, cy + FIELD_HALF, getZ() + FIELD_HALF);
+    }
+
+    /** Height of the field's centre above its feet. */
+    public double fieldCentreOffset() {
+        return getBbHeight() / 2;
+    }
+
+    private double fieldCentreY() {
+        return getY() + fieldCentreOffset();
     }
 
     private void fieldTick(ServerPlayer owner) {
@@ -1540,10 +1559,10 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
         if (!recalling() && r.nextInt(3) == 0)
             level().addParticle(stageDust(1f), getX() + (r.nextDouble() - .5) * getBbWidth(), getY() + r.nextDouble() * getBbHeight(),
                     getZ() + (r.nextDouble() - .5) * getBbWidth(), 0, 0, 0);
-        if (overheated() && r.nextInt(2) == 0) {
-            level().addParticle(ParticleTypes.FLAME, getX() + (r.nextDouble() - .5) * 1.6, getY() + 1.4 + r.nextDouble(), getZ() + (r.nextDouble() - .5) * 1.6, 0, .04, 0);
-            if (r.nextInt(3) == 0) level().addParticle(ParticleTypes.LARGE_SMOKE, getX(), getY() + 2.6, getZ(), 0, .06, 0);
-        }
+        // Overcharge: electric sparks jump off it (no fire, no smoke)
+        if (overheated() && r.nextInt(2) == 0)
+            level().addParticle(ParticleTypes.ELECTRIC_SPARK, getX() + (r.nextDouble() - .5) * 1.8, getY() + .4 + r.nextDouble() * 2,
+                    getZ() + (r.nextDouble() - .5) * 1.8, (r.nextDouble() - .5) * .3, r.nextDouble() * .2, (r.nextDouble() - .5) * .3);
         // summon: it rises out of the ground (out by frame 20), the reverse of the recall
         long since = level().getGameTime() - builtAt();
         if (since >= 0 && since < 22) {
