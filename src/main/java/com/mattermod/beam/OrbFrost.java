@@ -21,13 +21,14 @@ final class OrbFrost {
     private OrbFrost() {}
 
     /**
-     * Charged Frost: lays a 1-wide ice bridge one block under the shard's
+     * Charged Frost: lays a 1-wide ice bridge (3-wide with Glacier) one block under the shard's
      * flight, so a level shot makes a walkable path at your feet's height. 8 blocks at phase 2, 16
      * at phase 3. The ice cracks and melts back after {@link #BRIDGE_TICKS}.
      */
     static void frostBridge(BeamBallEntity b, Vec3 from, Vec3 movement) {
         if (b.getMode() != OrbMode.FROST || b.getPhase() == 0) return;
         ServerLevel sl = (ServerLevel) b.level();
+        boolean wide = b.has("hydraulics.glacier");
         int steps = Math.max(1, (int) Math.ceil(movement.length() / 0.2));
         BlockPos previous = BlockPos.containing(from.x, from.y - 2, from.z);
         for (int i = 0; i <= steps; i++) {
@@ -36,27 +37,35 @@ final class OrbFrost {
             // A Manhattan connector closes diagonal corner gaps without widening the base bridge.
             BlockPos cursor = previous;
             while (!cursor.equals(next)) {
-                OrbFrost.layBridgeCell(b, sl, cursor);
+                OrbFrost.layBridgeCell(b, sl, cursor, wide);
                 if (cursor.getX() != next.getX())
                     cursor = cursor.offset(Integer.signum(next.getX() - cursor.getX()), 0, 0);
                 else if (cursor.getZ() != next.getZ())
                     cursor = cursor.offset(0, 0, Integer.signum(next.getZ() - cursor.getZ()));
                 else cursor = cursor.offset(0, Integer.signum(next.getY() - cursor.getY()), 0);
             }
-            OrbFrost.layBridgeCell(b, sl, next);
+            OrbFrost.layBridgeCell(b, sl, next, wide);
             previous = next;
         }
     }
 
-    static void layBridgeCell(BeamBallEntity b, ServerLevel sl, BlockPos q) {
-        if (!b.bridgeSeen.add(q.asLong()) || !b.mayBuild(q)) return;
-        if (b.getOwner() != null && b.getOwner().getBoundingBox().intersects(new AABB(q))) return;
-        if (WorldEffects.tempBlock(
-                sl, q, Blocks.PACKED_ICE.defaultBlockState(), OrbFrost.bridgeTicks(b), true))
-            WorldEffects.markBridge(sl, q, b.getUUID());
+    static void layBridgeCell(BeamBallEntity b, ServerLevel sl, BlockPos center, boolean wide) {
+        Vec3 motion = b.getDeltaMovement();
+        for (int w = wide ? -1 : 0; w <= (wide ? 1 : 0); w++) {
+            BlockPos q =
+                    Math.abs(motion.x) >= Math.abs(motion.z)
+                            ? center.offset(0, 0, w)
+                            : center.offset(w, 0, 0);
+            if (!b.bridgeSeen.add(q.asLong()) || !b.mayBuild(q)) continue;
+            if (b.getOwner() != null && b.getOwner().getBoundingBox().intersects(new AABB(q)))
+                continue;
+            if (WorldEffects.tempBlock(
+                    sl, q, Blocks.PACKED_ICE.defaultBlockState(), OrbFrost.bridgeTicks(b), true))
+                WorldEffects.markBridge(sl, q, b.getUUID());
+        }
     }
 
-    /** Frost bridges last 3x longer with Glacier. */
+    /** Frost bridges last 3x longer with Glacier (10s, 30s with it). */
     static int bridgeTicks(BeamBallEntity b) {
         return b.BRIDGE_TICKS * (b.has("hydraulics.glacier") ? 3 : 1);
     }

@@ -107,7 +107,7 @@ public class BeamBallEntity extends Projectile {
             SynchedEntityData.defineId(BeamBallEntity.class, EntityDataSerializers.BOOLEAN);
 
     /** How long Frost bridge blocks last, in ticks. */
-    public static final int BRIDGE_TICKS = 600;
+    public static final int BRIDGE_TICKS = 200;
 
     /** How long a Light orb's bounce lights last, in ticks (3 minutes). */
     static final int BOUNCE_LIGHT_TICKS = 3600;

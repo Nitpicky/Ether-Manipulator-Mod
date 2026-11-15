@@ -30,7 +30,7 @@
     {
       "id": "excavation.steady_hand",
       "name": "Steady Hand",
-      "description": "Held blocks snap to the grid where they will be set down. No weight, turning, bouncing or damage: pure building."
+      "description": "Held blocks lock to the grid, preview where they land and are set down exactly as shown."
     }
   ],
   "master": [
