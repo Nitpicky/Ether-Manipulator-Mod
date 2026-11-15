@@ -165,6 +165,10 @@ public final class ModNetwork {
                                         com.mattermod.trait.MobilityEffects.airJump(sp);
                                 }));
         reg.playToClient(
+                com.mattermod.network.payload.GolemFxPayload.TYPE,
+                com.mattermod.network.payload.GolemFxPayload.CODEC,
+                (p, ctx) -> ctx.enqueueWork(() -> com.mattermod.client.GolemFx.accept(p)));
+        reg.playToClient(
                 com.mattermod.network.payload.ModulePayloads.LodestarMark.TYPE,
                 com.mattermod.network.payload.ModulePayloads.LodestarMark.CODEC,
                 (p, ctx) -> ctx.enqueueWork(() -> com.mattermod.trait.Lodestar.clientMark = p));

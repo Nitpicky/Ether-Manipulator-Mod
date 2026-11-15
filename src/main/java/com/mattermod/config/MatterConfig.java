@@ -17,7 +17,7 @@ public final class MatterConfig {
 
     public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.ConfigValue<List<? extends String>> GEM_COLORS;
-    public static final ModConfigSpec.BooleanValue AUTO_GEMS, CHARGED_BREAKS_BLOCKS;
+    public static final ModConfigSpec.BooleanValue AUTO_GEMS;
 
     public static final ModConfigSpec.IntValue MATTER_REFILL,
             STASIS_TICKS,
@@ -55,9 +55,6 @@ public final class MatterConfig {
         SOUL_LIFETIME = b.defineInRange("soul_skeleton_lifetime_ticks", 600, 20, 12000);
         PHOTONIC_BEACON_TICKS = b.defineInRange("photonic_beacon_ticks", 600, 20, 24000);
         RADIANCE_HEAL = b.defineInRange("radiance_health_per_second", 1.0, 0.1, 20.0);
-        CHARGED_BREAKS_BLOCKS =
-                b.comment("Supercharged Golem: its blasts break blocks like a creeper's (the mobGriefing game rule must allow it too).")
-                        .define("supercharged_blasts_break_blocks", false);
         b.pop();
         SPEC = b.build();
     }

@@ -1037,6 +1037,28 @@ public final class PlaytestBootstrap {
                         boolean ok = g != null && !g.venting() && g.overheated();
                         log((ok ? "PASS" : "FAIL") + " golem: back in action and still overheated after the animation");
                     });
+            // Primal Rage: Supercharged arcs chain through a pack, the Cube Field stops a shot
+            case 1439 ->
+                    server(mc, (s, p) -> {
+                        var g = com.mattermod.entity.GolemControl.golem(p);
+                        if (g == null) return;
+                        double[][] at = {{0, 3.5}, {1.5, 5.5}, {-1.5, 7}};
+                        for (double[] o : at)
+                            run(s, String.format(java.util.Locale.ROOT, "summon husk %.2f %.2f %.2f {NoAI:1b,Tags:[\"golem_c\"]}",
+                                    g.getX() + o[0], g.getY(), g.getZ() + o[1]));
+                    });
+            case 1440 ->
+                    server(mc, (s, p) -> {
+                        var g = com.mattermod.entity.GolemControl.golem(p);
+                        var hs = p.serverLevel().getEntitiesOfClass(net.minecraft.world.entity.monster.Husk.class,
+                                p.getBoundingBox().inflate(40), h -> h.getTags().contains("golem_c"));
+                        hs.sort(java.util.Comparator.comparingDouble(h -> g == null ? 0 : h.distanceToSqr(g)));
+                        int jumps = g == null || hs.isEmpty() ? 0 : g.chainArcs(p, hs.get(0));
+                        log((jumps >= 2 ? "PASS" : "FAIL") + " golem: Supercharged arc chained through " + jumps + " more husks (want 2)");
+                    });
+            case 1442 -> log((com.mattermod.client.GolemFx.liveChains() > 0 ? "PASS" : "FAIL")
+                    + " golem: the client drew the arc chain (" + com.mattermod.client.GolemFx.liveChains() + " live)");
+            case 1443 -> shot(mc, "35b_golem_arcs_field");
             case 1444 -> shot(mc, "35_ministrosities");
             case 1445 ->
                     server(mc, (s, p) -> {
@@ -1053,7 +1075,32 @@ public final class PlaytestBootstrap {
                                         + " golem: Dispenser Arm bolts hit the far target");
                                 if (h != null) h.discard();
                             });
-            case 1447 -> server(mc, (s, p) -> { checkGemLoot(s, p); checkAdvancements(s, p); });
+            case 1447 -> server(mc, (s, p) -> {
+                checkGemLoot(s, p);
+                checkAdvancements(s, p);
+                run(s, "kill @e[type=husk,tag=golem_c]");
+                var g = com.mattermod.entity.GolemControl.golem(p);
+                if (g == null) return;
+                log("golem field: overheated=" + g.overheated() + " blocks=" + g.fieldBlocks);
+                run(s, String.format(java.util.Locale.ROOT, "summon arrow %.2f %.2f %.2f {Motion:[-1.5d,0.0d,0.0d],Tags:[\"fieldtest\"]}",
+                        g.getX() + 7, g.getY() + 2, g.getZ() + 2.5));
+            });
+            case 1452 ->
+                    server(mc, (s, p) -> {
+                        var g = com.mattermod.entity.GolemControl.golem(p);
+                        var arrows = p.serverLevel().getEntitiesOfClass(net.minecraft.world.entity.projectile.AbstractArrow.class,
+                                p.getBoundingBox().inflate(60), a -> a.getTags().contains("fieldtest"));
+                        boolean stopped = g != null && g.fieldBlocks > 0
+                                && arrows.stream().noneMatch(a -> a.getX() < g.getX() + 3);
+                        log((stopped ? "PASS" : "FAIL") + " golem: the Cube Field stopped the arrow (blocks "
+                                + (g == null ? -1 : g.fieldBlocks) + ", arrows left " + arrows.size() + ")");
+                        arrows.forEach(net.minecraft.world.entity.Entity::discard);
+                    });
+            case 1453 -> {
+                var g = mc.level.getEntitiesOfClass(com.mattermod.entity.RedstoneGolem.class, mc.player.getBoundingBox().inflate(40));
+                String st = g.isEmpty() ? "no golem" : com.mattermod.client.GolemFx.debugField(g.get(0));
+                log((st.contains("totalHits=") && !st.contains("totalHits=0") ? "PASS" : "FAIL") + " golem: the field is drawn and showed the hit (" + st + ")");
+            }
             case 1449 -> server(mc, (s, p) -> checkGemGuarantee(s, p, "desert_pyramid", "atenite", false));
             case 1451 -> server(mc, (s, p) -> checkGemGuarantee(s, p, "jungle_pyramid", "quetzalite", true));
             case 1454 ->
@@ -1085,13 +1132,26 @@ public final class PlaytestBootstrap {
             }
             case 1468 -> shot(mc, "36_golem_ride");
             case 1470 -> sideCamera(mc, false);
-            case 1472 ->
+            // the charged jump: hold Jump (the bar fills), let go, it jumps far higher than a hop
+            case 1472 -> {
+                if (mc.player.getVehicle() instanceof com.mattermod.entity.RedstoneGolem rg) rg.peakY = rg.getY();
+            }
+            case 1473 -> opts.keyJump.setDown(true);
+            case 1485 -> opts.keyJump.setDown(false);
+            case 1490 -> sideCamera(mc, true);
+            case 1493 -> shot(mc, "37_golem_charged_jump");
+            case 1494 -> sideCamera(mc, false);
+            case 1506 -> {
+                double rise = mc.player.getVehicle() instanceof com.mattermod.entity.RedstoneGolem rg ? rg.peakY - rg.getY() : -1;
+                log((rise > 2.5 ? "PASS" : "FAIL") + " golem: a charged jump rose " + String.format("%.2f", rise) + " blocks (want > 2.5)");
+            }
+            case 1508 ->
                     server(mc, (s, p) -> {
                         p.stopRiding();
                         var g = com.mattermod.entity.GolemControl.golem(p);
                         if (g != null) g.recall();
                     });
-            case 1526 ->
+            case 1562 ->
                     server(
                             mc,
                             (s, p) -> {
@@ -1099,7 +1159,7 @@ public final class PlaytestBootstrap {
                                         + " golem: recall put the Golem away");
                                 run(s, "difficulty peaceful");
                             });
-            case 1536 -> finish(mc);
+            case 1572 -> finish(mc);
             default -> {}
         }
     }

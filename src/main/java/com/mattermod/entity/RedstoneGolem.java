@@ -59,13 +59,13 @@ import java.util.UUID;
  * The Mechatronic Module's Redstone Golem: one per player, built by Golem mode ({@link
  * GolemControl}), never saved with the world. It follows its owner, defends them, takes orders
  * (attack / hold / follow) and, with its traits, punches (Piston Arm) or shoots (Dispenser Arm),
- * runs (Stride Servos) or flies up (Rocket Boots), can be ridden (Saddle), and its overheat builds
- * Ministrosities or throws Redstone Arcs.
+ * runs (Stride Servos) or flies up (Rocket Boots), can be ridden (Saddle, with a horse-style charged jump), and
+ * its overheat is a Primal Rage under a Cube Field that builds Ministrosities or arcs its blows on (Supercharged).
  *
  * <p>Animations come from golem-model/geckolib/export_geckolib.py (20 fps). Attack timings below
  * are in animation frames and run 1.5x faster while the Redstone Furnace is overheated.
  */
-public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
+public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net.minecraft.world.entity.PlayerRideableJumping {
 
     // ---- synced state ---------------------------------------------------------------------
     private static final EntityDataAccessor<Optional<UUID>> OWNER =
@@ -523,7 +523,11 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
             // the furnace's heat as signal: climbs quickly with each hit, cools slowly (2.5s from full) after an overheat
             signalPrev = signal;
             boolean hot = overheated();
-            if (hot && !wasHot) flashTicks = 0;
+            if (hot && !wasHot) {
+                flashTicks = 0;
+                fieldOnTick = tickCount;
+            }
+            if (!hot && wasHot) fieldOffTick = tickCount;
             wasHot = hot;
             float target = hot ? 1 : entityData.get(HEAT) / (FURNACE_HITS * 10f);
             signal += target > signal ? Math.min(target - signal, 1 / 10f) : Math.max(target - signal, -1 / 50f);
@@ -593,6 +597,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         }
 
         cool();
+        if (overheated()) fieldTick(owner);
         // Redstone Furnace: the overheat runs out
         if (overheatTicks > 0 && action != Action.OVERHEAT && --overheatTicks == 0) setFlag(F_OVERHEATED, false);
 
@@ -890,13 +895,15 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
             if (d > LIFT_REACH + e.getBbWidth() / 2 + getBbWidth() / 2) continue;
             if (d > .01 && to.normalize().dot(fwd) < .2) continue;          // in front only
             if (!e.hurt(damageSources().mobAttack(this), dealt((float) getAttributeValue(Attributes.ATTACK_DAMAGE)))) continue;
-            e.setDeltaMovement(fwd.x * .12, 1.15, fwd.z * .12);   // straight up, like the iron golem's toss
+            // straight up, like the iron golem's toss; raging, it hurls them up and away
+            double k = knock();
+            e.setDeltaMovement(fwd.x * (k > 1 ? .9 : .12), 1.15 * (k > 1 ? 1.2 : 1), fwd.z * (k > 1 ? .9 : .12));
             e.hurtMarked = true;
             if (overheated()) e.igniteForSeconds(4);
+            landed(owner, e);
             hits++;
         }
         if (hits > 0) stoke(owner, hits);
-        blast(owner, position().add(fwd.scale(1.8)).add(0, .6, 0));     // the heave goes off in front of it
         if (level() instanceof ServerLevel sl) {
             var below = level().getBlockState(blockPosition().below());
             if (!below.isAir())
@@ -918,14 +925,14 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
             double d = to.length();
             if (d > SLAM_RADIUS + e.getBbWidth() / 2 || Math.abs(e.getY() - getY()) > 2.5) continue;
             if (!e.hurt(damageSources().mobAttack(this), dealt(PISTON_DAMAGE))) continue;
-            Vec3 push = (d > .01 ? to.normalize() : fwd).scale(1.5 - .2 * d);
-            e.setDeltaMovement(e.getDeltaMovement().add(push.x, .7, push.z));
+            Vec3 push = (d > .01 ? to.normalize() : fwd).scale((1.5 - .2 * d) * knock());
+            e.setDeltaMovement(e.getDeltaMovement().add(push.x, .7 * Math.sqrt(knock()), push.z));
             e.hurtMarked = true;
             if (overheated()) e.igniteForSeconds(4);
+            landed(owner, e);
             hits++;
         }
         if (hits > 0) stoke(owner, hits);
-        blast(owner, c.add(0, .3, 0));
         if (level() instanceof ServerLevel sl) {
             var below = level().getBlockState(BlockPos.containing(c).below());
             if (!below.isAir())
@@ -972,7 +979,13 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
 
     /** Called when a bolt hits: it stokes the furnace too. */
     void boltHit(ServerPlayer owner, LivingEntity hit) {
-        blast(owner, hit.getBoundingBox().getCenter());
+        if (overheated()) {
+            Vec3 push = hit.position().subtract(position()).multiply(1, 0, 1);
+            if (push.lengthSqr() > 1e-4) push = push.normalize().scale(.9);
+            hit.setDeltaMovement(hit.getDeltaMovement().add(push.x, .35, push.z));
+            hit.hurtMarked = true;
+        }
+        landed(owner, hit);
         stoke(owner, 1);
     }
 
@@ -1050,57 +1063,174 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         playSound(SoundEvents.PISTON_EXTEND, 1, 1.4f);
     }
 
-    /** Supercharged: while overheated it crackles with arcs, every blow it lands goes off as a redstone blast, it hits
-     *  harder, shrugs off a share of the damage and can't be knocked about. */
-    static final double BLAST_RADIUS = 2.5;
-    static final float BLAST_DAMAGE = 4, CHARGED_HIT = 1.5f, CHARGED_TAKEN = .7f;
+    /** Supercharged: while it rages it crackles with arcs, every blow it lands arcs on from enemy to enemy, and it
+     *  shrugs off a share of the damage. */
+    static final int CHAIN_JUMPS = 3;
+    static final double CHAIN_RANGE = 5;
+    static final float CHAIN_DAMAGE = 5, CHARGED_TAKEN = .7f;
 
     /** Supercharged and overheated right now. */
     public boolean charged() {
         return hasCharge() && overheated();
     }
 
-    /** One redstone blast at {@code at}: hurts and throws back what it may hit; breaks blocks only if the config and the
-     *  mobGriefing rule both allow it. */
-    void blast(ServerPlayer owner, Vec3 at) {
-        if (!charged() || !(level() instanceof ServerLevel sl)) return;
-        for (var e : level().getEntitiesOfClass(LivingEntity.class, new AABB(at, at).inflate(BLAST_RADIUS), e -> canHit(owner, e))) {
-            Vec3 to = e.getBoundingBox().getCenter().subtract(at);
-            double d = to.length();
-            if (d > BLAST_RADIUS + e.getBbWidth() / 2) continue;
-            e.hurt(damageSources().explosion(this, owner), BLAST_DAMAGE);
-            Vec3 push = (d > .01 ? to.normalize() : Vec3.directionFromRotation(0, getYRot())).scale(.9 * (1 - d / (BLAST_RADIUS + 1)));
-            e.setDeltaMovement(e.getDeltaMovement().add(push.x, .25 + push.y * .3, push.z));
-            e.hurtMarked = true;
-        }
-        boolean breaks = com.mattermod.config.MatterConfig.CHARGED_BREAKS_BLOCKS.get()
-                && sl.getGameRules().getBoolean(net.minecraft.world.level.GameRules.RULE_MOBGRIEFING);
-        if (breaks) {
-            // the blocks only: it never hurts or pushes the owner, the Golem, its allies (the damage is done above)
-            var calc = new net.minecraft.world.level.ExplosionDamageCalculator() {
-                @Override
-                public boolean shouldDamageEntity(net.minecraft.world.level.Explosion ex, Entity e) {
-                    return false;
-                }
+    /** Playtest/debug: how many arcs it has thrown. */
+    public int arcsThrown;
 
-                @Override
-                public float getKnockbackMultiplier(Entity e) {
-                    return 0;
-                }
-            };
-            sl.explode(this, null, calc, at.x, at.y, at.z, 1.6f, false, net.minecraft.world.level.Level.ExplosionInteraction.MOB);
-        } else {
-            sl.sendParticles(ParticleTypes.EXPLOSION, at.x, at.y, at.z, 1, 0, 0, 0, 0);
-            sl.playSound(null, at.x, at.y, at.z, SoundEvents.GENERIC_EXPLODE.value(), SoundSource.HOSTILE, .8f, 1.3f);
+    /**
+     * Chain arcs from {@code first} (just hit): each jump goes to the nearest enemy not yet struck within CHAIN_RANGE of
+     * the last one, with a clear line between them, up to CHAIN_JUMPS. Clients draw each jump as a pixel bolt.
+     * Returns the number of jumps.
+     */
+    public int chainArcs(ServerPlayer owner, LivingEntity first) {
+        if (!(level() instanceof ServerLevel sl) || first == null) return 0;
+        java.util.Set<LivingEntity> struck = new java.util.HashSet<>();
+        struck.add(first);
+        LivingEntity from = first;
+        java.util.List<Float> pts = new java.util.ArrayList<>();
+        addPoint(pts, from.getBoundingBox().getCenter());
+        int jumps = 0;
+        for (int i = 0; i < CHAIN_JUMPS; i++) {
+            Vec3 at = from.getBoundingBox().getCenter();
+            LivingEntity best = null;
+            double bd = CHAIN_RANGE * CHAIN_RANGE;
+            for (var e : level().getEntitiesOfClass(LivingEntity.class, new AABB(at, at).inflate(CHAIN_RANGE),
+                    e -> !struck.contains(e) && canHit(owner, e) && (e instanceof Enemy || e == getTarget() || e.getLastHurtByMob() == this))) {
+                double d = e.getBoundingBox().getCenter().distanceToSqr(at);
+                if (d >= bd) continue;
+                var clip = level().clip(new net.minecraft.world.level.ClipContext(at, e.getBoundingBox().getCenter(),
+                        net.minecraft.world.level.ClipContext.Block.COLLIDER, net.minecraft.world.level.ClipContext.Fluid.NONE, this));
+                if (clip.getType() != net.minecraft.world.phys.HitResult.Type.MISS) continue;
+                bd = d;
+                best = e;
+            }
+            if (best == null) break;
+            struck.add(best);
+            best.hurt(damageSources().indirectMagic(this, owner), CHAIN_DAMAGE);
+            Vec3 c = best.getBoundingBox().getCenter();
+            sl.sendParticles(new DustParticleOptions(new Vector3f(1f, .65f, .2f), 1f), c.x, c.y, c.z, 6, .25, .3, .25, 0);
+            addPoint(pts, c);
+            from = best;
+            jumps++;
         }
-        sl.sendParticles(new DustParticleOptions(new Vector3f(1f, .5f, .1f), 1.6f), at.x, at.y, at.z, 24, .8, .5, .8, 0);
-        sl.playSound(null, at.x, at.y, at.z, com.mattermod.registry.ModSounds.GOLEM_SPARK_HIT.get(), SoundSource.HOSTILE, 1, .9f);
+        if (jumps == 0) return 0;
+        arcsThrown += jumps;
+        sl.playSound(null, first.getX(), first.getY(), first.getZ(), com.mattermod.registry.ModSounds.GOLEM_SPARK_HIT.get(), SoundSource.HOSTILE, 1.2f, 1.2f);
+        net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingEntityAndSelf(this,
+                new com.mattermod.network.payload.GolemFxPayload(getId(), com.mattermod.network.payload.GolemFxPayload.CHAIN, pts));
+        return jumps;
     }
 
-    /** Damage dealt, with the Supercharge. */
-    private float dealt(float base) {
-        return charged() ? base * CHARGED_HIT : base;
+    private static void addPoint(java.util.List<Float> pts, Vec3 v) {
+        pts.add((float) v.x);
+        pts.add((float) v.y);
+        pts.add((float) v.z);
     }
+
+    /** A blow landed on {@code e}: Supercharged arcs it on. */
+    private void landed(ServerPlayer owner, LivingEntity e) {
+        if (charged()) chainArcs(owner, e);
+    }
+
+    /** Primal Rage (overheated): it hits harder and throws foes much further. */
+    public static final float RAGE_HIT = 1.5f;
+    public static final double RAGE_KNOCK = 1.7;
+
+    /** Damage dealt, with the Primal Rage. */
+    float dealt(float base) {
+        return overheated() ? base * RAGE_HIT : base;
+    }
+
+    private double knock() {
+        return overheated() ? RAGE_KNOCK : 1;
+    }
+
+    // ---- Cube Field (Primal Rage) -------------------------------------------------------------
+
+    /** The Cube Field it raises as it blows: 7 x 5 x 7 blocks around its feet, moving with it, for the whole overheat.
+     *  Hostile projectiles can't cross it either way; friendly ones (its own, its owner's, players') pass. */
+    public static final double FIELD_HALF = 3.5, FIELD_HEIGHT = 5;
+    /** Playtest/debug: projectiles the field has stopped. */
+    public int fieldBlocks;
+
+    public AABB fieldBox() {
+        return new AABB(getX() - FIELD_HALF, getY(), getZ() - FIELD_HALF, getX() + FIELD_HALF, getY() + FIELD_HEIGHT, getZ() + FIELD_HALF);
+    }
+
+    private void fieldTick(ServerPlayer owner) {
+        if (!(level() instanceof ServerLevel sl)) return;
+        AABB box = fieldBox();
+        for (var pr : level().getEntitiesOfClass(net.minecraft.world.entity.projectile.Projectile.class, box.inflate(4))) {
+            if (!pr.isAlive()) continue;
+            Entity shooter = pr.getOwner();
+            if (shooter != null && !(shooter instanceof LivingEntity l && canHit(owner, l))) continue;   // friendly fire passes
+            Vec3 from = new Vec3(pr.xo, pr.yo, pr.zo), to = pr.position().add(pr.getDeltaMovement());
+            boolean in0 = box.contains(from), in1 = box.contains(to);
+            Optional<Vec3> at;
+            if (in0 && in1) continue;
+            else if (in0) at = box.clip(to, from);         // leaving: where it would come out
+            else at = box.clip(from, to);                  // coming in, or passing through
+            if (at.isEmpty()) continue;
+            Vec3 p = at.get();
+            pr.discard();
+            fieldBlocks++;
+            sl.playSound(null, p.x, p.y, p.z, SoundEvents.AMETHYST_BLOCK_HIT, SoundSource.HOSTILE, 1.4f, .6f);
+            java.util.List<Float> pts = new java.util.ArrayList<>();
+            addPoint(pts, p);
+            net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingEntityAndSelf(this,
+                    new com.mattermod.network.payload.GolemFxPayload(getId(), com.mattermod.network.payload.GolemFxPayload.FIELD_HIT, pts));
+        }
+    }
+
+    /** Drawn while the field (or its collapse) may be on screen even when the Golem itself is not. */
+    @Override
+    public AABB getBoundingBoxForCulling() {
+        return overheated() || level().isClientSide && tickCount - fieldOffTick < 12 ? fieldBox().inflate(.5) : super.getBoundingBoxForCulling();
+    }
+
+    /** Client: when the field last went up (for its deploy) and down (for its collapse). */
+    public int fieldOnTick = -100, fieldOffTick = -100;
+
+    // ---- the charged jump (Saddle), horse style --------------------------------------------------
+
+    /** Hold Jump to charge (the jump bar fills), let go to jump: from a hop to about 4 blocks. Striding, the charge throws
+     *  it forward too, a long low leap. In the air Jump fires the Rocket Boots. */
+    static final double JUMP_LOW = .45, JUMP_HIGH = .85, LEAP = 1.1;
+    /** Client (rider): the charge of the jump to make, 0 = none. */
+    private float pendingJump;
+
+    @Override
+    public void onPlayerJump(int power) {
+        if (power <= 0) return;
+        pendingJump = power >= 90 ? 1 : .4f + .4f * power / 90f;
+    }
+
+    @Override
+    public boolean canJump() {
+        return hasSaddle() && onGround() && !busy() && !flag(F_LIFTING);
+    }
+
+    @Override
+    public void handleStartJump(int power) {
+        playSound(SoundEvents.PISTON_EXTEND, 1.2f, .6f);
+    }
+
+    @Override
+    public void handleStopJump() {}
+
+    /** Client (rider): the jump itself. Public for the playtest. */
+    public void leap(float scale) {
+        Vec3 v = getDeltaMovement();
+        double vy = JUMP_LOW + (JUMP_HIGH - JUMP_LOW) * scale;
+        Vec3 h = new Vec3(v.x, 0, v.z);
+        if (strideOn) h = h.add(Vec3.directionFromRotation(0, getYRot()).scale(LEAP * scale * (.5 + .5 * strideCharge)));
+        setDeltaMovement(h.x, vy, h.z);
+        hasImpulse = true;
+        fallDistance = 0;
+    }
+
+    /** Playtest: the highest it got since the last reset. */
+    public double peakY = -1e9;
 
     // ---- Rocket Boots -----------------------------------------------------------------------
 
@@ -1200,8 +1330,13 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity {
         // the rider's client simulates the ride: Jump jumps, held in the air it fires the boots
         if (level().isClientSide) {
             boolean jump = com.mattermod.client.GolemRiding.jumpHeld(player) && !busy();
-            if (jump && !jumpWas && onGround()) jumpFromGround();
+            if (pendingJump > 0) {
+                if (onGround() && !busy()) leap(pendingJump);
+                pendingJump = 0;
+                jump = false;        // the release that jumped
+            }
             rocketTick(jump && !onGround());
+            peakY = Math.max(peakY, getY());
             strideTick(player.isSprinting() && player.zza > 0 && Math.abs(player.xxa) < .3f && !busy());
             jumpWas = jump;
         }

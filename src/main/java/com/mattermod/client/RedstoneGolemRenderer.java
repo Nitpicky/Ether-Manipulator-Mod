@@ -31,6 +31,7 @@ public final class RedstoneGolemRenderer extends GeoEntityRenderer<RedstoneGolem
         if (since >= 0 && since < 2 || golem.tickCount < 2) return;
         super.render(golem, yaw, partialTick, pose, buffers, light);
         GolemArcs.render(golem, getGeoModel().getBakedModel(getGeoModel().getModelResource(golem)), partialTick, pose, buffers);
+        GolemFx.renderField(golem, pose, buffers);
         var body = getGeoModel().getBone("body").orElse(null);
         if (body == null || !golem.isVehicle()) {
             golem.seatOffset = null;

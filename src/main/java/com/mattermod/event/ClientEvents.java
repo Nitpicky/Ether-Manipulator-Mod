@@ -36,6 +36,7 @@ public class ClientEvents {
         NeoForge.EVENT_BUS.register(com.mattermod.client.ModeWheel.class);
         NeoForge.EVENT_BUS.register(com.mattermod.client.ClientMobility.class);
         NeoForge.EVENT_BUS.register(com.mattermod.client.AirwalkTiles.class);
+        NeoForge.EVENT_BUS.register(com.mattermod.client.GolemFx.class);
         com.mattermod.trait.RapidsCurrents.clientLevel =
                 () -> net.minecraft.client.Minecraft.getInstance().level;
         NeoForge.EVENT_BUS.register(com.mattermod.client.GravityRender.class);

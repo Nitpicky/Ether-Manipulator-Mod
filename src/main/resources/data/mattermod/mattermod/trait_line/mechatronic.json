@@ -13,12 +13,12 @@
     {
       "id": "mechatronic.redstone_furnace",
       "name": "Redstone Furnace",
-      "description": "Its blows stoke the furnace. Fully stoked, it blows: a roar, then 6s 50% faster, setting targets on fire. Left alone, the heat drains away."
+      "description": "Its blows stoke the furnace. Fully stoked, it flies into a Primal Rage: a roar raises a Cube Field around it that stops enemy projectiles, then for 6s it moves 50% faster, hits 50% harder, throws foes much further and sets them on fire. Left alone, the heat drains away."
     },
     {
       "id": "mechatronic.saddle",
       "name": "Saddle",
-      "description": "Right click the Golem to ride it. Left click: its lift. Right click: its Super Move. Jump: jump, then rocket. Sneak: get off."
+      "description": "Right click the Golem to ride it. Left click: its lift. Right click: its Super Move. Hold Jump to charge a jump, a long leap while it runs; press Jump again in the air to rocket. Sneak: get off."
     }
   ],
   "adept": [
@@ -42,7 +42,7 @@
     {
       "id": "mechatronic.supercharged",
       "name": "Supercharged",
-      "description": "When it blows, it crackles with arcs: every blow it lands bursts in a redstone blast, 50% more damage, and it takes 30% less."
+      "description": "In its Primal Rage it crackles with arcs: every blow it lands arcs on to up to 3 more enemies within 5 blocks, 5 damage each, and it takes 30% less damage."
     }
   ],
   "grandmaster": [

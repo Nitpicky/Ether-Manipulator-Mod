@@ -79,7 +79,7 @@ public final class RedstoneBolt extends ThrowableItemProjectile {
     protected void onHitEntity(EntityHitResult hit) {
         super.onHitEntity(hit);
         LivingEntity shooter = getOwner() instanceof LivingEntity l ? l : null;
-        if (hit.getEntity().hurt(damageSources().mobProjectile(this, shooter), getOwner() instanceof RedstoneGolem gg && gg.charged() ? RedstoneGolem.BOLT_DAMAGE * RedstoneGolem.CHARGED_HIT : RedstoneGolem.BOLT_DAMAGE)
+        if (hit.getEntity().hurt(damageSources().mobProjectile(this, shooter), getOwner() instanceof RedstoneGolem gg ? gg.dealt(RedstoneGolem.BOLT_DAMAGE) : RedstoneGolem.BOLT_DAMAGE)
                 && getOwner() instanceof RedstoneGolem g
                 && hit.getEntity() instanceof LivingEntity l) g.boltHit(player, l);
     }
