@@ -206,19 +206,15 @@ public final class RedesignEffects {
             if (reserved) {
                 var level = ev.getLevel();
                 var pos = ev.getPos().immutable();
-                int age = com.mattermod.item.OrbMode.tank(st) > 0 ? crop.getMaxAge() / 2 : 0;
                 WorldEffects.schedule(
                         level,
                         1,
                         () -> {
-                            var fresh = crop.getStateForAge(age);
+                            var fresh = crop.getStateForAge(0);
                             if (level.hasChunkAt(pos)
                                     && level.getBlockState(pos).isAir()
-                                    && fresh.canSurvive(level, pos)) {
-                                boolean accelerate = age > 0 && com.mattermod.item.OrbMode.tank(st) > 0;
-                                if (level.setBlockAndUpdate(pos, crop.getStateForAge(accelerate ? age : 0)) && accelerate)
-                                    com.mattermod.item.OrbMode.setTank(st, com.mattermod.item.OrbMode.tank(st) - 1);
-                            }
+                                    && fresh.canSurvive(level, pos))
+                                level.setBlockAndUpdate(pos, fresh);
                         });
             }
         }

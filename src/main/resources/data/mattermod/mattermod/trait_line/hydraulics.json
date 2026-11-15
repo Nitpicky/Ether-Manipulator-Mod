@@ -7,7 +7,7 @@
   "badge": {
     "id": "hydraulics.badge",
     "name": "Tank",
-    "description": "Unlocks [color=#2074E9]Hydraulic Mode[/color]: water blob (left click), ice shard (right click), steered by your aim. Swim faster."
+    "description": "Unlocks [color=#2074E9]Hydraulic Mode[/color]: aim-steered water blob (left click) and ice shard (right click). Swim faster."
   },
   "commons": [
     {
@@ -18,14 +18,14 @@
     {
       "id": "hydraulics.common_slipstream",
       "name": "Slipstream",
-      "description": "Water and Frost shots spend no range underwater."
+      "description": "Water and Frost shots lose no range underwater."
     }
   ],
   "adept": [
     {
       "id": "hydraulics.pressure",
       "name": "Wellhead",
-      "description": "Placed water touching a block becomes a lasting source. Otherwise it dries up after 8s."
+      "description": "Water placed against a block stays as a source."
     },
     {
       "id": "hydraulics.reservoir",
@@ -37,7 +37,7 @@
     {
       "id": "hydraulics.glacier",
       "name": "Glacier",
-      "description": "Frost bridges are wider and last longer while empty."
+      "description": "Frost bridges last 3x longer."
     },
     {
       "id": "hydraulics.rapids",

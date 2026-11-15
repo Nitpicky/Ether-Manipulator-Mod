@@ -49,12 +49,12 @@
     {
       "id": "orb.detonator",
       "name": "Detonator",
-      "description": "Press the input that fired a projectile again to burst it instantly."
+      "description": "Press the same button again to burst your projectile."
     },
     {
       "id": "orb.seeker",
       "name": "Seeker",
-      "description": "Projectiles pursue the enemy near your initial aim."
+      "description": "Projectiles home in on the enemy you aimed near."
     }
   ]
 }

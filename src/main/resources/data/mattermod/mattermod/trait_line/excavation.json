@@ -13,7 +13,7 @@
     {
       "id": "excavation.common_collector",
       "name": "Collector",
-      "description": "Drops from blocks you break pop out, then fly to you."
+      "description": "Drops from blocks you break fly to you."
     },
     {
       "id": "excavation.common_reach",

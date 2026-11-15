@@ -25,12 +25,12 @@
     {
       "id": "combat.lock_on",
       "name": "Lock-On",
-      "description": "Built [color=#E99F20]Pressure[/color] keeps your beam locked on its target."
+      "description": "[color=#E99F20]Pressure[/color] locks your beam onto its target."
     },
     {
       "id": "combat.arc",
       "name": "Arc",
-      "description": "Built [color=#E99F20]Pressure[/color] chains your beam to nearby enemies."
+      "description": "[color=#E99F20]Pressure[/color] chains your beam to nearby enemies."
     }
   ],
   "master": [
@@ -54,7 +54,7 @@
     {
       "id": "combat.annihilate",
       "name": "Annihilate",
-      "description": "After a kill, [color=#E99F20]Pressure[/color] holds for 3s before it starts draining."
+      "description": "After a kill, [color=#E99F20]Pressure[/color] holds for 3s."
     }
   ]
 }

@@ -7,7 +7,7 @@
   "badge": {
     "id": "mobility.badge",
     "name": "Graviton Core",
-    "description": "Unlocks [color=#9520E9]Tether Mode[/color]: left click hooks, right click reels (tap: all the way, hold: while held). Jump to let go and keep your speed. Move 10% faster."
+    "description": "Unlocks [color=#9520E9]Tether Mode[/color]: left click hooks, right click reels (tap: all the way, hold: while held). Jump to let go at speed. Move 10% faster."
   },
   "commons": [
     {
@@ -30,7 +30,7 @@
     {
       "id": "mobility.gravity_shift",
       "name": "Gravity Shift",
-      "description": "Double-tap right click while hooked to land on that surface as your new floor."
+      "description": "Double-tap right click while hooked to make that surface your floor."
     }
   ],
   "master": [

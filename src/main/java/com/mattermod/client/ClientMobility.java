@@ -20,7 +20,7 @@ public final class ClientMobility {
     public static final Deque<Vec3> TRAIL = new ArrayDeque<>();
     public static float trailAlpha;
     private static String dimension = "";
-    private static boolean jumpWas, airJumped, wasGrounded;
+    private static boolean jumpWas, airJumped, wasGrounded, coyote;
     private static long groundedAt = -100, landedAt = -100, freeUntil;
     private static int jumpChain, motionWas = -1;
     private static double hopSpeed, airLevel, skateSpeed;
@@ -45,6 +45,7 @@ public final class ClientMobility {
         airArmed = false;
         airSuspended = false;
         wasGrounded = false;
+        coyote = false;
         dropping = false;
         AirwalkFloor.armed = false;
     }
@@ -177,8 +178,19 @@ public final class ClientMobility {
                     p.position().dot(MovementPhysics.vector(MovementPhysics.down(p).getOpposite()));
         }
         boolean pressed = jump && !jumpWas;
+        // Coyote time: a jump pressed just after walking off a ledge still jumps. Only once, and
+        // never after a jump of your own (that would be a free second jump).
+        var upward = MovementPhysics.vector(MovementPhysics.down(p).getOpposite());
+        if (realGround || airSuspended) coyote = true;
+        else if (wasGrounded && p.getDeltaMovement().dot(upward) > .1) coyote = false;
         if (pressed && now - groundedAt <= 3) {
-            if (!realGround && Traits.hasLine(st, Traits.PNEUMATIC)) {
+            if (!realGround
+                    && !airSuspended
+                    && coyote
+                    && Traits.hasLine(st, Traits.PNEUMATIC)
+                    && !p.isInWater()
+                    && !p.isPassenger()) {
+                coyote = false;
                 var v = p.getDeltaMovement();
                 p.setDeltaMovement(MovementPhysics.withUp(p, v, .42));
             }

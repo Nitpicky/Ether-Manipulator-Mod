@@ -7,7 +7,7 @@
   "badge": {
     "id": "pneumatic.badge",
     "name": "Bellows Core",
-    "description": "Unlocks [color=#20E9C1]Gust Mode[/color]: push and disarm. Shots recoil; slammed mobs take damage. Coyote jump and double jump."
+    "description": "Unlocks [color=#20E9C1]Gust Mode[/color]: push and disarm. Shots recoil; slammed mobs take damage. Double jump."
   },
   "commons": [
     {

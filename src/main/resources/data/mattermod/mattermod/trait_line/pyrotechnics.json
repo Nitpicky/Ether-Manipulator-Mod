@@ -25,7 +25,7 @@
     {
       "id": "pyrotechnics.inferno",
       "name": "Magma Seal",
-      "description": "Placed lava touching a block becomes a lasting source. Otherwise it cools after 8s."
+      "description": "Lava placed against a block stays as a source. Elsewhere it cools after 8s."
     },
     {
       "id": "pyrotechnics.crucible",

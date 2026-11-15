@@ -7,54 +7,54 @@
   "badge": {
     "id": "mechatronic.badge",
     "name": "Redstone Monstrosity",
-    "description": "Summons the [color=#E92031]Redstone Monstrosity[/color]. It draws the attention of enemies within 12 blocks and wears your armor. Left click orders it: a creature to attack, a block to hold, Sneak to follow. Running straight, it drops to all fours and gathers speed. Hold Jump in the air to rocket up, then glide. Broken down, it is rebuilt after 60s."
+    "description": "Summons the [color=#E92031]Redstone Monstrosity[/color]: it draws enemies within 12 blocks. Left click a creature to attack, a block to hold; Sneak to follow. Rebuilt 60s after breaking down."
   },
   "commons": [
     {
       "id": "mechatronic.redstone_furnace",
       "name": "Redstone Generator",
-      "description": "Its blows build up charge. Fully charged, it Overcharges: a roar raises a Cube Field around it that stops enemy projectiles, then for 6s it moves 50% faster, hits 50% harder and throws foes much further. Left alone, the charge drains away."
+      "description": "Blows charge it up. Full charge Overcharges it for 6s: a Cube Field blocks projectiles, +50% speed and damage, much stronger knockback."
     },
     {
       "id": "mechatronic.saddle",
       "name": "Saddle",
-      "description": "Right click the Monstrosity to ride it. Left click: its lift. Right click: its Super Move. Hold Jump to charge a jump; while it gallops, a committed leap that lands with a slam. Press Jump again in the air to rocket. Sneak: get off."
+      "description": "Right click it to ride. Left click: lift. Right click: Super Move. Hold Jump to charge a jump (a slamming leap while galloping); Jump in the air to rocket."
     }
   ],
   "adept": [
     {
       "id": "mechatronic.piston_arm",
       "name": "Piston Arm",
-      "description": "Super Move: both fists come down like pistons, 14 damage to everything within 4 blocks in front. Cooldown 6s."
+      "description": "Super Move: a two-fist piston slam, 14 damage within 4 blocks in front. Cooldown 6s."
     },
     {
       "id": "mechatronic.dispenser_arm",
       "name": "Dispenser Arm",
-      "description": "Super Move: its arms become cannons, one homing bolt each, 6 damage. Cooldown 5s."
+      "description": "Super Move: a homing bolt from each arm cannon, 6 damage each. Cooldown 5s."
     }
   ],
   "master": [
     {
       "id": "mechatronic.ministrosities",
       "name": "Ministrosities",
-      "description": "When it Overcharges, 3 Ministrosities scramble up out of the ground to fight beside it. They crumble when it goes."
+      "description": "Overcharging raises 3 Ministrosities from the ground to fight beside it."
     },
     {
       "id": "mechatronic.supercharged",
       "name": "Supercharged",
-      "description": "Overcharged, it crackles with arcs: every blow it lands arcs on to up to 3 more enemies within 5 blocks, 5 damage each, and it takes 30% less damage."
+      "description": "While Overcharged, its blows arc to up to 3 more enemies within 5 blocks for 5 damage each, and it takes 30% less damage."
     }
   ],
   "grandmaster": [
     {
       "id": "mechatronic.stride_servos",
       "name": "Stride Servos",
-      "description": "Its gallop is faster: 9.5 blocks/s (8 without). Double-tap forward while riding to gallop."
+      "description": "Gallops at 9.5 blocks/s."
     },
     {
       "id": "mechatronic.rocket_boots",
       "name": "Rocket Boots",
-      "description": "Its rockets burn longer and climb harder: 2.4s of thrust (1.6s without)."
+      "description": "Rockets burn longer and climb harder: 2.4s of thrust."
     }
   ]
 }

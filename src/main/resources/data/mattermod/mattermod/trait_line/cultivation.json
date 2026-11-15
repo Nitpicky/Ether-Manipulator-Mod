@@ -7,13 +7,13 @@
   "badge": {
     "id": "cultivation.badge",
     "name": "Gardener",
-    "description": "Unlocks [color=#31E920]Growth Mode[/color]. Left click harvests ripe crops in a 3x3; right click's pollen grows plants and poisons enemies. Sneak-Beam tills. You never trample farmland."
+    "description": "Unlocks [color=#31E920]Growth Mode[/color]. Harvest ripe crops 3x3; pollen grows plants and poisons foes. Sneak-Beam tills. Farmland is never trampled."
   },
   "commons": [
     {
       "id": "cultivation.common_replant",
       "name": "Regrowth",
-      "description": "Harvests replant themselves. Spend 1 [b]Matter[/b] to replant them half-grown."
+      "description": "Harvests replant themselves."
     },
     {
       "id": "cultivation.common_nourishment",
@@ -25,7 +25,7 @@
     {
       "id": "cultivation.overgrowth",
       "name": "Overgrowth",
-      "description": "Harvests spread through every connected ripe crop of the same kind."
+      "description": "Harvests spread to all connected ripe crops of the same kind."
     },
     {
       "id": "cultivation.seedbank",
@@ -37,7 +37,7 @@
     {
       "id": "cultivation.groundskeeper",
       "name": "Groundskeeper",
-      "description": "Sneak-Beam works as shears, on sheep and hives too."
+      "description": "Sneak-Beam shears."
     },
     {
       "id": "cultivation.herder",

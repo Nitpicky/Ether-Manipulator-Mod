@@ -416,40 +416,26 @@ public class MatterManipulatorItem extends Item implements GeoItem {
     public void appendHoverText(
             ItemStack stack, TooltipContext ctx, List<Component> tooltip, TooltipFlag flag) {
         ManipulatorStage stage = ManipulatorStage.get(stack);
-
         tooltip.add(
-                Component.translatable(
-                                "tooltip.mattermod.stage",
-                                stage.title().withStyle(stageColor(stage)))
-                        .withStyle(ChatFormatting.GRAY));
-        tooltip.add(
-                Component.translatable("tooltip.mattermod.controls")
-                        .withStyle(ChatFormatting.DARK_GRAY));
+                stage.next() != null
+                        ? Component.translatable(
+                                        "tooltip.mattermod.stage_next",
+                                        stage.title().withStyle(stageColor(stage)),
+                                        stage.next().title())
+                                .withStyle(ChatFormatting.GRAY)
+                        : Component.translatable("tooltip.mattermod.max_stage", stage.title())
+                                .withStyle(ChatFormatting.GOLD));
         OrbMode mode = OrbMode.get(stack);
         tooltip.add(
                 Component.translatable(
-                                "tooltip.mattermod.mode_tank",
+                                "tooltip.mattermod.mode_matter",
                                 mode.title(),
                                 mode.tankLevel(stack),
                                 mode.tankCapacity(stack))
                         .withStyle(ChatFormatting.DARK_AQUA));
         tooltip.add(
-                Component.translatable("tooltip.mattermod.upgrade_hint")
-                        .withStyle(ChatFormatting.DARK_GRAY));
-        tooltip.add(
-                Component.translatable("tooltip.mattermod.slots", TraitBuild.openSlots(stack))
+                Component.translatable("tooltip.mattermod.traits", TraitBuild.openSlots(stack))
                         .withStyle(ChatFormatting.GREEN));
-
-        if (stage.next() != null) {
-            tooltip.add(
-                    Component.translatable(
-                                    "tooltip.mattermod.next", stage.title(), stage.next().title())
-                            .withStyle(ChatFormatting.YELLOW));
-        } else {
-            tooltip.add(
-                    Component.translatable("tooltip.mattermod.max_stage")
-                            .withStyle(ChatFormatting.GOLD));
-        }
     }
 
     private static ChatFormatting stageColor(ManipulatorStage s) {

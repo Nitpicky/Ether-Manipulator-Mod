@@ -627,8 +627,7 @@ public final class UiProbe {
                                         3,
                                         () ->
                                                 check(
-                                                        "Replant reserves seed and restores partial"
-                                                            + " growth",
+                                                        "Replant puts a fresh crop back",
                                                         sl.getBlockState(crop)
                                                                         .is(
                                                                                 net.minecraft.world
@@ -644,7 +643,7 @@ public final class UiProbe {
                                                                                                 .block
                                                                                                 .CropBlock
                                                                                                 .AGE)
-                                                                        == 3));
+                                                                        == 0));
                                 TraitBuild.setLine(st, 0, Traits.PHOTONIC);
                                 TraitBuild.setPick(st, 0, 0, "photonic.prism");
                                 TraitBuild.setPick(st, 0, 1, "photonic.radiance");

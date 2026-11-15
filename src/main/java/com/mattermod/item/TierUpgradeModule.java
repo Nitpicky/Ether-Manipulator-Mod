@@ -127,15 +127,9 @@ public class TierUpgradeModule extends Item {
     @Override
     public void appendHoverText(
             ItemStack stack, TooltipContext ctx, List<Component> tooltip, TooltipFlag flag) {
-        ManipulatorStage to = requiredStage.next();
-        if (to != null) {
-            tooltip.add(
-                    Component.translatable(
-                                    "tooltip.mattermod.chip_upgrades",
-                                    requiredStage.title(),
-                                    to.title())
-                            .withStyle(ChatFormatting.GRAY));
-        }
+        tooltip.add(
+                Component.translatable("tooltip.mattermod.chip_for", requiredStage.title())
+                        .withStyle(ChatFormatting.GRAY));
         tooltip.add(
                 Component.translatable("tooltip.mattermod.chip_install")
                         .withStyle(ChatFormatting.DARK_GRAY));
