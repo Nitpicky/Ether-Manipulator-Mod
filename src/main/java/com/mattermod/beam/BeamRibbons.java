@@ -129,8 +129,8 @@ final class BeamRibbons {
                 || layer.width != main.width
                 || layer.height != main.height) {
             // shader pack, or the first frame of a beam: draw straight into the world
-            emit(buf.getBuffer(RenderType.lightning()), m, false);
-            buf.endBatch(RenderType.lightning());
+            emit(com.mattermod.client.FxRender.buffer(buf), m, false);
+            com.mattermod.client.FxRender.end(buf);
             quads.clear();
             return;
         }

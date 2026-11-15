@@ -8,9 +8,12 @@ import com.mattermod.trait.Traits;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -76,13 +79,17 @@ public final class GolemControl {
         if (p.isShiftKeyDown()) {
             g.recall();
             say(p, "message.mattermod.golem_recall");
+            cue(p, g, Cue.RECALL, null);
             return;
         }
         HitResult aim = aim(p, g);
         if (!g.armsMove(p, target(aim), aim.getLocation())) {
             boolean hasArms = Traits.has(Manipulator.stack(p), "mechatronic.piston_arm")
                     || Traits.has(Manipulator.stack(p), "mechatronic.dispenser_arm");
-            if (!hasArms) say(p, "message.mattermod.golem_no_arms");
+            if (!hasArms) {
+                say(p, "message.mattermod.golem_no_arms");
+                cue(p, g, Cue.DENIED, null);
+            }
         }
     }
 
@@ -98,6 +105,7 @@ public final class GolemControl {
             g.orderTarget = null;
             g.setTarget(null);
             say(p, "message.mattermod.golem_follow");
+            cue(p, g, Cue.FOLLOW, p.position());
             return;
         }
         HitResult aim = aim(p, g);
@@ -107,12 +115,52 @@ public final class GolemControl {
             g.orderTarget = t;
             g.setTarget(t);
             say(p, "message.mattermod.golem_attack");
+            cue(p, g, Cue.ATTACK, t.position().add(0, t.getBbHeight() + 0.4, 0));
         } else if (aim instanceof BlockHitResult bh && aim.getType() == HitResult.Type.BLOCK) {
             g.order = RedstoneGolem.Order.HOLD;
             g.holdAt = bh.getBlockPos().relative(bh.getDirection());
             g.orderTarget = null;
             g.setTarget(null);
             say(p, "message.mattermod.golem_hold");
+            cue(p, g, Cue.HOLD, Vec3.atBottomCenterOf(g.holdAt).add(0, 0.1, 0));
+        }
+    }
+
+    // ---- order feedback ------------------------------------------------------------------------
+
+    enum Cue { ATTACK, HOLD, FOLLOW, RECALL, DENIED }
+
+    private static final Map<UUID, Long> LAST_ACK = new HashMap<>();
+
+    /**
+     * Tells the owner, by ear, which order was taken. The Manipulator gives a short redstone
+     * chirp only its holder hears (a different note per order), and the Monstrosity answers from
+     * where it stands, at most once a second. A few redstone motes mark the order's target, also
+     * only for the owner. Kept quiet on purpose: feedback, not noise.
+     */
+    static void cue(ServerPlayer p, RedstoneGolem g, Cue cue, Vec3 mark) {
+        switch (cue) {
+            case ATTACK -> p.playNotifySound(SoundEvents.NOTE_BLOCK_BIT.value(), SoundSource.PLAYERS, 0.35f, 1.6f);
+            case HOLD -> p.playNotifySound(SoundEvents.COMPARATOR_CLICK, SoundSource.PLAYERS, 0.45f, 0.55f);
+            case FOLLOW -> p.playNotifySound(SoundEvents.NOTE_BLOCK_BIT.value(), SoundSource.PLAYERS, 0.35f, 1.0f);
+            case RECALL -> p.playNotifySound(SoundEvents.NOTE_BLOCK_BIT.value(), SoundSource.PLAYERS, 0.35f, 0.7f);
+            case DENIED -> p.playNotifySound(SoundEvents.DISPENSER_FAIL, SoundSource.PLAYERS, 0.4f, 1.2f);
+        }
+        long now = p.serverLevel().getGameTime();
+        Long last = LAST_ACK.get(p.getUUID());
+        if (cue != Cue.DENIED && cue != Cue.RECALL && (last == null || now - last >= 20)) {
+            LAST_ACK.put(p.getUUID(), now);
+            switch (cue) {
+                case ATTACK -> g.playSound(com.mattermod.registry.ModSounds.GOLEM_VOICE_SHORT.get(), 0.6f, 1.0f);
+                case HOLD -> g.playSound(com.mattermod.registry.ModSounds.GOLEM_ARM.get(), 0.5f, 0.8f);
+                case FOLLOW -> g.playSound(com.mattermod.registry.ModSounds.GOLEM_ARM.get(), 0.5f, 1.25f);
+                default -> {}
+            }
+        }
+        if (mark != null) {
+            var dust = new DustParticleOptions(new org.joml.Vector3f(0.9f, 0.1f, 0.05f), 1.0f);
+            p.serverLevel().sendParticles(p, dust, true, mark.x, mark.y, mark.z,
+                    cue == Cue.HOLD ? 10 : 6, cue == Cue.HOLD ? 0.35 : 0.2, 0.05, cue == Cue.HOLD ? 0.35 : 0.2, 0);
         }
     }
 

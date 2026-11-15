@@ -7,7 +7,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -41,7 +40,7 @@ final class ModuleMarkers {
             Vec3 camPos, float time, MultiBufferSource.BufferSource buf, Matrix4f m) {
         float alpha = ClientMobility.trailAlpha;
         if (alpha <= 0 || ClientMobility.TRAIL.size() < 2) return;
-        VertexConsumer vc = buf.getBuffer(RenderType.lightning());
+        VertexConsumer vc = com.mattermod.client.FxRender.buffer(buf);
         Iterator<Vec3> it = ClientMobility.TRAIL.iterator();
         Vec3 newer = it.next();
         int i = 0;
@@ -61,7 +60,7 @@ final class ModuleMarkers {
             Vec3 c = at.subtract(camPos).add(0, 0.06, 0);
             chevron(vc, m, c, dir, side, a);
         }
-        buf.endBatch(RenderType.lightning());
+        com.mattermod.client.FxRender.end(buf);
     }
 
     /**

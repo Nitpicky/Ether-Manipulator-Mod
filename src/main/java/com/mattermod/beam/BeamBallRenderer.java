@@ -9,7 +9,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -101,7 +100,7 @@ public class BeamBallRenderer extends EntityRenderer<BeamBallEntity> {
         Vec3 entRel = entity.getPosition(partialTick).subtract(camPos);
         ps.translate(-entRel.x, -entRel.y, -entRel.z);
         Matrix4f m = ps.last().pose();
-        VertexConsumer vc = buf.getBuffer(RenderType.lightning());
+        VertexConsumer vc = com.mattermod.client.FxRender.buffer(buf);
 
         OrbMode mode = entity.getMode();
         float[] col =
@@ -540,7 +539,7 @@ public class BeamBallRenderer extends EntityRenderer<BeamBallEntity> {
 
         Vec3 c = pos.add(offset);
         float k = BeamRenderer.orbNearScale(c);
-        VertexConsumer vc = buf.getBuffer(RenderType.lightning());
+        VertexConsumer vc = com.mattermod.client.FxRender.buffer(buf);
         Matrix4f m = ps.last().pose();
         // The charging orb already has the shape it will fly as
         float s = radius / PHASE_RADIUS[1];

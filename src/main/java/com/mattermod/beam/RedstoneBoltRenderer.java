@@ -6,7 +6,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -64,7 +63,7 @@ public final class RedstoneBoltRenderer extends EntityRenderer<RedstoneBolt> {
         Vec3 entRel = worldPos.subtract(camPos);
         ps.translate(-entRel.x, -entRel.y, -entRel.z);
         Matrix4f m = ps.last().pose();
-        VertexConsumer vc = buf.getBuffer(RenderType.lightning());
+        VertexConsumer vc = com.mattermod.client.FxRender.buffer(buf);
 
         Deque<Vec3> trail = trails.computeIfAbsent(bolt.getId(), k -> new ArrayDeque<>());
         if (trail.isEmpty() || trail.peekFirst().distanceToSqr(worldPos) > .04) {

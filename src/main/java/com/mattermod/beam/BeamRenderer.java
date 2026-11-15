@@ -8,7 +8,6 @@ import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -143,18 +142,18 @@ public final class BeamRenderer {
             BeamRenderState.clearBeam();
         }
 
-        VertexConsumer vc = buf.getBuffer(RenderType.lightning());
+        VertexConsumer vc = com.mattermod.client.FxRender.buffer(buf);
         renderRemote(mc, camPos, pt, time, dt, proj, view, vc, m);
 
         BeaconMarkers.render(mc, player, camPos, camLeft, time, buf, m);
         ModuleMarkers.render(mc, camPos, camLeft, time, buf, m);
-        vc = buf.getBuffer(RenderType.lightning());
+        vc = com.mattermod.client.FxRender.buffer(buf);
         LeftClickFx.render(mc, camPos, pt, time, vc, m);
         if (held.getItem() instanceof MatterManipulatorItem)
             MassPreview.render(mc, player, held, camPos, time, vc, m);
 
         updateAndRenderSparks(dt, camPos, vc, m);
-        buf.endBatch(RenderType.lightning());
+        com.mattermod.client.FxRender.end(buf);
         BeamRibbons.flush(buf, m);
     }
 
