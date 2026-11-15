@@ -7,7 +7,8 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-/** The Redstone Golem's and Ministrosities' sounds (assets/mattermod/sounds.json, golem.* and mini.*). */
+/** The Redstone Monstrosity's and Ministrosities' sounds (assets/mattermod/sounds.json, golem.* and mini.*), assembled
+ *  from the sound bench: files trimmed to their onset; volumes and pitches per moment are in the code that plays them. */
 public final class ModSounds {
     private static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(Registries.SOUND_EVENT, "mattermod");
 
@@ -29,17 +30,18 @@ public final class ModSounds {
     public static final DeferredHolder<SoundEvent, SoundEvent> GOLEM_OVERHEAT = reg("golem.overheat");
     public static final DeferredHolder<SoundEvent, SoundEvent> GOLEM_SCREAM = reg("golem.scream");
     public static final DeferredHolder<SoundEvent, SoundEvent> GOLEM_SPARKS = reg("golem.sparks");
-    public static final DeferredHolder<SoundEvent, SoundEvent> GOLEM_PULSE = reg("golem.pulse");
     public static final DeferredHolder<SoundEvent, SoundEvent> GOLEM_SPARK_HIT = reg("golem.spark_hit");
-    public static final DeferredHolder<SoundEvent, SoundEvent> GOLEM_MALFUNCTION = reg("golem.malfunction");
     public static final DeferredHolder<SoundEvent, SoundEvent> GOLEM_POWER_DOWN = reg("golem.power_down");
-    public static final DeferredHolder<SoundEvent, SoundEvent> GOLEM_EYES = reg("golem.eyes");
-    public static final DeferredHolder<SoundEvent, SoundEvent> GOLEM_BOLT = reg("golem.bolt");
+    public static final DeferredHolder<SoundEvent, SoundEvent> GOLEM_ARC = reg("golem.arc");
+    public static final DeferredHolder<SoundEvent, SoundEvent> GOLEM_FIELD_HIT = reg("golem.field_hit");
+    public static final DeferredHolder<SoundEvent, SoundEvent> GOLEM_FIELD_DROP = reg("golem.field_drop");
+    public static final DeferredHolder<SoundEvent, SoundEvent> GOLEM_JUMP = reg("golem.jump");
+    public static final DeferredHolder<SoundEvent, SoundEvent> GOLEM_REPAIR = reg("golem.repair");
+    public static final DeferredHolder<SoundEvent, SoundEvent> GOLEM_ROCKET = reg("golem.rocket");
     public static final DeferredHolder<SoundEvent, SoundEvent> MINI_STEP = reg("mini.step");
     public static final DeferredHolder<SoundEvent, SoundEvent> MINI_AMBIENT = reg("mini.ambient");
     public static final DeferredHolder<SoundEvent, SoundEvent> MINI_SPAWN = reg("mini.spawn");
     public static final DeferredHolder<SoundEvent, SoundEvent> MINI_ATTACK = reg("mini.attack");
-    public static final DeferredHolder<SoundEvent, SoundEvent> MINI_SWING = reg("mini.swing");
     public static final DeferredHolder<SoundEvent, SoundEvent> MINI_HURT = reg("mini.hurt");
     public static final DeferredHolder<SoundEvent, SoundEvent> MINI_DEATH = reg("mini.death");
 

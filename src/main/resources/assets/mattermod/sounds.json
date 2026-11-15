@@ -50,246 +50,302 @@
   "golem.step": {
     "subtitle": "subtitles.mattermod.golem.step",
     "sounds": [
-      "mattermod:golem/step01",
-      "mattermod:golem/step02",
-      "mattermod:golem/step03",
-      "mattermod:golem/step04"
+      "mattermod:golem/step_soft_1",
+      "mattermod:golem/step_soft_2",
+      "mattermod:golem/step_soft_3",
+      "mattermod:golem/step_soft_4",
+      "mattermod:golem/step_soft_5"
     ]
   },
   "golem.gallop": {
     "subtitle": "subtitles.mattermod.golem.gallop",
     "sounds": [
-      "mattermod:golem/gallop01",
-      "mattermod:golem/gallop02",
-      "mattermod:golem/gallop03",
-      "mattermod:golem/gallop04"
+      "mattermod:golem/step_tame_1",
+      "mattermod:golem/step_tame_2",
+      "mattermod:golem/step_tame_3",
+      "mattermod:golem/step_tame_4"
     ]
   },
   "golem.ambient": {
     "subtitle": "subtitles.mattermod.golem.ambient",
     "sounds": [
-      "mattermod:golem/ambient01",
-      "mattermod:golem/ambient02",
-      "mattermod:golem/ambient03",
-      "mattermod:golem/ambient04",
-      "mattermod:golem/ambient05",
-      "mattermod:golem/ambient06",
-      "mattermod:golem/ambient07"
+      {
+        "name": "mattermod:golem/ambient_hum_1",
+        "volume": 0.78
+      },
+      {
+        "name": "mattermod:golem/ambient_hum_2",
+        "volume": 0.78
+      },
+      {
+        "name": "mattermod:golem/ambient_hum_3",
+        "volume": 0.78
+      },
+      {
+        "name": "mattermod:golem/ambient_hum_4",
+        "volume": 0.78
+      },
+      {
+        "name": "mattermod:golem/ambient_hum_5",
+        "volume": 0.78
+      }
     ]
   },
   "golem.laugh": {
     "subtitle": "subtitles.mattermod.golem.laugh",
     "sounds": [
-      "mattermod:golem/laugh01",
-      "mattermod:golem/laugh02",
-      "mattermod:golem/laugh03"
+      "mattermod:golem/rs_monstrosity_idle_003"
     ]
   },
   "golem.hurt": {
     "subtitle": "subtitles.mattermod.golem.hurt",
     "sounds": [
-      "mattermod:golem/hurt01",
-      "mattermod:golem/hurt02",
-      "mattermod:golem/hurt03",
-      "mattermod:golem/hurt04"
+      {
+        "name": "mattermod:golem/hurt_short_1",
+        "volume": 0.84
+      },
+      {
+        "name": "mattermod:golem/hurt_short_2",
+        "volume": 0.84
+      },
+      {
+        "name": "mattermod:golem/hurt_short_3",
+        "volume": 0.84
+      },
+      {
+        "name": "mattermod:golem/hurt_short_4",
+        "volume": 0.84
+      }
     ]
   },
   "golem.death": {
     "subtitle": "subtitles.mattermod.golem.death",
     "sounds": [
-      "mattermod:golem/death"
+      {
+        "name": "mattermod:golem/break_down_short",
+        "volume": 0.92
+      }
     ]
   },
   "golem.awaken": {
     "subtitle": "subtitles.mattermod.golem.awaken",
     "sounds": [
-      "mattermod:golem/awaken"
+      "mattermod:golem/rs_monstrosity_awaken_001"
     ]
   },
   "golem.land": {
     "subtitle": "subtitles.mattermod.golem.land",
     "sounds": [
-      "mattermod:golem/land01",
-      "mattermod:golem/land02",
-      "mattermod:golem/land03"
+      "mattermod:golem/wall_earth_erupt_001",
+      "mattermod:golem/wall_earth_erupt_002",
+      "mattermod:golem/wall_earth_erupt_003"
     ]
   },
   "golem.voice_short": {
     "subtitle": "subtitles.mattermod.golem.voice_short",
     "sounds": [
-      "mattermod:golem/voice_short01",
-      "mattermod:golem/voice_short02"
+      "mattermod:golem/rs_monstrosity_voice_short_001",
+      "mattermod:golem/rs_monstrosity_voice_short_002"
     ]
   },
   "golem.swipe": {
     "subtitle": "subtitles.mattermod.golem.swipe",
     "sounds": [
-      "mattermod:golem/swipe01",
-      "mattermod:golem/swipe02"
+      "mattermod:golem/redstonegolem_swipe_001",
+      "mattermod:golem/redstonegolem_swipe_002"
     ]
   },
   "golem.arm": {
     "subtitle": "subtitles.mattermod.golem.arm",
     "sounds": [
-      "mattermod:golem/arm01",
-      "mattermod:golem/arm02"
+      "mattermod:golem/rs_monstrosity_arm_001",
+      "mattermod:golem/rs_monstrosity_arm_002"
     ]
   },
   "golem.charge": {
     "subtitle": "subtitles.mattermod.golem.charge",
     "sounds": [
-      "mattermod:golem/charge01",
-      "mattermod:golem/charge02",
-      "mattermod:golem/charge03"
+      "mattermod:golem/rs_monstrosity_voice_charge_001",
+      "mattermod:golem/rs_monstrosity_voice_charge_002",
+      "mattermod:golem/rs_monstrosity_voice_charge_003"
     ]
   },
   "golem.slam": {
     "subtitle": "subtitles.mattermod.golem.slam",
     "sounds": [
-      "mattermod:golem/slam01",
-      "mattermod:golem/slam02",
-      "mattermod:golem/slam03",
-      "mattermod:golem/slam04",
-      "mattermod:golem/slam05"
+      "mattermod:golem/impact_heavy_1",
+      "mattermod:golem/impact_heavy_2",
+      "mattermod:golem/impact_heavy_3",
+      "mattermod:golem/impact_heavy_4",
+      "mattermod:golem/impact_heavy_5"
     ]
   },
   "golem.load": {
     "subtitle": "subtitles.mattermod.golem.load",
     "sounds": [
-      "mattermod:golem/load"
+      "mattermod:golem/redstone_golem_load_attack_001"
     ]
   },
   "golem.shoot": {
     "subtitle": "subtitles.mattermod.golem.shoot",
     "sounds": [
-      "mattermod:golem/shoot01",
-      "mattermod:golem/shoot02",
-      "mattermod:golem/shoot03"
+      "mattermod:golem/rs_monstrosity_shoot_001",
+      "mattermod:golem/rs_monstrosity_shoot_002",
+      "mattermod:golem/rs_monstrosity_shoot_003"
     ]
   },
   "golem.overheat": {
     "subtitle": "subtitles.mattermod.golem.overheat",
     "sounds": [
-      "mattermod:golem/overheat"
+      "mattermod:golem/field_raise"
     ]
   },
   "golem.scream": {
     "subtitle": "subtitles.mattermod.golem.scream",
     "sounds": [
-      "mattermod:golem/scream01",
-      "mattermod:golem/scream02"
+      "mattermod:golem/redstone_golem_growl_long_001",
+      "mattermod:golem/redstone_golem_growl_long_002"
     ]
   },
   "golem.sparks": {
     "subtitle": "subtitles.mattermod.golem.sparks",
     "sounds": [
-      "mattermod:golem/sparks01",
-      "mattermod:golem/sparks02",
-      "mattermod:golem/sparks03",
-      "mattermod:golem/sparks04",
-      "mattermod:golem/sparks05"
-    ]
-  },
-  "golem.pulse": {
-    "subtitle": "subtitles.mattermod.golem.pulse",
-    "sounds": [
-      "mattermod:golem/pulse01",
-      "mattermod:golem/pulse02",
-      "mattermod:golem/pulse03"
+      "mattermod:golem/redstonegolem_electric_sparks_001",
+      "mattermod:golem/redstonegolem_electric_sparks_003"
     ]
   },
   "golem.spark_hit": {
     "subtitle": "subtitles.mattermod.golem.spark_hit",
     "sounds": [
-      "mattermod:golem/spark_hit01",
-      "mattermod:golem/spark_hit02",
-      "mattermod:golem/spark_hit03",
-      "mattermod:golem/spark_hit04",
-      "mattermod:golem/spark_hit05",
-      "mattermod:golem/spark_hit06"
+      "mattermod:golem/crackle_1",
+      "mattermod:golem/crackle_2",
+      "mattermod:golem/crackle_3"
     ]
   },
-  "golem.malfunction": {
-    "subtitle": "subtitles.mattermod.golem.malfunction",
+  "golem.arc": {
+    "subtitle": "subtitles.mattermod.golem.arc",
     "sounds": [
-      "mattermod:golem/malfunction"
+      "mattermod:golem/arc_zap_1",
+      "mattermod:golem/arc_zap_2",
+      "mattermod:golem/arc_zap_3",
+      "mattermod:golem/arc_zap_4",
+      "mattermod:golem/arc_zap_5"
     ]
   },
   "golem.power_down": {
     "subtitle": "subtitles.mattermod.golem.power_down",
     "sounds": [
-      "mattermod:golem/power_down"
+      "mattermod:golem/redstone_golem_dead_pulsating_001"
     ]
   },
-  "golem.eyes": {
-    "subtitle": "subtitles.mattermod.golem.eyes",
+  "golem.field_hit": {
+    "subtitle": "subtitles.mattermod.golem.field_hit",
     "sounds": [
-      "mattermod:golem/eyes"
+      "mattermod:golem/field_hit_1",
+      "mattermod:golem/field_hit_2",
+      "mattermod:golem/field_hit_3"
     ]
   },
-  "golem.bolt": {
-    "subtitle": "subtitles.mattermod.golem.bolt",
+  "golem.field_drop": {
+    "subtitle": "subtitles.mattermod.golem.field_drop",
     "sounds": [
-      "mattermod:golem/bolt"
+      "mattermod:golem/field_drop"
+    ]
+  },
+  "golem.jump": {
+    "subtitle": "subtitles.mattermod.golem.jump",
+    "sounds": [
+      "mattermod:golem/jump_launch"
+    ]
+  },
+  "golem.repair": {
+    "subtitle": "subtitles.mattermod.golem.repair",
+    "sounds": [
+      "mattermod:golem/repair"
+    ]
+  },
+  "golem.rocket": {
+    "subtitle": "subtitles.mattermod.golem.rocket",
+    "sounds": [
+      "mattermod:golem/rocket_burst"
     ]
   },
   "mini.step": {
     "subtitle": "subtitles.mattermod.mini.step",
     "sounds": [
-      "mattermod:mini/step01",
-      "mattermod:mini/step02",
-      "mattermod:mini/step03",
-      "mattermod:mini/step04"
+      "mattermod:mini/mini_redstone_monstrosity_step_001",
+      "mattermod:mini/mini_redstone_monstrosity_step_002",
+      "mattermod:mini/mini_redstone_monstrosity_step_003",
+      "mattermod:mini/mini_redstone_monstrosity_step_004"
     ]
   },
   "mini.ambient": {
     "subtitle": "subtitles.mattermod.mini.ambient",
     "sounds": [
-      "mattermod:mini/ambient01",
-      "mattermod:mini/ambient02",
-      "mattermod:mini/ambient03"
+      {
+        "name": "mattermod:mini/mini_redstone_monstrosity_idle_003",
+        "volume": 0.71
+      }
     ]
   },
   "mini.spawn": {
     "subtitle": "subtitles.mattermod.mini.spawn",
     "sounds": [
-      "mattermod:mini/spawn"
+      "mattermod:mini/mini_redstone_monstrosity_equip"
     ]
   },
   "mini.attack": {
     "subtitle": "subtitles.mattermod.mini.attack",
     "sounds": [
-      "mattermod:mini/attack01",
-      "mattermod:mini/attack02",
-      "mattermod:mini/attack03"
-    ]
-  },
-  "mini.swing": {
-    "subtitle": "subtitles.mattermod.mini.swing",
-    "sounds": [
-      "mattermod:mini/swing01",
-      "mattermod:mini/swing02"
+      "mattermod:mini/redstone_golem_chest_001",
+      "mattermod:mini/redstone_golem_chest_002",
+      "mattermod:mini/redstone_golem_chest_003"
     ]
   },
   "mini.hurt": {
     "subtitle": "subtitles.mattermod.mini.hurt",
     "sounds": [
-      "mattermod:mini/hurt01",
-      "mattermod:mini/hurt02",
-      "mattermod:mini/hurt03",
-      "mattermod:mini/hurt04",
-      "mattermod:mini/hurt05",
-      "mattermod:mini/hurt06",
-      "mattermod:mini/hurt07",
-      "mattermod:mini/hurt08"
+      {
+        "name": "mattermod:mini/mini_hurt_1",
+        "volume": 0.72
+      },
+      {
+        "name": "mattermod:mini/mini_hurt_2",
+        "volume": 0.72
+      },
+      {
+        "name": "mattermod:mini/mini_hurt_3",
+        "volume": 0.72
+      },
+      {
+        "name": "mattermod:mini/mini_hurt_4",
+        "volume": 0.72
+      },
+      {
+        "name": "mattermod:mini/mini_hurt_5",
+        "volume": 0.72
+      },
+      {
+        "name": "mattermod:mini/mini_hurt_6",
+        "volume": 0.72
+      }
     ]
   },
   "mini.death": {
     "subtitle": "subtitles.mattermod.mini.death",
     "sounds": [
-      "mattermod:mini/death01",
-      "mattermod:mini/death02",
-      "mattermod:mini/death03"
+      {
+        "name": "mattermod:mini/mini_death_1",
+        "volume": 0.65
+      },
+      {
+        "name": "mattermod:mini/mini_death_2",
+        "volume": 0.65
+      },
+      {
+        "name": "mattermod:mini/mini_death_3",
+        "volume": 0.65
+      }
     ]
   }
 }

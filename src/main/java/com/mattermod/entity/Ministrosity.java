@@ -48,7 +48,9 @@ public final class Ministrosity extends PathfinderMob implements GeoEntity {
                     net.minecraft.network.syncher.EntityDataSerializers.INT);
     /** Overheat: they run and strike this much faster, and hit this much harder. */
     static final double OVERHEAT_FACTOR = RedstoneGolem.OVERHEAT_FACTOR;
-    private int attackCooldown, hitIn;
+    private int attackCooldown, hitIn, snickerIn;
+    /** Shared by all Ministrosities (server): when the next snicker and the next yelp may play. */
+    private static long nextSnicker, nextYelp;
 
     public Ministrosity(EntityType<? extends Ministrosity> type, Level level) {
         super(type, level);
@@ -86,7 +88,6 @@ public final class Ministrosity extends PathfinderMob implements GeoEntity {
     void bind(RedstoneGolem golem, ServerPlayer owner) {
         golemId = golem.getUUID();
         entityData.set(GOLEM, golem.getId());
-        playSound(com.mattermod.registry.ModSounds.MINI_SPAWN.get(), 1, 1);
         ownerId = owner.getUUID();
         // counts as the owner's ally everywhere (beam, orbs, Golem)
         getPersistentData().putUUID("mm_summoner", ownerId);
@@ -157,13 +158,19 @@ public final class Ministrosity extends PathfinderMob implements GeoEntity {
                     attackCooldown = ATTACK_COOLDOWN;
                     hitIn = ATTACK_HIT;
                     triggerAnim("main", "attack");
-                    playSound(com.mattermod.registry.ModSounds.MINI_SWING.get(), .9f, 1.3f);
                 }
             }
             return;
         }
         // now and then, while standing around, a little snicker
-        if (getNavigation().isDone() && hitIn == 0 && random.nextInt(240) == 0) triggerAnim("main", "idle_break");
+        // one snicker at a time across all of them, spaced out; the giggle is timed to its cackle (frame 4)
+        if (getNavigation().isDone() && hitIn == 0 && random.nextInt(240) == 0
+                && (level().getGameTime() >= nextSnicker || nextSnicker - level().getGameTime() > 600)) {   // (another world's clock)
+            nextSnicker = level().getGameTime() + 300 + random.nextInt(200);
+            triggerAnim("main", "idle_break");
+            snickerIn = 4;
+        }
+        if (snickerIn > 0 && --snickerIn == 0) playSound(com.mattermod.registry.ModSounds.MINI_AMBIENT.get(), 1, 1);
         if (distanceToSqr(g) > 16) {
             if (tickCount % 10 == 0 || getNavigation().isDone()) getNavigation().moveTo(g, 1.1);
         } else getNavigation().stop();
@@ -194,7 +201,7 @@ public final class Ministrosity extends PathfinderMob implements GeoEntity {
             Vec3 push = t.position().subtract(position()).multiply(1, 0, 1);
             if (push.lengthSqr() > 1e-4) push = push.normalize().scale(.35);
             t.push(push.x, .1, push.z);
-            playSound(com.mattermod.registry.ModSounds.MINI_ATTACK.get(), .9f, 1.3f);
+            playSound(com.mattermod.registry.ModSounds.MINI_ATTACK.get(), .43f, 1);
         }
     }
 
@@ -253,12 +260,12 @@ public final class Ministrosity extends PathfinderMob implements GeoEntity {
 
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
-        playSound(com.mattermod.registry.ModSounds.MINI_STEP.get(), .6f, 1);
+        playSound(com.mattermod.registry.ModSounds.MINI_STEP.get(), .25f, 1);
     }
 
     @Override
     public float getVoicePitch() {
-        return 1.4f + random.nextFloat() * .15f;   // the big Redstone Golem's voice, small
+        return .95f + random.nextFloat() * .1f;   // its hurt and death sounds are already pitched up
     }
 
     @Override
@@ -266,10 +273,17 @@ public final class Ministrosity extends PathfinderMob implements GeoEntity {
         return com.mattermod.registry.ModSounds.MINI_AMBIENT.get();
     }
 
-    /** Its own giggles at their own pitch (getVoicePitch raises the borrowed hurt and death voices). */
+    /** No random ambient: it only giggles with its snicker animation, one Ministrosity at a time (see the tick). */
     @Override
-    public void playAmbientSound() {
-        playSound(getAmbientSound(), getSoundVolume(), .95f + random.nextFloat() * .1f);
+    public void playAmbientSound() {}
+
+    /** A group yelps at most once a second between them: three hit by one sweep make one yelp, not a rattle. */
+    @Override
+    protected void playHurtSound(DamageSource source) {
+        long now = level().getGameTime();
+        if (now < nextYelp && nextYelp - now <= 20) return;
+        nextYelp = now + 20;
+        super.playHurtSound(source);
     }
 
     // ---- GeckoLib -------------------------------------------------------------------------------
