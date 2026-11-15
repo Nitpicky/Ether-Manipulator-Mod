@@ -1023,15 +1023,15 @@ public final class PlaytestBootstrap {
                         var g = com.mattermod.entity.GolemControl.golem(p);
                         log("golem minis at t" + t + ": " + (g == null ? "no golem" : com.mattermod.entity.Ministrosity.of(g).size()));
                     });
-            // the overheat is a state: nothing else while the furnace blows, its time starts after
+            // the overheat is a state: nothing else while the generator blows, its time starts after
             case 1420 ->
                     server(mc, (s, p) -> {
                         var g = com.mattermod.entity.GolemControl.golem(p);
                         boolean ok = g != null && g.venting() && g.overheated() && !g.sweep(null);
-                        log((ok ? "PASS" : "FAIL") + " golem: blowing its furnace it does nothing else (venting "
+                        log((ok ? "PASS" : "FAIL") + " golem: blowing its generator it does nothing else (venting "
                                 + (g != null && g.venting()) + ")");
                     });
-            case 1463 ->   // the dispenser runs to 1413, then the furnace blows for 43 ticks
+            case 1463 ->   // the dispenser runs to 1413, then the generator blows for 43 ticks
                     server(mc, (s, p) -> {
                         var g = com.mattermod.entity.GolemControl.golem(p);
                         boolean ok = g != null && !g.venting() && g.overheated();

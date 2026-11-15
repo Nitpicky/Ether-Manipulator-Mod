@@ -87,7 +87,7 @@ public final class RedstoneGolemRenderer extends GeoEntityRenderer<RedstoneGolem
             var lamp = getAnimationProcessor().getBone("lamp");
             if (lamp != null) lamp.setHidden(true);
             // like vanilla mobs, the head turns to what it looks at (on top of its animation); not while it rises, blows
-            // its furnace, folds away or breaks down, when the animation owns the head
+            // its generator, folds away or breaks down, when the animation owns the head
             // (set on its own "look" bone above the head, never added to the head's keyframes: an unanimated bone keeps
             // what it was given, so adding to it turned the head round and round)
             var look = getAnimationProcessor().getBone("look");

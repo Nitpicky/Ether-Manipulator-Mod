@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
-/** Ministrosity: the Golem's little helper, its redstone showing its Golem's furnace (GolemSignalLayer). */
+/** Ministrosity: the Golem's little helper, its redstone showing its Golem's generator (GolemSignalLayer). */
 public final class MinistrosityRenderer extends GeoEntityRenderer<Ministrosity> {
 
     public MinistrosityRenderer(EntityRendererProvider.Context ctx) {

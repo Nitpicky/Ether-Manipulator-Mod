@@ -12,7 +12,7 @@
   "commons": [
     {
       "id": "mechatronic.redstone_furnace",
-      "name": "Redstone Furnace",
+      "name": "Redstone Generator",
       "description": "Its blows build up charge. Fully charged, it Overcharges: a roar raises a Cube Field around it that stops enemy projectiles, then for 6s it moves 50% faster, hits 50% harder and throws foes much further. Left alone, the charge drains away."
     },
     {

@@ -15,16 +15,16 @@ import software.bernie.geckolib.renderer.GeoRenderer;
 import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
 
 /**
- * Lit redstone that shows the Redstone Furnace's heat as signal strength. At rest it is the texture's own four redstone
+ * Lit redstone that shows the Redstone Generator's heat as signal strength. At rest it is the texture's own four redstone
  * tones, glowing; as heat builds the same four tones step up in signal (0, 3, 6, 9, 12, 15) and hue-shift toward the
- * eyes' amber, keeping their contrast. When the furnace blows, the overheat animation flashes briefly to the eyes' white, then steps back through a halfway tone to signal 15.
- * Ministrosities show their Golem's furnace the same way. Cutout and full bright, so it stays solid under shader packs.
+ * eyes' amber, keeping their contrast. When the generator blows, the overheat animation flashes briefly to the eyes' white, then steps back through a halfway tone to signal 15.
+ * Ministrosities show their Golem's generator the same way. Cutout and full bright, so it stays solid under shader packs.
  */
 public final class GolemSignalLayer<T extends net.minecraft.world.entity.Entity & software.bernie.geckolib.animatable.GeoAnimatable> extends GeoRenderLayer<T> {
 
     private final ResourceLocation[] SIGNAL = new ResourceLocation[6];
     private final ResourceLocation FLASH, AFTER;
-    /** The Golem whose furnace this creature shows (itself, or a Ministrosity's Golem). */
+    /** The Golem whose generator this creature shows (itself, or a Ministrosity's Golem). */
     private final java.util.function.Function<T, RedstoneGolem> golemOf;
 
     private static ResourceLocation tex(String name) {

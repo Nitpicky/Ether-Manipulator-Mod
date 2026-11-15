@@ -63,7 +63,7 @@ import java.util.UUID;
  * its Overcharge raises a Cube Field that builds Ministrosities or arcs its blows on (Supercharged).
  *
  * <p>Animations come from golem-model/geckolib/export_geckolib.py (20 fps). Attack timings below
- * are in animation frames and run 1.5x faster while the Redstone Furnace is overheated.
+ * are in animation frames and run 1.5x faster while the Redstone Generator is overheated.
  */
 public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net.minecraft.world.entity.PlayerRideableJumping {
 
@@ -76,7 +76,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
     /** Game time of the last (re)assembly: the client plays the summon animation from it. */
     private static final EntityDataAccessor<Long> BUILT_AT =
             SynchedEntityData.defineId(RedstoneGolem.class, EntityDataSerializers.LONG);
-    /** Redstone Furnace heat in tenths of a hit, 0..FURNACE_HITS*10: the client shows it as the redstone's signal strength. */
+    /** Redstone Generator heat in tenths of a hit, 0..GENERATOR_HITS*10: the client shows it as the redstone's signal strength. */
     private static final EntityDataAccessor<Integer> HEAT =
             SynchedEntityData.defineId(RedstoneGolem.class, EntityDataSerializers.INT);
     /** Super Move cooldown: game time it is ready again, and its length in ticks (the HUD's attack indicator). */
@@ -114,10 +114,10 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
      *  2.16 x its ridden speed (the rider's full forward input). */
     private static final double GROUND = 2.16;
     static final int MINI_CAP = 3;
-    static final int FURNACE_HITS = 10, OVERHEAT_TICKS = 120;
+    static final int GENERATOR_HITS = 10, OVERHEAT_TICKS = 120;
     /** The overheat animation (frames): the Golem does nothing else meanwhile, and the overheat's time starts as it ends. */
     static final int OVERHEAT_LEN = 64, OVERHEAT_SCREAM = 17;
-    /** A Super Move stokes the furnace by this many hits as it is used. */
+    /** A Super Move stokes the generator by this many hits as it is used. */
     static final int SUPER_HEAT = 3;
     /** Client: the overheat animation's scream (frames 17..26 at 1.5x speed) flashes the redstone to the eyes' white. */
     static final int FLASH_FROM = 11, FLASH_TO = 17, AFTERGLOW_TO = 22;
@@ -319,7 +319,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
         return Mth.clamp(1 - (left - partialTick) / Math.max(1, entityData.get(SUPER_LEN)), 0, 1);
     }
 
-    /** Blowing its furnace (the overheat animation): it can't move, attack or be steered. */
+    /** Blowing its generator (the overheat animation): it can't move, attack or be steered. */
     public boolean venting() {
         return flag(F_VENTING);
     }
@@ -554,7 +554,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
     public void tick() {
         super.tick();
         if (level().isClientSide) {
-            // the furnace's heat as signal: climbs quickly with each hit, cools slowly (2.5s from full) after an overheat
+            // the generator's heat as signal: climbs quickly with each hit, cools slowly (2.5s from full) after an overheat
             signalPrev = signal;
             boolean hot = overheated();
             if (hot && !wasHot) {
@@ -563,7 +563,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
             }
             if (!hot && wasHot) fieldOffTick = tickCount;
             wasHot = hot;
-            float target = hot ? 1 : entityData.get(HEAT) / (FURNACE_HITS * 10f);
+            float target = hot ? 1 : entityData.get(HEAT) / (GENERATOR_HITS * 10f);
             signal += target > signal ? Math.min(target - signal, 1 / 10f) : Math.max(target - signal, -1 / 50f);
             if (flashTicks >= 0 && ++flashTicks >= AFTERGLOW_TO) flashTicks = -1;
             // Stride: how fast it really moves sets the gallop's pace; leaving it plays the push back upright
@@ -650,7 +650,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
 
         cool();
         if (overheated()) fieldTick(owner);
-        // Redstone Furnace: the overheat runs out
+        // Redstone Generator: the overheat runs out
         if (overheatTicks > 0 && action != Action.OVERHEAT && --overheatTicks == 0) {
             setFlag(F_OVERHEATED, false);
             playSound(com.mattermod.registry.ModSounds.GOLEM_FIELD_DROP.get(), .8f, 1);   // the Cube Field collapses
@@ -678,7 +678,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
             setFlag(F_BOOSTING, thrusting || gliding);
             setFlag(F_GLIDING, gliding);
         }
-        // the furnace blows as soon as the Golem is free: nothing else until it is done
+        // the generator blows as soon as the Golem is free: nothing else until it is done
         if (action == Action.NONE && overheatPending && !assembling()) {
             overheatPending = false;
             queuedUntil = 0;
@@ -1046,7 +1046,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
         level().addFreshEntity(bolt);
     }
 
-    /** Called when a bolt hits: it stokes the furnace too. */
+    /** Called when a bolt hits: it stokes the generator too. */
     void boltHit(ServerPlayer owner, LivingEntity hit) {
         if (overheated()) {
             Vec3 push = hit.position().subtract(position()).multiply(1, 0, 1);
@@ -1058,7 +1058,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
         stoke(owner, 1);
     }
 
-    // ---- Redstone Furnace -------------------------------------------------------------------
+    // ---- Redstone Generator -------------------------------------------------------------------
 
     private boolean overheatPending;
 
@@ -1073,22 +1073,22 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
         if (!hasCommon(owner, 0) || overheated() || overheatPending) return;
         heat += hits;
         lastStoke = tickCount;
-        entityData.set(HEAT, Math.round(Math.min(heat, FURNACE_HITS) * 10));
-        if (heat >= FURNACE_HITS) {
+        entityData.set(HEAT, Math.round(Math.min(heat, GENERATOR_HITS) * 10));
+        if (heat >= GENERATOR_HITS) {
             heat = 0;
             entityData.set(HEAT, 0);
             overheatPending = true;      // blows once the current move is over (see tick)
         }
     }
 
-    /** Playtest hook: stokes the furnace to an overheat at once. */
+    /** Playtest hook: stokes the generator to an overheat at once. */
     public String debugOverheat(ServerPlayer owner) {
-        String before = "furnace=" + hasCommon(owner, 0) + " overheated=" + overheated() + " heat=" + heat + " minis=" + hasMinis()
+        String before = "generator=" + hasCommon(owner, 0) + " overheated=" + overheated() + " heat=" + heat + " minis=" + hasMinis()
                 + " out=" + Ministrosity.of(this).size();
         if (overheated()) {
             // already hot from the fight: an overheat still has to build its Ministrosities
             if (hasMinis()) buildMinis(owner);
-        } else stoke(owner, FURNACE_HITS);
+        } else stoke(owner, GENERATOR_HITS);
         return before + " -> out=" + Ministrosity.of(this).size();
     }
 
