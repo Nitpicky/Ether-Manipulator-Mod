@@ -157,8 +157,13 @@ public final class GustGrenade {
             if (mob != null) {
                 g.stuck = mob.getEntity();
                 // latch where it touched, on the creature's skin (its box), and turn with it
+                // (this lookup only names the creature: its location is the feet, so find
+                // where the throw's path actually meets the creature's box)
                 AABB box = g.stuck.getBoundingBox();
-                Vec3 hit = mob.getLocation();
+                Vec3 hit =
+                        box.inflate(0.3)
+                                .clip(g.pos, end)
+                                .orElseGet(() -> box.getCenter().add(g.pos).scale(0.5));
                 Vec3 skin =
                         new Vec3(
                                 Math.clamp(hit.x, box.minX, box.maxX),

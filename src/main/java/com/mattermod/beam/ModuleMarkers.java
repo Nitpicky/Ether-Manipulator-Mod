@@ -40,7 +40,7 @@ final class ModuleMarkers {
             Vec3 camPos, float time, MultiBufferSource.BufferSource buf, Matrix4f m) {
         float alpha = ClientMobility.trailAlpha;
         if (alpha <= 0 || ClientMobility.TRAIL.size() < 2) return;
-        VertexConsumer vc = com.mattermod.client.FxRender.buffer(buf);
+        VertexConsumer vc = com.mattermod.client.Fx.glow();
         Iterator<Vec3> it = ClientMobility.TRAIL.iterator();
         Vec3 newer = it.next();
         int i = 0;
@@ -60,7 +60,6 @@ final class ModuleMarkers {
             Vec3 c = at.subtract(camPos).add(0, 0.06, 0);
             chevron(vc, m, c, dir, side, a);
         }
-        com.mattermod.client.FxRender.end(buf);
     }
 
     /**
