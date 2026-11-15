@@ -45,7 +45,7 @@ jobs:
           MESA_GL_VERSION_OVERRIDE: '4.5'
           MESA_GLSL_VERSION_OVERRIDE: '450'
         run: |
-          xvfb-run -a -s '-screen 0 1280x720x24' timeout 1500 ./gradlew runClient -Pplaytest -PmodelShots -PstopAfter=300 --no-daemon || true
+          xvfb-run -a -s '-screen 0 1280x720x24' timeout 1500 ./gradlew runClient -Pplaytest -PmodelShots -PstopAfter=310 --no-daemon || true
           grep -i -E 'iris|shader' runs/client/logs/latest.log | head -40 || true
       - name: Publish shots
         if: always()
