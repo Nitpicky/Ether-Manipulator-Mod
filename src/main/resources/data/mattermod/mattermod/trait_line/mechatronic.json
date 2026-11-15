@@ -18,7 +18,7 @@
     {
       "id": "mechatronic.saddle",
       "name": "Saddle",
-      "description": "Right click the Monstrosity to ride it. Left click: its lift. Right click: its Super Move. Hold Jump to charge a jump, a long leap while it runs; press Jump again in the air to rocket. Sneak: get off."
+      "description": "Right click the Monstrosity to ride it. Left click: its lift. Right click: its Super Move. Hold Jump to charge a jump; while it gallops, a committed leap that lands with a slam. Press Jump again in the air to rocket. Sneak: get off."
     }
   ],
   "adept": [
@@ -49,7 +49,7 @@
     {
       "id": "mechatronic.stride_servos",
       "name": "Stride Servos",
-      "description": "Its stride gathers faster and runs further: 1.9x speed in 1.2s (1.5x in 2s without)."
+      "description": "Its gallop is faster: 5.8 blocks/s (5 without). Double-tap forward while riding to gallop."
     },
     {
       "id": "mechatronic.rocket_boots",

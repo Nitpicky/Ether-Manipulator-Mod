@@ -103,10 +103,16 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
      *  go falls; the fuel refills the moment it lands. Fuel in ticks, thrust and climb in blocks/tick. */
     static final int ROCKET_FUEL = 32, ROCKET_FUEL_UP = 48;
     static final double THRUST = .10, THRUST_UP = .12, CLIMB = .5, CLIMB_UP = .62, GLIDE = -.12;
-    /** Stride (always on; the Stride Servos trait upgrades it): running in a steady line builds speed up to STRIDE_TOP x walk
-     *  over STRIDE_BUILD ticks, like Gravity Skate but much milder; stopping or a sharp turn sheds it. */
-    static final double STRIDE_TOP = 1.5, STRIDE_TOP_UP = 1.9;
-    static final int STRIDE_BUILD = 40, STRIDE_BUILD_UP = 24;
+    /** Ground speeds in blocks per tick, set from the animations (user 2026-11-15: feet must not slide). The walk is the slow
+     *  heavy waddle; Stride (rider's double-tap sprint, or the AI covering ground) is the knuckle gallop at once, no ramp;
+     *  the Stride Servos trait gallops faster. */
+    static final double WALK_V = .0165, STRIDE_V = .25, STRIDE_V_UP = .29;
+    /** How far each loop's planted feet carry it per tick at play rate 1 (measured off the animation files: walk and
+     *  sidestep feet, the gallop's fists and legs). The loops play at real ground speed over these, so feet stay planted. */
+    static final double WALK_PACE = .0123, STRAFE_PACE = .0107, RUN_PACE = .171;
+    /** Vanilla ground movement: a mob's input is its speed, so it covers 2.16 x speed^2 blocks a tick; a ridden mob covers
+     *  2.16 x its ridden speed (the rider's full forward input). */
+    private static final double GROUND = 2.16;
     static final int MINI_CAP = 3;
     static final int FURNACE_HITS = 10, OVERHEAT_TICKS = 120;
     /** The overheat animation (frames): the Golem does nothing else meanwhile, and the overheat's time starts as it ends. */
@@ -134,8 +140,8 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
     /** Rocket Boots: thrust ticks left; spent, holding Jump glides down. */
     private int fuel = ROCKET_FUEL;
     private boolean gliding, thrusting, jumpWas;
-    /** Stride: built-up speed, 0..1, and the heading it was built along (degrees). */
-    private float strideCharge, strideHeading;
+    /** Stride: the heading it was last moving along (degrees), to drop it on a sharp turn. */
+    private float strideHeading;
     private Vec3 rocketGoal;
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -257,10 +263,12 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
         return flashTicks >= FLASH_TO && flashTicks < AFTERGLOW_TO;
     }
 
-    /** Client: the gallop loop's speed: slow as it drops onto its fists, full tilt at Stride's top speed. */
-    double gallopRate() {
-        double top = BASE_SPEED * STRIDE_TOP_UP * .45;   // roughly blocks per tick at full Stride
-        return Mth.clamp(.5 + .7 * pace / top, .5, 1.2);
+    /** The walk, sidestep and gallop loops' play rate: its real ground speed over the ground the loop's planted feet
+     *  cover at rate 1, so the feet don't slide. Attacks and other one-offs play at the Overcharge rate. */
+    double locoRate() {
+        if (flag(F_LIFTING) || busy() || pace < .004 || tickCount < runStopUntil) return animSpeed();
+        double per = striding() ? RUN_PACE : Math.abs(lateral) > .5 ? STRAFE_PACE : WALK_PACE;
+        return Mth.clamp(pace / per, striding() ? .6 : .4, striding() ? 2.2 : 2.5);
     }
 
     /** GolemSignalLayer's tones, dark to bright: signal stages 0..5 (0 = the texture's own redstone), the flash, the step after. */
@@ -345,20 +353,20 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
         return hasRockets() ? ROCKET_FUEL_UP : ROCKET_FUEL;
     }
 
-    /** Walking it is slow; only on all fours (Stride) does it pick up speed, from a little over a walk to the top. */
-    private double strideMult() {
-        if (!strideOn) return 1;
-        double top = hasStride() ? STRIDE_TOP_UP : STRIDE_TOP;
-        return 1.15 + (top - 1.15) * strideCharge;
+    /** Its ground speed now (blocks per tick): the slow walk, or the gallop at once on Stride; Overcharge speeds it up. */
+    private double groundSpeed() {
+        double v = strideOn ? hasStride() ? STRIDE_V_UP : STRIDE_V : WALK_V;
+        return v * (overheated() ? OVERHEAT_FACTOR : 1);
     }
 
     /** The AI drops to all fours when it has ground to cover: its owner sprints away, it is far behind, or its target is. */
     private boolean aiWantsStride(ServerPlayer owner) {
         if (action != Action.NONE || order == Order.HOLD && getTarget() == null) return false;
         LivingEntity t = getTarget();
-        if (t != null) return distanceToSqr(t) > 8 * 8;
+        // the walk is slow and heavy: anything more than a few steps away, it gallops
+        if (t != null) return distanceToSqr(t) > 5 * 5;
         double d = distanceToSqr(owner);
-        return d > 10 * 10 || owner.isSprinting() && d > FOLLOW_DISTANCE * FOLLOW_DISTANCE * 2;
+        return d > (FOLLOW_DISTANCE + 3) * (FOLLOW_DISTANCE + 3);
     }
 
     /** Lets its rider sprint, which is what starts the Stride. */
@@ -368,8 +376,8 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
     }
 
     /** One tick of Stride where the Golem is simulated: asked for (rider sprinting ahead, or the AI covering ground) and
-     *  running straight ahead, it goes on all fours and builds speed; anything else (sideways, backing up, a sharp turn,
-     *  stopping, not asked) drops it at once. */
+     *  heading straight ahead, it drops on all fours at full gallop speed; anything else (sideways, backing up, a sharp
+     *  turn, not asked) drops it at once. */
     private void strideTick(boolean want) {
         Vec3 v = getDeltaMovement();
         double sp = v.horizontalDistance();
@@ -377,14 +385,9 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
         float turn = Math.abs(Mth.wrapDegrees(heading - strideHeading));
         strideHeading = heading;
         float off = Math.abs(Mth.wrapDegrees(heading - 90 - yBodyRot));
-        boolean ok = want && sp > .05 && off <= 25 && turn <= 35;
-        if (!ok) {
-            strideOn = false;
-            strideCharge = 0;
-            return;
-        }
-        strideOn = true;
-        if (onGround()) strideCharge = Math.min(1, strideCharge + 1f / (hasStride() ? STRIDE_BUILD_UP : STRIDE_BUILD));
+        // starting from a walk it is still slow: only its heading counts until it is under way
+        boolean ok = want && (sp < .03 || off <= 25 && turn <= 35);
+        strideOn = ok;
     }
 
     /** One line of state for the playtest log. */
@@ -577,10 +580,12 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
             strideOn = rider.isSprinting() && Math.hypot(getX() - xo, getZ() - zo) > .08;
         }
         setFlag(F_STRIDING, strideOn);
+        pace += (Math.hypot(getX() - xo, getZ() - zo) - pace) * .2;
+        landingTick(owner);
         footsteps();
         playCues();
         if (overheated() && random.nextInt(50) == 0) playSound(com.mattermod.registry.ModSounds.GOLEM_SPARKS.get(), .8f, 1);
-        double speed = BASE_SPEED * strideMult() * (overheated() ? OVERHEAT_FACTOR : 1);
+        double speed = Math.sqrt(groundSpeed() / GROUND);
         var attr = getAttribute(Attributes.MOVEMENT_SPEED);
         if (attr != null && attr.getBaseValue() != speed) attr.setBaseValue(speed);
 
@@ -774,7 +779,6 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
         }
         if (a == Action.SWEEP) {
             sweepCooldown = Math.round(SWEEP_LEN / animSpeed());
-            strideCharge = 0;
             strideOn = false;
         }
         if (a == Action.OVERHEAT) {
@@ -1212,11 +1216,21 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
 
     // ---- the charged jump (Saddle), horse style --------------------------------------------------
 
-    /** Hold Jump to charge (the jump bar fills), let go to jump: from a hop to about 4 blocks. Striding, the charge throws
-     *  it forward too, a long low leap. In the air Jump fires the Rocket Boots. */
-    static final double JUMP_LOW = .45, JUMP_HIGH = .85, LEAP = 1.1;
+    /** Hold Jump to charge (the jump bar fills), let go to jump: from a hop to about 4 blocks. Striding, it is a Winston
+     *  leap instead: launched up and forward along its heading on a committed arc (no steering in the air, no drag),
+     *  from about 5 to 11 blocks, and it lands with a slam. In the air Jump fires the Rocket Boots. */
+    static final double JUMP_LOW = .45, JUMP_HIGH = .85, LEAP_V_LOW = .6, LEAP_V_HIGH = .9, LEAP_H_LOW = .3, LEAP_H_HIGH = .5;
+    /** The leap's landing: everything within LAND_RADIUS is hit and thrown out; it needs this many ticks in the air. */
+    static final double LAND_RADIUS = 3;
+    static final float LAND_DAMAGE = 6;
+    static final int LAND_AIR_TICKS = 12;
     /** Client (rider): the charge of the jump to make, 0 = none. */
     private float pendingJump;
+    /** Client (rider): the leap's locked ground velocity while in the air, null when not leaping; its ticks airborne. */
+    private Vec3 leapVel;
+    private int leapTicks;
+    /** Server: ticks in the air while ridden, for the landing slam. */
+    private int airTicks;
 
     @Override
     public void onPlayerJump(int power) {
@@ -1240,12 +1254,59 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
     /** Client (rider): the jump itself. Public for the playtest. */
     public void leap(float scale) {
         Vec3 v = getDeltaMovement();
-        double vy = JUMP_LOW + (JUMP_HIGH - JUMP_LOW) * scale;
-        Vec3 h = new Vec3(v.x, 0, v.z);
-        if (strideOn) h = h.add(Vec3.directionFromRotation(0, getYRot()).scale(LEAP * scale * (.5 + .5 * strideCharge)));
-        setDeltaMovement(h.x, vy, h.z);
+        if (strideOn) {
+            leapVel = Vec3.directionFromRotation(0, getYRot()).scale(LEAP_H_LOW + (LEAP_H_HIGH - LEAP_H_LOW) * scale);
+            leapTicks = 0;
+            setDeltaMovement(leapVel.x, LEAP_V_LOW + (LEAP_V_HIGH - LEAP_V_LOW) * scale, leapVel.z);
+        } else setDeltaMovement(v.x, JUMP_LOW + (JUMP_HIGH - JUMP_LOW) * scale, v.z);
         hasImpulse = true;
         fallDistance = 0;
+    }
+
+    /** Client (rider): holds the leap's arc: the same ground velocity every tick until it lands or hits a wall. */
+    private void leapTick() {
+        if (leapVel == null) return;
+        if (++leapTicks > 2 && onGround() || horizontalCollision || isInWater()) {
+            leapVel = null;
+            return;
+        }
+        setDeltaMovement(leapVel.x, getDeltaMovement().y, leapVel.z);
+    }
+
+    /** Server: a ridden leap (or any long drop) comes down with a slam, Winston style: the area around is hit and thrown out. */
+    private void landingTick(ServerPlayer owner) {
+        if (!isVehicle()) {
+            airTicks = 0;
+            return;
+        }
+        if (!onGround()) {
+            airTicks++;
+            return;
+        }
+        boolean slam = airTicks >= LAND_AIR_TICKS;
+        airTicks = 0;
+        if (!slam) return;
+        playSound(com.mattermod.registry.ModSounds.GOLEM_SLAM.get(), 1.4f, 1);
+        bout(owner, getBoundingBox().inflate(LAND_RADIUS, 1.5, LAND_RADIUS));
+        int hits = 0;
+        for (var e : level().getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(LAND_RADIUS, 1.5, LAND_RADIUS), e -> canHit(owner, e))) {
+            Vec3 to = e.position().subtract(position()).multiply(1, 0, 1);
+            double d = to.length();
+            if (d > LAND_RADIUS + e.getBbWidth() / 2 + getBbWidth() / 2) continue;
+            if (!e.hurt(damageSources().mobAttack(this), melee(owner, LAND_DAMAGE))) continue;
+            Vec3 push = (d > .01 ? to.normalize() : Vec3.directionFromRotation(0, getYRot())).scale(1.1 * knock());
+            e.setDeltaMovement(e.getDeltaMovement().add(push.x, .5, push.z));
+            e.hurtMarked = true;
+            landed(owner, e);
+            hits++;
+        }
+        if (hits > 0) stoke(owner, hits);
+        if (level() instanceof ServerLevel sl) {
+            var below = level().getBlockState(blockPosition().below());
+            if (!below.isAir())
+                sl.sendParticles(new net.minecraft.core.particles.BlockParticleOption(ParticleTypes.BLOCK, below), getX(), getY() + .1, getZ(), 80, LAND_RADIUS * .5, .15, LAND_RADIUS * .5, .3);
+            sl.sendParticles(new DustParticleOptions(new Vector3f(.9f, .1f, .05f), 2f), getX(), getY() + .2, getZ(), 30, LAND_RADIUS * .5, .1, LAND_RADIUS * .5, 0);
+        }
     }
 
     /** Playtest: the highest it got since the last reset. */
@@ -1354,6 +1415,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
                 pendingJump = 0;
                 jump = false;        // the release that jumped
             }
+            leapTick();
             rocketTick(jump && !onGround());
             peakY = Math.max(peakY, getY());
             strideTick(player.isSprinting() && player.zza > 0 && Math.abs(player.xxa) < .3f && !busy());
@@ -1365,6 +1427,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
     protected Vec3 getRiddenInput(Player player, Vec3 input) {
         // rising, venting, folding away or heaving in its basic attack: it stands its ground
         if (busy() || flag(F_LIFTING)) return Vec3.ZERO;      // (F_LIFTING: any attack or Super Move under way)
+        if (leapVel != null) return Vec3.ZERO;                // mid-leap: committed, no steering
         // heavy: it steps sideways and backs up slowly
         float side = player.xxa * SIDESTEP, fwd = player.zza;
         if (fwd <= 0) fwd *= .25f;
@@ -1373,7 +1436,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
 
     @Override
     protected float getRiddenSpeed(Player player) {
-        return (float) (BASE_SPEED * strideMult() * (overheated() ? OVERHEAT_FACTOR : 1) * .9);
+        return (float) (groundSpeed() / GROUND);
     }
 
     /** Heavy: its head turns less far than most mobs' before the body follows, and the body turns slowly. */
@@ -1388,7 +1451,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
     }
 
     /** Sideways speed against forward, for the rider and the stride check. */
-    static final float SIDESTEP = .3f;
+    static final float SIDESTEP = .9f;
 
     /** The seat: the stone square in the middle of the body's top face (31 units up), sunk 2 units so the rider sits down
      *  between the shoulder towers with the thighs just over the head (its top is at 29). */
@@ -1499,7 +1562,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
     private float stepClock;
 
     /** Server: a stomp on each footfall of the walk (two per 40-frame cycle), a gallop beat for each fist and foot pair
-     *  of the run (two per 20-frame loop, faster as Stride builds). */
+     *  of the run (two per 20-frame loop), at the loops' play rate. */
     private void footsteps() {
         boolean moving = onGround() && getDeltaMovement().horizontalDistanceSqr() > 2.5e-3 && action == Action.NONE;
         if (!moving) {
@@ -1508,7 +1571,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
         }
         boolean run = strideOn;
         float before = stepClock;
-        stepClock += (float) (animSpeed() * (run ? .5 + .7 * strideCharge : 1));
+        stepClock += (float) locoRate();
         int period = run ? 10 : 20;
         if ((int) (before / period) != (int) (stepClock / period) || before == 0)
             playSound(run ? com.mattermod.registry.ModSounds.GOLEM_GALLOP.get() : com.mattermod.registry.ModSounds.GOLEM_STEP.get(), run ? 1.1f : 1.2f, .95f + random.nextFloat() * .1f);
@@ -1642,7 +1705,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
                             if (state.isMoving()) return state.setAndContinue(WALK);
                             return state.setAndContinue(IDLE);
                         });
-        main.setAnimationSpeedHandler(g -> (g.overheated() ? OVERHEAT_FACTOR : 1.0) * (g.striding() ? g.gallopRate() : 1.0));
+        main.setAnimationSpeedHandler(g -> g.locoRate());
         main.triggerableAnim("sweep", once("sweep"))
                 .triggerableAnim("piston", once("piston"))
                 .triggerableAnim("dispenser", once("dispenser"))
