@@ -21,19 +21,18 @@ import net.minecraft.world.level.block.state.BlockState;
  */
 public enum ManipulatorStage {
 
-    // id, displayName, miningSpeed, beamDmg/2ticks, ballDmgBase, beamRange, ballRange,
+    // id, miningSpeed, beamDmg/2ticks, ballDmgBase, beamRange, ballRange,
     // maxChargeTicks
     // Prototype is on par with copper tools: copper's mining speed, stone's harvest level and
     // damage (copper tools share both with stone)
-    STONE(1, "Prototype", 5.0f, 1.0f, 4.0f, 5.0f, 20.0f, 60),
-    IRON(2, "Calibrated", 6.0f, 2.0f, 6.0f, 6.0f, 24.0f, 50),
-    DIAMOND(3, "Augmented", 8.0f, 3.0f, 9.0f, 7.0f, 28.0f, 45),
-    NETHERITE(4, "Overclocked", 9.0f, 4.0f, 12.0f, 8.0f, 32.0f, 40);
+    STONE(1, 5.0f, 1.0f, 4.0f, 5.0f, 20.0f, 60),
+    IRON(2, 6.0f, 2.0f, 6.0f, 6.0f, 24.0f, 50),
+    DIAMOND(3, 8.0f, 3.0f, 9.0f, 7.0f, 28.0f, 45),
+    NETHERITE(4, 9.0f, 4.0f, 12.0f, 8.0f, 32.0f, 40);
 
     private static final String TAG_STAGE = "mm_stage";
 
     public final int id;
-    public final String displayName;
 
     // Combat / mining
     private final float miningSpeed; // matches vanilla tier speed
@@ -45,7 +44,6 @@ public enum ManipulatorStage {
 
     ManipulatorStage(
             int id,
-            String displayName,
             float miningSpeed,
             float beamTickDamage,
             float ballBaseDamage,
@@ -53,7 +51,6 @@ public enum ManipulatorStage {
             float ballRange,
             int maxChargeTicks) {
         this.id = id;
-        this.displayName = displayName;
         this.miningSpeed = miningSpeed;
         this.beamTickDamage = beamTickDamage;
         this.ballBaseDamage = ballBaseDamage;
@@ -63,8 +60,7 @@ public enum ManipulatorStage {
     }
 
     /**
-     * Translated stage name (lang key mattermod.stage.<name>); displayName stays the English
-     * fallback.
+     * Translated stage name (lang key mattermod.stage.<name>).
      */
     public net.minecraft.network.chat.MutableComponent title() {
         return net.minecraft.network.chat.Component.translatable(

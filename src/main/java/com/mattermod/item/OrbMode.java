@@ -21,18 +21,18 @@ import net.minecraft.world.item.component.CustomData;
  * Hydraulic and Pyrotechnic tools. VACUUM is gone.
  */
 public enum OrbMode {
-    ENERGY("Energy", 0x20C1E9, Items.AMETHYST_SHARD),
-    VACUUM("Vacuum", 0xB070FF, Items.HOPPER),
-    WATER("Water", 0x3F8CFF, Items.WATER_BUCKET),
-    LAVA("Lava", 0xFF7020, Items.LAVA_BUCKET),
-    FROST("Frost", 0xC8F0FF, Items.SNOWBALL),
-    IGNITE("Ignite", 0xFFB040, Items.FLINT_AND_STEEL),
-    GROWTH("Growth", 0x70E060, Items.BONE_MEAL),
-    LIGHT("Light", 0xFFF4B0, Items.GLOWSTONE_DUST),
-    TETHER("Tether", 0xD060FF, Items.LEAD),
-    GUST("Gust", 0xB8E8E0, Items.FEATHER),
-    MASS("Mass Driver", 0xE0A040, Items.COBBLESTONE),
-    GOLEM("Monstrosity", 0xE92031, Items.REDSTONE_BLOCK);
+    ENERGY(0x20C1E9, Items.AMETHYST_SHARD),
+    VACUUM(0xB070FF, Items.HOPPER),
+    WATER(0x3F8CFF, Items.WATER_BUCKET),
+    LAVA(0xFF7020, Items.LAVA_BUCKET),
+    FROST(0xC8F0FF, Items.SNOWBALL),
+    IGNITE(0xFFB040, Items.FLINT_AND_STEEL),
+    GROWTH(0x70E060, Items.BONE_MEAL),
+    LIGHT(0xFFF4B0, Items.GLOWSTONE_DUST),
+    TETHER(0xD060FF, Items.LEAD),
+    GUST(0xB8E8E0, Items.FEATHER),
+    MASS(0xE0A040, Items.COBBLESTONE),
+    GOLEM(0xE92031, Items.REDSTONE_BLOCK);
 
     /** Base size of the shared tank, in units; each tank trait adds {@link #TANK_STEP}. */
     public static final int TANK_CAPACITY = 6;
@@ -43,7 +43,6 @@ public enum OrbMode {
     /** The one tank every projectile draws from (the old water/lava/fertilizer tanks merged). */
     private static final String TAG_TANK = "mm_tank";
 
-    public final String displayName;
 
     /** RGB tint for the orb and HUD. */
     public final int color;
@@ -51,14 +50,13 @@ public enum OrbMode {
     /** Icon shown in the mode wheel and HUD. */
     public final net.minecraft.world.item.Item icon;
 
-    OrbMode(String displayName, int color, net.minecraft.world.item.Item icon) {
-        this.displayName = displayName;
+    OrbMode(int color, net.minecraft.world.item.Item icon) {
         this.color = color;
         this.icon = icon;
     }
 
     /**
-     * Translated name (lang key mattermod.orb_mode.<name>); displayName stays the English fallback.
+     * Translated name (lang key mattermod.orb_mode.<name>).
      */
     public net.minecraft.network.chat.MutableComponent title() {
         return net.minecraft.network.chat.Component.translatable(

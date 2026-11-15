@@ -27,19 +27,19 @@ public final class ModItems {
     public static final DeferredItem<TierUpgradeModule> UPGRADE_IRON =
             ITEMS.register(
                     "upgrade_iron",
-                    () -> new TierUpgradeModule(ManipulatorStage.STONE, "Calibrated Upgrade"));
+                    () -> new TierUpgradeModule(ManipulatorStage.STONE));
 
     /** Upgrades IRON → DIAMOND */
     public static final DeferredItem<TierUpgradeModule> UPGRADE_DIAMOND =
             ITEMS.register(
                     "upgrade_diamond",
-                    () -> new TierUpgradeModule(ManipulatorStage.IRON, "Augmented Upgrade"));
+                    () -> new TierUpgradeModule(ManipulatorStage.IRON));
 
     /** Upgrades DIAMOND → NETHERITE (smithing table) */
     public static final DeferredItem<TierUpgradeModule> UPGRADE_NETHERITE =
             ITEMS.register(
                     "upgrade_netherite",
-                    () -> new TierUpgradeModule(ManipulatorStage.DIAMOND, "Overclocked Upgrade"));
+                    () -> new TierUpgradeModule(ManipulatorStage.DIAMOND));
 
     /** Module id -> its Enchanted Gemstone. Gems are found in Overworld structure chests (loot modifiers in
      *  data/mattermod/loot_modifiers); using one unlocks its Module directly. */

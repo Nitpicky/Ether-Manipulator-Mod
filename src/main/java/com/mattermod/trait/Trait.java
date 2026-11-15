@@ -28,14 +28,4 @@ public record Trait(String id, String name, String description, List<String> ran
                                                     .optionalFieldOf("ranks", List.of())
                                                     .forGetter(Trait::ranks))
                                     .apply(i, Trait::new));
-
-    /** The description at a rank (1 = base), with the upgrades reached so far. */
-    public String describe(int rank) {
-        StringBuilder b = new StringBuilder(description);
-        for (int r = 2; r <= rank && r - 2 < ranks.size(); r++)
-            b.append("  ").append(r == 2 ? "Mk II: " : "Mk III: ").append(ranks.get(r - 2));
-        if (rank < 3 && rank - 1 < ranks.size())
-            b.append("  Next Mk: ").append(ranks.get(rank - 1));
-        return b.toString();
-    }
 }

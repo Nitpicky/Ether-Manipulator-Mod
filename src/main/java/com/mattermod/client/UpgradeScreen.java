@@ -189,7 +189,7 @@ public class UpgradeScreen extends Screen {
         frame(g, 0, 0, W, H, p());
         grid(g);
         frame(g, 0, 0, W, H, p(), false);
-        text(g, "Matter Manipulator", 8, 8, p().bright());
+        text(g, Lang.tr("screen.mattermod.upgrade"), 8, 8, p().bright());
         control(
                 g,
                 "theme-primary",
@@ -226,8 +226,8 @@ public class UpgradeScreen extends Screen {
                     p().accent(),
                     () -> audio.auditionNext(),
                     List.of(
-                            label("Sound: " + audio.profileName(), p().bright()),
-                            label("Cycle profile and audition Module switch", p().text())),
+                            label(Lang.tr("gui.mattermod.sound", audio.profileName()), p().bright()),
+                            label(Lang.tr("gui.mattermod.sound_hint"), p().text())),
                     false);
             center(g, "S", 272, 5, 12, 12, p().text());
         }
@@ -399,8 +399,8 @@ public class UpgradeScreen extends Screen {
         List<Component> tip =
                 active
                         ? List.of(
-                                label(st.next().displayName + " Tier", a().bright()),
-                                label("Requires the " + upgradeName() + " Upgrade.", 0xffedc16e))
+                                label(Lang.tr("gui.mattermod.tier", st.next().title().getString()), a().bright()),
+                                label(Lang.tr("gui.mattermod.requires_item", upgradeName()), 0xffedc16e))
                         : List.of();
         control(
                 g,
@@ -417,7 +417,7 @@ public class UpgradeScreen extends Screen {
         if (active && has) g.fill(9, 93, 78, 107, a().ramp()[1]);
         center(
                 g,
-                active ? "Upgrade" : "Max Stage",
+                active ? Lang.tr("gui.mattermod.upgrade") : Lang.tr("gui.mattermod.max_stage"),
                 8,
                 92,
                 71,
@@ -428,9 +428,9 @@ public class UpgradeScreen extends Screen {
 
     private String upgradeName() {
         return switch (ManipulatorStage.get(stack)) {
-            case STONE -> "Calibrated";
-            case IRON -> "Augmented";
-            default -> "Overclocked";
+            case STONE -> Lang.tr("item.mattermod.upgrade_iron");
+            case IRON -> Lang.tr("item.mattermod.upgrade_diamond");
+            default -> Lang.tr("item.mattermod.upgrade_netherite");
         };
     }
 
@@ -496,23 +496,21 @@ public class UpgradeScreen extends Screen {
             List<Component> tip =
                     k == 0
                             ? List.of(
-                                    label("Default", a().accent()),
-                                    label(
-                                            "Copper, Iron, Gold or Netherite, by tier.",
-                                            a().text()))
+                                    label(Lang.tr("gui.mattermod.colour_default"), a().accent()),
+                                    label(Lang.tr("gui.mattermod.colour_default_hint"), a().text()))
                             : k == 17 && count < 16
                             ? List.of(
-                                    label("Custom colour", a().accent()),
-                                    label(count + "/16 colours unlocked.", a().text()),
-                                    label("Unlock every other colour.", a().text()))
+                                    label(Lang.tr("gui.mattermod.colour_custom"), a().accent()),
+                                    label(Lang.tr("gui.mattermod.colours_unlocked", count), a().text()),
+                                    label(Lang.tr("gui.mattermod.colour_custom_hint"), a().text()))
                             : !open && k < 17
                                     ? List.of(
                                             label(
-                                                    "Requires "
-                                                            + DYES[k - 1]
-                                                                    .getName()
-                                                                    .replace('_', ' ')
-                                                            + " dye.",
+                                                    Lang.tr(
+                                                            "gui.mattermod.requires_item",
+                                                            DyeItem.byColor(DYES[k - 1])
+                                                                    .getDescription()
+                                                                    .getString()),
                                                     colour))
                                     : List.<Component>of();
             hit(
@@ -555,7 +553,7 @@ public class UpgradeScreen extends Screen {
 
     private void sets(GuiGraphics g) {
         inset(g, 235, 20, 77, 130, a(), a().ramp()[1]);
-        text(g, "Set", 238, 23, a().text());
+        text(g, Lang.tr("gui.mattermod.sets"), 238, 23, a().text());
         var list = Loadouts.list(stack);
         if (pendingSave >= 0 && list.size() > pendingSave) pendingSave = -1;
         if (selectedSet >= list.size() && pendingSave < 0) selectedSet = -1;
@@ -611,10 +609,10 @@ public class UpgradeScreen extends Screen {
                             if (n < Loadouts.MAX && pendingSave < 0) {
                                 pendingSave = n;
                                 selectedSet = n;
-                                send(new TraitPayloads.Loadout(Loadouts.SAVE, 0, "Set " + (n + 1)));
+                                send(new TraitPayloads.Loadout(Loadouts.SAVE, 0, Lang.tr("gui.mattermod.set_default", n + 1)));
                             }
                         },
-                List.of(label("Save set", p().accent())),
+                List.of(label(Lang.tr("gui.mattermod.save_set"), p().accent())),
                 false);
         hollowPlus(g, 261, 135, p().bright());
         control(
@@ -636,7 +634,7 @@ public class UpgradeScreen extends Screen {
                 },
                 List.of(
                         label(
-                                selectedSet < 0 ? "Clear current build" : "Delete selected set",
+                                selectedSet < 0 ? Lang.tr("gui.mattermod.clear_build") : Lang.tr("gui.mattermod.delete_set"),
                                 0xfff2928a)),
                 false);
         var r = new Raster(14, 14);
@@ -646,7 +644,7 @@ public class UpgradeScreen extends Screen {
 
     private void modulePicker(GuiGraphics g) {
         frame(g, 84, 17, 215, 145, a());
-        text(g, "Choose Module", 91, 23, a().bright());
+        text(g, Lang.tr("gui.mattermod.choose_module"), 91, 23, a().bright());
         var lines = TraitLines.all(minecraft.level.registryAccess());
         for (int i = 0; i < lines.size(); i++) {
             // 5-pixel margins on the sides and bottom, 3-pixel gaps between buttons
@@ -676,7 +674,7 @@ public class UpgradeScreen extends Screen {
                     moduleTip(e.getKey(), e.getValue()),
                     false);
             sprite(g, e.getKey(), x, y, 22, 22, available ? pal.accent() : pal.border());
-            text(g, e.getValue().name(), x + 25, y + 7, available ? pal.accent() : pal.dim());
+            text(g, Lang.moduleName(e.getKey(), e.getValue()), x + 25, y + 7, available ? pal.accent() : pal.dim());
         }
     }
 
@@ -695,7 +693,7 @@ public class UpgradeScreen extends Screen {
 
     private void colourDialog(GuiGraphics g) {
         frame(g, 119, 39, 152, 130, a());
-        text(g, "Custom trim colour", 126, 46, a().bright());
+        text(g, Lang.tr("gui.mattermod.custom_trim"), 126, 46, a().bright());
         for (int x = 0; x < 88; x++)
             for (int y = 0; y < 64; y++)
                 g.fill(127 + x, 60 + y, 128 + x, 61 + y, hsv(hue, x / 87f, 1 - y / 63f));
@@ -704,11 +702,11 @@ public class UpgradeScreen extends Screen {
         border(g, cx - 2, cy - 2, 5, 5, 0xff000000);
         border(g, cx - 1, cy - 1, 3, 3, 0xffffffff);
         border(g, 219, 58 + Math.round(hue * 63), 12, 4, 0xffffffff);
-        text(g, "New", 236, 60, a().text());
+        text(g, Lang.tr("gui.mattermod.colour_new"), 236, 60, a().text());
         g.fill(236, 71, 263, 87, hsv(hue, saturation, value));
-        text(g, "Old", 236, 96, a().text());
+        text(g, Lang.tr("gui.mattermod.colour_old"), 236, 96, a().text());
         g.fill(236, 107, 263, 123, 0xff000000 | oldColour);
-        text(g, "Hex", 127, 136, a().text());
+        text(g, Lang.tr("gui.mattermod.hex"), 127, 136, a().text());
         hit("sv", 127, 60, 88, 64, () -> pickColourPoint(mx, my, 1), List.of(), 0, false);
         hit("hue", 221, 60, 8, 64, () -> pickColourPoint(mx, my, 2), List.of(), 0, false);
         control(
@@ -723,7 +721,7 @@ public class UpgradeScreen extends Screen {
                 () -> closeColour(),
                 List.of(),
                 false);
-        center(g, "Cancel", 127, 152, 64, 12, p().text());
+        center(g, Lang.tr("gui.cancel"), 127, 152, 64, 12, p().text());
         boolean valid = hex.getValue().matches("#?[0-9a-fA-F]{6}");
         control(
                 g,
@@ -744,7 +742,7 @@ public class UpgradeScreen extends Screen {
                         : null,
                 List.of(),
                 false);
-        center(g, "Apply", 197, 152, 66, 12, p().bright());
+        center(g, Lang.tr("gui.mattermod.apply"), 197, 152, 66, 12, p().bright());
     }
 
     private void closeColour() {
@@ -891,7 +889,7 @@ public class UpgradeScreen extends Screen {
                 r.outline(6, 8, 24, 24, p().border(), p().bg(), 2);
                 raster(g, r, 84, y);
                 bigLock(g, 98, y + 14, p().dim());
-                text(g, ManipulatorStage.opening(slot).displayName, 121, y + 16, p().dim());
+                text(g, ManipulatorStage.opening(slot).title().getString(), 121, y + 16, p().dim());
                 return;
             }
             int[] chosen = {
@@ -1322,34 +1320,34 @@ public class UpgradeScreen extends Screen {
     private List<Component> traitTip(ResourceLocation id, Trait trait, int tier) {
         int c = module(id, p()).accent();
         var out = new ArrayList<Component>();
-        out.add(label(trait.name(), c));
-        out.add(rich(trait.description(), c));
+        out.add(label(Lang.traitName(trait), c));
+        out.add(rich(Lang.traitDesc(trait), c));
         return out;
     }
 
     private List<Component> commonTip(ResourceLocation id, Trait trait, int common) {
         int c = module(id, p()).accent();
         var out = new ArrayList<Component>();
-        out.add(label(trait.name(), c));
+        out.add(label(Lang.traitName(trait), c));
         if (stage() < common + 2)
             out.add(
                     label(
-                            "Requires "
-                                    + ManipulatorStage.opening(common + 1).displayName
-                                    + " Tier.",
+                            Lang.tr(
+                                    "gui.mattermod.requires_tier",
+                                    ManipulatorStage.opening(common + 1).title().getString()),
                             0xffdbad72));
-        out.add(rich(trait.description(), c));
+        out.add(rich(Lang.traitDesc(trait), c));
         return out;
     }
 
     private List<Component> moduleTip(ResourceLocation id, TraitLine line) {
         int c = module(id, p()).accent();
         var out = new ArrayList<Component>();
-        out.add(label(line.name() + " Module", c));
+        out.add(label(Lang.tr("gui.mattermod.module_named", Lang.moduleName(id, line)), c));
         var all = rules.getAsJsonObject("modules");
         if (all.has(id.getPath()))
             appendLines(out, all.getAsJsonObject(id.getPath()).get("body"), c, false);
-        else out.add(rich(line.badge().description(), c));
+        else out.add(rich(Lang.traitDesc(line.badge()), c));
         return out;
     }
 
@@ -1365,8 +1363,9 @@ public class UpgradeScreen extends Screen {
     }
 
     private MutableComponent rich(String source, int colour) {
-        source =
-                source.replaceAll("(?i)orb\\s+mode", "Mode")
+        if (Lang.english())
+            source =
+                    source.replaceAll("(?i)orb\\s+mode", "Mode")
                         .replaceAll("(?i)\\bmodule\\b", "Module")
                         .replaceAll("(?i)\\bbeam\\b", "Beam")
                         .replaceAll("(?i)\\bmode\\b", "Mode")

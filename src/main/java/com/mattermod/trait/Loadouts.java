@@ -76,7 +76,7 @@ public final class Loadouts {
                     return;
                 }
                 CompoundTag e = new CompoundTag();
-                e.putString("name", name.isEmpty() ? "Set " + (l.size() + 1) : name);
+                e.putString("name", name.isEmpty() ? "#" + (l.size() + 1) : name);
                 e.put("build", current.copy());
                 l.add(e);
             }

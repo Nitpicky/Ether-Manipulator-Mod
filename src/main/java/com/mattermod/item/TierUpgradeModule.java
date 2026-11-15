@@ -28,20 +28,14 @@ import java.util.List;
 public class TierUpgradeModule extends Item {
 
     private final ManipulatorStage requiredStage;
-    private final String displayName;
 
-    public TierUpgradeModule(ManipulatorStage requiredStage, String displayName) {
+    public TierUpgradeModule(ManipulatorStage requiredStage) {
         super(new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON));
         this.requiredStage = requiredStage;
-        this.displayName = displayName;
     }
 
     public ManipulatorStage getRequiredStage() {
         return requiredStage;
-    }
-
-    public String getDisplayName() {
-        return displayName;
     }
 
     @Override

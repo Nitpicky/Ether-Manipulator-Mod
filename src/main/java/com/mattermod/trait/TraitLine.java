@@ -29,7 +29,6 @@ public record TraitLine(
         List<Trait> grandmaster) {
 
     public static final int TIERS = 3;
-    public static final String[] TIER_NAMES = {"Calibrated", "Augmented", "Overclocked"};
 
     private static final Codec<Integer> HEX_COLOR =
             Codec.STRING.comapFlatMap(

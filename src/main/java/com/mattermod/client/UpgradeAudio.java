@@ -14,15 +14,10 @@ import java.util.*;
  */
 final class UpgradeAudio {
     enum Profile {
-        CRYSTAL("Crystal"),
-        ECHO("Crystal Echo"),
-        REVERSE("Reverse Crystal"),
-        DEEP("Deep Resonance");
-        final String name;
-
-        Profile(String n) {
-            name = n;
-        }
+        CRYSTAL,
+        ECHO,
+        REVERSE,
+        DEEP;
     }
 
     private static Profile profile = Profile.REVERSE;
@@ -47,7 +42,7 @@ final class UpgradeAudio {
     private String intent = "";
 
     String profileName() {
-        return profile.name;
+        return Lang.tr("gui.mattermod.sound." + profile.name().toLowerCase(java.util.Locale.ROOT));
     }
 
     private void cue(double delay, String event, float pitch, float volume, float length) {
