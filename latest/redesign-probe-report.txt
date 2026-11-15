@@ -69,7 +69,7 @@ PASS Blazeling ownership and deadline survive save/load
 PASS Split pays once per whole shot
 PASS Retired Gunner/Orbit dropped from old builds
 PASS Seeker is a Kinetic Grandmaster choice
-PASS Replant reserves seed and restores partial growth
+PASS Replant puts a fresh crop back
 PASS Diving Bell blocks water entry
 PASS Energy orb spends the shared tank, Tether does not
 PASS Shared tank refills at its boundary
