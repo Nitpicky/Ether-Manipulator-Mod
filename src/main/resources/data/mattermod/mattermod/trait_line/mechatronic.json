@@ -49,7 +49,7 @@
     {
       "id": "mechatronic.stride_servos",
       "name": "Stride Servos",
-      "description": "Its gallop is faster: 5.8 blocks/s (5 without). Double-tap forward while riding to gallop."
+      "description": "Its gallop is faster: 9.5 blocks/s (8 without). Double-tap forward while riding to gallop."
     },
     {
       "id": "mechatronic.rocket_boots",

@@ -86,7 +86,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
             SynchedEntityData.defineId(RedstoneGolem.class, EntityDataSerializers.INT);
 
     private static final int F_BOOSTING = 1, F_RECALLING = 2, F_OVERHEATED = 4, F_MINIS = 8, F_SADDLE = 16, F_STRIDE = 32,
-            F_ROCKETS = 64, F_CHARGE = 128, F_STRIDING = 256, F_GLIDING = 512, F_VENTING = 1024, F_LIFTING = 2048;
+            F_ROCKETS = 64, F_CHARGE = 128, F_STRIDING = 256, F_GLIDING = 512, F_VENTING = 1024, F_LIFTING = 2048, F_LEAPING = 4096;
 
     // ---- tuning ---------------------------------------------------------------------------
     public static final float MAX_HEALTH = 100, SWEEP_DAMAGE = 10, PISTON_DAMAGE = 14, BOLT_DAMAGE = 6;
@@ -106,10 +106,10 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
     /** Ground speeds in blocks per tick, set from the animations (user 2026-11-15: feet must not slide). The walk is the slow
      *  heavy waddle; Stride (rider's double-tap sprint, or the AI covering ground) is the knuckle gallop at once, no ramp;
      *  the Stride Servos trait gallops faster. */
-    static final double WALK_V = .0165, STRIDE_V = .25, STRIDE_V_UP = .29;
+    static final double WALK_V = .07, STRIDE_V = .4, STRIDE_V_UP = .475;
     /** How far each loop's planted feet carry it per tick at play rate 1 (measured off the animation files: walk and
      *  sidestep feet, the gallop's fists and legs). The loops play at real ground speed over these, so feet stay planted. */
-    static final double WALK_PACE = .0123, STRAFE_PACE = .0107, RUN_PACE = .171;
+    static final double WALK_PACE = .0459, STRAFE_PACE = .0107, RUN_PACE = .171;
     /** Vanilla ground movement: a mob's input is its speed, so it covers 2.16 x speed^2 blocks a tick; a ridden mob covers
      *  2.16 x its ridden speed (the rider's full forward input). */
     private static final double GROUND = 2.16;
@@ -263,12 +263,27 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
         return flashTicks >= FLASH_TO && flashTicks < AFTERGLOW_TO;
     }
 
-    /** The walk, sidestep and gallop loops' play rate: its real ground speed over the ground the loop's planted feet
-     *  cover at rate 1, so the feet don't slide. Attacks and other one-offs play at the Overcharge rate. */
+    /** The walk, sidestep and gallop loops' play rate: the speed it moves at in that gait over the ground the loop's planted
+     *  feet cover at rate 1, so the feet don't slide. It is a constant per gait (GeckoLib jumps the playhead whenever the
+     *  rate changes mid-animation), the same for a chain (run_start into run, run_stop into walk). Attacks and other
+     *  one-offs play at the Overcharge rate. */
     double locoRate() {
-        if (flag(F_LIFTING) || busy() || pace < .004 || tickCount < runStopUntil) return animSpeed();
-        double per = striding() ? RUN_PACE : Math.abs(lateral) > .5 ? STRAFE_PACE : WALK_PACE;
-        return Mth.clamp(pace / per, striding() ? .6 : .4, striding() ? 2.2 : 2.5);
+        if (flag(F_LIFTING) || busy() || leaping()) return animSpeed();
+        double k = overheated() ? OVERHEAT_FACTOR : 1;
+        if (striding()) return (hasStride() ? STRIDE_V_UP : STRIDE_V) / RUN_PACE * k;
+        if (!moving()) return animSpeed();
+        if (tickCount >= runStopUntil && Math.abs(lateral) > .5) return SIDESTEP * WALK_V / STRAFE_PACE * k;
+        return WALK_V / WALK_PACE * k;
+    }
+
+    /** Really moving over the ground (smoothed), not vanilla's limb swing, which a slow heavy walk never trips. */
+    public boolean moving() {
+        return pace > .006;
+    }
+
+    /** A ridden leap (or any long drop while ridden) in the air: the leap animation plays. */
+    public boolean leaping() {
+        return flag(F_LEAPING);
     }
 
     /** GolemSignalLayer's tones, dark to bright: signal stages 0..5 (0 = the texture's own redstone), the flash, the step after. */
@@ -363,10 +378,11 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
     private boolean aiWantsStride(ServerPlayer owner) {
         if (action != Action.NONE || order == Order.HOLD && getTarget() == null) return false;
         LivingEntity t = getTarget();
-        // the walk is slow and heavy: anything more than a few steps away, it gallops
-        if (t != null) return distanceToSqr(t) > 5 * 5;
+        // anything more than a few steps away, it gallops; it keeps galloping until it is close (no flicker between gaits)
+        double go = strideOn ? 4 : 7;
+        if (t != null) return distanceToSqr(t) > go * go;
         double d = distanceToSqr(owner);
-        return d > (FOLLOW_DISTANCE + 3) * (FOLLOW_DISTANCE + 3);
+        return d > (go + 1) * (go + 1) || owner.isSprinting() && d > FOLLOW_DISTANCE * FOLLOW_DISTANCE * 2;
     }
 
     /** Lets its rider sprint, which is what starts the Stride. */
@@ -379,6 +395,11 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
      *  heading straight ahead, it drops on all fours at full gallop speed; anything else (sideways, backing up, a sharp
      *  turn, not asked) drops it at once. */
     private void strideTick(boolean want) {
+        strideTick(want, 25, 35);
+    }
+
+    /** {@code off}: how far its motion may be off its facing; {@code turnMax}: the sharpest turn in a tick that keeps it. */
+    private void strideTick(boolean want, float offMax, float turnMax) {
         Vec3 v = getDeltaMovement();
         double sp = v.horizontalDistance();
         float heading = (float) (Mth.atan2(v.z, v.x) * Mth.RAD_TO_DEG);
@@ -386,7 +407,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
         strideHeading = heading;
         float off = Math.abs(Mth.wrapDegrees(heading - 90 - yBodyRot));
         // starting from a walk it is still slow: only its heading counts until it is under way
-        boolean ok = want && (sp < .03 || off <= 25 && turn <= 35);
+        boolean ok = want && (sp < .03 || off <= offMax && turn <= turnMax);
         strideOn = ok;
     }
 
@@ -574,7 +595,8 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
         if (armsCooldown > 0) armsCooldown--;
 
         // speed: Stride's built-up speed and the overheat
-        if (!isVehicle()) strideTick(aiWantsStride(owner));
+        // the AI follows paths round corners: it keeps the gallop through wider turns than a rider does
+        if (!isVehicle()) strideTick(aiWantsStride(owner), 60, 50);
         else if (getControllingPassenger() instanceof Player rider) {
             // the rider's client runs the Stride; others see it from here: sprinting, and really moving
             strideOn = rider.isSprinting() && Math.hypot(getX() - xo, getZ() - zo) > .08;
@@ -590,7 +612,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
         if (attr != null && attr.getBaseValue() != speed) attr.setBaseValue(speed);
 
         // now and then, while standing guard, it looks around
-        boolean still = !isVehicle() && getNavigation().isDone() && getDeltaMovement().horizontalDistanceSqr() < 1e-3
+        boolean still = !isVehicle() && getNavigation().isDone() && !moving() && getDeltaMovement().horizontalDistanceSqr() < 1e-4
                 && Math.abs(getX() - xo) + Math.abs(getZ() - zo) < 1e-3 && onGround();
         if (action == Action.NONE && still && !assembling() && !overheatPending && random.nextInt(400) == 0) {
             triggerAnim("main", "idle_break");
@@ -689,14 +711,23 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
             } else getNavigation().stop();
             return;
         }
-        if (toOwner > FOLLOW_DISTANCE * FOLLOW_DISTANCE) {
-            if (tickCount % 10 == 0 || getNavigation().isDone())
-                getNavigation().moveTo(owner, toOwner > 100 ? 1.25 : 1);
+        // follow with some slack (starts past 6 blocks, stops within FOLLOW_DISTANCE) so it doesn't stop-start on every
+        // step of its owner, and re-paths only when the owner has moved on, not every half second
+        boolean far = toOwner > 6 * 6;
+        if (far || followGoal != null && toOwner > FOLLOW_DISTANCE * FOLLOW_DISTANCE) {
+            if (followGoal == null || getNavigation().isDone() || owner.position().distanceToSqr(followGoal) > 2.25) {
+                followGoal = owner.position();
+                getNavigation().moveTo(owner, 1);
+            }
         } else {
-            getNavigation().stop();
+            if (followGoal != null) getNavigation().stop();
+            followGoal = null;
             if (tickCount % 40 == 0) getLookControl().setLookAt(owner, 10, 10);
         }
     }
+
+    /** Where its owner was when it last set off after them, null while it stands by them. */
+    private Vec3 followGoal;
 
     private double horizontalDistance(Vec3 p) {
         double dx = p.x - getX(), dz = p.z - getZ();
@@ -1218,8 +1249,8 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
 
     /** Hold Jump to charge (the jump bar fills), let go to jump: from a hop to about 4 blocks. Striding, it is a Winston
      *  leap instead: launched up and forward along its heading on a committed arc (no steering in the air, no drag),
-     *  from about 5 to 11 blocks, and it lands with a slam. In the air Jump fires the Rocket Boots. */
-    static final double JUMP_LOW = .45, JUMP_HIGH = .85, LEAP_V_LOW = .6, LEAP_V_HIGH = .9, LEAP_H_LOW = .3, LEAP_H_HIGH = .5;
+     *  from about 8 to 20 blocks (up to 6 high), and it lands with a slam. In the air Jump fires the Rocket Boots. */
+    static final double JUMP_LOW = .45, JUMP_HIGH = .85, LEAP_V_LOW = .7, LEAP_V_HIGH = 1.05, LEAP_H_LOW = .4, LEAP_H_HIGH = .7;
     /** The leap's landing: everything within LAND_RADIUS is hit and thrown out; it needs this many ticks in the air. */
     static final double LAND_RADIUS = 3;
     static final float LAND_DAMAGE = 6;
@@ -1277,15 +1308,19 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
     private void landingTick(ServerPlayer owner) {
         if (!isVehicle()) {
             airTicks = 0;
+            setFlag(F_LEAPING, false);
             return;
         }
         if (!onGround()) {
             airTicks++;
+            setFlag(F_LEAPING, airTicks >= 3 && !boosting());
             return;
         }
+        setFlag(F_LEAPING, false);
         boolean slam = airTicks >= LAND_AIR_TICKS;
         airTicks = 0;
         if (!slam) return;
+        triggerAnim("main", "land");
         playSound(com.mattermod.registry.ModSounds.GOLEM_SLAM.get(), 1.4f, 1);
         bout(owner, getBoundingBox().inflate(LAND_RADIUS, 1.5, LAND_RADIUS));
         int hits = 0;
@@ -1451,7 +1486,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
     }
 
     /** Sideways speed against forward, for the rider and the stride check. */
-    static final float SIDESTEP = .9f;
+    static final float SIDESTEP = .25f;
 
     /** The seat: the stone square in the middle of the body's top face (31 units up), sunk 2 units so the rider sits down
      *  between the shoulder towers with the thighs just over the head (its top is at 29). */
@@ -1564,7 +1599,8 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
     /** Server: a stomp on each footfall of the walk (two per 40-frame cycle), a gallop beat for each fist and foot pair
      *  of the run (two per 20-frame loop), at the loops' play rate. */
     private void footsteps() {
-        boolean moving = onGround() && getDeltaMovement().horizontalDistanceSqr() > 2.5e-3 && action == Action.NONE;
+        // pace, not the motion: a ridden Golem is moved by its rider's client, the server sees no motion
+        boolean moving = onGround() && moving() && action == Action.NONE;
         if (!moving) {
             stepClock = 0;
             return;
@@ -1673,7 +1709,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
     static final RawAnimation RUN = RawAnimation.begin().thenPlay("animation.monstrosity.run_start").thenLoop("animation.monstrosity.run"),
             STOP_WALK = RawAnimation.begin().thenPlay("animation.monstrosity.run_stop").thenLoop("animation.monstrosity.walk"),
             STOP_IDLE = RawAnimation.begin().thenPlay("animation.monstrosity.run_stop").thenLoop("animation.monstrosity.idle");
-    static final RawAnimation FALL = anim("fall");
+    static final RawAnimation FALL = anim("fall"), LEAP = anim("leap");
     static final RawAnimation STRAFE_RIGHT = anim("strafe_right"), STRAFE_LEFT = anim("strafe_left");
     static final RawAnimation IDLE = anim("idle"), WALK = anim("walk"), ROCKET = anim("rocket"),
             SUMMON = hold("summon"), RECALL = hold("recall"), BREAK_DOWN = hold("break_down");
@@ -1697,12 +1733,13 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
                                 return state.setAndContinue(SUMMON);
                             }
                             if (g.boosting()) return state.setAndContinue(ROCKET);
+                            if (g.leaping()) return state.setAndContinue(LEAP);
                             if (g.falling()) return state.setAndContinue(FALL);
                             if (g.striding()) return state.setAndContinue(RUN);
-                            if (g.tickCount < g.runStopUntil) return state.setAndContinue(state.isMoving() ? STOP_WALK : STOP_IDLE);
-                            if (state.isMoving() && Math.abs(g.lateral) > .5)
+                            if (g.tickCount < g.runStopUntil) return state.setAndContinue(g.moving() ? STOP_WALK : STOP_IDLE);
+                            if (g.moving() && Math.abs(g.lateral) > .5)
                                 return state.setAndContinue(g.lateral > 0 ? STRAFE_RIGHT : STRAFE_LEFT);
-                            if (state.isMoving()) return state.setAndContinue(WALK);
+                            if (g.moving()) return state.setAndContinue(WALK);
                             return state.setAndContinue(IDLE);
                         });
         main.setAnimationSpeedHandler(g -> g.locoRate());
@@ -1710,7 +1747,8 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
                 .triggerableAnim("piston", once("piston"))
                 .triggerableAnim("dispenser", once("dispenser"))
                 .triggerableAnim("idle_break", once("idle_break"))
-                .triggerableAnim("overheat", once("overheat"));
+                .triggerableAnim("overheat", once("overheat"))
+                .triggerableAnim("land", once("land"));
         controllers.add(main);
     }
 
