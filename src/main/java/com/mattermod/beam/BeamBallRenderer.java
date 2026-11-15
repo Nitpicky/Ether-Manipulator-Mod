@@ -100,7 +100,7 @@ public class BeamBallRenderer extends EntityRenderer<BeamBallEntity> {
         Vec3 entRel = entity.getPosition(partialTick).subtract(camPos);
         ps.translate(-entRel.x, -entRel.y, -entRel.z);
         Matrix4f m = ps.last().pose();
-        VertexConsumer vc = com.mattermod.client.Fx.glow();
+        VertexConsumer vc = com.mattermod.client.FxRender.buffer(buf);
 
         OrbMode mode = entity.getMode();
         float[] col =
@@ -539,7 +539,7 @@ public class BeamBallRenderer extends EntityRenderer<BeamBallEntity> {
 
         Vec3 c = pos.add(offset);
         float k = BeamRenderer.orbNearScale(c);
-        VertexConsumer vc = com.mattermod.client.Fx.glow();
+        VertexConsumer vc = com.mattermod.client.FxRender.buffer(buf);
         Matrix4f m = ps.last().pose();
         // The charging orb already has the shape it will fly as
         float s = radius / PHASE_RADIUS[1];

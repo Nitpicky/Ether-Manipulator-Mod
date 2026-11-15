@@ -138,7 +138,7 @@ public final class BlockGlow {
             glow.merge(e.getKey(), a, Math::max);
         }
 
-        VertexConsumer vc = com.mattermod.client.Fx.glow();
+        VertexConsumer vc = com.mattermod.client.FxRender.buffer(buf);
         // Each block glows in its own shape (a stair as an L, a slab as half a cube), like
         // vanilla's outline; faces shared with another glowing block vanish, so a group of
         // blocks glows as one shape.
@@ -165,6 +165,7 @@ public final class BlockGlow {
                     },
                     (d, x0, y0, z0, x1, y1, z1) -> rect(vc, m, d, x0, y0, z0, x1, y1, z1, camPos, 0.004f, a));
         }
+        com.mattermod.client.FxRender.end(buf);
     }
 
     private static void touch(long key, long now) {

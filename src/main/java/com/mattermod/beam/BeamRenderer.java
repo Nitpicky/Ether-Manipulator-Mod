@@ -89,26 +89,19 @@ public final class BeamRenderer {
             event.setCanceled(true);
     }
 
-    /**
-     * Frame handling for every effect (see {@link com.mattermod.client.Fx}): start of frame, then
-     * right after entities the world's effects are produced and everything recorded this frame is
-     * drawn at once.
-     */
     @SubscribeEvent
     public static void onRenderLevel(RenderLevelStageEvent event) {
-        // Shader packs fire these again for the shadow map, from the sun's view: drawing
+        // Before water and glass: give the beam layer the world's depth (see BeamRibbons)
+        if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_BLOCK_ENTITIES) {
+            if (!com.mattermod.client.ShaderCompat.inShadowPass()) BeamRibbons.captureDepth();
+            return;
+        }
+        // Last: clouds and rain are drawn after translucent blocks and used to cover the beam
+        if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_WEATHER) return;
+        // Shader packs fire this again for the shadow map, from the sun's view: drawing
         // there made a second beam come out of the sky (see ShaderCompat)
         if (com.mattermod.client.ShaderCompat.inShadowPass()) return;
-        RenderLevelStageEvent.Stage stage = event.getStage();
-        if (stage == RenderLevelStageEvent.Stage.AFTER_SKY) {
-            com.mattermod.client.Fx.beginFrame();
-        } else if (stage == com.mattermod.client.Fx.STAGE) {
-            com.mattermod.client.Fx.drawFrame(() -> produceWorldFx(event));
-        }
-    }
 
-    /** Records the beam, glows, markers and sparks for this frame. */
-    private static void produceWorldFx(RenderLevelStageEvent event) {
         Minecraft mc = Minecraft.getInstance();
         Player player = mc.player;
         if (player == null || mc.level == null) return;
@@ -126,8 +119,7 @@ public final class BeamRenderer {
         Matrix4f proj = event.getProjectionMatrix();
         Matrix4f view = event.getModelViewMatrix();
 
-        // Effects are recorded camera-relative, without the camera rotation
-        PoseStack ps = new PoseStack();
+        PoseStack ps = event.getPoseStack();
         MultiBufferSource.BufferSource buf = mc.renderBuffers().bufferSource();
         Matrix4f m = ps.last().pose();
 
@@ -151,16 +143,19 @@ public final class BeamRenderer {
             BeamRenderState.clearBeam();
         }
 
-        VertexConsumer vc = com.mattermod.client.Fx.glow();
+        VertexConsumer vc = com.mattermod.client.FxRender.buffer(buf);
         renderRemote(mc, camPos, pt, time, dt, proj, view, vc, m);
 
         BeaconMarkers.render(mc, player, camPos, camLeft, time, buf, m);
         ModuleMarkers.render(mc, camPos, camLeft, time, buf, m);
+        vc = com.mattermod.client.FxRender.buffer(buf);
         LeftClickFx.render(mc, camPos, pt, time, vc, m);
         if (held.getItem() instanceof MatterManipulatorItem)
             MassPreview.render(mc, player, held, camPos, time, vc, m);
 
         updateAndRenderSparks(dt, camPos, vc, m);
+        com.mattermod.client.FxRender.end(buf);
+        BeamRibbons.flush(buf, m);
     }
 
     // =========================================================================
@@ -576,7 +571,7 @@ public final class BeamRenderer {
      */
     private static void lane(
             Vec3 a0, Vec3 a1, Vec3 b0, Vec3 b1, float[] c0, float[] c1, float ea, float eb) {
-        com.mattermod.client.Fx.beamQuad(
+        BeamRibbons.quad(
                 a0, laneCol(c0, ea), a1, laneCol(c1, ea), b1, laneCol(c1, eb), b0, laneCol(c0, eb));
     }
 
