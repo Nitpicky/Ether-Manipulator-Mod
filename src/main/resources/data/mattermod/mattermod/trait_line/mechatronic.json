@@ -1,13 +1,13 @@
 {
   "name": "Mechatronic",
-  "description": "Builds a [color=#E92031]Redstone Golem[/color], a walking war machine of stone and redstone. [color=#E92031]Golem Mode[/color]: right click to summon it or use its Super Move, left click to give orders, Sneak + right click to recall it.",
+  "description": "Builds a [color=#E92031]Redstone Monstrosity[/color], a walking war machine of stone and redstone. [color=#E92031]Monstrosity Mode[/color]: right click to summon it or use its Super Move, left click to give orders, Sneak + right click to recall it.",
   "color": "#E92031",
   "icon": "minecraft:redstone",
   "order": 7,
   "badge": {
     "id": "mechatronic.badge",
-    "name": "Redstone Golem",
-    "description": "Summons the [color=#E92031]Redstone Golem[/color]. It draws the attention of enemies within 12 blocks and wears your armor. Left click orders it: a creature to attack, a block to hold, Sneak to follow. Running straight, it drops to all fours and gathers speed. Hold Jump in the air to rocket up, then glide. Broken down, it is rebuilt after 60s."
+    "name": "Redstone Monstrosity",
+    "description": "Summons the [color=#E92031]Redstone Monstrosity[/color]. It draws the attention of enemies within 12 blocks and wears your armor. Left click orders it: a creature to attack, a block to hold, Sneak to follow. Running straight, it drops to all fours and gathers speed. Hold Jump in the air to rocket up, then glide. Broken down, it is rebuilt after 60s."
   },
   "commons": [
     {
@@ -18,7 +18,7 @@
     {
       "id": "mechatronic.saddle",
       "name": "Saddle",
-      "description": "Right click the Golem to ride it. Left click: its lift. Right click: its Super Move. Hold Jump to charge a jump, a long leap while it runs; press Jump again in the air to rocket. Sneak: get off."
+      "description": "Right click the Monstrosity to ride it. Left click: its lift. Right click: its Super Move. Hold Jump to charge a jump, a long leap while it runs; press Jump again in the air to rocket. Sneak: get off."
     }
   ],
   "adept": [

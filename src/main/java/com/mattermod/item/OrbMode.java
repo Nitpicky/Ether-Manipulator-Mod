@@ -32,7 +32,7 @@ public enum OrbMode {
     TETHER("Tether", 0xD060FF, Items.LEAD),
     GUST("Gust", 0xB8E8E0, Items.FEATHER),
     MASS("Mass Driver", 0xE0A040, Items.COBBLESTONE),
-    GOLEM("Golem", 0xE92031, Items.REDSTONE_BLOCK);
+    GOLEM("Monstrosity", 0xE92031, Items.REDSTONE_BLOCK);
 
     /** Base size of the shared tank, in units; each tank trait adds {@link #TANK_STEP}. */
     public static final int TANK_CAPACITY = 6;
