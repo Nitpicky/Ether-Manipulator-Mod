@@ -248,8 +248,8 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
     private boolean wasHot;
     private int idleBreakUntil;
     /** Client: frames into the walk loop, and whether it is finishing its step after stopping. */
-    private float walkClock;
-    private boolean walkHold, wasWalking;
+    private int stillTicks, walkStopUntil;
+    private boolean wasWalking;
 
     /** Client: the redstone's signal, 0 (the texture's own tones) to 1 (signal 15, ready to blow), see GolemSignalLayer. */
     public float signal(float partialTick) {
@@ -274,9 +274,14 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
         if (flag(F_LIFTING) || busy() || leaping()) return animSpeed();
         double k = overheated() ? OVERHEAT_FACTOR : 1;
         if (striding()) return (hasStride() ? STRIDE_V_UP : STRIDE_V) / RUN_PACE * k;
-        if (!moving() && !walkHold) return animSpeed();
+        if (!walkingNow()) return animSpeed();
         if (tickCount >= runStopUntil && Math.abs(lateral) > .5) return SIDESTEP * WALK_V / STRAFE_PACE * k;
         return WALK_V / WALK_PACE * k;
+    }
+
+    /** Client: walking this tick (stops at once when it stops, unlike the smoothed pace). */
+    public boolean walkingNow() {
+        return wasWalking;
     }
 
     /** Really moving over the ground (smoothed), not vanilla's limb swing, which a slow heavy walk never trips. */
@@ -566,22 +571,14 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
             double fwd = -Math.sin(yaw) * dx + Math.cos(yaw) * dz, right = -Math.cos(yaw) * dx - Math.sin(yaw) * dz;
             lateral += ((Math.abs(right) > Math.abs(fwd) * 1.2 && Math.abs(right) > .01 ? Math.signum(right) : 0) - lateral) * .35;
             fallTicks = !onGround() && getY() - yo < -.12 ? fallTicks + 1 : 0;
-            // stopping mid-step, the walk plays on to the end of the step (frame 0 or 16 of its loop), then it stands
-            boolean walking = moving() && !striding() && Math.abs(lateral) <= .5 && tickCount >= runStopUntil && !leaping();
-            float wr = (float) (WALK_V / WALK_PACE * (overheated() ? OVERHEAT_FACTOR : 1));
-            if (walking) {
-                if (!wasWalking) walkClock = 0;
-                walkClock += wr;
-                walkHold = false;
-            } else if (wasWalking && !moving() && !striding() && !leaping() && !flag(F_LIFTING) && !busy()) {
-                walkHold = true;
-            }
-            if (walkHold && !walking) {
-                float before = walkClock;
-                walkClock += wr;
-                if ((int) (before / 16) != (int) (walkClock / 16) || moving() || flag(F_LIFTING) || busy()) walkHold = false;
-            }
-            wasWalking = walking || walkHold;
+            // vanilla-style stop: the walk ends the tick it stops moving (not when the smoothed pace runs down), and the
+            // controller eases the legs back to rest from wherever they are (walkStopUntil: a longer blend, like vanilla's
+            // limb swing amplitude dying away)
+            double movedNow = Math.hypot(getX() - xo, getZ() - zo);
+            stillTicks = movedNow < .004 ? stillTicks + 1 : 0;
+            boolean walking = stillTicks < 2 && pace > .004 && !striding() && !leaping();
+            if (wasWalking && !walking) walkStopUntil = tickCount + 6;
+            wasWalking = walking;
             boolean str = striding();
             if (wasStriding && !str) runStopUntil = tickCount + 8;
             if (str) runStopUntil = 0;
@@ -837,7 +834,8 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
             setDeltaMovement(0, getDeltaMovement().y, 0);
         }
         if (a == Action.SWEEP) {
-            sweepCooldown = Math.round(SWEEP_LEN / animSpeed());
+            sweepCooldown = Math.round(SWEEP_LEN / animSpeed()) + 4;   // +4: a new trigger on the very tick the last
+            stopTriggeredAnim("main", "sweep");                           // one ended got lost on the client
             strideOn = false;
         }
         if (a == Action.OVERHEAT) {
@@ -913,7 +911,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
                     fireBolt(owner, aim, true, first);
                     fireBolt(owner, aim, false, second != null ? second : first);
                     recoilStep(.36);           // the recoil drives it two heavy steps back, sliding a little
-                    playSound(com.mattermod.registry.ModSounds.GOLEM_GALLOP.get(), .26f, 1);
+                    playSound(com.mattermod.registry.ModSounds.GOLEM_STEP.get(), .26f, 1);
                 }
                 if (crossed(f, prev, DISPENSER_FIRE + 3)) {
                     recoilStep(.3);
@@ -1175,7 +1173,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
         }
         if (jumps == 0) return 0;
         arcsThrown += jumps;
-        sl.playSound(null, first.getX(), first.getY(), first.getZ(), com.mattermod.registry.ModSounds.GOLEM_ARC.get(), SoundSource.HOSTILE, .61f, 1);
+        sl.playSound(null, first.getX(), first.getY(), first.getZ(), com.mattermod.registry.ModSounds.GOLEM_ARC.get(), SoundSource.HOSTILE, .61f * SOUND_GAIN, 1);
         net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingEntityAndSelf(this,
                 new com.mattermod.network.payload.GolemFxPayload(getId(), com.mattermod.network.payload.GolemFxPayload.CHAIN, pts));
         return jumps;
@@ -1255,7 +1253,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
             Vec3 p = at.get();
             pr.discard();
             fieldBlocks++;
-            sl.playSound(null, p.x, p.y, p.z, com.mattermod.registry.ModSounds.GOLEM_FIELD_HIT.get(), SoundSource.HOSTILE, .51f, 1);
+            sl.playSound(null, p.x, p.y, p.z, com.mattermod.registry.ModSounds.GOLEM_FIELD_HIT.get(), SoundSource.HOSTILE, .51f * SOUND_GAIN, 1);
             java.util.List<Float> pts = new java.util.ArrayList<>();
             addPoint(pts, p);
             net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingEntityAndSelf(this,
@@ -1334,14 +1332,20 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
         fallDistance = 0;
     }
 
-    /** Client (rider): holds the leap's arc: the same ground velocity every tick until it lands or hits a wall. */
-    private void leapTick() {
+    /** Client (rider): carries the leap's momentum through the air (no drag on it) while the rider still steers: sideways
+     *  input bends the arc, holding back brakes it, until it lands or hits a wall. */
+    private void leapTick(Player rider) {
         if (leapVel == null) return;
         if (++leapTicks > 2 && onGround() || horizontalCollision || isInWater()) {
             leapVel = null;
             return;
         }
-        setDeltaMovement(leapVel.x, getDeltaMovement().y, leapVel.z);
+        Vec3 v = getDeltaMovement(), dir = leapVel.normalize();
+        double along = v.x * dir.x + v.z * dir.z, keep = leapVel.length() * (rider.zza < 0 ? .7 : 1);
+        if (along < keep) {
+            double add = keep - along;
+            setDeltaMovement(v.x + dir.x * add, v.y, v.z + dir.z * add);
+        }
     }
 
     /** Server: a ridden leap (or any long drop) comes down with a slam, Winston style: the area around is hit and thrown out. */
@@ -1496,7 +1500,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
                 pendingJump = 0;
                 jump = false;        // the release that jumped
             }
-            leapTick();
+            leapTick(player);
             rocketTick(jump && !onGround());
             peakY = Math.max(peakY, getY());
             strideTick(player.isSprinting() && player.zza > 0 && Math.abs(player.xxa) < .3f && !busy());
@@ -1508,7 +1512,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
     protected Vec3 getRiddenInput(Player player, Vec3 input) {
         // rising, venting, folding away or heaving in its basic attack: it stands its ground
         if (busy() || flag(F_LIFTING)) return Vec3.ZERO;      // (F_LIFTING: any attack or Super Move under way)
-        if (leapVel != null) return Vec3.ZERO;                // mid-leap: committed, no steering
+        if (leapVel != null) return new Vec3(player.xxa * .8, 0, player.zza * .5);   // mid-leap: air control
         // heavy: it steps sideways and backs up slowly
         float side = player.xxa * SIDESTEP, fwd = player.zza;
         if (fwd <= 0) fwd *= .25f;
@@ -1635,6 +1639,15 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
         return 300;
     }
 
+    /** Overall level of its sounds over the bench mix (user 2026-11-15: the bench levels came out too tame in game). The
+     *  engine clamps the final volume at 1, so the loud ones stay where they were and the quiet ones come up. */
+    static final float SOUND_GAIN = 1.6f;
+
+    @Override
+    public void playSound(SoundEvent sound, float volume, float pitch) {
+        super.playSound(sound, volume * SOUND_GAIN, pitch);
+    }
+
     /** Its hum only while it stands idle, never on the move, in a fight or ridden. */
     @Override
     public void playAmbientSound() {
@@ -1659,14 +1672,16 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
         }
         boolean run = strideOn, side = !run && Math.abs(lateral) > .5;
         float before = stepClock;
-        stepClock += (float) locoRate();
+        double k = overheated() ? OVERHEAT_FACTOR : 1;
+        stepClock += (float) ((run ? (hasStride() ? STRIDE_V_UP : STRIDE_V) / RUN_PACE : side ? SIDESTEP * WALK_V / STRAFE_PACE : WALK_V / WALK_PACE) * k);
         int period = run ? 10 : side ? 20 : 16;
         int beat = (int) (stepClock / period);
         if ((int) (before / period) != beat || before == 0) {
-            // tame: under vanilla's own footsteps; galloping, the hind legs thud and the fists only tap
+            // the bench's levels: galloping, the hind legs thud and the fists tap
             float pitch = .95f + random.nextFloat() * .1f;
-            if (run && beat % 2 == 1) playSound(com.mattermod.registry.ModSounds.GOLEM_GALLOP.get(), .15f, pitch);
-            else playSound(com.mattermod.registry.ModSounds.GOLEM_STEP.get(), run ? .5f : .45f, pitch);
+            if (!run) playSound(com.mattermod.registry.ModSounds.GOLEM_STEP.get(), .41f, pitch);
+            else if (beat % 2 == 0) playSound(com.mattermod.registry.ModSounds.GOLEM_GALLOP.get(), .67f, pitch);
+            else playSound(com.mattermod.registry.ModSounds.GOLEM_STEP.get(), .2f, pitch);
         }
     }
 
@@ -1793,10 +1808,11 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
                             if (g.leaping()) return state.setAndContinue(LEAP);
                             if (g.falling()) return state.setAndContinue(FALL);
                             if (g.striding()) return state.setAndContinue(RUN);
-                            if (g.tickCount < g.runStopUntil) return state.setAndContinue(g.moving() ? STOP_WALK : STOP_IDLE);
-                            if (g.moving() && Math.abs(g.lateral) > .5)
+                            if (g.tickCount < g.runStopUntil) return state.setAndContinue(g.walkingNow() ? STOP_WALK : STOP_IDLE);
+                            if (g.walkingNow() && Math.abs(g.lateral) > .5)
                                 return state.setAndContinue(g.lateral > 0 ? STRAFE_RIGHT : STRAFE_LEFT);
-                            if (g.moving() || g.walkHold) return state.setAndContinue(WALK);
+                            if (g.walkingNow()) return state.setAndContinue(WALK);
+                            if (g.tickCount < g.walkStopUntil) state.getController().transitionLength(6);
                             return state.setAndContinue(IDLE);
                         });
         main.setAnimationSpeedHandler(g -> g.locoRate());

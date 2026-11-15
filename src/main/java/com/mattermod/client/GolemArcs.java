@@ -83,7 +83,7 @@ final class GolemArcs {
             if (ax == bx && ay == by) continue;
             RandomSource r = RandomSource.create(arc.seed + now * 7919);
             List<int[]> cells = bolt(r, ax, ay, bx, by, arc.seed % 2 == 0 ? 1 : -1);
-            int[] col = CORE[Math.min(CORE.length - 1, age)];
+            int[] col = CORE[Mth.clamp(age, 0, CORE.length - 1)];   // age < 0: a pass (Iris shadows) a tick behind the arc
             for (int i = 0; i < cells.size(); i++) {
                 if (age >= 2 && (i + now) % 3 == 0) continue;      // breaking up as it dies
                 quad(vc, m, M, right, up, cells.get(i), col);

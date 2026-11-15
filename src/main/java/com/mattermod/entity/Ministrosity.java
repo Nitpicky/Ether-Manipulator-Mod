@@ -273,6 +273,11 @@ public final class Ministrosity extends PathfinderMob implements GeoEntity {
         return com.mattermod.registry.ModSounds.MINI_AMBIENT.get();
     }
 
+    @Override
+    public void playSound(SoundEvent sound, float volume, float pitch) {
+        super.playSound(sound, volume * RedstoneGolem.SOUND_GAIN, pitch);
+    }
+
     /** No random ambient: it only giggles with its snicker animation, one Ministrosity at a time (see the tick). */
     @Override
     public void playAmbientSound() {}

@@ -50,20 +50,20 @@
   "golem.step": {
     "subtitle": "subtitles.mattermod.golem.step",
     "sounds": [
-      "mattermod:golem/step_soft_1",
-      "mattermod:golem/step_soft_2",
-      "mattermod:golem/step_soft_3",
-      "mattermod:golem/step_soft_4",
-      "mattermod:golem/step_soft_5"
+      "mattermod:golem/step_tame_1",
+      "mattermod:golem/step_tame_2",
+      "mattermod:golem/step_tame_3",
+      "mattermod:golem/step_tame_4"
     ]
   },
   "golem.gallop": {
     "subtitle": "subtitles.mattermod.golem.gallop",
     "sounds": [
-      "mattermod:golem/step_tame_1",
-      "mattermod:golem/step_tame_2",
-      "mattermod:golem/step_tame_3",
-      "mattermod:golem/step_tame_4"
+      "mattermod:golem/step_soft_1",
+      "mattermod:golem/step_soft_2",
+      "mattermod:golem/step_soft_3",
+      "mattermod:golem/step_soft_4",
+      "mattermod:golem/step_soft_5"
     ]
   },
   "golem.ambient": {
