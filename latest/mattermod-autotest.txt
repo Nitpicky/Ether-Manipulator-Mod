@@ -1,7 +1,7 @@
 shot 01_idle_first_person
 shot 02_mining_first_person
 shot 03_mining_later
-PASS mining: stone ahead broke after 13 ticks of beam
+PASS mining: stone ahead broke after 12 ticks of beam
 PASS crystal after mining: e99f20 (want e99f20)
 PASS drops: mined stone gave cobblestone (empty hotbar slot selected: false)
 shot 04_beam_side_view
@@ -21,7 +21,7 @@ shot 15_custom_colour_sweep
 PASS colour: orbs follow the mode (20c1e9), the beam is Plasmic orange (true)
 shot 16_custom_colour_model
 shot 17_sneak_beam
-PASS sneak beam, no water near: grass ahead is now block.minecraft.dirt_path (beamActive=true, sneaking=true, hit=net.minecraft.world.phys.BlockHitResult@1e7535a4)
+PASS sneak beam, no water near: grass ahead is now block.minecraft.dirt_path (beamActive=true, sneaking=true, hit=net.minecraft.world.phys.BlockHitResult@317d7a5e)
 PASS sneak beam, water near: grass ahead is now block.minecraft.farmland
 PASS swing: a sword still swings with the Manipulator put away
 shot 14_sword_swing
@@ -45,17 +45,17 @@ PASS gust: left click threw a grenade that burst (bursts 1, pig hurt true)
 tether: aiming at the pig 13.0 blocks out, pitch 5.1
 tether: aiming at the pig 13.0 blocks out, pitch 5.1
 tether pig v=0.60 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
-tether pig at 11.8
+tether pig at 12.0
 tether pig v=0.60 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
-tether pig at 8.8
+tether pig at 9.6
 shot 27_tether_pull
 tether pig v=0.60 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
-tether pig at 7.1
+tether pig at 7.2
 tether pig v=0.59 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
-tether pig at 4.8
+tether pig at 4.9
 tether pig v=0.53 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=false
-tether pig at 2.6
-PASS tether: a right click tap reeled the hooked pig from 12 to 0.6 blocks (pig pulled 12.6)
+tether pig at 2.7
+PASS tether: a right click tap reeled the hooked pig from 12 to 0.8 blocks (pig pulled 12.4)
 shot 28_light_beacon
 PASS light: the Beacon lights where it lands (2 light blocks)
 PASS mining is Beam-only: 20 ticks of left click in Light mode left the stone
@@ -69,15 +69,15 @@ PASS golem: right click summoned the Redstone Golem
 PASS golem: Ministrosities, Rocket Boots and Saddle reached the Golem
 shot 31_golem_summon
 shot 32_golem_idle
-golem state t1287: pos=84.5,-60.0,-2.3 yaw=0 order=ATTACK target=husk@4.8 action=NONE frame=0 navDone=false speed=0.430 assembling=false armsCd=0
-golem state t1293: pos=84.2,-60.0,-1.3 yaw=21 order=ATTACK target=husk@3.9 action=NONE frame=0 navDone=false speed=0.180 assembling=false armsCd=0
-golem state t1310: pos=84.1,-60.0,-1.1 yaw=45 order=ATTACK target=husk@3.6 action=SWEEP frame=14 navDone=true speed=0.180 assembling=false armsCd=0
+golem state t1287: pos=83.5,-60.0,-6.3 yaw=0 order=ATTACK target=husk@4.8 action=NONE frame=0 navDone=false speed=0.430 assembling=false armsCd=0
+golem state t1293: pos=83.2,-60.0,-5.3 yaw=21 order=ATTACK target=husk@3.9 action=NONE frame=0 navDone=false speed=0.180 assembling=false armsCd=0
+golem state t1310: pos=83.1,-60.0,-5.1 yaw=45 order=ATTACK target=husk@3.6 action=SWEEP frame=14 navDone=true speed=0.180 assembling=false armsCd=0
 shot 33_golem_sweep
 PASS golem: attack order hit the target
-golem state t1345: pos=84.1,-60.0,-1.1 yaw=45 order=ATTACK target=husk@3.6 action=SWEEP frame=13 navDone=true speed=0.180 assembling=false armsCd=0
-golem state t1365: pos=84.1,-60.0,-1.1 yaw=17 order=ATTACK target=husk@3.6 action=DISPENSER frame=1 navDone=true speed=0.180 assembling=false armsCd=100
+golem state t1345: pos=83.1,-60.0,-5.1 yaw=45 order=ATTACK target=husk@3.6 action=SWEEP frame=13 navDone=true speed=0.180 assembling=false armsCd=0
+golem state t1365: pos=83.1,-60.0,-5.1 yaw=17 order=ATTACK target=husk@3.6 action=DISPENSER frame=1 navDone=true speed=0.180 assembling=false armsCd=100
 shot 34_golem_dispenser
-golem state t1375: pos=84.1,-60.0,-1.1 yaw=17 order=ATTACK target=husk@3.6 action=DISPENSER frame=11 navDone=true speed=0.180 assembling=false armsCd=90
+golem state t1375: pos=83.1,-60.0,-5.1 yaw=17 order=ATTACK target=husk@3.6 action=DISPENSER frame=11 navDone=true speed=0.180 assembling=false armsCd=90
 golem overheat: generator=true overheated=false heat=4.0 minis=true out=0 -> out=0
 FAIL golem: blowing its generator it does nothing else (venting false)
 golem minis at t1434: 0
@@ -110,12 +110,12 @@ PASS gems: the Module items are gone
 PASS recipes: upgrade_iron is ingot/block/ingot with the gem in the waist
 PASS recipes: upgrade_diamond is ingot/block/ingot with the gem in the waist
 golem field: overheated=true blocks=1
-PASS golem: the field is drawn and showed the hit (drawn=234 hits=1 totalHits=1)
 PASS gems: placed desert_pyramid, 4 chests, 1 with atenite: 0,0,-2+gem -2,0,0 2,0,0 0,0,2
-PASS gems: placed jungle_pyramid, 4 chests, 1 with quetzalite: 12,-2,-1 10,-3,4 3,-3,5+gem+sticky 10,-2,5
+PASS gems: placed jungle_pyramid, 4 chests, 1 with quetzalite: 13,-2,3 11,-3,8 4,-3,9+gem+sticky 11,-2,9
 PASS golem: the Cube Field stopped the arrow (blocks 1, arrows left 0)
+PASS golem: the field is drawn and showed the hit (drawn=235 hits=1 totalHits=1)
 FAIL golem: back in action and still overheated after the animation
-golem seat: player feet 1.204 above the Golem (seat 1.813, animated seat 1.804, vehicle attachment 0.600)
+golem seat: player feet 1.202 above the Golem (seat 1.813, animated seat 1.802, vehicle attachment 0.600)
 PASS golem: the rider sits on the seat (feet 1.20)
 shot 36_golem_ride
 shot 37_golem_charged_jump
