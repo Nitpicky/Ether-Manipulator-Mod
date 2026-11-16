@@ -51,7 +51,6 @@ public final class PlaytestBootstrap {
     private static boolean worldRequested;
     private static int t = -1;
     private static BlockPos base;
-    private static net.minecraft.world.phys.Vec3 cloudReturn = net.minecraft.world.phys.Vec3.ZERO;
     private static final List<String> report = new ArrayList<>();
     private static int mineBrokeAt = -1;
     private static boolean done;
@@ -117,6 +116,33 @@ public final class PlaytestBootstrap {
     // The script
     // =========================================================================
 
+    /**
+     * -PcloudTest: after the beam is on (combat on the pig), stand above the cloud layer and fire
+     * down past it, so every cloud on screen is behind the beam; once with Fancy graphics, once
+     * with Fabulous. Nothing may cover the beam.
+     */
+    private static void cloudStep(Minecraft mc) {
+        switch (t) {
+            case 230 ->
+                    server(
+                            mc,
+                            (s, p) -> {
+                                int x = p.getBlockX(), z = p.getBlockZ();
+                                run(s, "setblock " + x + " 209 " + z + " glass");
+                                run(s, "tp @p " + (x + 0.5) + " 210 " + (z + 0.5) + " -90 55");
+                            });
+            case 232 -> mc.options.keyAttack.setDown(true);
+            case 260 -> shot(mc, "07b_clouds_fancy");
+            case 262 -> {
+                mc.options.graphicsMode().set(net.minecraft.client.GraphicsStatus.FABULOUS);
+                mc.levelRenderer.allChanged();
+            }
+            case 290 -> shot(mc, "07c_clouds_fabulous");
+            case 292 -> mc.stop();
+            default -> {}
+        }
+    }
+
     private static void step(Minecraft mc) {
         if (Boolean.getBoolean("mattermod.uiProbe")) {
             UiProbe.step(mc);
@@ -128,6 +154,10 @@ public final class PlaytestBootstrap {
             return;
         }
         var opts = mc.options;
+        if (Boolean.getBoolean("mattermod.cloudTest") && t >= 230) {
+            cloudStep(mc);
+            return;
+        }
         if (t > 70 && t < 160) checkMined(mc);
         if (t > 432 && t < 476)
             mc.player.setYRot(160 + (t - 432) * 1.0f); // slow sweep across the wall
@@ -292,34 +322,7 @@ public final class PlaytestBootstrap {
             case 225 -> opts.keyAttack.setDown(true);
             case 245 -> shot(mc, "06_combat_level1");
             case 290 -> shot(mc, "07_combat_ramped");
-            // the beam swung up into the clouds: effects must draw in front of them
-            // lifted above the cloud layer (y 192-196), aiming down at it: every cloud on
-            // screen is behind the beam, so none may cover it
-            case 291 ->
-                    server(
-                            mc,
-                            (s, p) -> {
-                                cloudReturn = p.position();
-                                int x = p.getBlockX(), z = p.getBlockZ();
-                                run(s, "setblock " + x + " 214 " + z + " glass");
-                                run(s, "tp @p " + (x + 0.5) + " 215 " + (z + 0.5) + " -90 45");
-                            });
-            case 301 -> shot(mc, "07b_beam_clouds");
-            case 302 -> {
-                opts.keyAttack.setDown(false);
-                server(
-                        mc,
-                        (s, p) ->
-                                run(
-                                        s,
-                                        "tp @p "
-                                                + cloudReturn.x
-                                                + " "
-                                                + cloudReturn.y
-                                                + " "
-                                                + cloudReturn.z
-                                                + " -90 8"));
-            }
+            case 295 -> opts.keyAttack.setDown(false);
 
             // ---- Charge and fire an orb --------------------------------------------
             case 305 -> {
