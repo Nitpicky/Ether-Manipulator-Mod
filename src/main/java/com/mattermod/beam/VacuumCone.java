@@ -191,7 +191,7 @@ public final class VacuumCone {
                         net.minecraft.world.entity.LivingEntity.class,
                         box,
                         e ->
-                                e != sp
+                                !com.mattermod.beam.Mounts.own(sp, e)
                                         && e.isAlive()
                                         && !(e
                                                 instanceof

@@ -15,15 +15,15 @@ import software.bernie.geckolib.renderer.GeoRenderer;
 import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
 
 /**
- * Lit redstone that shows the Redstone Generator's heat as signal strength. At rest it is the texture's own four redstone
- * tones, glowing; as heat builds the same four tones step up in signal (0, 3, 6, 9, 12, 15) and hue-shift toward the
- * eyes' amber, keeping their contrast. When the generator blows, the overheat animation flashes briefly to the eyes' white, then steps back through a halfway tone to signal 15.
- * Ministrosities show their Golem's generator the same way. Cutout and full bright, so it stays solid under shader packs.
+ * Lit redstone that shows the Redstone Generator's heat. Each of the texture's four redstone tones has its own white mask,
+ * drawn full bright and tinted with the tone the Golem shows right now (RedstoneGolem.tones): at rest the texture's own
+ * reds, warming toward orange as heat builds and throbbing toward the next hotter tone, faster as it heats; Overcharged it
+ * throbs up to amber, the dark tones moving less. The eyes are drawn untinted. Ministrosities show their Golem's generator.
  */
 public final class GolemSignalLayer<T extends net.minecraft.world.entity.Entity & software.bernie.geckolib.animatable.GeoAnimatable> extends GeoRenderLayer<T> {
 
-    private final ResourceLocation[] SIGNAL = new ResourceLocation[6];
-    private final ResourceLocation FLASH, AFTER;
+    private final ResourceLocation[] TONE = new ResourceLocation[4];
+    private final ResourceLocation EYES;
     /** The Golem whose generator this creature shows (itself, or a Ministrosity's Golem). */
     private final java.util.function.Function<T, RedstoneGolem> golemOf;
 
@@ -31,12 +31,11 @@ public final class GolemSignalLayer<T extends net.minecraft.world.entity.Entity 
         return ResourceLocation.fromNamespaceAndPath(MatterMod.MODID, "textures/entity/" + name);
     }
 
-    /** {@code prefix}: "monstrosity" or "ministrosity" (textures prefix_signal_0..5, prefix_flash, prefix_flash_after). */
+    /** {@code prefix}: "monstrosity" or "ministrosity" (textures prefix_tone_0..3, prefix_lit_eyes). */
     public GolemSignalLayer(GeoRenderer<T> renderer, String prefix, java.util.function.Function<T, RedstoneGolem> golemOf) {
         super(renderer);
-        for (int i = 0; i < SIGNAL.length; i++) SIGNAL[i] = tex(prefix + "_signal_" + i + ".png");
-        FLASH = tex(prefix + "_flash.png");
-        AFTER = tex(prefix + "_flash_after.png");
+        for (int i = 0; i < TONE.length; i++) TONE[i] = tex(prefix + "_tone_" + i + ".png");
+        EYES = tex(prefix + "_lit_eyes.png");
         this.golemOf = golemOf;
     }
 
@@ -45,15 +44,15 @@ public final class GolemSignalLayer<T extends net.minecraft.world.entity.Entity 
             MultiBufferSource bufferSource, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay) {
         if (entity.isInvisible()) return;
         RedstoneGolem golem = golemOf.apply(entity);
-        ResourceLocation tex = golem == null
-                ? SIGNAL[0]
-                : golem.flashing()
-                ? FLASH
-                : golem.afterglow()
-                ? AFTER
-                : SIGNAL[Math.min(SIGNAL.length - 1, Math.round(golem.signal(partialTick) * (SIGNAL.length - 1)))];
+        int[] tones = golem == null ? RedstoneGolem.REST_TONES : golem.tones(partialTick);
+        draw(EYES, 0xFFFFFF, poseStack, entity, bakedModel, bufferSource, partialTick, packedOverlay);
+        for (int i = 0; i < TONE.length; i++) draw(TONE[i], tones[i], poseStack, entity, bakedModel, bufferSource, partialTick, packedOverlay);
+    }
+
+    private void draw(ResourceLocation tex, int rgb, PoseStack poseStack, T entity, BakedGeoModel bakedModel,
+            MultiBufferSource bufferSource, float partialTick, int packedOverlay) {
         RenderType rt = GlowMaskLayer.type(tex);
         getRenderer().reRender(bakedModel, poseStack, bufferSource, entity, rt, bufferSource.getBuffer(rt), partialTick,
-                LightTexture.FULL_BRIGHT, packedOverlay, 0xFFFFFFFF);
+                LightTexture.FULL_BRIGHT, packedOverlay, 0xFF000000 | rgb);
     }
 }

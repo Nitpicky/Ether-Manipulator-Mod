@@ -185,7 +185,7 @@ public final class MobilityEffects {
                 sl.getEntitiesOfClass(
                         net.minecraft.world.entity.LivingEntity.class,
                         sp.getBoundingBox().inflate(4),
-                        e -> e != sp)) {
+                        e -> !com.mattermod.beam.Mounts.own(sp, e))) {
             e.igniteForSeconds(6);
         }
         sl.sendParticles(

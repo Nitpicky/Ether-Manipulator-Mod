@@ -215,6 +215,12 @@ public class BeamBallEntity extends Projectile {
     // Constructors
     // =========================================================================
 
+    /** Never the shooter's own mount (or anyone riding with them): shots fired from the saddle go past it. */
+    @Override
+    protected boolean canHitEntity(Entity e) {
+        return super.canHitEntity(e) && !com.mattermod.beam.Mounts.own(getOwner(), e);
+    }
+
     public BeamBallEntity(EntityType<? extends BeamBallEntity> type, Level level) {
         super(type, level);
     }
@@ -314,7 +320,7 @@ public class BeamBallEntity extends Projectile {
                                             .expandTowards(look.scale(maxRange))
                                             .inflate(4),
                                     e ->
-                                            e != p
+                                            !com.mattermod.beam.Mounts.own(p, e)
                                                     && e.isAlive()
                                                     && !com.mattermod.trait.RedesignEffects.ally(
                                                             p, e)
@@ -781,7 +787,7 @@ public class BeamBallEntity extends Projectile {
                         LivingEntity.class,
                         getBoundingBox().inflate(0.35),
                         e ->
-                                e != sp
+                                !com.mattermod.beam.Mounts.own(sp, e)
                                         && e.isAlive()
                                         && !com.mattermod.trait.RedesignEffects.ally(sp, e))) {
             onHitEntity(new EntityHitResult(e));

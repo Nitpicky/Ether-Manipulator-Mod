@@ -302,7 +302,7 @@ public final class RedesignEffects {
     }
 
     public static boolean enemy(ServerPlayer owner, LivingEntity e) {
-        return e != owner
+        return !com.mattermod.beam.Mounts.own(owner, e)
                 && e.isAlive()
                 && !ally(owner, e)
                 && !(e instanceof net.minecraft.world.entity.decoration.ArmorStand);

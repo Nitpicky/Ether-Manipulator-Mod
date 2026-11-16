@@ -119,8 +119,6 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
     static final int OVERHEAT_LEN = 64, OVERHEAT_SCREAM = 17;
     /** A Super Move stokes the generator by this many hits as it is used. */
     static final int SUPER_HEAT = 3;
-    /** Client: the overheat animation's scream (frames 17..26 at 1.5x speed) flashes the redstone to the eyes' white. */
-    static final int FLASH_FROM = 11, FLASH_TO = 17, AFTERGLOW_TO = 22;
     static final double FOLLOW_DISTANCE = 4, CATCH_UP_DISTANCE = 24, GUARD_RANGE = 12, REACH = 3.4;
 
     // ---- server state ---------------------------------------------------------------------
@@ -244,7 +242,8 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
     private double pace;
     private boolean wasStriding;
     int runStopUntil;
-    private int flashTicks = -1;
+    /** Client: the redstone's throb, in cycles (its rate climbs with the heat). */
+    private double pulse, pulsePrev;
     private boolean wasHot;
     private int idleBreakUntil;
     /** Client: frames into the walk loop, and whether it is finishing its step after stopping. */
@@ -256,14 +255,15 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
         return signalPrev + (signal - signalPrev) * partialTick;
     }
 
-    /** Client: the moment of the overheat when the redstone flashes to the eyes' white. */
-    public boolean flashing() {
-        return flashTicks >= FLASH_FROM && flashTicks < FLASH_TO;
+    /** Client: the throb, 0 (resting tone) to 1 (pushed toward the hotter tone), on a cosine. */
+    public float pulse(float partialTick) {
+        double p = pulsePrev + (pulse - pulsePrev) * partialTick;
+        return (float) (1 - Math.cos(2 * Math.PI * p)) / 2;
     }
 
-    /** Client: just after the flash, a step halfway back to signal 15 so it does not cut straight back. */
-    public boolean afterglow() {
-        return flashTicks >= FLASH_TO && flashTicks < AFTERGLOW_TO;
+    /** Throbs per second at a heat 0..1: none cold, a slow 0.33 warm, ramping to 3.33 at full. */
+    static double pulseHz(float heat) {
+        return heat <= 0 ? 0 : .33 + 3 * heat * heat;
     }
 
     /** The walk, sidestep and gallop loops' play rate: the speed it moves at in that gait over the ground the loop's planted
@@ -294,21 +294,50 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
         return flag(F_LEAPING);
     }
 
-    /** GolemSignalLayer's tones, dark to bright: signal stages 0..5 (0 = the texture's own redstone), the flash, the step after. */
-    private static final int[][] TONES = {
-            {0x6C1005, 0x851607, 0xA71D08, 0xCC200A},
-            {0x731304, 0x8F1B06, 0xB22608, 0xD83009},
-            {0x7C1704, 0x9A2305, 0xBF3308, 0xE64707},
-            {0x851D03, 0xA72C04, 0xCD4307, 0xF66305},
-            {0x8F2301, 0xB53702, 0xDC5507, 0xFC850D},
-            {0x9A2A00, 0xC44400, 0xEC6A06, 0xFFA61A},
-            {0xFFC890, 0xFFDCB4, 0xFFEEDC, 0xFFFFFF},
-            {0xCC7948, 0xE2905A, 0xF6AC71, 0xFFD28C}};
+    /** The four redstone tones (dark to bright) at heat k/20, k = 0..20: 0 is the texture's own redstone, 20 signal 15. */
+    private static final int[][] STAGES = {
+            {0x6C1005,0x851607,0xA71D08,0xCC200A},{0x6D1105,0x871707,0xA91F08,0xCE230A},{0x6F1105,0x891807,0xAC2108,0xD12709},
+            {0x711205,0x8C1A06,0xAF2408,0xD42C09},{0x731304,0x8F1B06,0xB22608,0xD83009},{0x751404,0x911D06,0xB52908,0xDB3608},
+            {0x771504,0x941F06,0xB82C08,0xDF3B08},{0x791604,0x972105,0xBB3008,0xE24108},{0x7C1704,0x9A2305,0xBF3308,0xE64707},
+            {0x7E1903,0x9D2505,0xC23708,0xEA4E07},{0x801A03,0xA12705,0xC63B07,0xEE5506},{0x831B03,0xA42A04,0xC93E07,0xF25C06},
+            {0x851D03,0xA72C04,0xCD4307,0xF66305},{0x881E02,0xAB2F03,0xD14707,0xFA6B05},{0x8A2002,0xAE3103,0xD44B07,0xFB7407},
+            {0x8D2102,0xB23403,0xD85007,0xFC7C0A},{0x8F2301,0xB53702,0xDC5507,0xFC850D},{0x922501,0xB93A02,0xE05A07,0xFD8D10},
+            {0x952601,0xBD3D01,0xE45F06,0xFE9514},{0x972800,0xC04101,0xE86406,0xFE9E17},{0x9A2A00,0xC44400,0xEC6A06,0xFFA61A}};
+    /** Overcharged, the tones throb up to amber; the dark ones move less so the shape keeps its depth. */
+    private static final int[] AMBER = {0xC25800, 0xF08A12, 0xFFBE3C, 0xFFE27A};
+    private static final float[] AMBER_WEIGHT = {.3f, .55f, 1, 1};
+    /** How far a warm throb pushes toward the hotter tone (about one signal stage). */
+    private static final float PULSE_REACH = .22f;
+    /** Resting look, for a Ministrosity without a Golem. */
+    public static final int[] REST_TONES = STAGES[0].clone();
 
-    /** Client: redstone dust in the colours the redstone shows right now (its stage, or the flash), mostly the bright tones. */
+    private static int mix(int a, int b, float t) {
+        int r = Math.round((a >> 16 & 255) + ((b >> 16 & 255) - (a >> 16 & 255)) * t);
+        int g = Math.round((a >> 8 & 255) + ((b >> 8 & 255) - (a >> 8 & 255)) * t);
+        int bl = Math.round((a & 255) + ((b & 255) - (a & 255)) * t);
+        return r << 16 | g << 8 | bl;
+    }
+
+    private static int stage(float heat, int tone) {
+        float x = Mth.clamp(heat, 0, 1) * (STAGES.length - 1);
+        int i = Math.min(STAGES.length - 2, (int) x);
+        return mix(STAGES[i][tone], STAGES[i + 1][tone], x - i);
+    }
+
+    /** Client: the four redstone tones right now (dark to bright, RGB), heat and throb included. */
+    public int[] tones(float partialTick) {
+        float h = signal(partialTick), p = pulse(partialTick);
+        int[] out = new int[4];
+        for (int i = 0; i < 4; i++)
+            out[i] = h >= 1 || overheated()
+                    ? mix(STAGES[STAGES.length - 1][i], AMBER[i], p * AMBER_WEIGHT[i])
+                    : mix(stage(h, i), stage(Math.min(1, h + PULSE_REACH), i), h > 0 ? p : 0);
+        return out;
+    }
+
+    /** Client: redstone dust in the colours the redstone shows right now, mostly the bright tones. */
     public DustParticleOptions stageDust(float size) {
-        int[] row = flashing() ? TONES[6] : afterglow() ? TONES[7] : TONES[Math.min(5, Math.round(signal(1) * 5))];
-        int c = row[1 + getRandom().nextInt(3)];
+        int c = tones(1)[1 + getRandom().nextInt(3)];
         return new DustParticleOptions(new Vector3f((c >> 16 & 255) / 255f, (c >> 8 & 255) / 255f, (c & 255) / 255f), size);
     }
 
@@ -557,15 +586,17 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
             // the generator's heat as signal: climbs quickly with each hit, cools slowly (2.5s from full) after an overheat
             signalPrev = signal;
             boolean hot = overheated();
-            if (hot && !wasHot) {
-                flashTicks = 0;
-                fieldOnTick = tickCount;
-            }
+            if (hot && !wasHot) fieldOnTick = tickCount;
             if (!hot && wasHot) fieldOffTick = tickCount;
             wasHot = hot;
             float target = hot ? 1 : entityData.get(HEAT) / (GENERATOR_HITS * 10f);
             signal += target > signal ? Math.min(target - signal, 1 / 10f) : Math.max(target - signal, -1 / 50f);
-            if (flashTicks >= 0 && ++flashTicks >= AFTERGLOW_TO) flashTicks = -1;
+            pulsePrev = pulse;
+            pulse += pulseHz(hot ? 1 : signal) / 20;
+            if (pulse > 1000) {
+                pulse -= 1000;
+                pulsePrev -= 1000;
+            }
             // Stride: how fast it really moves sets the gallop's pace; leaving it plays the push back upright
             double moved = Math.hypot(getX() - xo, getZ() - zo);
             pace += (moved - pace) * .2;

@@ -226,7 +226,7 @@ public final class BeamCastHelper {
                                 LivingEntity.class,
                                 player.getBoundingBox().expandTowards(end.subtract(eye)).inflate(1),
                                 e ->
-                                        e != player
+                                        !com.mattermod.beam.Mounts.own(player, e)
                                                 && e != first
                                                 && e.isAlive()
                                                 && e.isPickable()
@@ -250,7 +250,7 @@ public final class BeamCastHelper {
                                 target.getBoundingBox().inflate(ARC_RANGE),
                                 e ->
                                         e != first
-                                                && e != player
+                                                && !com.mattermod.beam.Mounts.own(player, e)
                                                 && e.isAlive()
                                                 && e.isPickable()
                                                 && !(e
@@ -632,7 +632,7 @@ public final class BeamCastHelper {
                 .getEntitiesOfClass(
                         LivingEntity.class,
                         search,
-                        e -> e != player && e.isAlive() && e.isPickable())
+                        e -> !com.mattermod.beam.Mounts.own(player, e) && e.isAlive() && e.isPickable())
                 .stream()
                 .filter(e -> e.getBoundingBox().inflate(0.1).clip(start, end).isPresent())
                 .min(Comparator.comparingDouble(e -> start.distanceToSqr(e.getEyePosition())))

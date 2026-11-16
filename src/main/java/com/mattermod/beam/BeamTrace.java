@@ -40,7 +40,7 @@ public final class BeamTrace {
                                 net.minecraft.world.entity.LivingEntity.class,
                                 search,
                                 e ->
-                                        e != player
+                                        !com.mattermod.beam.Mounts.own(player, e)
                                                 && e.isAlive()
                                                 && e.isPickable()
                                                 && !e.isSpectator())) {

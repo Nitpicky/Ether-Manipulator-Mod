@@ -314,7 +314,7 @@ public final class BeamRenderer {
                                 first.getBoundingBox().inflate(4 + arc),
                                 e ->
                                         e != first
-                                                && e != player
+                                                && !com.mattermod.beam.Mounts.own(player, e)
                                                 && e.isAlive()
                                                 && e.isPickable()
                                                 && !(e instanceof Player));

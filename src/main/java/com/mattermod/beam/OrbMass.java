@@ -49,7 +49,7 @@ final class OrbMass {
                         e ->
                                 e instanceof LivingEntity
                                         && e.isAlive()
-                                        && e != sp
+                                        && !com.mattermod.beam.Mounts.own(sp, e)
                                         && !e.isSpectator());
         if (hit != null) aim = hit.getEntity().getBoundingBox().getCenter();
         Vec3 v = b.getDeltaMovement();

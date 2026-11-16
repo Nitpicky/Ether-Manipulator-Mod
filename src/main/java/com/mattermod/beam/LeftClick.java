@@ -258,7 +258,7 @@ public final class LeftClick {
                 sl.getEntitiesOfClass(
                         LivingEntity.class,
                         new AABB(eye, end).inflate(1),
-                        e -> e != p && e.getBoundingBox().inflate(0.3).clip(eye, end).isPresent()))
+                        e -> !com.mattermod.beam.Mounts.own(p, e) && e.getBoundingBox().inflate(0.3).clip(eye, end).isPresent()))
             e.addEffect(new MobEffectInstance(MobEffects.GLOWING, 30, 0, false, false));
     }
 
@@ -287,7 +287,7 @@ public final class LeftClick {
                                     && RedesignEffects.enemy(p, le)
                                     && !e.getType()
                                             .is(net.neoforged.neoforge.common.Tags.EntityTypes.BOSSES);
-            if (!pullable || e.isSpectator()) continue;
+            if (!pullable || e.isSpectator() || com.mattermod.beam.Mounts.own(p, e)) continue;
             // small things are easier to catch
             double grow = e instanceof LivingEntity ? 0.3 : 0.6;
             var through = e.getBoundingBox().inflate(grow).clip(eye, end);

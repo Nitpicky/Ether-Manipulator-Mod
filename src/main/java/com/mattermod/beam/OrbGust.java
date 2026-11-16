@@ -61,7 +61,7 @@ final class OrbGust {
                         b,
                         b.getBoundingBox().inflate(2.5, 3, 2.5),
                         e ->
-                                e != owner
+                                !com.mattermod.beam.Mounts.own(owner, e)
                                         && (e instanceof LivingEntity
                                                 || e instanceof ItemEntity
                                                 || e instanceof ExperienceOrb)
