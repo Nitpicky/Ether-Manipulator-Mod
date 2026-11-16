@@ -1,0 +1,34 @@
+name: Free SFX libraries
+# manual only: downloads free (CC0) sound packs for the FX bench to the playtest-results branch (never shipped as-is)
+on:
+  workflow_dispatch:
+    inputs:
+      packs:
+        description: comma-separated Kenney asset slugs (empty = the default set)
+        default: ''
+      out:
+        description: output folder on the playtest-results branch
+        default: sfx-libs
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 .github/scripts/sfx_libs.py
+        env:
+          PACKS: ${{ inputs.packs }}
+          OUT: ${{ inputs.out }}
+      - name: Publish to the playtest-results branch
+        env:
+          OUT: ${{ inputs.out }}
+        run: |
+          git config user.name "playtest-bot"
+          git config user.email "playtest-bot@users.noreply.github.com"
+          git fetch origin playtest-results
+          git worktree add /tmp/pr origin/playtest-results
+          cd /tmp/pr && git checkout -B playtest-results
+          rm -rf "$OUT" && cp -r "$GITHUB_WORKSPACE/$OUT" .
+          git add -A && git commit -qm "Free SFX libraries ($OUT)" && git push -q origin playtest-results
