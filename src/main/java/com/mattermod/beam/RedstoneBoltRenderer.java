@@ -63,7 +63,7 @@ public final class RedstoneBoltRenderer extends EntityRenderer<RedstoneBolt> {
         Vec3 entRel = worldPos.subtract(camPos);
         ps.translate(-entRel.x, -entRel.y, -entRel.z);
         Matrix4f m = ps.last().pose();
-        VertexConsumer vc = com.mattermod.client.FxRender.buffer(buf);
+        VertexConsumer vc = com.mattermod.client.Fx.glow();
 
         Deque<Vec3> trail = trails.computeIfAbsent(bolt.getId(), k -> new ArrayDeque<>());
         if (trail.isEmpty() || trail.peekFirst().distanceToSqr(worldPos) > .04) {
