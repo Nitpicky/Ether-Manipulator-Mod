@@ -1,5 +1,6 @@
 package com.mattermod.client;
 
+import com.mattermod.MatterMod;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.pipeline.TextureTarget;
 import com.mojang.blaze3d.platform.GlStateManager;
@@ -16,7 +17,9 @@ import com.mojang.blaze3d.vertex.VertexSorting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -50,8 +53,8 @@ import java.util.Arrays;
  * order of recorded quads never changes the picture.
  *
  * <p>With a shader pack (Iris) the pack finishes the world itself, so the same quads are drawn into
- * the world at the end of its own passes (after weather) with the vanilla lightning type, which
- * writes depth: the pack's clouds then see the effects as solid and stay behind them.
+ * the world at the end of its own passes (after weather) as a beacon-beam glow that writes depth:
+ * the pack's clouds then see the effects as solid and stay behind them.
  */
 @OnlyIn(Dist.CLIENT)
 public final class Fx {
@@ -340,11 +343,33 @@ public final class Fx {
     }
 
     // =========================================================================
-    // Shader pack: into the world with the vanilla lightning type, solid to the pack
+    // Shader pack: into the world as a beacon-beam glow, solid to the pack
     // =========================================================================
 
-    /** The vanilla lightning type, as the effects always used before (additive, writes depth). */
-    private static final RenderType SHADER_FX = RenderType.lightning();
+    private static final ResourceLocation WHITE =
+            ResourceLocation.fromNamespaceAndPath(MatterMod.MODID, "textures/misc/white.png");
+
+    /**
+     * Packs run the vanilla lightning type through a program that leaves it out or smears it like
+     * a cloud, so with a pack the effects use the beacon-beam program instead (every pack shows it
+     * as a glow): a plain white texture with the effects' own colours, both sides, writing depth.
+     */
+    private static final RenderType SHADER_FX =
+            RenderType.create(
+                    "mattermod_fx",
+                    DefaultVertexFormat.BLOCK,
+                    VertexFormat.Mode.QUADS,
+                    1536,
+                    false,
+                    true,
+                    RenderType.CompositeState.builder()
+                            .setShaderState(RenderStateShard.RENDERTYPE_BEACON_BEAM_SHADER)
+                            .setTextureState(
+                                    new RenderStateShard.TextureStateShard(WHITE, false, false))
+                            .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
+                            .setCullState(RenderStateShard.NO_CULL)
+                            .setWriteMaskState(RenderStateShard.COLOR_DEPTH_WRITE)
+                            .createCompositeState(false));
 
     private static void drawInWorld() {
         MultiBufferSource.BufferSource buf = Minecraft.getInstance().renderBuffers().bufferSource();
@@ -354,7 +379,10 @@ public final class Fx {
             for (int i = 0; i < verts; i++) {
                 int c = l.col[i];
                 vc.addVertex(l.pos[3 * i], l.pos[3 * i + 1], l.pos[3 * i + 2])
-                        .setColor(c >> 16 & 255, c >> 8 & 255, c & 255, c >>> 24);
+                        .setColor(c >> 16 & 255, c >> 8 & 255, c & 255, c >>> 24)
+                        .setUv(0.5f, 0.5f)
+                        .setUv2(240, 240)
+                        .setNormal(0f, 1f, 0f);
             }
         }
         buf.endBatch(SHADER_FX);

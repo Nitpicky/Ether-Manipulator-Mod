@@ -38,6 +38,9 @@ public final class ManipulatorHud {
 
     private static float open, rot, rotFrom, rotTo, spin = 1;
     private static OrbMode current, previous;
+
+    /** The ring's modes last frame, to notice one being added or removed. */
+    private static List<OrbMode> lastModes = List.of();
     private static boolean tapTurn;
     private static long lastFrame;
 
@@ -68,9 +71,12 @@ public final class ManipulatorHud {
 
         // a new mode: turn the ring the short way until it is at the bottom
         int idx = Math.max(0, modes.indexOf(mode));
-        if (current == null) {
-            rot = rotTo = -idx * step;
+        if (current == null || !modes.equals(lastModes)) {
+            // first frame, or a mode was added or removed: the ring re-spaces itself, and the
+            // current Badge stays put at the bottom (no turn)
+            rot = rotFrom = rotTo = -idx * step;
             spin = 1;
+            previous = null;
         } else if (mode != current) {
             // spamming: the badge that was still fading in leaves from how far it had got, so a
             // fast run of switches flows instead of popping
@@ -84,6 +90,7 @@ public final class ManipulatorHud {
             tapTurn = open < .5f;
         }
         current = mode;
+        lastModes = modes;
         if (spin < 1) {
             spin = Math.min(1, spin + dt / SPIN_MS);
             rot = rotFrom + (rotTo - rotFrom) * ease(spin);

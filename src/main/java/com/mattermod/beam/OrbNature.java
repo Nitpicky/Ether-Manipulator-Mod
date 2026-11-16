@@ -82,19 +82,14 @@ final class OrbNature {
         long now = sl.getGameTime();
         for (BlockPos bp : BlockPos.betweenClosed(c.offset(-r, -3, -r), c.offset(r, 0, r))) {
             BlockState bs = sl.getBlockState(bp);
-            if (!(bs.getBlock() instanceof net.minecraft.world.level.block.BonemealableBlock))
-                continue;
-            if (bs.is(Blocks.GRASS_BLOCK) && !b.has("cultivation.rewild"))
-                continue; // no flower spam
+            if (!(bs.getBlock() instanceof net.minecraft.world.level.block.BonemealableBlock)
+                    && !bs.getFluidState().is(net.minecraft.tags.FluidTags.WATER)) continue;
             long key = bp.asLong();
             Long next = b.growSeen.get(key);
             if (next != null && next > now) continue;
             b.growSeen.put(key, now + (linger ? 10 : 20));
             if (!b.mayBuild(bp)) continue;
-            if (net.minecraft.world.item.BoneMealItem.growCrop(
-                    new ItemStack(net.minecraft.world.item.Items.BONE_MEAL), sl, bp.immutable())) {
-                sl.levelEvent(1505, bp, 6);
-            }
+            boneMeal(sl, bp.immutable(), 6);
         }
         if (now % 2 == 0) {
             sl.sendParticles(
@@ -174,6 +169,26 @@ final class OrbNature {
     }
 
     /**
+     * Exactly what a bone meal item does on this block: grows crops and saplings, spreads grass and
+     * flowers on grass blocks (and moss, nylium...), and grows seagrass and coral plants on the
+     * floor under water.
+     */
+    static boolean boneMeal(ServerLevel sl, BlockPos pos, int particles) {
+        ItemStack meal = new ItemStack(net.minecraft.world.item.Items.BONE_MEAL);
+        if (net.minecraft.world.item.BoneMealItem.growCrop(meal, sl, pos)) {
+            sl.levelEvent(1505, pos, particles);
+            return true;
+        }
+        BlockState bs = sl.getBlockState(pos);
+        if (bs.getFluidState().is(net.minecraft.tags.FluidTags.WATER)
+                && net.minecraft.world.item.BoneMealItem.growWaterPlant(meal, sl, pos, Direction.UP)) {
+            sl.levelEvent(1505, pos, particles);
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Bone meal on the block hit. Phase 3 covers 5x5 (9x9 with Verdant Pulse, wider with Payload);
      * Rewild greens bare dirt and spreads flowers (II: moss onto stone and cobblestone).
      */
@@ -203,10 +218,7 @@ final class OrbNature {
                         (here.is(Blocks.COBBLESTONE) ? Blocks.MOSSY_COBBLESTONE : Blocks.MOSS_BLOCK)
                                 .defaultBlockState());
             }
-            if (net.minecraft.world.item.BoneMealItem.growCrop(
-                    new ItemStack(net.minecraft.world.item.Items.BONE_MEAL), sl, q)) {
-                sl.levelEvent(1505, q, 15);
-            }
+            boneMeal(sl, q, 15);
         }
         if (rewild) {
             BlockPos top = hitPos.above();
