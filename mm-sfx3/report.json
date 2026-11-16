@@ -1,0 +1,18 @@
+{
+ "block.note_block.bit": {
+  "subtitle": "subtitles.block.note_block.note",
+  "sounds": [
+   {
+    "file": "mm-sfx3/ogg/block.note_block.bit/0.ogg",
+    "name": "note/bit",
+    "volume": 1,
+    "pitch": 1,
+    "weight": 1,
+    "I": -29.5,
+    "Mmax": -26.9,
+    "peak": -15.7,
+    "dur": 0.38
+   }
+  ]
+ }
+}
