@@ -104,19 +104,36 @@ public final class RedesignEffects {
             if (Traits.hasLine(st, Traits.PYROTECHNICS)) p.clearFire();
         }
         boolean changed = false;
-        // The shared tank: one unit per refill period
-        int rate = Math.max(1, com.mattermod.config.MatterConfig.MATTER_REFILL.get());
-        if (OrbMode.tank(st) < OrbMode.capacity(st)) {
-            var data = p.getPersistentData();
-            String key = "mm_refill_matter";
-            int progress = data.getInt(key) + 1;
-            if (progress >= rate) {
-                OrbMode.setTank(st, OrbMode.tank(st) + 1);
-                progress = 0;
+        // The shared tank reloads Jhin-style: nothing trickles back while you keep firing; once no Matter has been
+        // spent for the reload delay (shorter at higher tiers), the whole tank fills at once. Four clicks lead in.
+        int cap = OrbMode.capacity(st), tank = OrbMode.tank(st);
+        var data = p.getPersistentData();
+        // spent since last tick: restart the wait
+        if (tank < data.getInt("mm_tank_last")) data.putInt("mm_refill_matter", 0);
+        data.putInt("mm_tank_last", tank);
+        if (tank < cap) {
+            int delay = reloadDelay(st);
+            int idle = data.getInt("mm_refill_matter") + 1;
+            int lead = delay - idle;
+            if (lead > 0 && lead <= 8 && lead % 2 == 0)
+                p.playNotifySound(
+                        net.minecraft.sounds.SoundEvents.LEVER_CLICK,
+                        net.minecraft.sounds.SoundSource.PLAYERS,
+                        0.25f,
+                        1.5f + (8 - lead) * 0.05f);
+            if (idle >= delay) {
+                OrbMode.setTank(st, cap);
+                data.putInt("mm_tank_last", cap);
+                idle = 0;
                 changed = true;
+                p.playNotifySound(
+                        net.minecraft.sounds.SoundEvents.ARMOR_EQUIP_NETHERITE.value(),
+                        net.minecraft.sounds.SoundSource.PLAYERS,
+                        0.3f,
+                        1.2f);
             }
-            data.putInt(key, progress);
-        }
+            data.putInt("mm_refill_matter", idle);
+        } else data.putInt("mm_refill_matter", 0);
         if (changed) Manipulator.sync(p);
         if (now % 20 == 0
                 && Traits.has(st, "pyrotechnics.rekindle")
@@ -125,6 +142,12 @@ public final class RedesignEffects {
             var at = p.blockPosition().above();
             if (p.serverLevel().hasChunkAt(at)) WorldEffects.tempLight(p.serverLevel(), at, 10, 15);
         }
+    }
+
+    /** Ticks without spending Matter before the tank reloads: the config value at Prototype, 15 less per tier. */
+    public static int reloadDelay(net.minecraft.world.item.ItemStack st) {
+        int base = com.mattermod.config.MatterConfig.MATTER_REFILL.get();
+        return Math.max(10, base - 15 * com.mattermod.item.ManipulatorStage.get(st).ordinal());
     }
 
     private static boolean touchesFire(Entity p) {

@@ -48,8 +48,10 @@ public final class MatterConfig {
         b.pop();
         b.push("redesign_tuning");
         MATTER_REFILL =
-                b.comment("Ticks per unit the shared projectile tank refills (40 = one every 2 seconds).")
-                        .defineInRange("matter_refill_ticks", 40, 1, 12000);
+                b.comment(
+                                "Ticks without spending Matter before the shared tank reloads in full, at"
+                                    + " Prototype (80 = 4 seconds). Each higher tier reloads 15 ticks sooner.")
+                        .defineInRange("matter_reload_ticks", 80, 10, 12000);
         STASIS_TICKS = b.defineInRange("stasis_ticks", 40, 1, 200);
         // Keep the existing config key so upgraded worlds retain their summon duration.
         SOUL_LIFETIME = b.defineInRange("soul_skeleton_lifetime_ticks", 600, 20, 12000);

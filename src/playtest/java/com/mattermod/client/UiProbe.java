@@ -329,9 +329,9 @@ public final class UiProbe {
                                 check("Module switch retains tank", OrbMode.tank(st) == 3);
                                 TraitBuild.setPick(st, 0, 0, "hydraulics.reservoir");
                                 check(
-                                        "Refill base one unit every 2s",
+                                        "Reload waits 4s at Prototype",
                                         com.mattermod.config.MatterConfig.MATTER_REFILL.get()
-                                                == 40);
+                                                == 80);
                                 TraitRules.equip(p, 1, Traits.PYROTECHNICS);
                                 TraitRules.pick(p, 1, 0, 1);
                                 check("Crucible grows the shared tank", OrbMode.capacity(st) == 10);
@@ -1076,14 +1076,19 @@ public final class UiProbe {
                                 TraitBuild.setLine(st, 2, Traits.CULTIVATION);
                                 TraitBuild.setPick(st, 2, 0, "cultivation.seedbank");
                                 OrbMode.setTank(st, 0);
-                                p.getPersistentData().putInt("mm_refill_matter", 39);
+                                p.getPersistentData().putInt("mm_tank_last", 0);
+                                p.getPersistentData()
+                                        .putInt(
+                                                "mm_refill_matter",
+                                                com.mattermod.trait.RedesignEffects.reloadDelay(st)
+                                                        - 1);
                                 WorldEffects.schedule(
                                         p.serverLevel(),
                                         2,
                                         () -> {
                                             check(
-                                                    "Shared tank refills at its boundary",
-                                                    OrbMode.tank(st) == 1);
+                                                    "Shared tank reloads in full after the delay",
+                                                    OrbMode.tank(st) == OrbMode.capacity(st));
                                             check(
                                                     "Three tank traits stack",
                                                     OrbMode.capacity(st) == 12);
