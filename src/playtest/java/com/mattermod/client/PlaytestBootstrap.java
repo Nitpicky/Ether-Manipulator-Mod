@@ -51,6 +51,7 @@ public final class PlaytestBootstrap {
     private static boolean worldRequested;
     private static int t = -1;
     private static BlockPos base;
+    private static net.minecraft.world.phys.Vec3 cloudReturn = net.minecraft.world.phys.Vec3.ZERO;
     private static final List<String> report = new ArrayList<>();
     private static int mineBrokeAt = -1;
     private static boolean done;
@@ -292,9 +293,32 @@ public final class PlaytestBootstrap {
             case 245 -> shot(mc, "06_combat_level1");
             case 290 -> shot(mc, "07_combat_ramped");
             // the beam swung up into the clouds: effects must draw in front of them
-            case 291 -> mc.player.setXRot(-40);
+            // lifted just under the cloud layer (y 192), aiming up through it
+            case 291 ->
+                    server(
+                            mc,
+                            (s, p) -> {
+                                cloudReturn = p.position();
+                                int x = p.getBlockX(), z = p.getBlockZ();
+                                run(s, "setblock " + x + " 184 " + z + " glass");
+                                run(s, "tp @p " + (x + 0.5) + " 185 " + (z + 0.5) + " -90 -35");
+                            });
             case 301 -> shot(mc, "07b_beam_clouds");
-            case 302 -> opts.keyAttack.setDown(false);
+            case 302 -> {
+                opts.keyAttack.setDown(false);
+                server(
+                        mc,
+                        (s, p) ->
+                                run(
+                                        s,
+                                        "tp @p "
+                                                + cloudReturn.x
+                                                + " "
+                                                + cloudReturn.y
+                                                + " "
+                                                + cloudReturn.z
+                                                + " -90 8"));
+            }
 
             // ---- Charge and fire an orb --------------------------------------------
             case 305 -> {
