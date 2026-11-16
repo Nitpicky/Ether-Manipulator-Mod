@@ -12,9 +12,13 @@ index = {}
 for slug in [p.strip() for p in PACKS.split(",") if p.strip()]:
     try:
         page = get(f"https://kenney.nl/assets/{slug}").decode("utf8", "replace")
-        links = re.findall(r'href="([^"]+\.zip)"', page)
+        links = re.findall(r'(https?://[^"\'\s<>]+?\.zip|/[^"\'\s<>]+?\.zip)', page.replace("\\/", "/"))
         if not links:
-            print("no zip for", slug); continue
+            print("no zip for", slug, len(page))
+            for m in re.finditer(r'(?i)download', page):
+                print("  ..", page[max(0, m.start() - 200):m.start() + 200].replace("\n", " "))
+                break
+            continue
         url = links[0] if links[0].startswith("http") else "https://kenney.nl" + links[0]
         z = zipfile.ZipFile(io.BytesIO(get(url)))
         files = []
