@@ -5,14 +5,32 @@ PACKS = os.environ.get("PACKS") or "sci-fi-sounds,impact-sounds,interface-sounds
 OUT = os.environ.get("OUT") or "sfx-libs"
 UA = {"User-Agent": "Mozilla/5.0 (sfx-fetch)"}
 
-def get(url):
-    return urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=60).read()
+import http.cookiejar
+OPENER = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()))
+
+def get(url, ref=None):
+    h = dict(UA)
+    if ref:
+        h["Referer"] = ref
+    return OPENER.open(urllib.request.Request(url, headers=h), timeout=90).read()
 
 index = {}
 for slug in [p.strip() for p in PACKS.split(",") if p.strip()]:
     try:
         page = get(f"https://kenney.nl/assets/{slug}").decode("utf8", "replace")
         links = re.findall(r'(https?://[^"\'\s<>]+?\.zip|/[^"\'\s<>]+?\.zip)', page.replace("\\/", "/"))
+        if not links:
+            # the page's own "Continue without donating" link: ask for a fresh signed link to the zip
+            m = re.search(r"data-download-id='([0-9a-f]+)'", page)
+            if m:
+                try:
+                    d = json.loads(get("https://kenney.nl/download-link/" + m.group(1), ref=f"https://kenney.nl/assets/{slug}"))
+                    if d.get("url"):
+                        links = [d["url"]]
+                    else:
+                        print("download-link answer", str(d)[:200])
+                except Exception as e:
+                    print("download-link failed", slug, e)
         if not links:
             # Kirby keeps a page's files in one media folder: the zip sits next to the preview image
             m = re.search(r"https://kenney\.nl/media/pages/assets/[^'\"]+?/", page)
@@ -28,11 +46,9 @@ for slug in [p.strip() for p in PACKS.split(",") if p.strip()]:
                     pass
         if not links:
             print("no zip for", slug, len(page))
-            for m in re.finditer(r"(?i)(download|\.zip|data-[a-z]+=)", page):
-                print("  ..", page[max(0, m.start() - 120):m.start() + 160].replace("\n", " ").replace("\t", ""))
             continue
         url = links[0] if links[0].startswith("http") else "https://kenney.nl" + links[0]
-        z = zipfile.ZipFile(io.BytesIO(get(url)))
+        z = zipfile.ZipFile(io.BytesIO(get(url, ref=f"https://kenney.nl/assets/{slug}")))
         files = []
         for n in z.namelist():
             if n.lower().endswith((".ogg", ".wav", ".mp3")):
