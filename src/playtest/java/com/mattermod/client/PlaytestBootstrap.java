@@ -293,15 +293,16 @@ public final class PlaytestBootstrap {
             case 245 -> shot(mc, "06_combat_level1");
             case 290 -> shot(mc, "07_combat_ramped");
             // the beam swung up into the clouds: effects must draw in front of them
-            // lifted just under the cloud layer (y 192), aiming up through it
+            // lifted above the cloud layer (y 192-196), aiming down at it: every cloud on
+            // screen is behind the beam, so none may cover it
             case 291 ->
                     server(
                             mc,
                             (s, p) -> {
                                 cloudReturn = p.position();
                                 int x = p.getBlockX(), z = p.getBlockZ();
-                                run(s, "setblock " + x + " 184 " + z + " glass");
-                                run(s, "tp @p " + (x + 0.5) + " 185 " + (z + 0.5) + " -90 -35");
+                                run(s, "setblock " + x + " 214 " + z + " glass");
+                                run(s, "tp @p " + (x + 0.5) + " 215 " + (z + 0.5) + " -90 45");
                             });
             case 301 -> shot(mc, "07b_beam_clouds");
             case 302 -> {
