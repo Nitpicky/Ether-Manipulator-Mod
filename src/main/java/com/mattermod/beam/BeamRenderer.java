@@ -199,7 +199,7 @@ public final class BeamRenderer {
             Vec3 rawHit = hit.getLocation();
             boolean hitSomething = hit.getType() != HitResult.Type.MISS;
             float extend = Math.min(1f, (BeamRenderState.beamTicks + pt) / 2.5f);
-            int level = BeamRenderState.combatLevel;
+            int level = RemoteBeams.level(player.getId());
             // The end point follows the aim exactly; the curve's bend trails behind
             // and catches up, so a sweep bends the beam like something elastic
             Vec3 aimNow = player.getViewVector(pt);
@@ -208,7 +208,6 @@ public final class BeamRenderer {
                             ? aimNow
                             : elasticDir(localAim, aimNow, dt);
             localTip = rawHit;
-            strikeAge = strikeAge(player.getId(), pt);
 
             drawBeam(
                     m,
@@ -221,8 +220,7 @@ public final class BeamRenderer {
                     time,
                     color,
                     hitSomething);
-            drawArcs(mc, camPos, player, hit, time, pt, color);
-            strikeAge = 99f;
+            drawArcs(m, camPos, player, held, hit, level, time, color);
             drawRefraction(m, camPos, player, held, level, time, color, extend);
             spawnImpactFx(mc.level, hit, localTip, nozzle, color, level, dt, hitSomething, -1);
             Vec3 toW = localTip;
@@ -271,7 +269,6 @@ public final class BeamRenderer {
             remoteAims.put(p.getId(), aim);
             float heldTicks = gameTime - e.getValue() + pt;
             int lvl = RemoteBeams.level(p.getId());
-            strikeAge = strikeAge(p.getId(), pt);
             Vec3[] nb = Muzzle.resolve(p.getId(), false, proj, view, camPos);
             Vec3 fromW = nb != null ? nb[0] : approximateMuzzle(p, pt);
             boolean hitSomething = hit.getType() != HitResult.Type.MISS;
@@ -286,92 +283,56 @@ public final class BeamRenderer {
                     time,
                     color,
                     hitSomething);
-            drawArcs(mc, camPos, p, hit, time, pt, color);
-            strikeAge = 99f;
+            drawArcs(m, camPos, p, held, hit, lvl, time, color);
             drawRefraction(m, camPos, p, held, lvl, time, color, Math.min(1f, heldTicks / 2.5f));
             spawnImpactFx(level, hit, toW, fromW, color, lvl, dt, hitSomething, p.getId());
         }
     }
 
-    /** Ticks since this player's beam last struck (99 when long ago), for the strike flash. */
-    private static float strikeAge = 99f;
-
-    private static float strikeAge(int id, float pt) {
-        RemoteBeams.Pulse pu = RemoteBeams.pulseOf(id);
-        if (pu == null || pu.strikeAt == Long.MIN_VALUE) return 99f;
-        return Math.min(99f, RemoteBeams.clientTime() - pu.strikeAt + pt);
-    }
-
-    /** Seeds whose arc sparks were already thrown, per player. */
-    private static final Map<Integer, Integer> arcSparked = new java.util.HashMap<>();
-
     /**
-     * Combat: Arc. Each strike the server picks the creatures it jumps to (more with pressure); here
-     * each jump is a jagged, pixel-wide bolt from the creature in the beam that flashes in the beam's
-     * colour and dies out over a few ticks, with a pop of sparks where it lands.
+     * Combat: Arc. From ramp level 2 the beam jumps off the target to the nearest creatures (one
+     * per rank), mirroring the server's pick.
      */
     private static void drawArcs(
-            Minecraft mc, Vec3 camPos, Player player, HitResult hit, float time, float pt, float[] color) {
-        RemoteBeams.Pulse pu = RemoteBeams.pulseOf(player.getId());
-        if (pu == null || pu.arcs.isEmpty() || !(hit instanceof EntityHitResult eh)) return;
-        float age = strikeAge(player.getId(), pt);
-        if (age > 5f) return;
-        float life = 1f - age / 5f;
-        Vec3 from = eh.getEntity().getBoundingBox().getCenter();
-        boolean spark = !Integer.valueOf(pu.seed).equals(arcSparked.put(player.getId(), pu.seed));
-        int k = 0;
-        for (int id : pu.arcs) {
-            Entity e = mc.level.getEntity(id);
-            if (e == null) continue;
-            Vec3 to = e.getBoundingBox().getCenter();
-            bolt(camPos, from, to, pu.seed * 31 + k++, life, color);
-            if (spark)
-                for (int i = 0; i < 5; i++)
-                    mc.level.addParticle(
-                            ParticleTypes.ELECTRIC_SPARK,
-                            to.x,
-                            to.y,
-                            to.z,
-                            (Math.random() - .5) * .3,
-                            Math.random() * .2,
-                            (Math.random() - .5) * .3);
-        }
-    }
-
-    /** A jagged lightning line between two points: straight segments, kinks every half block. */
-    private static void bolt(Vec3 camPos, Vec3 fromW, Vec3 toW, int seed, float life, float[] color) {
-        Vec3 a = fromW.subtract(camPos), b = toW.subtract(camPos);
-        Vec3 d = b.subtract(a);
-        double len = d.length();
-        if (len < 0.1) return;
-        Vec3 axis = d.scale(1 / len);
-        Vec3 u = axis.cross(new Vec3(0, 1, 0));
-        if (u.lengthSqr() < 1e-6) u = axis.cross(new Vec3(1, 0, 0));
-        u = u.normalize();
-        Vec3 v = u.cross(axis).normalize();
-        int n = Math.max(3, (int) Math.round(len / 0.5));
-        java.util.Random r = new java.util.Random(seed);
-        Vec3[] pts = new Vec3[n + 1];
-        for (int i = 0; i <= n; i++) {
-            double t = (double) i / n;
-            double j = (i == 0 || i == n) ? 0 : 0.28 * Math.sin(Math.PI * t);
-            pts[i] = a.add(d.scale(t))
-                    .add(u.scale((r.nextDouble() - .5) * 2 * j))
-                    .add(v.scale((r.nextDouble() - .5) * 2 * j));
-        }
-        float core = 0.5f * PX, glow = 1.8f * PX;
-        float[] col = {mix(color[0], 1f, 0.3f), mix(color[1], 1f, 0.3f), mix(color[2], 1f, 0.3f), life};
-        for (int i = 0; i < n; i++) {
-            Vec3 p0 = pts[i], p1 = pts[i + 1];
-            Vec3 tan = p1.subtract(p0).normalize();
-            Vec3 s0 = tan.cross(p0.scale(-1)).normalize(), s1 = tan.cross(p1.scale(-1)).normalize();
-            float k0 = nearScale(p0), k1 = nearScale(p1);
-            lane(p0.add(s0.scale(-glow * k0)), p1.add(s1.scale(-glow * k1)),
-                    p0.add(s0.scale(-core * k0)), p1.add(s1.scale(-core * k1)), col, col, 0f, 0.5f);
-            lane(p0.add(s0.scale(-core * k0)), p1.add(s1.scale(-core * k1)),
-                    p0.add(s0.scale(core * k0)), p1.add(s1.scale(core * k1)), col, col, -1f, -1f);
-            lane(p0.add(s0.scale(core * k0)), p1.add(s1.scale(core * k1)),
-                    p0.add(s0.scale(glow * k0)), p1.add(s1.scale(glow * k1)), col, col, 0.5f, 0f);
+            Matrix4f m,
+            Vec3 camPos,
+            Player player,
+            ItemStack held,
+            HitResult hit,
+            int level,
+            float time,
+            float[] color) {
+        if (!(hit instanceof EntityHitResult eh) || level < 2) return;
+        int arc = com.mattermod.trait.Traits.rank(held, "combat.arc");
+        if (arc <= 0 || !(eh.getEntity() instanceof net.minecraft.world.entity.LivingEntity first))
+            return;
+        Vec3 from = first.getBoundingBox().getCenter();
+        List<net.minecraft.world.entity.LivingEntity> near =
+                player.level()
+                        .getEntitiesOfClass(
+                                net.minecraft.world.entity.LivingEntity.class,
+                                first.getBoundingBox().inflate(4 + arc),
+                                e ->
+                                        e != first
+                                                && e != player
+                                                && e.isAlive()
+                                                && e.isPickable()
+                                                && !(e instanceof Player));
+        near.sort(java.util.Comparator.comparingDouble(e -> e.distanceToSqr(first)));
+        for (int i = 0; i < Math.min(arc, near.size()); i++) {
+            Vec3 to = near.get(i).getBoundingBox().getCenter();
+            Vec3 dir = to.subtract(from).normalize();
+            drawBeam(
+                    m,
+                    camPos,
+                    from,
+                    dir,
+                    to,
+                    1f,
+                    Math.max(1, level - 1),
+                    time + i * 7,
+                    color,
+                    true);
         }
     }
 
@@ -459,7 +420,7 @@ public final class BeamRenderer {
                                 full
                                         * 0.5)); // control point on the aim line: a lagging tip
                                                  // bends the beam
-        int lv = Math.max(0, Math.min(3, level - 1)); // pressure 1-4
+        int lv = Math.max(0, Math.min(2, level - 1)); // 0, 1, 2
         float[] hsv = rgbToHsv(color[0], color[1], color[2]);
 
         // A few control points along the curve, each drifting slowly on its own
@@ -475,9 +436,8 @@ public final class BeamRenderer {
         if (su.lengthSqr() < 1e-6) su = axis.cross(new Vec3(1, 0, 0));
         su = su.normalize();
         Vec3 sv = su.cross(axis).normalize();
-        // Pressure: a calm, thin line at 1 that thickens, shakes and runs hotter up to 4
-        float amp = (1.2f + 0.7f * lv) * PX; // a clear sway, the same size all along the beam
-        float speed = 1f + 0.6f * lv;
+        float amp = (1.6f + 0.6f * lv) * PX; // a clear sway, the same size all along the beam
+        float speed = 1f + 0.4f * lv;
         for (int i = 1; i < nc; i++) {
             long h = i * 0x9E3779B97F4A7C15L;
             double f1 = 0.08 + ((h >>> 8) & 0xff) / 255.0 * 0.08,
@@ -519,13 +479,8 @@ public final class BeamRenderer {
         }
         pts[n] = ctl[nc];
 
-        float core = (0.4f + 0.25f * lv) * PX;
-        float glow = (1.8f + 0.8f * lv) * PX;
-        // Each strike sends a bright band from the nozzle to the target and flares the glow
-        float age = strikeAge;
-        float flare = age < 4f ? 1f - age / 4f : 0f;
-        double head = age / 2.5;
-        float heat = 0.15f * lv; // the colour runs whiter as pressure builds
+        float core = (0.45f + 0.15f * lv) * PX;
+        float glow = (2.2f + 0.6f * lv) * PX;
         Vec3 prevL0 = null, prevL1 = null, prevR1 = null, prevR0 = null;
         float[] prevCol = null;
         for (int i = 0; i <= n; i++) {
@@ -549,16 +504,9 @@ public final class BeamRenderer {
                 double into = (t - (1 - fadeLen)) / fadeLen;
                 if (into > 0) fadeIn *= (float) Math.pow(1 - Math.min(1, into), 1.6);
             }
-            double off = (t - head) / 0.12;
-            float band = head <= 1.2 ? (float) Math.exp(-off * off) : 0f;
-            float w = Math.min(1f, heat + 0.6f * band);
-            float[] col = {
-                mix(rgb[0], 1f, w), mix(rgb[1], 1f, w), mix(rgb[2], 1f, w),
-                Math.min(1f, fadeIn * (0.85f + 0.15f * lv / 3f + 0.35f * flare))
-            };
-            float gw = glow * (1f + 0.35f * flare + 0.5f * band), cw = core * (1f + 0.6f * band);
-            Vec3 l0 = p.add(side.scale(-gw * ks)), l1 = p.add(side.scale(-cw * ks));
-            Vec3 r1 = p.add(side.scale(cw * ks)), r0 = p.add(side.scale(gw * ks));
+            float[] col = {rgb[0], rgb[1], rgb[2], fadeIn};
+            Vec3 l0 = p.add(side.scale(-glow * ks)), l1 = p.add(side.scale(-core * ks));
+            Vec3 r1 = p.add(side.scale(core * ks)), r0 = p.add(side.scale(glow * ks));
             if (prevL0 != null) {
                 // outer glow: fades from the core edge to nothing; centre: bright, whiter
                 lane(prevL0, l0, prevL1, l1, prevCol, col, 0f, 0.45f);
