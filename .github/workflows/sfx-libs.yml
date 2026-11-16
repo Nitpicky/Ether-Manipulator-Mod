@@ -31,4 +31,4 @@ jobs:
           git worktree add /tmp/pr origin/playtest-results
           cd /tmp/pr && git checkout -B playtest-results
           rm -rf "$OUT" && cp -r "$GITHUB_WORKSPACE/$OUT" .
-          git add -A && git commit -qm "Free SFX libraries ($OUT)" && git push -q origin playtest-results
+          git add -A && (git diff --cached --quiet || (git commit -qm "Free SFX libraries ($OUT)" && git push -q origin playtest-results))

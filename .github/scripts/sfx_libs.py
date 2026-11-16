@@ -14,10 +14,22 @@ for slug in [p.strip() for p in PACKS.split(",") if p.strip()]:
         page = get(f"https://kenney.nl/assets/{slug}").decode("utf8", "replace")
         links = re.findall(r'(https?://[^"\'\s<>]+?\.zip|/[^"\'\s<>]+?\.zip)', page.replace("\\/", "/"))
         if not links:
+            # Kirby keeps a page's files in one media folder: the zip sits next to the preview image
+            m = re.search(r"https://kenney\.nl/media/pages/assets/[^'\"]+?/", page)
+            base = m.group(0) if m else None
+            names = re.findall(r"kenney_[A-Za-z0-9_.-]+?\.zip", page)
+            cands = [base + n for n in names] if base else []
+            if base:
+                cands += [base + f"kenney_{slug}.zip", base + f"kenney_{slug.replace('-', '')}.zip", base + f"kenney_{slug.replace('-', '_')}.zip"]
+            for c in cands:
+                try:
+                    urllib.request.urlopen(urllib.request.Request(c, headers=UA, method="HEAD"), timeout=30); links = [c]; break
+                except Exception:
+                    pass
+        if not links:
             print("no zip for", slug, len(page))
-            for m in re.finditer(r'(?i)download', page):
-                print("  ..", page[max(0, m.start() - 200):m.start() + 200].replace("\n", " "))
-                break
+            for m in re.finditer(r"(?i)(download|\.zip|data-[a-z]+=)", page):
+                print("  ..", page[max(0, m.start() - 120):m.start() + 160].replace("\n", " ").replace("\t", ""))
             continue
         url = links[0] if links[0].startswith("http") else "https://kenney.nl" + links[0]
         z = zipfile.ZipFile(io.BytesIO(get(url)))
