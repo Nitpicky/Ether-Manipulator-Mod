@@ -2,6 +2,13 @@ name: Vanilla sound reference
 # manual only: downloads and measures some vanilla sounds as a reference for the mix pass (never shipped in the mod)
 on:
   workflow_dispatch:
+    inputs:
+      prefixes:
+        description: comma-separated sound event prefixes (empty = the mix-pass reference set)
+        default: ''
+      out:
+        description: output folder on the playtest-results branch
+        default: vanilla-ref
 permissions:
   contents: write
 jobs:
@@ -12,12 +19,17 @@ jobs:
       - uses: actions/checkout@v4
       - run: which ffmpeg || (sudo apt-get update -q && sudo apt-get install -yq ffmpeg)
       - run: python3 .github/scripts/vanilla_sounds.py
+        env:
+          PREFIXES: ${{ inputs.prefixes }}
+          OUT: ${{ inputs.out }}
       - name: Publish to the playtest-results branch
+        env:
+          OUT: ${{ inputs.out }}
         run: |
           git config user.name "playtest-bot"
           git config user.email "playtest-bot@users.noreply.github.com"
           git fetch origin playtest-results
           git worktree add /tmp/pr origin/playtest-results
           cd /tmp/pr && git checkout -B playtest-results
-          rm -rf vanilla-ref && cp -r $GITHUB_WORKSPACE/vanilla-ref .
-          git add -A && git commit -qm "Vanilla sound reference" && git push -q origin playtest-results
+          rm -rf "$OUT" && cp -r "$GITHUB_WORKSPACE/$OUT" .
+          git add -A && git commit -qm "Vanilla sound reference ($OUT)" && git push -q origin playtest-results
