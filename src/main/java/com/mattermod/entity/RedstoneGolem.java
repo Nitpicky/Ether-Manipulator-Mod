@@ -969,6 +969,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
             e.setDeltaMovement(fwd.x * (k > 1 ? .9 : .12), 1.15 * (k > 1 ? 1.2 : 1), fwd.z * (k > 1 ? .9 : .12));
             e.hurtMarked = true;
             landed(owner, e);
+            searing(owner, e);
             hits++;
         }
         if (hits > 0) stoke(owner, hits);
@@ -999,6 +1000,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
             e.setDeltaMovement(e.getDeltaMovement().add(push.x, .7 * Math.sqrt(knock()), push.z));
             e.hurtMarked = true;
             landed(owner, e);
+            searing(owner, e);
             hits++;
         }
         if (hits > 0) stoke(owner, hits);
@@ -1034,16 +1036,30 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
         return best;
     }
 
+    /**
+     * One arm's Super Move shot. It counts as a fully charged (charge 3) Kinetic shot of the
+     * owner's Manipulator: Split fires it as three bolts fanned 10 degrees apart sharing the
+     * damage, Bank Shot lets each bolt bounce off blocks three times.
+     */
     private void fireBolt(ServerPlayer owner, Vec3 aim, boolean right, LivingEntity homing) {
         Vec3 fwd = Vec3.directionFromRotation(0, getYRot());
         Vec3 left = new Vec3(fwd.z, 0, -fwd.x);
         Vec3 from = position().add(fwd.scale(2.0)).add(left.scale(right ? -1.15 : 1.15)).add(0, 1.75, 0);
         Vec3 to = homing != null ? homing.getBoundingBox().getCenter() : aim != null ? aim : from.add(fwd.scale(24));
-        var bolt = new RedstoneBolt(level(), this, owner);
-        bolt.home(homing);
-        bolt.setPos(from.x, from.y, from.z);
-        bolt.setDeltaMovement(to.subtract(from).normalize().scale(1.6));
-        level().addFreshEntity(bolt);
+        var st = owner == null ? net.minecraft.world.item.ItemStack.EMPTY : com.mattermod.manipulator.Manipulator.stack(owner);
+        int shots = com.mattermod.trait.Traits.has(st, "orb.split") ? 3 : 1;
+        int bounces = com.mattermod.trait.Traits.has(st, "orb.bank_shot") ? 3 : 0;
+        Vec3 dir = to.subtract(from).normalize();
+        for (int n = 0; n < shots; n++) {
+            float turn = (n - (shots - 1) / 2f) * 10f;
+            var bolt = new RedstoneBolt(level(), this, owner);
+            bolt.home(turn == 0 ? homing : null);      // the fanned bolts fly straight
+            bolt.share(1f / shots);
+            bolt.bounces(bounces);
+            bolt.setPos(from.x, from.y, from.z);
+            bolt.setDeltaMovement(dir.yRot((float) Math.toRadians(turn)).scale(1.6));
+            level().addFreshEntity(bolt);
+        }
     }
 
     /** Called when a bolt hits: it stokes the generator too. */
@@ -1201,6 +1217,16 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
         pts.add((float) v.x);
         pts.add((float) v.y);
         pts.add((float) v.z);
+    }
+
+    /** A melee blow landed: the owner's Searing (Pyrotechnic) sets it alight, as the Manipulator's own blows do. */
+    private void searing(ServerPlayer owner, LivingEntity e) {
+        if (owner != null
+                && com.mattermod.trait.Traits.hasCommon(
+                        com.mattermod.manipulator.Manipulator.stack(owner),
+                        com.mattermod.trait.Traits.PYROTECHNICS,
+                        0))
+            com.mattermod.trait.RedesignEffects.burn(e, owner, 4, -1);
     }
 
     /** A blow landed on {@code e}: Supercharged arcs it on. */
@@ -1397,6 +1423,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
             e.setDeltaMovement(e.getDeltaMovement().add(push.x, .5, push.z));
             e.hurtMarked = true;
             landed(owner, e);
+            searing(owner, e);
             hits++;
         }
         if (hits > 0) stoke(owner, hits);

@@ -23,8 +23,21 @@ public final class RedstoneBolt extends ThrowableItemProjectile {
     /** Steers toward this one while it lives (server side). */
     private LivingEntity homing;
 
+    /** Share of the bolt damage (Split fans one shot into three). */
+    private float share = 1;
+    /** Bank Shot: block bounces left. */
+    private int bouncesLeft;
+
     void home(LivingEntity target) {
         homing = target;
+    }
+
+    void share(float s) {
+        share = s;
+    }
+
+    void bounces(int n) {
+        bouncesLeft = n;
     }
 
     public RedstoneBolt(EntityType<? extends RedstoneBolt> type, Level level) {
@@ -79,13 +92,35 @@ public final class RedstoneBolt extends ThrowableItemProjectile {
     protected void onHitEntity(EntityHitResult hit) {
         super.onHitEntity(hit);
         LivingEntity shooter = getOwner() instanceof LivingEntity l ? l : null;
-        if (hit.getEntity().hurt(damageSources().mobProjectile(this, shooter), getOwner() instanceof RedstoneGolem gg ? gg.boltDamage(player) : RedstoneGolem.BOLT_DAMAGE)
+        if (hit.getEntity().hurt(damageSources().mobProjectile(this, shooter), (getOwner() instanceof RedstoneGolem gg ? gg.boltDamage(player) : RedstoneGolem.BOLT_DAMAGE) * share)
                 && getOwner() instanceof RedstoneGolem g
                 && hit.getEntity() instanceof LivingEntity l) g.boltHit(player, l);
     }
 
     @Override
+    protected void onHitBlock(net.minecraft.world.phys.BlockHitResult hit) {
+        if (bouncesLeft > 0 && !level().isClientSide) {
+            // Bank Shot: off the face like a mirror, with its range renewed
+            bouncesLeft--;
+            Vec3 n = Vec3.atLowerCornerOf(hit.getDirection().getNormal());
+            Vec3 v = getDeltaMovement();
+            setDeltaMovement(v.subtract(n.scale(2 * v.dot(n))));
+            Vec3 at = hit.getLocation().add(n.scale(.05));
+            setPos(at.x, at.y, at.z);
+            tickCount = 0;
+            hasImpulse = true;
+            ((ServerLevel) level()).sendParticles(DUST, getX(), getY(), getZ(), 4, .1, .1, .1, 0);
+            return;
+        }
+        super.onHitBlock(hit);
+    }
+
+    @Override
     protected void onHit(HitResult result) {
+        if (result.getType() == HitResult.Type.BLOCK && bouncesLeft > 0 && !level().isClientSide) {
+            onHitBlock((net.minecraft.world.phys.BlockHitResult) result);
+            return;
+        }
         super.onHit(result);
         if (level() instanceof ServerLevel sl) {
             com.mattermod.MatterMod.LOGGER.debug("redstone bolt hit {} at {} after {} ticks", result instanceof EntityHitResult eh ? eh.getEntity().getType().toShortString() : result.getType(), result.getLocation(), tickCount);
