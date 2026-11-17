@@ -5,54 +5,54 @@
   "icon": "minecraft:amethyst_shard",
   "order": 3,
   "badge": {
-    "id": "orb.badge",
+    "id": "kinetic.badge",
     "name": "Projector",
     "description": "Fully Charged Ranged Damage +3."
   },
   "commons": [
     {
-      "id": "orb.common_quick_charge",
+      "id": "kinetic.common_quick_charge",
       "name": "Quick Charge",
       "description": "Charge time -20%."
     },
     {
-      "id": "orb.common_long_throw",
+      "id": "kinetic.common_long_throw",
       "name": "Long Throw",
       "description": "Projectile range +16 blocks."
     }
   ],
   "adept": [
     {
-      "id": "orb.split",
+      "id": "kinetic.split",
       "name": "Split",
       "description": "Fire 1/2/3 projectiles at charge 1/2/3."
     },
     {
-      "id": "orb.bank_shot",
+      "id": "kinetic.bank_shot",
       "name": "Bank Shot",
       "description": "Projectiles ricochet 1/2/3 times at charge 1/2/3."
     }
   ],
   "master": [
     {
-      "id": "orb.marksman",
+      "id": "kinetic.marksman",
       "name": "Marksman",
       "description": "Stand still while charging for faster shots."
     },
     {
-      "id": "orb.skirmisher",
+      "id": "kinetic.skirmisher",
       "name": "Skirmisher",
       "description": "Move normally while charging."
     }
   ],
   "grandmaster": [
     {
-      "id": "orb.detonator",
+      "id": "kinetic.detonator",
       "name": "Detonator",
       "description": "Press the same button again to burst your projectile."
     },
     {
-      "id": "orb.seeker",
+      "id": "kinetic.seeker",
       "name": "Seeker",
       "description": "Projectiles home in on the enemy you aimed near."
     }

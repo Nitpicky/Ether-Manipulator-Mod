@@ -26,12 +26,12 @@ public final class TraitEnchants {
         HolderLookup.RegistryLookup<Enchantment> lookup =
                 registries.lookupOrThrow(Registries.ENCHANTMENT);
         ItemEnchantments.Mutable m = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
-        grant(m, lookup, Enchantments.FORTUNE, Traits.has(stack, "excavation.fortune") ? 3 : 0);
+        grant(m, lookup, Enchantments.FORTUNE, Traits.has(stack, "tectonic.fortune") ? 3 : 0);
         grant(
                 m,
                 lookup,
                 Enchantments.SILK_TOUCH,
-                Traits.has(stack, "excavation.silk_touch") ? 1 : 0);
+                Traits.has(stack, "tectonic.silk_touch") ? 1 : 0);
         grant(m, lookup, Enchantments.LOOTING, 0);
         stack.set(DataComponents.ENCHANTMENTS, m.toImmutable());
     }

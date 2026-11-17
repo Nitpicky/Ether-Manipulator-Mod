@@ -144,13 +144,13 @@ public enum OrbMode {
             case GOLEM -> Traits.hasLine(stack, Traits.MECHATRONIC);
             // the ice shard and fire seed are the right clicks of Hydraulic and Pyrotechnic
             case FROST, IGNITE -> false;
-            case WATER -> Traits.hasLine(stack, Traits.HYDRAULICS);
-            case LAVA -> Traits.hasLine(stack, Traits.PYROTECHNICS);
-            case GROWTH -> Traits.hasLine(stack, Traits.CULTIVATION);
+            case WATER -> Traits.hasLine(stack, Traits.HYDRAULIC);
+            case LAVA -> Traits.hasLine(stack, Traits.PYROTECHNIC);
+            case GROWTH -> Traits.hasLine(stack, Traits.BOTANIC);
             case LIGHT -> Traits.hasLine(stack, Traits.PHOTONIC);
-            case TETHER -> Traits.hasLine(stack, Traits.MOBILITY);
+            case TETHER -> Traits.hasLine(stack, Traits.GRAVITIC);
             case GUST -> Traits.hasLine(stack, Traits.PNEUMATIC);
-            case MASS -> Traits.hasLine(stack, Traits.EXCAVATION);
+            case MASS -> Traits.hasLine(stack, Traits.TECTONIC);
         };
     }
 
@@ -194,7 +194,7 @@ public enum OrbMode {
         int n = 0;
         for (String t :
                 new String[] {
-                    "hydraulics.reservoir", "pyrotechnics.crucible", "cultivation.seedbank", "pneumatic.bellows"
+                    "hydraulic.reservoir", "pyrotechnic.crucible", "botanic.seedbank", "pneumatic.bellows"
                 }) if (Traits.has(stack, t)) n++;
         return TANK_CAPACITY + TANK_STEP * n;
     }

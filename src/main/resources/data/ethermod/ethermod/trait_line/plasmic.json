@@ -5,54 +5,54 @@
   "icon": "minecraft:iron_sword",
   "order": 2,
   "badge": {
-    "id": "combat.badge",
+    "id": "plasmic.badge",
     "name": "Emitter",
     "description": "Melee Damage +1."
   },
   "commons": [
     {
-      "id": "combat.common_priming",
+      "id": "plasmic.common_priming",
       "name": "Priming",
       "description": "[color=#E99F20]Pressure[/color] builds 20% faster."
     },
     {
-      "id": "combat.common_reach",
+      "id": "plasmic.common_reach",
       "name": "Extended Reach",
       "description": "Melee Attack reach +1 block."
     }
   ],
   "adept": [
     {
-      "id": "combat.lock_on",
+      "id": "plasmic.lock_on",
       "name": "Lock-On",
       "description": "[color=#E99F20]Pressure[/color] locks your beam onto its target."
     },
     {
-      "id": "combat.arc",
+      "id": "plasmic.arc",
       "name": "Arc",
       "description": "[color=#E99F20]Pressure[/color] chains your beam to nearby enemies."
     }
   ],
   "master": [
     {
-      "id": "combat.overload",
+      "id": "plasmic.overload",
       "name": "Overload",
       "description": "[color=#E99F20]Pressure[/color] can reach a fourth stage."
     },
     {
-      "id": "combat.disrupt",
+      "id": "plasmic.disrupt",
       "name": "Disrupt",
       "description": "Sustained contact weakens armour and disables shields."
     }
   ],
   "grandmaster": [
     {
-      "id": "combat.dissolve",
+      "id": "plasmic.dissolve",
       "name": "Dissolve",
       "description": "Higher [color=#E99F20]Pressure[/color] improves loot."
     },
     {
-      "id": "combat.annihilate",
+      "id": "plasmic.annihilate",
       "name": "Annihilate",
       "description": "After a kill, [color=#E99F20]Pressure[/color] holds for 3s."
     }

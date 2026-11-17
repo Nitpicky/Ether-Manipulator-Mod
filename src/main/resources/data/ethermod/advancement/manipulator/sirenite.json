@@ -19,7 +19,7 @@
     "done": {
       "trigger": "ethermod:manipulator",
       "conditions": {
-        "event": "module_hydraulics"
+        "event": "module_hydraulic"
       }
     }
   },

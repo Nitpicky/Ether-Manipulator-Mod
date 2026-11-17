@@ -6,7 +6,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import java.util.List;
 
 /**
- * One trait: a badge, a common node, or a choice. {@code id} is global ("excavation.fortune") and
+ * One trait: a badge, a common node, or a choice. {@code id} is global ("tectonic.fortune") and
  * is what effect code checks for.
  *
  * <p>Choices grow stronger at every stage after their tier opens (see {@link Traits#rank}): {@code

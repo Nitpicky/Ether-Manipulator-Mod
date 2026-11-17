@@ -66,7 +66,7 @@ final class OreSense {
             float time,
             MultiBufferSource.BufferSource buf,
             Matrix4f m) {
-        if (!Traits.has(held, "excavation.ore_sense")) return;
+        if (!Traits.has(held, "tectonic.ore_sense")) return;
         long now = mc.level.getGameTime();
         if (now - lastScan >= 20 || now < lastScan) {
             lastScan = now;

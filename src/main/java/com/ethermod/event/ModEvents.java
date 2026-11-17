@@ -140,7 +140,6 @@ public class ModEvents {
     public static void onLogin(PlayerEvent.PlayerLoggedInEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer sp)) return;
         ManipulatorData data = Manipulator.data(sp);
-        com.ethermod.trait.ModuleUnlocks.migrate(data.stack(), sp.registryAccess());
         com.ethermod.trait.TraitEnchants.refresh(data.stack(), sp.registryAccess());
         if (!data.introduced()) {
             data.setIntroduced(true);

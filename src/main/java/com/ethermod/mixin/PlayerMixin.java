@@ -60,7 +60,7 @@ public abstract class PlayerMixin {
     private float ethermod$nourishment(float amount) {
         return com.ethermod.trait.Traits.hasCommon(
                         Manipulator.stack((Player) (Object) this),
-                        com.ethermod.trait.Traits.CULTIVATION,
+                        com.ethermod.trait.Traits.BOTANIC,
                         1)
                 ? amount * 0.5f
                 : amount;
@@ -69,7 +69,7 @@ public abstract class PlayerMixin {
     @Inject(method = "tryToStartFallFlying", at = @At("HEAD"), cancellable = true)
     private void mm$flight(CallbackInfoReturnable<Boolean> cir) {
         Player p = (Player) (Object) this;
-        if (com.ethermod.trait.Traits.has(Manipulator.stack(p), "mobility.flight")
+        if (com.ethermod.trait.Traits.has(Manipulator.stack(p), "gravitic.flight")
                 && !p.isFallFlying()
                 && !p.onGround()
                 && !p.onClimbable()

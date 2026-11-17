@@ -303,7 +303,7 @@ public final class BeamRenderer {
             float time,
             float[] color) {
         if (!(hit instanceof EntityHitResult eh) || level < 2) return;
-        int arc = com.ethermod.trait.Traits.rank(held, "combat.arc");
+        int arc = com.ethermod.trait.Traits.rank(held, "plasmic.arc");
         if (arc <= 0 || !(eh.getEntity() instanceof net.minecraft.world.entity.LivingEntity first))
             return;
         Vec3 from = first.getBoundingBox().getCenter();

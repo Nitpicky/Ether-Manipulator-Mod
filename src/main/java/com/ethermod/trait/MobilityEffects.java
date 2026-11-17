@@ -79,7 +79,7 @@ public final class MobilityEffects {
     @SubscribeEvent
     public static void onFall(LivingFallEvent event) {
         if (!(event.getEntity() instanceof Player p)) return;
-        if (Traits.hasCommon(Manipulator.stack(p), Traits.MOBILITY, 0)
+        if (Traits.hasCommon(Manipulator.stack(p), Traits.GRAVITIC, 0)
                 || Traits.hasCommon(Manipulator.stack(p), Traits.PNEUMATIC, 0)) {
             event.setDamageMultiplier(0);
             return;
@@ -92,7 +92,7 @@ public final class MobilityEffects {
         }
         long t = p.getPersistentData().getLong(SOFT_LANDING);
         if (t == 0 || p.level().getGameTime() - t > 100) return;
-        if (Traits.hasCommon(Manipulator.stack(p), Traits.MOBILITY, 0)) {
+        if (Traits.hasCommon(Manipulator.stack(p), Traits.GRAVITIC, 0)) {
             event.setDamageMultiplier(0);
             p.getPersistentData().remove(SOFT_LANDING);
         }
@@ -109,7 +109,7 @@ public final class MobilityEffects {
         ItemStack stack = Manipulator.stack(sp);
 
         AttributeInstance speed = sp.getAttribute(Attributes.MOVEMENT_SPEED);
-        boolean stride = Traits.hasLine(stack, Traits.MOBILITY);
+        boolean stride = Traits.hasLine(stack, Traits.GRAVITIC);
         if (speed != null) {
             if (stride && !speed.hasModifier(STRIDE_ID)) {
                 speed.addTransientModifier(
@@ -146,8 +146,8 @@ public final class MobilityEffects {
                             0.01);
 
         if (Traits.hasCommon(stack, Traits.PHOTONIC, 1)) refresh(sp, MobEffects.NIGHT_VISION);
-        if (Traits.hasCommon(stack, Traits.HYDRAULICS, 0)) refresh(sp, MobEffects.WATER_BREATHING);
-        if (Traits.hasLine(stack, Traits.PYROTECHNICS)) refresh(sp, MobEffects.FIRE_RESISTANCE);
+        if (Traits.hasCommon(stack, Traits.HYDRAULIC, 0)) refresh(sp, MobEffects.WATER_BREATHING);
+        if (Traits.hasLine(stack, Traits.PYROTECHNIC)) refresh(sp, MobEffects.FIRE_RESISTANCE);
     }
 
     /**
@@ -159,7 +159,7 @@ public final class MobilityEffects {
             net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer sp)) return;
         if (!event.getSource().is(net.minecraft.tags.DamageTypeTags.IS_FIRE)) return;
-        if (Traits.hasLine(Manipulator.stack(sp), Traits.PYROTECHNICS)) {
+        if (Traits.hasLine(Manipulator.stack(sp), Traits.PYROTECHNIC)) {
             event.setCanceled(true);
             sp.clearFire();
         }
@@ -171,7 +171,7 @@ public final class MobilityEffects {
     @SubscribeEvent
     public static void onDeath(net.neoforged.neoforge.event.entity.living.LivingDeathEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer sp)) return;
-        if (!Traits.has(Manipulator.stack(sp), "pyrotechnics.phoenix")) return;
+        if (!Traits.has(Manipulator.stack(sp), "pyrotechnic.phoenix")) return;
         long now = sp.level().getGameTime();
         long last = sp.getPersistentData().getLong(PHOENIX);
         if (last != 0 && now - last < 12000) return;

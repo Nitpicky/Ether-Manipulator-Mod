@@ -62,7 +62,7 @@ public final class TraitEffects {
         ServerLevel level = event.getLevel();
         List<ItemEntity> drops = event.getDrops();
 
-        if (Traits.has(tool, "excavation.auto_smelt")) {
+        if (Traits.has(tool, "tectonic.auto_smelt")) {
             float xp = 0;
             for (ItemEntity ie : drops) {
                 ItemStack in = ie.getItem();
@@ -87,11 +87,11 @@ public final class TraitEffects {
             }
             int whole = (int) xp;
             if (level.random.nextFloat() < xp - whole) whole++;
-            if (Traits.rank(tool, "excavation.auto_smelt") >= 2) whole *= 2; // II: double XP
+            if (Traits.rank(tool, "tectonic.auto_smelt") >= 2) whole *= 2; // II: double XP
             event.setDroppedExperience(event.getDroppedExperience() + whole);
         }
 
-        if (Traits.has(tool, "excavation.void_filter")) {
+        if (Traits.has(tool, "tectonic.void_filter")) {
             drops.removeIf(ie -> ie.getItem().is(VOID_FILTER));
         }
 
@@ -108,7 +108,7 @@ public final class TraitEffects {
                                 ie.getY(),
                                 ie.getZ(),
                                 s.copyWithCount(
-                                        Traits.rank(tool, "cultivation.bountiful")
+                                        Traits.rank(tool, "botanic.bountiful")
                                                 + level.random.nextInt(2)));
                 extra.add(copy);
             }
@@ -116,7 +116,7 @@ public final class TraitEffects {
         }
 
         // Collector (Tectonic common): drops pop out, then fly to you
-        if (Traits.hasCommon(tool, Traits.EXCAVATION, 0)) {
+        if (Traits.hasCommon(tool, Traits.TECTONIC, 0)) {
             for (ItemEntity ie : drops) com.ethermod.beam.LeftClick.magnet(ie, player);
             if (event.getDroppedExperience() > 0) {
                 ExperienceOrb.award(level, player.position(), event.getDroppedExperience());
@@ -139,7 +139,7 @@ public final class TraitEffects {
         com.ethermod.beam.BeamCastHelper.onBeamBreak(player, state);
         if (silkContainer(event, player, tool)) return;
         if (veinMining) return;
-        if (!state.is(Tags.Blocks.ORES) || !Traits.has(tool, "excavation.vein_miner")) return;
+        if (!state.is(Tags.Blocks.ORES) || !Traits.has(tool, "tectonic.vein_miner")) return;
         if (!(event.getLevel() instanceof ServerLevel level)) return;
 
         Block block = state.getBlock();
@@ -188,7 +188,7 @@ public final class TraitEffects {
      */
     private static boolean silkContainer(
             BlockEvent.BreakEvent event, ServerPlayer player, ItemStack tool) {
-        if (Traits.rank(tool, "excavation.silk_touch") < 2
+        if (Traits.rank(tool, "tectonic.silk_touch") < 2
                 || !(event.getLevel() instanceof ServerLevel level)) return false;
         BlockPos pos = event.getPos();
         var be = level.getBlockEntity(pos);
@@ -214,7 +214,7 @@ public final class TraitEffects {
         event.setCanceled(true);
         level.removeBlock(pos, false);
         level.levelEvent(2001, pos, Block.getId(event.getState()));
-        if (Traits.hasCommon(tool, Traits.EXCAVATION, 0) && player.getInventory().add(drop))
+        if (Traits.hasCommon(tool, Traits.TECTONIC, 0) && player.getInventory().add(drop))
             return true;
         Block.popResource(level, pos, drop);
         return true;

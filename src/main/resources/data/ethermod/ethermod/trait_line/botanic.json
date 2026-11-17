@@ -5,54 +5,54 @@
   "icon": "minecraft:wheat",
   "order": 9,
   "badge": {
-    "id": "cultivation.badge",
+    "id": "botanic.badge",
     "name": "Gardener",
     "description": "Unlocks [color=#31E920]Growth Mode[/color]. Harvest ripe crops 3x3; pollen grows plants and poisons foes. Sneak-Beam tills. Farmland is never trampled."
   },
   "commons": [
     {
-      "id": "cultivation.common_replant",
+      "id": "botanic.common_replant",
       "name": "Regrowth",
       "description": "Harvests replant themselves."
     },
     {
-      "id": "cultivation.common_nourishment",
+      "id": "botanic.common_nourishment",
       "name": "Nourishment",
       "description": "Hunger consumption is reduced."
     }
   ],
   "adept": [
     {
-      "id": "cultivation.overgrowth",
+      "id": "botanic.overgrowth",
       "name": "Overgrowth",
       "description": "Harvests spread to all connected ripe crops of the same kind."
     },
     {
-      "id": "cultivation.seedbank",
+      "id": "botanic.seedbank",
       "name": "Seedbank",
       "description": "Shared Ether tank +2."
     }
   ],
   "master": [
     {
-      "id": "cultivation.groundskeeper",
+      "id": "botanic.groundskeeper",
       "name": "Groundskeeper",
       "description": "Sneak-Beam shears."
     },
     {
-      "id": "cultivation.herder",
+      "id": "botanic.herder",
       "name": "Herder",
       "description": "Sneak-Beam feeds animals from your inventory."
     }
   ],
   "grandmaster": [
     {
-      "id": "cultivation.bountiful",
+      "id": "botanic.bountiful",
       "name": "Bountiful",
       "description": "Crops yield extra produce."
     },
     {
-      "id": "cultivation.cross_pollination",
+      "id": "botanic.cross_pollination",
       "name": "Cross-Pollination",
       "description": "Harvesting grows nearby young crops a stage."
     }

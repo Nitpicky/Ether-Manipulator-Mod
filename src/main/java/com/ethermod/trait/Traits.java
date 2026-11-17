@@ -13,13 +13,13 @@ public final class Traits {
 
     private Traits() {}
 
-    public static final ResourceLocation EXCAVATION = id("excavation");
-    public static final ResourceLocation COMBAT = id("combat");
-    public static final ResourceLocation ORB = id("orb");
-    public static final ResourceLocation HYDRAULICS = id("hydraulics");
-    public static final ResourceLocation CULTIVATION = id("cultivation");
-    public static final ResourceLocation MOBILITY = id("mobility");
-    public static final ResourceLocation PYROTECHNICS = id("pyrotechnics");
+    public static final ResourceLocation TECTONIC = id("tectonic");
+    public static final ResourceLocation PLASMIC = id("plasmic");
+    public static final ResourceLocation KINETIC = id("kinetic");
+    public static final ResourceLocation HYDRAULIC = id("hydraulic");
+    public static final ResourceLocation BOTANIC = id("botanic");
+    public static final ResourceLocation GRAVITIC = id("gravitic");
+    public static final ResourceLocation PYROTECHNIC = id("pyrotechnic");
     public static final ResourceLocation PNEUMATIC = id("pneumatic");
     public static final ResourceLocation PHOTONIC = id("photonic");
 
@@ -49,16 +49,16 @@ public final class Traits {
         return true;
     }
 
-    /** A choice trait ("excavation.fortune") is picked in an open tier of an equipped line. */
+    /** A choice trait ("tectonic.fortune") is picked in an open tier of an equipped line. */
     public static boolean has(ItemStack stack, String traitId) {
-        if (traitId.equals("combat.sustain")) return hasLine(stack, COMBAT);
-        if (traitId.equals("hydraulics.helmsman")) return hasLine(stack, HYDRAULICS);
-        if (traitId.equals("pyrotechnics.kiln")) return hasLine(stack, PYROTECHNICS);
+        if (traitId.equals("plasmic.sustain")) return hasLine(stack, COMBAT);
+        if (traitId.equals("hydraulic.helmsman")) return hasLine(stack, HYDRAULICS);
+        if (traitId.equals("pyrotechnic.kiln")) return hasLine(stack, PYROTECHNICS);
         if (traitId.equals("photonic.prism")) return hasLine(stack, PHOTONIC);
-        if (traitId.equals("mobility.freeflight")) return hasLine(stack, MOBILITY);
-        if (traitId.equals("pyrotechnics.phoenix")) return hasCommon(stack, PYROTECHNICS, 1);
-        if (traitId.equals("mobility.gravity_skate")) return hasCommon(stack, MOBILITY, 1);
-        if (traitId.equals("excavation.ore_sense")) return has(stack, "excavation.vein_miner");
+        if (traitId.equals("gravitic.freeflight")) return hasLine(stack, MOBILITY);
+        if (traitId.equals("pyrotechnic.phoenix")) return hasCommon(stack, PYROTECHNICS, 1);
+        if (traitId.equals("gravitic.gravity_skate")) return hasCommon(stack, MOBILITY, 1);
+        if (traitId.equals("tectonic.ore_sense")) return has(stack, "tectonic.vein_miner");
 
         for (int slot = 0; slot < TraitBuild.MAX_SLOTS; slot++) {
             for (int tier = 0; tier < TraitLine.TIERS; tier++) {
@@ -75,7 +75,7 @@ public final class Traits {
      */
     public static int rank(ItemStack stack, String traitId) {
         if (!has(stack, traitId)) return 0;
-        if (traitId.equals("combat.sustain") || traitId.equals("hydraulics.helmsman") || traitId.equals("pyrotechnics.kiln") || traitId.equals("photonic.prism") || traitId.equals("mobility.freeflight") || traitId.equals("pyrotechnics.phoenix") || traitId.equals("mobility.gravity_skate") || traitId.equals("excavation.ore_sense")) return 1;
+        if (traitId.equals("plasmic.sustain") || traitId.equals("hydraulic.helmsman") || traitId.equals("pyrotechnic.kiln") || traitId.equals("photonic.prism") || traitId.equals("gravitic.freeflight") || traitId.equals("pyrotechnic.phoenix") || traitId.equals("gravitic.gravity_skate") || traitId.equals("tectonic.ore_sense")) return 1;
         for (int slot = 0; slot < TraitBuild.MAX_SLOTS; slot++) {
             for (int tier = 0; tier < TraitLine.TIERS; tier++) {
                 if (traitId.equals(TraitBuild.pick(stack, slot, tier)))
@@ -118,7 +118,7 @@ public final class Traits {
      */
     public static float miningSpeedMultiplier(
             ItemStack stack, net.minecraft.world.level.block.state.BlockState state) {
-        int precision = rank(stack, "excavation.precision");
+        int precision = rank(stack, "tectonic.precision");
         if (precision > 0 && isSoft(state))
             return precision >= 3 ? 12f : precision == 2 ? 2f : 1.5f;
         return 1f;
@@ -140,7 +140,7 @@ public final class Traits {
             net.minecraft.core.BlockPos center,
             net.minecraft.world.phys.Vec3 look) {
         java.util.List<net.minecraft.core.BlockPos> out = new java.util.ArrayList<>();
-        int rank = rank(stack, "excavation.area_bore");
+        int rank = rank(stack, "tectonic.area_bore");
         if (rank <= 0) return out;
         int r = 1;
         int depth = rank;

@@ -282,14 +282,14 @@ public class BeamBallEntity extends Projectile {
     public void configure(ItemStack manipulator) {
         entityData.set(COLOR, getMode().color);
         this.traits = manipulator.copy();
-        entityData.set(SOULFIRE, Traits.has(manipulator, "pyrotechnics.soulwake"));
+        entityData.set(SOULFIRE, Traits.has(manipulator, "pyrotechnic.soulwake"));
         zipPlacing =
                 getMode() == OrbMode.TETHER
-                        && has("mobility.zipline")
+                        && has("gravitic.zipline")
                         && getOwner() != null
                         && getOwner().isShiftKeyDown();
-        if (Traits.hasCommon(traits, Traits.ORB, 1)) maxRange += 16;
-        int overcharge = Traits.rank(traits, "orb.overcharge");
+        if (Traits.hasCommon(traits, Traits.KINETIC, 1)) maxRange += 16;
+        int overcharge = Traits.rank(traits, "kinetic.overcharge");
         if (getPhase() == 2 && overcharge > 0) {
             damage *= 1.25f + 0.25f * overcharge; // x1.5, x1.75, x2
             entityData.set(OVERCHARGED, true);
@@ -302,15 +302,15 @@ public class BeamBallEntity extends Projectile {
         }
         if (getMode() == OrbMode.MASS) maxRange = 64;
         // Bank Shot: every mode bounces (not the hook, nor a drifting pollen cloud)
-        int bank = Traits.rank(traits, "orb.bank_shot");
+        int bank = Traits.rank(traits, "kinetic.bank_shot");
         if (getMode() != OrbMode.TETHER && !isDrifting())
             bouncesLeft = bank > 0 ? getPhase() + 1 : 0;
-        piercesLeft = has("orb.piercing") ? getPhase() : 0;
-        if (has("orb.marksman")
+        piercesLeft = has("kinetic.piercing") ? getPhase() : 0;
+        if (has("kinetic.marksman")
                 && getOwner() != null
                 && getOwner().getPersistentData().getInt("mm_charge_still") >= 10)
             setDeltaMovement(getDeltaMovement().scale(1.6));
-        if (has("orb.seeker") && getOwner() instanceof ServerPlayer p) {
+        if (has("kinetic.seeker") && getOwner() instanceof ServerPlayer p) {
             var look = p.getLookAngle();
             var eye = p.getEyePosition();
             ((ServerLevel) level())
@@ -613,7 +613,7 @@ public class BeamBallEntity extends Projectile {
                 (isInWater() || WorldEffects.isAirPocket((ServerLevel) level(), blockPosition()))
                         && (mode == OrbMode.WATER || mode == OrbMode.FROST)
                         && !traits.isEmpty()
-                        && Traits.hasCommon(traits, Traits.HYDRAULICS, 1);
+                        && Traits.hasCommon(traits, Traits.HYDRAULIC, 1);
         if (!slip) traveledDistance += movement.length(); // Slipstream: no range spent underwater
         if (traveledDistance > maxRange || lifeTicks > 600) {
             expire();
@@ -681,7 +681,7 @@ public class BeamBallEntity extends Projectile {
         if (mode == OrbMode.WATER
                 && isInWater()
                 && !traits.isEmpty()
-                && Traits.hasCommon(traits, Traits.HYDRAULICS, 1)) return 0f;
+                && Traits.hasCommon(traits, Traits.HYDRAULIC, 1)) return 0f;
         if (carrying) return mode.gravity() * 0.35f;
         return mode.gravity();
     }
@@ -765,7 +765,7 @@ public class BeamBallEntity extends Projectile {
         orbitPosition();
         lifeTicks++;
         ServerLevel sl = (ServerLevel) level();
-        if (lifeTicks > 600 || !Traits.has(Manipulator.stack(sp), "orb.orbit")) {
+        if (lifeTicks > 600 || !Traits.has(Manipulator.stack(sp), "kinetic.orbit")) {
             discard();
             return;
         }
@@ -800,7 +800,7 @@ public class BeamBallEntity extends Projectile {
      * instead of just vanishing.
      */
     void expire() {
-        if (getMode() == OrbMode.TETHER && has("mobility.skyhook") && !zipPlacing) {
+        if (getMode() == OrbMode.TETHER && has("gravitic.skyhook") && !zipPlacing) {
             OrbTether.hookAir(this);
             return;
         }
@@ -920,7 +920,7 @@ public class BeamBallEntity extends Projectile {
                         target.getDeltaMovement().add(push.x, 0.15 + force * 0.1, push.z));
                 target.hurtMarked = true;
                 if (pressure > 0) OrbFluids.extinguish(this, target.blockPosition(), 1 + pressure);
-                if (has("hydraulics.quench")) OrbFluids.extinguish(this, target.blockPosition(), 2);
+                if (has("hydraulic.quench")) OrbFluids.extinguish(this, target.blockPosition(), 2);
                 if (!OrbFluids.placeFluid(this, target.blockPosition(), null, Fluids.WATER))
                     refundTank();
             }
@@ -944,7 +944,7 @@ public class BeamBallEntity extends Projectile {
                 }
             }
             case IGNITE -> {
-                int inc = rank("pyrotechnics.incendiary");
+                int inc = rank("pyrotechnic.incendiary");
                 target.igniteForSeconds(inc >= 2 ? 12 : inc == 1 ? 8 : 4 + 2 * ph);
                 OrbFluids.kiln(this, result.getLocation());
             }
@@ -1024,7 +1024,7 @@ public class BeamBallEntity extends Projectile {
         int ph = getPhase();
         if (getMode() == OrbMode.WATER)
             ProjectileEffects.waterImpact(this, traits, result.getLocation());
-        int payload = ph == 2 ? rank("orb.payload") : 0; // Payload: 3x3, then 5x5
+        int payload = ph == 2 ? rank("kinetic.payload") : 0; // Payload: 3x3, then 5x5
 
         // Tether: the hook catches the block and holds (see tetherTick)
         if (getMode() == OrbMode.TETHER) {
@@ -1040,7 +1040,7 @@ public class BeamBallEntity extends Projectile {
             hookAt = sl.getGameTime() + OrbTether.HOOK_DELAY;
             hookPitch = 1.3f;
             if (getOwner() instanceof ServerPlayer sp) {
-                if (has("mobility.singularity")) WorldEffects.gravityWell(sl, at, 60, sp);
+                if (has("gravitic.singularity")) WorldEffects.gravityWell(sl, at, 60, sp);
                 if (zipPlacing) {
                     com.ethermod.trait.Ziplines.onHookStuck(sp, this);
                     if (!isAnchor()) com.ethermod.trait.Ziplines.pin(sp, this);
@@ -1118,8 +1118,8 @@ public class BeamBallEntity extends Projectile {
                                 });
                     }
                 // Quench: lava it lands on turns to obsidian or cobblestone, II in a 3x3
-                if (has("hydraulics.quench"))
-                    OrbFluids.quenchLava(this, front, rank("hydraulics.quench") >= 2 ? 1 : 0);
+                if (has("hydraulic.quench"))
+                    OrbFluids.quenchLava(this, front, rank("hydraulic.quench") >= 2 ? 1 : 0);
                 OrbFluids.extinguish(
                         this,
                         front,
@@ -1168,7 +1168,7 @@ public class BeamBallEntity extends Projectile {
                             1.5,
                             0.1);
                     // Wave: the water rolls on along the ground
-                    if (has("hydraulics.wave")) {
+                    if (has("hydraulic.wave")) {
                         Vec3 v = getDeltaMovement();
                         Direction dir = Direction.getNearest(v.x, 0, v.z);
                         if (dir.getAxis().isHorizontal())
@@ -1207,7 +1207,7 @@ public class BeamBallEntity extends Projectile {
                             OrbFrost.permafrost(this));
                 }
                 // Charged: freeze a patch of water (lava turns to obsidian for good)
-                int r = (ph == 2 ? 2 : ph) + (rank("hydraulics.permafrost") >= 2 ? 1 : 0) + payload;
+                int r = (ph == 2 ? 2 : ph) + (rank("hydraulic.permafrost") >= 2 ? 1 : 0) + payload;
                 for (BlockPos p :
                         BlockPos.betweenClosed(front.offset(-r, -1, -r), front.offset(r, 0, r))) {
                     if (sl.getBlockState(p).is(Blocks.WATER)
@@ -1271,7 +1271,7 @@ public class BeamBallEntity extends Projectile {
     void scheduleEcho(Vec3 at) {
         if (echo
                 || getPhase() != 2
-                || !has("orb.echo")
+                || !has("kinetic.echo")
                 || isDrifting()
                 || !(getOwner() instanceof LivingEntity owner)) return;
         ServerLevel sl = (ServerLevel) level();
@@ -1279,7 +1279,7 @@ public class BeamBallEntity extends Projectile {
         ItemStack snap = traits.copy();
         OrbMode mode = getMode();
         ManipulatorStage stage = getStage();
-        float dmg = damage * (rank("orb.echo") >= 2 ? 1f : 0.5f);
+        float dmg = damage * (rank("kinetic.echo") >= 2 ? 1f : 0.5f);
         WorldEffects.schedule(
                 sl,
                 20,
@@ -1644,7 +1644,7 @@ public class BeamBallEntity extends Projectile {
      * burst, so the press fires nothing; on the client it only answers whether one would.
      */
     public static boolean detonateFor(Player p, ItemStack stack, boolean left) {
-        if (!Traits.has(stack, "orb.detonator")) return false;
+        if (!Traits.has(stack, "kinetic.detonator")) return false;
         var live =
                 p.level()
                         .getEntitiesOfClass(

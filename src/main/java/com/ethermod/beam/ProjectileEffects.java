@@ -95,7 +95,7 @@ public final class ProjectileEffects {
         if (!(b.getOwner() instanceof ServerPlayer p)) return;
         var sl = p.serverLevel();
         if (b.getMode() == com.ethermod.item.OrbMode.WATER
-                && Traits.has(st, "hydraulics.rapids")) {
+                && Traits.has(st, "hydraulic.rapids")) {
             var water = waterNear(sl, b.position());
             if (water != null) {
                 // over water the shot rides its own surge, at the speed it carries a boat, so
@@ -107,7 +107,7 @@ public final class ProjectileEffects {
                 surge(b, water);
             }
         }
-        if (!Traits.has(st, "hydraulics.diving_bell")) return;
+        if (!Traits.has(st, "hydraulic.diving_bell")) return;
         // Diving Bell: one continuous 3x3 corridor along the whole path flown this tick (the
         // shot covers more than a block per tick, so clearing only around it left gaps)
         Vec3 from = new Vec3(b.xo, b.yo, b.zo), to = b.position();
@@ -130,7 +130,7 @@ public final class ProjectileEffects {
         if (!(b.getOwner() instanceof ServerPlayer p)) return;
         var sl = p.serverLevel();
         int phase = b.getPhase();
-        if (Traits.has(st, "hydraulics.geyser"))
+        if (Traits.has(st, "hydraulic.geyser"))
             WorldEffects.schedule(
                     sl,
                     2,
@@ -209,7 +209,7 @@ public final class ProjectileEffects {
                                     });
                         }
                     });
-        if (Traits.has(st, "hydraulics.rapids")) {
+        if (Traits.has(st, "hydraulic.rapids")) {
             var tile = waterNear(sl, at);
             if (tile != null) surge(b, tile);
         }

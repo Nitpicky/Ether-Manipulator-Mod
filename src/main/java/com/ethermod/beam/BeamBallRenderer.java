@@ -528,7 +528,7 @@ public class BeamBallRenderer extends EntityRenderer<BeamBallEntity> {
                         : OrbMode.get(stack).rmbShot();
         float[] col =
                 mode == OrbMode.IGNITE
-                                && com.ethermod.trait.Traits.has(stack, "pyrotechnics.soulwake")
+                                && com.ethermod.trait.Traits.has(stack, "pyrotechnic.soulwake")
                         ? new float[] {.18f, .9f, 1f, 1f}
                         : colorFor(mode, com.ethermod.item.ManipulatorColors.beam(stack));
 

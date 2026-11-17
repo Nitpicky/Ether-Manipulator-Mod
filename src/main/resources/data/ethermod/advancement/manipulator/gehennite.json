@@ -19,7 +19,7 @@
     "done": {
       "trigger": "ethermod:manipulator",
       "conditions": {
-        "event": "module_pyrotechnics"
+        "event": "module_pyrotechnic"
       }
     }
   },

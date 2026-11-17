@@ -110,14 +110,14 @@ public final class BeamCastHelper {
                                     ClipContext.Fluid.NONE,
                                     player));
             Optional<EntityHitResult> animalHit =
-                    (Traits.has(tool, "cultivation.herder")
-                                    || Traits.has(tool, "cultivation.groundskeeper"))
+                    (Traits.has(tool, "botanic.herder")
+                                    || Traits.has(tool, "botanic.groundskeeper"))
                             ? findEntityOnRay(level, player, eye, look, (float) end.distanceTo(eye))
                             : Optional.empty();
             if (animalHit.isPresent()
                     && animalHit.get().getEntity()
                             instanceof net.minecraft.world.entity.animal.Animal animal) {
-                if (Traits.has(tool, "cultivation.herder"))
+                if (Traits.has(tool, "botanic.herder"))
                     UtilityBeam.herd(level, player, animal, state);
                 else UtilityBeam.shearEntity(level, player, animal, state);
             } else if (bh.getType() == HitResult.Type.BLOCK) {
@@ -165,17 +165,17 @@ public final class BeamCastHelper {
         // fire out
         BlockPos touched = BlockPos.containing(hitPos.add(look.scale(0.05)));
         BlockPos before = BlockPos.containing(hitPos.subtract(look.scale(0.05)));
-        if (Traits.rank(tool, "pyrotechnics.controlled_burn") >= 3) {
+        if (Traits.rank(tool, "pyrotechnic.controlled_burn") >= 3) {
             com.ethermod.trait.WorldEffects.putOut(level, before, player.getUUID());
             com.ethermod.trait.WorldEffects.putOut(level, touched.above(), player.getUUID());
         }
-        if (Traits.has(tool, "pyrotechnics.heat_ray") && level.mayInteract(player, touched))
+        if (Traits.has(tool, "pyrotechnic.heat_ray") && level.mayInteract(player, touched))
             heatRay(level, player, touched);
 
         // --- Entity: Lock-On keeps the last target inside a small cone ---------
         LivingEntity target = null;
         Vec3 targetPoint = null;
-        if (Traits.has(tool, "combat.lock_on")
+        if (Traits.has(tool, "plasmic.lock_on")
                 && state.level() >= 2
                 && level.getEntity(state.targetId) instanceof LivingEntity locked
                 && locked.isAlive()) {
@@ -201,7 +201,7 @@ public final class BeamCastHelper {
             int combatLevel = state.trackTarget(target.getId(), interval, tool, level);
             player.getPersistentData().putInt("mm_beam_level", combatLevel);
             target.getPersistentData().putInt("mm_combat_pressure", combatLevel);
-            if (Traits.has(tool, "pyrotechnics.heat_ray"))
+            if (Traits.has(tool, "pyrotechnic.heat_ray"))
                 com.ethermod.trait.RedesignEffects.burn(target, player, 3, -1);
             if (!strike) {
                 sync(player, state, combatLevel, false, List.of());
@@ -213,7 +213,7 @@ public final class BeamCastHelper {
                             * DAMAGE_SCALE
                             * BeamState.levelMultiplier(combatLevel)
                             // Overload II: the 4th level hits 25% harder
-                            * (combatLevel >= 4 && Traits.rank(tool, "combat.overload") >= 2
+                            * (combatLevel >= 4 && Traits.rank(tool, "plasmic.overload") >= 2
                                     ? 1.25f
                                     : 1f);
             beamHit(level, player, tool, target, dmg);
@@ -242,7 +242,7 @@ public final class BeamCastHelper {
             // Arc: pressure jumps the strike to the nearest other creatures, one more per level
             // from level 2 (1 / 2 / 3), each taking half the strike
             List<Integer> arcs = new java.util.ArrayList<>();
-            if (combatLevel >= 2 && Traits.has(tool, "combat.arc")) {
+            if (combatLevel >= 2 && Traits.has(tool, "plasmic.arc")) {
                 final LivingEntity first = target;
                 level
                         .getEntitiesOfClass(
@@ -277,7 +277,7 @@ public final class BeamCastHelper {
         }
         boolean mining = hitPos.distanceTo(eye) < range - 0.1;
         // Momentum: mining builds (and keeps) the beam's pressure; otherwise it runs down
-        boolean momentum = mining && Traits.has(tool, "excavation.momentum");
+        boolean momentum = mining && Traits.has(tool, "tectonic.momentum");
         int pressure =
                 momentum
                         ? state.trackMining(interval, tool, level)
@@ -289,7 +289,7 @@ public final class BeamCastHelper {
         if (mining) {
             // step slightly INTO the block that was hit (not back towards the eye)
             BlockPos blockPos = BlockPos.containing(hitPos.add(look.scale(0.05)));
-            float rampTicks = Traits.hasCommon(tool, Traits.EXCAVATION, 0) ? 32f : 40f;
+            float rampTicks = Traits.hasCommon(tool, Traits.TECTONIC, 0) ? 32f : 40f;
             float ramp = Math.min(1.0f, state.ticks / rampTicks);
             float speed =
                     (stage.miningSpeed() + Traits.miningSpeedBonus(tool))
@@ -361,10 +361,10 @@ public final class BeamCastHelper {
         // Gentle Hands: leave crops that aren't ripe
         if (block.getBlock() instanceof CropBlock crop
                 && !crop.isMaxAge(block)
-                && Traits.hasLine(tool, Traits.CULTIVATION)) {
+                && Traits.hasLine(tool, Traits.BOTANIC)) {
             // Gentle Hands II: the beam's warmth sometimes grows the crop a stage
             if (centerHardness == null
-                    && Traits.rank(tool, "cultivation.gentle_hands") >= 2
+                    && Traits.rank(tool, "botanic.gentle_hands") >= 2
                     && level.random.nextFloat() < 0.04f * interval) {
                 level.setBlockAndUpdate(
                         pos,
@@ -418,7 +418,7 @@ public final class BeamCastHelper {
     /** Momentum: called when the beam breaks a block; the same type in a row builds a streak. */
     public static void onBeamBreak(ServerPlayer player, BlockState state) {
         ItemStack tool = player.getMainHandItem();
-        int rank = Traits.rank(tool, "excavation.momentum");
+        int rank = Traits.rank(tool, "tectonic.momentum");
         if (rank <= 0) return;
         long now = player.level().getGameTime();
         Streak s = STREAKS.get(player.getUUID());
@@ -432,7 +432,7 @@ public final class BeamCastHelper {
      * +30/50/80%.
      */
     private static float momentum(ServerPlayer player, ItemStack tool, BlockState state) {
-        int rank = Traits.rank(tool, "excavation.momentum");
+        int rank = Traits.rank(tool, "tectonic.momentum");
         if (rank <= 0) return 1f;
         Streak s = STREAKS.get(player.getUUID());
         if (s == null || s.block() != state.getBlock()) return 1f;
@@ -482,16 +482,16 @@ public final class BeamCastHelper {
         // Disrupt: the beam goes straight through shields and knocks them out
         if (target instanceof net.minecraft.world.entity.player.Player p
                 && p.isBlocking()
-                && Traits.has(tool, "combat.disrupt")) {
+                && Traits.has(tool, "plasmic.disrupt")) {
             p.disableShield();
         }
-        if (Traits.has(tool, "combat.disrupt")
+        if (Traits.has(tool, "plasmic.disrupt")
                 && player.getPersistentData().getInt("mm_beam_level") >= 2) {
             dmg *= 1.15f;
             target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 30, 0, false, false, true));
         }
         // Disrupt II: the beam also slows what it holds
-        if (Traits.rank(tool, "combat.disrupt") >= 2) {
+        if (Traits.rank(tool, "plasmic.disrupt") >= 2) {
             target.addEffect(
                     new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 30, 0, false, true, true));
         }
@@ -514,9 +514,9 @@ public final class BeamCastHelper {
                         "mm_combat_pressure",
                         Math.max(1, player.getPersistentData().getInt("mm_beam_level")));
 
-        if (Traits.has(tool, "combat.leech") && dealt > 0)
-            player.heal(dealt * (0.05f + 0.05f * Traits.rank(tool, "combat.leech")));
-        int ionize = Traits.rank(tool, "combat.ionize");
+        if (Traits.has(tool, "plasmic.leech") && dealt > 0)
+            player.heal(dealt * (0.05f + 0.05f * Traits.rank(tool, "plasmic.leech")));
+        int ionize = Traits.rank(tool, "plasmic.ionize");
         if (ionize > 0) {
             target.getPersistentData().putLong(IONIZED_TAG, level.getGameTime());
             target.getPersistentData().putInt(IONIZED_TAG + "_rank", ionize);

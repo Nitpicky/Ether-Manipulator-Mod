@@ -5,54 +5,54 @@
   "icon": "minecraft:lead",
   "order": 8,
   "badge": {
-    "id": "mobility.badge",
+    "id": "gravitic.badge",
     "name": "Graviton Core",
     "description": "Unlocks [color=#9520E9]Tether Mode[/color]: left click hooks, right click reels (tap: all the way, hold: while held). Jump to let go at speed. Move 10% faster."
   },
   "commons": [
     {
-      "id": "mobility.common_soft_landing",
+      "id": "gravitic.common_soft_landing",
       "name": "Soft Landing",
       "description": "No fall damage."
     },
     {
-      "id": "mobility.gravity_skate",
+      "id": "gravitic.gravity_skate",
       "name": "Gravity Skate",
       "description": "Running builds to twice sprint speed. Swings and flings carry into the run."
     }
   ],
   "adept": [
     {
-      "id": "mobility.blink",
+      "id": "gravitic.blink",
       "name": "Blink",
       "description": "Double-tap right click while hooked to teleport to the hook."
     },
     {
-      "id": "mobility.gravity_shift",
+      "id": "gravitic.gravity_shift",
       "name": "Gravity Shift",
       "description": "Double-tap right click while hooked to make that surface your floor."
     }
   ],
   "master": [
     {
-      "id": "mobility.skyhook",
+      "id": "gravitic.skyhook",
       "name": "Skyhook",
       "description": "Tether shots that miss anchor in empty air."
     },
     {
-      "id": "mobility.zipline",
+      "id": "gravitic.zipline",
       "name": "Zipline",
       "description": "Link two surfaces with a rope you can ride."
     }
   ],
   "grandmaster": [
     {
-      "id": "mobility.airwalk",
+      "id": "gravitic.airwalk",
       "name": "Airwalk",
       "description": "Walk off a ledge onto a glass floor. Jump drops it; tap Sneak to step down, hold to fall."
     },
     {
-      "id": "mobility.flight",
+      "id": "gravitic.flight",
       "name": "Flight",
       "description": "Glide as though wearing Elytra."
     }

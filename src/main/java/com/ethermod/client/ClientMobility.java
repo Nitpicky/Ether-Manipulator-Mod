@@ -94,7 +94,7 @@ public final class ClientMobility {
         var p = mc.player;
         if (p == null || hook.getOwner() != p) return;
         if (p.input.jumping && !jumpWas && !p.onGround() && mc.gameMode != null) {
-            if (Traits.has(Manipulator.stack(p), "mobility.freeflight")
+            if (Traits.has(Manipulator.stack(p), "gravitic.freeflight")
                     && p.distanceToSqr(hook) > 4) freeUntil = p.level().getGameTime() + 100;
             mc.gameMode.releaseUsingItem(p);
         }
@@ -296,7 +296,7 @@ public final class ClientMobility {
         // Gravity Skate (Hermes Boots style): running builds up to about twice sprint speed over a
         // second; landing faster than that (a tether swing or fling) keeps the extra speed and
         // lets it bleed off gently. Steering blends, so turns stay smooth.
-        if (Traits.has(st, "mobility.gravity_skate") && skateGround && wish(p).lengthSqr() > 0) {
+        if (Traits.has(st, "gravitic.gravity_skate") && skateGround && wish(p).lengthSqr() > 0) {
             var up = MovementPhysics.vector(MovementPhysics.down(p).getOpposite());
             var v = p.getDeltaMovement();
             var flat = v.subtract(up.scale(v.dot(up)));
@@ -334,7 +334,7 @@ public final class ClientMobility {
         // Tap Sneak to step one block down; hold Sneak to fall until you let go, where a
         // new floor appears under you.
         boolean sneak = mc.screen == null && mc.options.keyShift.isDown();
-        if (Traits.has(st, "mobility.airwalk")
+        if (Traits.has(st, "gravitic.airwalk")
                 && !p.getAbilities().flying
                 && !p.isFallFlying()
                 && !p.isInWater()

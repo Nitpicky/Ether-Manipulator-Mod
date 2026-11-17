@@ -28,7 +28,7 @@ final class OrbFrost {
     static void frostBridge(BeamBallEntity b, Vec3 from, Vec3 movement) {
         if (b.getMode() != OrbMode.FROST || b.getPhase() == 0) return;
         ServerLevel sl = (ServerLevel) b.level();
-        boolean wide = b.has("hydraulics.glacier");
+        boolean wide = b.has("hydraulic.glacier");
         int steps = Math.max(1, (int) Math.ceil(movement.length() / 0.2));
         BlockPos previous = BlockPos.containing(from.x, from.y - 2, from.z);
         for (int i = 0; i <= steps; i++) {
@@ -67,7 +67,7 @@ final class OrbFrost {
 
     /** Frost bridges last 3x longer with Glacier (10s, 30s with it). */
     static int bridgeTicks(BeamBallEntity b) {
-        return b.BRIDGE_TICKS * (b.has("hydraulics.glacier") ? 3 : 1);
+        return b.BRIDGE_TICKS * (b.has("hydraulic.glacier") ? 3 : 1);
     }
 
     /** Permafrost: Frost ice never cracks while someone stands on it. */

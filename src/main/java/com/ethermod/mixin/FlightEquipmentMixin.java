@@ -21,6 +21,6 @@ public abstract class FlightEquipmentMixin {
         return stack.canElytraFly(entity)
                 || (entity instanceof Player p
                         && com.ethermod.trait.Traits.has(
-                                com.ethermod.manipulator.Manipulator.stack(p), "mobility.flight"));
+                                com.ethermod.manipulator.Manipulator.stack(p), "gravitic.flight"));
     }
 }

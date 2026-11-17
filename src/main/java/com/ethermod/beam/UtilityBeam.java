@@ -50,16 +50,16 @@ final class UtilityBeam {
         state.lastUtilityPos = pos.asLong();
         ItemStack tool = player.getMainHandItem();
 
-        boolean gardener = Traits.hasLine(tool, Traits.CULTIVATION);
-        int harvestR = Traits.has(tool, "cultivation.harvest_moon") ? 3 : gardener ? 1 : 0;
+        boolean gardener = Traits.hasLine(tool, Traits.BOTANIC);
+        int harvestR = Traits.has(tool, "botanic.harvest_moon") ? 3 : gardener ? 1 : 0;
         int areaR = gardener ? 1 : 0;
         // Groundskeeper and Sower reach wider with rank
         areaR +=
                 Math.max(
                         0,
                         Math.max(
-                                        Traits.rank(tool, "cultivation.groundskeeper"),
-                                        Traits.rank(tool, "cultivation.sower"))
+                                        Traits.rank(tool, "botanic.groundskeeper"),
+                                        Traits.rank(tool, "botanic.sower"))
                                 - 1);
 
         // Harvest ripe crops (Cultivation badge: 3x3; Harvest Moon: 7x7)
@@ -115,7 +115,7 @@ final class UtilityBeam {
         }
 
         // Groundskeeper: shear leaves, vines, cobwebs and grasses; take honeycomb
-        if (Traits.has(tool, "cultivation.groundskeeper")) {
+        if (Traits.has(tool, "botanic.groundskeeper")) {
             if (isShearable(bs)) {
                 level.removeBlock(pos, false);
                 Block.popResource(level, pos, new ItemStack(bs.getBlock()));
@@ -140,7 +140,7 @@ final class UtilityBeam {
         // Sower: plant seeds from the inventory on farmland
         if (bs.getBlock() instanceof FarmBlock
                 && level.getBlockState(pos.above()).isAir()
-                && Traits.has(tool, "cultivation.sower")) {
+                && Traits.has(tool, "botanic.sower")) {
             if (sow(level, player, pos.above())) return true;
         }
 

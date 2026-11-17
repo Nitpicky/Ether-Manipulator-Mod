@@ -380,7 +380,7 @@ public final class VacuumCone {
             this.manip = manip;
             // (Vacuum is retired; both liquids now fill the one shared tank)
             cap = lavaCap = OrbMode.capacity(manip);
-            int well = Traits.rank(manip, "hydraulics.wellspring");
+            int well = Traits.rank(manip, "hydraulic.wellspring");
             perWater = well > 0 ? 1 + well : 1; // Wellspring: 2, 3, 4 buckets a tile
             water = w0 = OrbMode.tank(manip);
             lava = l0 = 0;

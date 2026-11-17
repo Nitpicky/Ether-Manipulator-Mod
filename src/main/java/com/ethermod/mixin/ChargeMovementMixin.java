@@ -48,7 +48,7 @@ public abstract class ChargeMovementMixin {
     private boolean mm$chargeSlow(LocalPlayer p) {
         return p.isUsingItem()
                 && !(p.getUseItem().getItem() instanceof com.ethermod.item.EtherManipulatorItem
-                        && (Traits.has(Manipulator.stack(p), "orb.skirmisher")
+                        && (Traits.has(Manipulator.stack(p), "kinetic.skirmisher")
                                 || com.ethermod.item.OrbMode.get(Manipulator.stack(p)).isHold()));
     }
 }

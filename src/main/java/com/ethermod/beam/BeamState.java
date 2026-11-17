@@ -45,7 +45,7 @@ public final class BeamState {
 
     /** Drains for the ticks since the last update (between beams too), then notes a kill. */
     private void catchUp(Level level, ItemStack tool, int interval) {
-        overload = Traits.has(tool, "combat.overload");
+        overload = Traits.has(tool, "plasmic.overload");
         long now = level.getGameTime();
         long idle = lastTick == Long.MIN_VALUE ? 0 : Math.min(400, now - lastTick - interval);
         for (long t = 0; t < idle; t++) drain(now - idle + t);
@@ -55,7 +55,7 @@ public final class BeamState {
         // Annihilate: the creature you were on just died
         if (targetId >= 0
                 && !(level.getEntity(targetId) instanceof LivingEntity le && le.isAlive())) {
-            if (Traits.has(tool, "combat.annihilate")) graceUntil = now + KILL_GRACE;
+            if (Traits.has(tool, "plasmic.annihilate")) graceUntil = now + KILL_GRACE;
             targetId = -1;
         }
     }
@@ -77,7 +77,7 @@ public final class BeamState {
         drainDebt = 0;
         int cap = overload ? LEVEL_4_TICKS + STAGE : LEVEL_3_TICKS + STAGE;
         // Priming: pressure builds 20% faster
-        float gain = Traits.hasCommon(tool, Traits.COMBAT, 0) ? 1.2f : 1f;
+        float gain = Traits.hasCommon(tool, Traits.PLASMIC, 0) ? 1.2f : 1f;
         gainDebt += interval * gain;
         int g = (int) gainDebt;
         gainDebt -= g;

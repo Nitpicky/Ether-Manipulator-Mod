@@ -37,7 +37,7 @@ final class MassPreview {
 
     static void render(
             Minecraft mc, Player player, ItemStack st, Vec3 cam, float time, VertexConsumer vc, Matrix4f m) {
-        if (OrbMode.get(st) != OrbMode.MASS || !Traits.has(st, "excavation.steady_hand")) return;
+        if (OrbMode.get(st) != OrbMode.MASS || !Traits.has(st, "tectonic.steady_hand")) return;
         List<BeamBallEntity> held = new ArrayList<>();
         for (var e : mc.level.entitiesForRendering())
             if (e instanceof BeamBallEntity b

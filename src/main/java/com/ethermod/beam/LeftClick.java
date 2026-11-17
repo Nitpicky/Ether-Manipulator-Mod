@@ -121,7 +121,7 @@ public final class LeftClick {
         // Skyhook: letting go of left click anchors the flying hook in the air where it is
         if (h != null && h.mode == OrbMode.TETHER) {
             var hook = OrbTether.activeHook(p);
-            if (hook != null && !hook.isStuck() && Traits.has(Manipulator.stack(p), "mobility.skyhook"))
+            if (hook != null && !hook.isStuck() && Traits.has(Manipulator.stack(p), "gravitic.skyhook"))
                 OrbTether.hookAir(hook);
             return;
         }
@@ -376,7 +376,7 @@ public final class LeftClick {
         var seen = new java.util.HashSet<BlockPos>();
         for (BlockPos q : BlockPos.betweenClosed(center.offset(-1, -1, -1), center.offset(1, 1, 1)))
             if (ripe(sl.getBlockState(q)) && seen.add(q.immutable())) todo.add(q.immutable());
-        boolean overgrowth = Traits.has(st, "cultivation.overgrowth");
+        boolean overgrowth = Traits.has(st, "botanic.overgrowth");
         // find everything first, then cut it in one sweep from right to left (the animation's
         // swing), a column every tick, so the harvest reads as a sickle pass
         var cut = new java.util.ArrayList<BlockPos>();

@@ -112,7 +112,7 @@ public final class MassDriver {
     }
 
     private static boolean steady(ServerPlayer p) {
-        return Traits.has(Manipulator.stack(p), "excavation.steady_hand");
+        return Traits.has(Manipulator.stack(p), "tectonic.steady_hand");
     }
 
     // ---------------------------------------------------------------- lifting
@@ -140,7 +140,7 @@ public final class MassDriver {
         var h = HOLDS.get(p.getUUID());
         var hit = aim(p);
         if (h == null || hit == null) return;
-        if (Traits.has(st, "excavation.mass_pickup")) {
+        if (Traits.has(st, "tectonic.mass_pickup")) {
             for (var at :
                     BlockPos.betweenClosed(
                             hit.getBlockPos().offset(-1, -1, -1), hit.getBlockPos().offset(1, 1, 1)))

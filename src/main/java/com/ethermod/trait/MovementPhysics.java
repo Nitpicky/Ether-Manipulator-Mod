@@ -277,10 +277,10 @@ public final class MovementPhysics {
 
     public static Vec3 edge(Player p, Vec3 v) {
         var st = Manipulator.stack(p);
-        if (!Traits.has(st, "mobility.surefoot")
+        if (!Traits.has(st, "gravitic.surefoot")
                 || !p.onGround()
                 || p.isPassenger()
-                || Traits.has(st, "mobility.airwalk")
+                || Traits.has(st, "gravitic.airwalk")
                 || p.getDeltaMovement().length() > 1.2) return v;
         var d = vector(down(p));
         var lateral = v.subtract(d.scale(v.dot(d)));
@@ -512,8 +512,8 @@ public final class MovementPhysics {
         if (down(p) != Direction.DOWN && p.isPassenger()) clearGravity(p);   // riding anything ends a gravity shift
         if (down(p) != Direction.DOWN
                 && (!p.isAlive()
-                        || !Traits.hasLine(st, Traits.MOBILITY)
-                        || !Traits.has(st, "mobility.gravity_shift")))
+                        || !Traits.hasLine(st, Traits.GRAVITIC)
+                        || !Traits.has(st, "gravitic.gravity_shift")))
             setGravity(p, Direction.DOWN);
         if (down(p) != Direction.DOWN) {
             // the server only learns positions from the client, so it measures the walk itself

@@ -19,7 +19,7 @@
     "done": {
       "trigger": "ethermod:manipulator",
       "conditions": {
-        "event": "module_excavation"
+        "event": "module_tectonic"
       }
     }
   },

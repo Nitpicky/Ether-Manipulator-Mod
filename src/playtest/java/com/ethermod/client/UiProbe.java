@@ -88,15 +88,14 @@ public final class UiProbe {
                                     var st = Manipulator.stack(p);
                                     if (Boolean.getBoolean("ethermod.blazelingTest")) {
                                         ManipulatorStage.set(st, ManipulatorStage.NETHERITE);
-                                        ModuleUnlocks.migrate(st, p.registryAccess());
                                         for (var line : TraitLines.all(p.registryAccess()))
                                             ModuleUnlocks.unlock(st, line.getKey());
                                         for (int slot = 0; slot < 3; slot++)
                                             TraitBuild.setLine(st, slot, null);
-                                        TraitBuild.setLine(st, 0, Traits.PYROTECHNICS);
-                                        TraitBuild.setPick(st, 0, 0, "pyrotechnics.crucible");
-                                        TraitBuild.setPick(st, 0, 1, "pyrotechnics.flashover");
-                                        TraitBuild.setPick(st, 0, 2, "pyrotechnics.soulwake");
+                                        TraitBuild.setLine(st, 0, Traits.PYROTECHNIC);
+                                        TraitBuild.setPick(st, 0, 0, "pyrotechnic.crucible");
+                                        TraitBuild.setPick(st, 0, 1, "pyrotechnic.flashover");
+                                        TraitBuild.setPick(st, 0, 2, "pyrotechnic.soulwake");
                                         OrbMode.set(st, OrbMode.IGNITE);
                                         OrbMode.setTank(st, 40);
                                         Manipulator.setSummoned(p, true);
@@ -164,14 +163,13 @@ public final class UiProbe {
                                         return;
                                     }
                                     ManipulatorStage.set(st, ManipulatorStage.NETHERITE);
-                                    ModuleUnlocks.migrate(st, p.registryAccess());
                                     for (var line : TraitLines.all(p.registryAccess()))
                                         ModuleUnlocks.unlock(st, line.getKey());
                                     for (int i = 0; i < 3; i++) TraitBuild.setLine(st, i, null);
-                                    TraitBuild.setLine(st, 0, Traits.MOBILITY);
-                                    TraitBuild.setPick(st, 0, 0, "mobility.gravity_shift");
-                                    TraitBuild.setPick(st, 0, 1, "mobility.skyhook");
-                                    TraitBuild.setPick(st, 0, 2, "mobility.airwalk");
+                                    TraitBuild.setLine(st, 0, Traits.GRAVITIC);
+                                    TraitBuild.setPick(st, 0, 0, "gravitic.gravity_shift");
+                                    TraitBuild.setPick(st, 0, 1, "gravitic.skyhook");
+                                    TraitBuild.setPick(st, 0, 2, "gravitic.airwalk");
                                     TraitBuild.setLine(st, 1, Traits.PNEUMATIC);
                                     TraitBuild.setPick(st, 1, 0, "pneumatic.updraft");
                                     TraitBuild.setPick(st, 1, 1, "pneumatic.bunny_hop");
@@ -291,7 +289,6 @@ public final class UiProbe {
                                             t.remove("mm_signal_strength");
                                         });
                                 ManipulatorStage.set(st, ManipulatorStage.NETHERITE);
-                                ModuleUnlocks.migrate(st, p.registryAccess());
                                 for (int slot = 0; slot < 3; slot++)
                                     TraitBuild.setLine(st, slot, null);
                                 check(
@@ -299,8 +296,8 @@ public final class UiProbe {
                                         TraitLines.all(p.registryAccess()).size() == 10);
                                 check(
                                         "Default Plasmic/Kinetic knowledge",
-                                        ModuleUnlocks.known(st, Traits.COMBAT)
-                                                && ModuleUnlocks.known(st, Traits.ORB));
+                                        ModuleUnlocks.known(st, Traits.PLASMIC)
+                                                && ModuleUnlocks.known(st, Traits.KINETIC));
                                 for (var e : TraitLines.all(p.registryAccess())) {
                                     check(
                                             e.getValue().name() + " 6 choices + 2 Commons",
@@ -310,32 +307,32 @@ public final class UiProbe {
                                                     && e.getValue().commons().size() == 2);
                                     ModuleUnlocks.unlock(st, e.getKey());
                                 }
-                                TraitRules.equip(p, 0, Traits.HYDRAULICS);
+                                TraitRules.equip(p, 0, Traits.HYDRAULIC);
                                 TraitRules.pick(p, 0, 0, 1); // Reservoir
                                 check("Reservoir grows the shared tank", OrbMode.capacity(st) == 8);
                                 check(
                                         "Common follows prior choice",
-                                        Traits.hasCommon(st, Traits.HYDRAULICS, 0));
+                                        Traits.hasCommon(st, Traits.HYDRAULIC, 0));
                                 TraitBuild.setPick(st, 0, 0, "");
                                 check(
                                         "Common inactive without choice",
-                                        !Traits.hasCommon(st, Traits.HYDRAULICS, 0));
-                                TraitBuild.setPick(st, 0, 0, "hydraulics.reservoir");
+                                        !Traits.hasCommon(st, Traits.HYDRAULIC, 0));
+                                TraitBuild.setPick(st, 0, 0, "hydraulic.reservoir");
                                 OrbMode.setTank(st, 3);
                                 OrbMode.set(st, OrbMode.FROST);
                                 check("Mode switch retains tank", OrbMode.tank(st) == 3);
                                 TraitBuild.setLine(st, 0, null);
-                                TraitBuild.setLine(st, 0, Traits.HYDRAULICS);
+                                TraitBuild.setLine(st, 0, Traits.HYDRAULIC);
                                 check("Module switch retains tank", OrbMode.tank(st) == 3);
-                                TraitBuild.setPick(st, 0, 0, "hydraulics.reservoir");
+                                TraitBuild.setPick(st, 0, 0, "hydraulic.reservoir");
                                 check(
                                         "Reload waits 4s at Prototype",
                                         com.ethermod.config.EtherConfig.ETHER_REFILL.get()
                                                 == 80);
-                                TraitRules.equip(p, 1, Traits.PYROTECHNICS);
+                                TraitRules.equip(p, 1, Traits.PYROTECHNIC);
                                 TraitRules.pick(p, 1, 0, 1);
                                 check("Crucible grows the shared tank", OrbMode.capacity(st) == 10);
-                                TraitRules.equip(p, 2, Traits.CULTIVATION);
+                                TraitRules.equip(p, 2, Traits.BOTANIC);
                                 TraitRules.pick(p, 2, 0, 1);
                                 check(
                                         "Seedbank grows the shared tank",
@@ -366,8 +363,8 @@ public final class UiProbe {
                                                 .getPlayer(mc.player.getUUID());
                                 var sl = p.serverLevel();
                                 var st = Manipulator.stack(p);
-                                TraitBuild.setLine(st, 0, Traits.MOBILITY);
-                                TraitBuild.setPick(st, 0, 0, "mobility.gravity_shift");
+                                TraitBuild.setLine(st, 0, Traits.GRAVITIC);
+                                TraitBuild.setPick(st, 0, 0, "gravitic.gravity_shift");
                                 MovementPhysics.setGravity(p, net.minecraft.core.Direction.EAST);
                                 check(
                                         "Gravity changes player bounds",
@@ -530,9 +527,9 @@ public final class UiProbe {
                                         !MovementPhysics.hasRealSupport(p));
                                 p.setPos(saved);
                                 // A sustained source effect, not an entity-hit-only impulse.
-                                TraitBuild.setLine(st, 0, Traits.HYDRAULICS);
-                                TraitBuild.setPick(st, 0, 0, "hydraulics.reservoir");
-                                TraitBuild.setPick(st, 0, 1, "hydraulics.geyser");
+                                TraitBuild.setLine(st, 0, Traits.HYDRAULIC);
+                                TraitBuild.setPick(st, 0, 0, "hydraulic.reservoir");
+                                TraitBuild.setPick(st, 0, 1, "hydraulic.geyser");
                                 var water = p.blockPosition().offset(9, 4, 0);
                                 sl.setBlockAndUpdate(
                                         water.below(),
@@ -567,13 +564,13 @@ public final class UiProbe {
                                 check(
                                         "Old builds keep moved choices",
                                         TraitChoices.resolve(
-                                                        "hydraulics",
+                                                        "hydraulic",
                                                         java.util.List.of(
-                                                                "hydraulics.reservoir",
-                                                                "hydraulics.helmsman",
-                                                                "hydraulics.glacier"),
+                                                                "hydraulic.reservoir",
+                                                                "hydraulic.helmsman",
+                                                                "hydraulic.glacier"),
                                                         1)
-                                                .equals("hydraulics.glacier"));
+                                                .equals("hydraulic.glacier"));
                                 var stone = p.blockPosition().offset(0, 1, 4);
                                 sl.setBlockAndUpdate(
                                         stone,
@@ -583,7 +580,7 @@ public final class UiProbe {
                                         net.minecraft.commands.arguments.EntityAnchorArgument.Anchor
                                                 .EYES,
                                         net.minecraft.world.phys.Vec3.atCenterOf(stone));
-                                TraitBuild.setLine(st, 0, Traits.EXCAVATION);
+                                TraitBuild.setLine(st, 0, Traits.TECTONIC);
                                 OrbMode.set(st, OrbMode.MASS);
                                 check(
                                         "Mass Driver picks block",
@@ -604,10 +601,10 @@ public final class UiProbe {
                                                                                         .isAir())
                                                         .size()
                                                 == 1);
-                                TraitBuild.setLine(st, 0, Traits.CULTIVATION);
-                                TraitBuild.setPick(st, 0, 0, "cultivation.seedbank");
-                                TraitBuild.setPick(st, 0, 1, "cultivation.sower");
-                                TraitBuild.setPick(st, 0, 2, "cultivation.regrowth");
+                                TraitBuild.setLine(st, 0, Traits.BOTANIC);
+                                TraitBuild.setPick(st, 0, 0, "botanic.seedbank");
+                                TraitBuild.setPick(st, 0, 1, "botanic.sower");
+                                TraitBuild.setPick(st, 0, 2, "botanic.regrowth");
                                 var crop = p.blockPosition().offset(-2, 0, 2);
                                 sl.setBlockAndUpdate(
                                         crop.below(),
@@ -664,10 +661,10 @@ public final class UiProbe {
                                 check("Radiance heals user", healed > 10);
                                 com.ethermod.beam.PhotonicEffects.flight(light, st);
                                 check("Radiance overlap does not stack", p.getHealth() == healed);
-                                TraitBuild.setLine(st, 0, Traits.PYROTECHNICS);
-                                TraitBuild.setPick(st, 0, 0, "pyrotechnics.crucible");
-                                TraitBuild.setPick(st, 0, 1, "pyrotechnics.flashover");
-                                TraitBuild.setPick(st, 0, 2, "pyrotechnics.soulwake");
+                                TraitBuild.setLine(st, 0, Traits.PYROTECHNIC);
+                                TraitBuild.setPick(st, 0, 0, "pyrotechnic.crucible");
+                                TraitBuild.setPick(st, 0, 1, "pyrotechnic.flashover");
+                                TraitBuild.setPick(st, 0, 2, "pyrotechnic.soulwake");
                                 var victim =
                                         net.minecraft.world.entity.EntityType.ZOMBIE.create(sl);
                                 victim.setPos(p.position().add(0, 0, -3));
@@ -1009,12 +1006,12 @@ public final class UiProbe {
                                                                 .getLong("mm_summon_expires")
                                                         == pet.getPersistentData()
                                                                 .getLong("mm_summon_expires"));
-                                TraitBuild.setLine(st, 0, Traits.ORB);
-                                TraitBuild.setPick(st, 0, 0, "orb.split");
-                                TraitBuild.setPick(st, 0, 1, "orb.marksman");
-                                TraitBuild.setPick(st, 0, 2, "orb.detonator");
-                                TraitBuild.setLine(st, 1, Traits.HYDRAULICS);
-                                TraitBuild.setPick(st, 1, 0, "hydraulics.pressure");
+                                TraitBuild.setLine(st, 0, Traits.KINETIC);
+                                TraitBuild.setPick(st, 0, 0, "kinetic.split");
+                                TraitBuild.setPick(st, 0, 1, "kinetic.marksman");
+                                TraitBuild.setPick(st, 0, 2, "kinetic.detonator");
+                                TraitBuild.setLine(st, 1, Traits.HYDRAULIC);
+                                TraitBuild.setPick(st, 1, 0, "hydraulic.pressure");
                                 OrbMode.set(st, OrbMode.WATER);
                                 OrbMode.setTank(st, 6);
                                 var item = com.ethermod.registry.ModItems.ETHER_MANIPULATOR.get();
@@ -1028,22 +1025,22 @@ public final class UiProbe {
                                 check(
                                         "Retired Gunner/Orbit dropped from old builds",
                                         TraitChoices.resolve(
-                                                                "orb",
+                                                                "kinetic",
                                                                 java.util.List.of(
-                                                                        "orb.split",
-                                                                        "orb.gunner",
-                                                                        "orb.orbit"),
+                                                                        "kinetic.split",
+                                                                        "kinetic.gunner",
+                                                                        "kinetic.orbit"),
                                                                 1)
                                                         .isEmpty()
                                                 && !TraitChoices.accepts(
-                                                        "orb", 2, "orb.orbit"));
+                                                        "kinetic", 2, "kinetic.orbit"));
                                 check(
                                         "Seeker is a Kinetic Grandmaster choice",
-                                        TraitChoices.accepts("orb", 2, "orb.seeker"));
-                                TraitBuild.setLine(st, 1, Traits.PYROTECHNICS);
-                                TraitBuild.setPick(st, 1, 0, "pyrotechnics.crucible");
-                                TraitBuild.setLine(st, 0, Traits.HYDRAULICS);
-                                TraitBuild.setPick(st, 0, 0, "hydraulics.reservoir");
+                                        TraitChoices.accepts("kinetic", 2, "kinetic.seeker"));
+                                TraitBuild.setLine(st, 1, Traits.PYROTECHNIC);
+                                TraitBuild.setPick(st, 1, 0, "pyrotechnic.crucible");
+                                TraitBuild.setLine(st, 0, Traits.HYDRAULIC);
+                                TraitBuild.setPick(st, 0, 0, "hydraulic.reservoir");
                                 p.getPersistentData().putInt("mm_refill_ether", 0);
                                 Manipulator.sync(p);
                             });
@@ -1069,12 +1066,12 @@ public final class UiProbe {
                                         OrbMode.ENERGY.usesTank()
                                                 && OrbMode.ENERGY.shotCost(st, 2) == 2
                                                 && !OrbMode.TETHER.usesTank());
-                                TraitBuild.setLine(st, 0, Traits.HYDRAULICS);
-                                TraitBuild.setPick(st, 0, 0, "hydraulics.reservoir");
-                                TraitBuild.setLine(st, 1, Traits.PYROTECHNICS);
-                                TraitBuild.setPick(st, 1, 0, "pyrotechnics.crucible");
-                                TraitBuild.setLine(st, 2, Traits.CULTIVATION);
-                                TraitBuild.setPick(st, 2, 0, "cultivation.seedbank");
+                                TraitBuild.setLine(st, 0, Traits.HYDRAULIC);
+                                TraitBuild.setPick(st, 0, 0, "hydraulic.reservoir");
+                                TraitBuild.setLine(st, 1, Traits.PYROTECHNIC);
+                                TraitBuild.setPick(st, 1, 0, "pyrotechnic.crucible");
+                                TraitBuild.setLine(st, 2, Traits.BOTANIC);
+                                TraitBuild.setPick(st, 2, 0, "botanic.seedbank");
                                 OrbMode.setTank(st, 0);
                                 p.getPersistentData().putInt("mm_tank_last", 0);
                                 p.getPersistentData()
@@ -1114,10 +1111,10 @@ public final class UiProbe {
                                                 .getPlayerList()
                                                 .getPlayer(mc.player.getUUID());
                                 var st = Manipulator.stack(p);
-                                TraitBuild.setLine(st, 0, Traits.MOBILITY);
-                                TraitBuild.setPick(st, 0, 0, "mobility.gravity_shift");
-                                TraitBuild.setPick(st, 0, 1, "mobility.skyhook");
-                                TraitBuild.setPick(st, 0, 2, "mobility.gravity_skate");
+                                TraitBuild.setLine(st, 0, Traits.GRAVITIC);
+                                TraitBuild.setPick(st, 0, 0, "gravitic.gravity_shift");
+                                TraitBuild.setPick(st, 0, 1, "gravitic.skyhook");
+                                TraitBuild.setPick(st, 0, 2, "gravitic.gravity_skate");
                                 OrbMode.set(st, OrbMode.TETHER);
                                 for (var dir : net.minecraft.core.Direction.values()) {
                                     var up =

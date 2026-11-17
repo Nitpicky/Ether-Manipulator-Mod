@@ -83,25 +83,25 @@ public final class RedesignEffects {
                     p,
                     Attributes.ENTITY_INTERACTION_RANGE,
                     REACH,
-                    Traits.hasCommon(st, Traits.COMBAT, 1) ? 1 : 0,
+                    Traits.hasCommon(st, Traits.PLASMIC, 1) ? 1 : 0,
                     AttributeModifier.Operation.ADD_VALUE);
             attribute(
                     p,
                     Attributes.BLOCK_INTERACTION_RANGE,
                     BLOCK_REACH,
-                    Traits.hasCommon(st, Traits.EXCAVATION, 1) ? 2 : 0,
+                    Traits.hasCommon(st, Traits.TECTONIC, 1) ? 2 : 0,
                     AttributeModifier.Operation.ADD_VALUE);
             attribute(
                     p,
                     net.neoforged.neoforge.common.NeoForgeMod.SWIM_SPEED,
                     SWIM,
-                    Traits.hasLine(st, Traits.HYDRAULICS) ? 0.3 : 0,
+                    Traits.hasLine(st, Traits.HYDRAULIC) ? 0.3 : 0,
                     AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
             if (Traits.hasCommon(st, Traits.PHOTONIC, 1)) {
                 p.removeEffect(MobEffects.BLINDNESS);
                 p.removeEffect(MobEffects.DARKNESS);
             }
-            if (Traits.hasLine(st, Traits.PYROTECHNICS)) p.clearFire();
+            if (Traits.hasLine(st, Traits.PYROTECHNIC)) p.clearFire();
         }
         boolean changed = false;
         // The shared tank reloads Jhin-style: nothing trickles back while you keep firing; once no Ether has been
@@ -136,7 +136,7 @@ public final class RedesignEffects {
         } else data.putInt("mm_refill_ether", 0);
         if (changed) Manipulator.sync(p);
         if (now % 20 == 0
-                && Traits.has(st, "pyrotechnics.rekindle")
+                && Traits.has(st, "pyrotechnic.rekindle")
                 && (p.isInLava() || touchesFire(p))) p.heal(1f);
         if (now % 10 == 0 && Traits.hasLine(st, Traits.PHOTONIC) && !p.isSpectator()) {
             var at = p.blockPosition().above();
@@ -192,7 +192,7 @@ public final class RedesignEffects {
 
     @SubscribeEvent
     public static void mine(PlayerEvent.BreakSpeed ev) {
-        if (Traits.hasLine(Manipulator.stack(ev.getEntity()), Traits.EXCAVATION)
+        if (Traits.hasLine(Manipulator.stack(ev.getEntity()), Traits.TECTONIC)
                 && !(ev.getEntity().getMainHandItem().getItem()
                         instanceof com.ethermod.item.EtherManipulatorItem))
             ev.setNewSpeed(ev.getNewSpeed() + 2);
@@ -201,7 +201,7 @@ public final class RedesignEffects {
     @SubscribeEvent
     public static void trample(BlockEvent.FarmlandTrampleEvent ev) {
         if (ev.getEntity() instanceof Player p
-                && Traits.hasLine(Manipulator.stack(p), Traits.CULTIVATION)) ev.setCanceled(true);
+                && Traits.hasLine(Manipulator.stack(p), Traits.BOTANIC)) ev.setCanceled(true);
     }
 
     @SubscribeEvent
@@ -213,12 +213,12 @@ public final class RedesignEffects {
             collect(ev, p, st);
             return;
         }
-        if (Traits.has(st, "cultivation.bountiful")) {
+        if (Traits.has(st, "botanic.bountiful")) {
             for (var d : ev.getDrops())
                 if (!d.getItem().is(net.neoforged.neoforge.common.Tags.Items.SEEDS))
                     d.getItem().grow(Math.max(1, d.getItem().getCount() / 2));
         }
-        if (Traits.hasCommon(st, Traits.CULTIVATION, 0)) {
+        if (Traits.hasCommon(st, Traits.BOTANIC, 0)) {
             boolean reserved = false;
             for (var d : ev.getDrops())
                 if (!d.getItem().isEmpty() && isPlantingItem(d.getItem(), crop)) {
@@ -241,7 +241,7 @@ public final class RedesignEffects {
                         });
             }
         }
-        if (Traits.has(st, "cultivation.cross_pollination"))
+        if (Traits.has(st, "botanic.cross_pollination"))
             for (var pos :
                     BlockPos.betweenClosed(
                             ev.getPos().offset(-2, 0, -2), ev.getPos().offset(2, 0, 2))) {
@@ -273,7 +273,7 @@ public final class RedesignEffects {
         target.igniteForSeconds(seconds);
         var d = target.getPersistentData();
         d.putUUID("mm_burn_owner", owner.getUUID());
-        d.putBoolean("mm_soul", Traits.has(st, "pyrotechnics.soulwake"));
+        d.putBoolean("mm_soul", Traits.has(st, "pyrotechnic.soulwake"));
         net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingEntityAndSelf(
                 target,
                 new com.ethermod.network.payload.ModulePayloads.SoulFlame(
@@ -285,7 +285,7 @@ public final class RedesignEffects {
                         ? phase + 1
                         : wasBurning ? d.getInt("mm_inferno") : 0);
         if (wasBurning
-                && Traits.has(st, "pyrotechnics.flashover")
+                && Traits.has(st, "pyrotechnic.flashover")
                 && target.tickCount - d.getInt("mm_flashover") > 20) {
             d.putInt("mm_flashover", target.tickCount);
             for (var e :
@@ -298,7 +298,7 @@ public final class RedesignEffects {
                 e.igniteForSeconds(seconds);
                 e.getPersistentData().putUUID("mm_burn_owner", owner.getUUID());
                 e.getPersistentData()
-                        .putBoolean("mm_soul", Traits.has(st, "pyrotechnics.soulwake"));
+                        .putBoolean("mm_soul", Traits.has(st, "pyrotechnic.soulwake"));
                 e.getPersistentData()
                         .putBoolean("mm_weak_burn", false /* Heat Exhaustion retired; Phoenix is the second Common. */);
             }
@@ -333,12 +333,12 @@ public final class RedesignEffects {
 
     /** The Manipulator's melee bonus (Plasmic: Melee Damage +1); the Redstone Golem's blows carry it too. */
     public static float meleeBonus(ServerPlayer p) {
-        return Traits.hasLine(Manipulator.stack(p), Traits.COMBAT) ? 1 : 0;
+        return Traits.hasLine(Manipulator.stack(p), Traits.PLASMIC) ? 1 : 0;
     }
 
     /** The Manipulator's ranged bonus (Kinetic: Fully Charged Ranged Damage +3); the Golem's Dispenser bolts carry it too. */
     public static float rangedBonus(ServerPlayer p) {
-        return Traits.hasLine(Manipulator.stack(p), Traits.ORB) ? 3 : 0;
+        return Traits.hasLine(Manipulator.stack(p), Traits.KINETIC) ? 3 : 0;
     }
 
     @SubscribeEvent
@@ -364,7 +364,7 @@ public final class RedesignEffects {
         if (ev.getSource().getEntity() instanceof ServerPlayer p
                 && (ev.getSource().is(net.minecraft.world.damagesource.DamageTypes.PLAYER_ATTACK)
                         || ev.getSource().is(com.ethermod.beam.BeamCastHelper.BEAM_DAMAGE))
-                && Traits.hasCommon(Manipulator.stack(p), Traits.PYROTECHNICS, 0))
+                && Traits.hasCommon(Manipulator.stack(p), Traits.PYROTECHNIC, 0))
             burn(ev.getEntity(), p, 4, -1);
     }
 
@@ -524,7 +524,7 @@ public final class RedesignEffects {
             return;
         }
         if (!(ev.getSource().getEntity() instanceof ServerPlayer p)
-                || !Traits.has(Manipulator.stack(p), "combat.dissolve")) return;
+                || !Traits.has(Manipulator.stack(p), "plasmic.dissolve")) return;
         int level =
                 Math.max(
                         1,
@@ -556,7 +556,7 @@ public final class RedesignEffects {
                 || d.hasUUID("mm_summoner")) return;
         var owner = sl.getServer().getPlayerList().getPlayer(d.getUUID("mm_burn_owner"));
         if (owner == null
-                || !Traits.has(Manipulator.stack(owner), "pyrotechnics.soulwake")
+                || !Traits.has(Manipulator.stack(owner), "pyrotechnic.soulwake")
                 || victim == owner
                 || ally(owner, victim)) return;
         if (sl.getEntitiesOfClass(

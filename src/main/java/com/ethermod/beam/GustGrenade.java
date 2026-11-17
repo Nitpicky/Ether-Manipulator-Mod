@@ -58,7 +58,7 @@ public final class GustGrenade {
 
         Grenade(ServerPlayer owner, ItemStack traits) {
             this.owner = owner;
-            this.ricochet = Traits.has(traits, "orb.bank_shot");
+            this.ricochet = Traits.has(traits, "kinetic.bank_shot");
         }
     }
 
@@ -96,7 +96,7 @@ public final class GustGrenade {
 
     /** Detonator: bursts this player's grenades still in the air; true if any did. */
     public static boolean detonateFor(ServerPlayer p, ItemStack stack) {
-        if (!Traits.has(stack, "orb.detonator")) return false;
+        if (!Traits.has(stack, "kinetic.detonator")) return false;
         var list = LIVE.get(p.serverLevel());
         if (list == null) return false;
         boolean any = false;

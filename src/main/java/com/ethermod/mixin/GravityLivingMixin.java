@@ -57,7 +57,7 @@ public abstract class GravityLivingMixin {
     @Inject(method = "updateFallFlying", at = @At("HEAD"), cancellable = true)
     private void mm$elytra(CallbackInfo ci) {
         if ((Object) this instanceof Player p
-                && Traits.has(Manipulator.stack(p), "mobility.flight")
+                && Traits.has(Manipulator.stack(p), "gravitic.flight")
                 && p.isFallFlying()
                 && !p.onGround()
                 && !p.isInWater()

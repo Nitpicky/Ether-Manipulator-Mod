@@ -19,7 +19,7 @@
     "done": {
       "trigger": "ethermod:manipulator",
       "conditions": {
-        "event": "module_cultivation"
+        "event": "module_botanic"
       }
     }
   },

@@ -72,7 +72,7 @@ public final class OrbTether {
             b.discard();
             return false;
         }
-        if (!Traits.hasLine(Manipulator.stack(sp), Traits.MOBILITY)
+        if (!Traits.hasLine(Manipulator.stack(sp), Traits.GRAVITIC)
                 || com.ethermod.item.OrbMode.get(Manipulator.stack(sp)) != OrbMode.TETHER) {
             b.discard();
             return false;
@@ -88,7 +88,7 @@ public final class OrbTether {
         b.jumpWas = jump;
         if (jumped && b.tickCount > 2) {
             if (b.isStuck() && b.hookAt < 0 && b.hooked == null) {
-                if (sp.isShiftKeyDown() && b.has("mobility.zipline")) {
+                if (sp.isShiftKeyDown() && b.has("gravitic.zipline")) {
                     com.ethermod.trait.Ziplines.pin(sp, b);
                     return false;
                 }
@@ -132,7 +132,7 @@ public final class OrbTether {
                                     .getType()
                                     .is(net.neoforged.neoforge.common.Tags.EntityTypes.BOSSES);
             // Displacement: sneak to swap places with it
-            if (mob && b.has("mobility.displacement") && sp.isShiftKeyDown()) {
+            if (mob && b.has("gravitic.displacement") && sp.isShiftKeyDown()) {
                 Vec3 me = sp.position(), it = b.hooked.position();
                 b.hooked.teleportTo(me.x, me.y, me.z);
                 sp.teleportTo(it.x, it.y, it.z);
@@ -170,7 +170,7 @@ public final class OrbTether {
                 return false;
             }
             // Hammer Throw: whirl it around you
-            if (mob && b.has("mobility.hammer_throw")) {
+            if (mob && b.has("gravitic.hammer_throw")) {
                 b.whirling = true;
                 double ang = b.lifeTicks++ * 0.45;
                 double r = 2.6;
@@ -197,7 +197,7 @@ public final class OrbTether {
             Vec3 d = b.position().subtract(hands);
             boolean light =
                     false
-                            && b.has("mobility.recall")
+                            && b.has("gravitic.recall")
                             && (!(b.hooked instanceof LivingEntity)
                                     || b.hooked.getBbWidth() * b.hooked.getBbHeight()
                                             <= sp.getBbWidth() * sp.getBbHeight());
@@ -210,7 +210,7 @@ public final class OrbTether {
                     if (b.hooked instanceof ItemEntity ie) ie.setNoPickUpDelay();
                 }
                 // Recall II: everything loose near the hook comes along
-                if (b.rank("mobility.recall") >= 2) {
+                if (b.rank("gravitic.recall") >= 2) {
                     for (Entity e :
                             sl.getEntities(
                                     b,
@@ -340,11 +340,11 @@ public final class OrbTether {
         b.idleTicks = 0;
         if (twice && b.isStuck() && b.hookAt < 0) {
             b.lastPress = -100;
-            if (b.has("mobility.blink")) {
+            if (b.has("gravitic.blink")) {
                 blink(b, sp);
                 return true;
             }
-            if (b.has("mobility.gravity_shift") && !b.virtualHit && b.hooked == null && b.hookFace != null) {
+            if (b.has("gravitic.gravity_shift") && !b.virtualHit && b.hooked == null && b.hookFace != null) {
                 com.ethermod.trait.MovementPhysics.setGravity(sp, b.hookFace.getOpposite());
                 b.landingSince = now;
                 return true;
@@ -529,7 +529,7 @@ public final class OrbTether {
         b.hookAt = b.level().getGameTime() + HOOK_DELAY;
         b.hookPitch = 1.5f;
         // Weightless: a hooked mob floats helplessly
-        int weightless = b.rank("mobility.weightless");
+        int weightless = b.rank("gravitic.weightless");
         if (weightless > 0
                 && e instanceof LivingEntity le
                 && !(e instanceof net.minecraft.world.entity.player.Player)) {
@@ -539,7 +539,7 @@ public final class OrbTether {
                             weightless >= 2 ? 100 : 60,
                             0));
         }
-        if (b.has("mobility.singularity"))
+        if (b.has("gravitic.singularity"))
             WorldEffects.gravityWell((ServerLevel) b.level(), b.position(), 60, owner);
     }
 }

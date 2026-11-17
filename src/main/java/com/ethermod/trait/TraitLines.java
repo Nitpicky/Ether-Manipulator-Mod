@@ -55,16 +55,16 @@ public final class TraitLines {
     private static int displayOrder(ResourceLocation id, int fallback) {
         int index =
                 List.of(
-                                "combat",
-                                "orb",
-                                "hydraulics",
-                                "pyrotechnics",
-                                "excavation",
+                                "plasmic",
+                                "kinetic",
+                                "hydraulic",
+                                "pyrotechnic",
+                                "tectonic",
                                 "pneumatic",
-                                "cultivation",
+                                "botanic",
                                 "mechatronic",
                                 "photonic",
-                                "mobility")
+                                "gravitic")
                         .indexOf(id.getPath());
         return index < 0 ? 100 + fallback : index;
     }

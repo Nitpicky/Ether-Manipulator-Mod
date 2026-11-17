@@ -50,7 +50,7 @@ public final class Loadouts {
         return out;
     }
 
-    /** The line ids of a saved build, for display ("excavation", ...). */
+    /** The line ids of a saved build, for display ("tectonic", ...). */
     public static List<String> lineIds(Entry e) {
         List<String> ids = new ArrayList<>();
         for (int i = 0; i < e.build().size(); i++) {

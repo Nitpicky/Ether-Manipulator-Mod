@@ -1078,8 +1078,8 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
         Vec3 from = position().add(fwd.scale(2.0)).add(left.scale(right ? -1.15 : 1.15)).add(0, 1.75, 0);
         Vec3 to = homing != null ? homing.getBoundingBox().getCenter() : aim != null ? aim : from.add(fwd.scale(24));
         var st = owner == null ? net.minecraft.world.item.ItemStack.EMPTY : com.ethermod.manipulator.Manipulator.stack(owner);
-        int shots = com.ethermod.trait.Traits.has(st, "orb.split") ? 3 : 1;
-        int bounces = com.ethermod.trait.Traits.has(st, "orb.bank_shot") ? 3 : 0;
+        int shots = com.ethermod.trait.Traits.has(st, "kinetic.split") ? 3 : 1;
+        int bounces = com.ethermod.trait.Traits.has(st, "kinetic.bank_shot") ? 3 : 0;
         Vec3 dir = to.subtract(from).normalize();
         for (int n = 0; n < shots; n++) {
             float turn = (n - (shots - 1) / 2f) * 10f;
@@ -1255,7 +1255,7 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
         if (owner != null
                 && com.ethermod.trait.Traits.hasCommon(
                         com.ethermod.manipulator.Manipulator.stack(owner),
-                        com.ethermod.trait.Traits.PYROTECHNICS,
+                        com.ethermod.trait.Traits.PYROTECHNIC,
                         0))
             com.ethermod.trait.RedesignEffects.burn(e, owner, 4, -1);
     }

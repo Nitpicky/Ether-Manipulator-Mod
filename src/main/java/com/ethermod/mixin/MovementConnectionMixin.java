@@ -27,6 +27,6 @@ public abstract class MovementConnectionMixin {
     private void mm$legitimateHover(CallbackInfo ci) {
         var st = com.ethermod.manipulator.Manipulator.stack(player);
         if (com.ethermod.trait.MovementPhysics.down(player) != net.minecraft.core.Direction.DOWN
-                || com.ethermod.trait.Traits.has(st, "mobility.airwalk")) clientIsFloating = false;
+                || com.ethermod.trait.Traits.has(st, "gravitic.airwalk")) clientIsFloating = false;
     }
 }

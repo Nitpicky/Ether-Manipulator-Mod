@@ -306,9 +306,9 @@ public class EtherManipulatorItem extends Item implements GeoItem {
                     true);
             return;
         }
-        int count = Traits.has(stack, "orb.split") ? phase + 1 : 1;
-        int bursts = Traits.has(stack, "orb.gunner") ? phase + 1 : 1;
-        if (Traits.has(stack, "orb.orbit")
+        int count = Traits.has(stack, "kinetic.split") ? phase + 1 : 1;
+        int bursts = Traits.has(stack, "kinetic.gunner") ? phase + 1 : 1;
+        if (Traits.has(stack, "kinetic.orbit")
                 && level.getEntitiesOfClass(
                                         BeamBallEntity.class,
                                         player.getBoundingBox().inflate(4),
@@ -327,7 +327,7 @@ public class EtherManipulatorItem extends Item implements GeoItem {
                     () -> {
                         if (!player.isAlive() || player.level() != level) return;
                         for (int n = 0; n < shots; n++) {
-                            if (Traits.has(launchTraits, "orb.orbit")
+                            if (Traits.has(launchTraits, "kinetic.orbit")
                                     && level.getEntitiesOfClass(
                                                             BeamBallEntity.class,
                                                             player.getBoundingBox().inflate(4),
@@ -340,12 +340,12 @@ public class EtherManipulatorItem extends Item implements GeoItem {
                             orb.setFiredLeft(left);
                             orb.scaleDamage(1f / (float) (shots * rounds));
                             if (shots > 1) orb.turn((n - (shots - 1) / 2f) * 10f);
-                            if (Traits.has(launchTraits, "orb.orbit")) orb.startOrbit();
+                            if (Traits.has(launchTraits, "kinetic.orbit")) orb.startOrbit();
                             else if (n == 0
                                     && sequence == 0
                                     && mode == OrbMode.WATER
                                     && phase == 2
-                                    && Traits.has(launchTraits, "hydraulics.tidecaller"))
+                                    && Traits.has(launchTraits, "hydraulic.tidecaller"))
                                 orb.carryOwner();
                         }
                         level.playSound(

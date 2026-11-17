@@ -1292,16 +1292,16 @@ public final class PlaytestBootstrap {
         var mm = com.ethermod.manipulator.Manipulator.stack(p);
         var gem = new net.minecraft.world.item.ItemStack(com.ethermod.registry.ModItems.GEMS.get("quetzalite").get());
         p.setItemInHand(net.minecraft.world.InteractionHand.OFF_HAND, gem);
-        boolean before = com.ethermod.trait.ModuleUnlocks.known(mm, net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("ethermod", "cultivation"));
+        boolean before = com.ethermod.trait.ModuleUnlocks.known(mm, net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("ethermod", "botanic"));
         gem.getItem().use(p.serverLevel(), p, net.minecraft.world.InteractionHand.OFF_HAND);
         boolean after = com.ethermod.trait.ModuleUnlocks.known(com.ethermod.manipulator.Manipulator.stack(p),
-                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("ethermod", "cultivation"));
+                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("ethermod", "botanic"));
         log((after ? "PASS" : "FAIL") + " gems: using a Quetzalite unlocks the Botanic Module (before " + before + ")");
         log((done.test("quetzalite") && !done.test("stratite") ? "PASS" : "FAIL")
                 + " advancements: unlocking the Botanic Module earns Feathered Serpent only");
         p.setItemInHand(net.minecraft.world.InteractionHand.OFF_HAND, net.minecraft.world.item.ItemStack.EMPTY);
         boolean noModules = net.minecraft.core.registries.BuiltInRegistries.ITEM.getOptional(
-                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("ethermod", "module_hydraulics")).isEmpty();
+                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("ethermod", "module_hydraulic")).isEmpty();
         log((noModules ? "PASS" : "FAIL") + " gems: the Module items are gone");
         for (String[] r : new String[][] {{"upgrade_iron", "minecraft:iron_block", "minecraft:amethyst_shard"}, {"upgrade_diamond", "minecraft:gold_block", "minecraft:diamond"}}) {
             var rec = s.getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("ethermod", r[0]));
@@ -1468,23 +1468,23 @@ public final class PlaytestBootstrap {
         net.minecraft.resources.ResourceLocation own =
                 switch (mode) {
                     case LIGHT -> com.ethermod.trait.Traits.PHOTONIC;
-                    case TETHER -> com.ethermod.trait.Traits.MOBILITY;
+                    case TETHER -> com.ethermod.trait.Traits.GRAVITIC;
                     case GUST -> com.ethermod.trait.Traits.PNEUMATIC;
-                    case MASS -> com.ethermod.trait.Traits.EXCAVATION;
-                    case LAVA, IGNITE -> com.ethermod.trait.Traits.PYROTECHNICS;
-                    case GROWTH -> com.ethermod.trait.Traits.CULTIVATION;
+                    case MASS -> com.ethermod.trait.Traits.TECTONIC;
+                    case LAVA, IGNITE -> com.ethermod.trait.Traits.PYROTECHNIC;
+                    case GROWTH -> com.ethermod.trait.Traits.BOTANIC;
                     case GOLEM -> com.ethermod.trait.Traits.MECHATRONIC;
-                    default -> com.ethermod.trait.Traits.HYDRAULICS;
+                    default -> com.ethermod.trait.Traits.HYDRAULIC;
                 };
         net.minecraft.resources.ResourceLocation second =
-                own.equals(com.ethermod.trait.Traits.HYDRAULICS)
+                own.equals(com.ethermod.trait.Traits.HYDRAULIC)
                         ? com.ethermod.trait.Traits.PNEUMATIC
-                        : com.ethermod.trait.Traits.HYDRAULICS;
+                        : com.ethermod.trait.Traits.HYDRAULIC;
         net.minecraft.resources.ResourceLocation third =
-                own.equals(com.ethermod.trait.Traits.CULTIVATION)
-                                || second.equals(com.ethermod.trait.Traits.CULTIVATION)
-                        ? com.ethermod.trait.Traits.PYROTECHNICS
-                        : com.ethermod.trait.Traits.CULTIVATION;
+                own.equals(com.ethermod.trait.Traits.BOTANIC)
+                                || second.equals(com.ethermod.trait.Traits.BOTANIC)
+                        ? com.ethermod.trait.Traits.PYROTECHNIC
+                        : com.ethermod.trait.Traits.BOTANIC;
         com.ethermod.trait.TraitBuild.setLine(mm, 0, own);
         com.ethermod.trait.TraitBuild.setLine(mm, 1, second);
         com.ethermod.trait.TraitBuild.setLine(mm, 2, third);

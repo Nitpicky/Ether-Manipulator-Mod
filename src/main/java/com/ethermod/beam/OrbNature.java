@@ -34,7 +34,7 @@ final class OrbNature {
     static void driftTick(BeamBallEntity b) {
         ServerLevel sl = (ServerLevel) b.level();
         // Lingering Bloom: twice as long, pulsing twice as often
-        boolean linger = b.has("cultivation.lingering_bloom");
+        boolean linger = b.has("botanic.lingering_bloom");
         int life = (b.getPhase() == 2 ? 160 : 80) * (linger ? 2 : 1);
         if (++b.lifeTicks > life) {
             b.impactFx(b.position());
@@ -44,7 +44,7 @@ final class OrbNature {
         if (b.getOwner() instanceof ServerPlayer sp && sp.isAlive() && sp.level() == sl) {
             Vec3 eye = sp.getEyePosition();
             double reach =
-                    !b.traits.isEmpty() && Traits.hasCommon(b.traits, Traits.CULTIVATION, 1)
+                    !b.traits.isEmpty() && Traits.hasCommon(b.traits, Traits.BOTANIC, 1)
                             ? 48
                             : 24; // Pollen Trail
             Vec3 target =
@@ -76,8 +76,8 @@ final class OrbNature {
         ProjectileEffects.growthCloud(b, b.traits);
         int r =
                 1
-                        + Math.max(0, b.rank("cultivation.lingering_bloom") - 1)
-                        + (b.getPhase() == 2 ? b.rank("orb.payload") : 0); // Payload: a wider cloud
+                        + Math.max(0, b.rank("botanic.lingering_bloom") - 1)
+                        + (b.getPhase() == 2 ? b.rank("kinetic.payload") : 0); // Payload: a wider cloud
         BlockPos c = b.blockPosition();
         long now = sl.getGameTime();
         for (BlockPos bp : BlockPos.betweenClosed(c.offset(-r, -3, -r), c.offset(r, 0, r))) {
@@ -151,7 +151,7 @@ final class OrbNature {
                 } else {
                     WorldEffects.placeFire(sl, firePos, owner);
                 }
-                int inc = b.rank("pyrotechnics.incendiary");
+                int inc = b.rank("pyrotechnic.incendiary");
                 if (b.getPhase() == 2 && inc > 0)
                     WorldEffects.fireStar(sl, firePos, owner, inc >= 2 ? 3 : 2);
                 else if (b.getPhase() >= 1)
@@ -196,12 +196,12 @@ final class OrbNature {
         ServerLevel sl = (ServerLevel) b.level();
         int r =
                 (b.getPhase() == 2
-                                ? (b.has("cultivation.verdant_pulse") ? 4 : 2)
-                                        + b.rank("orb.payload")
+                                ? (b.has("botanic.verdant_pulse") ? 4 : 2)
+                                        + b.rank("kinetic.payload")
                                 : 0)
-                        + Math.max(0, b.rank("cultivation.lingering_bloom") - 1);
-        boolean rewild = b.has("cultivation.rewild");
-        boolean moss = b.rank("cultivation.rewild") >= 2;
+                        + Math.max(0, b.rank("botanic.lingering_bloom") - 1);
+        boolean rewild = b.has("botanic.rewild");
+        boolean moss = b.rank("botanic.rewild") >= 2;
         for (BlockPos p :
                 BlockPos.betweenClosed(hitPos.offset(-r, -1, -r), hitPos.offset(r, 1, r))) {
             if (!b.mayBuild(p)) continue;

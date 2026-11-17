@@ -52,16 +52,16 @@ public final class PairScreenshotTour {
     }
     public static void step(Minecraft mc) {
         tick++;
-        if (tick == 10) configure(mc, ManipulatorStage.NETHERITE, "combat", "orb", "hydraulics");
+        if (tick == 10) configure(mc, ManipulatorStage.NETHERITE, "plasmic", "kinetic", "hydraulic");
         if (tick == 25 || tick == 155 || tick == 285 || tick == 415 || tick == 545) mc.setScreen(new TraitScreen());
         if (tick == 120) capture(mc, "pairs-01-plasmic-kinetic-hydraulic");
-        if (tick == 140) configure(mc, ManipulatorStage.NETHERITE, "pyrotechnics", "excavation", "pneumatic");
+        if (tick == 140) configure(mc, ManipulatorStage.NETHERITE, "pyrotechnic", "tectonic", "pneumatic");
         if (tick == 250) capture(mc, "pairs-02-pyrotechnic-tectonic-pneumatic");
-        if (tick == 270) configure(mc, ManipulatorStage.NETHERITE, "cultivation", "mechatronic", "photonic");
+        if (tick == 270) configure(mc, ManipulatorStage.NETHERITE, "botanic", "mechatronic", "photonic");
         if (tick == 380) capture(mc, "pairs-03-botanic-mechatronic-photonic");
-        if (tick == 400) configure(mc, ManipulatorStage.NETHERITE, "mobility", "mechatronic", "combat");
+        if (tick == 400) configure(mc, ManipulatorStage.NETHERITE, "gravitic", "mechatronic", "plasmic");
         if (tick == 510) capture(mc, "pairs-04-gravitic");
-        if (tick == 530) configure(mc, ManipulatorStage.IRON, "combat");
+        if (tick == 530) configure(mc, ManipulatorStage.IRON, "plasmic");
         if (tick == 640) capture(mc, "pairs-05-calibrated-locked-panels");
         if (tick == 660 && mc.screen instanceof UpgradeScreen screen) {
             try { var f = UpgradeScreen.class.getDeclaredField("picker"); f.setAccessible(true); f.setInt(screen, 0); }

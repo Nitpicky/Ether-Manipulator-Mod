@@ -206,14 +206,14 @@ public final class WorldEffects {
                 owner instanceof ServerPlayer player
                         && Traits.has(
                                 com.ethermod.manipulator.Manipulator.stack(player),
-                                "pyrotechnics.soulwake");
+                                "pyrotechnic.soulwake");
         if (soul) tempBlock(level, pos, Blocks.SOUL_FIRE.defaultBlockState(), 600);
         else level.setBlockAndUpdate(pos, BaseFireBlock.getState(level, pos));
         if (owner instanceof ServerPlayer sp) {
             int burn =
                     Traits.has(
                                     com.ethermod.manipulator.Manipulator.stack(sp),
-                                    "pyrotechnics.wildfire")
+                                    "pyrotechnic.wildfire")
                             ? 0
                             : 1;
             long now = level.getGameTime();

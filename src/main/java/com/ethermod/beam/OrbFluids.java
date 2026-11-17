@@ -34,7 +34,7 @@ final class OrbFluids {
 
     /** Helmsman: Water orbs steer toward where their owner aims. */
     static void steerWater(BeamBallEntity b) {
-        int helm = b.rank("hydraulics.helmsman");
+        int helm = b.rank("hydraulic.helmsman");
         if (helm <= 0
                 || !(b.getOwner() instanceof ServerPlayer sp)
                 || !sp.isAlive()
@@ -119,7 +119,7 @@ final class OrbFluids {
     static void settle(
             BeamBallEntity b, BlockPos pos, net.minecraft.world.level.material.FlowingFluid fluid) {
         ServerLevel sl = (ServerLevel) b.level();
-        String keeper = fluid == Fluids.LAVA ? "pyrotechnics.inferno" : "hydraulics.pressure";
+        String keeper = fluid == Fluids.LAVA ? "pyrotechnic.inferno" : "hydraulic.pressure";
         if (b.has(keeper)) {
             for (Direction d : Direction.values()) {
                 BlockState n = sl.getBlockState(pos.relative(d));
@@ -158,7 +158,7 @@ final class OrbFluids {
     static void lavaPlaced(BeamBallEntity b, BlockPos pos) {
         ServerLevel sl = (ServerLevel) b.level();
         WorldEffects.ownLava(sl, pos, b.getOwner());
-        int cast = b.rank("pyrotechnics.obsidian_cast");
+        int cast = b.rank("pyrotechnic.obsidian_cast");
         if (cast > 0) {
             BlockPos p = pos.immutable();
             WorldEffects.schedule(
@@ -227,7 +227,7 @@ final class OrbFluids {
 
     /** Forge Heart: a Lava orb fuels a furnace, smoker or blast furnace for 32 items (64 at II). */
     static boolean forgeHeart(BeamBallEntity b, BlockPos pos) {
-        int heart = b.getMode() == OrbMode.IGNITE ? b.rank("pyrotechnics.kiln") : 0;
+        int heart = b.getMode() == OrbMode.IGNITE ? b.rank("pyrotechnic.kiln") : 0;
         if (heart <= 0 || !b.mayBuild(pos)) return false;
         ServerLevel sl = (ServerLevel) b.level();
         if (!(sl.getBlockEntity(pos)
@@ -268,7 +268,7 @@ final class OrbFluids {
 
     /** Kiln: smelts dropped items near a fire impact (1 block, then 3x3, 5x5 and food too). */
     static void kiln(BeamBallEntity b, Vec3 at) {
-        int k = b.rank("pyrotechnics.kiln");
+        int k = b.rank("pyrotechnic.kiln");
         if (true) return; // Kiln is furnace fuelling, not dropped-item smelting.
         ServerLevel sl = (ServerLevel) b.level();
         double r = 0.5 + (k - 1);

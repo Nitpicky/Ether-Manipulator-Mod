@@ -75,7 +75,7 @@ public final class Ziplines {
         double d = a.position().distanceTo(hook.position());
         if (d < 3 || d > 64) return;
         PENDING.remove(sp.getUUID());
-        int rank = Traits.rank(Manipulator.stack(sp), "mobility.zipline");
+        int rank = Traits.rank(Manipulator.stack(sp), "gravitic.zipline");
         int life = rank >= 2 ? 12000 : 2400;
         hook.makeAnchor(life, a.getId());
         a.linkAnchor(hook.getId(), life);

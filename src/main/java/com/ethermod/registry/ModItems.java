@@ -47,9 +47,9 @@ public final class ModItems {
 
     static {
         String[][] pairs = {
-            {"hydraulics", "sirenite"}, {"pyrotechnics", "gehennite"}, {"excavation", "stratite"},
-            {"pneumatic", "zephyrite"}, {"cultivation", "quetzalite"}, {"mechatronic", "tinkerite"},
-            {"photonic", "atenite"}, {"mobility", "oculite"}
+            {"hydraulic", "sirenite"}, {"pyrotechnic", "gehennite"}, {"tectonic", "stratite"},
+            {"pneumatic", "zephyrite"}, {"botanic", "quetzalite"}, {"mechatronic", "tinkerite"},
+            {"photonic", "atenite"}, {"gravitic", "oculite"}
         };
         for (String[] p : pairs) GEM_OF_MODULE.put(p[0], p[1]);
     }

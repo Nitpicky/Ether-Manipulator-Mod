@@ -104,7 +104,6 @@ public final class TraitBuild {
         while (list.size() < MAX_SLOTS) list.add(new CompoundTag());
         f.accept(list);
         root.put(TAG, list);
-        root.remove("EtherSkillTree"); // retire the old skill tree data
         stack.set(DataComponents.CUSTOM_DATA, CustomData.of(root));
     }
 }

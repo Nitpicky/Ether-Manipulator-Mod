@@ -55,16 +55,16 @@ public final class ModuleItem extends Item {
     /** The Module's accent, as on the K screen (trait_line colours). */
     private static int colour(String module) {
         return switch (module) {
-            case "combat" -> 0xE99F20;
-            case "cultivation" -> 0x60D060;
-            case "excavation" -> 0xD48050;
-            case "hydraulics" -> 0x3F8CFF;
+            case "plasmic" -> 0xE99F20;
+            case "botanic" -> 0x60D060;
+            case "tectonic" -> 0xD48050;
+            case "hydraulic" -> 0x3F8CFF;
             case "mechatronic" -> 0xE92031;
-            case "mobility" -> 0xC080FF;
-            case "orb" -> 0x66E0FF;
+            case "gravitic" -> 0xC080FF;
+            case "kinetic" -> 0x66E0FF;
             case "photonic" -> 0xFFE070;
             case "pneumatic" -> 0xB8E8E0;
-            case "pyrotechnics" -> 0xFF7020;
+            case "pyrotechnic" -> 0xFF7020;
             default -> 0x55FFFF;
         };
     }

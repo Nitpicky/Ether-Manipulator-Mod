@@ -5,54 +5,54 @@
   "icon": "minecraft:diamond_pickaxe",
   "order": 1,
   "badge": {
-    "id": "excavation.badge",
+    "id": "tectonic.badge",
     "name": "Drill Head",
     "description": "Unlocks [color=#D48050]Mass Driver Mode[/color]. Mining Speed +2."
   },
   "commons": [
     {
-      "id": "excavation.common_collector",
+      "id": "tectonic.common_collector",
       "name": "Collector",
       "description": "Drops from blocks you break fly to you."
     },
     {
-      "id": "excavation.common_reach",
+      "id": "tectonic.common_reach",
       "name": "Extended Reach",
       "description": "Block interaction reach +2 blocks."
     }
   ],
   "adept": [
     {
-      "id": "excavation.momentum",
+      "id": "tectonic.momentum",
       "name": "Momentum",
       "description": "Mining builds [color=#E99F20]Pressure[/color]; each stage mines faster."
     },
     {
-      "id": "excavation.steady_hand",
+      "id": "tectonic.steady_hand",
       "name": "Steady Hand",
       "description": "Held blocks lock to the grid, preview where they land and are set down exactly as shown."
     }
   ],
   "master": [
     {
-      "id": "excavation.fortune",
+      "id": "tectonic.fortune",
       "name": "Fortune",
       "description": "Harvest more natural resources."
     },
     {
-      "id": "excavation.silk_touch",
+      "id": "tectonic.silk_touch",
       "name": "Silk Touch",
       "description": "Harvest blocks intact."
     }
   ],
   "grandmaster": [
     {
-      "id": "excavation.vein_miner",
+      "id": "tectonic.vein_miner",
       "name": "Vein Miner",
       "description": "Mine whole ore veins at once. See nearby ores through walls."
     },
     {
-      "id": "excavation.mass_pickup",
+      "id": "tectonic.mass_pickup",
       "name": "Mass Pickup",
       "description": "Lift a whole group of blocks at once."
     }
