@@ -17,8 +17,8 @@ PASS control dye11 found
 PASS control dye14 found
 PASS control dye7 found
 PASS control dye17 found
-PASS control 135.0,70.0 found
-PASS control 225.0,70.0 found
+PASS control 225.0,64.0 found
+PASS control 140.0,100.0 found
 PASS control apply-colour found
 PASS control dye0 found
 PASS control 330.0,120.0 found
