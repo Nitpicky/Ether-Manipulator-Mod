@@ -288,9 +288,12 @@ public class UpgradeScreen extends Screen {
             g.pose().popPose();
         }
         g.pose().popPose();
-        if (hovered != null && !hovered.tip().isEmpty() && now - hoverAt >= .180)
+        if (showTooltips && hovered != null && !hovered.tip().isEmpty() && now - hoverAt >= .180)
             renderColourTooltip(g, hovered, mouseX, mouseY);
     }
+
+    /** Off only for the recorded mod-page GIFs, where a tooltip would be cut by the crop. */
+    static boolean showTooltips = true;
 
     private void renderColourTooltip(GuiGraphics g, Hit hit, int mouseX, int mouseY) {
         var lines = new ArrayList<FormattedCharSequence>();

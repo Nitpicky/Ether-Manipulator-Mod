@@ -258,7 +258,9 @@ public final class KGifTour {
         glide("upgrade", 14);
         waitT(30);
         click();
-        waitT(50);
+        waitT(30);
+        away(10);
+        waitT(10);
         close();
 
         // ---- 2. Choosing a Module for the Calibrated slot -----------------------------------
@@ -276,7 +278,9 @@ public final class KGifTour {
         glideTo(() -> centre(mc, "module-pick" + moduleIndex(Traits.PYROTECHNIC)), "pyrotechnic", 12);
         waitT(18);
         click();
-        waitT(40);
+        waitT(30);
+        away(10);
+        waitT(10);
         close();
 
         // ---- 3. Trait choices: A or B per tier, then the Commons ----------------------------
@@ -302,9 +306,9 @@ public final class KGifTour {
         waitT(10);
         click();
         waitT(14);
-        glide("common01", 12);
+        glide("common00", 12);
         waitT(24);
-        glide("common02", 10);
+        glide("common01", 10);
         waitT(24);
         away(10);
         waitT(10);
@@ -355,7 +359,9 @@ public final class KGifTour {
         glide("dye0", 12);
         waitT(4);
         click();
-        waitT(24);
+        waitT(14);
+        away(10);
+        waitT(10);
         close();
 
         // ---- 5. Sets: save the build, clear it, load it back --------------------------------
@@ -380,7 +386,9 @@ public final class KGifTour {
         glide("set0", 14);
         waitT(8);
         click();
-        waitT(36);
+        waitT(24);
+        away(10);
+        waitT(10);
         close();
 
         // ---- 6. Overview: full build, turntable, then a drag spin ---------------------------
@@ -409,6 +417,8 @@ public final class KGifTour {
 
     public static void step(Minecraft mc) {
         tick++;
+        UpgradeScreen.showTooltips = false;
+        mc.getToasts().clear();
         if (tick < 20) return;
         if (!built) {
             built = true;
