@@ -217,6 +217,37 @@ public final class KGifTour {
                 });
     }
 
+    private static boolean tooltips;
+
+    private static void tips(boolean on) {
+        add(1, () -> tooltips = on, null);
+    }
+
+    /** Press, drag the virtual mouse to a point in K-window pixels over n ticks, release. */
+    private static void dragTo(double lx, double ly, int n) {
+        Minecraft mc = Minecraft.getInstance();
+        final double[] from = new double[2], to = new double[2];
+        add(
+                n + 2,
+                () -> {
+                    from[0] = vx;
+                    from[1] = vy;
+                    var t = local(mc, lx, ly);
+                    to[0] = t[0];
+                    to[1] = t[1];
+                    mc.screen.mouseClicked(vx, vy, 0);
+                },
+                i -> {
+                    if (i < n) {
+                        double f = (i + 1) / (double) n, px = vx, py = vy;
+                        f = f * f * (3 - 2 * f);
+                        vx = from[0] + (to[0] - from[0]) * f;
+                        vy = from[1] + (to[1] - from[1]) * f;
+                        mc.screen.mouseDragged(vx, vy, 0, vx - px, vy - py);
+                    } else if (i == n) mc.screen.mouseReleased(vx, vy, 0);
+                });
+    }
+
     private static void away(int n) {
         glideLocal(330, 120, n);
         add(1, () -> vx = vy = -50, null);
@@ -231,7 +262,7 @@ public final class KGifTour {
     private static void build(ServerPlayer p, ItemStack st, boolean picks) {
         var ids =
                 new net.minecraft.resources.ResourceLocation[] {
-                    Traits.PYROTECHNIC, Traits.HYDRAULIC, Traits.GRAVITIC
+                    Traits.TECTONIC, Traits.HYDRAULIC, Traits.GRAVITIC
                 };
         for (int slot = 0; slot < 3; slot++) {
             TraitBuild.setLine(st, slot, ids[slot]);
@@ -291,28 +322,30 @@ public final class KGifTour {
                     build(p, st, false);
                 });
         open("3_traits");
+        tips(true); // this scene reads the trait tooltips
         waitT(14);
         glide("node000", 14);
-        waitT(14);
+        waitT(40);
         glide("node001", 10);
-        waitT(14);
+        waitT(40);
         click();
         waitT(14);
         glide("node010", 12);
-        waitT(10);
+        waitT(36);
         click();
         waitT(14);
         glide("node021", 12);
-        waitT(10);
+        waitT(36);
         click();
         waitT(14);
         glide("common00", 12);
-        waitT(24);
+        waitT(36);
         glide("common01", 10);
-        waitT(24);
+        waitT(36);
         away(10);
         waitT(10);
         close();
+        tips(false);
 
         // ---- 4. Colours: unlock a dye from the inventory, pick dyes, then Custom ------------
         server(
@@ -346,11 +379,12 @@ public final class KGifTour {
         waitT(16);
         click();
         waitT(14);
-        glideLocal(135, 70, 12);
-        drag(46 * 3, 30 * 3, 24);
+        // hue first (a violet), then saturation/brightness inside the square: a bright, saturated pick
+        glideLocal(225, 64, 12);
+        dragTo(225, 112, 24);
         waitT(8);
-        glideLocal(225, 70, 10);
-        drag(0, 35 * 3, 24);
+        glideLocal(140, 100, 10);
+        dragTo(200, 66, 24);
         waitT(10);
         glide("apply-colour", 12);
         waitT(6);
@@ -417,7 +451,7 @@ public final class KGifTour {
 
     public static void step(Minecraft mc) {
         tick++;
-        UpgradeScreen.showTooltips = false;
+        UpgradeScreen.showTooltips = tooltips;
         mc.getToasts().clear();
         if (tick < 20) return;
         if (!built) {
