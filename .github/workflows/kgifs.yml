@@ -1,8 +1,11 @@
 name: K screen GIFs
 # Records the K screen scenes for the mod page (KGifTour, -PkGifs) and publishes the GIFs to the
-# playtest-results branch under kgifs/. Manual.
+# playtest-results branch under kgifs/. Runs by hand, or on a push that changes the recorder.
 on:
   workflow_dispatch:
+  push:
+    branches: ['claude/**', 'codex/**']
+    paths: ['src/playtest/java/com/ethermod/client/KGifTour.java', '.github/workflows/kgifs.yml', '.github/scripts/kgifs.py']
 permissions:
   contents: write
 jobs:
