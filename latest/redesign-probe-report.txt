@@ -1,0 +1,208 @@
+PASS Ten Module definitions
+PASS Default Plasmic/Kinetic knowledge
+PASS Plasmic 6 choices + 2 Commons
+PASS Kinetic 6 choices + 2 Commons
+PASS Hydraulic 6 choices + 2 Commons
+PASS Pyrotechnic 6 choices + 2 Commons
+PASS Tectonic 6 choices + 2 Commons
+PASS Pneumatic 6 choices + 2 Commons
+PASS Botanic 6 choices + 2 Commons
+PASS Mechatronic 6 choices + 2 Commons
+PASS Photonic 6 choices + 2 Commons
+PASS Gravitic 6 choices + 2 Commons
+PASS Reservoir grows the shared tank
+PASS Common follows prior choice
+PASS Common inactive without choice
+PASS Mode switch retains tank
+PASS Module switch retains tank
+PASS Reload waits 4s at Prototype
+PASS Crucible grows the shared tank
+PASS Seedbank grows the shared tank
+PASS Frost spends water
+PASS Ignite/Lava costs
+PASS Vacuum removed
+PASS No Tier scaling
+PASS Gravity changes player bounds
+PASS Gravity rotates up toward surface normal
+PASS Gravity reset
+PASS Golem tree: Supercharged replaces Redstone Arcs
+PASS Golem tree: Piston Arm offered, retired Latch rejected
+PASS Golem summoned
+PASS Golem counts as an ally
+PASS Golem has no Super Move without a Super Move trait
+PASS Golem put away
+PASS Stasis accumulates force
+PASS Stasis last impulse sets direction
+PASS Mirage entity creates with owner skin identity
+PASS Mirage cannot be hurt
+PASS Rapids overrides actual water flow
+PASS Rapids preserves water blocks
+PASS Airwalk finds real support with stale ground flag
+PASS Airwalk does not treat empty air as real support
+PASS Old builds keep moved choices
+PASS Mass Driver picks block
+PASS Mass Driver removes original once
+PASS Mass Driver focus release preserves entity
+PASS Radiance heals user
+PASS Radiance overlap does not stack
+PASS Soulfire kill raises allied Blazeling
+PASS Blazeling keeps owner and lifetime
+PASS Blazeling cannot target owner or summons
+PASS Blazeling emits one straight bolt
+PASS Blazeling bolt deals modest damage and player-owned soulfire
+PASS Blazeling-owned soulfire can trigger Soulwake again
+PASS Blazeling bolt does not place fire or alter terrain
+PASS Soulwake chain shares eight summon cap
+PASS Soulwake terrain fire is actual soul fire
+PASS Placed soul fire attributes burns to player
+PASS Player lava inflicts owned soul burn
+PASS Soulwake Ignite projectile syncs soul visual
+PASS Blazeling charges with soul fire before shot
+PASS Blazeling clears warning after its single shot
+PASS Blazeling rises before its single shot
+PASS Blazeling settles after firing
+PASS Blazeling routine fires only once in cycle
+PASS Blazeling idles at raised hover height
+PASS Fire expiry has no cracks but ice retains them
+PASS Blazeling expiry dies instead of discarding
+PASS Blazeling ownership and deadline survive save/load
+PASS Split pays once per whole shot
+PASS Retired Gunner/Orbit dropped from old builds
+PASS Seeker is a Kinetic Grandmaster choice
+PASS Replant puts a fresh crop back
+PASS Diving Bell blocks water entry
+PASS Energy orb spends the shared tank, Tether does not
+PASS Shared tank reloads in full after the delay
+PASS Three tank traits stack
+PASS Tank never exceeds capacity
+PASS Bellows grows the shared tank
+PASS Rapids restores natural current
+PASS Gravity basis down
+PASS Hook follows aim down
+PASS Skyhook anchors in the air down
+PASS Gravity basis up
+PASS Hook follows aim up
+PASS Skyhook anchors in the air up
+PASS Gravity basis north
+PASS Hook follows aim north
+PASS Skyhook anchors in the air north
+PASS Gravity basis south
+PASS Hook follows aim south
+PASS Skyhook anchors in the air south
+PASS Gravity basis west
+PASS Hook follows aim west
+PASS Skyhook anchors in the air west
+PASS Gravity basis east
+PASS Hook follows aim east
+PASS Skyhook anchors in the air east
+PASS Standing pose clearance follows gravity down
+PASS Ceiling/wall crawl recovers to standing down
+PASS Pose resize keeps feet planted down
+PASS Pose resize rebuilds correct box down
+PASS Standing surface with pose ticks remains stable down
+PASS Real low clearance still allows crawling down
+PASS Leaving low clearance restores standing down
+PASS Standing pose clearance follows gravity up
+PASS Ceiling/wall crawl recovers to standing up
+PASS Pose resize keeps feet planted up
+PASS Pose resize rebuilds correct box up
+PASS Standing surface with pose ticks remains stable up
+PASS Real low clearance still allows crawling up
+PASS Leaving low clearance restores standing up
+PASS Standing pose clearance follows gravity north
+PASS Ceiling/wall crawl recovers to standing north
+PASS Pose resize keeps feet planted north
+PASS Pose resize rebuilds correct box north
+PASS Standing surface with pose ticks remains stable north
+PASS Real low clearance still allows crawling north
+PASS Leaving low clearance restores standing north
+PASS Standing pose clearance follows gravity south
+PASS Ceiling/wall crawl recovers to standing south
+PASS Pose resize keeps feet planted south
+PASS Pose resize rebuilds correct box south
+PASS Standing surface with pose ticks remains stable south
+PASS Real low clearance still allows crawling south
+PASS Leaving low clearance restores standing south
+PASS Standing pose clearance follows gravity west
+PASS Ceiling/wall crawl recovers to standing west
+PASS Pose resize keeps feet planted west
+PASS Pose resize rebuilds correct box west
+PASS Standing surface with pose ticks remains stable west
+PASS Real low clearance still allows crawling west
+PASS Leaving low clearance restores standing west
+PASS Standing pose clearance follows gravity east
+PASS Ceiling/wall crawl recovers to standing east
+PASS Pose resize keeps feet planted east
+PASS Pose resize rebuilds correct box east
+PASS Standing surface with pose ticks remains stable east
+PASS Real low clearance still allows crawling east
+PASS Leaving low clearance restores standing east
+PASS Creative flight has no gravity acceleration
+PASS Rotated collision sweep stops at terrain
+PASS Cramped gravity turn refuses instead of clipping
+PASS Gravity turn is visibly intermediate after five ticks
+PASS Soul fire sends no mining-crack overlay
+PASS Blazeling model has one head and three rods
+PASS Blazeling rods orbit at preserved radius
+PASS Blazeling rods sit below face centre
+PASS Blazeling head tracks independently
+PASS Blazeling renderer registered
+PASS Client gravity received
+PASS Client gravity eye offset
+PASS Gravity overlay follows the actual eye
+PASS Client escape leaves supported player stable down
+PASS Client escape leaves supported player stable up
+PASS Client wall escape and travel stay planted up
+PASS Body facing follows local walk up along=(0.12, 0.0, 0.0)
+PASS Body facing follows local walk up along=(0.0, 0.0, 0.12)
+PASS Third person stays outside head up front=false
+PASS Third person stays outside head up front=true
+PASS Sneak protects gravity-relative ledge up
+PASS Pneumatic Common preserves jump away from surface up
+PASS Pneumatic Common slows local falling up
+PASS Gravity travel advances walking animation up
+PASS Gravity normal motion does not walk up
+PASS Client escape leaves supported player stable north
+PASS Client wall escape and travel stay planted north
+PASS Body facing follows local walk north along=(0.12, 0.0, 0.0)
+PASS Body facing follows local walk north along=(0.0, 0.0, 0.12)
+PASS Third person stays outside head north front=false
+PASS Third person stays outside head north front=true
+PASS Sneak protects gravity-relative ledge north
+PASS Pneumatic Common preserves jump away from surface north
+PASS Pneumatic Common slows local falling north
+PASS Gravity travel advances walking animation north
+PASS Gravity normal motion does not walk north
+PASS Client escape leaves supported player stable south
+PASS Client wall escape and travel stay planted south
+PASS Body facing follows local walk south along=(0.12, 0.0, 0.0)
+PASS Body facing follows local walk south along=(0.0, 0.0, 0.12)
+PASS Third person stays outside head south front=false
+PASS Third person stays outside head south front=true
+PASS Sneak protects gravity-relative ledge south
+PASS Pneumatic Common preserves jump away from surface south
+PASS Pneumatic Common slows local falling south
+PASS Gravity travel advances walking animation south
+PASS Gravity normal motion does not walk south
+PASS Client escape leaves supported player stable west
+PASS Client wall escape and travel stay planted west
+PASS Body facing follows local walk west along=(0.12, 0.0, 0.0)
+PASS Body facing follows local walk west along=(0.0, 0.0, 0.12)
+PASS Third person stays outside head west front=false
+PASS Third person stays outside head west front=true
+PASS Sneak protects gravity-relative ledge west
+PASS Pneumatic Common preserves jump away from surface west
+PASS Pneumatic Common slows local falling west
+PASS Gravity travel advances walking animation west
+PASS Gravity normal motion does not walk west
+PASS Client escape leaves supported player stable east
+PASS Client wall escape and travel stay planted east
+PASS Body facing follows local walk east along=(0.12, 0.0, 0.0)
+PASS Body facing follows local walk east along=(0.0, 0.0, 0.12)
+PASS Third person stays outside head east front=false
+PASS Third person stays outside head east front=true
+PASS Sneak protects gravity-relative ledge east
+PASS Pneumatic Common preserves jump away from surface east
+PASS Pneumatic Common slows local falling east
+PASS Gravity travel advances walking animation east
+PASS Gravity normal motion does not walk east
