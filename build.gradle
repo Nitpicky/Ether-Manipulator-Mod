@@ -102,5 +102,7 @@ if (project.hasProperty('playtest')) {
         if (project.hasProperty('stopAfter')) systemProperty 'ethermod.stopAfter', project.property('stopAfter')
         // -PcloudTest fires the beam from above the clouds (Fancy, then Fabulous) instead of the rest of the tour
         if (project.hasProperty('cloudTest')) systemProperty 'ethermod.cloudTest', 'true'
+        // -PkGifs records the K screen scenes for the mod page (KGifTour), frames in runs/client/screenshots
+        if (project.hasProperty('kGifs')) systemProperty 'ethermod.kGifs', 'true'
     }
 }

@@ -1,0 +1,46 @@
+name: K screen GIFs
+# Records the K screen scenes for the mod page (KGifTour, -PkGifs) and publishes the GIFs to the
+# playtest-results branch under kgifs/. Manual.
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  kgifs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Install virtual display
+        run: sudo apt-get update -q && sudo apt-get install -y -q xvfb libgl1-mesa-dri libglx-mesa0 pulseaudio && pip install -q pillow
+      - name: Record the K screen
+        env:
+          ETHERMOD_AUTOTEST: '1'
+          LIBGL_ALWAYS_SOFTWARE: '1'
+          MESA_GL_VERSION_OVERRIDE: '4.5'
+        run: |
+          xvfb-run -a -s '-screen 0 1280x720x24' timeout 1200 ./gradlew runClient -Pplaytest -PkGifs --no-daemon || true
+          cat runs/client/kgif-report.txt || true
+          ls runs/client/screenshots | wc -l
+      - name: Make the GIFs
+        run: python3 .github/scripts/kgifs.py runs/client out
+      - name: Publish
+        if: always()
+        run: |
+          cp runs/client/kgif-report.txt runs/client/logs/latest.log out/ 2>/dev/null || true
+          SHA=$(git rev-parse --short HEAD)
+          git config user.name "playtest-bot"
+          git config user.email "playtest-bot@users.noreply.github.com"
+          git fetch origin playtest-results
+          git worktree add /tmp/pr origin/playtest-results
+          cd /tmp/pr && git checkout -B playtest-results
+          rm -rf kgifs/latest && mkdir -p kgifs/latest
+          cp $GITHUB_WORKSPACE/out/* kgifs/latest/ 2>/dev/null || true
+          git add -A
+          git commit -qm "K screen GIFs for $SHA" || true
+          for i in 1 2 3 4; do git push -q origin playtest-results && break; git pull -q --rebase origin playtest-results; done
