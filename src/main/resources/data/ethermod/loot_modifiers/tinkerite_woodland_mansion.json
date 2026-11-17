@@ -1,0 +1,14 @@
+{
+  "type": "ethermod:gem",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:chests/woodland_mansion"
+    }
+  ],
+  "gem": "ethermod:tinkerite",
+  "chance": 0.55,
+  "guarantee_in": [
+    "minecraft:mansion"
+  ]
+}

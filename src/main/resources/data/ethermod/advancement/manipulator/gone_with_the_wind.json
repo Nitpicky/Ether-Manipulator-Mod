@@ -1,0 +1,34 @@
+{
+  "parent": "ethermod:manipulator/zephyrite",
+  "display": {
+    "icon": {
+      "id": "ethermod:module_icon_pneumatic"
+    },
+    "title": {
+      "translate": "advancements.ethermod.gone_with_the_wind.title"
+    },
+    "description": {
+      "translate": "advancements.ethermod.gone_with_the_wind.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "done": {
+      "trigger": "ethermod:manipulator",
+      "conditions": {
+        "event": "gust_launch"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ],
+  "rewards": {
+    "experience": 30
+  }
+}

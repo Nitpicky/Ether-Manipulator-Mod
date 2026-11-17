@@ -1,0 +1,31 @@
+{
+  "parent": "ethermod:manipulator/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:red_dye"
+    },
+    "title": {
+      "translate": "advancements.ethermod.dye.title"
+    },
+    "description": {
+      "translate": "advancements.ethermod.dye.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "done": {
+      "trigger": "ethermod:manipulator",
+      "conditions": {
+        "event": "dye"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}

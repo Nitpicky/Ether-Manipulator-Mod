@@ -1,0 +1,60 @@
+{
+  "name": "Pneumatic",
+  "description": "Unlocks [color=#20E9C1]Gust Mode[/color]: push and disarm. Shots recoil; slammed mobs take damage. Coyote jump and double jump.",
+  "color": "#B8E8E0",
+  "icon": "minecraft:feather",
+  "order": 6,
+  "badge": {
+    "id": "pneumatic.badge",
+    "name": "Bellows Core",
+    "description": "Unlocks [color=#20E9C1]Gust Mode[/color]: push and disarm. Shots recoil; slammed mobs take damage. Double jump."
+  },
+  "commons": [
+    {
+      "id": "pneumatic.common_featherfall",
+      "name": "Featherfall",
+      "description": "No fall damage. Hold Jump to fall slowly."
+    },
+    {
+      "id": "pneumatic.common_air_control",
+      "name": "Air Control",
+      "description": "Better steering in the air, without braking."
+    }
+  ],
+  "adept": [
+    {
+      "id": "pneumatic.gale_force",
+      "name": "Gale Force",
+      "description": "Charge boosts Gust knockback, yours too. Hit enemies take more fall damage."
+    },
+    {
+      "id": "pneumatic.bellows",
+      "name": "Bellows",
+      "description": "Shared Ether tank +2."
+    }
+  ],
+  "master": [
+    {
+      "id": "pneumatic.bunny_hop",
+      "name": "Bunny Hop",
+      "description": "Jump right as you land to build speed. Hold Jump to keep hopping."
+    },
+    {
+      "id": "pneumatic.ground_slam",
+      "name": "Pile Driver",
+      "description": "Sneak to charge a jump. Sneak in the air to slam down, harder the further you fell."
+    }
+  ],
+  "grandmaster": [
+    {
+      "id": "pneumatic.stasis",
+      "name": "Stasis",
+      "description": "Freeze enemies briefly. Knockback piles up and lands all at once when they thaw."
+    },
+    {
+      "id": "pneumatic.rebound",
+      "name": "Rebound",
+      "description": "Gusted enemies bounce off walls and each other."
+    }
+  ]
+}

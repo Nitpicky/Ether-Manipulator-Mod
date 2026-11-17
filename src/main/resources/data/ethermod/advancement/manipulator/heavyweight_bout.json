@@ -1,0 +1,34 @@
+{
+  "parent": "ethermod:manipulator/tinkerite",
+  "display": {
+    "icon": {
+      "id": "ethermod:module_icon_mechatronic"
+    },
+    "title": {
+      "translate": "advancements.ethermod.heavyweight_bout.title"
+    },
+    "description": {
+      "translate": "advancements.ethermod.heavyweight_bout.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "done": {
+      "trigger": "ethermod:manipulator",
+      "conditions": {
+        "event": "heavyweight"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ],
+  "rewards": {
+    "experience": 30
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "parent": "ethermod:manipulator/root",
+  "display": {
+    "icon": {
+      "id": "ethermod:module_icon_kinetic"
+    },
+    "title": {
+      "translate": "advancements.ethermod.ping_pong.title"
+    },
+    "description": {
+      "translate": "advancements.ethermod.ping_pong.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "done": {
+      "trigger": "ethermod:manipulator",
+      "conditions": {
+        "event": "ping_pong"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ],
+  "rewards": {
+    "experience": 30
+  }
+}

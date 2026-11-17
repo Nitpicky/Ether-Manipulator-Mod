@@ -3,7 +3,7 @@ loaderVersion="[4,)"
 license="All Rights Reserved"
 
 [[mods]]
-modId="mattermod"
+modId="ethermod"
 version="${mod_version}"
 displayName="Ether Manipulator"
 description='''
@@ -12,23 +12,23 @@ Every player owns one from the start. Summon it with R; equip elemental Modules 
 '''
 
 [[mixins]]
-config="mattermod.mixins.json"
+config="ethermod.mixins.json"
 
-[[dependencies.mattermod]]
+[[dependencies.ethermod]]
     modId="neoforge"
     type="required"
     versionRange="[21.1.265,)"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.mattermod]]
+[[dependencies.ethermod]]
     modId="minecraft"
     type="required"
     versionRange="[1.21.1,1.22)"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.mattermod]]
+[[dependencies.ethermod]]
     modId="geckolib"
     type="required"
     versionRange="[4.9.3,)"

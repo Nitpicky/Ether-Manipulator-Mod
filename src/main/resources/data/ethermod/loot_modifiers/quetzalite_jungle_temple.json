@@ -1,0 +1,15 @@
+{
+  "type": "ethermod:gem",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:chests/jungle_temple"
+    }
+  ],
+  "gem": "ethermod:quetzalite",
+  "chance": 0.25,
+  "guarantee_in": [
+    "minecraft:jungle_pyramid"
+  ],
+  "hidden_chest": true
+}

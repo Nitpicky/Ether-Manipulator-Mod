@@ -1,0 +1,34 @@
+{
+  "parent": "ethermod:manipulator/oculite",
+  "display": {
+    "icon": {
+      "id": "ethermod:module_icon_gravitic"
+    },
+    "title": {
+      "translate": "advancements.ethermod.fish_out_of_water.title"
+    },
+    "description": {
+      "translate": "advancements.ethermod.fish_out_of_water.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "done": {
+      "trigger": "ethermod:manipulator",
+      "conditions": {
+        "event": "fish_out"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ],
+  "rewards": {
+    "experience": 30
+  }
+}

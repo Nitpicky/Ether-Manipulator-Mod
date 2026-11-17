@@ -25,7 +25,7 @@ jobs:
         run: sudo apt-get update -q && sudo apt-get install -y -q xvfb libgl1-mesa-dri libglx-mesa0 pulseaudio
       - name: Run current client/server regression checks
         env:
-          MATTERMOD_AUTOTEST: '1'
+          ETHERMOD_AUTOTEST: '1'
           LIBGL_ALWAYS_SOFTWARE: '1'
           MESA_GL_VERSION_OVERRIDE: '4.5'
         run: xvfb-run -a -s '-screen 0 1280x720x24' timeout 1500 ./gradlew runClient -Pplaytest --no-daemon
@@ -39,13 +39,13 @@ jobs:
       - name: Screenshot tour (first and third person, animations)
         if: always()
         env:
-          MATTERMOD_AUTOTEST: '1'
+          ETHERMOD_AUTOTEST: '1'
           LIBGL_ALWAYS_SOFTWARE: '1'
           MESA_GL_VERSION_OVERRIDE: '4.5'
         run: |
           rm -rf runs/client/saves/mm_autotest
           xvfb-run -a -s '-screen 0 1280x720x24' timeout 900 ./gradlew runClient -Pplaytest -PmodelShots --no-daemon || true
-          cat runs/client/mattermod-autotest.txt || true
+          cat runs/client/ethermod-autotest.txt || true
       - name: Upload report and logs
         if: always()
         uses: actions/upload-artifact@v4
@@ -60,7 +60,7 @@ jobs:
         run: |
           mkdir -p out
           cp runs/client/screenshots/mm_*.png out/ 2>/dev/null || true
-          cp runs/client/redesign-probe-report.txt runs/client/mattermod-autotest.txt out/ 2>/dev/null || true
+          cp runs/client/redesign-probe-report.txt runs/client/ethermod-autotest.txt out/ 2>/dev/null || true
           cp runs/client/logs/latest.log out/ 2>/dev/null || true
           SHA=$(git rev-parse --short HEAD)
           git config user.name "playtest-bot"

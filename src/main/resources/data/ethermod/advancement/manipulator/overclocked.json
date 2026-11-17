@@ -1,0 +1,34 @@
+{
+  "parent": "ethermod:manipulator/augmented",
+  "display": {
+    "icon": {
+      "id": "ethermod:upgrade_netherite"
+    },
+    "title": {
+      "translate": "advancements.ethermod.overclocked.title"
+    },
+    "description": {
+      "translate": "advancements.ethermod.overclocked.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "done": {
+      "trigger": "ethermod:manipulator",
+      "conditions": {
+        "event": "stage_netherite"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  }
+}

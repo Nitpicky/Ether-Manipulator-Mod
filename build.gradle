@@ -3,11 +3,11 @@ plugins {
     id 'net.neoforged.gradle.userdev' version '7.0.165'
 }
 
-group   = 'com.mattermod'
+group   = 'com.ethermod'
 version = '1.1.0-playtest'
 
 base {
-    archivesName = 'matter-manipulator'
+    archivesName = 'ether-manipulator'
 }
 
 java {
@@ -36,7 +36,7 @@ runs {
 
     client {
         // CI playtest: a fixed 1280x720 window for the screenshots
-        if (System.getenv('MATTERMOD_AUTOTEST') != null) {
+        if (System.getenv('ETHERMOD_AUTOTEST') != null) {
             programArguments.addAll '--width', '1280', '--height', '720'
         }
     }
@@ -45,7 +45,7 @@ runs {
     }
 
     data {
-        programArguments.addAll '--mod', 'mattermod', '--all',
+        programArguments.addAll '--mod', 'ethermod', '--all',
                 '--output', file('src/generated/resources/').absolutePath,
                 '--existing', file('src/main/resources/').absolutePath
     }
@@ -70,7 +70,7 @@ tasks.withType(ProcessResources).configureEach {
             neo_version            : '21.1.265',
             neo_version_range      : '[21.1,)',
             loader_version_range   : '[2,)',
-            mod_id                 : 'mattermod',
+            mod_id                 : 'ethermod',
             mod_name               : 'Ether Manipulator',
             mod_license            : 'MIT',
             mod_version            : project.version,
@@ -92,15 +92,15 @@ sourceSets {
 if (project.hasProperty('playtest')) {
     runs.client {
         modSource sourceSets.playtest
-        systemProperty 'mattermod.playtest', 'true'
+        systemProperty 'ethermod.playtest', 'true'
         // -PmodelShots runs the scripted first/third-person screenshot tour instead of the UI probe
         def shots = project.hasProperty('modelShots')
-        systemProperty 'mattermod.uiProbe', shots ? 'false' : 'true'
-        systemProperty 'mattermod.hoverScreenshots', project.hasProperty('hoverTest') ? 'true' : 'false'
-        systemProperty 'mattermod.noScreenshots', shots ? 'false' : 'true'
+        systemProperty 'ethermod.uiProbe', shots ? 'false' : 'true'
+        systemProperty 'ethermod.hoverScreenshots', project.hasProperty('hoverTest') ? 'true' : 'false'
+        systemProperty 'ethermod.noScreenshots', shots ? 'false' : 'true'
         // -PstopAfter=<tick> ends the screenshot tour early (the shader-pack run only needs the beam)
-        if (project.hasProperty('stopAfter')) systemProperty 'mattermod.stopAfter', project.property('stopAfter')
+        if (project.hasProperty('stopAfter')) systemProperty 'ethermod.stopAfter', project.property('stopAfter')
         // -PcloudTest fires the beam from above the clouds (Fancy, then Fabulous) instead of the rest of the tour
-        if (project.hasProperty('cloudTest')) systemProperty 'mattermod.cloudTest', 'true'
+        if (project.hasProperty('cloudTest')) systemProperty 'ethermod.cloudTest', 'true'
     }
 }

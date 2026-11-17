@@ -1,0 +1,31 @@
+{
+  "parent": "ethermod:manipulator/calibrated",
+  "display": {
+    "icon": {
+      "id": "ethermod:upgrade_diamond"
+    },
+    "title": {
+      "translate": "advancements.ethermod.augmented.title"
+    },
+    "description": {
+      "translate": "advancements.ethermod.augmented.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "done": {
+      "trigger": "ethermod:manipulator",
+      "conditions": {
+        "event": "stage_diamond"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "parent": "ethermod:manipulator/stratite",
+  "display": {
+    "icon": {
+      "id": "ethermod:module_icon_tectonic"
+    },
+    "title": {
+      "translate": "advancements.ethermod.return_to_sender.title"
+    },
+    "description": {
+      "translate": "advancements.ethermod.return_to_sender.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "done": {
+      "trigger": "ethermod:manipulator",
+      "conditions": {
+        "event": "mass_self"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ],
+  "rewards": {
+    "experience": 30
+  }
+}

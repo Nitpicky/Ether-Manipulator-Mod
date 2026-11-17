@@ -1,0 +1,34 @@
+{
+  "parent": "ethermod:manipulator/gehennite",
+  "display": {
+    "icon": {
+      "id": "ethermod:module_icon_pyrotechnic"
+    },
+    "title": {
+      "translate": "advancements.ethermod.this_is_fine.title"
+    },
+    "description": {
+      "translate": "advancements.ethermod.this_is_fine.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "done": {
+      "trigger": "ethermod:manipulator",
+      "conditions": {
+        "event": "this_is_fine"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ],
+  "rewards": {
+    "experience": 30
+  }
+}

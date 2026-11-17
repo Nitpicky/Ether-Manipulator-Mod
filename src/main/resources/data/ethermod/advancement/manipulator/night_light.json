@@ -1,0 +1,34 @@
+{
+  "parent": "ethermod:manipulator/atenite",
+  "display": {
+    "icon": {
+      "id": "ethermod:module_icon_photonic"
+    },
+    "title": {
+      "translate": "advancements.ethermod.night_light.title"
+    },
+    "description": {
+      "translate": "advancements.ethermod.night_light.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "done": {
+      "trigger": "ethermod:manipulator",
+      "conditions": {
+        "event": "night_light"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ],
+  "rewards": {
+    "experience": 30
+  }
+}

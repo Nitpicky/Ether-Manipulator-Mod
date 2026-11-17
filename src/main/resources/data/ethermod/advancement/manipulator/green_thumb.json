@@ -1,0 +1,34 @@
+{
+  "parent": "ethermod:manipulator/quetzalite",
+  "display": {
+    "icon": {
+      "id": "ethermod:module_icon_botanic"
+    },
+    "title": {
+      "translate": "advancements.ethermod.green_thumb.title"
+    },
+    "description": {
+      "translate": "advancements.ethermod.green_thumb.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "done": {
+      "trigger": "ethermod:manipulator",
+      "conditions": {
+        "event": "green_thumb"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ],
+  "rewards": {
+    "experience": 30
+  }
+}

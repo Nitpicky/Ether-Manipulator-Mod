@@ -1,0 +1,31 @@
+{
+  "parent": "ethermod:manipulator/root",
+  "display": {
+    "icon": {
+      "id": "ethermod:oculite"
+    },
+    "title": {
+      "translate": "advancements.ethermod.oculite.title"
+    },
+    "description": {
+      "translate": "advancements.ethermod.oculite.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "done": {
+      "trigger": "ethermod:manipulator",
+      "conditions": {
+        "event": "module_mobility"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "done"
+    ]
+  ]
+}

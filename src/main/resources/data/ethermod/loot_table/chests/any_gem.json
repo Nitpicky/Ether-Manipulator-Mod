@@ -1,0 +1,42 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "ethermod:sirenite"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ethermod:gehennite"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ethermod:stratite"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ethermod:zephyrite"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ethermod:quetzalite"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ethermod:tinkerite"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ethermod:atenite"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "ethermod:oculite"
+        }
+      ]
+    }
+  ]
+}

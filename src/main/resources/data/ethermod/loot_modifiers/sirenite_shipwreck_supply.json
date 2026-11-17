@@ -1,0 +1,11 @@
+{
+  "type": "ethermod:gem",
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:chests/shipwreck_supply"
+    }
+  ],
+  "gem": "ethermod:sirenite",
+  "chance": 0.08
+}

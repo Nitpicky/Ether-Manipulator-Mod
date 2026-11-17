@@ -29,18 +29,18 @@ jobs:
           set -e
           mkdir -p runs/client/mods runs/client/shaderpacks runs/client/config
           get() { # slug, loader filter
-            curl -fsSL -A "mattermod-ci" "https://api.modrinth.com/v2/project/$1/version?loaders=%5B%22$2%22%5D&game_versions=%5B%221.21.1%22%5D" \
+            curl -fsSL -A "ethermod-ci" "https://api.modrinth.com/v2/project/$1/version?loaders=%5B%22$2%22%5D&game_versions=%5B%221.21.1%22%5D" \
               | jq -r '[.[] | select(.version_type=="release")][0] // .[0] | .files[] | select(.primary) | .url + " " + .filename'
           }
           read -r url name <<< "$(get sodium neoforge)"; curl -fsSL -o "runs/client/mods/$name" "$url"; echo "Sodium: $name"
           read -r url name <<< "$(get iris neoforge)"; curl -fsSL -o "runs/client/mods/$name" "$url"; echo "Iris: $name"
           if [ "$PACK" = none ]; then printf 'enableShaders=false\n' > runs/client/config/iris.properties; exit 0; fi
-          read -r url name <<< "$(curl -fsSL -A mattermod-ci "https://api.modrinth.com/v2/project/$PACK/version?loaders=%5B%22iris%22%5D" | jq -r '.[0].files[] | select(.primary) | .url + " " + .filename')"
+          read -r url name <<< "$(curl -fsSL -A ethermod-ci "https://api.modrinth.com/v2/project/$PACK/version?loaders=%5B%22iris%22%5D" | jq -r '.[0].files[] | select(.primary) | .url + " " + .filename')"
           curl -fsSL -o "runs/client/shaderpacks/$name" "$url"; echo "Pack: $name"
           printf 'enableShaders=true\nshaderPack=%s\n' "$name" > runs/client/config/iris.properties
       - name: Beam shots with shaders
         env:
-          MATTERMOD_AUTOTEST: '1'
+          ETHERMOD_AUTOTEST: '1'
           LIBGL_ALWAYS_SOFTWARE: '1'
           MESA_GL_VERSION_OVERRIDE: '4.5'
           MESA_GLSL_VERSION_OVERRIDE: '450'
