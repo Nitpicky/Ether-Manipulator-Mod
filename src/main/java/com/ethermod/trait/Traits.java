@@ -51,13 +51,13 @@ public final class Traits {
 
     /** A choice trait ("tectonic.fortune") is picked in an open tier of an equipped line. */
     public static boolean has(ItemStack stack, String traitId) {
-        if (traitId.equals("plasmic.sustain")) return hasLine(stack, COMBAT);
-        if (traitId.equals("hydraulic.helmsman")) return hasLine(stack, HYDRAULICS);
-        if (traitId.equals("pyrotechnic.kiln")) return hasLine(stack, PYROTECHNICS);
+        if (traitId.equals("plasmic.sustain")) return hasLine(stack, PLASMIC);
+        if (traitId.equals("hydraulic.helmsman")) return hasLine(stack, HYDRAULIC);
+        if (traitId.equals("pyrotechnic.kiln")) return hasLine(stack, PYROTECHNIC);
         if (traitId.equals("photonic.prism")) return hasLine(stack, PHOTONIC);
-        if (traitId.equals("gravitic.freeflight")) return hasLine(stack, MOBILITY);
-        if (traitId.equals("pyrotechnic.phoenix")) return hasCommon(stack, PYROTECHNICS, 1);
-        if (traitId.equals("gravitic.gravity_skate")) return hasCommon(stack, MOBILITY, 1);
+        if (traitId.equals("gravitic.freeflight")) return hasLine(stack, GRAVITIC);
+        if (traitId.equals("pyrotechnic.phoenix")) return hasCommon(stack, PYROTECHNIC, 1);
+        if (traitId.equals("gravitic.gravity_skate")) return hasCommon(stack, GRAVITIC, 1);
         if (traitId.equals("tectonic.ore_sense")) return has(stack, "tectonic.vein_miner");
 
         for (int slot = 0; slot < TraitBuild.MAX_SLOTS; slot++) {
@@ -95,21 +95,21 @@ public final class Traits {
     /** Beam reach: stage range, +1 with Combat's Focus Lens. */
     public static float beamRange(ItemStack stack) {
         float r = com.ethermod.item.ManipulatorStage.get(stack).beamRange();
-        if (hasCommon(stack, COMBAT, 1)) r += 1;
+        if (hasCommon(stack, PLASMIC, 1)) r += 1;
         return r;
     }
 
     /** Ticks to full orb charge, -20% with Orb's Quick Charge. */
     public static int chargeTicks(ItemStack stack) {
         int t = com.ethermod.item.ManipulatorStage.get(stack).maxChargeTicks();
-        return hasCommon(stack, ORB, 0) ? Math.round(t * 0.8f) : t;
+        return hasCommon(stack, KINETIC, 0) ? Math.round(t * 0.8f) : t;
     }
 
     // ---- Badge numbers ----------------------------------------------------------
 
     /** Mining speed: +2 with the Excavation badge. */
     public static float miningSpeedBonus(ItemStack stack) {
-        return hasLine(stack, EXCAVATION) ? 2.0f : 0f;
+        return hasLine(stack, TECTONIC) ? 2.0f : 0f;
     }
 
     /**
@@ -164,11 +164,11 @@ public final class Traits {
 
     /** Combat badge: +beam damage (base value before the beam's per-hit scaling). */
     public static float beamDamageBonus(ItemStack stack) {
-        return hasLine(stack, COMBAT) ? 1.0f : 0f;
+        return hasLine(stack, PLASMIC) ? 1.0f : 0f;
     }
 
     /** Orb badge: +orb damage at full charge. */
     public static float orbDamageBonus(ItemStack stack) {
-        return hasLine(stack, ORB) ? 3.0f : 0f;
+        return hasLine(stack, KINETIC) ? 3.0f : 0f;
     }
 }
