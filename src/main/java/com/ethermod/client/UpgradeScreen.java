@@ -1503,7 +1503,12 @@ public class UpgradeScreen extends Screen {
                                         ? 0xff000000
                                         : t == 'H'
                                                 ? pal.border()
-                                                : t == 'S' ? pal.shadow() : pal.bg());
+                                                : t == 'S'
+                                                        ? pal.shadow()
+                                                        // J: where the highlight meets the shadow
+                                                        : t == 'J'
+                                                                ? mix(pal.border(), pal.shadow(), .5)
+                                                                : pal.bg());
                 }
             }
         }
