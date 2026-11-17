@@ -15,7 +15,7 @@ PASS Common follows prior choice
 PASS Common inactive without choice
 PASS Mode switch retains tank
 PASS Module switch retains tank
-PASS Refill base one unit every 2s
+PASS Reload waits 4s at Prototype
 PASS Crucible grows the shared tank
 PASS Seedbank grows the shared tank
 PASS Frost spends water
@@ -72,7 +72,7 @@ PASS Seeker is a Kinetic Grandmaster choice
 PASS Replant puts a fresh crop back
 PASS Diving Bell blocks water entry
 PASS Energy orb spends the shared tank, Tether does not
-PASS Shared tank refills at its boundary
+PASS Shared tank reloads in full after the delay
 PASS Three tank traits stack
 PASS Tank never exceeds capacity
 PASS Bellows grows the shared tank
