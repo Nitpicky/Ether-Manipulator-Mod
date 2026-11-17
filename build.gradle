@@ -71,7 +71,7 @@ tasks.withType(ProcessResources).configureEach {
             neo_version_range      : '[21.1,)',
             loader_version_range   : '[2,)',
             mod_id                 : 'mattermod',
-            mod_name               : 'Matter Manipulator',
+            mod_name               : 'Ether Manipulator',
             mod_license            : 'MIT',
             mod_version            : project.version,
     ]

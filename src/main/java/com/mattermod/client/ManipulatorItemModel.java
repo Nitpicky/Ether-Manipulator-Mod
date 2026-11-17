@@ -13,7 +13,7 @@ import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.model.GeoModel;
 
 /**
- * GeckoLib model wiring for the Matter Manipulator.
+ * GeckoLib model wiring for the Ether Manipulator.
  *
  * <p>Asset paths: geo model → assets/mattermod/geo/matter_manipulator.geo.json texture →
  * assets/mattermod/textures/item/matter_manipulator.png animations →

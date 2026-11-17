@@ -1,4 +1,4 @@
-# Matter Manipulator
+# Ether Manipulator
 
 A Minecraft 1.21.1 multitool mod: a continuous left-click Beam, right-click Modes, elemental Modules and a native upgrade screen.
 

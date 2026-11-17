@@ -1274,12 +1274,12 @@ public final class RedstoneGolem extends PathfinderMob implements GeoEntity, net
         return overheated() ? base * RAGE_HIT : base;
     }
 
-    /** Its melee blows (the lift, the Piston slam) carry the owner's Matter Manipulator melee bonus. */
+    /** Its melee blows (the lift, the Piston slam) carry the owner's Ether Manipulator melee bonus. */
     private float melee(ServerPlayer owner, float base) {
         return dealt(base + (owner == null ? 0 : com.mattermod.trait.RedesignEffects.meleeBonus(owner)));
     }
 
-    /** Its Dispenser bolts carry the owner's Matter Manipulator ranged bonus. */
+    /** Its Dispenser bolts carry the owner's Ether Manipulator ranged bonus. */
     float boltDamage(ServerPlayer owner) {
         return dealt(BOLT_DAMAGE + (owner == null ? 0 : com.mattermod.trait.RedesignEffects.rangedBonus(owner)));
     }

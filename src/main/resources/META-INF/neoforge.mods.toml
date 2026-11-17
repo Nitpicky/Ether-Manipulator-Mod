@@ -5,7 +5,7 @@ license="All Rights Reserved"
 [[mods]]
 modId="mattermod"
 version="${mod_version}"
-displayName="Matter Manipulator"
+displayName="Ether Manipulator"
 description='''
 A Starbound-inspired multitool that replaces every tool: a continuous beam and a charged orb.
 Every player owns one from the start. Summon it with R; equip elemental Modules and progress through Prototype, Calibrated, Augmented and Overclocked Tiers.

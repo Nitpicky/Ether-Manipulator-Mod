@@ -12,7 +12,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 
 /**
- * Client item extensions for Matter Manipulator. Provides GeckoLib renderer and bow-draw arm pose
+ * Client item extensions for Ether Manipulator. Provides GeckoLib renderer and bow-draw arm pose
  * (no applyForgeHandTransform).
  */
 @OnlyIn(Dist.CLIENT)

@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * The four stages of the Matter Manipulator, named like hardware revisions: Prototype (start, no
+ * The four stages of the Ether Manipulator, named like hardware revisions: Prototype (start, no
  * traits), Calibrated (Iron module: 1 slot, Adept tier), Augmented (Diamond module: 2 slots,
  * Master), Overclocked (Netherite module: 3 slots, Grandmaster). The enum constants keep the
  * material names because the modules are crafted from those materials. Each stage matches the

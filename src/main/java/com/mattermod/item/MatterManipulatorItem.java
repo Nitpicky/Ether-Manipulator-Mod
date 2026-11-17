@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 /**
- * The Matter Manipulator — a BEAM-only GeckoLib item.
+ * The Ether Manipulator — a BEAM-only GeckoLib item.
  *
  * <p>LMB held → continuous beam (client → BeamActivePayload → server) RMB held → charge beam ball
  * (vanilla use-item system; bow animation in 3rd person) Release fires the ball. Phase depends on

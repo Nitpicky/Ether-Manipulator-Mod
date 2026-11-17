@@ -40,6 +40,6 @@ public class MatterMod {
         // Register server-side game events (NeoForge bus)
         ModEvents.register();
 
-        LOGGER.info("Matter Manipulator initialised.");
+        LOGGER.info("Ether Manipulator initialised.");
     }
 }
