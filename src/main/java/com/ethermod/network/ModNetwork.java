@@ -144,6 +144,10 @@ public final class ModNetwork {
                 com.ethermod.network.payload.BeamPulsePayload.CODEC,
                 (payload, ctx) -> ctx.enqueueWork(() -> RemoteBeams.pulse(payload)));
         reg.playToClient(
+                com.ethermod.network.payload.ReloadPayload.TYPE,
+                com.ethermod.network.payload.ReloadPayload.CODEC,
+                (payload, ctx) -> ctx.enqueueWork(() -> RemoteBeams.reload(payload.ticks())));
+        reg.playToClient(
                 BeamStatePayload.TYPE,
                 BeamStatePayload.CODEC,
                 (payload, ctx) ->

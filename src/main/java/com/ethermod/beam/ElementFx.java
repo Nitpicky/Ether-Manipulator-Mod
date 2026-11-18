@@ -59,6 +59,7 @@ final class ElementFx {
 
     /** Called every frame with the local player's nozzle (world space) and barrel direction. */
     static void frame(Minecraft mc, Player player, ItemStack held, Vec3 nozzle, Vec3 barrel, Vec3 cam, float time, float dt, float pt, VertexConsumer vc, Matrix4f m) {
+        reloadMotes(mc, nozzle, barrel, dt);
         OrbMode mode = OrbMode.get(held);
         if (mode == OrbMode.MASS) {
             grip(mc, player, nozzle, cam, time, pt, vc, m);
@@ -76,6 +77,23 @@ final class ElementFx {
                 Vec3 v = k.in ? nozzle.subtract(o).scale(0.15) : barrel.scale(k.speed).add(r(0.02), k.up, r(0.02));
                 mc.level.addParticle(k.type, o.x, o.y, o.z, v.x, v.y, v.z);
             }
+        }
+    }
+
+    private static float etherDebt;
+    private static final DustParticleOptions ETHER =
+            new DustParticleOptions(new Vector3f(0x30 / 255f, 0xD5 / 255f, 0xC8 / 255f), 0.7f);
+
+    /** Reload: motes of Ether (teal, whatever the mode colour) drawn into the nozzle before the clamp. */
+    private static void reloadMotes(Minecraft mc, Vec3 nozzle, Vec3 barrel, float dt) {
+        float rt = com.ethermod.client.ManipulatorAnimations.reloadTime();
+        if (rt < 0.1f || rt > 0.82f || mc.isPaused()) return;
+        etherDebt += 1.2f * dt * 20f;
+        while (etherDebt >= 1f) {
+            etherDebt -= 1f;
+            Vec3 o = nozzle.add(barrel.scale(0.5)).add(r(0.25), r(0.25), r(0.25));
+            Vec3 v = nozzle.subtract(o).scale(0.18);
+            mc.level.addParticle(ETHER, o.x, o.y, o.z, v.x, v.y, v.z);
         }
     }
 

@@ -69,4 +69,15 @@ public final class RemoteBeams {
     public static long clientTime() {
         return clientTime;
     }
+
+    /** Client game time at which the local player's tank fills (reload animation), or MIN_VALUE. */
+    private static long reloadFillAt = Long.MIN_VALUE;
+
+    public static void reload(int ticks) {
+        reloadFillAt = clientTime + ticks;
+    }
+
+    public static long reloadFillAt() {
+        return reloadFillAt;
+    }
 }

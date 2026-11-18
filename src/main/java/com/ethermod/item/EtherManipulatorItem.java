@@ -119,6 +119,12 @@ public class EtherManipulatorItem extends Item implements GeoItem {
                         Component.translatable("message.ethermod.tank_refilling", mode.title())
                                 .withStyle(ChatFormatting.RED),
                         true);
+                if (player instanceof net.minecraft.server.level.ServerPlayer sp) // dry fire: a soft fizz
+                    sp.playNotifySound(
+                            net.minecraft.sounds.SoundEvents.FIRE_EXTINGUISH,
+                            net.minecraft.sounds.SoundSource.PLAYERS,
+                            0.12f,
+                            1.8f);
             }
             return InteractionResultHolder.fail(stack);
         }

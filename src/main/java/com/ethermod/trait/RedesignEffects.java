@@ -105,32 +105,43 @@ public final class RedesignEffects {
         }
         boolean changed = false;
         // The shared tank reloads Jhin-style: nothing trickles back while you keep firing; once no Ether has been
-        // spent for the reload delay (shorter at higher tiers), the whole tank fills at once. Four clicks lead in.
+        // spent for the reload delay (shorter at higher tiers), the whole tank fills at once. The reload animation leads in.
         int cap = OrbMode.capacity(st), tank = OrbMode.tank(st);
         var data = p.getPersistentData();
         // spent since last tick: restart the wait
-        if (tank < data.getInt("mm_tank_last")) data.putInt("mm_refill_ether", 0);
+        if (tank < data.getInt("mm_tank_last")) {
+            // fired during the reload animation: call it off
+            if (reloadDelay(st) - data.getInt("mm_refill_ether") <= RELOAD_LEAD)
+                net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(
+                        p, new com.ethermod.network.payload.ReloadPayload(-100));
+            data.putInt("mm_refill_ether", 0);
+        }
         data.putInt("mm_tank_last", tank);
         if (tank < cap) {
             int delay = reloadDelay(st);
             int idle = data.getInt("mm_refill_ether") + 1;
             int lead = delay - idle;
-            if (lead > 0 && lead <= 8 && lead % 2 == 0)
+            // the reload (FX bench "intake"): the animation starts RELOAD_LEAD ticks before the fill, so its clamp
+            // lands on it; Ether is drawn in with a soft charge, and a small click when the tank is full
+            if (lead == Math.min(RELOAD_LEAD, delay - 1))
+                net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(
+                        p, new com.ethermod.network.payload.ReloadPayload(lead));
+            if (lead == RELOAD_LEAD - 8)
                 p.playNotifySound(
-                        net.minecraft.sounds.SoundEvents.LEVER_CLICK,
+                        net.minecraft.sounds.SoundEvents.RESPAWN_ANCHOR_CHARGE,
                         net.minecraft.sounds.SoundSource.PLAYERS,
-                        0.25f,
-                        1.5f + (8 - lead) * 0.05f);
+                        0.18f,
+                        1.5f);
             if (idle >= delay) {
                 OrbMode.setTank(st, cap);
                 data.putInt("mm_tank_last", cap);
                 idle = 0;
                 changed = true;
                 p.playNotifySound(
-                        net.minecraft.sounds.SoundEvents.ARMOR_EQUIP_NETHERITE.value(),
+                        net.minecraft.sounds.SoundEvents.COPPER_BULB_TURN_OFF,
                         net.minecraft.sounds.SoundSource.PLAYERS,
-                        0.3f,
-                        1.2f);
+                        0.1f,
+                        1.3f);
             }
             data.putInt("mm_refill_ether", idle);
         } else data.putInt("mm_refill_ether", 0);
@@ -143,6 +154,9 @@ public final class RedesignEffects {
             if (p.serverLevel().hasChunkAt(at)) WorldEffects.tempLight(p.serverLevel(), at, 10, 15);
         }
     }
+
+    /** Ticks from the reload animation's start to its clamp (1.16s of the 1.6s animation). */
+    static final int RELOAD_LEAD = 23;
 
     /** Ticks without spending Ether before the tank reloads: the config value at Prototype, 15 less per tier. */
     public static int reloadDelay(net.minecraft.world.item.ItemStack st) {
