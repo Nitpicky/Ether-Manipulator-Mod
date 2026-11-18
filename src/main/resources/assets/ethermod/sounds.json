@@ -46,5 +46,77 @@
         "stream": false
       }
     ]
+  },
+  "beam.hum1": {
+    "sounds": [
+      {
+        "name": "ethermod:beam/hum1",
+        "stream": false
+      }
+    ]
+  },
+  "beam.hum2": {
+    "sounds": [
+      {
+        "name": "ethermod:beam/hum2",
+        "stream": false
+      }
+    ]
+  },
+  "beam.hum3": {
+    "sounds": [
+      {
+        "name": "ethermod:beam/hum3",
+        "stream": false
+      }
+    ]
+  },
+  "beam.hum4": {
+    "sounds": [
+      {
+        "name": "ethermod:beam/hum4",
+        "stream": false
+      }
+    ]
+  },
+  "beam.on": {
+    "sounds": [
+      {
+        "name": "ethermod:beam/on",
+        "stream": false
+      }
+    ]
+  },
+  "beam.off": {
+    "sounds": [
+      {
+        "name": "ethermod:beam/off",
+        "stream": false
+      }
+    ]
+  },
+  "beam.crackle": {
+    "sounds": [
+      {
+        "name": "ethermod:beam/crackle",
+        "stream": false
+      }
+    ]
+  },
+  "beam.snap": {
+    "sounds": [
+      {
+        "name": "ethermod:beam/snap",
+        "stream": false
+      }
+    ]
+  },
+  "beam.sub": {
+    "sounds": [
+      {
+        "name": "ethermod:beam/sub",
+        "stream": false
+      }
+    ]
   }
 }
