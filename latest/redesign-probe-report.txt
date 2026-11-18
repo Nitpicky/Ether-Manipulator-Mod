@@ -1,4 +1,4 @@
-PASS Ten Module definitions
+PASS Nine Module definitions (Mechatronic shelved)
 PASS Default Plasmic/Kinetic knowledge
 PASS Plasmic 6 choices + 2 Commons
 PASS Kinetic 6 choices + 2 Commons
@@ -7,7 +7,6 @@ PASS Pyrotechnic 6 choices + 2 Commons
 PASS Tectonic 6 choices + 2 Commons
 PASS Pneumatic 6 choices + 2 Commons
 PASS Botanic 6 choices + 2 Commons
-PASS Mechatronic 6 choices + 2 Commons
 PASS Photonic 6 choices + 2 Commons
 PASS Gravitic 6 choices + 2 Commons
 PASS Reservoir grows the shared tank
@@ -25,12 +24,6 @@ PASS No Tier scaling
 PASS Gravity changes player bounds
 PASS Gravity rotates up toward surface normal
 PASS Gravity reset
-PASS Golem tree: Supercharged replaces Redstone Arcs
-PASS Golem tree: Piston Arm offered, retired Latch rejected
-PASS Golem summoned
-PASS Golem counts as an ally
-PASS Golem has no Super Move without a Super Move trait
-PASS Golem put away
 PASS Stasis accumulates force
 PASS Stasis last impulse sets direction
 PASS Mirage entity creates with owner skin identity
