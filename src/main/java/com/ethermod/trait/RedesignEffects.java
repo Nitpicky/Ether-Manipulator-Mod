@@ -158,9 +158,9 @@ public final class RedesignEffects {
     /** Ticks from the reload animation's start to its clamp (1.16s of the 1.6s animation). */
     static final int RELOAD_LEAD = 23;
 
-    /** Ticks without spending Ether before the tank reloads: the config value at Prototype, 15 less per tier. */
+    /** Ticks without spending Ether before the tank reloads: 80 at Prototype, 15 less per tier. */
     public static int reloadDelay(net.minecraft.world.item.ItemStack st) {
-        int base = com.ethermod.config.EtherConfig.ETHER_REFILL.get();
+        int base = 80; // 4s at Prototype
         return Math.max(10, base - 15 * com.ethermod.item.ManipulatorStage.get(st).ordinal());
     }
 

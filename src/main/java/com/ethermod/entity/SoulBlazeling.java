@@ -94,7 +94,7 @@ public final class SoulBlazeling extends FlyingMob {
                 .putLong(
                         "mm_summon_expires",
                         level().getGameTime()
-                                + com.ethermod.config.EtherConfig.SOUL_LIFETIME.get());
+                                + 600);
     }
 
     public boolean validTarget(ServerPlayer owner, LivingEntity e) {

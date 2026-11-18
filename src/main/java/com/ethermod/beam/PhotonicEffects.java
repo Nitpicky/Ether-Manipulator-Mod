@@ -62,10 +62,10 @@ public final class PhotonicEffects {
                     p,
                     at,
                     Traits.has(st, "photonic.lodestar")
-                            ? com.ethermod.config.EtherConfig.PHOTONIC_BEACON_TICKS.get()
+                            ? 600
                             : nova ? 240 : 120);
         if (Traits.has(st, "photonic.lodestar")) {
-            int life = com.ethermod.config.EtherConfig.PHOTONIC_BEACON_TICKS.get();
+            int life = 600;
             add(p, at, null, st, life);
             net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(
                     p,
@@ -166,8 +166,7 @@ public final class PhotonicEffects {
                     e.heal(
                             (float)
                                     ((power - prior)
-                                            * com.ethermod.config.EtherConfig.RADIANCE_HEAL
-                                                    .get()));
+                                            * 1.0));
                     data.putInt("mm_radiance_power", power);
                     if (fresh) data.putLong("mm_radiance_next", now + 20);
                 }

@@ -38,7 +38,7 @@ public final class ProjectileEffects {
             if (Traits.has(st, "pneumatic.gale_force") && !(e instanceof Player))
                 e.getPersistentData().putLong("mm_updraft_until", sl.getGameTime() + 200);
             if (Traits.has(st, "pneumatic.stasis"))
-                RedesignEffects.stasis(e, com.ethermod.config.EtherConfig.STASIS_TICKS.get());
+                RedesignEffects.stasis(e, 40);
             RedesignEffects.impulse(e, push);
             GustMotion.track(e, owner, Traits.has(st, "pneumatic.rebound"));
             if (e instanceof Mob mob && !mob.getMainHandItem().isEmpty()) {

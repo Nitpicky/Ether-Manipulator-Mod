@@ -327,8 +327,7 @@ public final class UiProbe {
                                 TraitBuild.setPick(st, 0, 0, "hydraulic.reservoir");
                                 check(
                                         "Reload waits 4s at Prototype",
-                                        com.ethermod.config.EtherConfig.ETHER_REFILL.get()
-                                                == 80);
+                                        com.ethermod.trait.RedesignEffects.reloadDelay(new net.minecraft.world.item.ItemStack(com.ethermod.registry.ModItems.ETHER_MANIPULATOR.get())) == 80);
                                 TraitRules.equip(p, 1, Traits.PYROTECHNIC);
                                 TraitRules.pick(p, 1, 0, 1);
                                 check("Crucible grows the shared tank", OrbMode.capacity(st) == 10);
@@ -661,9 +660,7 @@ public final class UiProbe {
                                                 && pet.getPersistentData()
                                                                 .getLong("mm_summon_expires")
                                                         == sl.getGameTime()
-                                                                + com.ethermod.config.EtherConfig
-                                                                        .SOUL_LIFETIME
-                                                                        .get());
+                                                                + 600);
                                 check(
                                         "Blazeling cannot target owner or summons",
                                         !pet.validTarget(p, p)
