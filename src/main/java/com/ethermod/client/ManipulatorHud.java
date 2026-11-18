@@ -184,66 +184,6 @@ public final class ManipulatorHud {
             ammoAlpha += (target - ammoAlpha) * Math.min(1, dt / 180f);
             if (ammoAlpha > .02f) ammo(g, have + "/" + cap, (int) cx, (int) cy + 16, ammoAlpha);
         } else ammoAlpha = 0;
-        // Golem mode: the Golem's health, or the seconds until it can be rebuilt
-        if (mode == OrbMode.GOLEM) {
-            String text = golemText(stack);
-            if (text != null) ammo(g, text, (int) cx, (int) cy + 16, 1);
-            superMoveCooldown(g, (int) cx, (int) cy);
-        }
-    }
-
-    private static final net.minecraft.resources.ResourceLocation ATTACK_BG =
-                    net.minecraft.resources.ResourceLocation.withDefaultNamespace("hud/crosshair_attack_indicator_background"),
-            ATTACK_PROGRESS =
-                    net.minecraft.resources.ResourceLocation.withDefaultNamespace("hud/crosshair_attack_indicator_progress");
-
-    /** The Golem's Super Move cooldown as vanilla's attack indicator (the little sword bar) under the crosshair,
-     *  drawn the way vanilla draws it (inverting what is behind it). */
-    private static void superMoveCooldown(GuiGraphics g, int cx, int cy) {
-        var golem = ownGolem();
-        if (golem == null) return;
-        float pt = net.minecraft.client.Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(true);
-        float f = golem.superReady(pt);
-        if (f >= 1) return;
-        int x = cx - 8, y = cy - 7 + 16;
-        com.mojang.blaze3d.systems.RenderSystem.enableBlend();
-        com.mojang.blaze3d.systems.RenderSystem.blendFuncSeparate(
-                com.mojang.blaze3d.platform.GlStateManager.SourceFactor.ONE_MINUS_DST_COLOR,
-                com.mojang.blaze3d.platform.GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR,
-                com.mojang.blaze3d.platform.GlStateManager.SourceFactor.ONE,
-                com.mojang.blaze3d.platform.GlStateManager.DestFactor.ZERO);
-        g.blitSprite(ATTACK_BG, x, y, 16, 4);
-        g.blitSprite(ATTACK_PROGRESS, 16, 4, 0, 0, x, y, (int) (f * 17), 4);
-        com.mojang.blaze3d.systems.RenderSystem.defaultBlendFunc();
-        com.mojang.blaze3d.systems.RenderSystem.disableBlend();
-    }
-
-    private static com.ethermod.entity.RedstoneGolem ownGolem() {
-        var mc = net.minecraft.client.Minecraft.getInstance();
-        if (mc.player == null || mc.level == null) return null;
-        var id = mc.player.getUUID();
-        for (var golem :
-                mc.level.getEntitiesOfClass(
-                        com.ethermod.entity.RedstoneGolem.class,
-                        mc.player.getBoundingBox().inflate(96),
-                        e -> e.isAlive() && e.ownerId().map(id::equals).orElse(false)))
-            return golem;
-        return null;
-    }
-
-    private static String golemText(net.minecraft.world.item.ItemStack stack) {
-        var mc = net.minecraft.client.Minecraft.getInstance();
-        if (mc.player == null || mc.level == null) return null;
-        long wait = com.ethermod.entity.GolemControl.rebuildAt(stack) - mc.level.getGameTime();
-        if (wait > 0) return String.valueOf((wait + 19) / 20);
-        var id = mc.player.getUUID();
-        for (var golem :
-                mc.level.getEntitiesOfClass(
-                        com.ethermod.entity.RedstoneGolem.class,
-                        mc.player.getBoundingBox().inflate(96),
-                        e -> e.isAlive() && e.ownerId().map(id::equals).orElse(false)))
-            return (int) Math.ceil(golem.getHealth()) + "/" + (int) golem.getMaxHealth();
-        return null;
     }
 
     private static final net.minecraft.resources.ResourceLocation DIGITS =

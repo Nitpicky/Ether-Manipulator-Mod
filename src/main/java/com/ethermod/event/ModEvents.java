@@ -45,7 +45,6 @@ public class ModEvents {
         NeoForge.EVENT_BUS.register(com.ethermod.trait.MovementPhysics.class);
         NeoForge.EVENT_BUS.register(com.ethermod.trait.GustMotion.class);
         NeoForge.EVENT_BUS.register(com.ethermod.advancement.SecretAdvancements.class);
-        NeoForge.EVENT_BUS.register(com.ethermod.entity.GolemControl.class);
         NeoForge.EVENT_BUS.register(com.ethermod.beam.PhotonicEffects.class);
         NeoForge.EVENT_BUS.register(com.ethermod.beam.MassDriver.class);
         NeoForge.EVENT_BUS.register(com.ethermod.beam.LeftClick.class);

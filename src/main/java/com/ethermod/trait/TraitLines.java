@@ -62,7 +62,6 @@ public final class TraitLines {
                                 "tectonic",
                                 "pneumatic",
                                 "botanic",
-                                "mechatronic",
                                 "photonic",
                                 "gravitic")
                         .indexOf(id.getPath());
