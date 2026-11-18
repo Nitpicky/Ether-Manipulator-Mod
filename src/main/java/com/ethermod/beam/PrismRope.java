@@ -260,7 +260,8 @@ final class PrismRope {
         right = right.normalize();
         Vec3 up = right.cross(look).normalize();
         int n = pts.length - 1;
-        VertexConsumer vc = com.ethermod.client.Fx.beam();
+        // arcs are light on the rope: added like the rope's own glow, not laid over it
+        VertexConsumer vc = com.ethermod.client.Fx.glow();
         for (Arc a : st.arcs) {
             int age = (int) (now - a.born);
             Rng r = new Rng(a.seed + now * 7919);
@@ -295,14 +296,14 @@ final class PrismRope {
         Vec3 ctr = M.add(right.scale(c[0] * px)).add(up.scale(c[1] * px));
         Vec3 h = right.scale(px / 2), w = up.scale(px / 2);
         int r = BeamFx.ch(col[0]), g = BeamFx.ch(col[1]), b = BeamFx.ch(col[2]);
-        v(vc, ctr.subtract(h).subtract(w), r, g, b, 255);
-        v(vc, ctr.add(h).subtract(w), r, g, b, 255);
-        v(vc, ctr.add(h).add(w), r, g, b, 255);
-        v(vc, ctr.subtract(h).add(w), r, g, b, 255);
-        v(vc, ctr.subtract(h).add(w), r, g, b, 255);
-        v(vc, ctr.add(h).add(w), r, g, b, 255);
-        v(vc, ctr.add(h).subtract(w), r, g, b, 255);
-        v(vc, ctr.subtract(h).subtract(w), r, g, b, 255);
+        v(vc, ctr.subtract(h).subtract(w), r, g, b, 225);
+        v(vc, ctr.add(h).subtract(w), r, g, b, 225);
+        v(vc, ctr.add(h).add(w), r, g, b, 225);
+        v(vc, ctr.subtract(h).add(w), r, g, b, 225);
+        v(vc, ctr.subtract(h).add(w), r, g, b, 225);
+        v(vc, ctr.add(h).add(w), r, g, b, 225);
+        v(vc, ctr.add(h).subtract(w), r, g, b, 225);
+        v(vc, ctr.subtract(h).subtract(w), r, g, b, 225);
     }
 
     private static List<int[]> line(int x0, int y0, int x1, int y1) {

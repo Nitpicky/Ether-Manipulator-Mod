@@ -146,9 +146,9 @@ public final class BeamAudio {
     // =========================================================================
 
     private static final Map<Integer, BeamVoice> VOICES = new HashMap<>();
-    private static final float[] HUM_V = {0.6f, 0.65f, 0.7f, 0.75f};
-    private static final float[] CRACKLE_V = {0.1f, 0.15f, 0.21f, 0.27f};
-    private static final float[] SUB_V = {0.35f, 0.48f, 0.63f, 0.8f};
+    private static final float[] HUM_V = {0.75f, 0.81f, 0.88f, 0.94f};
+    private static final float[] CRACKLE_V = {0.12f, 0.19f, 0.26f, 0.34f};
+    private static final float[] SUB_V = {0.44f, 0.6f, 0.79f, 1f};
     /** UI sounds played a few ticks from now (the level-up's second snap, mode-switch cues). */
     private static final java.util.List<Later> LATER = new java.util.ArrayList<>();
 
