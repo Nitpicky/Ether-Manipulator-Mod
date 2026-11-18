@@ -349,15 +349,7 @@ public class EtherManipulatorItem extends Item implements GeoItem {
                                     && Traits.has(launchTraits, "hydraulic.tidecaller"))
                                 orb.carryOwner();
                         }
-                        level.playSound(
-                                null,
-                                player.getX(),
-                                player.getEyeY(),
-                                player.getZ(),
-                                net.minecraft.sounds.SoundEvents.BREEZE_SHOOT,
-                                net.minecraft.sounds.SoundSource.PLAYERS,
-                                0.6f,
-                                1.5f - 0.2f * phase);
+                        com.ethermod.beam.ShotSounds.launch(level, player, mode, phase);
                     };
             if (sequence == 0) shot.run();
             else

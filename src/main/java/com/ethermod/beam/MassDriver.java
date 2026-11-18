@@ -179,7 +179,12 @@ public final class MassDriver {
         entity.setMassHeld(true, piece.offset);
         if (!level.addFreshEntity(entity)) return false;
         level.setBlock(at, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
-        level.playSound(null, at, bs.getSoundType().getBreakSound(), SoundSource.BLOCKS, .6f, 1.3f);
+        // the rip (FX bench): the block's own break, low, over gravel and deepslate, once per grab
+        level.playSound(null, at, bs.getSoundType().getBreakSound(), SoundSource.BLOCKS, .4f, .8f);
+        if (h.sources.isEmpty()) {
+            level.playSound(null, at, SoundEvents.GRAVEL_BREAK, SoundSource.BLOCKS, .5f, .7f);
+            level.playSound(null, at, SoundEvents.DEEPSLATE_BREAK, SoundSource.BLOCKS, .25f, .7f);
+        }
         h.sources.add(at.immutable());
         piece.from = Vec3.atCenterOf(at);
         piece.arriving = h.pieces.isEmpty() ? 0 : ARRIVE;
@@ -398,6 +403,8 @@ public final class MassDriver {
                 BlockPos at = base.offset(q.offset);
                 sl.setBlockAndUpdate(at, bs);
                 sl.playSound(null, at, bs.getSoundType().getPlaceSound(), SoundSource.BLOCKS, .8f, bs.getSoundType().getPitch() * .9f);
+                if (q.offset.equals(BlockPos.ZERO)) // a heavy thud as it lands (FX bench)
+                    sl.playSound(null, at, SoundEvents.HEAVY_CORE_PLACE, SoundSource.BLOCKS, .35f, .8f);
                 q.entity.setCarried(Blocks.AIR.defaultBlockState());
                 q.entity.discard();
             }
