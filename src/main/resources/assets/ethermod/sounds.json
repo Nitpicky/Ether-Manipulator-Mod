@@ -118,5 +118,13 @@
         "stream": false
       }
     ]
+  },
+  "mode.photonic": {
+    "sounds": [
+      {
+        "name": "ethermod:beam/mode_photonic",
+        "stream": false
+      }
+    ]
   }
 }

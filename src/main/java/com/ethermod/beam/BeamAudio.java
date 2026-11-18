@@ -148,8 +148,71 @@ public final class BeamAudio {
     private static final float[] HUM_V = {0.6f, 0.65f, 0.7f, 0.75f};
     private static final float[] CRACKLE_V = {0.1f, 0.15f, 0.21f, 0.27f};
     private static final float[] SUB_V = {0.35f, 0.48f, 0.63f, 0.8f};
-    /** Second snap of a level-up, 0.07s (about 1 tick) after the first. */
-    private static final java.util.List<Object[]> LATER = new java.util.ArrayList<>();
+    /** UI sounds played a few ticks from now (the level-up's second snap, mode-switch cues). */
+    private static final java.util.List<Later> LATER = new java.util.ArrayList<>();
+
+    private static final class Later {
+        int ticks;
+        final SoundEvent event;
+        final float vol, pitch;
+        final int cut;
+
+        Later(int ticks, SoundEvent event, float vol, float pitch, int cut) {
+            this.ticks = ticks;
+            this.event = event;
+            this.vol = vol;
+            this.pitch = pitch;
+            this.cut = cut;
+        }
+    }
+
+    private static void later(int ticks, SoundEvent e, float vol, float pitch) {
+        LATER.add(new Later(ticks, e, vol, pitch, 0));
+    }
+
+    /**
+     * Mode switch: a small cue of the Module it switches to, at the moment the star changes colour
+     * (4 ticks into the animation). All levelled to about the same loudness, played whole.
+     */
+    public static void modeCue(com.ethermod.item.OrbMode m) {
+        int t = 4;
+        switch (m) {
+            case WATER -> later(t, SoundEvents.BUCKET_FILL, 0.3f, 1.2f);
+            case LAVA -> later(t, SoundEvents.BUCKET_FILL_LAVA, 0.15f, 1.15f);
+            case GUST -> later(t, SoundEvents.BREEZE_IDLE_AIR, 0.2f, 1.25f);
+            case LIGHT -> later(t, ev("mode.photonic"), 1f, 1f);
+            case TETHER -> later(t, SoundEvents.CHORUS_FRUIT_TELEPORT, 0.07f, 1.4f);
+            case GROWTH -> later(t, SoundEvents.GRASS_HIT, 0.9f, 1.1f);
+            case MASS -> later(t, SoundEvents.DEEPSLATE_HIT, 0.22f, 1f);
+            default -> { // the Plasmic beam: a snap and a short crackle
+                later(t, ev("beam.snap"), 0.45f, 1f);
+                LATER.add(new Later(t, ev("beam.crackle"), 0.45f, 1.1f, 7));
+                later(t + 2, ev("beam.snap"), 0.35f, 1.15f);
+            }
+        }
+    }
+
+    /** A looping sound cut after a few ticks with a short fade (for a burst of crackle). */
+    private static final class CutSound extends AbstractTickableSoundInstance {
+        private int left;
+        private final float v0;
+
+        CutSound(SoundEvent e, float vol, float pitch, int ticks) {
+            super(e, SoundSource.MASTER, RandomSource.create());
+            looping = true;
+            relative = true;
+            attenuation = Attenuation.NONE;
+            volume = v0 = vol;
+            this.pitch = pitch;
+            left = ticks;
+        }
+
+        @Override
+        public void tick() {
+            if (--left <= 2) volume = v0 * Math.max(0, left) / 3f;
+            if (left <= 0) stop();
+        }
+    }
 
     static SoundEvent ev(String name) {
         return SoundEvent.createVariableRangeEvent(
@@ -182,13 +245,11 @@ public final class BeamAudio {
         VOICES.values().removeIf(v -> v.done);
         HEARD.keySet().retainAll(VOICES.keySet());
         for (var it = LATER.iterator(); it.hasNext(); ) {
-            Object[] o = it.next();
-            if ((int) o[0] > 0) {
-                o[0] = (int) o[0] - 1;
-                continue;
-            }
-            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(ev("beam.snap"), (float) o[2], (float) o[1]));
+            Later o = it.next();
+            if (o.ticks-- > 0) continue;
             it.remove();
+            if (o.cut > 0) mc.getSoundManager().play(new CutSound(o.event, o.vol, o.pitch, o.cut));
+            else mc.getSoundManager().play(SimpleSoundInstance.forUI(o.event, o.pitch, o.vol));
         }
     }
 
@@ -203,7 +264,7 @@ public final class BeamAudio {
         Minecraft.getInstance()
                 .getSoundManager()
                 .play(SimpleSoundInstance.forUI(ev("beam.snap"), 0.95f + 0.1f * l, 0.08f + 0.02f * l));
-        LATER.add(new Object[] {1, 0.06f + 0.02f * l, 1f + 0.1f * l});
+        later(1, ev("beam.snap"), 0.06f + 0.02f * l, 1f + 0.1f * l);
     }
 
     private static boolean isBeaming(Player p) {
