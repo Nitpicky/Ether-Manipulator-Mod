@@ -21,7 +21,7 @@ shot 15_custom_colour_sweep
 PASS colour: orbs follow the mode (20c1e9), the beam is Plasmic orange (true)
 shot 16_custom_colour_model
 shot 17_sneak_beam
-PASS sneak beam, no water near: grass ahead is now block.minecraft.dirt_path (beamActive=true, sneaking=true, hit=net.minecraft.world.phys.BlockHitResult@785d194d)
+PASS sneak beam, no water near: grass ahead is now block.minecraft.dirt_path (beamActive=true, sneaking=true, hit=net.minecraft.world.phys.BlockHitResult@7f77131b)
 PASS sneak beam, water near: grass ahead is now block.minecraft.farmland
 PASS swing: a sword still swings with the Manipulator put away
 shot 14_sword_swing
@@ -45,16 +45,16 @@ PASS gust: left click threw a grenade that burst (bursts 1, pig hurt true)
 tether: aiming at the pig 13.0 blocks out, pitch 5.1
 tether: aiming at the pig 13.0 blocks out, pitch 5.1
 tether pig v=0.60 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
-tether pig at 11.8
+tether pig at 11.7
 tether pig v=0.60 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
 tether pig at 9.4
 shot 27_tether_pull
 tether pig v=0.60 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
-tether pig at 6.5
+tether pig at 7.0
 tether pig v=0.59 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
-tether pig at 4.2
+tether pig at 4.7
 tether pig v=0.53 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=false
-tether pig at 2.6
+tether pig at 2.5
 PASS tether: a right click tap reeled the hooked pig from 12 to 0.6 blocks (pig pulled 12.6)
 shot 28_light_beacon
 PASS light: the Beacon lights where it lands (2 light blocks)
@@ -65,5 +65,24 @@ PASS growth: left click harvested 9 of 9 ripe wheat
 PASS mass driver: left click lifted the stone
 shot 30_mass_throw
 PASS mass driver: right click threw the carried stone
-PASS gems: placed desert_pyramid, 4 chests, 2 with atenite: 0,0,-2+gem -2,0,0 2,0,0+gem 0,0,2
-PASS gems: placed jungle_pyramid, 4 chests, 1 with quetzalite: -13,-2,-3 -11,-3,2 -4,-3,3+gem+sticky -11,-2,3
+PASS gems: chests/shipwreck_treasure gave sirenite 92/400, other gems 0
+PASS gems: chests/underwater_ruin_big gave sirenite 151/400, other gems 0
+PASS gems: chests/ruined_portal gave gehennite 400/400, other gems 0
+PASS gems: chests/nether_bridge gave gehennite 53/400, other gems 0
+PASS gems: chests/abandoned_mineshaft gave stratite 35/400, other gems 0
+PASS gems: chests/trial_chambers/reward gave zephyrite 65/400, other gems 0
+PASS gems: chests/jungle_temple gave quetzalite 108/400, other gems 0
+PASS gems: chests/desert_pyramid gave atenite 42/400, other gems 0
+PASS gems: chests/stronghold_library gave oculite 39/400, other gems 0
+PASS gems: chests/end_city_treasure gave oculite 249/400, other gems 0
+PASS gems: buried treasure held exactly one gem in 100/100
+PASS advancements: 22/22 in the Manipulator tab
+PASS advancements: summoning earns the root
+PASS advancements: only holding a Sirenite earns nothing yet
+PASS gems: using a Quetzalite unlocks the Botanic Module (before false)
+PASS advancements: unlocking the Botanic Module earns Feathered Serpent only
+PASS gems: the Module items are gone
+PASS recipes: upgrade_iron is ingot/block/ingot with the gem in the waist
+PASS recipes: upgrade_diamond is ingot/block/ingot with the gem in the waist
+PASS gems: placed desert_pyramid, 4 chests, 1 with atenite: 0,0,-2+gem -2,0,0 2,0,0 0,0,2
+PASS gems: placed jungle_pyramid, 4 chests, 1 with quetzalite: -4,-2,3 -2,-3,8 5,-3,9+gem+sticky -2,-2,9
