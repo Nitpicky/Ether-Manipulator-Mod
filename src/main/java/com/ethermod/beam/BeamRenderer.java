@@ -210,6 +210,7 @@ public final class BeamRenderer {
             localTip = rawHit;
 
             drawBeam(
+                    player.getId(),
                     m,
                     camPos,
                     nozzle,
@@ -273,6 +274,7 @@ public final class BeamRenderer {
             Vec3 fromW = nb != null ? nb[0] : approximateMuzzle(p, pt);
             boolean hitSomething = hit.getType() != HitResult.Type.MISS;
             drawBeam(
+                    p.getId(),
                     m,
                     camPos,
                     fromW,
@@ -323,6 +325,7 @@ public final class BeamRenderer {
             Vec3 to = near.get(i).getBoundingBox().getCenter();
             Vec3 dir = to.subtract(from).normalize();
             drawBeam(
+                    -(player.getId() * 32 + i + 1), // own roll/arcs, no swell (not the striking beam)
                     m,
                     camPos,
                     from,
@@ -364,6 +367,7 @@ public final class BeamRenderer {
                                             net.minecraft.world.level.ClipContext.Fluid.NONE,
                                             player));
             drawBeam(
+                    -(player.getId() * 32 + 16 + k),
                     m,
                     camPos,
                     from,
@@ -400,6 +404,7 @@ public final class BeamRenderer {
      * length, and the gradient flows towards the target.
      */
     private static void drawBeam(
+            int owner,
             Matrix4f m,
             Vec3 camPos,
             Vec3 fromW,
@@ -479,46 +484,8 @@ public final class BeamRenderer {
         }
         pts[n] = ctl[nc];
 
-        float core = (0.45f + 0.15f * lv) * PX;
-        float glow = (2.2f + 0.6f * lv) * PX;
-        Vec3 prevL0 = null, prevL1 = null, prevR1 = null, prevR0 = null;
-        float[] prevCol = null;
-        for (int i = 0; i <= n; i++) {
-            Vec3 p = pts[i];
-            Vec3 tan = pts[Math.min(n, i + 1)].subtract(pts[Math.max(0, i - 1)]).normalize();
-            Vec3 side = tan.cross(p.scale(-1)); // across the line, facing the camera
-            if (side.lengthSqr() < 1e-9) side = su;
-            side = side.normalize();
-            float ks = nearScale(p);
-            double t = (double) i / n;
-            // hue gradient along the beam, flowing outward
-            float hue = hsv[0] + 0.025f * (float) Math.sin((t * 1.5 - time * 0.05) * Math.PI * 2);
-            float[] rgb = hsvToRgb(hue, hsv[1], hsv[2]);
-            float fadeIn = (float) Math.min(1, t * n / (1.5 * sub)); // soft start at the nozzle
-            if (!hitSomething) {
-                // hitting nothing: the end dissolves over the last stretch, the fade's edge
-                // breathing a little
-                double fadeLen =
-                        Math.min(0.45, 2.5 / Math.max(full, 0.1))
-                                * (0.85 + 0.15 * Math.sin(time * 0.35));
-                double into = (t - (1 - fadeLen)) / fadeLen;
-                if (into > 0) fadeIn *= (float) Math.pow(1 - Math.min(1, into), 1.6);
-            }
-            float[] col = {rgb[0], rgb[1], rgb[2], fadeIn};
-            Vec3 l0 = p.add(side.scale(-glow * ks)), l1 = p.add(side.scale(-core * ks));
-            Vec3 r1 = p.add(side.scale(core * ks)), r0 = p.add(side.scale(glow * ks));
-            if (prevL0 != null) {
-                // outer glow: fades from the core edge to nothing; centre: bright, whiter
-                lane(prevL0, l0, prevL1, l1, prevCol, col, 0f, 0.45f);
-                lane(prevL1, l1, prevR1, r1, prevCol, col, -1f, -1f);
-                lane(prevR1, r1, prevR0, r0, prevCol, col, 0.45f, 0f);
-            }
-            prevL0 = l0;
-            prevL1 = l1;
-            prevR1 = r1;
-            prevR0 = r0;
-            prevCol = col;
-        }
+        // the look chosen on the FX bench: the Prism rope, with surface arcs and the damage swell
+        PrismRope.draw(owner, pts, sub, su, time, level, color, hitSomething, full);
     }
 
     /**
