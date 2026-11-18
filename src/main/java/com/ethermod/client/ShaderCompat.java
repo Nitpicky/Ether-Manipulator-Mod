@@ -22,6 +22,7 @@ public final class ShaderCompat {
 
     /** True while a shader pack is active (custom off-screen layers are avoided then). */
     public static boolean shadersActive() {
+        if (com.ethermod.config.ClientConfig.forceSimpleShaders()) return true; // client setting
         inShadowPass(); // looks the API up
         if (api == null || packInUse == null) return false;
         try {

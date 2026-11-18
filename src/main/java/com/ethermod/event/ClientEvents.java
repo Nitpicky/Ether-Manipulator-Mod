@@ -18,6 +18,10 @@ public class ClientEvents {
 
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
+        // the Mods list's Config button opens NeoForge's settings screen for both config files
+        net.neoforged.fml.ModList.get().getModContainerById(EtherMod.MODID).ifPresent(c -> c.registerExtensionPoint(
+                net.neoforged.neoforge.client.gui.IConfigScreenFactory.class,
+                net.neoforged.neoforge.client.gui.ConfigurationScreen::new));
         NeoForge.EVENT_BUS.register(ClientInputHandler.class);
         com.ethermod.entity.SoulBlazeling.smokeEmitter = com.ethermod.client.BlazelingSmoke::emit;
         NeoForge.EVENT_BUS.register(BeamRenderer.class);

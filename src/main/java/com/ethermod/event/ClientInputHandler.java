@@ -110,7 +110,7 @@ public class ClientInputHandler {
             int newPhase =
                     Math.min(2, ticksHeld * 3 / com.ethermod.trait.Traits.chargeTicks(held));
             if (newPhase > BeamRenderState.chargePhase) {
-                BeamRenderState.phaseFlash = 1f;
+                BeamRenderState.phaseFlash = com.ethermod.config.ClientConfig.reduceFlashing() ? 0.25f : 1f;
                 // each charge stage swells a beacon power note, louder and higher (FX bench)
                 mc.getSoundManager()
                         .play(

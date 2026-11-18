@@ -60,7 +60,10 @@ final class PrismRope {
         }
         tube(pts, su, h1, r, color, a1);
         tube(pts, su, h2, r, wc, a2);
-        arcs(owner, pts, su, time, L, gl);
+        var me = net.minecraft.client.Minecraft.getInstance().player;
+        boolean simple = me != null && owner != me.getId() && com.ethermod.config.ClientConfig.simpleOtherBeams();
+        if (simple) return; // client setting: other players' beams as a plain rope
+        if (com.ethermod.config.ClientConfig.arcs()) arcs(owner, pts, su, time, L, gl);
         swells(owner, pts, su, L, color, time);
     }
 
@@ -174,7 +177,7 @@ final class PrismRope {
         for (float ta = next; ta - time <= SURGE_TICKS; ta += gap) {
             float f = 1 - (ta - time) / SURGE_TICKS;
             if (f < 0 || f > 1) continue;
-            swell(pts, su, f, color, L, Math.min(1f, f / 0.08f), time);
+            swell(pts, su, f, color, L, Math.min(1f, f / 0.08f) * (com.ethermod.config.ClientConfig.reduceFlashing() ? 0.35f : 1f), time);
         }
     }
 

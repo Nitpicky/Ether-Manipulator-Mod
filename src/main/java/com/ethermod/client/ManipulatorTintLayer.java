@@ -90,7 +90,8 @@ public class ManipulatorTintLayer extends GeoRenderLayer<EtherManipulatorItem> {
         if (mc.player != null && stack == mc.player.getMainHandItem()) {
             float rt = ManipulatorAnimations.reloadTime();
             if (rt >= 0.05f && rt < 1.16f) c = new int[] {mix(c[0], 0x101010, 0.85), mix(c[1], 0x101010, 0.85)};
-            else if (rt >= 1.16f && rt < 1.22f) c = new int[] {0xFFFFFF, 0xFFFFFF};
+            else if (rt >= 1.16f && rt < 1.22f && !com.ethermod.config.ClientConfig.reduceFlashing())
+                c = new int[] {0xFFFFFF, 0xFFFFFF};
         }
         draw(STAR, c[0], poseStack, animatable, bakedModel, bufferSource, partialTick);
         draw(CORE, c[1], poseStack, animatable, bakedModel, bufferSource, partialTick);

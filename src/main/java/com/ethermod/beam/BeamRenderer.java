@@ -78,18 +78,6 @@ public final class BeamRenderer {
     public static Vec3 nozzle, barrel;
 
     /**
-     * With the Manipulator out, the beam's own target preview replaces the vanilla block outline,
-     * which would box foliage the beam passes through.
-     */
-    @SubscribeEvent
-    public static void onBlockHighlight(
-            net.neoforged.neoforge.client.event.RenderHighlightEvent.Block event) {
-        Player p = Minecraft.getInstance().player;
-        if (p != null && p.getMainHandItem().getItem() instanceof EtherManipulatorItem)
-            event.setCanceled(true);
-    }
-
-    /**
      * Frame handling for every effect (see {@link com.ethermod.client.Fx}): start of frame, depth
      * copy before water, then once the world is finished the world's effects are produced and
      * everything recorded this frame is drawn at once.

@@ -16,7 +16,7 @@ public final class ClientConfig {
 
     public static final ModConfigSpec SPEC;
 
-    private static final ModConfigSpec.DoubleValue MASTER, BEAM, SHOT, UI, OTHER, SHAKE;
+    private static final ModConfigSpec.DoubleValue MASTER, BEAM, SHOT, UI, OTHER;
     private static final ModConfigSpec.BooleanValue FLASHING, ARCS, GLOW, SCROLL, SPIN;
     private static final ModConfigSpec.EnumValue<Detail> OTHER_DETAIL;
     private static final ModConfigSpec.EnumValue<ShaderMode> SHADER;
@@ -36,7 +36,6 @@ public final class ClientConfig {
         b.comment("Visual effects.").push("visuals");
         FLASHING = b.comment("Softens flashes: the damage swell, charge stages, the reload star and the light beacon.")
                 .define("reduce_flashing", false);
-        SHAKE = b.comment("Camera shake, from 0 (none) to 1.").defineInRange("camera_shake", 1.0, 0.0, 1.0);
         ARCS = b.comment("Crackling arcs on the beam.").define("beam_arcs", true);
         GLOW = b.comment("The glow on blocks you mine.").define("mined_block_glow", true);
         OTHER_DETAIL = b.comment("Other players' beams: FULL, or SIMPLE (no arcs or swell) for busy servers.")
@@ -72,7 +71,6 @@ public final class ClientConfig {
     public static float otherBeams() { return f(OTHER) * master(); }
 
     public static boolean reduceFlashing() { return or(FLASHING::get, false); }
-    public static float shake() { return f(SHAKE); }
     public static boolean arcs() { return or(ARCS::get, true); }
     public static boolean minedGlow() { return or(GLOW::get, true); }
     public static boolean simpleOtherBeams() { return or(OTHER_DETAIL::get, Detail.FULL) == Detail.SIMPLE; }

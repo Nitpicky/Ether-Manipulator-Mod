@@ -70,7 +70,8 @@ final class LightBeacon {
 
         // the mod's touch
         VertexConsumer g = com.ethermod.client.Fx.glow();
-        float br = 1 + 0.08f * (float) Math.sin(time * 0.15);
+        boolean calm = com.ethermod.config.ClientConfig.reduceFlashing();
+        float br = calm ? 1f : 1 + 0.08f * (float) Math.sin(time * 0.15);
         BeamFx.prism(g, m, from, to, PX * 0.25f, 0.785, 1f, 1f, 1f, 0.7f);
         BeamFx.prism(g, m, from, to, PX * 2.2f * br, 0.785, wr, wg, wb, 0.035f);
         for (int k = 0; k < 4; k++) {
@@ -83,7 +84,7 @@ final class LightBeacon {
         for (int k = 0; k < 4; k++) {
             double an = k * Math.PI / 2 + Math.PI / 4 + time * 0.01;
             Vec3 dd = u.scale(Math.cos(an)).add(v.scale(Math.sin(an)));
-            BeamFx.prism(g, m, b, b.add(dd.scale(r)), PX * 0.4f, 0.785, 1f, 1f, 1f, 0.6f);
+            BeamFx.prism(g, m, b, b.add(dd.scale(r)), PX * 0.4f, 0.785, 1f, 1f, 1f, calm ? 0.25f : 0.6f);
         }
         BeamFx.cube(g, m, b, PX * 1.2f * BeamRenderer.nearScale(to), wr, wg, wb, 0.5f);
     }
