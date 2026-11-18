@@ -406,6 +406,9 @@ public final class RedesignEffects {
         e.setDeltaMovement(Vec3.ZERO);
         e.setNoGravity(true);
         if (e instanceof Mob m) m.setNoAi(true);
+        // the amber tint and the quickening ding (client StasisFx)
+        net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingEntityAndSelf(
+                e, new com.ethermod.network.payload.StasisPayload(e.getId(), ticks));
     }
 
     public static void impulse(LivingEntity e, Vec3 force) {
@@ -465,6 +468,8 @@ public final class RedesignEffects {
                 e.setDeltaMovement(v);
                 e.hurtMarked = true;
                 d.putLong("mm_stasis_cooldown", now + 40);
+                net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingEntityAndSelf(
+                        e, new com.ethermod.network.payload.StasisPayload(e.getId(), 0));
                 it.remove();
             } else {
                 if (e.getDeltaMovement().lengthSqr() > .09) store(e, e.getDeltaMovement());

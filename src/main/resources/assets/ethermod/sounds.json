@@ -783,5 +783,23 @@
       }
     ],
     "subtitle": "subtitles.entity.wind_charge.wind_burst"
+  },
+  "world/stasis.ding": {
+    "sounds": [
+      {
+        "name": "minecraft:block.note_block.bell",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.ethermod.stasis.ding"
+  },
+  "world/stasis.release": {
+    "sounds": [
+      {
+        "name": "minecraft:block.bell.use",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.ethermod.stasis.release"
   }
 }

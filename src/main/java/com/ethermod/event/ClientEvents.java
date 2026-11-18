@@ -83,6 +83,18 @@ public class ClientEvents {
                                         level, x, y, z, dx, dy, dz, sprites, 2));
     }
 
+    /** Stasis: every living creature's renderer gets the amber tint layer (client StasisFx). */
+    @SubscribeEvent
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static void stasisLayers(EntityRenderersEvent.AddLayers event) {
+        for (var type : event.getEntityTypes())
+            if (event.getRenderer(type) instanceof net.minecraft.client.renderer.entity.LivingEntityRenderer r)
+                r.addLayer(new com.ethermod.client.StasisFx.Layer(r));
+        for (var skin : event.getSkins())
+            if (event.getSkin(skin) instanceof net.minecraft.client.renderer.entity.LivingEntityRenderer r)
+                r.addLayer(new com.ethermod.client.StasisFx.Layer(r));
+    }
+
     @SubscribeEvent
     public static void blazelingLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(

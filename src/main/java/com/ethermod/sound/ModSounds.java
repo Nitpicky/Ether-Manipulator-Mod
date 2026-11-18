@@ -89,4 +89,7 @@ public final class ModSounds {
     public static final SoundEvent WORLD_SLIME_ATTACK = a("world/entity.slime.attack");
     public static final SoundEvent WORLD_TOTEM_USE = a("world/item.totem.use");
     public static final SoundEvent WORLD_WIND_CHARGE_BURST = a("world/entity.wind_charge.wind_burst");
+    // Stasis (Pneumatic): a ding that speeds up, a low ring on release
+    public static final SoundEvent WORLD_STASIS_DING = a("world/stasis.ding");
+    public static final SoundEvent WORLD_STASIS_RELEASE = a("world/stasis.release");
 }
