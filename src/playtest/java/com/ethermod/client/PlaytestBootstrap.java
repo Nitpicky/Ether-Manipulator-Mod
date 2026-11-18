@@ -952,6 +952,10 @@ public final class PlaytestBootstrap {
                                                     + " mass driver: right click threw the"
                                                     + " carried stone"));
             // (Mechatronic Golem checks shelved with the Module, see docs/MECHATRONIC.md)
+            case 1447 -> server(mc, (s, p) -> {
+                checkGemLoot(s, p);
+                checkAdvancements(s, p);
+            });
             case 1449 -> server(mc, (s, p) -> checkGemGuarantee(s, p, "desert_pyramid", "atenite", false));
             case 1451 -> server(mc, (s, p) -> checkGemGuarantee(s, p, "jungle_pyramid", "quetzalite", true));
             case 1572 -> finish(mc);

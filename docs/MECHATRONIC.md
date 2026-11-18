@@ -21,7 +21,7 @@ Commit `c360a7e` ("Shelve the Mechatronic Module for the first release") removes
 | Advancements | Spoils of War (`tinkerite`), Heavyweight Bout |
 | Text | 70 lang keys in each of the 18 languages |
 | Hooks in shared code | `OrbMode.GOLEM` (it was the last mode, so saved mode numbers don't shift), Golem left/right click, HUD health and Super Move bar, Badges, animations, ally check, registrations |
-| CI playtest | the Golem scene (ticks 1210 to 1562, shots 31 to 37), 6 UI-probe Golem checks; the probe gate went from 205 to 202 PASS |
+| CI playtest | the Golem scene (ticks 1210 to 1562, shots 31 to 37), 7 UI-probe Mechatronic checks (6 Golem + its per-Module tree check); the probe gate went from 205 to 201 PASS. The gem-loot and advancement checks that ran inside the Golem scene now run on their own at tick 1447 |
 
 One side effect: the Plasmic beam's extra "electric snap" on arcing strikes used the Golem's crackle
 sounds (cut from Dungeons spark recordings), so it is gone too. The amethyst tick still plays.
