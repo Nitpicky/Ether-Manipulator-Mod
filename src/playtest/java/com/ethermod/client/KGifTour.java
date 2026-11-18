@@ -294,7 +294,7 @@ public final class KGifTour {
         waitT(10);
         close();
 
-        // ---- 2. Choosing a Module for the Calibrated slot -----------------------------------
+        // ---- 2. Choosing a Module for the Calibrated slot (nine Modules: Mechatronic is shelved) 
         open("2_module");
         waitT(14);
         glide("badge0", 14);
