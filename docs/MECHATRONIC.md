@@ -42,9 +42,10 @@ read the Modules from data, so they show nine Modules without further changes.
 ## Bringing it back
 
 ```sh
-git revert c360a7e
+git revert 212ea08 c360a7e
 ```
 
+(`212ea08` is the small playtest follow-up to the removal; reverting both, newest first, avoids a conflict.)
 That restores every file and hook exactly as it was (checked: after the revert the tree equals
 `a4a960f` plus the login cleanup). Then:
 
