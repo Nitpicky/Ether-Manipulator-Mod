@@ -140,6 +140,12 @@ public class ModEvents {
     public static void onLogin(PlayerEvent.PlayerLoggedInEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer sp)) return;
         ManipulatorData data = Manipulator.data(sp);
+        // a Module whose definition is gone (e.g. shelved Mechatronic) leaves its slot empty instead of half-loaded
+        for (int slot = 0; slot < com.ethermod.trait.TraitBuild.MAX_SLOTS; slot++) {
+            var line = com.ethermod.trait.TraitBuild.line(data.stack(), slot);
+            if (line != null && com.ethermod.trait.TraitLines.get(sp.registryAccess(), line).isEmpty())
+                com.ethermod.trait.TraitBuild.setLine(data.stack(), slot, null);
+        }
         com.ethermod.trait.TraitEnchants.refresh(data.stack(), sp.registryAccess());
         if (!data.introduced()) {
             data.setIntroduced(true);
