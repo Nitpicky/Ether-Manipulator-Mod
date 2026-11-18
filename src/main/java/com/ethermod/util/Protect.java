@@ -20,8 +20,9 @@ public final class Protect {
     public static boolean probing;
 
     public static boolean may(LevelAccessor level, Player p, BlockPos pos) {
-        if (!level.mayInteract(p, pos)) return false;
-        if (p == null || !(level instanceof Level l) || l.isClientSide()
+        if (!(level instanceof Level l)) return true;
+        if (p != null && !l.mayInteract(p, pos)) return false;
+        if (p == null || l.isClientSide()
                 || !com.ethermod.config.ServerConfig.respectProtection()) return true;
         if (probing) return true;
         probing = true;

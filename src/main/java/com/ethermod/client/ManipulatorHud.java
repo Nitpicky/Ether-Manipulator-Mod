@@ -180,9 +180,9 @@ public final class ManipulatorHud {
             int cap = OrbMode.capacity(stack), have = Math.min(cap, OrbMode.tank(stack));
             if (have != lastTank || have < cap) fullSince = now;
             lastTank = have;
-            var mode = com.ethermod.config.ClientConfig.counter();
-            float target = mode == com.ethermod.config.ClientConfig.Counter.HIDDEN || open > .5f ? 0
-                    : mode == com.ethermod.config.ClientConfig.Counter.ALWAYS || now - fullSince <= AMMO_LINGER_MS ? 1 : 0;
+            var counter = com.ethermod.config.ClientConfig.counter();
+            float target = counter == com.ethermod.config.ClientConfig.Counter.HIDDEN || open > .5f ? 0
+                    : counter == com.ethermod.config.ClientConfig.Counter.ALWAYS || now - fullSince <= AMMO_LINGER_MS ? 1 : 0;
             ammoAlpha += (target - ammoAlpha) * Math.min(1, dt / 180f);
             if (ammoAlpha > .02f) ammo(g, have + "/" + cap, (int) cx, (int) cy + 16, ammoAlpha);
         } else ammoAlpha = 0;
