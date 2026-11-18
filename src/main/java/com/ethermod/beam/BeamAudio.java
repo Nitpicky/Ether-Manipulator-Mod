@@ -223,9 +223,13 @@ public final class BeamAudio {
     private static void ensureLoop(Minecraft mc, Player p, IntSupplier level) {
         BeamVoice v = VOICES.get(p.getId());
         if (v != null && !v.done) return;
-        VOICES.put(p.getId(), new BeamVoice(mc, p, level));
-        mc.level.playLocalSound(
-                p.getX(), p.getEyeY(), p.getZ(), ev("beam.on"), SoundSource.PLAYERS, 0.6f, 1f, false);
+        BeamVoice nv = new BeamVoice(mc, p, level);
+        VOICES.put(p.getId(), nv);
+        if (nv.light) // Photonic's beacon: vanilla's beacon sounds, as it is vanilla's beacon beam
+            mc.level.playLocalSound(p.getX(), p.getEyeY(), p.getZ(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 0.3f, 1.15f, false);
+        else
+            mc.level.playLocalSound(
+                    p.getX(), p.getEyeY(), p.getZ(), ev("beam.on"), SoundSource.PLAYERS, 0.6f, 1f, false);
     }
 
     private static final Map<Integer, Integer> HEARD = new HashMap<>();
@@ -282,12 +286,19 @@ public final class BeamAudio {
         Layer hum, crackle, sub;
         int lv;
         boolean done;
+        final boolean light;
 
         BeamVoice(Minecraft mc, Player p, IntSupplier level) {
             this.mc = mc;
             this.player = p;
             this.level = level;
             lv = lvl();
+            light = com.ethermod.item.OrbMode.get(p.getMainHandItem()) == com.ethermod.item.OrbMode.LIGHT;
+            if (light) {
+                hum = new Layer(player, SoundEvents.BEACON_AMBIENT, 0.45f, 1.15f);
+                mc.getSoundManager().play(hum);
+                return;
+            }
             hum = start("beam.hum" + lv, HUM_V[lv - 1], 1f);
             crackle = start("beam.crackle", CRACKLE_V[lv - 1], 0.94f + 0.06f * lv);
             sub = start("beam.sub", SUB_V[lv - 1], 1f);
@@ -307,13 +318,18 @@ public final class BeamAudio {
             if (done) return;
             if (player.isRemoved() || !isBeaming(player)) {
                 hum.fade();
-                crackle.fade();
-                sub.fade();
+                if (crackle != null) crackle.fade();
+                if (sub != null) sub.fade();
                 done = true;
-                mc.level.playLocalSound(
-                        player.getX(), player.getEyeY(), player.getZ(), ev("beam.off"), SoundSource.PLAYERS, 0.6f, 1f, false);
+                if (light)
+                    mc.level.playLocalSound(
+                            player.getX(), player.getEyeY(), player.getZ(), SoundEvents.BEACON_DEACTIVATE, SoundSource.PLAYERS, 0.3f, 1.15f, false);
+                else
+                    mc.level.playLocalSound(
+                            player.getX(), player.getEyeY(), player.getZ(), ev("beam.off"), SoundSource.PLAYERS, 0.6f, 1f, false);
                 return;
             }
+            if (light) return;
             int now = lvl();
             if (now != lv) {
                 lv = now;

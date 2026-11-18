@@ -210,20 +210,24 @@ public final class BeamRenderer {
                             : elasticDir(localAim, aimNow, dt);
             localTip = rawHit;
 
-            drawBeam(
-                    player.getId(),
-                    m,
-                    camPos,
-                    nozzle,
-                    localAim,
-                    localTip,
-                    extend,
-                    level,
-                    time,
-                    color,
-                    hitSomething);
-            drawArcs(m, camPos, player, held, hit, level, time, color);
-            drawRefraction(m, camPos, player, held, level, time, color, extend);
+            if (com.ethermod.item.OrbMode.get(held) == com.ethermod.item.OrbMode.LIGHT) {
+                lightBeacon(mc, buf, m, camPos, nozzle, localTip, extend, time, color);
+            } else {
+                drawBeam(
+                        player.getId(),
+                        m,
+                        camPos,
+                        nozzle,
+                        localAim,
+                        localTip,
+                        extend,
+                        level,
+                        time,
+                        color,
+                        hitSomething);
+                drawArcs(m, camPos, player, held, hit, level, time, color);
+                drawRefraction(m, camPos, player, held, level, time, color, extend);
+            }
             spawnImpactFx(mc.level, hit, localTip, nozzle, color, level, dt, hitSomething, -1);
             Vec3 toW = localTip;
 
@@ -274,6 +278,11 @@ public final class BeamRenderer {
             Vec3[] nb = Muzzle.resolve(p.getId(), false, proj, view, camPos);
             Vec3 fromW = nb != null ? nb[0] : approximateMuzzle(p, pt);
             boolean hitSomething = hit.getType() != HitResult.Type.MISS;
+            if (com.ethermod.item.OrbMode.get(held) == com.ethermod.item.OrbMode.LIGHT) {
+                lightBeacon(mc, mc.renderBuffers().bufferSource(), m, camPos, fromW, toW, Math.min(1f, heldTicks / 2.5f), time, color);
+                spawnImpactFx(level, hit, toW, fromW, color, lvl, dt, hitSomething, p.getId());
+                continue;
+            }
             drawBeam(
                     p.getId(),
                     m,
@@ -289,6 +298,23 @@ public final class BeamRenderer {
             drawArcs(m, camPos, p, held, hit, lvl, time, color);
             drawRefraction(m, camPos, p, held, lvl, time, color, Math.min(1f, heldTicks / 2.5f));
             spawnImpactFx(level, hit, toW, fromW, color, lvl, dt, hitSomething, p.getId());
+        }
+    }
+
+    private static long lastBeaconMote = Long.MIN_VALUE;
+
+    /** Photonic's beacon in place of the beam (vanilla's beacon columns, FX bench), with a mote of light every 8 ticks. */
+    private static void lightBeacon(
+            Minecraft mc, MultiBufferSource.BufferSource buf, Matrix4f m, Vec3 camPos, Vec3 fromW, Vec3 toW, float extend, float time, float[] color) {
+        Vec3 to = fromW.lerp(toW, extend);
+        LightBeacon.draw(buf, m, fromW.subtract(camPos), to.subtract(camPos), time, color);
+        long tick = (long) time;
+        if (tick % 8 == 0 && tick != lastBeaconMote && !mc.isPaused()) {
+            lastBeaconMote = tick;
+            Vec3 p = fromW.lerp(to, Math.random());
+            mc.level.addParticle(
+                    net.minecraft.core.particles.ParticleTypes.END_ROD,
+                    p.x, p.y, p.z, (Math.random() - 0.5) * 0.04, 0.01, (Math.random() - 0.5) * 0.04);
         }
     }
 
