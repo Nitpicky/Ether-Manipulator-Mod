@@ -119,7 +119,7 @@ public final class ProjectileEffects {
                 var q = pos.immutable();
                 if (done.add(q)
                         && sl.hasChunkAt(q)
-                        && sl.mayInteract(p, q)
+                        && com.ethermod.util.Protect.may(sl, p, q)
                         && sl.getBlockState(q).is(Blocks.WATER))
                     WorldEffects.tempBlock(sl, q, Blocks.AIR.defaultBlockState(), 400);
             }

@@ -9,7 +9,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
@@ -58,7 +57,7 @@ public final class OrbTether {
                 b.getX(),
                 b.getY(),
                 b.getZ(),
-                SoundEvents.CHAIN_PLACE,
+                com.ethermod.sound.ModSounds.WORLD_CHAIN_PLACE,
                 SoundSource.PLAYERS,
                 1f,
                 b.hookPitch);
@@ -142,7 +141,7 @@ public final class OrbTether {
                         me.x,
                         me.y,
                         me.z,
-                        SoundEvents.ENDERMAN_TELEPORT,
+                        com.ethermod.sound.ModSounds.WORLD_ENDERMAN_TELEPORT,
                         SoundSource.PLAYERS,
                         0.8f,
                         1.3f);
@@ -187,7 +186,7 @@ public final class OrbTether {
                             sp.getX(),
                             sp.getY(),
                             sp.getZ(),
-                            SoundEvents.BREEZE_IDLE_GROUND,
+                            com.ethermod.sound.ModSounds.WORLD_BREEZE_IDLE_GROUND,
                             SoundSource.PLAYERS,
                             0.5f,
                             1.6f);
@@ -320,7 +319,7 @@ public final class OrbTether {
                 sp.getX(),
                 sp.getEyeY(),
                 sp.getZ(),
-                SoundEvents.CROSSBOW_SHOOT,
+                com.ethermod.sound.ModSounds.WORLD_CROSSBOW_SHOOT,
                 SoundSource.PLAYERS,
                 0.7f,
                 1.4f);
@@ -403,7 +402,7 @@ public final class OrbTether {
         if (dist < .35 || sl.getGameTime() - b.landingSince > 80) {
             sp.setDeltaMovement(Vec3.ZERO);
             sp.hurtMarked = true;
-            sl.playSound(null, sp.blockPosition(), SoundEvents.AMETHYST_BLOCK_STEP, SoundSource.PLAYERS, .8f, .8f);
+            sl.playSound(null, sp.blockPosition(), com.ethermod.sound.ModSounds.WORLD_AMETHYST_BLOCK_STEP, SoundSource.PLAYERS, .8f, .8f);
             b.discard();
             return;
         }
@@ -457,7 +456,7 @@ public final class OrbTether {
                     sp.getX(),
                     sp.getY(),
                     sp.getZ(),
-                    SoundEvents.CROSSBOW_SHOOT,
+                    com.ethermod.sound.ModSounds.WORLD_CROSSBOW_SHOOT,
                     SoundSource.PLAYERS,
                     0.8f,
                     0.7f);
@@ -488,7 +487,7 @@ public final class OrbTether {
                 sp.getX(),
                 sp.getY(),
                 sp.getZ(),
-                SoundEvents.BREEZE_SHOOT,
+                com.ethermod.sound.ModSounds.WORLD_BREEZE_SHOOT,
                 SoundSource.PLAYERS,
                 1f,
                 0.7f);

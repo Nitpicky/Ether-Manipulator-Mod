@@ -62,10 +62,10 @@ public final class PhotonicEffects {
                     p,
                     at,
                     Traits.has(st, "photonic.lodestar")
-                            ? 600
+                            ? com.ethermod.config.ServerConfig.photonicTicks()
                             : nova ? 240 : 120);
         if (Traits.has(st, "photonic.lodestar")) {
-            int life = 600;
+            int life = com.ethermod.config.ServerConfig.photonicTicks();
             add(p, at, null, st, life);
             net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(
                     p,
@@ -80,7 +80,7 @@ public final class PhotonicEffects {
         if (nova) {
             for (var dir : Direction.values()) {
                 var spot = BlockPos.containing(at).relative(dir, 3);
-                if (p.serverLevel().hasChunkAt(spot) && p.serverLevel().mayInteract(p, spot))
+                if (p.serverLevel().hasChunkAt(spot) && com.ethermod.util.Protect.may(p.serverLevel(), p, spot))
                     WorldEffects.tempLight(p.serverLevel(), spot, 15, 80);
             }
             WorldEffects.tempLight(p.serverLevel(), BlockPos.containing(at), 15, 80);

@@ -6,7 +6,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -30,12 +29,12 @@ final class FoliageCut {
             var bs = sl.getBlockState(bp);
             if (!FoliageHelper.isFoliage(bs)) continue;
             BlockPos at = bp.immutable();
-            if (owner != null && !sl.mayInteract(owner, at)) continue;
+            if (owner != null && !com.ethermod.util.Protect.may(sl, owner, at)) continue;
             if (burn) {
                 sl.destroyBlock(at, false, owner);
                 sl.sendParticles(ParticleTypes.FLAME, at.getX() + .5, at.getY() + .5, at.getZ() + .5, 4, .25, .25, .25, .01);
                 sl.sendParticles(ParticleTypes.SMOKE, at.getX() + .5, at.getY() + .6, at.getZ() + .5, 2, .2, .2, .2, .01);
-                sl.playSound(null, at, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, .25f, 1.6f);
+                sl.playSound(null, at, com.ethermod.sound.ModSounds.WORLD_FIRE_EXTINGUISH, SoundSource.BLOCKS, .25f, 1.6f);
             } else if (owner != null) MiningDamageTracker.breakAsPlayer(owner, at);
             else sl.destroyBlock(at, true);
         }

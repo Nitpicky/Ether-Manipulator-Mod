@@ -256,6 +256,7 @@
   "trait.ethermod.pyrotechnic.phoenix.desc": "Overleef een fatale klap in een vuuruitbarsting. Eens per 10 min.",
   "trait.ethermod.pyrotechnic.soulwake": "Zielenspoor",
   "trait.ethermod.pyrotechnic.soulwake.desc": "Je brandwonden worden zielenvuur. Vijanden die het doodt, herrijzen als bevriende zielenvuur-blazeling.",
+  "trait.ethermod.pyrotechnic.soulwake_nosummon.desc": "Je brandwonden worden zielenvuur.",
   "trait.ethermod.pyrotechnic.rekindle": "Herontsteking",
   "trait.ethermod.pyrotechnic.rekindle.desc": "Vuur en lava genezen je.",
   "module.ethermod.pneumatic": "Pneumatiek",

@@ -256,6 +256,7 @@
   "trait.ethermod.pyrotechnic.phoenix.desc": "Переживіть смертельний удар у спалаху вогню. Раз на 10 хв.",
   "trait.ethermod.pyrotechnic.soulwake": "Слід душ",
   "trait.ethermod.pyrotechnic.soulwake.desc": "Ваші опіки стають душевним вогнем. Убиті ним вороги повстають союзним Душевним сполохеням.",
+  "trait.ethermod.pyrotechnic.soulwake_nosummon.desc": "Ваші опіки стають душевним вогнем.",
   "trait.ethermod.pyrotechnic.rekindle": "Розпалювання",
   "trait.ethermod.pyrotechnic.rekindle.desc": "Вогонь і лава лікують вас.",
   "module.ethermod.pneumatic": "Пневматичний",

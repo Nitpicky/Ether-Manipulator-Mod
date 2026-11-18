@@ -10,7 +10,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
@@ -153,7 +152,7 @@ public final class MassDriver {
         var level = p.serverLevel();
         var bs = level.getBlockState(at);
         if (h.sources.contains(at)
-                || h.pieces.size() >= MAX_PIECES
+                || h.pieces.size() >= com.ethermod.config.ServerConfig.massMax()
                 || !canLift(level, p, at, bs)
                 || p.blockActionRestricted(level, at, p.gameMode.getGameModeForPlayer()))
             return false;
@@ -173,6 +172,11 @@ public final class MassDriver {
                         level, p, 0, com.ethermod.item.ManipulatorStage.get(st), com.ethermod.item.OrbMode.MASS);
         entity.configure(st);
         entity.setCarried(bs);
+        var be = level.getBlockEntity(at);
+        if (be != null) {
+            entity.carriedBe = be.saveWithFullMetadata(level.registryAccess());
+            if (be instanceof net.minecraft.world.Container box) box.clearContent(); // no spill when removed
+        }
         entity.setPos(Vec3.atCenterOf(at));
         entity.setDeltaMovement(Vec3.ZERO);
         var piece = new Piece(entity, at.subtract(h.origin));
@@ -182,8 +186,8 @@ public final class MassDriver {
         // the rip (FX bench): the block's own break, low, over gravel and deepslate, once per grab
         level.playSound(null, at, bs.getSoundType().getBreakSound(), SoundSource.BLOCKS, .4f, .8f);
         if (h.sources.isEmpty()) {
-            level.playSound(null, at, SoundEvents.GRAVEL_BREAK, SoundSource.BLOCKS, .5f, .7f);
-            level.playSound(null, at, SoundEvents.DEEPSLATE_BREAK, SoundSource.BLOCKS, .25f, .7f);
+            level.playSound(null, at, com.ethermod.sound.ModSounds.WORLD_GRAVEL_BREAK, SoundSource.BLOCKS, .5f, .7f);
+            level.playSound(null, at, com.ethermod.sound.ModSounds.WORLD_DEEPSLATE_BREAK, SoundSource.BLOCKS, .25f, .7f);
         }
         h.sources.add(at.immutable());
         piece.from = Vec3.atCenterOf(at);
@@ -392,7 +396,7 @@ public final class MassDriver {
             for (var q : h.pieces) {
                 BlockPos at = base.offset(q.offset);
                 if (!canPlace(sl, p, q.entity.getCarried(), at)) {
-                    sl.playSound(null, p.blockPosition(), SoundEvents.DISPENSER_FAIL, SoundSource.PLAYERS, .6f, 1.4f);
+                    sl.playSound(null, p.blockPosition(), com.ethermod.sound.ModSounds.WORLD_DISPENSER_FAIL, SoundSource.PLAYERS, .6f, 1.4f);
                     return; // the shape must fit as a whole; the ghosts show what is in the way
                 }
             }
@@ -402,9 +406,10 @@ public final class MassDriver {
                 var bs = q.entity.getCarried();
                 BlockPos at = base.offset(q.offset);
                 sl.setBlockAndUpdate(at, bs);
+                OrbMass.restoreBe(sl, at, q.entity);
                 sl.playSound(null, at, bs.getSoundType().getPlaceSound(), SoundSource.BLOCKS, .8f, bs.getSoundType().getPitch() * .9f);
                 if (q.offset.equals(BlockPos.ZERO)) // a heavy thud as it lands (FX bench)
-                    sl.playSound(null, at, SoundEvents.HEAVY_CORE_PLACE, SoundSource.BLOCKS, .35f, .8f);
+                    sl.playSound(null, at, com.ethermod.sound.ModSounds.WORLD_HEAVY_CORE_PLACE, SoundSource.BLOCKS, .35f, .8f);
                 q.entity.setCarried(Blocks.AIR.defaultBlockState());
                 q.entity.discard();
             }
@@ -429,7 +434,7 @@ public final class MassDriver {
         return level.hasChunkAt(at)
                 && level.getBlockState(at).canBeReplaced()
                 && bs.canSurvive(level, at)
-                && level.mayInteract(p, at)
+                && com.ethermod.util.Protect.may(level, p, at)
                 && level.isUnobstructed(bs, at, CollisionContext.empty());
     }
 
@@ -454,7 +459,7 @@ public final class MassDriver {
         setCarried(Manipulator.stack(p), null);
         Manipulator.sync(p);
         p.serverLevel()
-                .playSound(null, p.getX(), p.getEyeY(), p.getZ(), SoundEvents.BREEZE_SHOOT, SoundSource.PLAYERS, .8f, .7f - .1f * phase);
+                .playSound(null, p.getX(), p.getEyeY(), p.getZ(), com.ethermod.sound.ModSounds.WORLD_BREEZE_SHOOT, SoundSource.PLAYERS, .8f, .7f - .1f * phase);
     }
 
     @SubscribeEvent
@@ -492,12 +497,17 @@ public final class MassDriver {
 
     /** Ordinary solid blocks only: no fluids, containers, two-part blocks or unbreakables. */
     public static boolean canLift(Level level, Player p, BlockPos pos, BlockState bs) {
-        if (bs.isAir() || !bs.getFluidState().isEmpty() || bs.hasBlockEntity()) return false;
+        if (bs.isAir() || !bs.getFluidState().isEmpty() || com.ethermod.config.ServerConfig.blacklisted(bs)) return false;
+        if (bs.hasBlockEntity()
+                && (!com.ethermod.config.ServerConfig.massLiftsContainers()
+                        || bs.hasProperty(BlockStateProperties.CHEST_TYPE)
+                                && bs.getValue(BlockStateProperties.CHEST_TYPE) != net.minecraft.world.level.block.state.properties.ChestType.SINGLE))
+            return false;
         float hard = bs.getDestroySpeed(level, pos);
         if (hard < 0 || hard > 50) return false;
         if (bs.hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF) || bs.hasProperty(BlockStateProperties.BED_PART))
             return false;
         if (bs.getBlock().asItem() == net.minecraft.world.item.Items.AIR) return false;
-        return level.mayInteract(p, pos);
+        return com.ethermod.util.Protect.may(level, p, pos);
     }
 }

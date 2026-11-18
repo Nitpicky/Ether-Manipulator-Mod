@@ -256,6 +256,7 @@
   "trait.ethermod.pyrotechnic.phoenix.desc": "Sopravvivi a un colpo fatale in un'esplosione di fuoco. Una volta ogni 10 min.",
   "trait.ethermod.pyrotechnic.soulwake": "Scia di anime",
   "trait.ethermod.pyrotechnic.soulwake.desc": "Le tue ustioni diventano fuoco delle anime. I nemici che uccide risorgono come Blazeling delle anime alleato.",
+  "trait.ethermod.pyrotechnic.soulwake_nosummon.desc": "Le tue ustioni diventano fuoco delle anime.",
   "trait.ethermod.pyrotechnic.rekindle": "Ravvivare",
   "trait.ethermod.pyrotechnic.rekindle.desc": "Fuoco e lava ti curano.",
   "module.ethermod.pneumatic": "Pneumatico",

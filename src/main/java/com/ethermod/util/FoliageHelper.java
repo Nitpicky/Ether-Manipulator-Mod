@@ -18,8 +18,18 @@ public final class FoliageHelper {
 
     private FoliageHelper() {}
 
+    /** A crop the server lists in extra_crops: ripe when its "age" property is at its top value. */
+    public static boolean extraRipe(BlockState s) {
+        if (!com.ethermod.config.ServerConfig.extraCrop(s)) return false;
+        for (var prop : s.getProperties())
+            if (prop.getName().equals("age") && prop instanceof net.minecraft.world.level.block.state.properties.IntegerProperty ip)
+                return s.getValue(ip) >= java.util.Collections.max(ip.getPossibleValues());
+        return true;
+    }
+
     public static boolean isFoliage(BlockState state) {
         Block b = state.getBlock();
+        if (com.ethermod.config.ServerConfig.extraFoliage(state)) return true;
 
         // Leaves
         if (b == Blocks.OAK_LEAVES

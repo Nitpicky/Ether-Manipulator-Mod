@@ -121,7 +121,7 @@ public class EtherManipulatorItem extends Item implements GeoItem {
                         true);
                 if (player instanceof net.minecraft.server.level.ServerPlayer sp) // dry fire: a soft fizz
                     sp.playNotifySound(
-                            net.minecraft.sounds.SoundEvents.FIRE_EXTINGUISH,
+                            com.ethermod.sound.ModSounds.SHOT_FIRE_EXTINGUISH,
                             net.minecraft.sounds.SoundSource.PLAYERS,
                             0.12f,
                             1.8f);
@@ -391,14 +391,14 @@ public class EtherManipulatorItem extends Item implements GeoItem {
             ItemStack stack, net.minecraft.world.level.block.state.BlockState state) {
         float baseSpeed = ManipulatorStage.get(stack).miningSpeed();
         float skillBonus = Traits.miningSpeedBonus(stack);
-        return baseSpeed + skillBonus;
+        return (baseSpeed + skillBonus) * com.ethermod.config.ServerConfig.miningSpeed();
     }
 
     /** Harvest level follows the stage: Stone can't take diamond ore, Iron can't take obsidian. */
     @Override
     public boolean isCorrectToolForDrops(
             ItemStack stack, net.minecraft.world.level.block.state.BlockState state) {
-        return ManipulatorStage.get(stack).canHarvest(state);
+        return ManipulatorStage.get(stack).canHarvest(state) || com.ethermod.config.ServerConfig.alwaysHarvest(state);
     }
 
     // =========================================================================

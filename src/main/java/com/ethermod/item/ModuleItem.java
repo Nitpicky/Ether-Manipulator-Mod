@@ -14,6 +14,10 @@ import net.minecraft.world.level.Level;
 public final class ModuleItem extends Item {
     private final ResourceLocation module;
 
+    public ResourceLocation module() {
+        return module;
+    }
+
     public ModuleItem(String module) {
         super(new Properties().rarity(Rarity.UNCOMMON));
         this.module = ResourceLocation.fromNamespaceAndPath("ethermod", module);

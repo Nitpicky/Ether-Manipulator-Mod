@@ -131,7 +131,7 @@ public final class TraitEffects {
 
     @SubscribeEvent
     public static void onBreak(BlockEvent.BreakEvent event) {
-        if (com.ethermod.beam.MassDriver.lifting) return;
+        if (com.ethermod.beam.MassDriver.lifting || com.ethermod.util.Protect.probing) return;
         if (!(event.getPlayer() instanceof ServerPlayer player) || !Manipulator.isSummoned(player))
             return;
         ItemStack tool = player.getMainHandItem();
@@ -149,7 +149,7 @@ public final class TraitEffects {
         List<BlockPos> vein = new ArrayList<>();
         queue.add(origin);
         seen.add(origin);
-        int limit = VEIN_LIMIT;
+        int limit = com.ethermod.config.ServerConfig.veinLimit();
         while (!queue.isEmpty() && vein.size() < limit) {
             BlockPos p = queue.poll();
             for (BlockPos n : BlockPos.betweenClosed(p.offset(-1, -1, -1), p.offset(1, 1, 1))) {

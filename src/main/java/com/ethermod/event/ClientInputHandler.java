@@ -115,7 +115,7 @@ public class ClientInputHandler {
                 mc.getSoundManager()
                         .play(
                                 net.minecraft.client.resources.sounds.SimpleSoundInstance.forUI(
-                                        net.minecraft.sounds.SoundEvents.BEACON_POWER_SELECT,
+                                        com.ethermod.sound.ModSounds.SHOT_BEACON_POWER_SELECT,
                                         1.1f + 0.25f * newPhase,
                                         0.2f + 0.05f * newPhase));
             }

@@ -256,6 +256,7 @@
   "trait.ethermod.pyrotechnic.phoenix.desc": "Sobrevive a un golpe mortal en una explosión de fuego. Una vez cada 10 min.",
   "trait.ethermod.pyrotechnic.soulwake": "Estela de almas",
   "trait.ethermod.pyrotechnic.soulwake.desc": "Tus quemaduras se vuelven fuego de almas. Los enemigos que mata se alzan como Blazeling de almas aliado.",
+  "trait.ethermod.pyrotechnic.soulwake_nosummon.desc": "Tus quemaduras se vuelven fuego de almas.",
   "trait.ethermod.pyrotechnic.rekindle": "Reavivar",
   "trait.ethermod.pyrotechnic.rekindle.desc": "El fuego y la lava te curan.",
   "module.ethermod.pneumatic": "Neumático",

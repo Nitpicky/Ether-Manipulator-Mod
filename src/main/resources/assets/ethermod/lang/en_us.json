@@ -256,6 +256,7 @@
   "trait.ethermod.pyrotechnic.phoenix.desc": "Survive a fatal hit in a burst of fire. Once every 10 min.",
   "trait.ethermod.pyrotechnic.soulwake": "Soulwake",
   "trait.ethermod.pyrotechnic.soulwake.desc": "Your burns become soulfire. Enemies it kills rise as an allied Soulfire Blazeling.",
+  "trait.ethermod.pyrotechnic.soulwake_nosummon.desc": "Your burns become soulfire.",
   "trait.ethermod.pyrotechnic.rekindle": "Rekindle",
   "trait.ethermod.pyrotechnic.rekindle.desc": "Fire and Lava heal you.",
   "module.ethermod.pneumatic": "Pneumatic",

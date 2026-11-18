@@ -107,8 +107,8 @@ public final class ManipulatorColors {
         if (body) {
             var s =
                     rnd.nextBoolean()
-                            ? net.minecraft.sounds.SoundEvents.GENERIC_SPLASH
-                            : net.minecraft.sounds.SoundEvents.PLAYER_SPLASH;
+                            ? com.ethermod.sound.ModSounds.UI_GENERIC_SPLASH
+                            : com.ethermod.sound.ModSounds.UI_PLAYER_SPLASH;
             sp.level()
                     .playSound(
                             null,
@@ -126,7 +126,7 @@ public final class ManipulatorColors {
                             sp.getX(),
                             sp.getY(),
                             sp.getZ(),
-                            net.minecraft.sounds.SoundEvents.AMETHYST_BLOCK_PLACE,
+                            com.ethermod.sound.ModSounds.UI_AMETHYST_BLOCK_PLACE,
                             net.minecraft.sounds.SoundSource.PLAYERS,
                             0.9f,
                             0.8f + rnd.nextFloat() * 0.5f);

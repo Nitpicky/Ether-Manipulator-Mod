@@ -256,6 +256,7 @@
   "trait.ethermod.pyrotechnic.phoenix.desc": "치명적인 공격을 불꽃의 폭발과 함께 버텨 냅니다. 10분마다 한 번.",
   "trait.ethermod.pyrotechnic.soulwake": "영혼의 자취",
   "trait.ethermod.pyrotechnic.soulwake.desc": "당신의 화상이 영혼 불이 됩니다. 그것으로 처치한 적은 아군 영혼 꼬마 블레이즈로 되살아납니다.",
+  "trait.ethermod.pyrotechnic.soulwake_nosummon.desc": "당신의 화상이 영혼 불이 됩니다.",
   "trait.ethermod.pyrotechnic.rekindle": "재점화",
   "trait.ethermod.pyrotechnic.rekindle.desc": "불과 용암이 당신을 치유합니다.",
   "module.ethermod.pneumatic": "공압",

@@ -3,7 +3,6 @@ package com.ethermod.beam;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
@@ -100,7 +99,7 @@ final class OrbGust {
                     c.x,
                     c.y,
                     c.z,
-                    SoundEvents.BREEZE_IDLE_AIR,
+                    com.ethermod.sound.ModSounds.WORLD_BREEZE_IDLE_AIR,
                     SoundSource.PLAYERS,
                     0.8f,
                     0.8f);

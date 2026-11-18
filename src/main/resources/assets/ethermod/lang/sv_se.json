@@ -256,6 +256,7 @@
   "trait.ethermod.pyrotechnic.phoenix.desc": "Överlev en dödlig träff i ett eldutbrott. En gång var 10:e min.",
   "trait.ethermod.pyrotechnic.soulwake": "Själsspår",
   "trait.ethermod.pyrotechnic.soulwake.desc": "Dina brännskador blir själseld. Fiender den dödar reser sig som allierad själseldsbrännling.",
+  "trait.ethermod.pyrotechnic.soulwake_nosummon.desc": "Dina brännskador blir själseld.",
   "trait.ethermod.pyrotechnic.rekindle": "Återtändning",
   "trait.ethermod.pyrotechnic.rekindle.desc": "Eld och lava helar dig.",
   "module.ethermod.pneumatic": "Pneumatik",

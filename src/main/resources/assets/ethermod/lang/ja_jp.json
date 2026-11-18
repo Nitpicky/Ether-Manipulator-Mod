@@ -256,6 +256,7 @@
   "trait.ethermod.pyrotechnic.phoenix.desc": "致命傷を炎の爆発とともに耐える。10分に1回。",
   "trait.ethermod.pyrotechnic.soulwake": "ソウルウェイク",
   "trait.ethermod.pyrotechnic.soulwake.desc": "自分の炎がソウルファイアになる。それで倒した敵は味方のソウルブレイズリングとして蘇る。",
+  "trait.ethermod.pyrotechnic.soulwake_nosummon.desc": "自分の炎がソウルファイアになる。",
   "trait.ethermod.pyrotechnic.rekindle": "再点火",
   "trait.ethermod.pyrotechnic.rekindle.desc": "火と溶岩で回復する。",
   "module.ethermod.pneumatic": "ニューマチック",

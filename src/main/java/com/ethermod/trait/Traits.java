@@ -94,13 +94,14 @@ public final class Traits {
     public static float beamRange(ItemStack stack) {
         float r = com.ethermod.item.ManipulatorStage.get(stack).beamRange();
         if (hasCommon(stack, PLASMIC, 1)) r += 1;
-        return r;
+        return r * com.ethermod.config.ServerConfig.rangeMultiplier();
     }
 
     /** Ticks to full orb charge, -20% with Orb's Quick Charge. */
     public static int chargeTicks(ItemStack stack) {
         int t = com.ethermod.item.ManipulatorStage.get(stack).maxChargeTicks();
-        return hasCommon(stack, KINETIC, 0) ? Math.round(t * 0.8f) : t;
+        t = Math.max(1, Math.round(t * com.ethermod.config.ServerConfig.chargeTime()));
+        return hasCommon(stack, KINETIC, 0) ? Math.max(1, Math.round(t * 0.8f)) : t;
     }
 
     // ---- Badge numbers ----------------------------------------------------------

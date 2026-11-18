@@ -28,6 +28,7 @@
     "FlightEquipmentMixin",
     "GravityOverlayMixin",
     "ChargeArmTremblerMixin",
-    "NoUseDipMixin"
+    "NoUseDipMixin",
+    "SoundVolumeAccessor"
   ]
 }

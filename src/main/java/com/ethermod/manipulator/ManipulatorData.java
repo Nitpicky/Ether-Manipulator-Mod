@@ -23,12 +23,16 @@ public final class ManipulatorData {
                                                     .forGetter(d -> d.stack),
                                             Codec.BOOL
                                                     .optionalFieldOf("introduced", false)
-                                                    .forGetter(d -> d.introduced))
+                                                    .forGetter(d -> d.introduced),
+                                            // saves from before these flags: owned and already greeted
+                                            Codec.BOOL.optionalFieldOf("owned", true).forGetter(d -> d.owned),
+                                            Codec.BOOL.optionalFieldOf("greeted", true).forGetter(d -> d.greeted))
                                     .apply(i, ManipulatorData::new));
 
     private ItemStack stack;
     private boolean introduced;
     private boolean summoned;
+    private boolean owned = true, greeted;
 
     public ManipulatorData() {
         this(ItemStack.EMPTY, false);
@@ -37,6 +41,30 @@ public final class ManipulatorData {
     public ManipulatorData(ItemStack stack, boolean introduced) {
         this.stack = stack;
         this.introduced = introduced;
+    }
+
+    public ManipulatorData(ItemStack stack, boolean introduced, boolean owned, boolean greeted) {
+        this(stack, introduced);
+        this.owned = owned;
+        this.greeted = greeted;
+    }
+
+    /** Whether the player has the Manipulator (server config give_on_first_join, or /ethermod grant). */
+    public boolean owned() {
+        return owned;
+    }
+
+    public void setOwned(boolean owned) {
+        this.owned = owned;
+    }
+
+    /** Whether the summon hint was shown. */
+    public boolean greeted() {
+        return greeted;
+    }
+
+    public void setGreeted(boolean greeted) {
+        this.greeted = greeted;
     }
 
     /** The Manipulator stack. Created on first access if missing or corrupted. */

@@ -256,6 +256,7 @@
   "trait.ethermod.pyrotechnic.phoenix.desc": "Survivez à un coup fatal dans une gerbe de feu. Une fois toutes les 10 min.",
   "trait.ethermod.pyrotechnic.soulwake": "Sillage d'âmes",
   "trait.ethermod.pyrotechnic.soulwake.desc": "Vos brûlures deviennent du feu des âmes. Les ennemis qu'il tue renaissent en Blazeling des âmes allié.",
+  "trait.ethermod.pyrotechnic.soulwake_nosummon.desc": "Vos brûlures deviennent du feu des âmes.",
   "trait.ethermod.pyrotechnic.rekindle": "Ravivage",
   "trait.ethermod.pyrotechnic.rekindle.desc": "Le feu et la lave vous soignent.",
   "module.ethermod.pneumatic": "Pneumatique",

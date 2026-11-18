@@ -256,6 +256,7 @@
   "trait.ethermod.pyrotechnic.phoenix.desc": "Sobreviva a um golpe fatal numa explosão de fogo. Uma vez a cada 10 min.",
   "trait.ethermod.pyrotechnic.soulwake": "Rastro de almas",
   "trait.ethermod.pyrotechnic.soulwake.desc": "Suas queimaduras viram fogo das almas. Inimigos mortos por ele se erguem como Blazeling das almas aliado.",
+  "trait.ethermod.pyrotechnic.soulwake_nosummon.desc": "Suas queimaduras viram fogo das almas.",
   "trait.ethermod.pyrotechnic.rekindle": "Reacender",
   "trait.ethermod.pyrotechnic.rekindle.desc": "Fogo e lava curam você.",
   "module.ethermod.pneumatic": "Pneumático",

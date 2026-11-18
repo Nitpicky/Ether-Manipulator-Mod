@@ -256,6 +256,7 @@
   "trait.ethermod.pyrotechnic.phoenix.desc": "Przeżyj śmiertelny cios w wybuchu ognia. Raz na 10 min.",
   "trait.ethermod.pyrotechnic.soulwake": "Ślad dusz",
   "trait.ethermod.pyrotechnic.soulwake.desc": "Twoje oparzenia stają się ogniem dusz. Zabici nim wrogowie powstają jako sojuszniczy Płomyczek dusz.",
+  "trait.ethermod.pyrotechnic.soulwake_nosummon.desc": "Twoje oparzenia stają się ogniem dusz.",
   "trait.ethermod.pyrotechnic.rekindle": "Ponowne rozpalenie",
   "trait.ethermod.pyrotechnic.rekindle.desc": "Ogień i lawa cię leczą.",
   "module.ethermod.pneumatic": "Pneumatyczny",

@@ -198,7 +198,8 @@ public final class WorldEffects {
      * never spreads and burns out after 30 s (10 s at II).
      */
     public static boolean placeFire(ServerLevel level, BlockPos pos, Entity owner) {
-        if (owner instanceof ServerPlayer sp && !level.mayInteract(sp, pos)) return false;
+        if (!com.ethermod.config.ServerConfig.fireAndLava()) return false;
+        if (owner instanceof ServerPlayer sp && !com.ethermod.util.Protect.may(level, sp, pos)) return false;
         if (!level.getBlockState(pos).isAir()
                 || !BaseFireBlock.canBePlacedAt(level, pos, net.minecraft.core.Direction.UP))
             return false;
@@ -304,7 +305,7 @@ public final class WorldEffects {
         level.playSound(
                 null,
                 pos,
-                net.minecraft.sounds.SoundEvents.FIRE_EXTINGUISH,
+                com.ethermod.sound.ModSounds.WORLD_FIRE_EXTINGUISH,
                 net.minecraft.sounds.SoundSource.BLOCKS,
                 0.4f,
                 1.6f);
@@ -367,7 +368,7 @@ public final class WorldEffects {
                             BlockPos q = c.relative(side, w);
                             if (!level.getBlockState(q).isAir()) q = q.above();
                             else if (level.getBlockState(q.below()).isAir()) q = q.below();
-                            if (owner instanceof ServerPlayer sp && !level.mayInteract(sp, q))
+                            if (owner instanceof ServerPlayer sp && !com.ethermod.util.Protect.may(level, sp, q))
                                 continue;
                             if (level.getBlockState(q).isAir())
                                 tempBlock(level, q, Blocks.WATER.defaultBlockState(), 8);
@@ -404,7 +405,7 @@ public final class WorldEffects {
                             level.playSound(
                                     null,
                                     c,
-                                    net.minecraft.sounds.SoundEvents.PLAYER_SPLASH_HIGH_SPEED,
+                                    com.ethermod.sound.ModSounds.WORLD_PLAYER_SPLASH_HIGH_SPEED,
                                     net.minecraft.sounds.SoundSource.PLAYERS,
                                     0.4f,
                                     1.2f);
@@ -455,7 +456,7 @@ public final class WorldEffects {
                         level.playSound(
                                 null,
                                 mob.blockPosition(),
-                                net.minecraft.sounds.SoundEvents.MACE_SMASH_GROUND,
+                                com.ethermod.sound.ModSounds.WORLD_MACE_SMASH_GROUND,
                                 net.minecraft.sounds.SoundSource.PLAYERS,
                                 0.8f,
                                 1f);

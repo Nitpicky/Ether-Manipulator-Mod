@@ -9,7 +9,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.Entity;
@@ -109,7 +108,7 @@ public final class VacuumCone {
                             sp.getX(),
                             sp.getY(),
                             sp.getZ(),
-                            SoundEvents.ITEM_PICKUP,
+                            com.ethermod.sound.ModSounds.WORLD_ITEM_PICKUP,
                             SoundSource.PLAYERS,
                             0.2f,
                             1.6f);
@@ -169,7 +168,7 @@ public final class VacuumCone {
                     sp.getX(),
                     sp.getEyeY(),
                     sp.getZ(),
-                    SoundEvents.BREEZE_INHALE,
+                    com.ethermod.sound.ModSounds.WORLD_BREEZE_INHALE,
                     SoundSource.PLAYERS,
                     0.25f,
                     1.6f);
@@ -275,7 +274,7 @@ public final class VacuumCone {
         if (fluidHit.getType() == HitResult.Type.BLOCK) {
             BlockPos p = fluidHit.getBlockPos();
             FluidState fs = sl.getFluidState(p);
-            if (!fs.isEmpty() && sl.mayInteract(sp, p)) {
+            if (!fs.isEmpty() && com.ethermod.util.Protect.may(sl, sp, p)) {
                 h.origin = p.immutable();
                 h.lava = fs.is(FluidTags.LAVA);
                 h.seen.add(p.asLong());
@@ -283,7 +282,7 @@ public final class VacuumCone {
                 return;
             }
             // no liquid there: a cauldron or another mod's tank
-            if (sl.mayInteract(sp, p)) drainContainer(sl, p, fluidHit.getDirection(), store);
+            if (com.ethermod.util.Protect.may(sl, sp, p)) drainContainer(sl, p, fluidHit.getDirection(), store);
         }
     }
 
@@ -298,7 +297,7 @@ public final class VacuumCone {
                 if (q.distSqr(h.origin) > REACH * REACH
                         || Vec3.atCenterOf(q).distanceTo(eye) > REACH + 2) continue;
                 FluidState fs = sl.getFluidState(q);
-                if (fs.isEmpty() || fs.is(FluidTags.LAVA) != h.lava || !sl.mayInteract(sp, q))
+                if (fs.isEmpty() || fs.is(FluidTags.LAVA) != h.lava || !com.ethermod.util.Protect.may(sl, sp, q))
                     continue;
                 if (drain(sl, q, store)) next.add(q.immutable());
             }
@@ -406,7 +405,7 @@ public final class VacuumCone {
                         sp.getX(),
                         sp.getEyeY(),
                         sp.getZ(),
-                        drankLava ? SoundEvents.BUCKET_FILL_LAVA : SoundEvents.BUCKET_FILL,
+                        drankLava ? com.ethermod.sound.ModSounds.WORLD_BUCKET_FILL_LAVA : com.ethermod.sound.ModSounds.WORLD_BUCKET_FILL,
                         SoundSource.PLAYERS,
                         0.6f,
                         1.2f + sl.random.nextFloat() * 0.2f);

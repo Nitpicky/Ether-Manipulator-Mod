@@ -28,6 +28,29 @@ public final class BeamAudio {
 
     private BeamAudio() {}
 
+    /** The volume setting for this player's beam: yours, or other players'. */
+    private static float own(Entity p) {
+        return p == Minecraft.getInstance().player
+                ? com.ethermod.config.ClientConfig.beam()
+                : com.ethermod.config.ClientConfig.otherBeams();
+    }
+
+    /** A one-shot that carries its own volume setting (the sound hook leaves com.ethermod sounds alone). */
+    private static final class Once extends SimpleSoundInstance {
+        Once(SoundEvent e, SoundSource src, float vol, float pitch, double x, double y, double z) {
+            super(e, src, vol, pitch, RandomSource.create(), x, y, z);
+        }
+
+        Once(SoundEvent e, float vol, float pitch) { // like forUI: not positioned
+            super(e.getLocation(), SoundSource.MASTER, vol, pitch, RandomSource.create(), false, 0, Attenuation.NONE, 0, 0, 0, true);
+        }
+    }
+
+    private static void at(Entity p, SoundEvent e, float vol, float pitch, float setting) {
+        if (setting <= 0) return;
+        Minecraft.getInstance().getSoundManager().play(new Once(e, SoundSource.PLAYERS, vol * setting, pitch, p.getX(), p.getEyeY(), p.getZ()));
+    }
+
 
     @SubscribeEvent
     public static void onClientTick(ClientTickEvent.Post event) {
@@ -87,15 +110,7 @@ public final class BeamAudio {
         pulseDebt += 0.1f + 0.4f * c * c;
         if (pulseDebt >= 1f) {
             pulseDebt -= 1f;
-            mc.level.playLocalSound(
-                    mc.player.getX(),
-                    mc.player.getEyeY(),
-                    mc.player.getZ(),
-                    SoundEvents.AMETHYST_BLOCK_CHIME,
-                    SoundSource.PLAYERS,
-                    0.25f + 0.55f * c,
-                    0.7f + 1.1f * c,
-                    false);
+            at(mc.player, SoundEvents.AMETHYST_BLOCK_CHIME, 0.25f + 0.55f * c, 0.7f + 1.1f * c, com.ethermod.config.ClientConfig.shot());
         }
     }
 
@@ -107,7 +122,7 @@ public final class BeamAudio {
             this.player = player;
             this.looping = true;
             this.delay = 0;
-            this.volume = 0.15f;
+            this.volume = 0.15f * com.ethermod.config.ClientConfig.shot();
             this.pitch = 0.6f;
             x = player.getX();
             y = player.getEyeY();
@@ -125,7 +140,7 @@ public final class BeamAudio {
             y = player.getEyeY();
             z = player.getZ();
             float c = Math.max(0f, Math.min(1f, BeamRenderState.chargeProgress));
-            volume = 0.15f + 0.6f * c;
+            volume = (0.15f + 0.6f * c) * com.ethermod.config.ClientConfig.shot();
             pitch = 0.6f + 1.2f * c;
         }
 
@@ -159,9 +174,13 @@ public final class BeamAudio {
         final int cut;
 
         Later(int ticks, SoundEvent event, float vol, float pitch, int cut) {
+            this(ticks, event, vol, pitch, cut, com.ethermod.config.ClientConfig.ui());
+        }
+
+        Later(int ticks, SoundEvent event, float vol, float pitch, int cut, float setting) {
             this.ticks = ticks;
             this.event = event;
-            this.vol = vol;
+            this.vol = vol * setting;
             this.pitch = pitch;
             this.cut = cut;
         }
@@ -226,10 +245,8 @@ public final class BeamAudio {
         BeamVoice nv = new BeamVoice(mc, p, level);
         VOICES.put(p.getId(), nv);
         if (nv.light) // Photonic's beacon: vanilla's beacon sounds, as it is vanilla's beacon beam
-            mc.level.playLocalSound(p.getX(), p.getEyeY(), p.getZ(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 0.3f, 1.15f, false);
-        else
-            mc.level.playLocalSound(
-                    p.getX(), p.getEyeY(), p.getZ(), ev("beam.on"), SoundSource.PLAYERS, 0.6f, 1f, false);
+            at(p, SoundEvents.BEACON_ACTIVATE, 0.3f, 1.15f, own(p));
+        else at(p, ev("beam.on"), 0.6f, 1f, own(p));
     }
 
     private static final Map<Integer, Integer> HEARD = new HashMap<>();
@@ -244,8 +261,7 @@ public final class BeamAudio {
             if (last == null || last == pu.seed) continue;
             Entity ent = mc.level.getEntity(e.getKey());
             if (ent == null) continue;
-            mc.level.playLocalSound(
-                    ent.getX(), ent.getEyeY(), ent.getZ(), ev("beam.snap"), SoundSource.PLAYERS, 0.07f, 1.3f, false);
+            at(ent, ev("beam.snap"), 0.07f, 1.3f, own(ent));
         }
         VOICES.values().removeIf(v -> v.done);
         HEARD.keySet().retainAll(VOICES.keySet());
@@ -254,13 +270,13 @@ public final class BeamAudio {
             if (o.ticks-- > 0) continue;
             it.remove();
             if (o.cut > 0) mc.getSoundManager().play(new CutSound(o.event, o.vol, o.pitch, o.cut));
-            else mc.getSoundManager().play(SimpleSoundInstance.forUI(o.event, o.pitch, o.vol));
+            else if (o.vol > 0) mc.getSoundManager().play(new Once(o.event, o.vol, o.pitch));
         }
     }
 
     /** Local player's pressure dropped a level: one soft, low snap. */
     public static void levelDown(int level) {
-        Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(ev("beam.snap"), 0.85f, 0.06f));
+        Minecraft.getInstance().getSoundManager().play(new Once(ev("beam.snap"), 0.06f * com.ethermod.config.ClientConfig.beam(), 0.85f));
     }
 
     /** Local player's pressure went up: a double snap, louder and higher per level. */
@@ -268,8 +284,8 @@ public final class BeamAudio {
         int l = Math.max(1, Math.min(4, level));
         Minecraft.getInstance()
                 .getSoundManager()
-                .play(SimpleSoundInstance.forUI(ev("beam.snap"), 0.95f + 0.1f * l, 0.08f + 0.02f * l));
-        later(1, ev("beam.snap"), 0.06f + 0.02f * l, 1f + 0.1f * l);
+                .play(new Once(ev("beam.snap"), (0.08f + 0.02f * l) * com.ethermod.config.ClientConfig.beam(), 0.95f + 0.1f * l));
+        LATER.add(new Later(1, ev("beam.snap"), 0.06f + 0.02f * l, 1f + 0.1f * l, 0, com.ethermod.config.ClientConfig.beam()));
     }
 
     private static boolean isBeaming(Player p) {
@@ -321,12 +337,8 @@ public final class BeamAudio {
                 if (crackle != null) crackle.fade();
                 if (sub != null) sub.fade();
                 done = true;
-                if (light)
-                    mc.level.playLocalSound(
-                            player.getX(), player.getEyeY(), player.getZ(), SoundEvents.BEACON_DEACTIVATE, SoundSource.PLAYERS, 0.3f, 1.15f, false);
-                else
-                    mc.level.playLocalSound(
-                            player.getX(), player.getEyeY(), player.getZ(), ev("beam.off"), SoundSource.PLAYERS, 0.6f, 1f, false);
+                if (light) at(player, SoundEvents.BEACON_DEACTIVATE, 0.3f, 1.15f, own(player));
+                else at(player, ev("beam.off"), 0.6f, 1f, own(player));
                 return;
             }
             if (light) return;
@@ -352,7 +364,7 @@ public final class BeamAudio {
             this.player = player;
             this.looping = true;
             this.delay = 0;
-            this.volume = vol * 0.5f;
+            this.volume = vol * 0.5f * own(player);
             this.tv = vol;
             this.pitch = this.tp = pitch;
             follow();
@@ -385,7 +397,7 @@ public final class BeamAudio {
                 if (volume < 0.01f) stop();
                 return;
             }
-            volume += (tv - volume) * 0.35f;
+            volume += (tv * own(player) - volume) * 0.35f;
             pitch += (tp - pitch) * 0.35f;
         }
 

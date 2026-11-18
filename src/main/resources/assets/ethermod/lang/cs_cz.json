@@ -256,6 +256,7 @@
   "trait.ethermod.pyrotechnic.phoenix.desc": "Přežij smrtící zásah v záblesku ohně. Jednou za 10 min.",
   "trait.ethermod.pyrotechnic.soulwake": "Brázda duší",
   "trait.ethermod.pyrotechnic.soulwake.desc": "Tvé popáleniny se mění v duší oheň. Nepřátelé jím zabití povstanou jako spojenecký Duší ohnivec.",
+  "trait.ethermod.pyrotechnic.soulwake_nosummon.desc": "Tvé popáleniny se mění v duší oheň.",
   "trait.ethermod.pyrotechnic.rekindle": "Rozdmýchání",
   "trait.ethermod.pyrotechnic.rekindle.desc": "Oheň a láva tě léčí.",
   "module.ethermod.pneumatic": "Pneumatický",

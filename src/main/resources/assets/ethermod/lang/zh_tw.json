@@ -256,6 +256,7 @@
   "trait.ethermod.pyrotechnic.phoenix.desc": "在烈焰爆發中挺過致命一擊。每10分鐘一次。",
   "trait.ethermod.pyrotechnic.soulwake": "魂跡",
   "trait.ethermod.pyrotechnic.soulwake.desc": "你的灼燒變為靈魂火。被它擊殺的敵人會化為友方靈魂小烈焰。",
+  "trait.ethermod.pyrotechnic.soulwake_nosummon.desc": "你的灼燒變為靈魂火。",
   "trait.ethermod.pyrotechnic.rekindle": "復燃",
   "trait.ethermod.pyrotechnic.rekindle.desc": "火焰與熔岩會治療你。",
   "module.ethermod.pneumatic": "氣動",

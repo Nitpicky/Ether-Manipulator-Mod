@@ -16,7 +16,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.Entity;
@@ -218,7 +217,9 @@ public class BeamBallEntity extends Projectile {
     /** Never the shooter's own mount (or anyone riding with them): shots fired from the saddle go past it. */
     @Override
     protected boolean canHitEntity(Entity e) {
-        return super.canHitEntity(e) && !com.ethermod.beam.Mounts.own(getOwner(), e);
+        return super.canHitEntity(e) && !com.ethermod.beam.Mounts.own(getOwner(), e)
+                && ((getMode() == OrbMode.TETHER ? com.ethermod.config.ServerConfig.tetherPlayers() : com.ethermod.config.ServerConfig.hurtPlayers())
+                        || !(e instanceof net.minecraft.world.entity.player.Player) || e == getOwner());
     }
 
     public BeamBallEntity(EntityType<? extends BeamBallEntity> type, Level level) {
@@ -235,7 +236,7 @@ public class BeamBallEntity extends Projectile {
         entityData.set(MODE, mode.ordinal());
         entityData.set(STAGE, stage.ordinal());
 
-        this.damage = stage.ballDamage(p);
+        this.damage = stage.ballDamage(p) * com.ethermod.config.ServerConfig.shotDamage();
         this.maxRange = mode.gravity() > 0 ? 96f : stage.ballRange();
         this.burningLight = false;
         this.traveledDistance = 0f;
@@ -367,6 +368,9 @@ public class BeamBallEntity extends Projectile {
     }
 
     /** Mass Driver: the carried block (air if none). */
+    /** A lifted container's contents (server config mass_driver_lifts_containers), or null. */
+    public net.minecraft.nbt.CompoundTag carriedBe;
+
     public BlockState getCarried() {
         return entityData.get(CARRIED);
     }
@@ -622,7 +626,8 @@ public class BeamBallEntity extends Projectile {
         if (carrying) carryTick();
 
         // fire and wind tear through foliage; every other shot passes through it
-        if (mode == OrbMode.LAVA || mode == OrbMode.IGNITE || mode == OrbMode.GUST)
+        if ((mode == OrbMode.LAVA || mode == OrbMode.IGNITE) && com.ethermod.config.ServerConfig.fireAndLava()
+                || mode == OrbMode.GUST && com.ethermod.config.ServerConfig.gustCutsFoliage())
             FoliageCut.sweep(
                     (ServerLevel) level(),
                     getOwner() instanceof ServerPlayer sp ? sp : null,
@@ -733,7 +738,7 @@ public class BeamBallEntity extends Projectile {
                         getX(),
                         getY(),
                         getZ(),
-                        SoundEvents.BLAZE_SHOOT,
+                        com.ethermod.sound.ModSounds.WORLD_BLAZE_SHOOT,
                         SoundSource.PLAYERS,
                         1f,
                         0.6f);
@@ -1081,7 +1086,7 @@ public class BeamBallEntity extends Projectile {
                     at.x,
                     at.y,
                     at.z,
-                    SoundEvents.AMETHYST_BLOCK_HIT,
+                    com.ethermod.sound.ModSounds.WORLD_AMETHYST_BLOCK_HIT,
                     SoundSource.PLAYERS,
                     0.8f,
                     1.6f);
@@ -1302,7 +1307,7 @@ public class BeamBallEntity extends Projectile {
     // =========================================================================
 
     boolean mayBuild(BlockPos pos) {
-        return !(getOwner() instanceof ServerPlayer sp) || level().mayInteract(sp, pos);
+        return !(getOwner() instanceof ServerPlayer sp) || com.ethermod.util.Protect.may(level(), sp, pos);
     }
 
     /** Meteor landing: a blast that hurts and burns, without breaking blocks. */
@@ -1332,7 +1337,7 @@ public class BeamBallEntity extends Projectile {
                 at.x,
                 at.y,
                 at.z,
-                SoundEvents.GENERIC_EXPLODE.value(),
+                com.ethermod.sound.ModSounds.WORLD_GENERIC_EXPLODE,
                 SoundSource.PLAYERS,
                 1.2f,
                 0.8f);
@@ -1378,7 +1383,7 @@ public class BeamBallEntity extends Projectile {
                         pos.x,
                         pos.y,
                         pos.z,
-                        SoundEvents.AMETHYST_CLUSTER_BREAK,
+                        com.ethermod.sound.ModSounds.WORLD_AMETHYST_CLUSTER_BREAK,
                         SoundSource.PLAYERS,
                         0.7f + 0.2f * ph,
                         1.6f - 0.25f * ph);
@@ -1399,7 +1404,7 @@ public class BeamBallEntity extends Projectile {
                         pos.x,
                         pos.y,
                         pos.z,
-                        SoundEvents.ENDERMAN_TELEPORT,
+                        com.ethermod.sound.ModSounds.WORLD_ENDERMAN_TELEPORT,
                         SoundSource.PLAYERS,
                         0.5f,
                         1.8f);
@@ -1422,7 +1427,7 @@ public class BeamBallEntity extends Projectile {
                         pos.x,
                         pos.y,
                         pos.z,
-                        SoundEvents.PLAYER_SPLASH,
+                        com.ethermod.sound.ModSounds.WORLD_PLAYER_SPLASH,
                         SoundSource.PLAYERS,
                         0.6f,
                         1.3f);
@@ -1437,7 +1442,7 @@ public class BeamBallEntity extends Projectile {
                         pos.x,
                         pos.y,
                         pos.z,
-                        SoundEvents.LAVA_EXTINGUISH,
+                        com.ethermod.sound.ModSounds.WORLD_LAVA_EXTINGUISH,
                         SoundSource.PLAYERS,
                         0.5f,
                         1.2f);
@@ -1460,7 +1465,7 @@ public class BeamBallEntity extends Projectile {
                         pos.x,
                         pos.y,
                         pos.z,
-                        SoundEvents.GLASS_BREAK,
+                        com.ethermod.sound.ModSounds.WORLD_GLASS_BREAK,
                         SoundSource.PLAYERS,
                         0.7f,
                         1.5f);
@@ -1482,7 +1487,7 @@ public class BeamBallEntity extends Projectile {
                         pos.x,
                         pos.y,
                         pos.z,
-                        SoundEvents.FIRECHARGE_USE,
+                        com.ethermod.sound.ModSounds.WORLD_FIRECHARGE_USE,
                         SoundSource.PLAYERS,
                         0.6f,
                         1.3f);
@@ -1513,7 +1518,7 @@ public class BeamBallEntity extends Projectile {
                         pos.x,
                         pos.y,
                         pos.z,
-                        SoundEvents.BONE_MEAL_USE,
+                        com.ethermod.sound.ModSounds.WORLD_BONE_MEAL_USE,
                         SoundSource.PLAYERS,
                         0.8f,
                         1.2f);
@@ -1535,7 +1540,7 @@ public class BeamBallEntity extends Projectile {
                         pos.x,
                         pos.y,
                         pos.z,
-                        SoundEvents.AMETHYST_BLOCK_CHIME,
+                        com.ethermod.sound.ModSounds.WORLD_AMETHYST_BLOCK_CHIME,
                         SoundSource.PLAYERS,
                         1f,
                         1.6f);
@@ -1591,7 +1596,7 @@ public class BeamBallEntity extends Projectile {
                 old.x,
                 old.y,
                 old.z,
-                SoundEvents.ENDERMAN_TELEPORT,
+                com.ethermod.sound.ModSounds.WORLD_ENDERMAN_TELEPORT,
                 SoundSource.PLAYERS,
                 .8f,
                 1f);
@@ -1600,7 +1605,7 @@ public class BeamBallEntity extends Projectile {
                 at.x,
                 at.y,
                 at.z,
-                SoundEvents.ENDERMAN_TELEPORT,
+                com.ethermod.sound.ModSounds.WORLD_ENDERMAN_TELEPORT,
                 SoundSource.PLAYERS,
                 .8f,
                 1f);
@@ -1674,11 +1679,13 @@ public class BeamBallEntity extends Projectile {
         tag.putFloat(TAG_TRAVEL, traveledDistance);
         if (!getCarried().isAir())
             tag.put("mm_carried", net.minecraft.nbt.NbtUtils.writeBlockState(getCarried()));
+        if (carriedBe != null) tag.put("mm_carried_be", carriedBe);
     }
 
     @Override
     protected void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
+        carriedBe = tag.contains("mm_carried_be") ? tag.getCompound("mm_carried_be") : null;
         entityData.set(PHASE, tag.getInt(TAG_PHASE));
         entityData.set(MODE, tag.getInt("mm_mode"));
         entityData.set(SOULFIRE, tag.getBoolean("mm_soul_projectile"));

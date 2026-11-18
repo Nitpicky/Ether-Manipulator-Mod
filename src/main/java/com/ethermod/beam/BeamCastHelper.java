@@ -169,7 +169,7 @@ public final class BeamCastHelper {
             com.ethermod.trait.WorldEffects.putOut(level, before, player.getUUID());
             com.ethermod.trait.WorldEffects.putOut(level, touched.above(), player.getUUID());
         }
-        if (Traits.has(tool, "pyrotechnic.heat_ray") && level.mayInteract(player, touched))
+        if (Traits.has(tool, "pyrotechnic.heat_ray") && com.ethermod.util.Protect.may(level, player, touched))
             heatRay(level, player, touched);
 
         // --- Entity: Lock-On keeps the last target inside a small cone ---------
@@ -375,7 +375,7 @@ public final class BeamCastHelper {
         }
         if (centerHardness != null) {
             if (!stage.canHarvest(block) || hardness > centerHardness * 2 + 0.5f) return null;
-            if (!level.mayInteract(player, pos)) return null;
+            if (!com.ethermod.util.Protect.may(level, player, pos)) return null;
         }
         float dmg;
         if (hardness == 0f || player.isCreative()) {
@@ -462,7 +462,7 @@ public final class BeamCastHelper {
             level.playSound(
                     null,
                     pos,
-                    net.minecraft.sounds.SoundEvents.FLINTANDSTEEL_USE,
+                    com.ethermod.sound.ModSounds.WORLD_FLINTANDSTEEL_USE,
                     net.minecraft.sounds.SoundSource.BLOCKS,
                     0.6f,
                     1.2f);
@@ -501,6 +501,7 @@ public final class BeamCastHelper {
             dmg *= 1f + 0.5f * sun;
             target.igniteForSeconds(3);
         }
+        dmg *= com.ethermod.config.ServerConfig.beamDamage();
         Vec3 incomingVelocity = target.getDeltaMovement();
         float before = target.getHealth();
         // A continuous beam: ignore the 10-tick invulnerability window.
@@ -632,7 +633,8 @@ public final class BeamCastHelper {
                 .getEntitiesOfClass(
                         LivingEntity.class,
                         search,
-                        e -> !com.ethermod.beam.Mounts.own(player, e) && e.isAlive() && e.isPickable())
+                        e -> !com.ethermod.beam.Mounts.own(player, e) && e.isAlive() && e.isPickable()
+                                && (com.ethermod.config.ServerConfig.hurtPlayers() || !(e instanceof net.minecraft.world.entity.player.Player)))
                 .stream()
                 .filter(e -> e.getBoundingBox().inflate(0.1).clip(start, end).isPresent())
                 .min(Comparator.comparingDouble(e -> start.distanceToSqr(e.getEyePosition())))

@@ -7,7 +7,6 @@ import com.ethermod.trait.Traits;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -88,7 +87,7 @@ public final class GustGrenade {
                         p.getX(),
                         p.getEyeY(),
                         p.getZ(),
-                        SoundEvents.BREEZE_SHOOT,
+                        com.ethermod.sound.ModSounds.WORLD_BREEZE_SHOOT,
                         SoundSource.PLAYERS,
                         0.6f,
                         1.8f);
@@ -133,7 +132,7 @@ public final class GustGrenade {
         g.age++;
         if (!g.landed) {
             Vec3 next = g.pos.add(g.vel);
-            FoliageCut.sweep(sl, g.owner, g.pos, next, false); // wind cuts foliage loose
+            if (com.ethermod.config.ServerConfig.gustCutsFoliage()) FoliageCut.sweep(sl, g.owner, g.pos, next, false); // wind cuts foliage loose
             var block =
                     sl.clip(
                             new ClipContext(
@@ -184,7 +183,7 @@ public final class GustGrenade {
                             g.pos.x,
                             g.pos.y,
                             g.pos.z,
-                            SoundEvents.BREEZE_SHOOT,
+                            com.ethermod.sound.ModSounds.WORLD_BREEZE_SHOOT,
                             SoundSource.PLAYERS,
                             0.5f,
                             1.6f);
@@ -214,7 +213,7 @@ public final class GustGrenade {
                         g.pos.x,
                         g.pos.y,
                         g.pos.z,
-                        SoundEvents.NOTE_BLOCK_HAT.value(),
+                        com.ethermod.sound.ModSounds.WORLD_NOTE_BLOCK_HAT,
                         SoundSource.PLAYERS,
                         0.6f,
                         g.fuse > 12 ? 1.4f : 1.9f);
@@ -242,7 +241,7 @@ public final class GustGrenade {
                 g.pos.x,
                 g.pos.y,
                 g.pos.z,
-                SoundEvents.SLIME_ATTACK,
+                com.ethermod.sound.ModSounds.WORLD_SLIME_ATTACK,
                 SoundSource.PLAYERS,
                 0.5f,
                 1.6f);
@@ -258,7 +257,7 @@ public final class GustGrenade {
                 at.x,
                 at.y,
                 at.z,
-                SoundEvents.WIND_CHARGE_BURST.value(),
+                com.ethermod.sound.ModSounds.WORLD_WIND_CHARGE_BURST,
                 SoundSource.PLAYERS,
                 1f,
                 0.9f);

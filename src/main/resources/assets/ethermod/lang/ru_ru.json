@@ -256,6 +256,7 @@
   "trait.ethermod.pyrotechnic.phoenix.desc": "Переживите смертельный удар во вспышке огня. Раз в 10 мин.",
   "trait.ethermod.pyrotechnic.soulwake": "След душ",
   "trait.ethermod.pyrotechnic.soulwake.desc": "Ваши ожоги становятся огнём душ. Убитые им враги восстают союзным Всполошонком душ.",
+  "trait.ethermod.pyrotechnic.soulwake_nosummon.desc": "Ваши ожоги становятся огнём душ.",
   "trait.ethermod.pyrotechnic.rekindle": "Разжигание",
   "trait.ethermod.pyrotechnic.rekindle.desc": "Огонь и лава лечат вас.",
   "module.ethermod.pneumatic": "Пневматический",

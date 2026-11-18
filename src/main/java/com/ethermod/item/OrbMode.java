@@ -194,7 +194,7 @@ public enum OrbMode {
                 new String[] {
                     "hydraulic.reservoir", "pyrotechnic.crucible", "botanic.seedbank", "pneumatic.bellows"
                 }) if (Traits.has(stack, t)) n++;
-        return TANK_CAPACITY + TANK_STEP * n;
+        return com.ethermod.config.ServerConfig.tankBase() + com.ethermod.config.ServerConfig.tankPerTrait() * n;
     }
 
     /** Units in the shared tank. A Manipulator that never had one starts full. */

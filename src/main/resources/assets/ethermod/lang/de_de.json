@@ -256,6 +256,7 @@
   "trait.ethermod.pyrotechnic.phoenix.desc": "Überlebe einen tödlichen Treffer in einem Feuerstoß. Einmal alle 10 Min.",
   "trait.ethermod.pyrotechnic.soulwake": "Seelenspur",
   "trait.ethermod.pyrotechnic.soulwake.desc": "Deine Verbrennungen werden zu Seelenfeuer. Von ihm getötete Gegner erheben sich als verbündeter Seelenfeuer-Lohling.",
+  "trait.ethermod.pyrotechnic.soulwake_nosummon.desc": "Deine Verbrennungen werden zu Seelenfeuer.",
   "trait.ethermod.pyrotechnic.rekindle": "Neu entfacht",
   "trait.ethermod.pyrotechnic.rekindle.desc": "Feuer und Lava heilen dich.",
   "module.ethermod.pneumatic": "Pneumatik",

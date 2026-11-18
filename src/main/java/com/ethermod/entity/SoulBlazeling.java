@@ -94,7 +94,7 @@ public final class SoulBlazeling extends FlyingMob {
                 .putLong(
                         "mm_summon_expires",
                         level().getGameTime()
-                                + 600);
+                                + com.ethermod.config.ServerConfig.blazelingTicks());
     }
 
     public boolean validTarget(ServerPlayer owner, LivingEntity e) {
@@ -217,17 +217,17 @@ public final class SoulBlazeling extends FlyingMob {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.BLAZE_AMBIENT;
+        return com.ethermod.sound.ModSounds.WORLD_BLAZE_AMBIENT;
     }
 
     @Override
     protected SoundEvent getHurtSound(net.minecraft.world.damagesource.DamageSource source) {
-        return SoundEvents.BLAZE_HURT;
+        return com.ethermod.sound.ModSounds.WORLD_BLAZE_HURT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.BLAZE_DEATH;
+        return com.ethermod.sound.ModSounds.WORLD_BLAZE_DEATH;
     }
 
     @Override

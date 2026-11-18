@@ -128,7 +128,7 @@ public final class RedesignEffects {
                         p, new com.ethermod.network.payload.ReloadPayload(lead));
             if (lead == RELOAD_LEAD - 8)
                 p.playNotifySound(
-                        net.minecraft.sounds.SoundEvents.RESPAWN_ANCHOR_CHARGE,
+                        com.ethermod.sound.ModSounds.UI_RESPAWN_ANCHOR_CHARGE,
                         net.minecraft.sounds.SoundSource.PLAYERS,
                         0.18f,
                         1.5f);
@@ -138,7 +138,7 @@ public final class RedesignEffects {
                 idle = 0;
                 changed = true;
                 p.playNotifySound(
-                        net.minecraft.sounds.SoundEvents.COPPER_BULB_TURN_OFF,
+                        com.ethermod.sound.ModSounds.UI_COPPER_BULB_TURN_OFF,
                         net.minecraft.sounds.SoundSource.PLAYERS,
                         0.1f,
                         1.3f);
@@ -158,10 +158,9 @@ public final class RedesignEffects {
     /** Ticks from the reload animation's start to its clamp (1.16s of the 1.6s animation). */
     static final int RELOAD_LEAD = 23;
 
-    /** Ticks without spending Ether before the tank reloads: 80 at Prototype, 15 less per tier. */
+    /** Ticks without spending Ether before the tank reloads: from the server config, Prototype to Overclocked. */
     public static int reloadDelay(net.minecraft.world.item.ItemStack st) {
-        int base = 80; // 4s at Prototype
-        return Math.max(10, base - 15 * com.ethermod.item.ManipulatorStage.get(st).ordinal());
+        return com.ethermod.config.ServerConfig.reloadTicks(com.ethermod.item.ManipulatorStage.get(st).ordinal());
     }
 
     private static boolean touchesFire(Entity p) {
@@ -264,7 +263,7 @@ public final class RedesignEffects {
                 if (!q.equals(ev.getPos())
                         && s.getBlock() instanceof CropBlock c
                         && !c.isMaxAge(s)
-                        && ev.getLevel().mayInteract(p, q))
+                        && com.ethermod.util.Protect.may(ev.getLevel(), p, q))
                     ev.getLevel()
                             .setBlockAndUpdate(
                                     q, c.getStateForAge(Math.min(c.getMaxAge(), c.getAge(s) + 1)));
@@ -568,6 +567,7 @@ public final class RedesignEffects {
                 || d.hasUUID("mm_summoner")) return;
         var owner = sl.getServer().getPlayerList().getPlayer(d.getUUID("mm_burn_owner"));
         if (owner == null
+                || !com.ethermod.config.ServerConfig.blazelings()
                 || !Traits.has(Manipulator.stack(owner), "pyrotechnic.soulwake")
                 || victim == owner
                 || ally(owner, victim)) return;
@@ -580,7 +580,7 @@ public final class RedesignEffects {
                                                         .getUUID("mm_summoner")
                                                         .equals(owner.getUUID()))
                         .size()
-                >= 8) return;
+                >= com.ethermod.config.ServerConfig.maxSummons()) return;
         var pet = com.ethermod.registry.ModEntities.SOUL_BLAZELING.get().create(sl);
         if (pet == null) return;
         pet.setPos(victim.position());
@@ -590,7 +590,7 @@ public final class RedesignEffects {
         sl.addFreshEntity(pet);
         track(pet);
         var pos = victim.blockPosition();
-        if (sl.mayInteract(owner, pos) && sl.getBlockState(pos).isAir())
+        if (com.ethermod.config.ServerConfig.fireAndLava() && com.ethermod.util.Protect.may(sl, owner, pos) && sl.getBlockState(pos).isAir())
             WorldEffects.tempBlock(sl, pos, Blocks.SOUL_FIRE.defaultBlockState(), 100);
     }
 

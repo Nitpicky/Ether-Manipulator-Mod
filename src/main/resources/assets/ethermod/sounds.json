@@ -126,5 +126,662 @@
         "stream": false
       }
     ]
+  },
+  "shot/block.amethyst_block.chime": {
+    "sounds": [
+      {
+        "name": "minecraft:block.amethyst_block.chime",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.amethyst_block.chime"
+  },
+  "shot/block.beacon.power_select": {
+    "sounds": [
+      {
+        "name": "minecraft:block.beacon.power_select",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.beacon.power_select"
+  },
+  "shot/entity.breeze.shoot": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.breeze.shoot",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.entity.breeze.shoot"
+  },
+  "shot/item.bucket.fill": {
+    "sounds": [
+      {
+        "name": "minecraft:item.bucket.fill",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.item.bucket.fill"
+  },
+  "shot/item.bucket.fill_lava": {
+    "sounds": [
+      {
+        "name": "minecraft:item.bucket.fill_lava",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.item.bucket.fill"
+  },
+  "shot/block.copper_bulb.turn_on": {
+    "sounds": [
+      {
+        "name": "minecraft:block.copper_bulb.turn_on",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.copper_bulb.turn_on"
+  },
+  "shot/block.fire.extinguish": {
+    "sounds": [
+      {
+        "name": "minecraft:block.fire.extinguish",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.fire.extinguish"
+  },
+  "shot/item.flintandsteel.use": {
+    "sounds": [
+      {
+        "name": "minecraft:item.flintandsteel.use",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.item.flintandsteel.use"
+  },
+  "shot/block.glass.break": {
+    "sounds": [
+      {
+        "name": "minecraft:block.glass.break",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "shot/block.grass.hit": {
+    "sounds": [
+      {
+        "name": "minecraft:block.grass.hit",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.hit"
+  },
+  "shot/block.powder_snow.break": {
+    "sounds": [
+      {
+        "name": "minecraft:block.powder_snow.break",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "ui/block.amethyst_block.place": {
+    "sounds": [
+      {
+        "name": "minecraft:block.amethyst_block.place",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+  "ui/block.beacon.power_select": {
+    "sounds": [
+      {
+        "name": "minecraft:block.beacon.power_select",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.beacon.power_select"
+  },
+  "ui/block.copper_bulb.turn_off": {
+    "sounds": [
+      {
+        "name": "minecraft:block.copper_bulb.turn_off",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.copper_bulb.turn_off"
+  },
+  "ui/entity.generic.splash": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.generic.splash",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.entity.generic.splash"
+  },
+  "ui/entity.player.splash": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.player.splash",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.entity.generic.splash"
+  },
+  "ui/block.respawn_anchor.charge": {
+    "sounds": [
+      {
+        "name": "minecraft:block.respawn_anchor.charge",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.respawn_anchor.charge"
+  },
+  "world/block.amethyst_block.chime": {
+    "sounds": [
+      {
+        "name": "minecraft:block.amethyst_block.chime",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.amethyst_block.chime"
+  },
+  "world/block.amethyst_block.hit": {
+    "sounds": [
+      {
+        "name": "minecraft:block.amethyst_block.hit",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.hit"
+  },
+  "world/block.amethyst_block.step": {
+    "sounds": [
+      {
+        "name": "minecraft:block.amethyst_block.step",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.footsteps"
+  },
+  "world/block.amethyst_cluster.break": {
+    "sounds": [
+      {
+        "name": "minecraft:block.amethyst_cluster.break",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "world/item.axe.scrape": {
+    "sounds": [
+      {
+        "name": "minecraft:item.axe.scrape",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.item.axe.scrape"
+  },
+  "world/item.axe.strip": {
+    "sounds": [
+      {
+        "name": "minecraft:item.axe.strip",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.item.axe.strip"
+  },
+  "world/item.axe.wax_off": {
+    "sounds": [
+      {
+        "name": "minecraft:item.axe.wax_off",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.item.axe.wax_off"
+  },
+  "world/block.beacon.activate": {
+    "sounds": [
+      {
+        "name": "minecraft:block.beacon.activate",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.beacon.activate"
+  },
+  "world/block.beehive.shear": {
+    "sounds": [
+      {
+        "name": "minecraft:block.beehive.shear",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.beehive.shear"
+  },
+  "world/entity.blaze.ambient": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.blaze.ambient",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.entity.blaze.ambient"
+  },
+  "world/entity.blaze.death": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.blaze.death",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.entity.blaze.death"
+  },
+  "world/entity.blaze.hurt": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.blaze.hurt",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.entity.blaze.hurt"
+  },
+  "world/entity.blaze.shoot": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.blaze.shoot",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.entity.blaze.shoot"
+  },
+  "world/item.bone_meal.use": {
+    "sounds": [
+      {
+        "name": "minecraft:item.bone_meal.use",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.item.bone_meal.use"
+  },
+  "world/entity.breeze.idle_air": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.breeze.idle_air",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.entity.breeze.idle_air"
+  },
+  "world/entity.breeze.idle_ground": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.breeze.idle_ground",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.entity.breeze.idle_ground"
+  },
+  "world/entity.breeze.inhale": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.breeze.inhale",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.entity.breeze.inhale"
+  },
+  "world/entity.breeze.jump": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.breeze.jump",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.entity.breeze.jump"
+  },
+  "world/entity.breeze.shoot": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.breeze.shoot",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.entity.breeze.shoot"
+  },
+  "world/item.bucket.empty": {
+    "sounds": [
+      {
+        "name": "minecraft:item.bucket.empty",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.item.bucket.empty"
+  },
+  "world/item.bucket.empty_lava": {
+    "sounds": [
+      {
+        "name": "minecraft:item.bucket.empty_lava",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.item.bucket.empty"
+  },
+  "world/item.bucket.fill": {
+    "sounds": [
+      {
+        "name": "minecraft:item.bucket.fill",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.item.bucket.fill"
+  },
+  "world/item.bucket.fill_lava": {
+    "sounds": [
+      {
+        "name": "minecraft:item.bucket.fill_lava",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.item.bucket.fill"
+  },
+  "world/block.chain.hit": {
+    "sounds": [
+      {
+        "name": "minecraft:block.chain.hit",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.hit"
+  },
+  "world/block.chain.place": {
+    "sounds": [
+      {
+        "name": "minecraft:block.chain.place",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+  "world/item.crop.plant": {
+    "sounds": [
+      {
+        "name": "minecraft:item.crop.plant",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+  "world/item.crossbow.shoot": {
+    "sounds": [
+      {
+        "name": "minecraft:item.crossbow.shoot",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.item.crossbow.shoot"
+  },
+  "world/block.deepslate.break": {
+    "sounds": [
+      {
+        "name": "minecraft:block.deepslate.break",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "world/block.dispenser.fail": {
+    "sounds": [
+      {
+        "name": "minecraft:block.dispenser.fail",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.dispenser.fail"
+  },
+  "world/entity.enderman.teleport": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.enderman.teleport",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.entity.enderman.teleport"
+  },
+  "world/item.firecharge.use": {
+    "sounds": [
+      {
+        "name": "minecraft:item.firecharge.use",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.item.firecharge.use"
+  },
+  "world/block.fire.extinguish": {
+    "sounds": [
+      {
+        "name": "minecraft:block.fire.extinguish",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.fire.extinguish"
+  },
+  "world/entity.fishing_bobber.retrieve": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.fishing_bobber.retrieve",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.entity.fishing_bobber.retrieve"
+  },
+  "world/item.flintandsteel.use": {
+    "sounds": [
+      {
+        "name": "minecraft:item.flintandsteel.use",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.item.flintandsteel.use"
+  },
+  "world/entity.generic.eat": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.generic.eat",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.entity.generic.eat"
+  },
+  "world/entity.generic.explode": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.generic.explode",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.entity.generic.explode"
+  },
+  "world/block.glass.break": {
+    "sounds": [
+      {
+        "name": "minecraft:block.glass.break",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "world/block.gravel.break": {
+    "sounds": [
+      {
+        "name": "minecraft:block.gravel.break",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.break"
+  },
+  "world/block.heavy_core.place": {
+    "sounds": [
+      {
+        "name": "minecraft:block.heavy_core.place",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.generic.place"
+  },
+  "world/item.hoe.till": {
+    "sounds": [
+      {
+        "name": "minecraft:item.hoe.till",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.item.hoe.till"
+  },
+  "world/entity.item.pickup": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.item.pickup",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.entity.item.pickup"
+  },
+  "world/block.lava.extinguish": {
+    "sounds": [
+      {
+        "name": "minecraft:block.lava.extinguish",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.lava.extinguish"
+  },
+  "world/item.mace.smash_ground": {
+    "sounds": [
+      {
+        "name": "minecraft:item.mace.smash_ground",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.item.mace.smash_ground"
+  },
+  "world/item.mace.smash_ground_heavy": {
+    "sounds": [
+      {
+        "name": "minecraft:item.mace.smash_ground_heavy",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.item.mace.smash_ground"
+  },
+  "world/block.note_block.chime": {
+    "sounds": [
+      {
+        "name": "minecraft:block.note_block.chime",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.note_block.note"
+  },
+  "world/block.note_block.hat": {
+    "sounds": [
+      {
+        "name": "minecraft:block.note_block.hat",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.note_block.note"
+  },
+  "world/block.piston.contract": {
+    "sounds": [
+      {
+        "name": "minecraft:block.piston.contract",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.block.piston.move"
+  },
+  "world/entity.player.attack.sweep": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.player.attack.sweep",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.entity.player.attack.sweep"
+  },
+  "world/entity.player.splash": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.player.splash",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.entity.generic.splash"
+  },
+  "world/entity.player.splash.high_speed": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.player.splash.high_speed",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.entity.generic.splash"
+  },
+  "world/entity.puffer_fish.blow_out": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.puffer_fish.blow_out",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.entity.puffer_fish.blow_out"
+  },
+  "world/entity.sheep.shear": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.sheep.shear",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.item.shears.shear"
+  },
+  "world/item.shovel.flatten": {
+    "sounds": [
+      {
+        "name": "minecraft:item.shovel.flatten",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.item.shovel.flatten"
+  },
+  "world/entity.slime.attack": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.slime.attack",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.entity.slime.attack"
+  },
+  "world/item.totem.use": {
+    "sounds": [
+      {
+        "name": "minecraft:item.totem.use",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.item.totem.use"
+  },
+  "world/entity.wind_charge.wind_burst": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.wind_charge.wind_burst",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.entity.wind_charge.wind_burst"
   }
 }

@@ -256,6 +256,7 @@
   "trait.ethermod.pyrotechnic.phoenix.desc": "Ölümcül bir darbeden bir ateş patlamasıyla kurtul. 10 dakikada bir.",
   "trait.ethermod.pyrotechnic.soulwake": "Ruh İzi",
   "trait.ethermod.pyrotechnic.soulwake.desc": "Yanıkların ruh ateşine dönüşür. Onunla öldürülen düşmanlar müttefik Ruh Alevciği olarak dirilir.",
+  "trait.ethermod.pyrotechnic.soulwake_nosummon.desc": "Yanıkların ruh ateşine dönüşür.",
   "trait.ethermod.pyrotechnic.rekindle": "Yeniden Alevlenme",
   "trait.ethermod.pyrotechnic.rekindle.desc": "Ateş ve lav seni iyileştirir.",
   "module.ethermod.pneumatic": "Pnömatik",
