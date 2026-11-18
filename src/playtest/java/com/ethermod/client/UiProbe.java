@@ -293,8 +293,8 @@ public final class UiProbe {
                                 for (int slot = 0; slot < 3; slot++)
                                     TraitBuild.setLine(st, slot, null);
                                 check(
-                                        "Ten Module definitions",
-                                        TraitLines.all(p.registryAccess()).size() == 10);
+                                        "Nine Module definitions (Mechatronic shelved)",
+                                        TraitLines.all(p.registryAccess()).size() == 9);
                                 check(
                                         "Default Plasmic/Kinetic knowledge",
                                         ModuleUnlocks.known(st, Traits.PLASMIC)
@@ -381,10 +381,7 @@ public final class UiProbe {
                                                 < -.9);
                                 MovementPhysics.setGravity(p, net.minecraft.core.Direction.DOWN);
                                 check("Gravity reset", !p.isNoGravity());
-                                TraitBuild.setLine(st, 0, Traits.MECHATRONIC);
-                                TraitBuild.setPick(st, 0, 0, "");
-                                TraitBuild.setPick(st, 0, 1, "");
-                                TraitBuild.setPick(st, 0, 2, "");
+                                TraitBuild.setLine(st, 0, null);
                                 var at = p.blockPosition().offset(4, 1, 0);
                                 sl.setBlockAndUpdate(
                                         at,
@@ -394,26 +391,6 @@ public final class UiProbe {
                                         net.minecraft.commands.arguments.EntityAnchorArgument.Anchor
                                                 .EYES,
                                         net.minecraft.world.phys.Vec3.atCenterOf(at));
-                                check(
-                                        "Golem tree: Supercharged replaces Redstone Arcs",
-                                        TraitChoices.accepts("mechatronic", 1, "mechatronic.supercharged")
-                                                && !TraitChoices.accepts("mechatronic", 1, "mechatronic.redstone_arcs"));
-                                check(
-                                        "Golem tree: Piston Arm offered, retired Latch rejected",
-                                        TraitChoices.accepts("mechatronic", 0, "mechatronic.piston_arm")
-                                                && !TraitChoices.accepts(
-                                                        "mechatronic", 0, "mechatronic.latch"));
-                                com.ethermod.entity.GolemControl.summon(p);
-                                var golem = com.ethermod.entity.GolemControl.golem(p);
-                                check("Golem summoned", golem != null);
-                                if (golem != null) {
-                                    check("Golem counts as an ally", RedesignEffects.ally(p, golem));
-                                    check(
-                                            "Golem has no Super Move without a Super Move trait",
-                                            !golem.armsMove(p, null, p.getLookAngle()));
-                                    com.ethermod.entity.GolemControl.putAway(golem, true);
-                                }
-                                check("Golem put away", com.ethermod.entity.GolemControl.golem(p) == null);
                                 var zombie =
                                         net.minecraft.world.entity.EntityType.ZOMBIE.create(sl);
                                 zombie.setPos(p.position().add(0, 0, 3));

@@ -666,8 +666,6 @@ public final class ManipulatorAnimations {
             if (t.leftPressMode == OrbMode.TETHER && since < PULL_LEN - HANDOVER) return TETHER;
             if (t.leftPressMode == OrbMode.GUST && since < GRENADE_LEN - HANDOVER) return GRENADE;
             if (t.leftPressMode == OrbMode.GROWTH && since < HARVEST_LEN - HANDOVER) return HARVEST;
-            // Golem orders: the old signal click, a firm middle press
-            if (t.leftPressMode == OrbMode.GOLEM && since < CYCLE_LEN - HANDOVER) return CYCLE[1];
         }
         if (t.carrying) return MASS_GRIP;
 

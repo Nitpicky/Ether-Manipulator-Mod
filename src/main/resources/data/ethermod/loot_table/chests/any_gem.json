@@ -26,10 +26,6 @@
         },
         {
           "type": "minecraft:item",
-          "name": "ethermod:tinkerite"
-        },
-        {
-          "type": "minecraft:item",
           "name": "ethermod:atenite"
         },
         {

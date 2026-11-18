@@ -59,7 +59,6 @@ public final class ModuleItem extends Item {
             case "botanic" -> 0x60D060;
             case "tectonic" -> 0xD48050;
             case "hydraulic" -> 0x3F8CFF;
-            case "mechatronic" -> 0xE92031;
             case "gravitic" -> 0xC080FF;
             case "kinetic" -> 0x66E0FF;
             case "photonic" -> 0xFFE070;

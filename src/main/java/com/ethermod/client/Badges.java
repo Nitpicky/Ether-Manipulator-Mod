@@ -24,7 +24,6 @@ public final class Badges {
             case TETHER -> "gravitic";
             case GUST -> "pneumatic";
             case MASS -> "tectonic";
-            case GOLEM -> "mechatronic";
         };
     }
 

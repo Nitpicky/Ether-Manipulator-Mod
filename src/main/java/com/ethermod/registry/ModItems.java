@@ -48,7 +48,7 @@ public final class ModItems {
     static {
         String[][] pairs = {
             {"hydraulic", "sirenite"}, {"pyrotechnic", "gehennite"}, {"tectonic", "stratite"},
-            {"pneumatic", "zephyrite"}, {"botanic", "quetzalite"}, {"mechatronic", "tinkerite"},
+            {"pneumatic", "zephyrite"}, {"botanic", "quetzalite"},
             {"photonic", "atenite"}, {"gravitic", "oculite"}
         };
         for (String[] p : pairs) GEM_OF_MODULE.put(p[0], p[1]);
@@ -67,7 +67,7 @@ public final class ModItems {
     /** Icon-only items for the secret Module advancements (the K screen's Badge sprites); not in any tab. */
     static {
         for (String m : new String[] {"tectonic", "hydraulic", "pyrotechnic", "pneumatic", "photonic", "gravitic",
-                "botanic", "mechatronic", "plasmic", "kinetic"})
+                "botanic", "plasmic", "kinetic"})
             ITEMS.registerSimpleItem("module_icon_" + m, new net.minecraft.world.item.Item.Properties());
     }
 

@@ -53,7 +53,7 @@ public final class TraitEffects {
     // Drops: Auto-Smelt, Void Filter, Bountiful, Collector
     // =========================================================================
 
-    // last, so drops other traits add (Bountiful, Mechatronic) are collected too
+    // last, so drops other traits add (Bountiful) are collected too
     @SubscribeEvent(priority = net.neoforged.bus.api.EventPriority.LOWEST)
     public static void onBlockDrops(BlockDropsEvent event) {
         if (!(event.getBreaker() instanceof ServerPlayer player)) return;

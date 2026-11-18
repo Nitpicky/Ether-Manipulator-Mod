@@ -66,54 +66,7 @@ public final class ModEntities {
                                             .updateInterval(1)
                                             .build("soul_bolt"));
 
-    public static final DeferredHolder<EntityType<?>, EntityType<com.ethermod.entity.RedstoneGolem>>
-            REDSTONE_GOLEM =
-                    ENTITY_TYPES.register(
-                            "redstone_golem",
-                            () ->
-                                    EntityType.Builder.<com.ethermod.entity.RedstoneGolem>of(
-                                                    com.ethermod.entity.RedstoneGolem::new, MobCategory.MISC)
-                                            .sized(2.0f, 2.4f)
-                                            .eyeHeight(1.5f)
-                                            .fireImmune()
-                                            .clientTrackingRange(10)
-                                            .build("redstone_golem"));
-    public static final DeferredHolder<EntityType<?>, EntityType<com.ethermod.entity.RedstoneBolt>>
-            REDSTONE_BOLT =
-                    ENTITY_TYPES.register(
-                            "redstone_bolt",
-                            () ->
-                                    EntityType.Builder.<com.ethermod.entity.RedstoneBolt>of(
-                                                    com.ethermod.entity.RedstoneBolt::new, MobCategory.MISC)
-                                            .sized(.25f, .25f)
-                                            .clientTrackingRange(6)
-                                            .updateInterval(2)
-                                            .build("redstone_bolt"));
-
-    public static final DeferredHolder<EntityType<?>, EntityType<com.ethermod.entity.Ministrosity>>
-            MINISTROSITY =
-                    ENTITY_TYPES.register(
-                            "ministrosity",
-                            () ->
-                                    EntityType.Builder.<com.ethermod.entity.Ministrosity>of(
-                                                    com.ethermod.entity.Ministrosity::new, MobCategory.MISC)
-                                            .sized(.6f, 1.05f)
-                                            .eyeHeight(.8f)
-                                            .fireImmune()
-                                            .clientTrackingRange(8)
-                                            .build("ministrosity"));
-
     public static void register(IEventBus bus) {
-        bus.addListener(
-                (net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent event) ->
-                        event.put(
-                                MINISTROSITY.get(),
-                                com.ethermod.entity.Ministrosity.attributes().build()));
-        bus.addListener(
-                (net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent event) ->
-                        event.put(
-                                REDSTONE_GOLEM.get(),
-                                com.ethermod.entity.RedstoneGolem.attributes().build()));
         bus.addListener(
                 (net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent event) ->
                         event.put(

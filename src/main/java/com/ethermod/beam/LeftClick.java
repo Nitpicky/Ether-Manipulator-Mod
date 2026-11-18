@@ -45,7 +45,6 @@ import java.util.UUID;
  *   <li>Gravitic: yank the creature or item you aim at toward you.
  *   <li>Botanic: a poison puff in front of you.
  *   <li>Tectonic: grab the block you aim at (hold to sweep up more); press again to set it down.
- *   <li>Mechatronic: orders for the Golem ({@link com.ethermod.entity.GolemControl}).
  * </ul>
  */
 public final class LeftClick {
@@ -110,7 +109,6 @@ public final class LeftClick {
                 if (MassDriver.holding(p)) MassDriver.release(p, true);
                 else if (MassDriver.press(p, st)) HOLDS.put(p.getUUID(), new Hold(mode));
             }
-            case GOLEM -> com.ethermod.entity.GolemControl.leftClick(p);
             default -> {}
         }
     }
