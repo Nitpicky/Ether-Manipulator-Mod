@@ -41,6 +41,7 @@ public final class BeamAudio {
         RemoteBeams.tick(mc.level.getGameTime());
         LeftClickFxData.tick(mc.level.getGameTime());
         com.ethermod.client.ManipulatorAnimations.tick();
+        ElementFx.tick();
 
         // Local player
         int self = mc.player.getId();

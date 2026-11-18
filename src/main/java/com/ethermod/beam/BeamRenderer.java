@@ -147,6 +147,7 @@ public final class BeamRenderer {
         ItemStack held = player.getMainHandItem();
         if (held.getItem() instanceof EtherManipulatorItem) {
             renderLocal(mc, player, held, camPos, pt, time, dt, ps, buf, m);
+            ElementFx.frame(mc, player, held, nozzle, barrel, camPos, time, dt, pt, com.ethermod.client.Fx.glow(), m);
             BlockGlow.render(mc, player, held, camPos, time, pt, buf, m);
             OreSense.render(mc, player, held, camPos, time, buf, m);
         } else if (lastBeamState) {
