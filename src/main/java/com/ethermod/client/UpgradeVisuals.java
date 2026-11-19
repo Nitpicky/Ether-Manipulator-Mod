@@ -71,6 +71,11 @@ final class UpgradeVisuals {
         return r;
     }
 
+    /** ARGB to the byte order NativeImage.setPixelRGBA expects (red and blue swapped). */
+    static int abgr(int c) {
+        return (c & 0xff00ff00) | ((c >> 16) & 255) | ((c & 255) << 16);
+    }
+
     record Palette(int[] ramp, boolean module) {
         int bg() {
             return ramp[0];
