@@ -14,7 +14,7 @@ PASS Common follows prior choice
 PASS Common inactive without choice
 PASS Mode switch retains tank
 PASS Module switch retains tank
-PASS Reload waits 4s at Prototype
+PASS Reload waits 30s at Prototype
 PASS Crucible grows the shared tank
 PASS Seedbank grows the shared tank
 PASS Frost spends water
