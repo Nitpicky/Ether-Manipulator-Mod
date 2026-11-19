@@ -133,7 +133,7 @@ PASS Leaving low clearance restores standing east
 PASS Creative flight has no gravity acceleration
 PASS Rotated collision sweep stops at terrain
 PASS Cramped gravity turn refuses instead of clipping
-PASS Gravity turn is visibly intermediate after five ticks
+FAIL Gravity turn is visibly intermediate after five ticks
 PASS Soul fire sends no mining-crack overlay
 PASS Blazeling model has one head and three rods
 PASS Blazeling rods orbit at preserved radius
