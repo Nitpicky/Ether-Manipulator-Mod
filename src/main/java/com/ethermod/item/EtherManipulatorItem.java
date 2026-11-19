@@ -113,7 +113,9 @@ public class EtherManipulatorItem extends Item implements GeoItem {
         OrbMode mode = OrbMode.get(stack);
         // the projectile this tool charges on right click (Hydraulic: the ice shard)
         OrbMode shot = mode.rmbShot();
-        if (shot.usesTank() && shot.tankLevel(stack) < shot.shotCost(stack, 0)) {
+        // the tank lives on the Manipulator's own stack (synced to the client), not on the copy in
+        // hand, which can be stale on the client and let an empty tank start a charge
+        if (shot.isDry(player)) {
             if (player instanceof net.minecraft.server.level.ServerPlayer sp) com.ethermod.beam.DryFire.signal(sp);
             return InteractionResultHolder.fail(stack);
         }

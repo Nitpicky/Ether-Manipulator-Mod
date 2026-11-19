@@ -220,6 +220,12 @@ public enum OrbMode {
         };
     }
 
+    /** True when this shot spends Ether and the player's tank can't pay its smallest charge. */
+    public boolean isDry(net.minecraft.world.entity.player.Player player) {
+        ItemStack s = com.ethermod.manipulator.Manipulator.stack(player);
+        return usesTank() && tank(s) < shotCost(s, 0);
+    }
+
     /** Left-click cost that is not a charged shot: Gust's Stasis Grenade. */
     public static final int GRENADE_COST = 2;
 
