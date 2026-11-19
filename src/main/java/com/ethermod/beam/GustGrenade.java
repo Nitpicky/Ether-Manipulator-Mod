@@ -67,6 +67,11 @@ public final class GustGrenade {
 
     private static final Map<ServerLevel, List<Grenade>> LIVE = new HashMap<>();
 
+    /** For the playtest: cut every live Stasis hold short so the burst lands within the tour. */
+    public static void hurry() {
+        for (List<Grenade> l : LIVE.values()) for (Grenade g : l) g.fuse = Math.min(g.fuse, 4);
+    }
+
     /**
      * Ticks between the click and the grenade leaving: the Manipulator's lob animation gathers for
      * these, then flicks it out (animations: "grenade", flick at 0.1 s).

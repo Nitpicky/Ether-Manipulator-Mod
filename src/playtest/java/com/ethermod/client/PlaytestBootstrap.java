@@ -730,6 +730,8 @@ public final class PlaytestBootstrap {
             case 968 -> opts.keyAttack.setDown(true);
             case 970 -> opts.keyAttack.setDown(false);
             case 978 -> shot(mc, "26_gust_grenade_latched"); // +2: grenade wind-up
+            // the Stasis hold lasts 3s; cut it short so the burst lands before the check
+            case 996 -> server(mc, (s, p) -> com.ethermod.beam.GustGrenade.hurry());
             case 1006 -> shot(mc, "26b_gust_grenade_burst");
             case 1012 ->
                     server(

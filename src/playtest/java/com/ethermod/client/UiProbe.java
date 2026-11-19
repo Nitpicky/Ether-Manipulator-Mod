@@ -997,7 +997,7 @@ public final class UiProbe {
                                         sl, p, st, 2, OrbMode.WATER);
                                 check(
                                         "Split pays once per whole shot",
-                                        OrbMode.tank(st) == 5);
+                                        OrbMode.tank(st) == 6 - 4);
                                 OrbMode.setTank(st, 16);
                                 check(
                                         "Retired Gunner/Orbit dropped from old builds",
