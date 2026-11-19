@@ -33,8 +33,6 @@ PASS Rapids preserves water blocks
 PASS Airwalk finds real support with stale ground flag
 PASS Airwalk does not treat empty air as real support
 PASS Old builds keep moved choices
-PASS Stasis saves and restores the creature's own flags
-PASS Other players are no enemies while hurt_players is off
 PASS Mass Driver picks block
 PASS Mass Driver removes original once
 PASS Mass Driver focus release preserves entity
