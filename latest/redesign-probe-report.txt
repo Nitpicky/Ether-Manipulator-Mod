@@ -14,7 +14,7 @@ PASS Common follows prior choice
 PASS Common inactive without choice
 PASS Mode switch retains tank
 PASS Module switch retains tank
-PASS Reload waits 30s at Prototype
+PASS Reload waits 4s at Prototype
 PASS Crucible grows the shared tank
 PASS Seedbank grows the shared tank
 PASS Frost spends water
@@ -59,7 +59,7 @@ PASS Blazeling idles at raised hover height
 PASS Fire expiry has no cracks but ice retains them
 PASS Blazeling expiry dies instead of discarding
 PASS Blazeling ownership and deadline survive save/load
-FAIL Split pays once per whole shot
+PASS Split pays once per whole shot
 PASS Retired Gunner/Orbit dropped from old builds
 PASS Seeker is a Kinetic Grandmaster choice
 PASS Replant puts a fresh crop back
