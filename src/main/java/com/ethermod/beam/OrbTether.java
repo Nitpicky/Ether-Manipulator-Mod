@@ -271,7 +271,7 @@ public final class OrbTether {
         if (b.hooked != null) {
             var dest = b.hooked.position().subtract(sp.getLookAngle().scale(1.2));
             if (sl.noCollision(sp, sp.getBoundingBox().move(dest.subtract(sp.position()))))
-                BeamBallEntity.blinkTo(sp, dest);
+                blinkTo(sp, dest);
             b.discard();
             return;
         }
@@ -282,7 +282,7 @@ public final class OrbTether {
         for (int i = 0; i < 6; i++) {
             var at = dest.add(0, i * 0.5, 0);
             if (sl.noCollision(sp, sp.getBoundingBox().move(at.subtract(old)))) {
-                BeamBallEntity.blinkTo(sp, at);
+                blinkTo(sp, at);
                 break;
             }
         }
@@ -410,5 +410,33 @@ public final class OrbTether {
         b.lifeTicks = 0;
         b.hookAt = b.level().getGameTime() + HOOK_DELAY;
         b.hookPitch = 1.5f;
+    }
+
+    /** Blink: teleports the player to {@code at}, with portal particles and sounds at both ends. */
+    static void blinkTo(ServerPlayer player, Vec3 at) {
+        ServerLevel sl = player.serverLevel();
+        Vec3 old = player.position();
+        sl.sendParticles(ParticleTypes.PORTAL, old.x, old.y + 1, old.z, 32, .3, .7, .3, .15);
+        player.teleportTo(
+                sl, at.x, at.y, at.z, java.util.Set.of(), player.getYRot(), player.getXRot());
+        sl.sendParticles(ParticleTypes.PORTAL, at.x, at.y + 1, at.z, 32, .3, .7, .3, .15);
+        sl.playSound(
+                null,
+                old.x,
+                old.y,
+                old.z,
+                com.ethermod.sound.ModSounds.WORLD_ENDERMAN_TELEPORT,
+                SoundSource.PLAYERS,
+                .8f,
+                1f);
+        sl.playSound(
+                null,
+                at.x,
+                at.y,
+                at.z,
+                com.ethermod.sound.ModSounds.WORLD_ENDERMAN_TELEPORT,
+                SoundSource.PLAYERS,
+                .8f,
+                1f);
     }
 }
