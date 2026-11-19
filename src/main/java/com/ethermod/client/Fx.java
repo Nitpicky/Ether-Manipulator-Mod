@@ -547,6 +547,8 @@ public final class Fx {
         return out;
     }
 
+    private static final float[] UV_U = {0f, 1f, 1f, 0f}, UV_V = {0f, 0f, 1f, 1f};
+
     private static void drawInWorld() {
         MultiBufferSource.BufferSource buf = Minecraft.getInstance().renderBuffers().bufferSource();
         boolean beacon = VARIANT.startsWith("beacon"), particle = particleFamily();
@@ -570,7 +572,10 @@ public final class Fx {
                                     (c >> 8 & 255) * k / 255,
                                     (c & 255) * k / 255,
                                     premultiply ? 255 : a)
-                            .setUv(0.5f, 0.5f);
+                            // a real UV span: packs that lock lighting to the texture's texels
+                            // (pixel-locked shading) took a single point UV as ONE texel for the
+                            // whole quad, so every beam segment came out as one flat band
+                            .setUv(UV_U[i & 3], UV_V[i & 3]);
                     if (particle) {
                         vc.setLight(LightTexture.FULL_BRIGHT); // particles carry no normal
                         continue;
