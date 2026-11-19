@@ -376,14 +376,39 @@ public final class Fx {
      *   <li>{@code <setup>_p}: that setup, drawn in the particle stage
      * </ul>
      */
-    static final String VARIANT = System.getProperty("ethermod.fxVariant", "particle");
+    static final String VARIANT = System.getProperty("ethermod.fxVariant", "particle_max");
 
     /** {@code particle}, or any setup ending in {@code _p}: drawn in the particle stage. */
-    static final boolean PARTICLE_STAGE = VARIANT.equals("particle") || VARIANT.endsWith("_p");
+    static final boolean PARTICLE_STAGE = VARIANT.startsWith("particle") || VARIANT.endsWith("_p");
+
+    /** Brightest wins where beam strands overlap (as without a pack), instead of adding up. */
+    private static final RenderStateShard.TransparencyStateShard MAX_TRANSPARENCY =
+            new RenderStateShard.TransparencyStateShard(
+                    "ethermod_max",
+                    () -> {
+                        RenderSystem.enableBlend();
+                        RenderSystem.blendEquation(GL14.GL_MAX);
+                        RenderSystem.blendFunc(
+                                GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
+                    },
+                    () -> {
+                        RenderSystem.blendEquation(GL14.GL_FUNC_ADD);
+                        RenderSystem.disableBlend();
+                        RenderSystem.defaultBlendFunc();
+                    });
+
+    /** {@code particle_max}: beam brightest-wins; {@code particle_max_nd}: and no depth write. */
+    static boolean particleFamily() {
+        return VARIANT.startsWith("particle");
+    }
 
     private static RenderType shaderType(String name, boolean depthOnly) {
+        return shaderType(name, depthOnly, false);
+    }
+
+    private static RenderType shaderType(String name, boolean depthOnly, boolean beamLayer) {
         boolean beacon = VARIANT.startsWith("beacon");
-        boolean particle = VARIANT.equals("particle");
+        boolean particle = particleFamily();
         RenderStateShard.ShaderStateShard shader =
                 particle
                         ? new RenderStateShard.ShaderStateShard(GameRenderer::getParticleShader)
@@ -406,9 +431,11 @@ public final class Fx {
             b.setTransparencyState(
                     VARIANT.equals("beacon")
                             ? RenderStateShard.TRANSLUCENT_TRANSPARENCY
-                            : RenderStateShard.ADDITIVE_TRANSPARENCY);
+                            : beamLayer && VARIANT.startsWith("particle_max")
+                                    ? MAX_TRANSPARENCY
+                                    : RenderStateShard.ADDITIVE_TRANSPARENCY);
             b.setWriteMaskState(
-                    VARIANT.equals("eyes2")
+                    VARIANT.equals("eyes2") || VARIANT.equals("particle_max_nd")
                             ? RenderStateShard.COLOR_WRITE
                             : RenderStateShard.COLOR_DEPTH_WRITE);
         }
@@ -425,17 +452,22 @@ public final class Fx {
     }
 
     private static final RenderType SHADER_FX = shaderType("ethermod_fx", false);
+    private static final RenderType SHADER_FX_BEAM = shaderType("ethermod_fx_beam", false, true);
     private static final RenderType SHADER_FX_DEPTH =
             VARIANT.equals("eyes2") ? shaderType("ethermod_fx_depth", true) : null;
 
     private static void drawInWorld() {
         MultiBufferSource.BufferSource buf = Minecraft.getInstance().renderBuffers().bufferSource();
-        boolean beacon = VARIANT.startsWith("beacon"), particle = VARIANT.equals("particle");
+        boolean beacon = VARIANT.startsWith("beacon"), particle = particleFamily();
         boolean premultiply = !VARIANT.equals("beacon"); // added light ignores alpha
-        for (RenderType type : new RenderType[] {SHADER_FX, SHADER_FX_DEPTH}) {
+        // the beam first (its own blend), then the glows, then the optional depth pass
+        RenderType[] types = {SHADER_FX_BEAM, SHADER_FX, SHADER_FX_DEPTH};
+        Layer[][] layers = {{BEAM}, {GLOW}, {BEAM, GLOW}};
+        for (int t = 0; t < types.length; t++) {
+            RenderType type = types[t];
             if (type == null) continue;
             VertexConsumer vc = buf.getBuffer(type);
-            for (Layer l : new Layer[] {BEAM, GLOW}) {
+            for (Layer l : layers[t]) {
                 int verts = l.quads() * 4;
                 for (int i = 0; i < verts; i++) {
                     int c = l.col[i];
