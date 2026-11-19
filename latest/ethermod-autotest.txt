@@ -21,7 +21,7 @@ shot 15_custom_colour_sweep
 PASS colour: orbs follow the mode (20c1e9), the beam is Plasmic orange (true)
 shot 16_custom_colour_model
 shot 17_sneak_beam
-PASS sneak beam, no water near: grass ahead is now block.minecraft.dirt_path (beamActive=true, sneaking=true, hit=net.minecraft.world.phys.BlockHitResult@5379839c)
+PASS sneak beam, no water near: grass ahead is now block.minecraft.dirt_path (beamActive=true, sneaking=true, hit=net.minecraft.world.phys.BlockHitResult@5c991516)
 PASS sneak beam, water near: grass ahead is now block.minecraft.farmland
 PASS swing: a sword still swings with the Manipulator put away
 shot 14_sword_swing
@@ -38,26 +38,26 @@ shot 23a_growth_charging
 shot 23_pollen_cloud
 shot 24_light_bounce
 shot 25_tether_rope
-PASS tether: the hook reeled the player up (2.1 blocks)
+PASS tether: the hook reeled the player up (4.4 blocks)
 shot 26_gust_grenade_latched
 shot 26b_gust_grenade_burst
 PASS gust: left click threw a grenade that burst (bursts 1, pig hurt true)
-tether: aiming at the pig 13.0 blocks out, pitch 5.1
-tether: aiming at the pig 13.0 blocks out, pitch 5.1
+tether: aiming at the pig 12.0 blocks out, pitch 5.6
+tether: aiming at the pig 12.0 blocks out, pitch 5.6
 tether pig v=0.60 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
-tether pig at 11.2
+tether pig at 10.8
 tether pig v=0.60 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
-tether pig at 9.4
+tether pig at 8.4
 shot 27_tether_pull
 tether pig v=0.60 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
-tether pig at 6.5
+tether pig at 5.5
 tether pig v=0.59 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
-tether pig at 4.2
-tether pig v=0.53 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=false
-tether pig at 2.6
-PASS tether: a right click tap reeled the hooked pig from 12 to 0.6 blocks (pig pulled 12.6)
+tether pig at 3.3
+tether pig v=0.44 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=false full=false
+tether pig at 1.2
+PASS tether: a right click tap reeled the hooked pig from 12 to 0.7 blocks (pig pulled 12.2)
 shot 28_light_beacon
-PASS light: the Beacon lights where it lands (2 light blocks)
+PASS light: the Beacon lights where it lands (1 light blocks)
 PASS mining is Beam-only: 20 ticks of left click in Light mode left the stone
 PASS light: the Beacon's light goes with it (0 left [], 0 were there before)
 shot 29_harvest
@@ -84,7 +84,7 @@ PASS advancements: unlocking the Botanic Module earns Feathered Serpent only
 PASS gems: the Module items are gone
 PASS recipes: upgrade_iron is gem between two blocks, ingot fins top right and bottom left
 PASS recipes: upgrade_diamond is gem between two blocks, ingot fins top right and bottom left
-PASS gems: placed desert_pyramid, 4 chests, 1 with atenite: 0,0,-2+gem -2,0,0 2,0,0 0,0,2
-PASS gems: placed jungle_pyramid, 4 chests, 2 with quetzalite: -12,-2,1 -10,-3,6+gem -3,-3,7+gem+sticky -10,-2,7
+PASS gems: placed desert_pyramid, 4 chests, 2 with atenite: 0,0,-2+gem -2,0,0+gem 2,0,0 0,0,2
+PASS gems: placed jungle_pyramid, 4 chests, 1 with quetzalite: 1,-2,-6 3,-3,-1 10,-3,0+gem+sticky 3,-2,0
 shot 35_gem_glint
 shot 36_advancements
