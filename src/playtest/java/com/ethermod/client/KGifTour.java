@@ -274,7 +274,7 @@ public final class KGifTour {
 
     private static void makePlan() {
         Minecraft mc = Minecraft.getInstance();
-        // ---- 1. Upgrade: Prototype to Calibrated with an Iron Tier Chip --------------------
+        // ---- 1. Upgrade: Prototype to Calibrated with an Iron Tier Chip (new chip sprites) ----
         server(
                 p -> {
                     var st = Manipulator.stack(p);
