@@ -462,7 +462,8 @@ public final class Fx {
                             ? RenderStateShard.TRANSLUCENT_TRANSPARENCY
                             : beamLayer
                                             && (VARIANT.startsWith("particle_max")
-                                                    || VARIANT.equals("particle_keep"))
+                                                    || VARIANT.equals("particle_keep")
+                                                    || VARIANT.equals("particle_sort"))
                                     ? MAX_TRANSPARENCY
                                     : RenderStateShard.ADDITIVE_TRANSPARENCY);
             b.setWriteMaskState(
@@ -494,6 +495,34 @@ public final class Fx {
                     ? shaderType("ethermod_fx_depth", true)
                     : null;
 
+    /**
+     * Vertex order for a layer. {@code particle_sort}: quads far to near, so with depth written
+     * no part of the beam ever hides a farther part drawn after it (that cut the rope into bands);
+     * everything adds up as without a pack, and the depth still keeps the pack's clouds behind.
+     */
+    private static int[] order(Layer l) {
+        int quads = l.quads();
+        int[] out = new int[quads * 4];
+        Integer[] q = new Integer[quads];
+        for (int i = 0; i < quads; i++) q[i] = i;
+        if (VARIANT.equals("particle_sort")) {
+            double[] d = new double[quads];
+            for (int i = 0; i < quads; i++) {
+                double x = 0, y = 0, z = 0;
+                for (int v = 0; v < 4; v++) {
+                    int o = 3 * (4 * i + v);
+                    x += l.pos[o];
+                    y += l.pos[o + 1];
+                    z += l.pos[o + 2];
+                }
+                d[i] = x * x + y * y + z * z;
+            }
+            java.util.Arrays.sort(q, (a, b) -> Double.compare(d[b], d[a]));
+        }
+        for (int i = 0; i < quads; i++) for (int v = 0; v < 4; v++) out[4 * i + v] = 4 * q[i] + v;
+        return out;
+    }
+
     private static void drawInWorld() {
         MultiBufferSource.BufferSource buf = Minecraft.getInstance().renderBuffers().bufferSource();
         boolean beacon = VARIANT.startsWith("beacon"), particle = particleFamily();
@@ -506,8 +535,7 @@ public final class Fx {
             if (type == null) continue;
             VertexConsumer vc = buf.getBuffer(type);
             for (Layer l : layers[t]) {
-                int verts = l.quads() * 4;
-                for (int i = 0; i < verts; i++) {
+                for (int i : order(l)) {
                     int c = l.col[i];
                     int a = c >>> 24, k = premultiply ? a : 255;
                     vc.addVertex(l.pos[3 * i], l.pos[3 * i + 1], l.pos[3 * i + 2])
