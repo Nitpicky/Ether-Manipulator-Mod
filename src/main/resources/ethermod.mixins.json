@@ -12,7 +12,7 @@
     "GravityLivingMixin",
     "DazzleMixin",
     "MovementConnectionMixin",
-    "AdvancementOrderMixin",
+    "AdvancementLayoutMixin",
     "SoulFireMixin",
     "FluidPocketMixin",
     "GravityFallAccessor",
