@@ -59,7 +59,7 @@ PASS Blazeling idles at raised hover height
 PASS Fire expiry has no cracks but ice retains them
 PASS Blazeling expiry dies instead of discarding
 PASS Blazeling ownership and deadline survive save/load
-PASS Split pays once per whole shot
+FAIL Split pays once per whole shot
 PASS Retired Gunner/Orbit dropped from old builds
 PASS Seeker is a Kinetic Grandmaster choice
 PASS Replant puts a fresh crop back
