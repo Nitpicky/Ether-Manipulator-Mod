@@ -43,6 +43,9 @@ public final class BodyTextures {
     /** The texture for a body colour; the painted one for -1 (default) or if anything fails. */
     public static ResourceLocation get(int body) {
         if (body < 0) return BASE;
+        // cache hit first: the ramp and name are only needed to build a new texture
+        ResourceLocation have = CACHE.get(body);
+        if (have != null) return have;
         return build(body, BodyPalette.ramp(body), String.format("%06x", body));
     }
 

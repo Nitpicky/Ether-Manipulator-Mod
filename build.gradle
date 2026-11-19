@@ -4,7 +4,7 @@ plugins {
 }
 
 group   = 'com.ethermod'
-version = '1.1.0-playtest'
+version = '1.0.0'
 
 base {
     archivesName = 'ether-manipulator'
@@ -72,7 +72,6 @@ tasks.withType(ProcessResources).configureEach {
             loader_version_range   : '[2,)',
             mod_id                 : 'ethermod',
             mod_name               : 'Ether Manipulator',
-            mod_license            : 'MIT',
             mod_version            : project.version,
     ]
     inputs.properties replaceProperties

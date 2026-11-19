@@ -131,9 +131,11 @@ public enum ManipulatorStage {
 
     public static ManipulatorStage get(ItemStack stack) {
         if (com.ethermod.config.ServerConfig.allTiers()) return NETHERITE;
-        CompoundTag tag =
-                stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
-        int id = tag.getInt(TAG_STAGE);
+        // read-only: getUnsafe avoids a deep copy of the whole stack data on every trait lookup
+        int id =
+                stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY)
+                        .getUnsafe()
+                        .getInt(TAG_STAGE);
         for (ManipulatorStage s : values()) {
             if (s.id == id) return s;
         }
