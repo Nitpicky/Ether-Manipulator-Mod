@@ -41,7 +41,7 @@ public class UpgradeScreen extends Screen {
     private boolean colourPicker;
     private float hue = .45f, saturation = .5f, value = .8f;
     private int oldColour;
-    private static String primary = "forest", accent = "amethyst";
+    private static String primary = "petrol", accent = "copper";
     private static boolean settingsLoaded;
     private static final DyeColor[] DYES = {
         DyeColor.WHITE,
