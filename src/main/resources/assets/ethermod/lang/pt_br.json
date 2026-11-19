@@ -57,6 +57,7 @@
   "message.ethermod.intro_keys": "Aperte R para invocá-lo e K para abrir seus traços.",
   "message.ethermod.orb_selected": "Modo: %s",
   "message.ethermod.module_known": "Módulo já conhecido.",
+  "message.ethermod.module_disabled": "Este módulo está desativado neste servidor.",
   "message.ethermod.module_unlocked": "Módulo desbloqueado. Abra K para equipá-lo.",
   "message.ethermod.zipline_first": "Tirolesa: agora prenda a outra ponta.",
   "message.ethermod.zipline_done": "Tirolesa esticada: mire nela e segure Amarra para deslizar.",

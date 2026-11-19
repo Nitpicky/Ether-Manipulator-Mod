@@ -38,9 +38,13 @@ public final class ModuleItem extends Item {
      * Everything a gem does when used, without the gem: unlocks the Module on the player's
      * Manipulator, fires its advancement and plays the unlock cue. Also behind
      * {@code /ethermod unlock}, so modpacks can hand Modules out through quests or their own items.
-     * False when the player already knew it.
+     * False when the player already knew it or the server disabled it.
      */
     public static boolean grant(ServerPlayer sp, ResourceLocation module) {
+        if (com.ethermod.config.ServerConfig.moduleDisabled(module.getPath())) {
+            sp.displayClientMessage(Component.translatable("message.ethermod.module_disabled"), true);
+            return false;
+        }
         if (!ModuleUnlocks.unlock(Manipulator.stack(sp), module)) {
             sp.displayClientMessage(Component.translatable("message.ethermod.module_known"), true);
             return false;

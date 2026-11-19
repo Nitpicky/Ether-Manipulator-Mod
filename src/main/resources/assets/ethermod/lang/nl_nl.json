@@ -57,6 +57,7 @@
   "message.ethermod.intro_keys": "Druk op R om hem op te roepen en op K om zijn eigenschappen te openen.",
   "message.ethermod.orb_selected": "Modus: %s",
   "message.ethermod.module_known": "Module al bekend.",
+  "message.ethermod.module_disabled": "Deze module staat uit op deze server.",
   "message.ethermod.module_unlocked": "Module ontgrendeld. Open K om hem uit te rusten.",
   "message.ethermod.zipline_first": "Tokkelbaan: haak nu het andere uiteinde vast.",
   "message.ethermod.zipline_done": "Tokkelbaan gespannen: richt erop en houd Lijn ingedrukt om te glijden.",

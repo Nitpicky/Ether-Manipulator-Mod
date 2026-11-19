@@ -57,6 +57,7 @@
   "message.ethermod.intro_keys": "Appuyez sur R pour l'invoquer, sur K pour ouvrir ses traits.",
   "message.ethermod.orb_selected": "Mode : %s",
   "message.ethermod.module_known": "Module déjà connu.",
+  "message.ethermod.module_disabled": "Ce module est désactivé sur ce serveur.",
   "message.ethermod.module_unlocked": "Module débloqué. Ouvrez K pour l'équiper.",
   "message.ethermod.zipline_first": "Tyrolienne : accrochez maintenant l'autre extrémité.",
   "message.ethermod.zipline_done": "Tyrolienne tendue : visez-la et maintenez Attache pour glisser.",

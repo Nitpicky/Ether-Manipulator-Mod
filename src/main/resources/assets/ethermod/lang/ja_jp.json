@@ -57,6 +57,7 @@
   "message.ethermod.intro_keys": "Rキーで召喚、Kキーで特性を開きます。",
   "message.ethermod.orb_selected": "モード:%s",
   "message.ethermod.module_known": "このモジュールはすでに解放済みです。",
+  "message.ethermod.module_disabled": "このモジュールはこのサーバーで無効になっています。",
   "message.ethermod.module_unlocked": "モジュールを解放しました。Kキーで装備できます。",
   "message.ethermod.zipline_first": "ジップライン:もう一方の端を取り付けてください。",
   "message.ethermod.zipline_done": "ジップライン完成:狙ってテザーを長押しすると乗れます。",

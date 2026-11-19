@@ -116,7 +116,11 @@ public final class RedesignCommands {
                                                         })));
     }
 
-    /** Items listed in the server config's gem_items unlock their Module like that gem. */
+    /**
+     * Items listed in the server config's gem_items unlock their Module like that gem. Runs on both
+     * sides (server configs sync to clients) so the client cancels too and never plays the item's
+     * own use (an ender pearl throw, a bite) for a moment before the server's answer.
+     */
     @SubscribeEvent
     public static void gemItem(net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.RightClickItem ev) {
         var stack = ev.getItemStack();
@@ -125,15 +129,16 @@ public final class RedesignCommands {
         if (module == null) return;
         var id = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("ethermod", module);
         if (id.equals(Traits.PLASMIC) || id.equals(Traits.KINETIC)) return;
-        if (!(ev.getEntity() instanceof net.minecraft.server.level.ServerPlayer sp)) return;
-        if (!Manipulator.data(sp).owned()) return;
-        if (TraitLines.all(sp.registryAccess()).stream().noneMatch(e -> e.getKey().equals(id))) return;
-        // already known: the item keeps its own use
-        if (com.ethermod.trait.ModuleUnlocks.known(Manipulator.stack(sp), id)) return;
-        if (ModuleItem.grant(sp, id)) {
+        var player = ev.getEntity();
+        if (!Manipulator.data(player).owned()) return;
+        if (TraitLines.all(player.level().registryAccess()).stream().noneMatch(e -> e.getKey().equals(id))) return;
+        // already known: the item keeps its own use (a disabled Module is never known, so it lands
+        // in grant below, which says so and keeps the item)
+        if (!com.ethermod.config.ServerConfig.moduleDisabled(module)
+                && com.ethermod.trait.ModuleUnlocks.known(Manipulator.stack(player), id)) return;
+        ev.setCanceled(true);
+        ev.setCancellationResult(net.minecraft.world.InteractionResult.SUCCESS);
+        if (player instanceof net.minecraft.server.level.ServerPlayer sp && ModuleItem.grant(sp, id))
             stack.consume(1, sp);
-            ev.setCanceled(true);
-            ev.setCancellationResult(net.minecraft.world.InteractionResult.SUCCESS);
-        }
     }
 }

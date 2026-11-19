@@ -57,6 +57,7 @@
   "message.ethermod.intro_keys": "Tryck R för att kalla fram den och K för att öppna dess egenskaper.",
   "message.ethermod.orb_selected": "Läge: %s",
   "message.ethermod.module_known": "Modulen är redan känd.",
+  "message.ethermod.module_disabled": "Den här modulen är avstängd på den här servern.",
   "message.ethermod.module_unlocked": "Modul upplåst. Öppna K för att utrusta den.",
   "message.ethermod.zipline_first": "Linbana: haka nu fast andra änden.",
   "message.ethermod.zipline_done": "Linbanan är spänd: sikta på den och håll Lina för att åka.",

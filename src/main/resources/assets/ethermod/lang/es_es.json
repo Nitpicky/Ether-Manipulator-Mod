@@ -57,6 +57,7 @@
   "message.ethermod.intro_keys": "Pulsa R para invocarlo y K para abrir sus rasgos.",
   "message.ethermod.orb_selected": "Modo: %s",
   "message.ethermod.module_known": "Módulo ya conocido.",
+  "message.ethermod.module_disabled": "Este módulo está desactivado en este servidor.",
   "message.ethermod.module_unlocked": "Módulo desbloqueado. Abre K para equiparlo.",
   "message.ethermod.zipline_first": "Tirolina: ahora engancha el otro extremo.",
   "message.ethermod.zipline_done": "Tirolina tendida: apunta a ella y mantén Amarre para deslizarte.",

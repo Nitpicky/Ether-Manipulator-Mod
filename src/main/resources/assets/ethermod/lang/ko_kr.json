@@ -57,6 +57,7 @@
   "message.ethermod.intro_keys": "R을 눌러 소환하고 K를 눌러 특성을 여세요.",
   "message.ethermod.orb_selected": "모드: %s",
   "message.ethermod.module_known": "이미 알고 있는 모듈입니다.",
+  "message.ethermod.module_disabled": "이 모듈은 이 서버에서 꺼져 있습니다.",
   "message.ethermod.module_unlocked": "모듈이 해금되었습니다. K를 열어 장착하세요.",
   "message.ethermod.zipline_first": "집라인: 이제 반대쪽 끝을 거세요.",
   "message.ethermod.zipline_done": "집라인 완성: 조준하고 밧줄을 누르고 있으면 탈 수 있습니다.",

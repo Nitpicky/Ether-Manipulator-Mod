@@ -57,6 +57,7 @@
   "message.ethermod.intro_keys": "Drücke R, um ihn zu rufen, und K, um seine Eigenschaften zu öffnen.",
   "message.ethermod.orb_selected": "Modus: %s",
   "message.ethermod.module_known": "Modul bereits bekannt.",
+  "message.ethermod.module_disabled": "Dieses Modul ist auf diesem Server deaktiviert.",
   "message.ethermod.module_unlocked": "Modul freigeschaltet. Öffne K, um es auszurüsten.",
   "message.ethermod.zipline_first": "Seilrutsche: Jetzt das andere Ende einhaken.",
   "message.ethermod.zipline_done": "Seilrutsche gespannt: Ziele darauf und halte Halteseil, um zu fahren.",

@@ -57,6 +57,7 @@
   "message.ethermod.intro_keys": "Нажмите R, чтобы призвать его, и K, чтобы открыть его черты.",
   "message.ethermod.orb_selected": "Режим: %s",
   "message.ethermod.module_known": "Модуль уже известен.",
+  "message.ethermod.module_disabled": "Этот модуль отключён на этом сервере.",
   "message.ethermod.module_unlocked": "Модуль открыт. Откройте K, чтобы установить его.",
   "message.ethermod.zipline_first": "Тарзанка: теперь зацепите другой конец.",
   "message.ethermod.zipline_done": "Тарзанка натянута: наведитесь на неё и удерживайте Трос, чтобы ехать.",

@@ -57,6 +57,7 @@
   "message.ethermod.intro_keys": "按R召唤,按K打开其特性。",
   "message.ethermod.orb_selected": "模式:%s",
   "message.ethermod.module_known": "已拥有此模块。",
+  "message.ethermod.module_disabled": "此模块在本服务器上已关闭。",
   "message.ethermod.module_unlocked": "模块已解锁。打开K界面进行装备。",
   "message.ethermod.zipline_first": "滑索:现在固定另一端。",
   "message.ethermod.zipline_done": "滑索已拉好:瞄准它并按住系索即可滑行。",

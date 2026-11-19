@@ -57,6 +57,7 @@
   "message.ethermod.intro_keys": "Çağırmak için R, özelliklerini açmak için K tuşuna bas.",
   "message.ethermod.orb_selected": "Mod: %s",
   "message.ethermod.module_known": "Modül zaten biliniyor.",
+  "message.ethermod.module_disabled": "Bu modül bu sunucuda kapalı.",
   "message.ethermod.module_unlocked": "Modül açıldı. Takmak için K ekranını aç.",
   "message.ethermod.zipline_first": "Zipline: şimdi diğer ucu bağla.",
   "message.ethermod.zipline_done": "Zipline gerildi: ona nişan al ve sürmek için Halatı basılı tut.",

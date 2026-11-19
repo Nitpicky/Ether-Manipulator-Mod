@@ -57,6 +57,7 @@
   "message.ethermod.intro_keys": "Naciśnij R, aby go przywołać, i K, aby otworzyć jego cechy.",
   "message.ethermod.orb_selected": "Tryb: %s",
   "message.ethermod.module_known": "Moduł już znany.",
+  "message.ethermod.module_disabled": "Ten moduł jest wyłączony na tym serwerze.",
   "message.ethermod.module_unlocked": "Moduł odblokowany. Otwórz K, aby go założyć.",
   "message.ethermod.zipline_first": "Tyrolka: teraz zaczep drugi koniec.",
   "message.ethermod.zipline_done": "Tyrolka napięta: wyceluj w nią i przytrzymaj Linę, aby zjechać.",

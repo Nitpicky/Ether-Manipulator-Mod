@@ -57,6 +57,7 @@
   "message.ethermod.intro_keys": "Stiskni R pro přivolání a K pro otevření jeho vlastností.",
   "message.ethermod.orb_selected": "Režim: %s",
   "message.ethermod.module_known": "Modul už znáš.",
+  "message.ethermod.module_disabled": "Tento modul je na tomto serveru vypnutý.",
   "message.ethermod.module_unlocked": "Modul odemčen. Otevři K a nasaď ho.",
   "message.ethermod.zipline_first": "Lanovka: teď ukotvi druhý konec.",
   "message.ethermod.zipline_done": "Lanovka napnuta: zamiř na ni a drž Lano pro jízdu.",
