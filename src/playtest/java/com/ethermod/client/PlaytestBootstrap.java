@@ -967,6 +967,15 @@ public final class PlaytestBootstrap {
             case 1460 -> mc.setScreen(new net.minecraft.client.gui.screens.inventory.InventoryScreen(mc.player));
             case 1470 -> shot(mc, "35_gem_glint");
             case 1474 -> mc.setScreen(null);
+            // the advancement tab's layout (upgrade path on the root's row, gems, dyes last)
+            case 1478 -> {
+                var adv = mc.player.connection.getAdvancements();
+                var root = adv.getTree().get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("ethermod", "manipulator/root"));
+                mc.setScreen(new net.minecraft.client.gui.screens.advancements.AdvancementsScreen(adv));
+                if (root != null) adv.setSelectedTab(root.holder(), true);
+            }
+            case 1486 -> shot(mc, "36_advancements");
+            case 1490 -> mc.setScreen(null);
             case 1572 -> finish(mc);
             default -> {}
         }
