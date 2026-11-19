@@ -379,6 +379,7 @@
   "ethermod.configuration.gem_in_first_chest": "Gem in first chest of a structure",
   "ethermod.configuration.all_modules_unlocked": "All modules unlocked",
   "ethermod.configuration.all_tiers_unlocked": "All tiers unlocked",
+  "ethermod.configuration.gem_items": "Items that work as gems",
   "ethermod.configuration.disabled_modules": "Disabled modules",
   "ethermod.configuration.soulwake_blazelings": "Soulwake summons Blazelings",
   "ethermod.configuration.blazeling_lifetime_seconds": "Blazeling lifetime (s)",

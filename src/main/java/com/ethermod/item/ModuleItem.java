@@ -28,19 +28,28 @@ public final class ModuleItem extends Item {
             Level level, Player player, InteractionHand hand) {
         var item = player.getItemInHand(hand);
         if (player instanceof ServerPlayer sp) {
-            if (!ModuleUnlocks.unlock(Manipulator.stack(sp), module)) {
-                sp.displayClientMessage(
-                        Component.translatable("message.ethermod.module_known"), true);
-                return InteractionResultHolder.fail(item);
-            }
+            if (!grant(sp, module)) return InteractionResultHolder.fail(item);
             item.consume(1, sp);
-            com.ethermod.advancement.ManipulatorTrigger.fire(sp, "module_" + module.getPath());
-            Manipulator.sync(sp);
-            sp.displayClientMessage(
-                    Component.translatable("message.ethermod.module_unlocked"), true);
-            unlockSound(sp, module.getPath());
         }
         return InteractionResultHolder.sidedSuccess(item, level.isClientSide);
+    }
+
+    /**
+     * Everything a gem does when used, without the gem: unlocks the Module on the player's
+     * Manipulator, fires its advancement and plays the unlock cue. Also behind
+     * {@code /ethermod unlock}, so modpacks can hand Modules out through quests or their own items.
+     * False when the player already knew it.
+     */
+    public static boolean grant(ServerPlayer sp, ResourceLocation module) {
+        if (!ModuleUnlocks.unlock(Manipulator.stack(sp), module)) {
+            sp.displayClientMessage(Component.translatable("message.ethermod.module_known"), true);
+            return false;
+        }
+        com.ethermod.advancement.ManipulatorTrigger.fire(sp, "module_" + module.getPath());
+        Manipulator.sync(sp);
+        sp.displayClientMessage(Component.translatable("message.ethermod.module_unlocked"), true);
+        unlockSound(sp, module.getPath());
+        return true;
     }
 
     /** Enchanted Gemstones shimmer, in their Module's colour (client GemGlint). */

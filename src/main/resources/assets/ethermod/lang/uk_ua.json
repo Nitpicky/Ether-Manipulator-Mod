@@ -379,6 +379,7 @@
   "ethermod.configuration.gem_in_first_chest": "Самоцвіт у першій скрині споруди",
   "ethermod.configuration.all_modules_unlocked": "Усі модулі відкрито",
   "ethermod.configuration.all_tiers_unlocked": "Усі рівні відкрито",
+  "ethermod.configuration.gem_items": "Предмети, що діють як самоцвіти",
   "ethermod.configuration.disabled_modules": "Вимкнені модулі",
   "ethermod.configuration.soulwake_blazelings": "Слід душ викликає сполохенят",
   "ethermod.configuration.blazeling_lifetime_seconds": "Час життя сполохенят (с)",

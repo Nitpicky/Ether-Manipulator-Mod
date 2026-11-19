@@ -379,6 +379,7 @@
   "ethermod.configuration.gem_in_first_chest": "構造物の最初のチェストにジェム",
   "ethermod.configuration.all_modules_unlocked": "全モジュール解放",
   "ethermod.configuration.all_tiers_unlocked": "全段階解放",
+  "ethermod.configuration.gem_items": "宝石として使えるアイテム",
   "ethermod.configuration.disabled_modules": "無効化するモジュール",
   "ethermod.configuration.soulwake_blazelings": "ソウルウェイクでブレイズリングを召喚",
   "ethermod.configuration.blazeling_lifetime_seconds": "ブレイズリングの持続時間(秒)",

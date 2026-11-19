@@ -379,6 +379,7 @@
   "ethermod.configuration.gem_in_first_chest": "Drahokam v první truhle stavby",
   "ethermod.configuration.all_modules_unlocked": "Všechny moduly odemčené",
   "ethermod.configuration.all_tiers_unlocked": "Všechny úrovně odemčené",
+  "ethermod.configuration.gem_items": "Předměty fungující jako drahokamy",
   "ethermod.configuration.disabled_modules": "Vypnuté moduly",
   "ethermod.configuration.soulwake_blazelings": "Brázda duší vyvolává ohnivce",
   "ethermod.configuration.blazeling_lifetime_seconds": "Doba života ohnivců (s)",

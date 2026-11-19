@@ -379,6 +379,7 @@
   "ethermod.configuration.gem_in_first_chest": "Klejnot w pierwszej skrzyni struktury",
   "ethermod.configuration.all_modules_unlocked": "Wszystkie moduły odblokowane",
   "ethermod.configuration.all_tiers_unlocked": "Wszystkie poziomy odblokowane",
+  "ethermod.configuration.gem_items": "Przedmioty działające jak klejnoty",
   "ethermod.configuration.disabled_modules": "Wyłączone moduły",
   "ethermod.configuration.soulwake_blazelings": "Ślad dusz przyzywa płomyczki",
   "ethermod.configuration.blazeling_lifetime_seconds": "Czas życia płomyczków (s)",

@@ -379,6 +379,7 @@
   "ethermod.configuration.gem_in_first_chest": "Edelsteen in eerste kist van een bouwwerk",
   "ethermod.configuration.all_modules_unlocked": "Alle modules ontgrendeld",
   "ethermod.configuration.all_tiers_unlocked": "Alle niveaus ontgrendeld",
+  "ethermod.configuration.gem_items": "Voorwerpen die als edelsteen werken",
   "ethermod.configuration.disabled_modules": "Uitgeschakelde modules",
   "ethermod.configuration.soulwake_blazelings": "Zielenspoor roept blazelings op",
   "ethermod.configuration.blazeling_lifetime_seconds": "Levensduur van blazelings (s)",

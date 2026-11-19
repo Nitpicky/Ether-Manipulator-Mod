@@ -379,6 +379,7 @@
   "ethermod.configuration.gem_in_first_chest": "Edelstein in der ersten Truhe eines Bauwerks",
   "ethermod.configuration.all_modules_unlocked": "Alle Module freigeschaltet",
   "ethermod.configuration.all_tiers_unlocked": "Alle Stufen freigeschaltet",
+  "ethermod.configuration.gem_items": "Gegenstände, die als Edelsteine wirken",
   "ethermod.configuration.disabled_modules": "Deaktivierte Module",
   "ethermod.configuration.soulwake_blazelings": "Seelenspur beschwört Lohlinge",
   "ethermod.configuration.blazeling_lifetime_seconds": "Lebensdauer der Lohlinge (s)",
