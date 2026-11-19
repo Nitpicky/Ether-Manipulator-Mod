@@ -391,8 +391,13 @@ public final class Fx {
      */
     static final String VARIANT = System.getProperty("ethermod.fxVariant", "particle_sort");
 
-    /** {@code particle}, or any setup ending in {@code _p}: drawn in the particle stage. */
-    static final boolean PARTICLE_STAGE = VARIANT.startsWith("particle") || VARIANT.endsWith("_p");
+    /**
+     * {@code particle}, or any setup ending in {@code _p} or {@code _sort}: drawn in the particle
+     * stage. {@code eyes_sort} / {@code emissive_sort}: as particle_sort, with a program that
+     * takes the vertex normal: the particle program has none, so packs derive one per face and
+     * light every beam segment flat on its own (the bands).
+     */
+    static final boolean PARTICLE_STAGE = VARIANT.startsWith("particle") || VARIANT.endsWith("_p") || VARIANT.endsWith("_sort");
 
     /** Brightest wins where beam strands overlap (as without a pack), instead of adding up. */
     private static final RenderStateShard.TransparencyStateShard MAX_TRANSPARENCY =
@@ -457,7 +462,7 @@ public final class Fx {
                         ? new RenderStateShard.ShaderStateShard(GameRenderer::getParticleShader)
                         : beacon
                         ? RenderStateShard.RENDERTYPE_BEACON_BEAM_SHADER
-                        : VARIANT.equals("emissive")
+                        : VARIANT.startsWith("emissive")
                                 ? RenderStateShard.RENDERTYPE_ENTITY_TRANSLUCENT_EMISSIVE_SHADER
                                 : RenderStateShard.RENDERTYPE_EYES_SHADER;
         var b =
@@ -466,7 +471,7 @@ public final class Fx {
                         .setTextureState(new RenderStateShard.TextureStateShard(WHITE, false, false))
                         .setCullState(RenderStateShard.NO_CULL)
                         .setLayeringState(RenderStateShard.POLYGON_OFFSET_LAYERING);
-        if (VARIANT.equals("emissive") || particle)
+        if (VARIANT.startsWith("emissive") || particle)
             b.setLightmapState(RenderStateShard.LIGHTMAP).setOverlayState(RenderStateShard.OVERLAY);
         if (depthOnly) {
             if (VARIANT.equals("particle_keep")) b.setTransparencyState(KEEP_TRANSPARENCY);
@@ -481,7 +486,7 @@ public final class Fx {
                             : beamLayer
                                             && (VARIANT.startsWith("particle_max")
                                                     || VARIANT.equals("particle_keep")
-                                                    || VARIANT.equals("particle_sort"))
+                                                    || VARIANT.endsWith("_sort"))
                                     ? MAX_TRANSPARENCY
                                     : RenderStateShard.ADDITIVE_TRANSPARENCY);
             b.setWriteMaskState(
@@ -529,7 +534,7 @@ public final class Fx {
         int[] out = new int[quads * 4];
         Integer[] q = new Integer[quads];
         for (int i = 0; i < quads; i++) q[i] = i;
-        if (VARIANT.equals("particle_sort")) {
+        if (VARIANT.endsWith("_sort")) {
             double[] d = new double[quads];
             for (int i = 0; i < quads; i++) {
                 double x = 0, y = 0, z = 0;
