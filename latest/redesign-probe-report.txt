@@ -11,7 +11,6 @@ PASS Photonic 6 choices + 2 Commons
 PASS Gravitic 6 choices + 2 Commons
 PASS Reservoir grows the shared tank
 PASS Common follows prior choice
-FAIL Setup pick is a real choice:  (tier 0)
 PASS Common inactive without choice
 PASS Mode switch retains tank
 PASS Module switch retains tank
