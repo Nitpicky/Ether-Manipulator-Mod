@@ -391,7 +391,7 @@ public final class Fx {
      * </ul>
      */
     // particle_sort_nd: no depth anywhere; particle_sort_t / _tnd: in the translucent stage
-    static final String VARIANT = System.getProperty("ethermod.fxVariant", "particle_sort");
+    static final String VARIANT = System.getProperty("ethermod.fxVariant", "particle_sort_t");
 
     /**
      * {@code particle}, or any setup ending in {@code _p} or {@code _sort}: drawn in the particle
