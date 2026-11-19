@@ -23,8 +23,6 @@ public final class Traits {
     public static final ResourceLocation PNEUMATIC = id("pneumatic");
     public static final ResourceLocation PHOTONIC = id("photonic");
 
-    public static final ResourceLocation MECHATRONIC = id("mechatronic");
-
     private static ResourceLocation id(String path) {
         return ResourceLocation.fromNamespaceAndPath(EtherMod.MODID, path);
     }

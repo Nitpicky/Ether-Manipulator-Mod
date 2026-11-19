@@ -951,255 +951,13 @@ public final class PlaytestBootstrap {
                                                             : "FAIL")
                                                     + " mass driver: right click threw the"
                                                     + " carried stone"));
-            // Mechatronic: summon the Redstone Golem, order a sweep, fire the Dispenser, recall
-            case 1210 ->
-                    server(
-                            mc,
-                            (s, p) -> {
-                                int bx = base.getX() + 84, y = base.getY(), bz = base.getZ();
-                                run(s, "fill " + (bx - 8) + " " + y + " " + (bz - 6) + " " + (bx + 8)
-                                        + " " + (y + 6) + " " + (bz + 16) + " air");
-                                run(s, "fill " + (bx - 8) + " " + (y - 1) + " " + (bz - 6) + " "
-                                        + (bx + 8) + " " + (y - 1) + " " + (bz + 16) + " grass_block");
-                                run(s, "difficulty easy");
-                                orbMode(p, com.ethermod.item.OrbMode.GOLEM);
-                                ItemStack mm = Manipulator.stack(p);
-                                int slot = com.ethermod.trait.TraitBuild.slotOf(
-                                        mm, com.ethermod.trait.Traits.MECHATRONIC);
-                                com.ethermod.trait.TraitBuild.setPick(mm, slot, 0, "mechatronic.dispenser_arm");
-                                com.ethermod.trait.TraitBuild.setPick(mm, slot, 1, "mechatronic.ministrosities");
-                                com.ethermod.trait.TraitBuild.setPick(mm, slot, 2, "mechatronic.rocket_boots");
-                                Manipulator.sync(p);
-                                p.teleportTo(bx + .5, y, bz + .5);
-                            });
-            case 1213 -> {
-                mc.player.setYRot(-90);
-                mc.player.setXRot(30);
-            }
-            case 1216 -> opts.keyUse.setDown(true);
-            case 1218 -> opts.keyUse.setDown(false);
-            case 1225 ->
-                    server(
-                            mc,
-                            (s, p) -> {
-                                var g = com.ethermod.entity.GolemControl.golem(p);
-                                log((g != null ? "PASS" : "FAIL") + " golem: right click summoned the Redstone Golem");
-                                log((g != null && g.hasMinis() && g.hasRockets() && g.hasSaddle() ? "PASS" : "FAIL")
-                                        + " golem: Ministrosities, Rocket Boots and Saddle reached the Golem");
-                            });
-            case 1240 -> shot(mc, "31_golem_summon");
-            case 1275 -> shot(mc, "32_golem_idle");
-            case 1278 ->
-                    server(
-                            mc,
-                            (s, p) -> {
-                                int bx = base.getX() + 84, y = base.getY(), bz = base.getZ();
-                                run(s, "summon husk " + bx + " " + y + " " + (bz + 5)
-                                        + " {NoAI:1b,Tags:[\"golem_t1\"]}");
-                                run(s, "summon husk " + bx + " " + y + " " + (bz + 11)
-                                        + " {NoAI:1b,Tags:[\"golem_t2\"]}");
-                            });
-            case 1280 -> {
-                mc.player.setYRot(0);
-                mc.player.setXRot(10);
-            }
-            case 1283 -> opts.keyAttack.setDown(true);
-            case 1285 -> opts.keyAttack.setDown(false);
-            case 1287 ->
-                    server(mc, (s, p) -> {
-                        var g = com.ethermod.entity.GolemControl.golem(p);
-                        log("golem state t1287: " + (g == null ? "none" : g.debugState()));
-                    });
-            case 1293 ->
-                    server(mc, (s, p) -> {
-                        var g = com.ethermod.entity.GolemControl.golem(p);
-                        log("golem state t1293: " + (g == null ? "none" : g.debugState()));
-                    });
-            case 1310 ->
-                    server(mc, (s, p) -> {
-                        var g = com.ethermod.entity.GolemControl.golem(p);
-                        log("golem state t1310: " + (g == null ? "none" : g.debugState()));
-                    });
-            case 1345 ->
-                    server(mc, (s, p) -> {
-                        var g = com.ethermod.entity.GolemControl.golem(p);
-                        log("golem state t1345: " + (g == null ? "none" : g.debugState()));
-                    });
-            case 1365 ->
-                    server(mc, (s, p) -> {
-                        var g = com.ethermod.entity.GolemControl.golem(p);
-                        log("golem state t1365: " + (g == null ? "none" : g.debugState()));
-                    });
-            case 1375 ->
-                    server(mc, (s, p) -> {
-                        var g = com.ethermod.entity.GolemControl.golem(p);
-                        log("golem state t1375: " + (g == null ? "none" : g.debugState()));
-                    });
-            case 1319 -> shot(mc, "33_golem_sweep");
-            case 1332 ->
-                    server(
-                            mc,
-                            (s, p) -> {
-                                var h = husk(p, "golem_t1");
-                                log((h == null || h.getHealth() < h.getMaxHealth() ? "PASS" : "FAIL")
-                                        + " golem: attack order hit the target");
-                                if (h != null) h.discard();
-                            });
-            case 1322 -> mc.player.setXRot(4);
-            case 1336 -> opts.keyUse.setDown(true);
-            case 1338 -> opts.keyUse.setDown(false);
-            case 1366 -> shot(mc, "34_golem_dispenser");
-            case 1376 ->
-                    server(mc, (s, p) -> {
-                        var g = com.ethermod.entity.GolemControl.golem(p);
-                        if (g != null) log("golem overheat: " + g.debugOverheat(p));
-                    });
-            case 1434, 1438 ->
-                    server(mc, (s, p) -> {
-                        var g = com.ethermod.entity.GolemControl.golem(p);
-                        log("golem minis at t" + t + ": " + (g == null ? "no golem" : com.ethermod.entity.Ministrosity.of(g).size()));
-                    });
-            // the overheat is a state: nothing else while the generator blows, its time starts after
-            case 1420 ->
-                    server(mc, (s, p) -> {
-                        var g = com.ethermod.entity.GolemControl.golem(p);
-                        boolean ok = g != null && g.venting() && g.overheated() && !g.sweep(null);
-                        log((ok ? "PASS" : "FAIL") + " golem: blowing its generator it does nothing else (venting "
-                                + (g != null && g.venting()) + ")");
-                    });
-            case 1463 ->   // the dispenser runs to 1413, then the generator blows for 43 ticks
-                    server(mc, (s, p) -> {
-                        var g = com.ethermod.entity.GolemControl.golem(p);
-                        boolean ok = g != null && !g.venting() && g.overheated();
-                        log((ok ? "PASS" : "FAIL") + " golem: back in action and still overheated after the animation");
-                    });
-            // Primal Rage: Supercharged arcs chain through a pack, the Cube Field stops a shot
-            case 1439 ->
-                    server(mc, (s, p) -> {
-                        var g = com.ethermod.entity.GolemControl.golem(p);
-                        if (g == null) return;
-                        double[][] at = {{0, 3.5}, {1.5, 5.5}, {-1.5, 7}};
-                        for (double[] o : at)
-                            run(s, String.format(java.util.Locale.ROOT, "summon husk %.2f %.2f %.2f {NoAI:1b,Tags:[\"golem_c\"]}",
-                                    g.getX() + o[0], g.getY(), g.getZ() + o[1]));
-                    });
-            case 1440 ->
-                    server(mc, (s, p) -> {
-                        var g = com.ethermod.entity.GolemControl.golem(p);
-                        var hs = p.serverLevel().getEntitiesOfClass(net.minecraft.world.entity.monster.Husk.class,
-                                p.getBoundingBox().inflate(40), h -> h.getTags().contains("golem_c"));
-                        hs.sort(java.util.Comparator.comparingDouble(h -> g == null ? 0 : h.distanceToSqr(g)));
-                        int jumps = g == null || hs.isEmpty() ? 0 : g.chainArcs(p, hs.get(0));
-                        log((jumps >= 2 ? "PASS" : "FAIL") + " golem: Supercharged arc chained through " + jumps + " more husks (want 2)");
-                    });
-            // the server can lag the client by many ticks here: the arrow starts just outside the wall, crossing at once
-            case 1441 ->
-                    server(mc, (s, p) -> {
-                        var g = com.ethermod.entity.GolemControl.golem(p);
-                        if (g != null)
-                            run(s, String.format(java.util.Locale.ROOT, "summon arrow %.2f %.2f %.2f {Motion:[-1.5d,0.0d,0.0d],Tags:[\"fieldtest\"]}",
-                                    g.getX() + 4.2, g.getY() + 2, g.getZ() + 2.5));
-                    });
-            case 1442 -> log((com.ethermod.client.GolemFx.liveChains() > 0 ? "PASS" : "FAIL")
-                    + " golem: the client drew the arc chain (" + com.ethermod.client.GolemFx.liveChains() + " live)");
-            case 1443 -> shot(mc, "35b_golem_arcs_field");
-            case 1444 -> shot(mc, "35_ministrosities");
-            case 1445 ->
-                    server(mc, (s, p) -> {
-                        var g = com.ethermod.entity.GolemControl.golem(p);
-                        int n = g == null ? 0 : com.ethermod.entity.Ministrosity.of(g).size();
-                        log((n == 3 ? "PASS" : "FAIL") + " golem: an overheat built " + n + " Ministrosities (want 3)");
-                    });
-            case 1446 ->
-                    server(
-                            mc,
-                            (s, p) -> {
-                                var h = husk(p, "golem_t2");
-                                log((h == null || h.getHealth() < h.getMaxHealth() ? "PASS" : "FAIL")
-                                        + " golem: Dispenser Arm bolts hit the far target");
-                                if (h != null) h.discard();
-                            });
+            // (Mechatronic Golem checks shelved with the Module, see docs/MECHATRONIC.md)
             case 1447 -> server(mc, (s, p) -> {
                 checkGemLoot(s, p);
                 checkAdvancements(s, p);
-                run(s, "kill @e[type=husk,tag=golem_c]");
-                var g = com.ethermod.entity.GolemControl.golem(p);
-                if (g == null) return;
-                log("golem field: overheated=" + g.overheated() + " blocks=" + g.fieldBlocks);
             });
-            case 1452 ->
-                    server(mc, (s, p) -> {
-                        var g = com.ethermod.entity.GolemControl.golem(p);
-                        var arrows = p.serverLevel().getEntitiesOfClass(net.minecraft.world.entity.projectile.AbstractArrow.class,
-                                p.getBoundingBox().inflate(60), a -> a.getTags().contains("fieldtest"));
-                        boolean stopped = g != null && g.fieldBlocks > 0 && arrows.isEmpty();
-                        log((stopped ? "PASS" : "FAIL") + " golem: the Cube Field stopped the arrow (blocks "
-                                + (g == null ? -1 : g.fieldBlocks) + ", arrows left " + arrows.size() + ")");
-                        arrows.forEach(net.minecraft.world.entity.Entity::discard);
-                    });
-            case 1453 -> {
-                var g = mc.level.getEntitiesOfClass(com.ethermod.entity.RedstoneGolem.class, mc.player.getBoundingBox().inflate(40));
-                String st = g.isEmpty() ? "no golem" : com.ethermod.client.GolemFx.debugField(g.get(0));
-                log((st.contains("totalHits=") && !st.contains("totalHits=0") ? "PASS" : "FAIL") + " golem: the field is drawn and showed the hit (" + st + ")");
-            }
             case 1449 -> server(mc, (s, p) -> checkGemGuarantee(s, p, "desert_pyramid", "atenite", false));
             case 1451 -> server(mc, (s, p) -> checkGemGuarantee(s, p, "jungle_pyramid", "quetzalite", true));
-            case 1454 ->
-                    server(
-                            mc,
-                            (s, p) -> {
-                                int bx = base.getX() + 84, y = base.getY(), bz = base.getZ();
-                                var g = com.ethermod.entity.GolemControl.golem(p);
-                                if (g == null) return;
-                                for (var m : com.ethermod.entity.Ministrosity.of(g)) m.discard();
-                                g.teleportTo(bx + .5, y, bz + 3.5);
-                                g.setYRot(0);
-                                g.setYBodyRot(0);
-                                p.startRiding(g, true);
-                                run(s, "kill @e[type=armor_stand,name=mmcam]");
-                                run(s, "summon armor_stand " + (bx + 6.5) + " " + (y - 0.4) + " " + (bz + 3.5)
-                                        + " {Invisible:1b,NoGravity:1b,CustomName:'\"mmcam\"',Rotation:[90f,8f]}");
-                            });
-            case 1460 -> sideCamera(mc, true);
-            case 1466 -> {
-                var v = mc.player.getVehicle();
-                log("golem seat: player feet " + (v == null ? "not riding" : String.format("%.3f", mc.player.getY() - v.getY()))
-                        + " above the Golem (seat " + String.format("%.3f", com.ethermod.entity.RedstoneGolem.SEAT_Y)
-                        + ", animated seat " + (v instanceof com.ethermod.entity.RedstoneGolem rg && rg.seatOffset != null ? String.format("%.3f", rg.seatOffset.y) : "none")
-                        + ", vehicle attachment " + String.format("%.3f", v == null ? 0 : mc.player.getVehicleAttachmentPoint(v).y) + ")");
-                double feet = v == null ? 9 : mc.player.getY() - v.getY();
-                log((Math.abs(feet - (com.ethermod.entity.RedstoneGolem.SEAT_Y - .6)) < .3 ? "PASS" : "FAIL")
-                        + " golem: the rider sits on the seat (feet " + String.format("%.2f", feet) + ")");
-            }
-            case 1468 -> shot(mc, "36_golem_ride");
-            case 1470 -> sideCamera(mc, false);
-            // the charged jump: hold Jump (the bar fills), let go, it jumps far higher than a hop
-            case 1472 -> {
-                if (mc.player.getVehicle() instanceof com.ethermod.entity.RedstoneGolem rg) rg.peakY = rg.getY();
-            }
-            case 1473 -> opts.keyJump.setDown(true);
-            case 1485 -> opts.keyJump.setDown(false);
-            case 1490 -> sideCamera(mc, true);
-            case 1493 -> shot(mc, "37_golem_charged_jump");
-            case 1494 -> sideCamera(mc, false);
-            case 1506 -> {
-                double rise = mc.player.getVehicle() instanceof com.ethermod.entity.RedstoneGolem rg ? rg.peakY - rg.getY() : -1;
-                log((rise > 2.5 ? "PASS" : "FAIL") + " golem: a charged jump rose " + String.format("%.2f", rise) + " blocks (want > 2.5)");
-            }
-            case 1508 ->
-                    server(mc, (s, p) -> {
-                        p.stopRiding();
-                        var g = com.ethermod.entity.GolemControl.golem(p);
-                        if (g != null) g.recall();
-                    });
-            case 1562 ->
-                    server(
-                            mc,
-                            (s, p) -> {
-                                log((com.ethermod.entity.GolemControl.golem(p) == null ? "PASS" : "FAIL")
-                                        + " golem: recall put the Golem away");
-                                run(s, "difficulty peaceful");
-                            });
             case 1572 -> finish(mc);
             default -> {}
         }
@@ -1269,12 +1027,12 @@ public final class PlaytestBootstrap {
                 });
     }
 
-    /** The Manipulator advancement tab: all 24 load (10 of them secret), summoning earned the root, picking up a gem earns the gem
+    /** The Manipulator advancement tab: all 22 load (9 of them secret), summoning earned the root, picking up a gem earns the gem
      *  hub and that gem's riddle, a gem unlocks its Module directly, and the Upgrades use the new recipes. */
     private static void checkAdvancements(MinecraftServer s, ServerPlayer p) {
         String[] ids = {"root", "calibrated", "augmented", "overclocked", "stratite", "sirenite", "atenite", "oculite",
-            "zephyrite", "gehennite", "quetzalite", "tinkerite", "dye", "spectrum", "return_to_sender", "rain_check", "this_is_fine",
-            "gone_with_the_wind", "night_light", "fish_out_of_water", "green_thumb", "heavyweight_bout", "let_it_go", "ping_pong"};
+            "zephyrite", "gehennite", "quetzalite", "dye", "spectrum", "return_to_sender", "rain_check", "this_is_fine",
+            "gone_with_the_wind", "night_light", "fish_out_of_water", "green_thumb", "let_it_go", "ping_pong"};
         int loaded = 0;
         for (String id : ids)
             if (s.getAdvancements().get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("ethermod", "manipulator/" + id)) != null) loaded++;
@@ -1321,7 +1079,7 @@ public final class PlaytestBootstrap {
         String[][] want = {
             {"chests/shipwreck_treasure", "sirenite"}, {"chests/underwater_ruin_big", "sirenite"}, {"chests/ruined_portal", "gehennite"},
             {"chests/nether_bridge", "gehennite"}, {"chests/abandoned_mineshaft", "stratite"}, {"chests/trial_chambers/reward", "zephyrite"},
-            {"chests/jungle_temple", "quetzalite"}, {"chests/pillager_outpost", "tinkerite"}, {"chests/woodland_mansion", "tinkerite"},
+            {"chests/jungle_temple", "quetzalite"},
             {"chests/desert_pyramid", "atenite"}, {"chests/stronghold_library", "oculite"}, {"chests/end_city_treasure", "oculite"}
         };
         for (String[] w : want) {
@@ -1473,7 +1231,6 @@ public final class PlaytestBootstrap {
                     case MASS -> com.ethermod.trait.Traits.TECTONIC;
                     case LAVA, IGNITE -> com.ethermod.trait.Traits.PYROTECHNIC;
                     case GROWTH -> com.ethermod.trait.Traits.BOTANIC;
-                    case GOLEM -> com.ethermod.trait.Traits.MECHATRONIC;
                     default -> com.ethermod.trait.Traits.HYDRAULIC;
                 };
         net.minecraft.resources.ResourceLocation second =

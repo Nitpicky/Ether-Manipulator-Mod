@@ -319,9 +319,7 @@ public final class RedesignEffects {
                         && owner.getUUID().equals(e.getPersistentData().getUUID("mm_summoner")))
                 || owner.isAlliedTo(e)
                 || (e instanceof net.minecraft.world.entity.TamableAnimal t
-                        && owner.getUUID().equals(t.getOwnerUUID()))
-                || (e instanceof com.ethermod.entity.RedstoneGolem g
-                        && g.ownerId().map(owner.getUUID()::equals).orElse(false));
+                        && owner.getUUID().equals(t.getOwnerUUID()));
     }
 
     public static boolean enemy(ServerPlayer owner, LivingEntity e) {
@@ -331,12 +329,12 @@ public final class RedesignEffects {
                 && !(e instanceof net.minecraft.world.entity.decoration.ArmorStand);
     }
 
-    /** The Manipulator's melee bonus (Plasmic: Melee Damage +1); the Redstone Golem's blows carry it too. */
+    /** The Manipulator's melee bonus (Plasmic: Melee Damage +1). */
     public static float meleeBonus(ServerPlayer p) {
         return Traits.hasLine(Manipulator.stack(p), Traits.PLASMIC) ? 1 : 0;
     }
 
-    /** The Manipulator's ranged bonus (Kinetic: Fully Charged Ranged Damage +3); the Golem's Dispenser bolts carry it too. */
+    /** The Manipulator's ranged bonus (Kinetic: Fully Charged Ranged Damage +3). */
     public static float rangedBonus(ServerPlayer p) {
         return Traits.hasLine(Manipulator.stack(p), Traits.KINETIC) ? 3 : 0;
     }

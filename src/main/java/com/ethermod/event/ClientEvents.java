@@ -36,7 +36,6 @@ public class ClientEvents {
         NeoForge.EVENT_BUS.register(com.ethermod.client.ModeWheel.class);
         NeoForge.EVENT_BUS.register(com.ethermod.client.ClientMobility.class);
         NeoForge.EVENT_BUS.register(com.ethermod.client.AirwalkTiles.class);
-        NeoForge.EVENT_BUS.register(com.ethermod.client.GolemFx.class);
         com.ethermod.trait.RapidsCurrents.clientLevel =
                 () -> net.minecraft.client.Minecraft.getInstance().level;
         NeoForge.EVENT_BUS.register(com.ethermod.client.GravityRender.class);
@@ -96,11 +95,5 @@ public class ClientEvents {
                 ModEntities.SOUL_BOLT.get(), com.ethermod.client.SoulBoltRenderer::new);
         event.registerEntityRenderer(
                 ModEntities.LIGHT_DECOY.get(), com.ethermod.client.LightDecoyRenderer::new);
-        event.registerEntityRenderer(
-                ModEntities.REDSTONE_GOLEM.get(), com.ethermod.client.RedstoneGolemRenderer::new);
-        event.registerEntityRenderer(
-                ModEntities.MINISTROSITY.get(), com.ethermod.client.MinistrosityRenderer::new);
-        event.registerEntityRenderer(
-                ModEntities.REDSTONE_BOLT.get(), com.ethermod.beam.RedstoneBoltRenderer::new);
     }
 }

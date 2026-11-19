@@ -156,8 +156,8 @@ public final class BeamAudio {
 
     /**
      * Each strike of a beam ticks: lightly and low at pressure 1, sharper, higher and louder as it
-     * climbs, so the cadence you hear is the damage you deal. A strike that arcs adds a short
-     * electric snap.
+     * climbs, so the cadence you hear is the damage you deal. (The electric snap on arcing strikes
+     * used the Golem's crackle sounds and is shelved with Mechatronic.)
      */
     private static void strikes(Minecraft mc) {
         for (Map.Entry<Integer, BeamLoop> e : LOOPS.entrySet()) {
@@ -177,16 +177,6 @@ public final class BeamAudio {
                     0.3f + 0.1f * lv,
                     0.8f + 0.25f * lv,
                     false);
-            if (!pu.arcs.isEmpty())
-                mc.level.playLocalSound(
-                        ent.getX(),
-                        ent.getEyeY(),
-                        ent.getZ(),
-                        com.ethermod.registry.ModSounds.GOLEM_SPARK_HIT.get(),
-                        SoundSource.PLAYERS,
-                        0.25f,
-                        1.2f + 0.1f * lv,
-                        false);
         }
         HEARD.keySet().retainAll(LOOPS.keySet());
     }

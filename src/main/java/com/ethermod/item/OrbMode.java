@@ -15,7 +15,7 @@ import net.minecraft.world.item.component.CustomData;
  * left clicks). Beam (ENERGY) is always there: LMB mines, RMB charges the Energy orb. The others
  * come with their Module: Hydraulic (WATER: LMB water blob, RMB ice shard), Pyrotechnic (LAVA: LMB
  * molten glob, RMB fire seed), Botanic (Growth), Photonic (Light), Gravitic (Tether), Pneumatic
- * (Gust), Tectonic (Mass Driver), Mechatronic (Golem: orders for the Redstone Golem).
+ * (Gust), Tectonic (Mass Driver).
  *
  * <p>FROST and IGNITE are no longer wheel modes, only the right-click projectiles of the
  * Hydraulic and Pyrotechnic tools. VACUUM is gone.
@@ -31,8 +31,7 @@ public enum OrbMode {
     LIGHT(0xFFF4B0, Items.GLOWSTONE_DUST),
     TETHER(0xD060FF, Items.LEAD),
     GUST(0xB8E8E0, Items.FEATHER),
-    MASS(0xE0A040, Items.COBBLESTONE),
-    GOLEM(0xE92031, Items.REDSTONE_BLOCK);
+    MASS(0xE0A040, Items.COBBLESTONE);
 
     /** Base size of the shared tank, in units; each tank trait adds {@link #TANK_STEP}. */
     public static final int TANK_CAPACITY = 6;
@@ -141,7 +140,6 @@ public enum OrbMode {
         return switch (this) {
             case ENERGY -> true;
             case VACUUM -> false;
-            case GOLEM -> Traits.hasLine(stack, Traits.MECHATRONIC);
             // the ice shard and fire seed are the right clicks of Hydraulic and Pyrotechnic
             case FROST, IGNITE -> false;
             case WATER -> Traits.hasLine(stack, Traits.HYDRAULIC);
@@ -156,10 +154,10 @@ public enum OrbMode {
 
     /**
      * Every projectile draws from the shared tank. Free: Tether (Gravitic), Mass Driver
-     * (Tectonic), Golem (Mechatronic); and, outside projectiles, mining and the Light Beacon.
+     * (Tectonic); and, outside projectiles, mining and the Light Beacon.
      */
     public boolean usesTank() {
-        return this != TETHER && this != MASS && this != GOLEM && this != VACUUM;
+        return this != TETHER && this != MASS && this != VACUUM;
     }
 
     public static OrbMode byId(int id) {

@@ -35,7 +35,7 @@ jobs:
           test -s runs/client/redesign-probe-report.txt
           cat runs/client/redesign-probe-report.txt
           ! grep -q '^FAIL ' runs/client/redesign-probe-report.txt
-          test "$(grep -c '^PASS ' runs/client/redesign-probe-report.txt)" -ge 205
+          test "$(grep -c '^PASS ' runs/client/redesign-probe-report.txt)" -ge 201
       - name: Screenshot tour (first and third person, animations)
         if: always()
         env:

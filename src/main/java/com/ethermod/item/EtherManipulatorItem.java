@@ -113,11 +113,6 @@ public class EtherManipulatorItem extends Item implements GeoItem {
         OrbMode mode = OrbMode.get(stack);
         // the projectile this tool charges on right click (Hydraulic: the ice shard)
         OrbMode shot = mode.rmbShot();
-        // Golem mode: right click summons the Golem, uses its Super Move, or (sneaking) recalls it
-        if (mode == OrbMode.GOLEM) {
-            if (player instanceof ServerPlayer sp) com.ethermod.entity.GolemControl.rightClick(sp);
-            return InteractionResultHolder.fail(stack);
-        }
         if (shot.usesTank() && shot.tankLevel(stack) < shot.shotCost(stack, 0)) {
             if (!level.isClientSide) {
                 player.displayClientMessage(

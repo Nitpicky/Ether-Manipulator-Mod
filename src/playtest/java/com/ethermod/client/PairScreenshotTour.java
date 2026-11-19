@@ -32,7 +32,7 @@ public final class PairScreenshotTour {
             }
             Manipulator.setSummoned(p, true);
             if (tick < 30) {
-                check("Ten Modules", TraitLines.all(p.registryAccess()).size() == 10);
+                check("Nine Modules (Mechatronic shelved)", TraitLines.all(p.registryAccess()).size() == 9);
                 for (var entry : TraitLines.all(p.registryAccess())) {
                     var line = entry.getValue();
                     check(line.name() + " has six choices and two Commons", line.adept().size() == 2 && line.master().size() == 2 && line.grandmaster().size() == 2 && line.commons().size() == 2);
@@ -57,9 +57,9 @@ public final class PairScreenshotTour {
         if (tick == 120) capture(mc, "pairs-01-plasmic-kinetic-hydraulic");
         if (tick == 140) configure(mc, ManipulatorStage.NETHERITE, "pyrotechnic", "tectonic", "pneumatic");
         if (tick == 250) capture(mc, "pairs-02-pyrotechnic-tectonic-pneumatic");
-        if (tick == 270) configure(mc, ManipulatorStage.NETHERITE, "botanic", "mechatronic", "photonic");
-        if (tick == 380) capture(mc, "pairs-03-botanic-mechatronic-photonic");
-        if (tick == 400) configure(mc, ManipulatorStage.NETHERITE, "gravitic", "mechatronic", "plasmic");
+        if (tick == 270) configure(mc, ManipulatorStage.NETHERITE, "botanic", "gravitic", "photonic");
+        if (tick == 380) capture(mc, "pairs-03-botanic-gravitic-photonic");
+        if (tick == 400) configure(mc, ManipulatorStage.NETHERITE, "gravitic", "kinetic", "plasmic");
         if (tick == 510) capture(mc, "pairs-04-gravitic");
         if (tick == 530) configure(mc, ManipulatorStage.IRON, "plasmic");
         if (tick == 640) capture(mc, "pairs-05-calibrated-locked-panels");
