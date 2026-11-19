@@ -50,10 +50,8 @@
   "message.ethermod.upgraded_hint": "已解鎖新的模組槽位和%s層級(按K)",
   "message.ethermod.max_stage": "你的操縱器已達最高階段。",
   "message.ethermod.need_chip": "需要:%s。",
-  "message.ethermod.tank_refilling": "以太儲存槽已空,正在補充(%s)。",
   "message.ethermod.moved_to_slot": "你的操縱器已移至專屬槽位。按R召喚。",
   "message.ethermod.not_enough_fertilizer": "肥料不足,無法發射。",
-  "message.ethermod.not_enough_ether": "儲存槽中的以太不足,無法發射。",
   "message.ethermod.not_enough_fluid": "液體不足,無法發射。",
   "message.ethermod.intro": "你擁有了一臺以太操縱器。",
   "message.ethermod.intro_keys": "按R召喚,按K打開其特性。",
@@ -393,5 +391,6 @@
   "ethermod.configuration.extra_crops": "Extra crops",
   "ethermod.configuration.title": "Ether Manipulator settings",
   "subtitles.ethermod.stasis.ding": "靜滯：滴答",
+  "subtitles.ethermod.dry_fire": "以太操縱器：嗶嗶，已空",
   "subtitles.ethermod.stasis.release": "靜滯解除"
 }

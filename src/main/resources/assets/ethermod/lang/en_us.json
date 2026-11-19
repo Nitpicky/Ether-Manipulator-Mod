@@ -50,10 +50,8 @@
   "message.ethermod.upgraded_hint": "New module slot and %s tier open (press K)",
   "message.ethermod.max_stage": "Your Manipulator is at its maximum stage.",
   "message.ethermod.need_chip": "You need the %s Upgrade.",
-  "message.ethermod.tank_refilling": "Ether tank empty, refilling (%s).",
   "message.ethermod.moved_to_slot": "Your Manipulator moved to its own slot. Press R to summon it.",
   "message.ethermod.not_enough_fertilizer": "Not enough Fertilizer for this shot.",
-  "message.ethermod.not_enough_ether": "Not enough Ether in the tank for this shot.",
   "message.ethermod.not_enough_fluid": "Not enough fluid for this shot.",
   "message.ethermod.intro": "You carry an Ether Manipulator. ",
   "message.ethermod.intro_keys": "Press R to summon it, K to open its traits.",
@@ -393,5 +391,6 @@
   "ethermod.configuration.extra_crops": "Extra crops",
   "ethermod.configuration.title": "Ether Manipulator settings",
   "subtitles.ethermod.stasis.ding": "Stasis ticks",
+  "subtitles.ethermod.dry_fire": "Ether Manipulator beeps: empty",
   "subtitles.ethermod.stasis.release": "Stasis lets go"
 }

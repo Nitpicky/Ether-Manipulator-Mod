@@ -50,10 +50,8 @@
   "message.ethermod.upgraded_hint": "Novo espaço de Módulo e nível %s abertos (aperte K)",
   "message.ethermod.max_stage": "Seu Manipulador está no estágio máximo.",
   "message.ethermod.need_chip": "Você precisa do %s.",
-  "message.ethermod.tank_refilling": "Tanque de Éter vazio, reabastecendo (%s).",
   "message.ethermod.moved_to_slot": "Seu Manipulador foi para o próprio espaço. Aperte R para invocá-lo.",
   "message.ethermod.not_enough_fertilizer": "Fertilizante insuficiente para este disparo.",
-  "message.ethermod.not_enough_ether": "Éter insuficiente no tanque para este disparo.",
   "message.ethermod.not_enough_fluid": "Fluido insuficiente para este disparo.",
   "message.ethermod.intro": "Você carrega um Manipulador de Éter. ",
   "message.ethermod.intro_keys": "Aperte R para invocá-lo e K para abrir seus traços.",
@@ -393,5 +391,6 @@
   "ethermod.configuration.extra_crops": "Extra crops",
   "ethermod.configuration.title": "Ether Manipulator settings",
   "subtitles.ethermod.stasis.ding": "Estase: tique-taque",
+  "subtitles.ethermod.dry_fire": "Manipulador de Éter apita: vazio",
   "subtitles.ethermod.stasis.release": "Estase liberada"
 }

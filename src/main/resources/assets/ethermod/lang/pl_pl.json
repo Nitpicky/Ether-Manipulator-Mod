@@ -50,10 +50,8 @@
   "message.ethermod.upgraded_hint": "Nowe miejsce na moduł i poziom %s otwarte (naciśnij K)",
   "message.ethermod.max_stage": "Twój Manipulator jest na najwyższym etapie.",
   "message.ethermod.need_chip": "Potrzebujesz: %s.",
-  "message.ethermod.tank_refilling": "Zbiornik Eteru pusty, napełnia się (%s).",
   "message.ethermod.moved_to_slot": "Twój Manipulator ma teraz własne miejsce. Naciśnij R, aby go przywołać.",
   "message.ethermod.not_enough_fertilizer": "Za mało nawozu na ten strzał.",
-  "message.ethermod.not_enough_ether": "Za mało Eteru w zbiorniku na ten strzał.",
   "message.ethermod.not_enough_fluid": "Za mało płynu na ten strzał.",
   "message.ethermod.intro": "Nosisz Manipulator Eteru. ",
   "message.ethermod.intro_keys": "Naciśnij R, aby go przywołać, i K, aby otworzyć jego cechy.",
@@ -393,5 +391,6 @@
   "ethermod.configuration.extra_crops": "Extra crops",
   "ethermod.configuration.title": "Ether Manipulator settings",
   "subtitles.ethermod.stasis.ding": "Staza tyka",
+  "subtitles.ethermod.dry_fire": "Manipulator Eteru pika: pusty",
   "subtitles.ethermod.stasis.release": "Staza puszcza"
 }

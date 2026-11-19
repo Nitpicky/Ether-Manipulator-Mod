@@ -144,6 +144,10 @@ public final class ModNetwork {
                 com.ethermod.network.payload.BeamPulsePayload.CODEC,
                 (payload, ctx) -> ctx.enqueueWork(() -> RemoteBeams.pulse(payload)));
         reg.playToClient(
+                com.ethermod.network.payload.DryFirePayload.TYPE,
+                com.ethermod.network.payload.DryFirePayload.CODEC,
+                (payload, ctx) -> ctx.enqueueWork(com.ethermod.client.DryFireFx::fire));
+        reg.playToClient(
                 com.ethermod.network.payload.StasisPayload.TYPE,
                 com.ethermod.network.payload.StasisPayload.CODEC,
                 (payload, ctx) -> ctx.enqueueWork(() -> com.ethermod.client.StasisFx.mark(payload.entity(), payload.ticks())));

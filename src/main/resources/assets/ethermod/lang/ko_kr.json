@@ -50,10 +50,8 @@
   "message.ethermod.upgraded_hint": "새 모듈 슬롯과 %s 등급이 열렸습니다(K 누르기)",
   "message.ethermod.max_stage": "매니퓰레이터가 최고 단계입니다.",
   "message.ethermod.need_chip": "필요: %s.",
-  "message.ethermod.tank_refilling": "에테르 탱크가 비었습니다. 충전 중(%s).",
   "message.ethermod.moved_to_slot": "매니퓰레이터가 전용 슬롯으로 옮겨졌습니다. R을 눌러 소환하세요.",
   "message.ethermod.not_enough_fertilizer": "이 사격에 필요한 비료가 부족합니다.",
-  "message.ethermod.not_enough_ether": "탱크에 이 사격에 필요한 에테르가 부족합니다.",
   "message.ethermod.not_enough_fluid": "이 사격에 필요한 액체가 부족합니다.",
   "message.ethermod.intro": "에테르 매니퓰레이터를 얻었습니다. ",
   "message.ethermod.intro_keys": "R을 눌러 소환하고 K를 눌러 특성을 여세요.",
@@ -393,5 +391,6 @@
   "ethermod.configuration.extra_crops": "Extra crops",
   "ethermod.configuration.title": "Ether Manipulator settings",
   "subtitles.ethermod.stasis.ding": "정지장: 똑딱",
+  "subtitles.ethermod.dry_fire": "에테르 매니퓰레이터 경고음: 비었음",
   "subtitles.ethermod.stasis.release": "정지장 해제"
 }

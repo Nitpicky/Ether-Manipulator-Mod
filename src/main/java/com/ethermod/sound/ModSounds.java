@@ -27,6 +27,7 @@ public final class ModSounds {
     public static final SoundEvent SHOT_GLASS_BREAK = a("shot/block.glass.break");
     public static final SoundEvent SHOT_GRASS_HIT = a("shot/block.grass.hit");
     public static final SoundEvent SHOT_POWDER_SNOW_BREAK = a("shot/block.powder_snow.break");
+    public static final SoundEvent UI_DRY_BEEP = a("ui/dry_beep");
     public static final SoundEvent UI_AMETHYST_BLOCK_PLACE = a("ui/block.amethyst_block.place");
     public static final SoundEvent UI_BEACON_POWER_SELECT = a("ui/block.beacon.power_select");
     public static final SoundEvent UI_COPPER_BULB_TURN_OFF = a("ui/block.copper_bulb.turn_off");

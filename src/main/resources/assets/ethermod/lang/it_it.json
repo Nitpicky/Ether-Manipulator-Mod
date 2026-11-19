@@ -50,10 +50,8 @@
   "message.ethermod.upgraded_hint": "Nuovo slot Modulo e livello %s aperti (premi K)",
   "message.ethermod.max_stage": "Il tuo Manipolatore è allo stadio massimo.",
   "message.ethermod.need_chip": "Ti serve il %s.",
-  "message.ethermod.tank_refilling": "Serbatoio d'Etere vuoto, si ricarica (%s).",
   "message.ethermod.moved_to_slot": "Il tuo Manipolatore ha ora uno slot tutto suo. Premi R per evocarlo.",
   "message.ethermod.not_enough_fertilizer": "Fertilizzante insufficiente per questo colpo.",
-  "message.ethermod.not_enough_ether": "Etere insufficiente nel serbatoio per questo colpo.",
   "message.ethermod.not_enough_fluid": "Fluido insufficiente per questo colpo.",
   "message.ethermod.intro": "Porti con te un Manipolatore d'Etere. ",
   "message.ethermod.intro_keys": "Premi R per evocarlo e K per aprirne i tratti.",
@@ -393,5 +391,6 @@
   "ethermod.configuration.extra_crops": "Extra crops",
   "ethermod.configuration.title": "Ether Manipulator settings",
   "subtitles.ethermod.stasis.ding": "Stasi: tic-tac",
+  "subtitles.ethermod.dry_fire": "Manipolatore d'Etere emette un bip: vuoto",
   "subtitles.ethermod.stasis.release": "Stasi rilasciata"
 }

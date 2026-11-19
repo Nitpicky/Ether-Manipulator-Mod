@@ -114,18 +114,7 @@ public class EtherManipulatorItem extends Item implements GeoItem {
         // the projectile this tool charges on right click (Hydraulic: the ice shard)
         OrbMode shot = mode.rmbShot();
         if (shot.usesTank() && shot.tankLevel(stack) < shot.shotCost(stack, 0)) {
-            if (!level.isClientSide) {
-                player.displayClientMessage(
-                        Component.translatable("message.ethermod.tank_refilling", mode.title())
-                                .withStyle(ChatFormatting.RED),
-                        true);
-                if (player instanceof net.minecraft.server.level.ServerPlayer sp) // dry fire: a soft fizz
-                    sp.playNotifySound(
-                            com.ethermod.sound.ModSounds.SHOT_FIRE_EXTINGUISH,
-                            net.minecraft.sounds.SoundSource.PLAYERS,
-                            0.12f,
-                            1.8f);
-            }
+            if (player instanceof net.minecraft.server.level.ServerPlayer sp) com.ethermod.beam.DryFire.signal(sp);
             return InteractionResultHolder.fail(stack);
         }
 
@@ -301,10 +290,7 @@ public class EtherManipulatorItem extends Item implements GeoItem {
         final int phase = affordable;
         int cost = mode.shotCost(stack, phase);
         if (mode.usesTank() && mode.tankLevel(stack) < cost) {
-            player.displayClientMessage(
-                    Component.translatable("message.ethermod.not_enough_ether")
-                            .withStyle(ChatFormatting.RED),
-                    true);
+            if (player instanceof ServerPlayer sp) com.ethermod.beam.DryFire.signal(sp);
             return;
         }
         int count = Traits.has(stack, "kinetic.split") ? phase + 1 : 1;

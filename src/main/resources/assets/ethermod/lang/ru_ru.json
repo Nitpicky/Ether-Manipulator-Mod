@@ -50,10 +50,8 @@
   "message.ethermod.upgraded_hint": "Открыты новая ячейка модуля и уровень «%s» (нажмите K)",
   "message.ethermod.max_stage": "Ваш Манипулятор на максимальной стадии.",
   "message.ethermod.need_chip": "Нужно: %s.",
-  "message.ethermod.tank_refilling": "Бак эфира пуст, наполняется (%s).",
   "message.ethermod.moved_to_slot": "Ваш Манипулятор переехал в отдельную ячейку. Нажмите R, чтобы призвать его.",
   "message.ethermod.not_enough_fertilizer": "Недостаточно удобрения для этого выстрела.",
-  "message.ethermod.not_enough_ether": "Недостаточно эфира в баке для этого выстрела.",
   "message.ethermod.not_enough_fluid": "Недостаточно жидкости для этого выстрела.",
   "message.ethermod.intro": "У вас есть Манипулятор эфира. ",
   "message.ethermod.intro_keys": "Нажмите R, чтобы призвать его, и K, чтобы открыть его черты.",
@@ -393,5 +391,6 @@
   "ethermod.configuration.extra_crops": "Extra crops",
   "ethermod.configuration.title": "Ether Manipulator settings",
   "subtitles.ethermod.stasis.ding": "Стазис тикает",
+  "subtitles.ethermod.dry_fire": "Манипулятор эфира пищит: пусто",
   "subtitles.ethermod.stasis.release": "Стазис спадает"
 }

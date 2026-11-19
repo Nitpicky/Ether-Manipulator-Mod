@@ -50,10 +50,8 @@
   "message.ethermod.upgraded_hint": "新しいモジュールスロットと%s段階を解放(Kキー)",
   "message.ethermod.max_stage": "マニピュレーターは最大ステージです。",
   "message.ethermod.need_chip": "必要:%s。",
-  "message.ethermod.tank_refilling": "エーテルタンクが空です。補充中(%s)。",
   "message.ethermod.moved_to_slot": "マニピュレーターは専用スロットに移りました。Rキーで召喚できます。",
   "message.ethermod.not_enough_fertilizer": "このショットに必要な肥料が足りません。",
-  "message.ethermod.not_enough_ether": "タンクのエーテルが足りません。",
   "message.ethermod.not_enough_fluid": "このショットに必要な液体が足りません。",
   "message.ethermod.intro": "エーテルマニピュレーターを手に入れました。",
   "message.ethermod.intro_keys": "Rキーで召喚、Kキーで特性を開きます。",
@@ -393,5 +391,6 @@
   "ethermod.configuration.extra_crops": "Extra crops",
   "ethermod.configuration.title": "Ether Manipulator settings",
   "subtitles.ethermod.stasis.ding": "ステイシス：チクタク",
+  "subtitles.ethermod.dry_fire": "エーテルマニピュレーターの警告音：空",
   "subtitles.ethermod.stasis.release": "ステイシス解除"
 }

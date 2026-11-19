@@ -50,10 +50,8 @@
   "message.ethermod.upgraded_hint": "Ny modulplats och rang %s öppna (tryck K)",
   "message.ethermod.max_stage": "Din manipulator är i sitt högsta stadium.",
   "message.ethermod.need_chip": "Du behöver %s.",
-  "message.ethermod.tank_refilling": "Etertanken är tom, fylls på (%s).",
   "message.ethermod.moved_to_slot": "Din manipulator har nu en egen plats. Tryck R för att kalla fram den.",
   "message.ethermod.not_enough_fertilizer": "Inte tillräckligt med gödsel för det här skottet.",
-  "message.ethermod.not_enough_ether": "Inte tillräckligt med eter i tanken för det här skottet.",
   "message.ethermod.not_enough_fluid": "Inte tillräckligt med vätska för det här skottet.",
   "message.ethermod.intro": "Du bär en Etermanipulator. ",
   "message.ethermod.intro_keys": "Tryck R för att kalla fram den och K för att öppna dess egenskaper.",
@@ -393,5 +391,6 @@
   "ethermod.configuration.extra_crops": "Extra crops",
   "ethermod.configuration.title": "Ether Manipulator settings",
   "subtitles.ethermod.stasis.ding": "Stas tickar",
+  "subtitles.ethermod.dry_fire": "Etermanipulator piper: tom",
   "subtitles.ethermod.stasis.release": "Stas släpper"
 }

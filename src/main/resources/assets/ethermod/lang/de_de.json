@@ -50,10 +50,8 @@
   "message.ethermod.upgraded_hint": "Neuer Modulplatz und Rang %s offen (K drücken)",
   "message.ethermod.max_stage": "Dein Manipulator hat die höchste Stufe erreicht.",
   "message.ethermod.need_chip": "Du brauchst das %s.",
-  "message.ethermod.tank_refilling": "Äthertank leer, füllt sich (%s).",
   "message.ethermod.moved_to_slot": "Dein Manipulator hat jetzt einen eigenen Platz. Drücke R, um ihn zu rufen.",
   "message.ethermod.not_enough_fertilizer": "Nicht genug Dünger für diesen Schuss.",
-  "message.ethermod.not_enough_ether": "Nicht genug Äther im Tank für diesen Schuss.",
   "message.ethermod.not_enough_fluid": "Nicht genug Flüssigkeit für diesen Schuss.",
   "message.ethermod.intro": "Du trägst einen Äthermanipulator. ",
   "message.ethermod.intro_keys": "Drücke R, um ihn zu rufen, und K, um seine Eigenschaften zu öffnen.",
@@ -393,5 +391,6 @@
   "ethermod.configuration.extra_crops": "Extra crops",
   "ethermod.configuration.title": "Ether Manipulator settings",
   "subtitles.ethermod.stasis.ding": "Stase tickt",
+  "subtitles.ethermod.dry_fire": "Äthermanipulator piept: leer",
   "subtitles.ethermod.stasis.release": "Stase löst sich"
 }

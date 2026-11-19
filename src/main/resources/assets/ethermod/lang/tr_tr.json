@@ -50,10 +50,8 @@
   "message.ethermod.upgraded_hint": "Yeni Modül yuvası ve %s kademesi açıldı (K tuşuna bas)",
   "message.ethermod.max_stage": "Manipülatörün en yüksek aşamada.",
   "message.ethermod.need_chip": "Gerekli: %s.",
-  "message.ethermod.tank_refilling": "Eter tankı boş, doluyor (%s).",
   "message.ethermod.moved_to_slot": "Manipülatörün kendi yuvasına taşındı. Çağırmak için R tuşuna bas.",
   "message.ethermod.not_enough_fertilizer": "Bu atış için yeterli gübre yok.",
-  "message.ethermod.not_enough_ether": "Tankta bu atış için yeterli Eter yok.",
   "message.ethermod.not_enough_fluid": "Bu atış için yeterli sıvı yok.",
   "message.ethermod.intro": "Bir Eter Manipülatörün var. ",
   "message.ethermod.intro_keys": "Çağırmak için R, özelliklerini açmak için K tuşuna bas.",
@@ -393,5 +391,6 @@
   "ethermod.configuration.extra_crops": "Extra crops",
   "ethermod.configuration.title": "Ether Manipulator settings",
   "subtitles.ethermod.stasis.ding": "Durağanlık tıkırdıyor",
+  "subtitles.ethermod.dry_fire": "Eter Manipülatörü bipliyor: boş",
   "subtitles.ethermod.stasis.release": "Durağanlık çözülüyor"
 }

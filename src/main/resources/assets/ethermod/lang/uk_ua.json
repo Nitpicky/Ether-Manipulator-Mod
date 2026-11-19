@@ -50,10 +50,8 @@
   "message.ethermod.upgraded_hint": "Відкрито нову комірку модуля і рівень «%s» (натисніть K)",
   "message.ethermod.max_stage": "Ваш Маніпулятор на максимальній стадії.",
   "message.ethermod.need_chip": "Потрібно: %s.",
-  "message.ethermod.tank_refilling": "Бак ефіру порожній, наповнюється (%s).",
   "message.ethermod.moved_to_slot": "Ваш Маніпулятор переїхав в окрему комірку. Натисніть R, щоб викликати його.",
   "message.ethermod.not_enough_fertilizer": "Недостатньо добрива для цього пострілу.",
-  "message.ethermod.not_enough_ether": "Недостатньо ефіру в баку для цього пострілу.",
   "message.ethermod.not_enough_fluid": "Недостатньо рідини для цього пострілу.",
   "message.ethermod.intro": "У вас є Маніпулятор ефіру. ",
   "message.ethermod.intro_keys": "Натисніть R, щоб викликати його, і K, щоб відкрити його риси.",
@@ -393,5 +391,6 @@
   "ethermod.configuration.extra_crops": "Extra crops",
   "ethermod.configuration.title": "Ether Manipulator settings",
   "subtitles.ethermod.stasis.ding": "Стазис цокає",
+  "subtitles.ethermod.dry_fire": "Маніпулятор ефіру пищить: порожньо",
   "subtitles.ethermod.stasis.release": "Стазис спадає"
 }

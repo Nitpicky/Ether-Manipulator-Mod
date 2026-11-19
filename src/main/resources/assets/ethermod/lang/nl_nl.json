@@ -50,10 +50,8 @@
   "message.ethermod.upgraded_hint": "Nieuw modulevak en rang %s open (druk op K)",
   "message.ethermod.max_stage": "Je manipulator heeft het hoogste stadium bereikt.",
   "message.ethermod.need_chip": "Je hebt de %s nodig.",
-  "message.ethermod.tank_refilling": "Ethertank leeg, wordt bijgevuld (%s).",
   "message.ethermod.moved_to_slot": "Je manipulator heeft nu een eigen vak. Druk op R om hem op te roepen.",
   "message.ethermod.not_enough_fertilizer": "Niet genoeg mest voor dit schot.",
-  "message.ethermod.not_enough_ether": "Niet genoeg ether in de tank voor dit schot.",
   "message.ethermod.not_enough_fluid": "Niet genoeg vloeistof voor dit schot.",
   "message.ethermod.intro": "Je draagt een Ethermanipulator. ",
   "message.ethermod.intro_keys": "Druk op R om hem op te roepen en op K om zijn eigenschappen te openen.",
@@ -393,5 +391,6 @@
   "ethermod.configuration.extra_crops": "Extra crops",
   "ethermod.configuration.title": "Ether Manipulator settings",
   "subtitles.ethermod.stasis.ding": "Stasis tikt",
+  "subtitles.ethermod.dry_fire": "Ethermanipulator piept: leeg",
   "subtitles.ethermod.stasis.release": "Stasis laat los"
 }

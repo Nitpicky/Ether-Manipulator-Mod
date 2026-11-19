@@ -50,10 +50,8 @@
   "message.ethermod.upgraded_hint": "Nouvel emplacement de Module et palier %s ouverts (touche K)",
   "message.ethermod.max_stage": "Votre Manipulateur est à son stade maximal.",
   "message.ethermod.need_chip": "Il vous faut l'Amélioration %s.",
-  "message.ethermod.tank_refilling": "Réservoir d'Éther vide, remplissage (%s).",
   "message.ethermod.moved_to_slot": "Votre Manipulateur a rejoint son propre emplacement. Appuyez sur R pour l'invoquer.",
   "message.ethermod.not_enough_fertilizer": "Pas assez d'engrais pour ce tir.",
-  "message.ethermod.not_enough_ether": "Pas assez d'Éther dans le réservoir pour ce tir.",
   "message.ethermod.not_enough_fluid": "Pas assez de fluide pour ce tir.",
   "message.ethermod.intro": "Vous portez un Manipulateur d'Éther. ",
   "message.ethermod.intro_keys": "Appuyez sur R pour l'invoquer, sur K pour ouvrir ses traits.",
@@ -393,5 +391,6 @@
   "ethermod.configuration.extra_crops": "Extra crops",
   "ethermod.configuration.title": "Ether Manipulator settings",
   "subtitles.ethermod.stasis.ding": "Stase : tic-tac",
+  "subtitles.ethermod.dry_fire": "Manipulateur d'Éther bipe : vide",
   "subtitles.ethermod.stasis.release": "Stase relâchée"
 }

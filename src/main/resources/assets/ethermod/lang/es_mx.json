@@ -50,10 +50,8 @@
   "message.ethermod.upgraded_hint": "Nueva ranura de Módulo y nivel %s abiertos (pulsa K)",
   "message.ethermod.max_stage": "Tu Manipulador está en su fase máxima.",
   "message.ethermod.need_chip": "Necesitas la %s.",
-  "message.ethermod.tank_refilling": "Tanque de Éter vacío, rellenando (%s).",
   "message.ethermod.moved_to_slot": "Tu Manipulador se ha movido a su propia ranura. Pulsa R para invocarlo.",
   "message.ethermod.not_enough_fertilizer": "No hay suficiente fertilizante para este disparo.",
-  "message.ethermod.not_enough_ether": "No hay suficiente Éter en el tanque para este disparo.",
   "message.ethermod.not_enough_fluid": "No hay suficiente fluido para este disparo.",
   "message.ethermod.intro": "Llevas un Manipulador de Éter. ",
   "message.ethermod.intro_keys": "Pulsa R para invocarlo y K para abrir sus rasgos.",
@@ -393,5 +391,6 @@
   "ethermod.configuration.extra_crops": "Extra crops",
   "ethermod.configuration.title": "Ether Manipulator settings",
   "subtitles.ethermod.stasis.ding": "Estasis: tictac",
+  "subtitles.ethermod.dry_fire": "Manipulador de Éter pita: vacío",
   "subtitles.ethermod.stasis.release": "Estasis liberada"
 }

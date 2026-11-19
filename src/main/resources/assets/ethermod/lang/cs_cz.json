@@ -50,10 +50,8 @@
   "message.ethermod.upgraded_hint": "Odemčen nový slot modulu a úroveň %s (stiskni K)",
   "message.ethermod.max_stage": "Tvůj Manipulátor je v nejvyšší fázi.",
   "message.ethermod.need_chip": "Potřebuješ: %s.",
-  "message.ethermod.tank_refilling": "Nádrž éteru je prázdná, plní se (%s).",
   "message.ethermod.moved_to_slot": "Tvůj Manipulátor se přesunul do vlastního slotu. Stiskni R pro přivolání.",
   "message.ethermod.not_enough_fertilizer": "Na tento výstřel nemáš dost hnojiva.",
-  "message.ethermod.not_enough_ether": "V nádrži není na tento výstřel dost éteru.",
   "message.ethermod.not_enough_fluid": "Na tento výstřel nemáš dost tekutiny.",
   "message.ethermod.intro": "Máš Manipulátor éteru. ",
   "message.ethermod.intro_keys": "Stiskni R pro přivolání a K pro otevření jeho vlastností.",
@@ -393,5 +391,6 @@
   "ethermod.configuration.extra_crops": "Extra crops",
   "ethermod.configuration.title": "Ether Manipulator settings",
   "subtitles.ethermod.stasis.ding": "Stáze tiká",
+  "subtitles.ethermod.dry_fire": "Manipulátor éteru pípá: prázdný",
   "subtitles.ethermod.stasis.release": "Stáze povolí"
 }

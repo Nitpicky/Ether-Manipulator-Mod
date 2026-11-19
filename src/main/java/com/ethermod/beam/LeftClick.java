@@ -167,10 +167,7 @@ public final class LeftClick {
     }
 
     private static void empty(ServerPlayer p) {
-        p.displayClientMessage(
-                Component.translatable("message.ethermod.not_enough_ether")
-                        .withStyle(ChatFormatting.RED),
-                true);
+        DryFire.signal(p);
     }
 
     /** False (and nothing happens) until {@code cooldown} ticks after the last use. */
