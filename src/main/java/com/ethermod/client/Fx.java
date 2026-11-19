@@ -511,7 +511,7 @@ public final class Fx {
     private static final RenderType SHADER_FX = shaderType("ethermod_fx", false);
     private static final RenderType SHADER_FX_BEAM = shaderType("ethermod_fx_beam", false, true);
     private static final RenderType SHADER_FX_SOFT =
-            shaderType("ethermod_fx_soft", false, false, true);
+            shaderType("ethermod_fx_soft", false, false, false); // strips: depth is safe again
     private static final RenderType SHADER_FX_DEPTH =
             VARIANT.equals("eyes2")
                             || VARIANT.equals("particle_max_d2")

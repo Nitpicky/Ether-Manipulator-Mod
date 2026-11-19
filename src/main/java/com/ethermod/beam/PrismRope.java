@@ -82,6 +82,10 @@ final class PrismRope {
     private static void tube(
             Vec3[] pts, Vec3 su, float[] h, float[] roll, float[] c, float[] a, VertexConsumer vc) {
         int n = pts.length - 1;
+        if (com.ethermod.client.ShaderCompat.shadersActive()) {
+            ribbon(pts, su, h, c, a, vc, vc != com.ethermod.client.Fx.softGlow());
+            return;
+        }
         Vec3[][] cs = new Vec3[n + 1][];
         for (int j = 0; j <= n; j++) {
             Vec3[] fr = frame(pts, j, su);
@@ -113,6 +117,40 @@ final class PrismRope {
                 v(vc, cs[j + 1][k2], r, g, b, cb);
                 v(vc, cs[j][k2], r, g, b, ca);
                 v(vc, cs[j][k], r, g, b, ca);
+            }
+        }
+    }
+
+    /**
+     * With a shader pack: the tube as one flat strip turned toward the camera. A rolling tube
+     * shows a different set of faces from one segment to the next, and the pack's bloom turned
+     * each change into a band; a strip has one surface all along. The core sits a hair nearer the
+     * camera so it is drawn over the shell, never fighting it.
+     */
+    private static void ribbon(
+            Vec3[] pts, Vec3 su, float[] h, float[] c, float[] a, VertexConsumer vc, boolean core) {
+        int n = pts.length - 1;
+        Vec3[] l = new Vec3[n + 1], rr = new Vec3[n + 1];
+        for (int j = 0; j <= n; j++) {
+            Vec3 p = pts[j];
+            Vec3 tan = frame(pts, j, su)[0];
+            Vec3 side = tan.cross(p);
+            if (side.lengthSqr() < 1e-12) side = frame(pts, j, su)[1];
+            side = side.normalize().scale(h[j] * BeamRenderer.nearScale(p));
+            if (core) p = p.subtract(p.normalize().scale(0.01));
+            l[j] = p.add(side);
+            rr[j] = p.subtract(side);
+        }
+        int r = BeamFx.ch(c[0] * 0.9f), g = BeamFx.ch(c[1] * 0.9f), b = BeamFx.ch(c[2] * 0.9f);
+        for (int j = 0; j < n; j++) {
+            if (a[j] <= 0.003f && a[j + 1] <= 0.003f) continue;
+            int ca = BeamFx.ch(a[j]), cb = BeamFx.ch(a[j + 1]);
+            // twice, as the tube shows two faces at every point
+            for (int k = 0; k < 2; k++) {
+                v(vc, l[j], r, g, b, ca);
+                v(vc, rr[j], r, g, b, ca);
+                v(vc, rr[j + 1], r, g, b, cb);
+                v(vc, l[j + 1], r, g, b, cb);
             }
         }
     }
