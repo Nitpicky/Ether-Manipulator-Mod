@@ -960,6 +960,13 @@ public final class PlaytestBootstrap {
             });
             case 1449 -> server(mc, (s, p) -> checkGemGuarantee(s, p, "desert_pyramid", "atenite", false));
             case 1451 -> server(mc, (s, p) -> checkGemGuarantee(s, p, "jungle_pyramid", "quetzalite", true));
+            // the gems' Module-coloured glint, in the inventory
+            case 1455 -> server(mc, (s, p) -> {
+                for (String gem : com.ethermod.registry.ModItems.GEMS.keySet()) run(s, "give @p ethermod:" + gem);
+            });
+            case 1460 -> mc.setScreen(new net.minecraft.client.gui.screens.inventory.InventoryScreen(mc.player));
+            case 1470 -> shot(mc, "35_gem_glint");
+            case 1474 -> mc.setScreen(null);
             case 1572 -> finish(mc);
             default -> {}
         }
