@@ -324,13 +324,14 @@ public final class GustGrenade {
     }
 
     /**
-     * The burst's push on the creature it holds: away from where the grenade stuck on the body,
-     * level (the launch adds its own lift); stuck on top, straight up.
+     * The burst's push on the creature it holds: straight away from where the grenade stuck on
+     * the body (on its side, level; on top, down; underneath, up). This sets the launch direction;
+     * hits stored meanwhile only add strength.
      */
     private static Vec3 heldPush(Grenade g, LivingEntity e) {
         Vec3 centre = e.position().add(0, e.getBbHeight() * 0.5, 0);
-        Vec3 away = centre.subtract(g.pos).multiply(1, 0, 1);
-        if (away.lengthSqr() < 0.0025) return new Vec3(0, 1.6, 0);
+        Vec3 away = centre.subtract(g.pos);
+        if (away.lengthSqr() < 1e-4) return new Vec3(0, 1.6, 0);
         return away.normalize().scale(1.6);
     }
 

@@ -422,7 +422,7 @@ public final class RedesignEffects {
             impulse(e, push);
             return;
         }
-        if (d.getDouble("mm_stasis_force") <= 1e-6) {
+        { // the grenade's spot is the one authority on direction; stored hits only add strength
             var n = push.normalize();
             d.putDouble("mm_stasis_x", n.x);
             d.putDouble("mm_stasis_y", n.y);
@@ -482,8 +482,8 @@ public final class RedesignEffects {
 
     /**
      * What a Stasis Grenade's burst will add on release: its strength joins the stored knockback,
-     * but the direction stays the last hit's (set up a big push, then aim it with one hit). With
-     * no hit stored, the burst's own direction is used. Shown in the arrow before it happens.
+     * and its direction (away from where the grenade stuck) is the launch direction. Shown in the
+     * arrow before it happens.
      */
     public static void expectBurst(LivingEntity e, Vec3 push) {
         var d = e.getPersistentData();
@@ -506,10 +506,15 @@ public final class RedesignEffects {
                 : Vec3.ZERO;
         double force = Math.min(STASIS_MAX, d.getDouble("mm_stasis_force") + burst.length());
         if (force < 1e-6) return Vec3.ZERO;
-        var dir = d.getDouble("mm_stasis_force") > 1e-6
-                ? new Vec3(d.getDouble("mm_stasis_x"), d.getDouble("mm_stasis_y"), d.getDouble("mm_stasis_z"))
-                : burst.normalize();
+        // the Stasis Grenade's spot on the body sets the direction (stored hits only add
+        // strength); without a pending burst, the last stored direction
+        var dir = burst.lengthSqr() > 1e-6
+                ? burst.normalize()
+                : new Vec3(d.getDouble("mm_stasis_x"), d.getDouble("mm_stasis_y"), d.getDouble("mm_stasis_z"));
         var v = dir.scale(force);
+        // lift so a level push flies instead of dragging along the ground; a push aimed down
+        // (grenade on top) stays down
+        if (dir.y < -0.2) return v;
         return new Vec3(v.x, Math.max(v.y, .3 + .12 * force), v.z);
     }
 
