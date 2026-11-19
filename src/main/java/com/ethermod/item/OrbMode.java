@@ -87,7 +87,8 @@ public enum OrbMode {
 
     /** Left clicks that charge like the right-click orbs (same behaviour, other button). */
     public boolean chargesOnLeft() {
-        return this == WATER || this == LAVA;
+        // Pneumatic: the Gust shot charges on left click, the Stasis Grenade is thrown on right
+        return this == WATER || this == LAVA || this == GUST;
     }
 
     /** Mass Driver: RMB lifts a block first, then charges as usual. */

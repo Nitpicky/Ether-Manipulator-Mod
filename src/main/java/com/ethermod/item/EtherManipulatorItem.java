@@ -111,6 +111,12 @@ public class EtherManipulatorItem extends Item implements GeoItem {
             return InteractionResultHolder.fail(stack);
 
         OrbMode mode = OrbMode.get(stack);
+        // Pneumatic: right click throws the Stasis Grenade (the Gust shot charges on left click)
+        if (mode == OrbMode.GUST) {
+            if (player instanceof ServerPlayer sp) com.ethermod.beam.LeftClick.throwGrenade(sp);
+            else com.ethermod.client.ManipulatorAnimations.grenadeThrow(player);
+            return InteractionResultHolder.fail(stack);
+        }
         // the projectile this tool charges on right click (Hydraulic: the ice shard)
         OrbMode shot = mode.rmbShot();
         // the tank lives on the Manipulator's own stack (synced to the client), not on the copy in

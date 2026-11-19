@@ -76,19 +76,14 @@ public final class LeftClick {
         OrbMode mode = OrbMode.get(st);
         stop(p);
         // Detonator: left click again while your left-click shot is in the air bursts it
-        if (BeamBallEntity.detonateFor(p, st, true) || GustGrenade.detonateFor(p, st))
-            return;
+        if (BeamBallEntity.detonateFor(p, st, true)) return;
         switch (mode) {
-            case WATER, LAVA -> {
+            case WATER, LAVA, GUST -> {
                 if (mode.tankLevel(st) < mode.shotCost(st, 0)) {
                     empty(p);
                     return;
                 }
                 HOLDS.put(p.getUUID(), new Hold(mode));
-            }
-            case GUST -> {
-                if (ready(p, 10) && spend(p, st, OrbMode.GRENADE_COST))
-                    GustGrenade.throwFrom(p, st);
             }
             case LIGHT -> {
                 HOLDS.put(p.getUUID(), new Hold(mode));
@@ -148,6 +143,16 @@ public final class LeftClick {
                 sl.removeBlock(q, false);
             WorldEffects.forgetLight(sl, q);
         }
+    }
+
+    /**
+     * Right click in Pneumatic mode: throws the Stasis Grenade, or bursts the one already out
+     * (Detonator-style, like the other tools' second click).
+     */
+    public static void throwGrenade(ServerPlayer p) {
+        ItemStack st = Manipulator.stack(p);
+        if (GustGrenade.detonateFor(p, st)) return;
+        if (ready(p, 10) && spend(p, st, OrbMode.GRENADE_COST)) GustGrenade.throwFrom(p, st);
     }
 
     /** True while LMB is held for an action (the playtest reads it). */

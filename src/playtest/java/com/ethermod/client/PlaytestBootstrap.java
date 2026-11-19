@@ -727,8 +727,8 @@ public final class PlaytestBootstrap {
                 mc.player.setYRot(0);
                 mc.player.setXRot(11);
             }
-            case 968 -> opts.keyAttack.setDown(true);
-            case 970 -> opts.keyAttack.setDown(false);
+            case 968 -> opts.keyUse.setDown(true); // Pneumatic: right click throws the grenade
+            case 970 -> opts.keyUse.setDown(false);
             case 978 -> shot(mc, "26_gust_grenade_latched"); // +2: grenade wind-up
             // the Stasis hold lasts 3s; cut it short so the burst lands before the check
             case 996 -> server(mc, (s, p) -> com.ethermod.beam.GustGrenade.hurry());
@@ -744,7 +744,7 @@ public final class PlaytestBootstrap {
                                         (com.ethermod.beam.GustGrenade.bursts > bursts && hurt
                                                         ? "PASS"
                                                         : "FAIL")
-                                                + " gust: left click threw a grenade that burst"
+                                                + " gust: right click threw a grenade that burst"
                                                 + " (bursts "
                                                 + (com.ethermod.beam.GustGrenade.bursts - bursts)
                                                 + ", pig hurt "
