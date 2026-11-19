@@ -7,6 +7,9 @@ on:
       pack:
         description: Modrinth slug of the shader pack (none = Sodium + Iris with shaders off)
         default: complementary-reimagined
+      variant:
+        description: How effects draw with the pack (client/Fx.VARIANT); empty = the mod's default
+        default: ''
 permissions:
   contents: write
 jobs:
@@ -45,7 +48,7 @@ jobs:
           MESA_GL_VERSION_OVERRIDE: '4.5'
           MESA_GLSL_VERSION_OVERRIDE: '450'
         run: |
-          xvfb-run -a -s '-screen 0 1280x720x24' timeout 1500 ./gradlew runClient -Pplaytest -PmodelShots -PcloudTest --no-daemon || true
+          xvfb-run -a -s '-screen 0 1280x720x24' timeout 1500 ./gradlew runClient -Pplaytest -PmodelShots -PcloudTest ${{ github.event.inputs.variant != '' && format('-PfxVariant={0}', github.event.inputs.variant) || '' }} --no-daemon || true
           grep -i -E 'iris|shader' runs/client/logs/latest.log | head -40 || true
       - name: Publish shots
         if: always()
@@ -59,9 +62,9 @@ jobs:
           git fetch origin playtest-results
           git worktree add /tmp/pr origin/playtest-results
           cd /tmp/pr && git checkout -B playtest-results
-          D="shaders/${{ github.event.inputs.pack }}"
+          D="shaders/${{ github.event.inputs.pack }}${{ github.event.inputs.variant != '' && format('-{0}', github.event.inputs.variant) || '' }}"
           rm -rf "$D" && mkdir -p "$D"
           cp $GITHUB_WORKSPACE/out/* "$D"/ 2>/dev/null || true
           git add -A
-          git commit -qm "Shader shots for $SHA" || true
+          git commit -qm "Shader shots for $SHA ${{ github.event.inputs.variant }}" || true
           for i in 1 2 3 4; do git push -q origin playtest-results && break; git pull -q --rebase origin playtest-results; done

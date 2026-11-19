@@ -358,71 +358,84 @@ public final class Fx {
             ResourceLocation.fromNamespaceAndPath(EtherMod.MODID, "textures/misc/white.png");
 
     /**
-     * Packs run the vanilla lightning type through a program that leaves it out or smears it like
-     * a cloud, and the beacon-beam program lights it like a solid (washed-out white, dithered
-     * halos). With a pack the effects use the eyes program instead (spider and Enderman eyes):
-     * every pack draws it as pure emissive light, added on top, keeping its colour. Additive blending
-     * ignores alpha, so colours are premultiplied when written; no depth write, so glows overlap
-     * softly instead of cutting into each other.
+     * How the effects are drawn with a shader pack. The pack decides which of its programs runs a
+     * render type and when its clouds and sky are laid over, so each setup is checked with a real
+     * pack on CI (-PfxVariant picks one there):
+     *
+     * <ul>
+     *   <li>{@code beacon}: beacon-beam program, translucent, writes depth (in front of clouds,
+     *       but packs light it like a solid: washed-out white)
+     *   <li>{@code beacon_add}: beacon-beam program, added light, writes depth
+     *   <li>{@code eyes}: eyes program (Enderman eyes), added light, writes depth
+     *   <li>{@code eyes2}: eyes program colour only, then a depth-only pass
+     *   <li>{@code emissive}: glowing-entity program, added light, writes depth
+     * </ul>
      */
-    private static final RenderType SHADER_FX =
-            RenderType.create(
-                    "ethermod_fx",
-                    DefaultVertexFormat.NEW_ENTITY,
-                    VertexFormat.Mode.QUADS,
-                    1536,
-                    false,
-                    true,
-                    RenderType.CompositeState.builder()
-                            .setShaderState(RenderStateShard.RENDERTYPE_EYES_SHADER)
-                            .setTextureState(
-                                    new RenderStateShard.TextureStateShard(WHITE, false, false))
-                            .setTransparencyState(RenderStateShard.ADDITIVE_TRANSPARENCY)
-                            .setCullState(RenderStateShard.NO_CULL)
-                            .setLayeringState(RenderStateShard.POLYGON_OFFSET_LAYERING)
-                            .setWriteMaskState(RenderStateShard.COLOR_WRITE)
-                            .createCompositeState(false));
+    static final String VARIANT = System.getProperty("ethermod.fxVariant", "eyes");
 
-    /**
-     * The same quads again, depth only: the pack's clouds (drawn later) stay behind the effects,
-     * while the glows themselves still overlap softly in the colour pass.
-     */
+    private static RenderType shaderType(String name, boolean depthOnly) {
+        boolean beacon = VARIANT.startsWith("beacon");
+        RenderStateShard.ShaderStateShard shader =
+                beacon
+                        ? RenderStateShard.RENDERTYPE_BEACON_BEAM_SHADER
+                        : VARIANT.equals("emissive")
+                                ? RenderStateShard.RENDERTYPE_ENTITY_TRANSLUCENT_EMISSIVE_SHADER
+                                : RenderStateShard.RENDERTYPE_EYES_SHADER;
+        var b =
+                RenderType.CompositeState.builder()
+                        .setShaderState(shader)
+                        .setTextureState(new RenderStateShard.TextureStateShard(WHITE, false, false))
+                        .setCullState(RenderStateShard.NO_CULL)
+                        .setLayeringState(RenderStateShard.POLYGON_OFFSET_LAYERING);
+        if (VARIANT.equals("emissive"))
+            b.setLightmapState(RenderStateShard.LIGHTMAP).setOverlayState(RenderStateShard.OVERLAY);
+        if (depthOnly) {
+            b.setWriteMaskState(RenderStateShard.DEPTH_WRITE);
+        } else {
+            b.setTransparencyState(
+                    VARIANT.equals("beacon")
+                            ? RenderStateShard.TRANSLUCENT_TRANSPARENCY
+                            : RenderStateShard.ADDITIVE_TRANSPARENCY);
+            b.setWriteMaskState(
+                    VARIANT.equals("eyes2")
+                            ? RenderStateShard.COLOR_WRITE
+                            : RenderStateShard.COLOR_DEPTH_WRITE);
+        }
+        return RenderType.create(
+                name,
+                beacon ? DefaultVertexFormat.BLOCK : DefaultVertexFormat.NEW_ENTITY,
+                VertexFormat.Mode.QUADS,
+                1536,
+                false,
+                !depthOnly,
+                b.createCompositeState(false));
+    }
+
+    private static final RenderType SHADER_FX = shaderType("ethermod_fx", false);
     private static final RenderType SHADER_FX_DEPTH =
-            RenderType.create(
-                    "ethermod_fx_depth",
-                    DefaultVertexFormat.NEW_ENTITY,
-                    VertexFormat.Mode.QUADS,
-                    1536,
-                    false,
-                    false,
-                    RenderType.CompositeState.builder()
-                            .setShaderState(RenderStateShard.RENDERTYPE_EYES_SHADER)
-                            .setTextureState(
-                                    new RenderStateShard.TextureStateShard(WHITE, false, false))
-                            .setCullState(RenderStateShard.NO_CULL)
-                            .setLayeringState(RenderStateShard.POLYGON_OFFSET_LAYERING)
-                            .setWriteMaskState(RenderStateShard.DEPTH_WRITE)
-                            .createCompositeState(false));
+            VARIANT.equals("eyes2") ? shaderType("ethermod_fx_depth", true) : null;
 
     private static void drawInWorld() {
         MultiBufferSource.BufferSource buf = Minecraft.getInstance().renderBuffers().bufferSource();
+        boolean beacon = VARIANT.startsWith("beacon");
+        boolean premultiply = !VARIANT.equals("beacon"); // added light ignores alpha
         for (RenderType type : new RenderType[] {SHADER_FX, SHADER_FX_DEPTH}) {
+            if (type == null) continue;
             VertexConsumer vc = buf.getBuffer(type);
             for (Layer l : new Layer[] {BEAM, GLOW}) {
                 int verts = l.quads() * 4;
                 for (int i = 0; i < verts; i++) {
                     int c = l.col[i];
-                    int a = c >>> 24;
+                    int a = c >>> 24, k = premultiply ? a : 255;
                     vc.addVertex(l.pos[3 * i], l.pos[3 * i + 1], l.pos[3 * i + 2])
                             .setColor(
-                                    (c >> 16 & 255) * a / 255,
-                                    (c >> 8 & 255) * a / 255,
-                                    (c & 255) * a / 255,
-                                    255)
-                            .setUv(0.5f, 0.5f)
-                            .setOverlay(OverlayTexture.NO_OVERLAY)
-                            .setLight(LightTexture.FULL_BRIGHT)
-                            .setNormal(0f, 1f, 0f);
+                                    (c >> 16 & 255) * k / 255,
+                                    (c >> 8 & 255) * k / 255,
+                                    (c & 255) * k / 255,
+                                    premultiply ? 255 : a)
+                            .setUv(0.5f, 0.5f);
+                    if (!beacon) vc.setOverlay(OverlayTexture.NO_OVERLAY);
+                    vc.setLight(LightTexture.FULL_BRIGHT).setNormal(0f, 1f, 0f);
                 }
             }
             buf.endBatch(type);
