@@ -398,7 +398,28 @@ public final class Fx {
                     });
 
     /**
-     * {@code particle_max}: beam brightest-wins; {@code particle_max_nd}: and no depth write;
+     * Depth-only pass that can't change the picture: packs may run their own colour output whatever
+     * the write mask says (a plain depth pass came out as flat beam or as sky), so the blend keeps
+     * what is there (source x 0 + destination x 1).
+     */
+    private static final RenderStateShard.TransparencyStateShard KEEP_TRANSPARENCY =
+            new RenderStateShard.TransparencyStateShard(
+                    "ethermod_keep",
+                    () -> {
+                        RenderSystem.enableBlend();
+                        RenderSystem.blendFunc(
+                                GlStateManager.SourceFactor.ZERO, GlStateManager.DestFactor.ONE);
+                    },
+                    () -> {
+                        RenderSystem.disableBlend();
+                        RenderSystem.defaultBlendFunc();
+                    });
+
+    /**
+     * {@code particle_keep}: as without a pack (beam brightest-wins, glows add, no depth write),
+     * then a depth pass that keeps the colour, so the pack's clouds stay behind.
+     *
+     * <p>{@code particle_max}: beam brightest-wins; {@code particle_max_nd}: and no depth write;
      * {@code particle_max_d2}: colour first without depth (the beam can't cut its own segments
      * into bands), then a depth-only pass so the pack's clouds stay behind.
      */
@@ -430,18 +451,25 @@ public final class Fx {
         if (VARIANT.equals("emissive") || particle)
             b.setLightmapState(RenderStateShard.LIGHTMAP).setOverlayState(RenderStateShard.OVERLAY);
         if (depthOnly) {
-            b.setWriteMaskState(RenderStateShard.DEPTH_WRITE);
+            if (VARIANT.equals("particle_keep")) b.setTransparencyState(KEEP_TRANSPARENCY);
+            b.setWriteMaskState(
+                    VARIANT.equals("particle_keep")
+                            ? RenderStateShard.COLOR_DEPTH_WRITE
+                            : RenderStateShard.DEPTH_WRITE);
         } else {
             b.setTransparencyState(
                     VARIANT.equals("beacon")
                             ? RenderStateShard.TRANSLUCENT_TRANSPARENCY
-                            : beamLayer && VARIANT.startsWith("particle_max")
+                            : beamLayer
+                                            && (VARIANT.startsWith("particle_max")
+                                                    || VARIANT.equals("particle_keep"))
                                     ? MAX_TRANSPARENCY
                                     : RenderStateShard.ADDITIVE_TRANSPARENCY);
             b.setWriteMaskState(
                     VARIANT.equals("eyes2")
                                     || VARIANT.equals("particle_max_nd")
                                     || VARIANT.equals("particle_max_d2")
+                                    || VARIANT.equals("particle_keep")
                             ? RenderStateShard.COLOR_WRITE
                             : RenderStateShard.COLOR_DEPTH_WRITE);
         }
@@ -460,7 +488,9 @@ public final class Fx {
     private static final RenderType SHADER_FX = shaderType("ethermod_fx", false);
     private static final RenderType SHADER_FX_BEAM = shaderType("ethermod_fx_beam", false, true);
     private static final RenderType SHADER_FX_DEPTH =
-            VARIANT.equals("eyes2") || VARIANT.equals("particle_max_d2")
+            VARIANT.equals("eyes2")
+                            || VARIANT.equals("particle_max_d2")
+                            || VARIANT.equals("particle_keep")
                     ? shaderType("ethermod_fx_depth", true)
                     : null;
 
