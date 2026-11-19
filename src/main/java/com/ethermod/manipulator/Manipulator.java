@@ -38,6 +38,7 @@ public final class Manipulator {
 
     /** Server-side: summon or put away, then sync to the owner. */
     public static void setSummoned(ServerPlayer player, boolean summoned) {
+        if (summoned && !data(player).owned()) return; // not given yet (server config)
         data(player).setSummoned(summoned);
         // Give the stack its own GeckoLib animation id, so each player's prongs animate on their own
         if (summoned) GeoItem.getOrAssignId(data(player).stack(), player.serverLevel());

@@ -212,7 +212,7 @@ public final class ClientMobility {
                             p.getX(),
                             p.getY(),
                             p.getZ(),
-                            net.minecraft.sounds.SoundEvents.NOTE_BLOCK_CHIME.value(),
+                            com.ethermod.sound.ModSounds.WORLD_NOTE_BLOCK_CHIME,
                             net.minecraft.sounds.SoundSource.PLAYERS,
                             .35f,
                             1.6f,
@@ -225,7 +225,7 @@ public final class ClientMobility {
                         p.getX(),
                         p.getY(),
                         p.getZ(),
-                        net.minecraft.sounds.SoundEvents.BREEZE_JUMP,
+                        com.ethermod.sound.ModSounds.WORLD_BREEZE_JUMP,
                         net.minecraft.sounds.SoundSource.PLAYERS,
                         .6f,
                         1.2f - .3f * (float) c,
@@ -270,10 +270,16 @@ public final class ClientMobility {
             p.setDeltaMovement(MovementPhysics.withUp(p, v, 0.55));
             ModNetwork.send(new ModulePayloads.AirJump());
         }
-        if (!p.onGround() && Traits.hasCommon(st, Traits.PNEUMATIC, 0) && jump) {
+        if (!p.onGround() && Traits.hasCommon(st, Traits.PNEUMATIC, 0) && !p.isFallFlying() && !p.isInWater()) {
+            // Bullet Time: charging any weapon in the air (bow, crossbow, trident, modded ones,
+            // the Manipulator's shots) slows the fall even more, no Jump needed
+            // it lasts half a second past the release, so a shot's recoil (a Gust Shot fired
+            // upward) can't slam you into the ground
+            if (chargingWeapon(p)) bulletUntil = now + 10;
+            double cap = now < bulletUntil ? -.03 : jump ? -.08 : Double.NEGATIVE_INFINITY;
             var up = MovementPhysics.vector(MovementPhysics.down(p).getOpposite());
-            if (p.getDeltaMovement().dot(up) < -.08)
-                p.setDeltaMovement(MovementPhysics.withUp(p, p.getDeltaMovement(), -.08));
+            if (p.getDeltaMovement().dot(up) < cap)
+                p.setDeltaMovement(MovementPhysics.withUp(p, p.getDeltaMovement(), cap));
         }
         if (!p.onGround() && !p.isFallFlying()) {
             var v = p.getDeltaMovement();
@@ -368,7 +374,7 @@ public final class ClientMobility {
                             p.getX(),
                             p.getY(),
                             p.getZ(),
-                            net.minecraft.sounds.SoundEvents.AMETHYST_BLOCK_STEP,
+                            com.ethermod.sound.ModSounds.WORLD_AMETHYST_BLOCK_STEP,
                             net.minecraft.sounds.SoundSource.PLAYERS,
                             .25f,
                             1.15f,
@@ -406,5 +412,19 @@ public final class ClientMobility {
                         p.input.forwardImpulse * Math.cos(yaw)
                                 + p.input.leftImpulse * Math.sin(yaw))
                 .normalize();
+    }
+
+    /** Drawing a bow or crossbow, raising a trident (or a modded weapon that does the same), or charging a Manipulator shot. */
+    private static long bulletUntil;
+
+    static boolean chargingWeapon(net.minecraft.world.entity.player.Player p) {
+        if (com.ethermod.beam.BeamRenderState.chargeMode != null) return true;
+        if (!p.isUsingItem()) return false;
+        var use = p.getUseItem();
+        if (use.getItem() instanceof com.ethermod.item.EtherManipulatorItem) return true;
+        var anim = use.getUseAnimation();
+        return anim == net.minecraft.world.item.UseAnim.BOW
+                || anim == net.minecraft.world.item.UseAnim.CROSSBOW
+                || anim == net.minecraft.world.item.UseAnim.SPEAR;
     }
 }

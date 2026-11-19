@@ -78,18 +78,6 @@ public final class BeamRenderer {
     public static Vec3 nozzle, barrel;
 
     /**
-     * With the Manipulator out, the beam's own target preview replaces the vanilla block outline,
-     * which would box foliage the beam passes through.
-     */
-    @SubscribeEvent
-    public static void onBlockHighlight(
-            net.neoforged.neoforge.client.event.RenderHighlightEvent.Block event) {
-        Player p = Minecraft.getInstance().player;
-        if (p != null && p.getMainHandItem().getItem() instanceof EtherManipulatorItem)
-            event.setCanceled(true);
-    }
-
-    /**
      * Frame handling for every effect (see {@link com.ethermod.client.Fx}): start of frame, depth
      * copy before water, then once the world is finished the world's effects are produced and
      * everything recorded this frame is drawn at once.
@@ -147,6 +135,7 @@ public final class BeamRenderer {
         ItemStack held = player.getMainHandItem();
         if (held.getItem() instanceof EtherManipulatorItem) {
             renderLocal(mc, player, held, camPos, pt, time, dt, ps, buf, m);
+            ElementFx.frame(mc, player, held, nozzle, barrel, camPos, time, dt, pt, com.ethermod.client.Fx.glow(), m);
             BlockGlow.render(mc, player, held, camPos, time, pt, buf, m);
             OreSense.render(mc, player, held, camPos, time, buf, m);
         } else if (lastBeamState) {
@@ -160,6 +149,7 @@ public final class BeamRenderer {
         BeaconMarkers.render(mc, player, camPos, camLeft, time, buf, m);
         ModuleMarkers.render(mc, camPos, camLeft, time, buf, m);
         LeftClickFx.render(mc, camPos, pt, time, vc, m);
+        com.ethermod.client.StasisFx.renderArrows(mc, camPos, pt, time, vc, m);
         if (held.getItem() instanceof EtherManipulatorItem)
             MassPreview.render(mc, player, held, camPos, time, vc, m);
 
@@ -209,19 +199,24 @@ public final class BeamRenderer {
                             : elasticDir(localAim, aimNow, dt);
             localTip = rawHit;
 
-            drawBeam(
-                    m,
-                    camPos,
-                    nozzle,
-                    localAim,
-                    localTip,
-                    extend,
-                    level,
-                    time,
-                    color,
-                    hitSomething);
-            drawArcs(m, camPos, player, held, hit, level, time, color);
-            drawRefraction(m, camPos, player, held, level, time, color, extend);
+            if (com.ethermod.item.OrbMode.get(held) == com.ethermod.item.OrbMode.LIGHT) {
+                lightBeacon(mc, buf, m, camPos, nozzle, localTip, extend, time, color);
+            } else {
+                drawBeam(
+                        player.getId(),
+                        m,
+                        camPos,
+                        nozzle,
+                        localAim,
+                        localTip,
+                        extend,
+                        level,
+                        time,
+                        color,
+                        hitSomething);
+                drawArcs(m, camPos, player, held, hit, level, time, color);
+                drawRefraction(m, camPos, player, held, level, time, color, extend);
+            }
             spawnImpactFx(mc.level, hit, localTip, nozzle, color, level, dt, hitSomething, -1);
             Vec3 toW = localTip;
 
@@ -272,7 +267,13 @@ public final class BeamRenderer {
             Vec3[] nb = Muzzle.resolve(p.getId(), false, proj, view, camPos);
             Vec3 fromW = nb != null ? nb[0] : approximateMuzzle(p, pt);
             boolean hitSomething = hit.getType() != HitResult.Type.MISS;
+            if (com.ethermod.item.OrbMode.get(held) == com.ethermod.item.OrbMode.LIGHT) {
+                lightBeacon(mc, mc.renderBuffers().bufferSource(), m, camPos, fromW, toW, Math.min(1f, heldTicks / 2.5f), time, color);
+                spawnImpactFx(level, hit, toW, fromW, color, lvl, dt, hitSomething, p.getId());
+                continue;
+            }
             drawBeam(
+                    p.getId(),
                     m,
                     camPos,
                     fromW,
@@ -286,6 +287,23 @@ public final class BeamRenderer {
             drawArcs(m, camPos, p, held, hit, lvl, time, color);
             drawRefraction(m, camPos, p, held, lvl, time, color, Math.min(1f, heldTicks / 2.5f));
             spawnImpactFx(level, hit, toW, fromW, color, lvl, dt, hitSomething, p.getId());
+        }
+    }
+
+    private static long lastBeaconMote = Long.MIN_VALUE;
+
+    /** Photonic's beacon in place of the beam (vanilla's beacon columns, FX bench), with a mote of light every 8 ticks. */
+    private static void lightBeacon(
+            Minecraft mc, MultiBufferSource.BufferSource buf, Matrix4f m, Vec3 camPos, Vec3 fromW, Vec3 toW, float extend, float time, float[] color) {
+        Vec3 to = fromW.lerp(toW, extend);
+        LightBeacon.draw(buf, m, fromW.subtract(camPos), to.subtract(camPos), time, color);
+        long tick = (long) time;
+        if (tick % 8 == 0 && tick != lastBeaconMote && !mc.isPaused()) {
+            lastBeaconMote = tick;
+            Vec3 p = fromW.lerp(to, Math.random());
+            mc.level.addParticle(
+                    net.minecraft.core.particles.ParticleTypes.END_ROD,
+                    p.x, p.y, p.z, (Math.random() - 0.5) * 0.04, 0.01, (Math.random() - 0.5) * 0.04);
         }
     }
 
@@ -323,6 +341,7 @@ public final class BeamRenderer {
             Vec3 to = near.get(i).getBoundingBox().getCenter();
             Vec3 dir = to.subtract(from).normalize();
             drawBeam(
+                    -(player.getId() * 32 + i + 1), // own roll/arcs, no swell (not the striking beam)
                     m,
                     camPos,
                     from,
@@ -364,6 +383,7 @@ public final class BeamRenderer {
                                             net.minecraft.world.level.ClipContext.Fluid.NONE,
                                             player));
             drawBeam(
+                    -(player.getId() * 32 + 16 + k),
                     m,
                     camPos,
                     from,
@@ -400,6 +420,7 @@ public final class BeamRenderer {
      * length, and the gradient flows towards the target.
      */
     private static void drawBeam(
+            int owner,
             Matrix4f m,
             Vec3 camPos,
             Vec3 fromW,
@@ -479,46 +500,8 @@ public final class BeamRenderer {
         }
         pts[n] = ctl[nc];
 
-        float core = (0.45f + 0.15f * lv) * PX;
-        float glow = (2.2f + 0.6f * lv) * PX;
-        Vec3 prevL0 = null, prevL1 = null, prevR1 = null, prevR0 = null;
-        float[] prevCol = null;
-        for (int i = 0; i <= n; i++) {
-            Vec3 p = pts[i];
-            Vec3 tan = pts[Math.min(n, i + 1)].subtract(pts[Math.max(0, i - 1)]).normalize();
-            Vec3 side = tan.cross(p.scale(-1)); // across the line, facing the camera
-            if (side.lengthSqr() < 1e-9) side = su;
-            side = side.normalize();
-            float ks = nearScale(p);
-            double t = (double) i / n;
-            // hue gradient along the beam, flowing outward
-            float hue = hsv[0] + 0.025f * (float) Math.sin((t * 1.5 - time * 0.05) * Math.PI * 2);
-            float[] rgb = hsvToRgb(hue, hsv[1], hsv[2]);
-            float fadeIn = (float) Math.min(1, t * n / (1.5 * sub)); // soft start at the nozzle
-            if (!hitSomething) {
-                // hitting nothing: the end dissolves over the last stretch, the fade's edge
-                // breathing a little
-                double fadeLen =
-                        Math.min(0.45, 2.5 / Math.max(full, 0.1))
-                                * (0.85 + 0.15 * Math.sin(time * 0.35));
-                double into = (t - (1 - fadeLen)) / fadeLen;
-                if (into > 0) fadeIn *= (float) Math.pow(1 - Math.min(1, into), 1.6);
-            }
-            float[] col = {rgb[0], rgb[1], rgb[2], fadeIn};
-            Vec3 l0 = p.add(side.scale(-glow * ks)), l1 = p.add(side.scale(-core * ks));
-            Vec3 r1 = p.add(side.scale(core * ks)), r0 = p.add(side.scale(glow * ks));
-            if (prevL0 != null) {
-                // outer glow: fades from the core edge to nothing; centre: bright, whiter
-                lane(prevL0, l0, prevL1, l1, prevCol, col, 0f, 0.45f);
-                lane(prevL1, l1, prevR1, r1, prevCol, col, -1f, -1f);
-                lane(prevR1, r1, prevR0, r0, prevCol, col, 0.45f, 0f);
-            }
-            prevL0 = l0;
-            prevL1 = l1;
-            prevR1 = r1;
-            prevR0 = r0;
-            prevCol = col;
-        }
+        // the look chosen on the FX bench: the Prism rope, with surface arcs and the damage swell
+        PrismRope.draw(owner, pts, sub, su, time, level, color, hitSomething, full);
     }
 
     /**

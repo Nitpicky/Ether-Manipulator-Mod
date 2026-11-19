@@ -1,7 +1,6 @@
 package com.ethermod.beam;
 
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
@@ -55,7 +54,7 @@ final class Compressor {
                                 sp.getX(),
                                 sp.getY(),
                                 sp.getZ(),
-                                SoundEvents.PISTON_CONTRACT,
+                                com.ethermod.sound.ModSounds.WORLD_PISTON_CONTRACT,
                                 SoundSource.PLAYERS,
                                 0.3f,
                                 1.6f);

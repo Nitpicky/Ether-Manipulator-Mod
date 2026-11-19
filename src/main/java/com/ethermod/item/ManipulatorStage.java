@@ -130,6 +130,7 @@ public enum ManipulatorStage {
     // =========================================================================
 
     public static ManipulatorStage get(ItemStack stack) {
+        if (com.ethermod.config.ServerConfig.allTiers()) return NETHERITE;
         CompoundTag tag =
                 stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
         int id = tag.getInt(TAG_STAGE);

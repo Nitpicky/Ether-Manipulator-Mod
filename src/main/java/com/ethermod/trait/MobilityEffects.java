@@ -9,7 +9,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -62,7 +61,7 @@ public final class MobilityEffects {
                 sp.getX(),
                 sp.getY(),
                 sp.getZ(),
-                SoundEvents.BREEZE_JUMP,
+                com.ethermod.sound.ModSounds.WORLD_BREEZE_JUMP,
                 SoundSource.PLAYERS,
                 0.6f,
                 1.4f);
@@ -201,7 +200,7 @@ public final class MobilityEffects {
                 0.6,
                 0.3);
         sl.playSound(
-                null, sp.blockPosition(), SoundEvents.TOTEM_USE, SoundSource.PLAYERS, 0.8f, 1.3f);
+                null, sp.blockPosition(), com.ethermod.sound.ModSounds.WORLD_TOTEM_USE, SoundSource.PLAYERS, 0.8f, 1.3f);
         sp.displayClientMessage(
                 Component.translatable("message.ethermod.phoenix").withStyle(ChatFormatting.GOLD),
                 true);

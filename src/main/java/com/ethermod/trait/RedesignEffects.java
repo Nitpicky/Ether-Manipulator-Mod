@@ -105,32 +105,43 @@ public final class RedesignEffects {
         }
         boolean changed = false;
         // The shared tank reloads Jhin-style: nothing trickles back while you keep firing; once no Ether has been
-        // spent for the reload delay (shorter at higher tiers), the whole tank fills at once. Four clicks lead in.
+        // spent for the reload delay (shorter at higher tiers), the whole tank fills at once. The reload animation leads in.
         int cap = OrbMode.capacity(st), tank = OrbMode.tank(st);
         var data = p.getPersistentData();
         // spent since last tick: restart the wait
-        if (tank < data.getInt("mm_tank_last")) data.putInt("mm_refill_ether", 0);
+        if (tank < data.getInt("mm_tank_last")) {
+            // fired during the reload animation: call it off
+            if (reloadDelay(st) - data.getInt("mm_refill_ether") <= RELOAD_LEAD)
+                net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(
+                        p, new com.ethermod.network.payload.ReloadPayload(-100));
+            data.putInt("mm_refill_ether", 0);
+        }
         data.putInt("mm_tank_last", tank);
         if (tank < cap) {
             int delay = reloadDelay(st);
             int idle = data.getInt("mm_refill_ether") + 1;
             int lead = delay - idle;
-            if (lead > 0 && lead <= 8 && lead % 2 == 0)
+            // the reload (FX bench "intake"): the animation starts RELOAD_LEAD ticks before the fill, so its clamp
+            // lands on it; Ether is drawn in with a soft charge, and a small click when the tank is full
+            if (lead == Math.min(RELOAD_LEAD, delay - 1))
+                net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(
+                        p, new com.ethermod.network.payload.ReloadPayload(lead));
+            if (lead == RELOAD_LEAD - 8)
                 p.playNotifySound(
-                        net.minecraft.sounds.SoundEvents.LEVER_CLICK,
+                        com.ethermod.sound.ModSounds.UI_RESPAWN_ANCHOR_CHARGE,
                         net.minecraft.sounds.SoundSource.PLAYERS,
-                        0.25f,
-                        1.5f + (8 - lead) * 0.05f);
+                        0.18f,
+                        1.5f);
             if (idle >= delay) {
                 OrbMode.setTank(st, cap);
                 data.putInt("mm_tank_last", cap);
                 idle = 0;
                 changed = true;
                 p.playNotifySound(
-                        net.minecraft.sounds.SoundEvents.ARMOR_EQUIP_NETHERITE.value(),
+                        com.ethermod.sound.ModSounds.UI_COPPER_BULB_TURN_OFF,
                         net.minecraft.sounds.SoundSource.PLAYERS,
-                        0.3f,
-                        1.2f);
+                        0.1f,
+                        1.3f);
             }
             data.putInt("mm_refill_ether", idle);
         } else data.putInt("mm_refill_ether", 0);
@@ -144,10 +155,12 @@ public final class RedesignEffects {
         }
     }
 
-    /** Ticks without spending Ether before the tank reloads: the config value at Prototype, 15 less per tier. */
+    /** Ticks from the reload animation's start to its clamp (1.16s of the 1.6s animation). */
+    static final int RELOAD_LEAD = 23;
+
+    /** Ticks without spending Ether before the tank reloads: from the server config, Prototype to Overclocked. */
     public static int reloadDelay(net.minecraft.world.item.ItemStack st) {
-        int base = com.ethermod.config.EtherConfig.ETHER_REFILL.get();
-        return Math.max(10, base - 15 * com.ethermod.item.ManipulatorStage.get(st).ordinal());
+        return com.ethermod.config.ServerConfig.reloadTicks(com.ethermod.item.ManipulatorStage.get(st).ordinal());
     }
 
     private static boolean touchesFire(Entity p) {
@@ -250,7 +263,7 @@ public final class RedesignEffects {
                 if (!q.equals(ev.getPos())
                         && s.getBlock() instanceof CropBlock c
                         && !c.isMaxAge(s)
-                        && ev.getLevel().mayInteract(p, q))
+                        && com.ethermod.util.Protect.may(ev.getLevel(), p, q))
                     ev.getLevel()
                             .setBlockAndUpdate(
                                     q, c.getStateForAge(Math.min(c.getMaxAge(), c.getAge(s) + 1)));
@@ -393,6 +406,50 @@ public final class RedesignEffects {
         e.setDeltaMovement(Vec3.ZERO);
         e.setNoGravity(true);
         if (e instanceof Mob m) m.setNoAi(true);
+        // the amber tint and the quickening ding (client StasisFx)
+        net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingEntityAndSelf(
+                e, new com.ethermod.network.payload.StasisPayload(e.getId(), ticks));
+    }
+
+    public static boolean inStasis(LivingEntity e) {
+        return FROZEN.containsKey(e.getUUID());
+    }
+
+    /** The Stasis Grenade's burst: adds its strength to the stored push, keeping the last hit's aim. */
+    public static void burstInto(LivingEntity e, Vec3 push) {
+        var d = e.getPersistentData();
+        if (!inStasis(e)) {
+            impulse(e, push);
+            return;
+        }
+        { // the grenade's spot is the one authority on direction; stored hits only add strength
+            var n = push.normalize();
+            d.putDouble("mm_stasis_x", n.x);
+            d.putDouble("mm_stasis_y", n.y);
+            d.putDouble("mm_stasis_z", n.z);
+        }
+        d.putDouble("mm_stasis_force", Math.min(STASIS_MAX, d.getDouble("mm_stasis_force") + push.length()));
+    }
+
+    /** Lets a held creature go now, with all the knockback it stored. */
+    public static void thaw(LivingEntity e) {
+        var f = FROZEN.remove(e.getUUID());
+        if (f != null) let(e, f, e.level().getGameTime());
+    }
+
+    private static void let(LivingEntity e, Frozen f, long now) {
+        var d = e.getPersistentData();
+        var v = launch(e, false);
+        e.setNoGravity(f.noGravity());
+        if (e instanceof Mob m) m.setNoAi(f.noAi());
+        e.setDeltaMovement(v);
+        e.hurtMarked = true;
+        d.putLong("mm_stasis_cooldown", now + 40);
+        d.remove("mm_stasis_ex");
+        d.remove("mm_stasis_ey");
+        d.remove("mm_stasis_ez");
+        net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingEntityAndSelf(
+                e, new com.ethermod.network.payload.StasisPayload(e.getId(), 0));
     }
 
     public static void impulse(LivingEntity e, Vec3 force) {
@@ -404,19 +461,88 @@ public final class RedesignEffects {
         e.hurtMarked = true;
     }
 
+    /**
+     * Stasis amplifies what it stores: each knockback taken while held counts this much more, up to
+     * {@link #STASIS_MAX} (blocks/tick), so a setup of a few hits sends it flying.
+     */
+    public static final double STASIS_GAIN = 1.8, STASIS_MAX = 3.0;
+
     private static void store(LivingEntity e, Vec3 force) {
         if (force.lengthSqr() < 1e-6) return;
         var d = e.getPersistentData();
         d.putDouble(
-                "mm_stasis_force", Math.min(2.5, d.getDouble("mm_stasis_force") + force.length()));
+                "mm_stasis_force",
+                Math.min(STASIS_MAX, d.getDouble("mm_stasis_force") + force.length() * STASIS_GAIN));
         var n = force.normalize();
         d.putDouble("mm_stasis_x", n.x);
         d.putDouble("mm_stasis_y", n.y);
         d.putDouble("mm_stasis_z", n.z);
+        sendForce(e);
+    }
+
+    /**
+     * What a Stasis Grenade's burst will add on release: its strength joins the stored knockback,
+     * and its direction (away from where the grenade stuck) is the launch direction. Shown in the
+     * arrow before it happens.
+     */
+    public static void expectBurst(LivingEntity e, Vec3 push) {
+        var d = e.getPersistentData();
+        d.putDouble("mm_stasis_ex", push.x);
+        d.putDouble("mm_stasis_ey", push.y);
+        d.putDouble("mm_stasis_ez", push.z);
+        sendForce(e);
+    }
+
+    /**
+     * The velocity a held creature leaves with: the stored strength (plus a pending burst) along the
+     * last hit's direction (the burst's own when nothing hit it), always with enough lift to leave
+     * the ground, so it flies instead of being dragged to a stop by friction. The arrow and the
+     * release both use this, so the preview is the launch.
+     */
+    private static Vec3 launch(LivingEntity e, boolean withBurst) {
+        var d = e.getPersistentData();
+        var burst = withBurst
+                ? new Vec3(d.getDouble("mm_stasis_ex"), d.getDouble("mm_stasis_ey"), d.getDouble("mm_stasis_ez"))
+                : Vec3.ZERO;
+        double force = Math.min(STASIS_MAX, d.getDouble("mm_stasis_force") + burst.length());
+        if (force < 1e-6) return Vec3.ZERO;
+        // the Stasis Grenade's spot on the body sets the direction (stored hits only add
+        // strength); without a pending burst, the last stored direction
+        var dir = burst.lengthSqr() > 1e-6
+                ? burst.normalize()
+                : new Vec3(d.getDouble("mm_stasis_x"), d.getDouble("mm_stasis_y"), d.getDouble("mm_stasis_z"));
+        var v = dir.scale(force);
+        // lift so a level push flies instead of dragging along the ground; a push aimed down
+        // (grenade on top) stays down
+        if (dir.y < -0.2) return v;
+        return new Vec3(v.x, Math.max(v.y, .3 + .12 * force), v.z);
+    }
+
+    /** The teal arrow over the held creature: where (and how hard) it will fly on release. */
+    private static void sendForce(LivingEntity e) {
+        var v = launch(e, true);
+        net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingEntityAndSelf(
+                e, new com.ethermod.network.payload.StasisForcePayload(e.getId(), (float) v.x, (float) v.y, (float) v.z));
+    }
+
+    private static UUID quiet;
+
+    /** Damages a held creature without its knockback counting toward the stored push. */
+    public static void hurtQuietly(LivingEntity e, net.minecraft.world.damagesource.DamageSource src, float amount) {
+        quiet = e.getUUID();
+        try {
+            e.hurt(src, amount);
+        } finally {
+            quiet = null;
+        }
     }
 
     @SubscribeEvent
     public static void knock(LivingKnockBackEvent ev) {
+        if (ev.getEntity().getUUID().equals(quiet)) {
+            ev.setCanceled(true);
+            return;
+        }
         if (FROZEN.containsKey(ev.getEntity().getUUID())) {
             store(
                     ev.getEntity(),
@@ -440,22 +566,15 @@ public final class RedesignEffects {
                 continue;
             }
             if (now >= f.expires()) {
-                var d = e.getPersistentData();
-                var v =
-                        new Vec3(
-                                        d.getDouble("mm_stasis_x"),
-                                        d.getDouble("mm_stasis_y"),
-                                        d.getDouble("mm_stasis_z"))
-                                .scale(d.getDouble("mm_stasis_force"));
-                e.setNoGravity(f.noGravity());
-                if (e instanceof Mob m) m.setNoAi(f.noAi());
-                e.setDeltaMovement(v);
-                e.hurtMarked = true;
-                d.putLong("mm_stasis_cooldown", now + 40);
+                let(e, f, now);
                 it.remove();
             } else {
                 if (e.getDeltaMovement().lengthSqr() > .09) store(e, e.getDeltaMovement());
-                e.setPos(f.at());
+                if (e instanceof ServerPlayer sp) {
+                    // players move on their own side: pull them back to the spot when they drift
+                    if (sp.position().distanceToSqr(f.at()) > 1e-4)
+                        sp.connection.teleport(f.at().x, f.at().y, f.at().z, sp.getYRot(), sp.getXRot());
+                } else e.setPos(f.at());
                 e.setDeltaMovement(Vec3.ZERO);
                 e.resetFallDistance();
                 if (e instanceof Mob m) m.getNavigation().stop();
@@ -554,6 +673,7 @@ public final class RedesignEffects {
                 || d.hasUUID("mm_summoner")) return;
         var owner = sl.getServer().getPlayerList().getPlayer(d.getUUID("mm_burn_owner"));
         if (owner == null
+                || !com.ethermod.config.ServerConfig.blazelings()
                 || !Traits.has(Manipulator.stack(owner), "pyrotechnic.soulwake")
                 || victim == owner
                 || ally(owner, victim)) return;
@@ -566,7 +686,7 @@ public final class RedesignEffects {
                                                         .getUUID("mm_summoner")
                                                         .equals(owner.getUUID()))
                         .size()
-                >= 8) return;
+                >= com.ethermod.config.ServerConfig.maxSummons()) return;
         var pet = com.ethermod.registry.ModEntities.SOUL_BLAZELING.get().create(sl);
         if (pet == null) return;
         pet.setPos(victim.position());
@@ -576,7 +696,7 @@ public final class RedesignEffects {
         sl.addFreshEntity(pet);
         track(pet);
         var pos = victim.blockPosition();
-        if (sl.mayInteract(owner, pos) && sl.getBlockState(pos).isAir())
+        if (com.ethermod.config.ServerConfig.fireAndLava() && com.ethermod.util.Protect.may(sl, owner, pos) && sl.getBlockState(pos).isAir())
             WorldEffects.tempBlock(sl, pos, Blocks.SOUL_FIRE.defaultBlockState(), 100);
     }
 

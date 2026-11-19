@@ -61,6 +61,7 @@ public final class MiningDamageTracker {
             int breakerId,
             float damageAmount,
             ServerPlayer player) {
+        if (com.ethermod.config.ServerConfig.blacklisted(level.getBlockState(pos))) return;
         long key = pos.asLong();
         Map<Long, DamageEntry> damage =
                 DAMAGE_MAP.computeIfAbsent(level.dimension(), k -> new HashMap<>());

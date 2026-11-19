@@ -37,15 +37,15 @@ runs {
     client {
         // CI playtest: a fixed 1280x720 window for the screenshots
         if (System.getenv('ETHERMOD_AUTOTEST') != null) {
-            programArguments.addAll '--width', '1280', '--height', '720'
+            arguments.addAll '--width', '1280', '--height', '720'
         }
     }
     server {
-        programArguments.add '--nogui'
+        arguments.add '--nogui'
     }
 
     data {
-        programArguments.addAll '--mod', 'ethermod', '--all',
+        arguments.addAll '--mod', 'ethermod', '--all',
                 '--output', file('src/generated/resources/').absolutePath,
                 '--existing', file('src/main/resources/').absolutePath
     }

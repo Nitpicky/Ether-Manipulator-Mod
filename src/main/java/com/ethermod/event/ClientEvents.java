@@ -13,11 +13,15 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.common.NeoForge;
 
-@EventBusSubscriber(modid = EtherMod.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = EtherMod.MODID, value = Dist.CLIENT)
 public class ClientEvents {
 
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
+        // the Mods list's Config button opens NeoForge's settings screen for both config files
+        net.neoforged.fml.ModList.get().getModContainerById(EtherMod.MODID).ifPresent(c -> c.registerExtensionPoint(
+                net.neoforged.neoforge.client.gui.IConfigScreenFactory.class,
+                net.neoforged.neoforge.client.gui.ConfigurationScreen::new));
         NeoForge.EVENT_BUS.register(ClientInputHandler.class);
         com.ethermod.entity.SoulBlazeling.smokeEmitter = com.ethermod.client.BlazelingSmoke::emit;
         NeoForge.EVENT_BUS.register(BeamRenderer.class);
@@ -77,6 +81,18 @@ public class ClientEvents {
                         (type, level, x, y, z, dx, dy, dz) ->
                                 new com.ethermod.client.GeyserParticle(
                                         level, x, y, z, dx, dy, dz, sprites, 2));
+    }
+
+    /** Stasis: every living creature's renderer gets the amber tint layer (client StasisFx). */
+    @SubscribeEvent
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public static void stasisLayers(EntityRenderersEvent.AddLayers event) {
+        for (var type : event.getEntityTypes())
+            if (event.getRenderer(type) instanceof net.minecraft.client.renderer.entity.LivingEntityRenderer r)
+                r.addLayer(new com.ethermod.client.StasisFx.Layer(r));
+        for (var skin : event.getSkins())
+            if (event.getSkin(skin) instanceof net.minecraft.client.renderer.entity.LivingEntityRenderer r)
+                r.addLayer(new com.ethermod.client.StasisFx.Layer(r));
     }
 
     @SubscribeEvent

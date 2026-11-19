@@ -1,6 +1,5 @@
 package com.ethermod.item;
 
-import com.ethermod.config.EtherConfig;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -64,18 +63,14 @@ public final class GemColors {
         KEYWORDS.put("certus", 0xBFE6FF);
     }
 
-    private static String cachedConfig;
-    private static Map<Item, Integer> configured = Map.of();
 
     /** The beam colour this item gives, or -1 if it isn't a gem. */
     public static int colorOf(ItemStack stack) {
         if (stack.isEmpty()) return -1;
         Item item = stack.getItem();
-        Integer c = config().get(item);
+        Integer c = VANILLA.get(item);
         if (c != null) return c;
-        c = VANILLA.get(item);
-        if (c != null) return c;
-        if (autoGems() && stack.is(C_GEMS)) {
+        if (stack.is(C_GEMS)) {
             String path = BuiltInRegistries.ITEM.getKey(item).getPath();
             for (var e : KEYWORDS.entrySet()) if (path.contains(e.getKey())) return e.getValue();
             return fromId(BuiltInRegistries.ITEM.getKey(item).toString());
@@ -83,40 +78,6 @@ public final class GemColors {
         return -1;
     }
 
-    private static boolean autoGems() {
-        try {
-            return EtherConfig.AUTO_GEMS.get();
-        } catch (IllegalStateException e) {
-            return true;
-        }
-    }
-
-    private static Map<Item, Integer> config() {
-        java.util.List<? extends String> list;
-        try {
-            list = EtherConfig.GEM_COLORS.get();
-        } catch (IllegalStateException e) {
-            return Map.of();
-        }
-        String key = String.valueOf(list);
-        if (key.equals(cachedConfig)) return configured;
-        Map<Item, Integer> m = new java.util.HashMap<>();
-        for (String entry : list) {
-            int eq = entry.indexOf("=#");
-            if (eq < 0) continue;
-            ResourceLocation id = ResourceLocation.tryParse(entry.substring(0, eq).trim());
-            if (id == null || !BuiltInRegistries.ITEM.containsKey(id)) continue;
-            try {
-                m.put(
-                        BuiltInRegistries.ITEM.get(id),
-                        Integer.parseInt(entry.substring(eq + 2).trim(), 16) & 0xFFFFFF);
-            } catch (NumberFormatException ignored) {
-            }
-        }
-        cachedConfig = key;
-        configured = m;
-        return m;
-    }
 
     /** A stable, bright colour from an id, for gems no keyword covers. */
     private static int fromId(String id) {

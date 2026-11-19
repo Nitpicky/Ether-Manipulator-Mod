@@ -76,6 +76,7 @@ public final class BlockGlow {
             MultiBufferSource.BufferSource buf,
             Matrix4f m) {
         long now = mc.level.getGameTime();
+        if (!com.ethermod.config.ClientConfig.minedGlow()) return;
         float[] c = com.ethermod.item.ManipulatorColors.beamRgba(held);
         R = c[0];
         G = c[1];
@@ -84,10 +85,11 @@ public final class BlockGlow {
         // only Beam mode mines, so only it previews what it would mine
         if (!player.isShiftKeyDown()
                 && com.ethermod.item.OrbMode.get(held) == com.ethermod.item.OrbMode.ENERGY) {
-            HitResult hit = BeamTrace.cast(player, Traits.beamRange(held), pt);
+            // a creature in the way takes the beam: the blocks behind it are not being mined
+            HitResult hit = BeamTrace.castWithEntities(player, Traits.beamRange(held), pt);
             if (hit instanceof BlockHitResult bh && hit.getType() == HitResult.Type.BLOCK) {
                 for (BlockPos p : affected(mc, player, held, bh.getBlockPos())) {
-                    aimed.add(p.asLong());
+                    // the aim itself shows vanilla's outline now (user); only mined blocks glow
                     if (BeamRenderState.beamActive) touch(p.asLong(), now);
                 }
             }

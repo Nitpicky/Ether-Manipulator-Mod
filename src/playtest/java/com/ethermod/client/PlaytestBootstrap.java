@@ -730,6 +730,8 @@ public final class PlaytestBootstrap {
             case 968 -> opts.keyAttack.setDown(true);
             case 970 -> opts.keyAttack.setDown(false);
             case 978 -> shot(mc, "26_gust_grenade_latched"); // +2: grenade wind-up
+            // the Stasis hold lasts 3s; cut it short so the burst lands before the check
+            case 996 -> server(mc, (s, p) -> com.ethermod.beam.GustGrenade.hurry());
             case 1006 -> shot(mc, "26b_gust_grenade_burst");
             case 1012 ->
                     server(
@@ -1061,15 +1063,19 @@ public final class PlaytestBootstrap {
         boolean noModules = net.minecraft.core.registries.BuiltInRegistries.ITEM.getOptional(
                 net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("ethermod", "module_hydraulic")).isEmpty();
         log((noModules ? "PASS" : "FAIL") + " gems: the Module items are gone");
-        for (String[] r : new String[][] {{"upgrade_iron", "minecraft:iron_block", "minecraft:amethyst_shard"}, {"upgrade_diamond", "minecraft:gold_block", "minecraft:diamond"}}) {
+        for (String[] r : new String[][] {{"upgrade_iron", "minecraft:iron_block", "minecraft:amethyst_shard", "minecraft:iron_ingot"}, {"upgrade_diamond", "minecraft:gold_block", "minecraft:diamond", "minecraft:gold_ingot"}}) {
             var rec = s.getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("ethermod", r[0]));
             boolean ok = rec.isPresent() && rec.get().value().getIngredients().size() == 9
-                    && rec.get().value().getIngredients().get(1).test(new net.minecraft.world.item.ItemStack(
+                    && rec.get().value().getIngredients().get(3).test(new net.minecraft.world.item.ItemStack(
                             net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse(r[1]))))
+                    && rec.get().value().getIngredients().get(2).test(new net.minecraft.world.item.ItemStack(
+                            net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse(r[3]))))
+                    && rec.get().value().getIngredients().get(6).test(new net.minecraft.world.item.ItemStack(
+                            net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse(r[3]))))
                     && rec.get().value().getIngredients().get(4).test(new net.minecraft.world.item.ItemStack(
                             net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse(r[2]))))
-                    && rec.get().value().getIngredients().get(3).isEmpty();
-            log((ok ? "PASS" : "FAIL") + " recipes: " + r[0] + " is ingot/block/ingot with the gem in the waist");
+                    && rec.get().value().getIngredients().get(0).isEmpty();
+            log((ok ? "PASS" : "FAIL") + " recipes: " + r[0] + " is gem between two blocks, ingot fins top right and bottom left");
         }
         p.getInventory().clearOrCountMatchingItems(st -> com.ethermod.registry.ModItems.GEMS.values().stream().anyMatch(g -> st.is(g.get())), -1, p.inventoryMenu.getCraftSlots());
     }

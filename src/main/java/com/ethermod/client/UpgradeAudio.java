@@ -254,9 +254,9 @@ final class UpgradeAudio {
         Voice(SoundEvent event, float pitch, float volume, float seconds, boolean hover) {
             super(event, SoundSource.MASTER, RandomSource.create());
             this.pitch = pitch;
-            this.volume = volume;
+            this.volume = volume * com.ethermod.config.ClientConfig.ui();
             this.hover = hover;
-            peak = volume;
+            peak = this.volume;
             length = Math.max(2, (int) (seconds * 20));
             ends = time() + seconds + .05;
             relative = true;

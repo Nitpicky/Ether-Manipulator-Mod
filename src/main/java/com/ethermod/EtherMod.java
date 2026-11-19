@@ -9,7 +9,6 @@ import com.ethermod.registry.ModItems;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.config.ModConfig;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,8 +20,8 @@ public class EtherMod {
     public static final Logger LOGGER = LogManager.getLogger(MODID);
 
     public EtherMod(IEventBus modEventBus, ModContainer container) {
-        container.registerConfig(ModConfig.Type.COMMON, com.ethermod.config.EtherConfig.SPEC);
-
+        container.registerConfig(net.neoforged.fml.config.ModConfig.Type.SERVER, com.ethermod.config.ServerConfig.SPEC);
+        container.registerConfig(net.neoforged.fml.config.ModConfig.Type.CLIENT, com.ethermod.config.ClientConfig.SPEC);
         // Register deferred items, entities, and creative tab
         ModItems.register(modEventBus);
         ModEntities.register(modEventBus);

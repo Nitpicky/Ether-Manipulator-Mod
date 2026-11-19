@@ -7,7 +7,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
@@ -91,7 +90,7 @@ final class UtilityBeam {
     private static boolean single(
             ServerLevel level, ServerPlayer player, ItemStack tool, BlockHitResult hit) {
         BlockPos pos = hit.getBlockPos();
-        if (!level.mayInteract(player, pos) || !player.mayUseItemAt(pos, hit.getDirection(), tool))
+        if (!com.ethermod.util.Protect.may(level, player, pos) || !player.mayUseItemAt(pos, hit.getDirection(), tool))
             return false;
         BlockState bs = level.getBlockState(pos);
 
@@ -100,17 +99,17 @@ final class UtilityBeam {
                 || CandleCakeBlock.canLight(bs)) {
             level.setBlock(
                     pos, bs.setValue(BlockStateProperties.LIT, true), Block.UPDATE_ALL_IMMEDIATE);
-            level.playSound(null, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1f, 1.2f);
+            level.playSound(null, pos, com.ethermod.sound.ModSounds.WORLD_FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1f, 1.2f);
             level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
             return true;
         }
 
         // The sneak beam shears foliage (leaves, grass, flowers...) like shears would: the beam
         // passes through it otherwise, so this is the way to take it
-        if (com.ethermod.util.FoliageHelper.isFoliage(bs)) {
+        if (com.ethermod.util.FoliageHelper.isPlant(bs)) {
             level.removeBlock(pos, false);
             Block.popResource(level, pos, new ItemStack(bs.getBlock()));
-            level.playSound(null, pos, SoundEvents.SHEEP_SHEAR, SoundSource.BLOCKS, 0.8f, 1.2f);
+            level.playSound(null, pos, com.ethermod.sound.ModSounds.WORLD_SHEEP_SHEAR, SoundSource.BLOCKS, 0.8f, 1.2f);
             return true;
         }
 
@@ -119,7 +118,7 @@ final class UtilityBeam {
             if (isShearable(bs)) {
                 level.removeBlock(pos, false);
                 Block.popResource(level, pos, new ItemStack(bs.getBlock()));
-                level.playSound(null, pos, SoundEvents.SHEEP_SHEAR, SoundSource.BLOCKS, 0.8f, 1.2f);
+                level.playSound(null, pos, com.ethermod.sound.ModSounds.WORLD_SHEEP_SHEAR, SoundSource.BLOCKS, 0.8f, 1.2f);
                 return true;
             }
             if (bs.getBlock() instanceof BeehiveBlock hive
@@ -132,7 +131,7 @@ final class UtilityBeam {
                         player,
                         net.minecraft.world.level.block.entity.BeehiveBlockEntity.BeeReleaseStatus
                                 .BEE_RELEASED);
-                level.playSound(null, pos, SoundEvents.BEEHIVE_SHEAR, SoundSource.BLOCKS, 1f, 1f);
+                level.playSound(null, pos, com.ethermod.sound.ModSounds.WORLD_BEEHIVE_SHEAR, SoundSource.BLOCKS, 1f, 1f);
                 return true;
             }
         }
@@ -187,15 +186,15 @@ final class UtilityBeam {
     }
 
     private static boolean isRipeCrop(BlockState bs) {
-        return bs.getBlock() instanceof CropBlock crop && crop.isMaxAge(bs);
+        return bs.getBlock() instanceof CropBlock crop && crop.isMaxAge(bs)
+                || com.ethermod.util.FoliageHelper.extraRipe(bs);
     }
 
     /** Breaks a ripe crop like the player would; Replant puts a fresh one back. */
     private static void harvest(
             ServerLevel level, ServerPlayer player, ItemStack tool, BlockPos p) {
         BlockState bs = level.getBlockState(p);
-        if (!isRipeCrop(bs) || !level.mayInteract(player, p)) return;
-        CropBlock crop = (CropBlock) bs.getBlock();
+        if (!isRipeCrop(bs) || !com.ethermod.util.Protect.may(level, player, p)) return;
         if (!MiningDamageTracker.breakAsPlayer(player, p)) return;
     }
 
@@ -209,7 +208,7 @@ final class UtilityBeam {
             BlockState plant = crop.defaultBlockState();
             if (!plant.canSurvive(level, at)) continue;
             level.setBlockAndUpdate(at, plant);
-            level.playSound(null, at, SoundEvents.CROP_PLANTED, SoundSource.BLOCKS, 1f, 1f);
+            level.playSound(null, at, com.ethermod.sound.ModSounds.WORLD_CROP_PLANTED, SoundSource.BLOCKS, 1f, 1f);
             if (!player.getAbilities().instabuild) s.shrink(1);
             return true;
         }
@@ -299,17 +298,17 @@ final class UtilityBeam {
             level.playSound(
                     null,
                     animal.blockPosition(),
-                    SoundEvents.GENERIC_EAT,
+                    com.ethermod.sound.ModSounds.WORLD_GENERIC_EAT,
                     SoundSource.NEUTRAL,
                     0.6f,
                     1.2f);
     }
 
     private static SoundEvent soundFor(ItemAbility a) {
-        if (a == ItemAbilities.HOE_TILL) return SoundEvents.HOE_TILL;
-        if (a == ItemAbilities.SHOVEL_FLATTEN) return SoundEvents.SHOVEL_FLATTEN;
-        if (a == ItemAbilities.AXE_SCRAPE) return SoundEvents.AXE_SCRAPE;
-        if (a == ItemAbilities.AXE_WAX_OFF) return SoundEvents.AXE_WAX_OFF;
-        return SoundEvents.AXE_STRIP;
+        if (a == ItemAbilities.HOE_TILL) return com.ethermod.sound.ModSounds.WORLD_HOE_TILL;
+        if (a == ItemAbilities.SHOVEL_FLATTEN) return com.ethermod.sound.ModSounds.WORLD_SHOVEL_FLATTEN;
+        if (a == ItemAbilities.AXE_SCRAPE) return com.ethermod.sound.ModSounds.WORLD_AXE_SCRAPE;
+        if (a == ItemAbilities.AXE_WAX_OFF) return com.ethermod.sound.ModSounds.WORLD_AXE_WAX_OFF;
+        return com.ethermod.sound.ModSounds.WORLD_AXE_STRIP;
     }
 }

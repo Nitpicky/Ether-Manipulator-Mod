@@ -587,7 +587,7 @@ public final class MovementPhysics {
                             p.getX(),
                             p.getY(),
                             p.getZ(),
-                            net.minecraft.sounds.SoundEvents.MACE_SMASH_GROUND_HEAVY,
+                            com.ethermod.sound.ModSounds.WORLD_MACE_SMASH_GROUND_HEAVY,
                             net.minecraft.sounds.SoundSource.PLAYERS,
                             Math.min(1.2f, .5f + (float) fell * .05f),
                             .9f);

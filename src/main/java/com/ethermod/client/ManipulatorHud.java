@@ -178,11 +178,19 @@ public final class ManipulatorHud {
         // (inverting what is behind it). Full for a while, it fades out; any change brings it back.
         if (mode.usesTank() || mode.rmbShot().usesTank()) {
             int cap = OrbMode.capacity(stack), have = Math.min(cap, OrbMode.tank(stack));
-            if (have != lastTank || have < cap) fullSince = now;
+            // charging a shot that spends Ether brings the counter up right away
+            var charge = com.ethermod.beam.BeamRenderState.chargeMode;
+            if (have != lastTank || have < cap || charge != null && charge.usesTank()) fullSince = now;
             lastTank = have;
-            float target = now - fullSince > AMMO_LINGER_MS || open > .5f ? 0 : 1;
+            var counter = com.ethermod.config.ClientConfig.counter();
+            float flash = DryFireFx.flash();
+            float target = counter == com.ethermod.config.ClientConfig.Counter.HIDDEN || open > .5f ? 0
+                    : counter == com.ethermod.config.ClientConfig.Counter.ALWAYS || now - fullSince <= AMMO_LINGER_MS
+                                    || flash > 0 ? 1 : 0;
             ammoAlpha += (target - ammoAlpha) * Math.min(1, dt / 180f);
-            if (ammoAlpha > .02f) ammo(g, have + "/" + cap, (int) cx, (int) cy + 16, ammoAlpha);
+            // empty: tinted red; a refused shot flashes it a brighter, hotter red
+            float red = have == 0 || flash > 0 ? Math.max(have == 0 ? .55f : 0, flash) : -1;
+            if (ammoAlpha > .02f) ammo(g, have + "/" + cap, (int) cx, (int) cy + 16, ammoAlpha, red);
         } else ammoAlpha = 0;
     }
 
@@ -196,17 +204,23 @@ public final class ManipulatorHud {
     private static float ammoAlpha;
 
     /** Pixel digits (3x5, from ammo_digits.png: 0-9 then '/'), centred on x, blended like the crosshair. */
-    private static void ammo(GuiGraphics g, String text, int x, int y, float alpha) {
+    private static void ammo(GuiGraphics g, String text, int x, int y, float alpha, float red) {
         int w = text.length() * 4 - 1;
         int left = x - w / 2;
         com.mojang.blaze3d.systems.RenderSystem.enableBlend();
-        com.mojang.blaze3d.systems.RenderSystem.blendFuncSeparate(
-                com.mojang.blaze3d.platform.GlStateManager.SourceFactor.ONE_MINUS_DST_COLOR,
-                com.mojang.blaze3d.platform.GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR,
-                com.mojang.blaze3d.platform.GlStateManager.SourceFactor.ONE,
-                com.mojang.blaze3d.platform.GlStateManager.DestFactor.ZERO);
-        // with the inverting blend a darker source inverts less, so fading is a grey ramp
-        g.setColor(alpha, alpha, alpha, 1);
+        if (red >= 0) {
+            // red reads on any background with plain blending; 0 = dim red, 1 = bright flash
+            com.mojang.blaze3d.systems.RenderSystem.defaultBlendFunc();
+            g.setColor(.7f + .3f * red, .1f + .22f * red, .08f + .14f * red, alpha * (.8f + .2f * red));
+        } else {
+            com.mojang.blaze3d.systems.RenderSystem.blendFuncSeparate(
+                    com.mojang.blaze3d.platform.GlStateManager.SourceFactor.ONE_MINUS_DST_COLOR,
+                    com.mojang.blaze3d.platform.GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR,
+                    com.mojang.blaze3d.platform.GlStateManager.SourceFactor.ONE,
+                    com.mojang.blaze3d.platform.GlStateManager.DestFactor.ZERO);
+            // with the inverting blend a darker source inverts less, so fading is a grey ramp
+            g.setColor(alpha, alpha, alpha, 1);
+        }
         for (int i = 0; i < text.length(); i++) {
             char c = text.charAt(i);
             int glyph = c == '/' ? 10 : c - '0';

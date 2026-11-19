@@ -110,13 +110,14 @@ public class ClientInputHandler {
             int newPhase =
                     Math.min(2, ticksHeld * 3 / com.ethermod.trait.Traits.chargeTicks(held));
             if (newPhase > BeamRenderState.chargePhase) {
-                BeamRenderState.phaseFlash = 1f;
+                BeamRenderState.phaseFlash = com.ethermod.config.ClientConfig.reduceFlashing() ? 0.25f : 1f;
+                // each charge stage swells a beacon power note, louder and higher (FX bench)
                 mc.getSoundManager()
                         .play(
                                 net.minecraft.client.resources.sounds.SimpleSoundInstance.forUI(
-                                        net.minecraft.sounds.SoundEvents.AMETHYST_BLOCK_RESONATE,
-                                        1.0f + 0.4f * newPhase,
-                                        0.7f));
+                                        com.ethermod.sound.ModSounds.SHOT_BEACON_POWER_SELECT,
+                                        1.1f + 0.25f * newPhase,
+                                        0.2f + 0.05f * newPhase));
             }
             BeamRenderState.chargePhase = newPhase;
             BeamRenderState.chargeProgress =

@@ -17,6 +17,8 @@ public final class ModuleUnlocks {
     public static boolean known(ItemStack stack, ResourceLocation id) {
         if (id == null) return false;
         if (id.equals(Traits.PLASMIC) || id.equals(Traits.KINETIC)) return true;
+        if (com.ethermod.config.ServerConfig.moduleDisabled(id.getPath())) return false;
+        if (com.ethermod.config.ServerConfig.allModules()) return true;
         var tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).getUnsafe();
         var list = tag.getList(KEY, Tag.TAG_STRING);
         for (int i = 0; i < list.size(); i++)

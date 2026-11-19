@@ -41,7 +41,7 @@ public class UpgradeScreen extends Screen {
     private boolean colourPicker;
     private float hue = .45f, saturation = .5f, value = .8f;
     private int oldColour;
-    private static String primary = "forest", accent = "amethyst";
+    private static String primary = "petrol", accent = "copper";
     private static boolean settingsLoaded;
     private static final DyeColor[] DYES = {
         DyeColor.WHITE,
@@ -773,7 +773,8 @@ public class UpgradeScreen extends Screen {
         if (!dragging) {
             // a flick coasts on, then eases back into the advert-style turn, whichever way it
             // was last thrown
-            vy += (SPIN * spinDir - vy) * (1 - (float) Math.pow(.97, dt * 60));
+            float spin = com.ethermod.config.ClientConfig.spin() ? SPIN * spinDir : 0;
+            vy += (spin - vy) * (1 - (float) Math.pow(.97, dt * 60));
             yaw += vy * (float) dt;
             pitch += (0 - pitch) * (1 - (float) Math.pow(.985, dt * 60));
         }

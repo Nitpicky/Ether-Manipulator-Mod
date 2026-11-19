@@ -8,7 +8,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.phys.Vec3;
 
@@ -50,7 +49,7 @@ public final class Ziplines {
                 hook.getX(),
                 hook.getY(),
                 hook.getZ(),
-                SoundEvents.CHAIN_PLACE,
+                com.ethermod.sound.ModSounds.WORLD_CHAIN_PLACE,
                 SoundSource.PLAYERS,
                 1f,
                 0.8f);
@@ -92,7 +91,7 @@ public final class Ziplines {
                 hook.getX(),
                 hook.getY(),
                 hook.getZ(),
-                SoundEvents.CHAIN_PLACE,
+                com.ethermod.sound.ModSounds.WORLD_CHAIN_PLACE,
                 SoundSource.PLAYERS,
                 1f,
                 1.2f);
@@ -132,7 +131,7 @@ public final class Ziplines {
                 sp.getX(),
                 sp.getEyeY(),
                 sp.getZ(),
-                SoundEvents.CHAIN_HIT,
+                com.ethermod.sound.ModSounds.WORLD_CHAIN_HIT,
                 SoundSource.PLAYERS,
                 0.8f,
                 1.4f);

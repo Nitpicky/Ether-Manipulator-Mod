@@ -19,7 +19,7 @@ public final class TraitChoices {
             case "hydraulic" -> new String[][] {{"hydraulic.pressure", "hydraulic.reservoir"}, {"hydraulic.glacier", "hydraulic.rapids"}, {"hydraulic.tidecaller", "hydraulic.diving_bell"}};
             case "pyrotechnic" -> new String[][] {{"pyrotechnic.inferno", "pyrotechnic.crucible"}, {"pyrotechnic.wildfire", "pyrotechnic.flashover"}, {"pyrotechnic.soulwake", "pyrotechnic.rekindle"}};
             case "tectonic" -> new String[][] {{"tectonic.momentum", "tectonic.steady_hand"}, {"tectonic.fortune", "tectonic.silk_touch"}, {"tectonic.vein_miner", "tectonic.mass_pickup"}};
-            case "pneumatic" -> new String[][] {{"pneumatic.gale_force", "pneumatic.bellows"}, {"pneumatic.bunny_hop", "pneumatic.ground_slam"}, {"pneumatic.stasis", "pneumatic.rebound"}};
+            case "pneumatic" -> new String[][] {{"pneumatic.gale_force", "pneumatic.bellows"}, {"pneumatic.bunny_hop", "pneumatic.ground_slam"}, {"pneumatic.cyclone", "pneumatic.rebound"}};
             case "botanic" -> new String[][] {{"botanic.overgrowth", "botanic.seedbank"}, {"botanic.groundskeeper", "botanic.herder"}, {"botanic.bountiful", "botanic.cross_pollination"}};
             case "photonic" -> new String[][] {{"photonic.flare", "photonic.radiance"}, {"photonic.daybreak", "photonic.mirage"}, {"photonic.constellation", "photonic.supernova"}};
             case "gravitic" -> new String[][] {{"gravitic.blink", "gravitic.gravity_shift"}, {"gravitic.skyhook", "gravitic.zipline"}, {"gravitic.airwalk", "gravitic.flight"}};

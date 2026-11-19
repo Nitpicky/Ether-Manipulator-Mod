@@ -12,7 +12,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -168,10 +167,7 @@ public final class LeftClick {
     }
 
     private static void empty(ServerPlayer p) {
-        p.displayClientMessage(
-                Component.translatable("message.ethermod.not_enough_ether")
-                        .withStyle(ChatFormatting.RED),
-                true);
+        DryFire.signal(p);
     }
 
     /** False (and nothing happens) until {@code cooldown} ticks after the last use. */
@@ -310,7 +306,7 @@ public final class LeftClick {
                 p.getX(),
                 p.getEyeY(),
                 p.getZ(),
-                SoundEvents.FISHING_BOBBER_RETRIEVE,
+                com.ethermod.sound.ModSounds.WORLD_FISHING_BOBBER_RETRIEVE,
                 SoundSource.PLAYERS,
                 0.8f,
                 target == null ? 0.7f : 1.2f);
@@ -381,7 +377,7 @@ public final class LeftClick {
         while (!todo.isEmpty() && cut.size() < 256) {
             BlockPos q = todo.poll();
             var state = sl.getBlockState(q);
-            if (!ripe(state) || !sl.mayInteract(p, q)) continue;
+            if (!ripe(state) || !com.ethermod.util.Protect.may(sl, p, q)) continue;
             cut.add(q);
             if (overgrowth)
                 for (BlockPos n : BlockPos.betweenClosed(q.offset(-1, -1, -1), q.offset(1, 1, 1))) {
@@ -408,7 +404,7 @@ public final class LeftClick {
         sl.playSound(
                 null,
                 center,
-                SoundEvents.PLAYER_ATTACK_SWEEP,
+                com.ethermod.sound.ModSounds.WORLD_PLAYER_ATTACK_SWEEP,
                 SoundSource.PLAYERS,
                 0.5f,
                 1.4f);
@@ -418,7 +414,7 @@ public final class LeftClick {
     private static void cutCrop(ServerPlayer p, BlockPos q, Vec3 right) {
         if (p.isRemoved() || !(p.level() instanceof ServerLevel sl) || !sl.isLoaded(q)) return;
         var state = sl.getBlockState(q);
-        if (!ripe(state) || !sl.mayInteract(p, q)) return;
+        if (!ripe(state) || !com.ethermod.util.Protect.may(sl, p, q)) return;
         harvesting = p;
         try {
             if (!p.gameMode.destroyBlock(q)) return;
@@ -501,6 +497,7 @@ public final class LeftClick {
     /** A crop ready to harvest: a fully grown crop, nether wart or cocoa, or a melon/pumpkin. */
     private static boolean ripe(net.minecraft.world.level.block.state.BlockState s) {
         var b = s.getBlock();
+        if (com.ethermod.util.FoliageHelper.extraRipe(s)) return true;
         if (b instanceof net.minecraft.world.level.block.CropBlock crop) return crop.isMaxAge(s);
         if (b instanceof net.minecraft.world.level.block.NetherWartBlock)
             return s.getValue(net.minecraft.world.level.block.NetherWartBlock.AGE) >= 3;
@@ -527,7 +524,7 @@ public final class LeftClick {
                 at.x,
                 at.y,
                 at.z,
-                SoundEvents.PUFFER_FISH_BLOW_OUT,
+                com.ethermod.sound.ModSounds.WORLD_PUFFER_FISH_BLOW_OUT,
                 SoundSource.PLAYERS,
                 0.8f,
                 1.3f);

@@ -194,7 +194,7 @@ public enum OrbMode {
                 new String[] {
                     "hydraulic.reservoir", "pyrotechnic.crucible", "botanic.seedbank", "pneumatic.bellows"
                 }) if (Traits.has(stack, t)) n++;
-        return TANK_CAPACITY + TANK_STEP * n;
+        return com.ethermod.config.ServerConfig.tankBase() + com.ethermod.config.ServerConfig.tankPerTrait() * n;
     }
 
     /** Units in the shared tank. A Manipulator that never had one starts full. */
@@ -213,15 +213,15 @@ public enum OrbMode {
     public int shotCost(ItemStack s, int phase) {
         int p = Math.max(0, Math.min(2, phase));
         return switch (this) {
-            case ENERGY, GUST, LIGHT -> p == 2 ? 2 : 1;
-            case WATER, FROST, IGNITE, GROWTH -> 1;
-            case LAVA -> 3;
+            case ENERGY, GUST, FROST, IGNITE -> 1;
+            case LIGHT -> p == 2 ? 2 : 1;
+            case WATER, LAVA, GROWTH -> 4;
             default -> 0;
         };
     }
 
-    /** Left-click costs that are not charged shots: Gust's grenade and Growth's poison puff. */
-    public static final int GRENADE_COST = 1, PUFF_COST = 1;
+    /** Left-click cost that is not a charged shot: Gust's Stasis Grenade. */
+    public static final int GRENADE_COST = 2;
 
     /** The shared tank's level (kept per mode for callers that ask a mode). */
     public int tankLevel(ItemStack stack) {

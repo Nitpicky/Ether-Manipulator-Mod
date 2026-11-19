@@ -7,7 +7,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.neoforged.neoforge.network.PacketDistributor;
 
@@ -35,7 +34,7 @@ public final class Lodestar {
                         sp.getX(),
                         sp.getEyeY(),
                         sp.getZ(),
-                        SoundEvents.BEACON_ACTIVATE,
+                        com.ethermod.sound.ModSounds.WORLD_BEACON_ACTIVATE,
                         SoundSource.PLAYERS,
                         0.8f,
                         1.6f);
