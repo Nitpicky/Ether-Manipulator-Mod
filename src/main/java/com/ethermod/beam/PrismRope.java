@@ -25,6 +25,9 @@ final class PrismRope {
 
     private static final float PX = BeamFx.PX;
 
+    /** Strip pieces per beam segment with a shader pack. */
+    private static final int SUBDIV = Integer.getInteger("ethermod.fxSubdiv", 6);
+
     /** Integrated roll per beam owner, so a pressure change never makes the roll jump. */
     private static final Map<Integer, float[]> ROLL = new HashMap<>();
 
@@ -128,8 +131,28 @@ final class PrismRope {
      * camera so it is drawn over the shell, never fighting it.
      */
     private static void ribbon(
-            Vec3[] pts, Vec3 su, float[] h, float[] c, float[] a, VertexConsumer vc, boolean core) {
-        int n = pts.length - 1;
+            Vec3[] pts0, Vec3 su, float[] h0, float[] c, float[] a0, VertexConsumer vc, boolean core) {
+        // packs shade each flat piece on its own, so the strip bends in many small, smooth steps
+        // (Catmull-Rom through the beam's points) instead of one hard turn per segment
+        int n0 = pts0.length - 1, S = SUBDIV;
+        int n = n0 * S;
+        Vec3[] pts = new Vec3[n + 1];
+        float[] h = new float[n + 1], a = new float[n + 1];
+        for (int i = 0; i <= n; i++) {
+            int j = Math.min(n0 - 1, i / S);
+            double t = (i - j * S) / (double) S;
+            if (i == n) t = 1;
+            Vec3 p0 = pts0[Math.max(0, j - 1)], p1 = pts0[j], p2 = pts0[j + 1], p3 = pts0[Math.min(n0, j + 2)];
+            double t2 = t * t, t3 = t2 * t;
+            pts[i] =
+                    p1.scale(2)
+                            .add(p2.subtract(p0).scale(t))
+                            .add(p0.scale(2).subtract(p1.scale(5)).add(p2.scale(4)).subtract(p3).scale(t2))
+                            .add(p1.scale(3).subtract(p0).subtract(p2.scale(3)).add(p3).scale(t3))
+                            .scale(0.5);
+            h[i] = (float) (h0[j] + (h0[j + 1] - h0[j]) * t);
+            a[i] = (float) (a0[j] + (a0[j + 1] - a0[j]) * t);
+        }
         Vec3[] l = new Vec3[n + 1], rr = new Vec3[n + 1];
         for (int j = 0; j <= n; j++) {
             Vec3 p = pts[j];
