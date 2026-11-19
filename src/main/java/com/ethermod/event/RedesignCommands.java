@@ -40,6 +40,39 @@ public final class RedesignCommands {
                                                                             return ps.size();
                                                                         })))
                                 .then(
+                                        // one Module for the given players, exactly as its gem would
+                                        // (advancement, cue): for quests and modpack items
+                                        Commands.literal("unlock")
+                                                .then(
+                                                        Commands.argument("targets", net.minecraft.commands.arguments.EntityArgument.players())
+                                                                .then(
+                                                                        Commands.argument("module", net.minecraft.commands.arguments.ResourceLocationArgument.id())
+                                                                                .suggests(
+                                                                                        (c, b) ->
+                                                                                                net.minecraft.commands.SharedSuggestionProvider.suggestResource(
+                                                                                                        TraitLines.all(c.getSource().registryAccess()).stream()
+                                                                                                                .map(java.util.Map.Entry::getKey)
+                                                                                                                .filter(k -> !k.equals(Traits.PLASMIC) && !k.equals(Traits.KINETIC)),
+                                                                                                        b))
+                                                                                .executes(
+                                                                                        c -> {
+                                                                                            var id = net.minecraft.commands.arguments.ResourceLocationArgument.getId(c, "module");
+                                                                                            if (!id.getNamespace().equals("ethermod"))
+                                                                                                id = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("ethermod", id.getPath());
+                                                                                            final var mod = id;
+                                                                                            boolean exists =
+                                                                                                    TraitLines.all(c.getSource().registryAccess()).stream()
+                                                                                                            .anyMatch(e -> e.getKey().equals(mod));
+                                                                                            if (!exists)
+                                                                                                throw new com.mojang.brigadier.exceptions.SimpleCommandExceptionType(
+                                                                                                                net.minecraft.network.chat.Component.translatable("argument.id.invalid"))
+                                                                                                        .create();
+                                                                                            int n = 0;
+                                                                                            for (var p : net.minecraft.commands.arguments.EntityArgument.getPlayers(c, "targets"))
+                                                                                                if (ModuleItem.grant(p, mod)) n++;
+                                                                                            return n;
+                                                                                        }))))
+                                .then(
                                         Commands.literal("unlock_all")
                                                 .executes(
                                                         c -> {
