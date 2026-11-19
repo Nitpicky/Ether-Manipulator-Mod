@@ -196,6 +196,7 @@ public final class Fx {
     public static RenderLevelStageEvent.Stage drawStage() {
         if (!ShaderCompat.shadersActive()) return RenderLevelStageEvent.Stage.AFTER_LEVEL;
         // drawn with the particles (the pack places them right, before its clouds), or late
+        if (VARIANT.contains("_sort_t")) return RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS;
         return PARTICLE_STAGE
                 ? RenderLevelStageEvent.Stage.AFTER_PARTICLES
                 : RenderLevelStageEvent.Stage.AFTER_WEATHER;
@@ -389,6 +390,7 @@ public final class Fx {
      *   <li>{@code <setup>_p}: that setup, drawn in the particle stage
      * </ul>
      */
+    // particle_sort_nd: no depth anywhere; particle_sort_t / _tnd: in the translucent stage
     static final String VARIANT = System.getProperty("ethermod.fxVariant", "particle_sort");
 
     /**
@@ -397,7 +399,7 @@ public final class Fx {
      * takes the vertex normal: the particle program has none, so packs derive one per face and
      * light every beam segment flat on its own (the bands).
      */
-    static final boolean PARTICLE_STAGE = VARIANT.startsWith("particle") || VARIANT.endsWith("_p") || VARIANT.endsWith("_sort");
+    static final boolean PARTICLE_STAGE = VARIANT.startsWith("particle") || VARIANT.endsWith("_p") || VARIANT.contains("_sort");
 
     /** Brightest wins where beam strands overlap (as without a pack), instead of adding up. */
     private static final RenderStateShard.TransparencyStateShard MAX_TRANSPARENCY =
@@ -486,7 +488,7 @@ public final class Fx {
                             : beamLayer
                                             && (VARIANT.startsWith("particle_max")
                                                     || VARIANT.equals("particle_keep")
-                                                    || VARIANT.endsWith("_sort"))
+                                                    || VARIANT.contains("_sort"))
                                     ? MAX_TRANSPARENCY
                                     : RenderStateShard.ADDITIVE_TRANSPARENCY);
             b.setWriteMaskState(
@@ -495,6 +497,7 @@ public final class Fx {
                                     || VARIANT.equals("particle_max_nd")
                                     || VARIANT.equals("particle_max_d2")
                                     || VARIANT.equals("particle_keep")
+                                    || VARIANT.endsWith("nd")
                             ? RenderStateShard.COLOR_WRITE
                             : RenderStateShard.COLOR_DEPTH_WRITE);
         }
@@ -534,7 +537,7 @@ public final class Fx {
         int[] out = new int[quads * 4];
         Integer[] q = new Integer[quads];
         for (int i = 0; i < quads; i++) q[i] = i;
-        if (VARIANT.endsWith("_sort")) {
+        if (VARIANT.contains("_sort")) {
             double[] d = new double[quads];
             for (int i = 0; i < quads; i++) {
                 double x = 0, y = 0, z = 0;

@@ -148,8 +148,22 @@ public class EtherManipulatorItem extends Item implements GeoItem {
                 if (hook != null) {
                     if (com.ethermod.beam.OrbTether.press(hook, sp))
                         return InteractionResultHolder.fail(stack);
-                } else if (sp.isShiftKeyDown() || !com.ethermod.trait.Ziplines.tryRide(sp))
-                    return InteractionResultHolder.fail(stack);
+                } else {
+                    // no hook out: a double tap while gravity is shifted puts it back to normal
+                    var data = sp.getPersistentData();
+                    long now = sp.level().getGameTime();
+                    boolean shifted =
+                            com.ethermod.trait.MovementPhysics.down(sp)
+                                    != net.minecraft.core.Direction.DOWN;
+                    if (shifted && now - data.getLong("mm_tether_tap") <= com.ethermod.beam.OrbTether.DOUBLE_TAP) {
+                        data.remove("mm_tether_tap");
+                        com.ethermod.trait.MovementPhysics.setGravity(sp, net.minecraft.core.Direction.DOWN);
+                        return InteractionResultHolder.fail(stack);
+                    }
+                    data.putLong("mm_tether_tap", now);
+                    if (sp.isShiftKeyDown() || !com.ethermod.trait.Ziplines.tryRide(sp))
+                        return InteractionResultHolder.fail(stack);
+                }
             }
             // (the client can't see the Ziplines it might ride: it holds, the server decides)
         }
