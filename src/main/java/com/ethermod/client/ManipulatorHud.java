@@ -178,7 +178,9 @@ public final class ManipulatorHud {
         // (inverting what is behind it). Full for a while, it fades out; any change brings it back.
         if (mode.usesTank() || mode.rmbShot().usesTank()) {
             int cap = OrbMode.capacity(stack), have = Math.min(cap, OrbMode.tank(stack));
-            if (have != lastTank || have < cap) fullSince = now;
+            // charging a shot that spends Ether brings the counter up right away
+            var charge = com.ethermod.beam.BeamRenderState.chargeMode;
+            if (have != lastTank || have < cap || charge != null && charge.usesTank()) fullSince = now;
             lastTank = have;
             var counter = com.ethermod.config.ClientConfig.counter();
             float flash = DryFireFx.flash();
