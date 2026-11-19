@@ -48,7 +48,7 @@ public final class UiProbe {
     static void setPickChecked(
             net.minecraft.world.item.ItemStack st, int slot, int tier, String id) {
         String module = id.substring(0, Math.max(0, id.indexOf('.')));
-        if (!TraitChoices.accepts(module, tier, id))
+        if (!id.isEmpty() && !TraitChoices.accepts(module, tier, id)) // "" clears the pick
             check("Setup pick is a real choice: " + id + " (tier " + tier + ")", false);
         TraitBuild.setPick(st, slot, tier, id);
     }
