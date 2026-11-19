@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ItemInHandRenderer.class)
 public abstract class NoUseDipMixin {
 
-    @Inject(method = "itemUsed", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "itemUsed", at = @At("HEAD"), cancellable = true, require = 0)
     private void mm$keepManipulatorUp(InteractionHand hand, CallbackInfo ci) {
         var p = Minecraft.getInstance().player;
         if (p != null && p.getItemInHand(hand).getItem() instanceof EtherManipulatorItem)

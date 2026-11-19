@@ -1,6 +1,8 @@
 package com.ethermod.mixin;
 
 import com.ethermod.trait.MovementPhysics;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
@@ -66,7 +68,8 @@ public abstract class GravityEntityMixin {
             cir.setReturnValue(com.ethermod.trait.AirwalkFloor.clamp(p, cir.getReturnValue()));
     }
 
-    @org.spongepowered.asm.mixin.injection.Redirect(
+    /** Vanilla's fall damage check runs only under upright gravity. */
+    @WrapOperation(
             method = "move",
             at =
                     @At(
@@ -78,9 +81,9 @@ public abstract class GravityEntityMixin {
             double distance,
             boolean onGround,
             net.minecraft.world.level.block.state.BlockState block,
-            net.minecraft.core.BlockPos pos) {
+            net.minecraft.core.BlockPos pos,
+            Operation<Void> original) {
         if (!(entity instanceof Player p) || MovementPhysics.down(p) == Direction.DOWN)
-            ((GravityFallAccessor) entity).mm$checkFall(distance, onGround, block, pos);
+            original.call(entity, distance, onGround, block, pos);
     }
-
 }

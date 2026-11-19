@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ScreenEffectRenderer.class)
 public abstract class GravityOverlayMixin {
-    @Inject(method = "getOverlayBlock", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "getOverlayBlock", at = @At("HEAD"), cancellable = true, require = 0)
     private static void mm$eye(
             Player player, CallbackInfoReturnable<Pair<BlockState, BlockPos>> cir) {
         if (!com.ethermod.trait.MovementPhysics.isTurning(player)) return;
