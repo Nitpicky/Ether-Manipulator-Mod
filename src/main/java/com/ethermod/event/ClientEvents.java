@@ -16,6 +16,12 @@ import net.neoforged.neoforge.common.NeoForge;
 @EventBusSubscriber(modid = EtherMod.MODID, value = Dist.CLIENT)
 public class ClientEvents {
 
+    /** The tinted gem glints get fixed buffers so they draw after the items (GemGlint). */
+    @SubscribeEvent
+    public static void onRenderBuffers(net.neoforged.neoforge.client.event.RegisterRenderBuffersEvent event) {
+        com.ethermod.client.GemGlint.all().forEach(event::registerRenderBuffer);
+    }
+
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
         // the Mods list's Config button opens NeoForge's settings screen for both config files

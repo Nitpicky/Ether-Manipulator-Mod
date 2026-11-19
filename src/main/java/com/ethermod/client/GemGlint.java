@@ -36,6 +36,17 @@ public final class GemGlint extends RenderType {
 
     private static final Map<String, RenderType> TYPES = new HashMap<>();
 
+    /**
+     * Every gem's glint type, for the fixed render buffers (RegisterRenderBuffersEvent): a glint
+     * must be drawn after the item it lies on (it depth-tests EQUAL), which only the fixed
+     * buffers guarantee; a shared buffer can flush it before the item and it never shows.
+     */
+    public static java.util.List<RenderType> all() {
+        var out = new java.util.ArrayList<RenderType>();
+        COLOURS.forEach((gem, c) -> out.add(TYPES.computeIfAbsent(gem, k -> make(k, c))));
+        return out;
+    }
+
     /** The current item being drawn (set around ItemRenderer.render). */
     public static ItemStack current = ItemStack.EMPTY;
 
