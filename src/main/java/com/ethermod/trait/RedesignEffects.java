@@ -35,6 +35,17 @@ public final class RedesignEffects {
 
     @SubscribeEvent
     public static void loaded(net.neoforged.neoforge.event.entity.EntityJoinLevelEvent ev) {
+        // held, then moved to another level (a player changing dimension): the hold ends there and
+        // its own flags come back; the old level's tick would only drop the entry and leave
+        // NoGravity on
+        if (ev.getLevel() instanceof ServerLevel joined
+                && ev.getEntity() instanceof LivingEntity moved) {
+            Frozen held = FROZEN.get(moved.getUUID());
+            if (held != null && held.level() != joined) {
+                FROZEN.remove(moved.getUUID());
+                restoreStasisFlags(moved);
+            }
+        }
         // a creature saved mid-stasis (chunk unloaded, logout, Save and Quit) gets its flags back
         if (ev.getEntity() instanceof LivingEntity held
                 && held.getPersistentData().contains(STASIS_RESTORE)
