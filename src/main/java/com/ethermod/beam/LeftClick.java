@@ -125,10 +125,23 @@ public final class LeftClick {
 
     /** Ends any held left click (the Beacon's lights go out with it). */
     private static Hold stop(ServerPlayer p) {
+        return stop(p, p.serverLevel());
+    }
+
+    /**
+     * The player changed dimension: ends any held left click, putting the Beacon's lights out in
+     * the level they were lit in ({@code from}; null if it is gone, then they are only forgotten
+     * and run out on their own timer). The new level is never touched at the old coordinates.
+     */
+    public static void changedLevel(ServerPlayer p, ServerLevel from) {
+        stop(p, from);
+    }
+
+    private static Hold stop(ServerPlayer p, ServerLevel lightsIn) {
         var lit = LIT.remove(p.getUUID());
-        if (lit != null) unlight(p.serverLevel(), lit, java.util.Set.of());
+        if (lit != null && lightsIn != null) unlight(lightsIn, lit, java.util.Set.of());
         var all = LIT_ALL.remove(p.getUUID());
-        if (all != null) unlight(p.serverLevel(), all, java.util.Set.of());
+        if (all != null && lightsIn != null) unlight(lightsIn, all, java.util.Set.of());
         Hold h = HOLDS.remove(p.getUUID());
         if (h != null && h.mode == OrbMode.LIGHT) com.ethermod.event.ModEvents.showBeam(p, false);
         return h;
