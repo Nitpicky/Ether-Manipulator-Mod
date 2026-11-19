@@ -520,8 +520,24 @@ public final class RedesignEffects {
                 e, new com.ethermod.network.payload.StasisForcePayload(e.getId(), (float) v.x, (float) v.y, (float) v.z));
     }
 
+    private static UUID quiet;
+
+    /** Damages a held creature without its knockback counting toward the stored push. */
+    public static void hurtQuietly(LivingEntity e, net.minecraft.world.damagesource.DamageSource src, float amount) {
+        quiet = e.getUUID();
+        try {
+            e.hurt(src, amount);
+        } finally {
+            quiet = null;
+        }
+    }
+
     @SubscribeEvent
     public static void knock(LivingKnockBackEvent ev) {
+        if (ev.getEntity().getUUID().equals(quiet)) {
+            ev.setCanceled(true);
+            return;
+        }
         if (FROZEN.containsKey(ev.getEntity().getUUID())) {
             store(
                     ev.getEntity(),

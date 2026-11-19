@@ -52,7 +52,7 @@ public final class ServerConfig {
         TANK_PER_TRAIT = b.comment("Extra Ether per tank trait (Reservoir, Crucible, Seedbank, Bellows).")
                 .defineInRange("ether_per_tank_trait", 2, 0, 50);
         RELOAD_FIRST = b.comment("Seconds without spending Ether before the tank reloads, at Prototype.")
-                .defineInRange("reload_seconds_prototype", 30.0, 0.5, 600.0);
+                .defineInRange("reload_seconds_prototype", 15.0, 0.5, 600.0);
         RELOAD_LAST = b.comment("The same at Overclocked. The tiers in between fall evenly between the two.")
                 .defineInRange("reload_seconds_overclocked", 5.0, 0.5, 600.0);
         BEAM_DMG = b.comment("Multiplies the beam's damage.").defineInRange("beam_damage_multiplier", 1.0, 0.0, 10.0);
@@ -139,7 +139,7 @@ public final class ServerConfig {
 
     /** Reload delay in ticks at a tier (0 = Prototype .. 3 = Overclocked). */
     public static int reloadTicks(int tier) {
-        double a = or(RELOAD_FIRST::get, 30.0), z = or(RELOAD_LAST::get, 5.0);
+        double a = or(RELOAD_FIRST::get, 15.0), z = or(RELOAD_LAST::get, 5.0);
         return Math.max(10, (int) Math.round((a + (z - a) * Math.max(0, Math.min(3, tier)) / 3.0) * 20));
     }
 

@@ -43,6 +43,12 @@ public final class ModuleItem extends Item {
         return InteractionResultHolder.sidedSuccess(item, level.isClientSide);
     }
 
+    /** Enchanted Gemstones shimmer, in their Module's colour (client GemGlint). */
+    @Override
+    public boolean isFoil(ItemStack stack) {
+        return true;
+    }
+
     /** An Eye of Ender seating in a portal frame, with the unlocked Module's mode-switch cue. */
     private static void unlockSound(ServerPlayer sp, String module) {
         var level = sp.level();

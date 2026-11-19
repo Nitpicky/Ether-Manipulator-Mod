@@ -186,7 +186,7 @@ public final class GustGrenade {
                 if (g.stuck instanceof LivingEntity le) {
                     g.fuse = STASIS_FUSE; // time to set up hits on it
                     RedesignEffects.stasis(le, g.fuse + 5);
-                    if (RedesignEffects.inStasis(le)) RedesignEffects.expectBurst(le, heldPush(g.owner, le));
+                    if (RedesignEffects.inStasis(le)) RedesignEffects.expectBurst(le, heldPush(g, le));
                 }
             } else if (block.getType() != HitResult.Type.MISS) {
                 var n = Vec3.atLowerCornerOf(block.getDirection().getNormal());
@@ -227,7 +227,7 @@ public final class GustGrenade {
             // held in Stasis, the creature's own quickening tick replaces the fuse's (StasisFx)
             boolean held = g.stuck instanceof LivingEntity le && RedesignEffects.inStasis(le);
             if (held && g.fuse % 4 == 0) // the thrower may move: keep the arrow's burst current
-                RedesignEffects.expectBurst((LivingEntity) g.stuck, heldPush(g.owner, (LivingEntity) g.stuck));
+                RedesignEffects.expectBurst((LivingEntity) g.stuck, heldPush(g, (LivingEntity) g.stuck));
             if (!held && g.fuse % every == 0) {
                 sl.playSound(
                         null,
@@ -294,13 +294,19 @@ public final class GustGrenade {
                 e.hurtMarked = true;
             } else if (e instanceof LivingEntity le) {
                 if (!RedesignEffects.enemy(g.owner, le) || !affects(g.owner, le)) continue;
+                float dmg = DAMAGE * (float) (0.5 + 0.5 * near);
                 if (RedesignEffects.inStasis(le)) {
-                    // the burst joins the stored push (aimed by the last hit) and the held one
-                    // lets go; the hit lands after, so its own knockback can't re-aim the launch
-                    RedesignEffects.burstInto(le, heldPush(g.owner, le));
+                    // the burst joins the stored push (aimed by the last hit); the hit lands while
+                    // still held with its knockback dropped (vanilla knockback would halve the launch
+                    // and cap its lift at 0.4), then the creature lets go
+                    RedesignEffects.burstInto(le, heldPush(g, le));
+                    RedesignEffects.hurtQuietly(le, sl.damageSources().playerAttack(g.owner), dmg);
                     RedesignEffects.thaw(le);
-                } else RedesignEffects.impulse(le, push);
-                le.hurt(sl.damageSources().playerAttack(g.owner), DAMAGE * (float) (0.5 + 0.5 * near));
+                } else {
+                    // hit first, push after: the hit's own knockback must not halve the push
+                    le.hurt(sl.damageSources().playerAttack(g.owner), dmg);
+                    RedesignEffects.impulse(le, push);
+                }
             } else if (e instanceof ItemEntity) {
                 e.setDeltaMovement(e.getDeltaMovement().add(push.scale(0.6)));
                 e.hurtMarked = true;
@@ -318,12 +324,13 @@ public final class GustGrenade {
     }
 
     /**
-     * The burst's push on the creature it holds: straight away from the thrower, level, so it is
-     * predictable wherever on the body the grenade stuck (the launch adds its own lift).
+     * The burst's push on the creature it holds: away from where the grenade stuck on the body,
+     * level (the launch adds its own lift); stuck on top, straight up.
      */
-    private static Vec3 heldPush(ServerPlayer owner, LivingEntity e) {
-        Vec3 away = e.position().subtract(owner.position()).multiply(1, 0, 1);
-        if (away.lengthSqr() < 1e-4) away = owner.getLookAngle().multiply(1, 0, 1);
+    private static Vec3 heldPush(Grenade g, LivingEntity e) {
+        Vec3 centre = e.position().add(0, e.getBbHeight() * 0.5, 0);
+        Vec3 away = centre.subtract(g.pos).multiply(1, 0, 1);
+        if (away.lengthSqr() < 0.0025) return new Vec3(0, 1.6, 0);
         return away.normalize().scale(1.6);
     }
 

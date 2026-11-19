@@ -69,7 +69,7 @@ public final class StasisFx {
             var dir = v.scale(1 / force);
             var centre = e.getPosition(pt).add(0, e.getBbHeight() * .5, 0);
             var from = centre.add(dir.scale(e.getBbWidth() * .5 + .15));
-            var tip = from.add(dir.scale(.6 + force));
+            var tip = from.add(dir.scale(.4 + .5 * force)); // 1.2 blocks for a bare burst, 1.9 at the cap
             var side = dir.cross(new net.minecraft.world.phys.Vec3(0, 1, 0));
             if (side.lengthSqr() < 1e-4) side = dir.cross(new net.minecraft.world.phys.Vec3(1, 0, 0));
             side = side.normalize();

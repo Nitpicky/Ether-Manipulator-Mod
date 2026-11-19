@@ -326,8 +326,8 @@ public final class UiProbe {
                                 check("Module switch retains tank", OrbMode.tank(st) == 3);
                                 TraitBuild.setPick(st, 0, 0, "hydraulic.reservoir");
                                 check(
-                                        "Reload waits 30s at Prototype",
-                                        com.ethermod.trait.RedesignEffects.reloadDelay(new net.minecraft.world.item.ItemStack(com.ethermod.registry.ModItems.ETHER_MANIPULATOR.get())) == 600);
+                                        "Reload waits 15s at Prototype",
+                                        com.ethermod.trait.RedesignEffects.reloadDelay(new net.minecraft.world.item.ItemStack(com.ethermod.registry.ModItems.ETHER_MANIPULATOR.get())) == 300);
                                 TraitRules.equip(p, 1, Traits.PYROTECHNIC);
                                 TraitRules.pick(p, 1, 0, 1);
                                 check("Crucible grows the shared tank", OrbMode.capacity(st) == 10);

@@ -29,6 +29,7 @@
     "GravityOverlayMixin",
     "ChargeArmTremblerMixin",
     "NoUseDipMixin",
-    "SoundVolumeAccessor"
+    "SoundVolumeAccessor",
+    "GemGlintMixin"
   ]
 }
