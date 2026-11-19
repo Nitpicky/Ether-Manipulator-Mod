@@ -149,6 +149,7 @@ public final class BeamRenderer {
         BeaconMarkers.render(mc, player, camPos, camLeft, time, buf, m);
         ModuleMarkers.render(mc, camPos, camLeft, time, buf, m);
         LeftClickFx.render(mc, camPos, pt, time, vc, m);
+        com.ethermod.client.StasisFx.renderArrows(mc, camPos, pt, time, vc, m);
         if (held.getItem() instanceof EtherManipulatorItem)
             MassPreview.render(mc, player, held, camPos, time, vc, m);
 

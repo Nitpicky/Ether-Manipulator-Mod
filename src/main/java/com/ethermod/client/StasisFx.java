@@ -42,13 +42,58 @@ public final class StasisFx {
             return;
         }
         HELD.put(entity, new Hold(now, now + ticks));
+        FORCE.remove(entity);
         NEXT_DING.put(entity, now);
     }
+
+    /** Stored knockback per held creature, from the server. */
+    private static final Map<Integer, net.minecraft.world.phys.Vec3> FORCE = new HashMap<>();
+
+    public static void force(int entity, float x, float y, float z) {
+        FORCE.put(entity, new net.minecraft.world.phys.Vec3(x, y, z));
+    }
+
+    /**
+     * The knockback arrow: a teal rope like the Tether's (a soft outer prism around a bright core),
+     * from the creature's body along the push it has stored, with two short rope strokes as the
+     * head. It grows with the stored force.
+     */
+    public static void renderArrows(Minecraft mc, net.minecraft.world.phys.Vec3 cam, float pt, float time,
+            com.mojang.blaze3d.vertex.VertexConsumer vc, org.joml.Matrix4f m) {
+        if (mc.level == null || FORCE.isEmpty()) return;
+        for (var en : FORCE.entrySet()) {
+            if (!HELD.containsKey(en.getKey()) || !(mc.level.getEntity(en.getKey()) instanceof LivingEntity e)) continue;
+            var v = en.getValue();
+            double force = v.length();
+            if (force < .05) continue;
+            var dir = v.scale(1 / force);
+            var centre = e.getPosition(pt).add(0, e.getBbHeight() * .5, 0);
+            var from = centre.add(dir.scale(e.getBbWidth() * .5 + .15));
+            var tip = from.add(dir.scale(.6 + force));
+            var side = dir.cross(new net.minecraft.world.phys.Vec3(0, 1, 0));
+            if (side.lengthSqr() < 1e-4) side = dir.cross(new net.minecraft.world.phys.Vec3(1, 0, 0));
+            side = side.normalize();
+            float p = Math.max(0, pulse(e, pt));
+            var a = from.subtract(cam);
+            var t = tip.subtract(cam);
+            var h1 = tip.add(dir.scale(-.4)).add(side.scale(.28)).subtract(cam);
+            var h2 = tip.add(dir.scale(-.4)).add(side.scale(-.28)).subtract(cam);
+            for (var seg : new net.minecraft.world.phys.Vec3[][] {{a, t}, {t, h1}, {t, h2}}) {
+                com.ethermod.beam.BeamFx.prism(vc, m, seg[0], seg[1], com.ethermod.beam.BeamFx.PX * 1.4f, time * .1,
+                        TEAL_R, TEAL_G, TEAL_B, .3f + .1f * p);
+                com.ethermod.beam.BeamFx.prism(vc, m, seg[0], seg[1], com.ethermod.beam.BeamFx.PX * .5f, time * .1,
+                        .73f, .95f, .84f, .95f);
+            }
+        }
+    }
+
+    private static final float TEAL_R = 0x20 / 255f, TEAL_G = 0xE9 / 255f, TEAL_B = 0xC1 / 255f;
 
     private static void release(int entity) {
         var mc = Minecraft.getInstance();
         HELD.remove(entity);
         NEXT_DING.remove(entity);
+        FORCE.remove(entity);
     }
 
     /** Client tick: dings, faster as the hold runs out; ends holds whose time is up. */
@@ -57,6 +102,7 @@ public final class StasisFx {
         if (mc.level == null) {
             HELD.clear();
             NEXT_DING.clear();
+            FORCE.clear();
             return;
         }
         long now = mc.level.getGameTime();

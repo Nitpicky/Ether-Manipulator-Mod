@@ -148,6 +148,10 @@ public final class ModNetwork {
                 com.ethermod.network.payload.DryFirePayload.CODEC,
                 (payload, ctx) -> ctx.enqueueWork(com.ethermod.client.DryFireFx::fire));
         reg.playToClient(
+                com.ethermod.network.payload.StasisForcePayload.TYPE,
+                com.ethermod.network.payload.StasisForcePayload.CODEC,
+                (payload, ctx) -> ctx.enqueueWork(() -> com.ethermod.client.StasisFx.force(payload.entity(), payload.x(), payload.y(), payload.z())));
+        reg.playToClient(
                 com.ethermod.network.payload.StasisPayload.TYPE,
                 com.ethermod.network.payload.StasisPayload.CODEC,
                 (payload, ctx) -> ctx.enqueueWork(() -> com.ethermod.client.StasisFx.mark(payload.entity(), payload.ticks())));

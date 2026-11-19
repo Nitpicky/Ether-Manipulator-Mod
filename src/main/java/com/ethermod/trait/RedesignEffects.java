@@ -431,6 +431,9 @@ public final class RedesignEffects {
         e.setDeltaMovement(v);
         e.hurtMarked = true;
         d.putLong("mm_stasis_cooldown", now + 40);
+        d.remove("mm_stasis_ex");
+        d.remove("mm_stasis_ey");
+        d.remove("mm_stasis_ez");
         net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingEntityAndSelf(
                 e, new com.ethermod.network.payload.StasisPayload(e.getId(), 0));
     }
@@ -453,6 +456,29 @@ public final class RedesignEffects {
         d.putDouble("mm_stasis_x", n.x);
         d.putDouble("mm_stasis_y", n.y);
         d.putDouble("mm_stasis_z", n.z);
+        sendForce(e);
+    }
+
+    /**
+     * What a Stasis Grenade's burst will add on release (it lands after the stored knockback, so
+     * the two add up); shown in the arrow before it happens.
+     */
+    public static void expectBurst(LivingEntity e, Vec3 push) {
+        var d = e.getPersistentData();
+        d.putDouble("mm_stasis_ex", push.x);
+        d.putDouble("mm_stasis_ey", push.y);
+        d.putDouble("mm_stasis_ez", push.z);
+        sendForce(e);
+    }
+
+    /** The teal arrow over the held creature: where (and how hard) it will fly on release. */
+    private static void sendForce(LivingEntity e) {
+        var d = e.getPersistentData();
+        var v = new Vec3(d.getDouble("mm_stasis_x"), d.getDouble("mm_stasis_y"), d.getDouble("mm_stasis_z"))
+                .scale(d.getDouble("mm_stasis_force"))
+                .add(d.getDouble("mm_stasis_ex"), d.getDouble("mm_stasis_ey"), d.getDouble("mm_stasis_ez"));
+        net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingEntityAndSelf(
+                e, new com.ethermod.network.payload.StasisForcePayload(e.getId(), (float) v.x, (float) v.y, (float) v.z));
     }
 
     @SubscribeEvent

@@ -176,7 +176,10 @@ public final class GustGrenade {
                 land(sl, g);
                 // Stasis: the creature it sticks to is held until the burst; every knockback it
                 // takes meanwhile is stored and lands together with the burst
-                if (g.stuck instanceof LivingEntity le) RedesignEffects.stasis(le, g.fuse + 5);
+                if (g.stuck instanceof LivingEntity le) {
+                    RedesignEffects.stasis(le, g.fuse + 5);
+                    if (RedesignEffects.inStasis(le)) RedesignEffects.expectBurst(le, push(le, g.pos));
+                }
             } else if (block.getType() != HitResult.Type.MISS) {
                 var n = Vec3.atLowerCornerOf(block.getDirection().getNormal());
                 if (g.ricochet && g.bounces == 0) {
@@ -273,9 +276,8 @@ public final class GustGrenade {
             Vec3 centre = e.position().add(0, e.getBbHeight() * 0.5, 0);
             double d = centre.distanceTo(at);
             if (d > RADIUS || e.isSpectator()) continue;
+            Vec3 push = push(e, at);
             double near = 1 - d / RADIUS;
-            Vec3 away = d < 0.01 ? new Vec3(0, 1, 0) : centre.subtract(at).normalize();
-            Vec3 push = away.scale(0.5 + 1.1 * near).add(0, 0.35, 0);
             if (e == g.owner) {
                 // your own grenade launches you but never hurts you
                 e.setDeltaMovement(e.getDeltaMovement().add(push));
@@ -283,14 +285,23 @@ public final class GustGrenade {
             } else if (e instanceof LivingEntity le) {
                 if (!RedesignEffects.enemy(g.owner, le) || !affects(g.owner, le)) continue;
                 le.hurt(sl.damageSources().playerAttack(g.owner), DAMAGE * (float) (0.5 + 0.5 * near));
-                RedesignEffects.impulse(le, push);
-                // the held one lets go now, with everything it stored
+                // the held one lets go with everything it stored, and the burst adds on top
                 RedesignEffects.thaw(le);
+                RedesignEffects.impulse(le, push);
             } else if (e instanceof ItemEntity) {
                 e.setDeltaMovement(e.getDeltaMovement().add(push.scale(0.6)));
                 e.hurtMarked = true;
             }
         }
+    }
+
+    /** The burst's push on {@code e}: away from the grenade, harder up close, and a little up. */
+    private static Vec3 push(Entity e, Vec3 at) {
+        Vec3 centre = e.position().add(0, e.getBbHeight() * 0.5, 0);
+        double d = centre.distanceTo(at);
+        double near = Math.max(0, 1 - d / RADIUS);
+        Vec3 away = d < 0.01 ? new Vec3(0, 1, 0) : centre.subtract(at).normalize();
+        return away.scale(0.5 + 1.1 * near).add(0, 0.35, 0);
     }
 
     /** Other players only when the server allows it (PvP on, and the Stasis Grenade setting). */
