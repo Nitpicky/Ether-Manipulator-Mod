@@ -83,7 +83,8 @@ public enum OrbMode {
 
     /** Left clicks that charge like the right-click orbs (same behaviour, other button). */
     public boolean chargesOnLeft() {
-        return this == WATER || this == LAVA;
+        // Pneumatic: the Gust shot charges on left click, the Stasis Grenade is thrown on right
+        return this == WATER || this == LAVA || this == GUST;
     }
 
     /** Downward pull per tick on the projectile (0 = flies straight). */
@@ -209,6 +210,12 @@ public enum OrbMode {
             case WATER, LAVA, GROWTH -> 4;
             default -> 0;
         };
+    }
+
+    /** True when this shot spends Ether and the player's tank can't pay its smallest charge. */
+    public boolean isDry(net.minecraft.world.entity.player.Player player) {
+        ItemStack s = com.ethermod.manipulator.Manipulator.stack(player);
+        return usesTank() && tank(s) < shotCost(s, 0);
     }
 
     /** Left-click cost that is not a charged shot: Gust's Stasis Grenade. */

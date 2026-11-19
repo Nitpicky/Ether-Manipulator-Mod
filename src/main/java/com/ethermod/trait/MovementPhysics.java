@@ -511,8 +511,9 @@ public final class MovementPhysics {
         if (p.onGround() && data.getBoolean("mm_slamming")) {
             data.remove("mm_slamming");
             double fell = Math.max(0, data.getDouble("mm_slam_peak") - height);
-            float damage = (float) Math.min(24, 4 + fell * 1.2);
-            double reach = Math.min(8, 3 + fell / 3);
+            // everything grows from almost nothing: a plain jump is a nudge, a big fall a quake
+            float damage = (float) Math.min(24, 1 + fell * 1.3);
+            double reach = Math.min(8, 2 + fell / 3);
             int phase = fell >= 10 ? 2 : fell >= 4 ? 1 : 0;
             for (var target :
                     p.serverLevel()
@@ -525,12 +526,14 @@ public final class MovementPhysics {
                 // the shock throws them away and up, harder the further you fell
                 Vec3 away = target.position().subtract(p.position()).multiply(1, 0, 1);
                 if (away.lengthSqr() < 1e-4) away = p.getLookAngle().multiply(1, 0, 1);
-                double force = (.5 + fell * .08) * (.4 + .6 * near);
+                double force = Math.min(2.2, .2 + fell * .09) * (.4 + .6 * near);
                 RedesignEffects.impulse(
-                        target, away.normalize().scale(Math.min(2.2, force)).add(0, .3 + Math.min(.6, fell * .03), 0));
+                        target, away.normalize().scale(force).add(0, Math.min(.6, .08 + fell * .03), 0));
             }
-            com.ethermod.beam.ProjectileEffects.gust(
-                    p.serverLevel(), p, st, p.position(), phase, false);
+            // the gust blast (which can throw mobs into a fall) only from a real fall
+            if (fell >= 4)
+                com.ethermod.beam.ProjectileEffects.gust(
+                        p.serverLevel(), p, st, p.position(), phase, false);
             p.serverLevel()
                     .playSound(
                             null,

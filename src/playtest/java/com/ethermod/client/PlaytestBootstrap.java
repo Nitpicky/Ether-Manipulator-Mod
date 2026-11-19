@@ -727,8 +727,8 @@ public final class PlaytestBootstrap {
                 mc.player.setYRot(0);
                 mc.player.setXRot(11);
             }
-            case 968 -> opts.keyAttack.setDown(true);
-            case 970 -> opts.keyAttack.setDown(false);
+            case 968 -> opts.keyUse.setDown(true); // Pneumatic: right click throws the grenade
+            case 970 -> opts.keyUse.setDown(false);
             case 978 -> shot(mc, "26_gust_grenade_latched"); // +2: grenade wind-up
             // the Stasis hold lasts 3s; cut it short so the burst lands before the check
             case 996 -> server(mc, (s, p) -> com.ethermod.beam.GustGrenade.hurry());
@@ -744,7 +744,7 @@ public final class PlaytestBootstrap {
                                         (com.ethermod.beam.GustGrenade.bursts > bursts && hurt
                                                         ? "PASS"
                                                         : "FAIL")
-                                                + " gust: left click threw a grenade that burst"
+                                                + " gust: right click threw a grenade that burst"
                                                 + " (bursts "
                                                 + (com.ethermod.beam.GustGrenade.bursts - bursts)
                                                 + ", pig hurt "
@@ -960,9 +960,37 @@ public final class PlaytestBootstrap {
             });
             case 1449 -> server(mc, (s, p) -> checkGemGuarantee(s, p, "desert_pyramid", "atenite", false));
             case 1451 -> server(mc, (s, p) -> checkGemGuarantee(s, p, "jungle_pyramid", "quetzalite", true));
+            // the gems' Module-coloured glint, in the inventory
+            case 1455 -> server(mc, (s, p) -> {
+                for (String gem : com.ethermod.registry.ModItems.GEMS.keySet()) run(s, "give @p ethermod:" + gem);
+            });
+            case 1460 -> mc.setScreen(new net.minecraft.client.gui.screens.inventory.InventoryScreen(mc.player));
+            case 1470 -> shot(mc, "35_gem_glint");
+            case 1474 -> mc.setScreen(null);
+            // the advancement tab's layout (gems and Module challenges on top, upgrade line, dyes last)
+            case 1478 -> {
+                var adv = mc.player.connection.getAdvancements();
+                var root = adv.getTree().get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("ethermod", "manipulator/root"));
+                mc.setScreen(new net.minecraft.client.gui.screens.advancements.AdvancementsScreen(adv));
+                if (root != null) adv.setSelectedTab(root.holder(), true);
+                // the mouse off the window, so no tooltip covers the tree
+                org.lwjgl.glfw.GLFW.glfwSetCursorPos(mc.getWindow().getWindow(), 0, 0);
+                if (root != null) logAdvancements(root);
+            }
+            case 1486 -> shot(mc, "36_advancements");
+            case 1487 -> mc.screen.mouseDragged(0, 0, 0, 0, -400); // scroll to the bottom rows
+            case 1489 -> shot(mc, "36b_advancements_bottom");
+            case 1492 -> mc.setScreen(null);
             case 1572 -> finish(mc);
             default -> {}
         }
+    }
+
+    /** Logs where each advancement of the tab sits (x, y in tree cells). */
+    private static void logAdvancements(net.minecraft.advancements.AdvancementNode n) {
+        n.holder().value().display().ifPresent(d -> com.ethermod.EtherMod.LOGGER.info(
+                "[autotest] ADV {} at {} {}", n.holder().id().getPath(), d.getX(), d.getY()));
+        for (var c : n.children()) logAdvancements(c);
     }
 
     /** Turns the player to look at the middle of the nearest pig. */

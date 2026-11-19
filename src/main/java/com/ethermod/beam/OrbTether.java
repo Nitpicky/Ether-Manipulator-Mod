@@ -329,7 +329,7 @@ public final class OrbTether {
     }
 
     /** Ticks of right click that still count as a tap, and between the taps of a double tap. */
-    static final int TAP = 5, DOUBLE_TAP = 7;
+    public static final int TAP = 5, DOUBLE_TAP = 7;
 
     /**
      * Right click pressed with a hook out. A second press soon after the first is a double tap:

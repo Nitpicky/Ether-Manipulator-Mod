@@ -103,7 +103,9 @@ public class ClientInputHandler {
         }
 
         // Hydraulic / Pyrotechnic charge their left click like an orb
-        boolean leftCharge = wasBeamActive && mode.chargesOnLeft() && !using;
+        // an empty tank never starts a charge (the server answers the press with the dry-fire fizz)
+        boolean leftCharge =
+                wasBeamActive && mode.chargesOnLeft() && !using && !mode.isDry(mc.player);
         BeamRenderState.leftChargeTicks = leftCharge ? lmbTicks : 0;
         BeamRenderState.leftMode = wasBeamActive && !using ? mode : null;
         BeamRenderState.chargeMode = leftCharge ? mode : charging ? mode.rmbShot() : null;

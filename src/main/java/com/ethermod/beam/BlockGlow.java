@@ -140,7 +140,9 @@ public final class BlockGlow {
             glow.merge(e.getKey(), a, Math::max);
         }
 
-        VertexConsumer vc = com.ethermod.client.Fx.glow();
+        VertexConsumer vc = com.ethermod.client.Fx.faceGlow();
+        // packs jitter and rebuild depth: a face this close to its block flickers through it
+        float lift = com.ethermod.client.ShaderCompat.shadersActive() ? 0.02f : 0.008f;
         // Each block glows in its own shape (a stair as an L, a slab as half a cube), like
         // vanilla's outline; faces shared with another glowing block vanish, so a group of
         // blocks glows as one shape.
@@ -165,7 +167,7 @@ public final class BlockGlow {
                                 && ShapeSurface.contains(
                                         boxes, x - q.getX(), y - q.getY(), z - q.getZ());
                     },
-                    (d, x0, y0, z0, x1, y1, z1) -> rect(vc, m, d, x0, y0, z0, x1, y1, z1, camPos, 0.004f, a));
+                    (d, x0, y0, z0, x1, y1, z1) -> rect(vc, m, d, x0, y0, z0, x1, y1, z1, camPos, lift, a));
         }
     }
 

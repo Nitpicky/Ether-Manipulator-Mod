@@ -111,9 +111,17 @@ public class EtherManipulatorItem extends Item implements GeoItem {
             return InteractionResultHolder.fail(stack);
 
         OrbMode mode = OrbMode.get(stack);
+        // Pneumatic: right click throws the Stasis Grenade (the Gust shot charges on left click)
+        if (mode == OrbMode.GUST) {
+            if (player instanceof ServerPlayer sp) com.ethermod.beam.LeftClick.throwGrenade(sp);
+            else com.ethermod.client.ManipulatorAnimations.grenadeThrow(player);
+            return InteractionResultHolder.fail(stack);
+        }
         // the projectile this tool charges on right click (Hydraulic: the ice shard)
         OrbMode shot = mode.rmbShot();
-        if (shot.usesTank() && shot.tankLevel(stack) < shot.shotCost(stack, 0)) {
+        // the tank lives on the Manipulator's own stack (synced to the client), not on the copy in
+        // hand, which can be stale on the client and let an empty tank start a charge
+        if (shot.isDry(player)) {
             if (player instanceof net.minecraft.server.level.ServerPlayer sp) com.ethermod.beam.DryFire.signal(sp);
             return InteractionResultHolder.fail(stack);
         }
@@ -140,8 +148,22 @@ public class EtherManipulatorItem extends Item implements GeoItem {
                 if (hook != null) {
                     if (com.ethermod.beam.OrbTether.press(hook, sp))
                         return InteractionResultHolder.fail(stack);
-                } else if (sp.isShiftKeyDown() || !com.ethermod.trait.Ziplines.tryRide(sp))
-                    return InteractionResultHolder.fail(stack);
+                } else {
+                    // no hook out: a double tap while gravity is shifted puts it back to normal
+                    var data = sp.getPersistentData();
+                    long now = sp.level().getGameTime();
+                    boolean shifted =
+                            com.ethermod.trait.MovementPhysics.down(sp)
+                                    != net.minecraft.core.Direction.DOWN;
+                    if (shifted && now - data.getLong("mm_tether_tap") <= com.ethermod.beam.OrbTether.DOUBLE_TAP) {
+                        data.remove("mm_tether_tap");
+                        com.ethermod.trait.MovementPhysics.setGravity(sp, net.minecraft.core.Direction.DOWN);
+                        return InteractionResultHolder.fail(stack);
+                    }
+                    data.putLong("mm_tether_tap", now);
+                    if (sp.isShiftKeyDown() || !com.ethermod.trait.Ziplines.tryRide(sp))
+                        return InteractionResultHolder.fail(stack);
+                }
             }
             // (the client can't see the Ziplines it might ride: it holds, the server decides)
         }

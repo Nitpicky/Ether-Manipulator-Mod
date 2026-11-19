@@ -25,6 +25,9 @@ final class PrismRope {
 
     private static final float PX = BeamFx.PX;
 
+    /** Strip pieces per beam segment with a shader pack. */
+    private static final int SUBDIV = Integer.getInteger("ethermod.fxSubdiv", 6);
+
     /** Integrated roll per beam owner, so a pressure change never makes the roll jump. */
     private static final Map<Integer, float[]> ROLL = new HashMap<>();
 
@@ -58,8 +61,8 @@ final class PrismRope {
             a1[i] = 0.45f * fade[i];
             a2[i] = 0.95f * fade[i];
         }
-        tube(pts, su, h1, r, color, a1);
-        tube(pts, su, h2, r, wc, a2);
+        tube(pts, su, h1, r, color, a1, com.ethermod.client.Fx.softGlow());
+        tube(pts, su, h2, r, wc, a2, com.ethermod.client.Fx.glow());
         var me = net.minecraft.client.Minecraft.getInstance().player;
         boolean simple = me != null && owner != me.getId() && com.ethermod.config.ClientConfig.simpleOtherBeams();
         if (simple) return; // client setting: other players' beams as a plain rope
@@ -79,9 +82,13 @@ final class PrismRope {
      * caps), only the faces turned toward the camera, face-shaded and additive like the Tether
      * rope and the orbs' cubes.
      */
-    private static void tube(Vec3[] pts, Vec3 su, float[] h, float[] roll, float[] c, float[] a) {
+    private static void tube(
+            Vec3[] pts, Vec3 su, float[] h, float[] roll, float[] c, float[] a, VertexConsumer vc) {
         int n = pts.length - 1;
-        VertexConsumer vc = com.ethermod.client.Fx.glow();
+        if (com.ethermod.client.ShaderCompat.shadersActive()) {
+            ribbon(pts, su, h, c, a, vc, vc != com.ethermod.client.Fx.softGlow());
+            return;
+        }
         Vec3[][] cs = new Vec3[n + 1][];
         for (int j = 0; j <= n; j++) {
             Vec3[] fr = frame(pts, j, su);
@@ -113,6 +120,60 @@ final class PrismRope {
                 v(vc, cs[j + 1][k2], r, g, b, cb);
                 v(vc, cs[j][k2], r, g, b, ca);
                 v(vc, cs[j][k], r, g, b, ca);
+            }
+        }
+    }
+
+    /**
+     * With a shader pack: the tube as one flat strip turned toward the camera. A rolling tube
+     * shows a different set of faces from one segment to the next, and the pack's bloom turned
+     * each change into a band; a strip has one surface all along. The core sits a hair nearer the
+     * camera so it is drawn over the shell, never fighting it.
+     */
+    private static void ribbon(
+            Vec3[] pts0, Vec3 su, float[] h0, float[] c, float[] a0, VertexConsumer vc, boolean core) {
+        // packs shade each flat piece on its own, so the strip bends in many small, smooth steps
+        // (Catmull-Rom through the beam's points) instead of one hard turn per segment
+        int n0 = pts0.length - 1, S = SUBDIV;
+        int n = n0 * S;
+        Vec3[] pts = new Vec3[n + 1];
+        float[] h = new float[n + 1], a = new float[n + 1];
+        for (int i = 0; i <= n; i++) {
+            int j = Math.min(n0 - 1, i / S);
+            double t = (i - j * S) / (double) S;
+            if (i == n) t = 1;
+            Vec3 p0 = pts0[Math.max(0, j - 1)], p1 = pts0[j], p2 = pts0[j + 1], p3 = pts0[Math.min(n0, j + 2)];
+            double t2 = t * t, t3 = t2 * t;
+            pts[i] =
+                    p1.scale(2)
+                            .add(p2.subtract(p0).scale(t))
+                            .add(p0.scale(2).subtract(p1.scale(5)).add(p2.scale(4)).subtract(p3).scale(t2))
+                            .add(p1.scale(3).subtract(p0).subtract(p2.scale(3)).add(p3).scale(t3))
+                            .scale(0.5);
+            h[i] = (float) (h0[j] + (h0[j + 1] - h0[j]) * t);
+            a[i] = (float) (a0[j] + (a0[j + 1] - a0[j]) * t);
+        }
+        Vec3[] l = new Vec3[n + 1], rr = new Vec3[n + 1];
+        for (int j = 0; j <= n; j++) {
+            Vec3 p = pts[j];
+            Vec3 tan = frame(pts, j, su)[0];
+            Vec3 side = tan.cross(p);
+            if (side.lengthSqr() < 1e-12) side = frame(pts, j, su)[1];
+            side = side.normalize().scale(h[j] * BeamRenderer.nearScale(p));
+            if (core) p = p.subtract(p.normalize().scale(0.01));
+            l[j] = p.add(side);
+            rr[j] = p.subtract(side);
+        }
+        int r = BeamFx.ch(c[0] * 0.9f), g = BeamFx.ch(c[1] * 0.9f), b = BeamFx.ch(c[2] * 0.9f);
+        for (int j = 0; j < n; j++) {
+            if (a[j] <= 0.003f && a[j + 1] <= 0.003f) continue;
+            int ca = BeamFx.ch(a[j]), cb = BeamFx.ch(a[j + 1]);
+            // twice, as the tube shows two faces at every point
+            for (int k = 0; k < 2; k++) {
+                v(vc, l[j], r, g, b, ca);
+                v(vc, rr[j], r, g, b, ca);
+                v(vc, rr[j + 1], r, g, b, cb);
+                v(vc, l[j + 1], r, g, b, cb);
             }
         }
     }
@@ -200,8 +261,8 @@ final class PrismRope {
             ag[j] = 0.5f * bump * fi;
             ac[j] = 0.95f * bump * fi;
         }
-        tube(sp, su, hg, rr, color, ag);
-        tube(sp, su, hc, rr, mix3(color, 0.55f), ac);
+        tube(sp, su, hg, rr, color, ag, com.ethermod.client.Fx.softGlow());
+        tube(sp, su, hc, rr, mix3(color, 0.55f), ac, com.ethermod.client.Fx.glow());
     }
 
     // ---------------------------------------------------------------- surface arcs
@@ -256,7 +317,8 @@ final class PrismRope {
             }
         }
         st.tick = now;
-        st.arcs.removeIf(a -> now - a.born >= a.life);
+        // the clock can step back (world reload, time change): arcs from the "future" are dropped
+        st.arcs.removeIf(a -> now < a.born || now - a.born >= a.life);
         Vec3 look = pointAt(pts, 0.5).normalize();
         Vec3 right = look.cross(new Vec3(0, 1, 0));
         if (right.lengthSqr() < 1e-9) right = new Vec3(1, 0, 0);

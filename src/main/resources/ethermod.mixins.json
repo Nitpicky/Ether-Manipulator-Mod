@@ -11,6 +11,7 @@
     "GravityEntityMixin",
     "GravityLivingMixin",
     "MovementConnectionMixin",
+    "AdvancementLayoutMixin",
     "SoulFireMixin",
     "FluidPocketMixin",
     "GravityFallAccessor",

@@ -180,6 +180,7 @@ public final class ManipulatorAnimations {
         OrbMode lastMode;
         float modeSwitchAt = -100;
         float leftPressAt = -100;
+        float grenadeAt = -100;
         OrbMode leftPressMode;
         // the left click was a set-down (it came while carrying), not a grab
         boolean leftPressPlaces;
@@ -410,6 +411,13 @@ public final class ManipulatorAnimations {
     private static boolean screenOpen;
 
     /** Local player pressed left click in this mode (instant left clicks animate from here). */
+    /** Right click in Pneumatic mode: the Stasis Grenade throw. */
+    public static void grenadeThrow(Player p) {
+        Track t = track(p);
+        t.grenadeAt = now(Minecraft.getInstance());
+        t.restart = true;
+    }
+
     public static void leftPress(Player p, OrbMode mode) {
         Track t = track(p);
         t.leftPressAt = now(Minecraft.getInstance());
@@ -677,7 +685,7 @@ public final class ManipulatorAnimations {
             if (held == OrbMode.LIGHT) return BEACON;
             float since = now - t.leftPressAt;
             if (t.leftPressMode == OrbMode.TETHER && since < PULL_LEN - HANDOVER) return TETHER;
-            if (t.leftPressMode == OrbMode.GUST && since < GRENADE_LEN - HANDOVER) return GRENADE;
+            if (now - t.grenadeAt < GRENADE_LEN - HANDOVER) return GRENADE;
             if (t.leftPressMode == OrbMode.GROWTH && since < HARVEST_LEN - HANDOVER) return HARVEST;
         }
         if (t.carrying) return MASS_GRIP;
