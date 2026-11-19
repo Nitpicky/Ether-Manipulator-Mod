@@ -38,6 +38,7 @@ public class ClientEvents {
                 net.neoforged.neoforge.client.gui.ConfigurationScreen::new));
         NeoForge.EVENT_BUS.register(ClientInputHandler.class);
         com.ethermod.entity.SoulBlazeling.smokeEmitter = com.ethermod.client.BlazelingSmoke::emit;
+        com.ethermod.beam.BeamBallEntity.clientRopeTick = com.ethermod.client.ClientMobility::ropeTick;
         NeoForge.EVENT_BUS.register(BeamRenderer.class);
         NeoForge.EVENT_BUS.register(com.ethermod.beam.MuzzleEvents.class);
         if (Boolean.getBoolean("ethermod.playtest")) {

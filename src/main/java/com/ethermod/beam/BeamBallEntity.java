@@ -394,6 +394,12 @@ public class BeamBallEntity extends Projectile {
     // Tick
     // =========================================================================
 
+    /**
+     * The local player's rope physics on a stuck tether (ClientMobility.ropeTick). Set by the
+     * client setup, so this common class never names a client class; null on a dedicated server.
+     */
+    public static java.util.function.Consumer<BeamBallEntity> clientRopeTick;
+
     @Override
     public void tick() {
         OrbMode mode = getMode();
@@ -401,8 +407,8 @@ public class BeamBallEntity extends Projectile {
         // (maxRange = 0 on client, so a range check would instantly discard)
         if (level().isClientSide) {
             if (isStuck()) {
-                if (mode == OrbMode.TETHER && !isAnchor())
-                    com.ethermod.client.ClientMobility.ropeTick(this);
+                if (mode == OrbMode.TETHER && !isAnchor() && clientRopeTick != null)
+                    clientRopeTick.accept(this);
                 return;
             }
             // a held Mass Driver block goes exactly where the server puts it: moving it on here
