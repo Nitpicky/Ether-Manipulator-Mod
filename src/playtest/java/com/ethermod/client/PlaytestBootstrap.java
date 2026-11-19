@@ -973,12 +973,24 @@ public final class PlaytestBootstrap {
                 var root = adv.getTree().get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("ethermod", "manipulator/root"));
                 mc.setScreen(new net.minecraft.client.gui.screens.advancements.AdvancementsScreen(adv));
                 if (root != null) adv.setSelectedTab(root.holder(), true);
+                // the mouse off the window, so no tooltip covers the tree
+                org.lwjgl.glfw.GLFW.glfwSetCursorPos(mc.getWindow().getWindow(), 0, 0);
+                if (root != null) logAdvancements(root);
             }
             case 1486 -> shot(mc, "36_advancements");
-            case 1490 -> mc.setScreen(null);
+            case 1487 -> mc.screen.mouseDragged(0, 0, 0, 0, -400); // scroll to the bottom rows
+            case 1489 -> shot(mc, "36b_advancements_bottom");
+            case 1492 -> mc.setScreen(null);
             case 1572 -> finish(mc);
             default -> {}
         }
+    }
+
+    /** Logs where each advancement of the tab sits (x, y in tree cells). */
+    private static void logAdvancements(net.minecraft.advancements.AdvancementNode n) {
+        n.holder().value().display().ifPresent(d -> com.ethermod.EtherMod.LOGGER.info(
+                "[autotest] ADV {} at {} {}", n.holder().id().getPath(), d.getX(), d.getY()));
+        for (var c : n.children()) logAdvancements(c);
     }
 
     /** Turns the player to look at the middle of the nearest pig. */
