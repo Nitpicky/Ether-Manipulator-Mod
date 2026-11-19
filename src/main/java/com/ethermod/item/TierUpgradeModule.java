@@ -104,7 +104,7 @@ public class TierUpgradeModule extends Item {
         for (int i = 0; i < inv.getContainerSize(); i++) {
             ItemStack s = inv.getItem(i);
             if (s.getItem() instanceof TierUpgradeModule m && m.requiredStage == current) {
-                install(sp, s, false);
+                install(sp, s, true); // the upgrade screen gets the same sound as a right click
                 return;
             }
         }
