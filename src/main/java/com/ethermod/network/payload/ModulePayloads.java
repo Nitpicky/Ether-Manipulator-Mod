@@ -101,23 +101,4 @@ public final class ModulePayloads {
         }
     }
 
-    /** Server to client: the player's Lodestar marker. */
-    public record LodestarMark(BlockPos pos, ResourceLocation dim, long expires)
-            implements CustomPacketPayload {
-        public static final Type<LodestarMark> TYPE = typeOf("lodestar");
-        public static final StreamCodec<ByteBuf, LodestarMark> CODEC =
-                StreamCodec.composite(
-                        BlockPos.STREAM_CODEC,
-                        LodestarMark::pos,
-                        ResourceLocation.STREAM_CODEC,
-                        LodestarMark::dim,
-                        ByteBufCodecs.VAR_LONG,
-                        LodestarMark::expires,
-                        LodestarMark::new);
-
-        @Override
-        public Type<? extends CustomPacketPayload> type() {
-            return TYPE;
-        }
-    }
 }

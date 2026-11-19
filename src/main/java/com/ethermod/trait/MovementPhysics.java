@@ -271,55 +271,6 @@ public final class MovementPhysics {
         return rotate(new Vec3(x, v.y, z), down(p));
     }
 
-    private record Edge(long first, long last, int taps, boolean pressed) {}
-
-    private static final Map<Player, Edge> EDGES = new WeakHashMap<>();
-
-    public static Vec3 edge(Player p, Vec3 v) {
-        var st = Manipulator.stack(p);
-        if (!Traits.has(st, "gravitic.surefoot")
-                || !p.onGround()
-                || p.isPassenger()
-                || Traits.has(st, "gravitic.airwalk")
-                || p.getDeltaMovement().length() > 1.2) return v;
-        var d = vector(down(p));
-        var lateral = v.subtract(d.scale(v.dot(d)));
-        long now = p.level().getGameTime();
-        var old = EDGES.get(p);
-        boolean pressed = (p.getPersistentData().getInt("mm_motion") & 120) != 0;
-        if (lateral.lengthSqr() < 1e-6) {
-            if (old != null && now - old.last() > 6) EDGES.remove(p);
-            else if (old != null && !pressed)
-                EDGES.put(p, new Edge(old.first(), old.last(), old.taps(), false));
-            return v;
-        }
-        var at = p.position().add(lateral.normalize().scale(0.35)).add(lateral);
-        var hit =
-                p.level()
-                        .clip(
-                                new ClipContext(
-                                        at,
-                                        at.add(d.scale(4)),
-                                        ClipContext.Block.COLLIDER,
-                                        ClipContext.Fluid.NONE,
-                                        p));
-        if (hit.getType() != HitResult.Type.MISS) {
-            EDGES.remove(p);
-            return v;
-        }
-        if (!pressed) {
-            if (old != null) EDGES.put(p, new Edge(old.first(), old.last(), old.taps(), false));
-            return d.scale(v.dot(d));
-        }
-        Edge e;
-        if (old == null || now - old.last() > 6) e = new Edge(now, now, 1, true);
-        else e = new Edge(old.first(), now, old.taps() + (!old.pressed() ? 1 : 0), true);
-        EDGES.put(p, e);
-        if (now - e.first() >= 7 || e.taps() >= 2) return v;
-
-        return d.scale(v.dot(d));
-    }
-
     public static Vec3 local(Player p, Vec3 world) {
         var v =
                 rotation(down(p))
@@ -417,7 +368,6 @@ public final class MovementPhysics {
                             : p.isSprinting() ? .026 : .02;
             v = v.add(wish.scale(acceleration));
         }
-        v = edge(p, v);
         Vec3 before = p.position();
         p.move(MoverType.SELF, v);
         Vec3 actual = p.position().subtract(before);

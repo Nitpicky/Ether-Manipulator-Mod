@@ -2,7 +2,6 @@ package com.ethermod.beam;
 
 import com.ethermod.client.ClientMobility;
 import com.ethermod.network.payload.ModulePayloads;
-import com.ethermod.trait.Lodestar;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.Minecraft;
@@ -17,8 +16,7 @@ import java.util.Iterator;
 
 /**
  * Photonic markers drawn in the world: Lumen Trail's arrows along the path you walked (pointing
- * back the way you came), and the Lodestar, a star in the sky you can see from anywhere in the
- * dimension.
+ * back the way you came).
  */
 @OnlyIn(Dist.CLIENT)
 final class ModuleMarkers {
@@ -33,7 +31,6 @@ final class ModuleMarkers {
             MultiBufferSource.BufferSource buf,
             Matrix4f m) {
         renderTrail(camPos, time, buf, m);
-        renderLodestar(mc, camPos, camLeft, time, buf, m);
     }
 
     private static void renderTrail(
@@ -79,86 +76,6 @@ final class ModuleMarkers {
         }
     }
 
-    private static void renderLodestar(
-            Minecraft mc,
-            Vec3 camPos,
-            Vec3 camLeft,
-            float time,
-            MultiBufferSource.BufferSource buf,
-            Matrix4f m) {
-        ModulePayloads.LodestarMark mark = Lodestar.clientMark;
-        if (mark == null || mc.level == null) return;
-        if (mc.level.getGameTime() > mark.expires()) {
-            Lodestar.clientMark = null;
-            return;
-        }
-        if (!mark.dim().equals(mc.level.dimension().location())) return;
-        Vec3 world = Vec3.atCenterOf(mark.pos());
-        Vec3 rel = world.subtract(camPos);
-        double dist = rel.length();
-        // far away it is drawn closer but bigger, so it shows from anywhere
-        double show = Math.min(dist, 96);
-        Vec3 c = rel.scale(show / Math.max(0.01, dist));
-        float s = (float) (1.2 * show / 24) * (float) (1 + 0.1 * Math.sin(time * 0.2));
-        Vec3 up = new Vec3(0, 1, 0);
-        Vec3 left = camLeft.normalize();
-        Vec3 toCam = c.scale(-1).normalize();
-        Vec3 vUp = toCam.cross(left).normalize();
-        VertexConsumer vc = buf.getBuffer(OreSense.XRAY);
-        // four-point star facing the camera
-        for (int k = 0; k < 4; k++) {
-            double ang = k * Math.PI / 2 + time * 0.01;
-            Vec3 arm = left.scale(Math.cos(ang)).add(vUp.scale(Math.sin(ang)));
-            Vec3 perp = left.scale(-Math.sin(ang)).add(vUp.scale(Math.cos(ang)));
-            Vec3 tip = c.add(arm.scale(s));
-            Vec3 b1 = c.add(perp.scale(s * 0.18)), b2 = c.subtract(perp.scale(s * 0.18));
-            quad(vc, m, b1, tip, b2, c, 255, 245, 190, 230);
-        }
-        // the glow around it
-        Vec3 l = left.scale(s * 0.45), u = vUp.scale(s * 0.45);
-        quad(
-                vc,
-                m,
-                c.subtract(l).subtract(u),
-                c.add(l).subtract(u),
-                c.add(l).add(u),
-                c.subtract(l).add(u),
-                255,
-                230,
-                140,
-                90);
-        // A world-vertical pillar rises from the actual marked block.
-        if (dist < 128) {
-            Vec3 base = world.subtract(camPos),
-                    top = base.add(0, Math.min(96, mc.level.getMaxBuildHeight() - world.y), 0);
-            for (int axis = 0; axis < 2; axis++) {
-                Vec3 width = axis == 0 ? new Vec3(.12, 0, 0) : new Vec3(0, 0, .12);
-                quad(
-                        vc,
-                        m,
-                        base.subtract(width),
-                        base.add(width),
-                        top.add(width),
-                        top.subtract(width),
-                        255,
-                        240,
-                        170,
-                        160);
-                quad(
-                        vc,
-                        m,
-                        top.subtract(width),
-                        top.add(width),
-                        base.add(width),
-                        base.subtract(width),
-                        255,
-                        240,
-                        170,
-                        160);
-            }
-        }
-        buf.endBatch(OreSense.XRAY);
-    }
 
     private static void quad(
             VertexConsumer vc,

@@ -22,44 +22,6 @@ final class OrbMass {
 
     private OrbMass() {}
 
-    /** The carried block homes toward what its owner aims at. */
-    static void massSteer(BeamBallEntity b) {
-        if (b.lifeTicks < 3
-                || !(b.getOwner() instanceof ServerPlayer sp)
-                || sp.level() != b.level()) return;
-        Vec3 eye = sp.getEyePosition(), look = sp.getLookAngle();
-        Vec3 end = eye.add(look.scale(64));
-        Vec3 aim =
-                b.level()
-                        .clip(
-                                new net.minecraft.world.level.ClipContext(
-                                        eye,
-                                        end,
-                                        net.minecraft.world.level.ClipContext.Block.COLLIDER,
-                                        net.minecraft.world.level.ClipContext.Fluid.NONE,
-                                        sp))
-                        .getLocation();
-        var hit =
-                ProjectileUtil.getEntityHitResult(
-                        b.level(),
-                        sp,
-                        eye,
-                        aim,
-                        sp.getBoundingBox().expandTowards(aim.subtract(eye)).inflate(1),
-                        e ->
-                                e instanceof LivingEntity
-                                        && e.isAlive()
-                                        && !com.ethermod.beam.Mounts.own(sp, e)
-                                        && !e.isSpectator());
-        if (hit != null) aim = hit.getEntity().getBoundingBox().getCenter();
-        Vec3 v = b.getDeltaMovement();
-        double speed = Math.max(0.6, v.length());
-        Vec3 want = aim.subtract(b.position());
-        if (want.lengthSqr() < 0.01) return;
-        Vec3 nd = v.normalize().scale(0.75).add(want.normalize().scale(0.25)).normalize();
-        b.setDeltaMovement(nd.scale(speed));
-    }
-
     /** Hardness makes it hurt: dirt barely, obsidian a lot. */
     static float massDamage(BeamBallEntity b) {
         BlockState c = b.getCarried();

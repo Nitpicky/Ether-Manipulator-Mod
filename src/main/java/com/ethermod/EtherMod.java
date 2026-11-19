@@ -26,7 +26,6 @@ public class EtherMod {
         ModItems.register(modEventBus);
         ModEntities.register(modEventBus);
         com.ethermod.loot.ModLoot.register(modEventBus);
-        com.ethermod.registry.ModParticles.register(modEventBus);
         ModCreativeTabs.register(modEventBus);
         com.ethermod.advancement.ManipulatorTrigger.register(modEventBus);
         ModAttachments.register(modEventBus);

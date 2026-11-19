@@ -106,7 +106,7 @@ public final class ServerConfig {
                 .define("soulwake_blazelings", true);
         BLAZE_LIFE = b.comment("Seconds a Soulfire Blazeling lives.").defineInRange("blazeling_lifetime_seconds", 30, 1, 600);
         MAX_SUMMONS = b.comment("Most summons each player can have at once.").defineInRange("max_summons_per_player", 8, 0, 64);
-        PHOTONIC_LIFE = b.comment("Seconds Photonic's lasting lights (Lodestar decoys and lights) stay.")
+        PHOTONIC_LIFE = b.comment("Seconds Photonic's lasting lights (Mirage decoys and lights) stay.")
                 .defineInRange("photonic_light_seconds", 30, 1, 1200);
         FROST_MELT = b.comment("Seconds a frost bridge stays before it melts (Glacier makes it three times longer).").defineInRange("frost_bridge_seconds", 10, 1, 1200);
         TETHER_PLAYERS = b.comment("Whether Gravitic's tether can grab other players.").define("tether_grabs_players", false);
@@ -200,6 +200,4 @@ public final class ServerConfig {
         return false;
     }
 
-    /** For callers holding a Block. */
-    public static boolean blacklisted(Block b) { return blacklisted(b.defaultBlockState()); }
 }

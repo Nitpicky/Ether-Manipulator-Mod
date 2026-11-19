@@ -10,7 +10,6 @@
     "FurnaceAccessor",
     "GravityEntityMixin",
     "GravityLivingMixin",
-    "DazzleMixin",
     "MovementConnectionMixin",
     "SoulFireMixin",
     "FluidPocketMixin",

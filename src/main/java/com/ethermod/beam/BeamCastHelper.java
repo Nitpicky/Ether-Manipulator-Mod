@@ -138,6 +138,7 @@ public final class BeamCastHelper {
         // --- Photonic: Refraction, the beam splits behind glass and ice
         if (lastRefract != null && strike) {
             float base = (stage.beamTickDamage() + Traits.beamDamageBonus(tool)) * DAMAGE_SCALE;
+            // LEFTOVER(trait): photonic.refraction can no longer be picked
             for (Vec3 dir : refractRays(look, Traits.rank(tool, "photonic.refraction"))) {
                 Vec3 from = lastRefract;
                 Vec3 to =
@@ -165,12 +166,6 @@ public final class BeamCastHelper {
         // fire out
         BlockPos touched = BlockPos.containing(hitPos.add(look.scale(0.05)));
         BlockPos before = BlockPos.containing(hitPos.subtract(look.scale(0.05)));
-        if (Traits.rank(tool, "pyrotechnic.controlled_burn") >= 3) {
-            com.ethermod.trait.WorldEffects.putOut(level, before, player.getUUID());
-            com.ethermod.trait.WorldEffects.putOut(level, touched.above(), player.getUUID());
-        }
-        if (Traits.has(tool, "pyrotechnic.heat_ray") && com.ethermod.util.Protect.may(level, player, touched))
-            heatRay(level, player, touched);
 
         // --- Entity: Lock-On keeps the last target inside a small cone ---------
         LivingEntity target = null;
@@ -201,10 +196,9 @@ public final class BeamCastHelper {
             int combatLevel = state.trackTarget(target.getId(), interval, tool, level);
             player.getPersistentData().putInt("mm_beam_level", combatLevel);
             target.getPersistentData().putInt("mm_combat_pressure", combatLevel);
-            if (Traits.has(tool, "pyrotechnic.heat_ray"))
-                com.ethermod.trait.RedesignEffects.burn(target, player, 3, -1);
             if (!strike) {
                 sync(player, state, combatLevel, false, List.of());
+                // LEFTOVER(trait): photonic.laser can no longer be picked
                 return Traits.has(tool, "photonic.laser") ? hitPos : targetPoint;
             }
             state.hitCooldown = BeamState.hitInterval(combatLevel);
@@ -218,6 +212,7 @@ public final class BeamCastHelper {
                                     : 1f);
             beamHit(level, player, tool, target, dmg);
             // Photonic: Laser, the beam goes through and hits everything in its line
+            // LEFTOVER(trait): photonic.laser can no longer be picked
             if (Traits.has(tool, "photonic.laser")) {
                 final LivingEntity first = target;
                 Vec3 end = eye.add(look.scale(hitPos.distanceTo(eye)));
@@ -364,6 +359,7 @@ public final class BeamCastHelper {
                 && Traits.hasLine(tool, Traits.BOTANIC)) {
             // Gentle Hands II: the beam's warmth sometimes grows the crop a stage
             if (centerHardness == null
+                    // LEFTOVER(trait): botanic.gentle_hands can no longer be picked
                     && Traits.rank(tool, "botanic.gentle_hands") >= 2
                     && level.random.nextFloat() < 0.04f * interval) {
                 level.setBlockAndUpdate(
@@ -409,69 +405,6 @@ public final class BeamCastHelper {
         return hardness;
     }
 
-    // ---- Excavation: Momentum ------------------------------------------------
-
-    private record Streak(net.minecraft.world.level.block.Block block, int count, long last) {}
-
-    private static final java.util.Map<java.util.UUID, Streak> STREAKS = new java.util.HashMap<>();
-
-    /** Momentum: called when the beam breaks a block; the same type in a row builds a streak. */
-    public static void onBeamBreak(ServerPlayer player, BlockState state) {
-        ItemStack tool = player.getMainHandItem();
-        int rank = Traits.rank(tool, "tectonic.momentum");
-        if (rank <= 0) return;
-        long now = player.level().getGameTime();
-        Streak s = STREAKS.get(player.getUUID());
-        int keep = rank >= 3 ? 40 : 20;
-        boolean same = s != null && s.block() == state.getBlock() && now - s.last() <= keep;
-        STREAKS.put(player.getUUID(), new Streak(state.getBlock(), same ? s.count() + 1 : 1, now));
-    }
-
-    /**
-     * Momentum's speed factor for mining this block: +10% per block in the streak, up to
-     * +30/50/80%.
-     */
-    private static float momentum(ServerPlayer player, ItemStack tool, BlockState state) {
-        int rank = Traits.rank(tool, "tectonic.momentum");
-        if (rank <= 0) return 1f;
-        Streak s = STREAKS.get(player.getUUID());
-        if (s == null || s.block() != state.getBlock()) return 1f;
-        long idle = player.level().getGameTime() - s.last();
-        if (idle > (rank >= 3 ? 40 : 20) + 40) return 1f; // mining one block takes a while too
-        float cap = rank >= 3 ? 0.8f : rank == 2 ? 0.5f : 0.3f;
-        return 1f + Math.min(cap, 0.1f * s.count());
-    }
-
-    // ---- Mobility: Rocket Beam ------------------------------------------------
-
-    // ---- Pyrotechnics: Heat Ray -----------------------------------------------
-
-    /** Heat Ray: the beam lights candles, campfires and TNT it touches. */
-    private static void heatRay(ServerLevel level, ServerPlayer player, BlockPos pos) {
-        BlockState bs = level.getBlockState(pos);
-        if (net.minecraft.world.level.block.CampfireBlock.canLight(bs)
-                || net.minecraft.world.level.block.CandleBlock.canLight(bs)
-                || net.minecraft.world.level.block.CandleCakeBlock.canLight(bs)) {
-            level.setBlock(
-                    pos,
-                    bs.setValue(
-                            net.minecraft.world.level.block.state.properties.BlockStateProperties
-                                    .LIT,
-                            true),
-                    11);
-            level.playSound(
-                    null,
-                    pos,
-                    com.ethermod.sound.ModSounds.WORLD_FLINTANDSTEEL_USE,
-                    net.minecraft.sounds.SoundSource.BLOCKS,
-                    0.6f,
-                    1.2f);
-        } else if (bs.getBlock() instanceof net.minecraft.world.level.block.TntBlock) {
-            bs.onCaughtFire(level, pos, Direction.UP, player);
-            level.removeBlock(pos, false);
-        }
-    }
-
     /** One beam hit on a creature, with the Combat line's on-hit traits. */
     private static void beamHit(
             ServerLevel level,
@@ -496,6 +429,7 @@ public final class BeamCastHelper {
                     new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 30, 0, false, true, true));
         }
         // Photonic: Sunfire, the beam burns the undead
+        // LEFTOVER(trait): photonic.sunfire can no longer be picked
         int sun = Traits.rank(tool, "photonic.sunfire");
         if (sun > 0 && target.getType().is(net.minecraft.tags.EntityTypeTags.UNDEAD)) {
             dmg *= 1f + 0.5f * sun;
@@ -515,8 +449,7 @@ public final class BeamCastHelper {
                         "mm_combat_pressure",
                         Math.max(1, player.getPersistentData().getInt("mm_beam_level")));
 
-        if (Traits.has(tool, "plasmic.leech") && dealt > 0)
-            player.heal(dealt * (0.05f + 0.05f * Traits.rank(tool, "plasmic.leech")));
+        // LEFTOVER(trait): plasmic.ionize can no longer be picked
         int ionize = Traits.rank(tool, "plasmic.ionize");
         if (ionize > 0) {
             target.getPersistentData().putLong(IONIZED_TAG, level.getGameTime());
@@ -570,6 +503,7 @@ public final class BeamCastHelper {
         return (state.is(net.neoforged.neoforge.common.Tags.Blocks.GLASS_BLOCKS)
                         || state.is(net.neoforged.neoforge.common.Tags.Blocks.GLASS_PANES)
                         || state.is(net.minecraft.tags.BlockTags.ICE))
+                // LEFTOVER(trait): photonic.refraction can no longer be picked
                 && Traits.has(tool, "photonic.refraction");
     }
 

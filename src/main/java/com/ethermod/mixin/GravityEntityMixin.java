@@ -83,8 +83,4 @@ public abstract class GravityEntityMixin {
             ((GravityFallAccessor) entity).mm$checkFall(distance, onGround, block, pos);
     }
 
-    @ModifyVariable(method = "move", at = @At("HEAD"), argsOnly = true)
-    private Vec3 mm$edge(Vec3 movement) {
-        return (Object) this instanceof Player p ? MovementPhysics.edge(p, movement) : movement;
-    }
 }

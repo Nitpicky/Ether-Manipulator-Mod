@@ -50,7 +50,7 @@ import net.minecraft.world.phys.Vec3;
  * tap: a puff that bonemeals what it hits; charged: a slow pollen cloud that drifts where you look,
  * growing what it passes LIGHT bouncing ball: leaves a light where it stops, and (charged) a light
  * at every bounce for 3 minutes TETHER grapple hook: sticks, then reels you in while RMB is held
- * (Vacuum is a held cone, see VacuumCone; it has no projectile)
+ * (Vacuum was retired; its constant stays as a save-data placeholder)
  *
  * <p>Every projectile does its job where it stops at max range too.
  *
@@ -105,9 +105,6 @@ public class BeamBallEntity extends Projectile {
     static final EntityDataAccessor<Boolean> FIRED_LEFT =
             SynchedEntityData.defineId(BeamBallEntity.class, EntityDataSerializers.BOOLEAN);
 
-    /** How long Frost bridge blocks last, in ticks. */
-    public static final int BRIDGE_TICKS = 200;
-
     /** How long a Light orb's bounce lights last, in ticks (3 minutes). */
     static final int BOUNCE_LIGHT_TICKS = 3600;
 
@@ -135,8 +132,6 @@ public class BeamBallEntity extends Projectile {
     Direction hookFace;
     long lastPress = -100;
     int idleTicks;
-    boolean releasedMass;
-
 
     /**
      * Mass Driver: the block is let go and flies on its own. {@code bounces}: how many times it
@@ -144,7 +139,6 @@ public class BeamBallEntity extends Projectile {
      * nothing.
      */
     public void releaseMass(int bounces, boolean gentle) {
-        releasedMass = true;
         massBounces = bounces;
         massGentle = gentle;
         entityData.set(MASS_HELD, false);
@@ -185,9 +179,6 @@ public class BeamBallEntity extends Projectile {
     /** Hammer Throw: the hooked mob is being whirled around the owner. */
     boolean whirling;
 
-    /** Deflector: projectiles this Gust already turned around. */
-    final java.util.Set<Integer> deflected = new java.util.HashSet<>();
-
     /** How long a Light orb's lights last (Prism II doubles it). */
     int lightLife = BOUNCE_LIGHT_TICKS;
 
@@ -197,7 +188,6 @@ public class BeamBallEntity extends Projectile {
     float traveledDistance;
     boolean burningLight;
 
-    static final float[] PHASE_SPEED = {1.0f, 1.8f, 2.8f};
     public static final float[] PHASE_RADIUS = {0.18f, 0.35f, 0.58f};
 
     // 6/16 blocks — hitbox smaller than the visual 8-unit model
@@ -277,8 +267,6 @@ public class BeamBallEntity extends Projectile {
         damage *= amount;
     }
 
-    float lastPathMark;
-
     /** Applies the Orb line's launch-time traits. Call before spawning. */
     public void configure(ItemStack manipulator) {
         entityData.set(COLOR, getMode().color);
@@ -290,6 +278,7 @@ public class BeamBallEntity extends Projectile {
                         && getOwner() != null
                         && getOwner().isShiftKeyDown();
         if (Traits.hasCommon(traits, Traits.KINETIC, 1)) maxRange += 16;
+        // LEFTOVER(trait): kinetic.overcharge can no longer be picked
         int overcharge = Traits.rank(traits, "kinetic.overcharge");
         if (getPhase() == 2 && overcharge > 0) {
             damage *= 1.25f + 0.25f * overcharge; // x1.5, x1.75, x2
@@ -306,6 +295,7 @@ public class BeamBallEntity extends Projectile {
         int bank = Traits.rank(traits, "kinetic.bank_shot");
         if (getMode() != OrbMode.TETHER && !isDrifting())
             bouncesLeft = bank > 0 ? getPhase() + 1 : 0;
+        // LEFTOVER(trait): kinetic.piercing can no longer be picked
         piercesLeft = has("kinetic.piercing") ? getPhase() : 0;
         if (has("kinetic.marksman")
                 && getOwner() != null
@@ -403,18 +393,6 @@ public class BeamBallEntity extends Projectile {
         anchorLife = life;
     }
 
-    public boolean isStuckOnBlock() {
-        return isStuck() && hooked == null && stuckBlock != null;
-    }
-
-    @Override
-    public void onClientRemoval() {
-        super.onClientRemoval();
-        if (level().isClientSide && getMode() == OrbMode.TETHER && isStuck() && !isAnchor()) {
-            com.ethermod.client.ClientMobility.onHookGone(this);
-        }
-    }
-
     /** Zipline anchors melt away when their time is up or their partner is gone. */
     void anchorTick() {
         if (--anchorLife <= 0
@@ -431,12 +409,6 @@ public class BeamBallEntity extends Projectile {
     /** Tidecaller: the owner rides along. */
     public void carryOwner() {
         carrying = true;
-    }
-
-    /** Meteor: rise, then fall on the block the owner aims at. */
-    public void makeMeteor() {
-        meteor = 1;
-        maxRange = 256;
     }
 
     /** Rotates the flight direction around the vertical axis (Split). */
@@ -563,10 +535,7 @@ public class BeamBallEntity extends Projectile {
             return;
         }
 
-        if (mode == OrbMode.MASS && !level().isClientSide) {
-            if (MassDriver.heldTick(this)) return;
-            releasedMass = true;
-        }
+        if (mode == OrbMode.MASS && !level().isClientSide && MassDriver.heldTick(this)) return;
         // SERVER: full physics
         if ((mode == OrbMode.LAVA || mode == OrbMode.IGNITE) && getOwner() instanceof ServerPlayer pyro)
             pyro.getPersistentData()
@@ -772,6 +741,7 @@ public class BeamBallEntity extends Projectile {
         orbitPosition();
         lifeTicks++;
         ServerLevel sl = (ServerLevel) level();
+        // LEFTOVER(trait): kinetic.orbit can no longer be picked
         if (lifeTicks > 600 || !Traits.has(Manipulator.stack(sp), "kinetic.orbit")) {
             discard();
             return;
@@ -832,12 +802,12 @@ public class BeamBallEntity extends Projectile {
                 }
             }
             case WATER -> {
-                if (!OrbFluids.placeFluid(this, here, Direction.UP, Fluids.WATER)) refundTank();
+                OrbFluids.placeFluid(this, here, Direction.UP, Fluids.WATER);
                 ProjectileEffects.waterImpact(this, traits, at);
             }
             case LAVA -> {
-                if (!OrbFluids.placeFluid(this, here, Direction.UP, Fluids.LAVA)) refundTank();
-                else OrbFluids.lavaPlaced(this, here);
+                if (OrbFluids.placeFluid(this, here, Direction.UP, Fluids.LAVA))
+                    OrbFluids.lavaPlaced(this, here);
             }
             case IGNITE -> OrbNature.ignite(this, here.below(), Direction.UP);
             case FROST -> {
@@ -927,16 +897,12 @@ public class BeamBallEntity extends Projectile {
                         target.getDeltaMovement().add(push.x, 0.15 + force * 0.1, push.z));
                 target.hurtMarked = true;
                 if (pressure > 0) OrbFluids.extinguish(this, target.blockPosition(), 1 + pressure);
-                if (has("hydraulic.quench")) OrbFluids.extinguish(this, target.blockPosition(), 2);
-                if (!OrbFluids.placeFluid(this, target.blockPosition(), null, Fluids.WATER))
-                    refundTank();
+                OrbFluids.placeFluid(this, target.blockPosition(), null, Fluids.WATER);
             }
             case LAVA -> {
                 target.igniteForSeconds(5);
-                if (!OrbFluids.placeFluid(this, target.blockPosition(), null, Fluids.LAVA))
-                    refundTank();
-                else OrbFluids.lavaPlaced(this, target.blockPosition());
-                OrbFluids.kiln(this, result.getLocation());
+                if (OrbFluids.placeFluid(this, target.blockPosition(), null, Fluids.LAVA))
+                    OrbFluids.lavaPlaced(this, target.blockPosition());
             }
             case FROST -> {
                 if (target instanceof LivingEntity le) {
@@ -951,9 +917,9 @@ public class BeamBallEntity extends Projectile {
                 }
             }
             case IGNITE -> {
+                // LEFTOVER(trait): pyrotechnic.incendiary can no longer be picked
                 int inc = rank("pyrotechnic.incendiary");
                 target.igniteForSeconds(inc >= 2 ? 12 : inc == 1 ? 8 : 4 + 2 * ph);
-                OrbFluids.kiln(this, result.getLocation());
             }
             case GROWTH -> {
                 if (target instanceof LivingEntity victim
@@ -983,6 +949,7 @@ public class BeamBallEntity extends Projectile {
                 if (target instanceof LivingEntity le) {
 
                     // Sunfire: Light burns the undead
+                    // LEFTOVER(trait): photonic.sunfire can no longer be picked
                     int sun = rank("photonic.sunfire");
                     if (sun > 0 && le.getType().is(net.minecraft.tags.EntityTypeTags.UNDEAD)) {
                         le.hurt(
@@ -1031,6 +998,7 @@ public class BeamBallEntity extends Projectile {
         int ph = getPhase();
         if (getMode() == OrbMode.WATER)
             ProjectileEffects.waterImpact(this, traits, result.getLocation());
+        // LEFTOVER(trait): kinetic.payload can no longer be picked
         int payload = ph == 2 ? rank("kinetic.payload") : 0; // Payload: 3x3, then 5x5
 
         // Tether: the hook catches the block and holds (see tetherTick)
@@ -1047,7 +1015,6 @@ public class BeamBallEntity extends Projectile {
             hookAt = sl.getGameTime() + OrbTether.HOOK_DELAY;
             hookPitch = 1.3f;
             if (getOwner() instanceof ServerPlayer sp) {
-                if (has("gravitic.singularity")) WorldEffects.gravityWell(sl, at, 60, sp);
                 if (zipPlacing) {
                     com.ethermod.trait.Ziplines.onHookStuck(sp, this);
                     if (!isAnchor()) com.ethermod.trait.Ziplines.pin(sp, this);
@@ -1062,8 +1029,6 @@ public class BeamBallEntity extends Projectile {
             if (getMode() == OrbMode.LIGHT) traveledDistance = 0f;
             if (getMode() == OrbMode.LIGHT && mayBuild(front) && sl.getBlockState(front).isAir()) {
                 WorldEffects.tempLight(sl, front, 13, lightLife);
-                if (getOwner() instanceof ServerPlayer sp)
-                    com.ethermod.trait.BeaconNet.add(sp, sl, front, lightLife);
                 sl.sendParticles(
                         ParticleTypes.END_ROD,
                         front.getX() + 0.5,
@@ -1106,26 +1071,11 @@ public class BeamBallEntity extends Projectile {
                         (hitState.getBlock() instanceof SimpleWaterloggedBlock
                                         && OrbFluids.placeFluid(this, hitPos, face, Fluids.WATER))
                                 || OrbFluids.placeFluid(this, front, face, Fluids.WATER);
-                if (!placed) refundTank();
-                else if (payload > 0) OrbFluids.spill(this, front, payload, Fluids.WATER);
-                if (false && placed)
-                    for (int d = 1; d <= 3 + ph * 2; d++) {
-                        final int delay = d;
-                        WorldEffects.schedule(
-                                sl,
-                                d,
-                                () -> {
-                                    for (var pos :
-                                            BlockPos.betweenClosed(
-                                                    front.offset(-delay, 0, -delay),
-                                                    front.offset(delay, 0, delay)))
-                                        if (sl.hasChunkAt(pos)
-                                                && sl.getFluidState(pos).is(FluidTags.WATER))
-                                            sl.scheduleTick(pos, Fluids.WATER, 1);
-                                });
-                    }
+                if (placed && payload > 0) OrbFluids.spill(this, front, payload, Fluids.WATER);
                 // Quench: lava it lands on turns to obsidian or cobblestone, II in a 3x3
+                // LEFTOVER(trait): hydraulic.quench can no longer be picked
                 if (has("hydraulic.quench"))
+                    // LEFTOVER(trait): hydraulic.quench can no longer be picked
                     OrbFluids.quenchLava(this, front, rank("hydraulic.quench") >= 2 ? 1 : 0);
                 OrbFluids.extinguish(
                         this,
@@ -1175,6 +1125,7 @@ public class BeamBallEntity extends Projectile {
                             1.5,
                             0.1);
                     // Wave: the water rolls on along the ground
+                    // LEFTOVER(trait): hydraulic.wave can no longer be picked
                     if (has("hydraulic.wave")) {
                         Vec3 v = getDeltaMovement();
                         Direction dir = Direction.getNearest(v.x, 0, v.z);
@@ -1186,15 +1137,13 @@ public class BeamBallEntity extends Projectile {
             case LAVA -> {
                 if (OrbFluids.forgeHeart(this, hitPos)) break;
                 if (OrbFluids.fillContainer(this, hitPos, face, Fluids.LAVA)) break;
-                if (!OrbFluids.placeFluid(this, front, face, Fluids.LAVA)) refundTank();
-                else {
+                if (OrbFluids.placeFluid(this, front, face, Fluids.LAVA)) {
                     OrbFluids.lavaPlaced(this, front);
                     if (payload > 0) OrbFluids.spill(this, front, payload, Fluids.LAVA);
                     // charged: fire splashes out around the pool
                     if (ph >= 1) WorldEffects.fireRing(sl, front, getOwner(), ph);
                 }
                 if (meteor == 2) meteorImpact(result.getLocation());
-                OrbFluids.kiln(this, result.getLocation());
             }
             case FROST -> {
                 // Tap: freeze the water block hit, or the air in front of the face, into ice
@@ -1214,6 +1163,7 @@ public class BeamBallEntity extends Projectile {
                             OrbFrost.permafrost(this));
                 }
                 // Charged: freeze a patch of water (lava turns to obsidian for good)
+                // LEFTOVER(trait): hydraulic.permafrost can no longer be picked
                 int r = (ph == 2 ? 2 : ph) + (rank("hydraulic.permafrost") >= 2 ? 1 : 0) + payload;
                 for (BlockPos p :
                         BlockPos.betweenClosed(front.offset(-r, -1, -r), front.offset(r, 0, r))) {
@@ -1278,6 +1228,7 @@ public class BeamBallEntity extends Projectile {
     void scheduleEcho(Vec3 at) {
         if (echo
                 || getPhase() != 2
+                // LEFTOVER(trait): kinetic.echo can no longer be picked
                 || !has("kinetic.echo")
                 || isDrifting()
                 || !(getOwner() instanceof LivingEntity owner)) return;
@@ -1286,6 +1237,7 @@ public class BeamBallEntity extends Projectile {
         ItemStack snap = traits.copy();
         OrbMode mode = getMode();
         ManipulatorStage stage = getStage();
+        // LEFTOVER(trait): kinetic.echo can no longer be picked
         float dmg = damage * (rank("kinetic.echo") >= 2 ? 1f : 0.5f);
         WorldEffects.schedule(
                 sl,
@@ -1343,13 +1295,6 @@ public class BeamBallEntity extends Projectile {
                 SoundSource.PLAYERS,
                 1.2f,
                 0.8f);
-    }
-
-    /** Gives the bucket back if the liquid couldn't land anywhere. */
-    void refundTank() {
-        // One resource payment funds the whole volley. Failed individual impacts
-        // cannot refund that payment repeatedly; firing spends it once.
-
     }
 
     /** Impact burst, visible to everyone nearby. */

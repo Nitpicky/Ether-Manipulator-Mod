@@ -54,26 +54,10 @@ public final class PhotonicEffects {
     public static void end(BeamBallEntity b, ItemStack st, Vec3 at) {
         if (!(b.getOwner() instanceof ServerPlayer p)) return;
         boolean nova = Traits.has(st, "photonic.supernova");
-        if (!Traits.has(st, "photonic.lodestar") && !Traits.has(st, "photonic.constellation"))
-            add(p, at, null, st, 3600);
+        if (!Traits.has(st, "photonic.constellation")) add(p, at, null, st, 3600);
         apply(p, at, st, nova ? 2 : 1, true);
         if (Traits.has(st, "photonic.mirage"))
-            decoy(
-                    p,
-                    at,
-                    Traits.has(st, "photonic.lodestar")
-                            ? com.ethermod.config.ServerConfig.photonicTicks()
-                            : nova ? 240 : 120);
-        if (Traits.has(st, "photonic.lodestar")) {
-            int life = com.ethermod.config.ServerConfig.photonicTicks();
-            add(p, at, null, st, life);
-            net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(
-                    p,
-                    new com.ethermod.network.payload.ModulePayloads.LodestarMark(
-                            BlockPos.containing(at),
-                            p.level().dimension().location(),
-                            p.level().getGameTime() + life));
-        }
+            decoy(p, at, nova ? 240 : 120);
         if (Traits.has(st, "photonic.constellation"))
             add(p, at, PREVIOUS.remove(b.getUUID()), st, 200);
         else PREVIOUS.remove(b.getUUID());
@@ -173,14 +157,6 @@ public final class PhotonicEffects {
             }
 
             if (e instanceof Mob mob && !friend) {
-                if (impact
-                        && Traits.has(st, "photonic.dazzle")
-                        && e.distanceToSqr(at) <= 9 * power * power) {
-                    e.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 40 * power));
-                    e.getPersistentData().putLong("mm_dazzled_until", now + 40 * power);
-                    mob.setTarget(null);
-                    mob.getNavigation().stop();
-                }
                 boolean dark =
                         e.getType().is(net.minecraft.tags.EntityTypeTags.UNDEAD)
                                 || e instanceof net.minecraft.world.entity.monster.Spider;

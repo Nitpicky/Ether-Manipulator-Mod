@@ -25,11 +25,7 @@ public record LeftClickFxPayload(int kind, int id, int owner, Vector3f pos, int 
     /** A gust grenade burst at pos. */
     public static final int BURST = 1;
 
-    /** A tether pull from owner to pos; extra = the pulled entity's id, or -1. */
-    public static final int PULL = 2;
-
-    /** A poison puff at pos. */
-    public static final int PUFF = 3;
+    // 2 and 3 were the retired Gravitic pull and Botanic poison puff
 
     /** A Botanic harvest cut through the crop at pos; extra = the sweep's heading, in tenths of a degree. */
     public static final int CUT = 4;

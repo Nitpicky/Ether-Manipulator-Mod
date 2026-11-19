@@ -226,10 +226,7 @@ public final class RedesignEffects {
         if (!(ev.getBreaker() instanceof ServerPlayer p)) return;
         var st = Manipulator.stack(p);
         var bs = ev.getState();
-        if (!(bs.getBlock() instanceof CropBlock crop) || !crop.isMaxAge(bs)) {
-            collect(ev, p, st);
-            return;
-        }
+        if (!(bs.getBlock() instanceof CropBlock crop) || !crop.isMaxAge(bs)) return;
         if (Traits.has(st, "botanic.bountiful")) {
             for (var d : ev.getDrops())
                 if (!d.getItem().is(net.neoforged.neoforge.common.Tags.Items.SEEDS))
@@ -272,11 +269,6 @@ public final class RedesignEffects {
                             .setBlockAndUpdate(
                                     q, c.getStateForAge(Math.min(c.getMaxAge(), c.getAge(s) + 1)));
             }
-        collect(ev, p, st);
-    }
-
-    private static void collect(BlockDropsEvent ev, ServerPlayer p, ItemStack st) {
-        // Collector is handled with the other drop traits (TraitEffects): drops fly to you
     }
 
     private static boolean isPlantingItem(ItemStack item, CropBlock crop) {
@@ -296,11 +288,9 @@ public final class RedesignEffects {
                 new com.ethermod.network.payload.ModulePayloads.SoulFlame(
                         target.getId(), d.getBoolean("mm_soul")));
         d.putBoolean("mm_weak_burn", false /* Heat Exhaustion retired; Phoenix is the second Common. */);
-        d.putInt(
-                "mm_inferno",
-                false && phase >= 0
-                        ? phase + 1
-                        : wasBurning ? d.getInt("mm_inferno") : 0);
+        // LEFTOVER: mm_weak_burn and mm_inferno are always false/0 now (Heat Exhaustion and the
+        // old Inferno burn are retired); the readers in the burn tick never fire
+        d.putInt("mm_inferno", wasBurning ? d.getInt("mm_inferno") : 0);
         if (wasBurning
                 && Traits.has(st, "pyrotechnic.flashover")
                 && target.tickCount - d.getInt("mm_flashover") > 20) {

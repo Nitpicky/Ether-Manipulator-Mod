@@ -146,7 +146,6 @@ public final class BeamRenderer {
         VertexConsumer vc = com.ethermod.client.Fx.glow();
         renderRemote(mc, camPos, pt, time, dt, proj, view, vc, m);
 
-        BeaconMarkers.render(mc, player, camPos, camLeft, time, buf, m);
         ModuleMarkers.render(mc, camPos, camLeft, time, buf, m);
         LeftClickFx.render(mc, camPos, pt, time, vc, m);
         com.ethermod.client.StasisFx.renderArrows(mc, camPos, pt, time, vc, m);
@@ -372,6 +371,7 @@ public final class BeamRenderer {
         int k = 0;
         for (Vec3 dir :
                 BeamCastHelper.refractRays(
+                        // LEFTOVER(trait): photonic.refraction can no longer be picked
                         look, com.ethermod.trait.Traits.rank(held, "photonic.refraction"))) {
             var hit =
                     player.level()
@@ -442,7 +442,6 @@ public final class BeamRenderer {
                                         * 0.5)); // control point on the aim line: a lagging tip
                                                  // bends the beam
         int lv = Math.max(0, Math.min(2, level - 1)); // 0, 1, 2
-        float[] hsv = rgbToHsv(color[0], color[1], color[2]);
 
         // A few control points along the curve, each drifting slowly on its own
         int nc = Math.max(3, Math.min(24, (int) Math.round(full / 0.9)));
@@ -502,50 +501,6 @@ public final class BeamRenderer {
 
         // the look chosen on the FX bench: the Prism rope, with surface arcs and the damage swell
         PrismRope.draw(owner, pts, sub, su, time, level, color, hitSomething, full);
-    }
-
-    /**
-     * One lane of the ribbon between two cross-sections. {@code ea, eb} are the alpha of the lane's
-     * two long edges; -1 means the bright core.
-     */
-    private static void lane(
-            Vec3 a0, Vec3 a1, Vec3 b0, Vec3 b1, float[] c0, float[] c1, float ea, float eb) {
-        com.ethermod.client.Fx.beamQuad(
-                a0, laneCol(c0, ea), a1, laneCol(c1, ea), b1, laneCol(c1, eb), b0, laneCol(c0, eb));
-    }
-
-    private static int[] laneCol(float[] c, float edge) {
-        if (edge < 0) {
-            return new int[] {
-                BeamFx.ch(mix(c[0], 1f, 0.25f)),
-                BeamFx.ch(mix(c[1], 1f, 0.25f)),
-                BeamFx.ch(mix(c[2], 1f, 0.25f)),
-                BeamFx.ch(0.95f * c[3])
-            };
-        }
-        return new int[] {
-            BeamFx.ch(c[0]), BeamFx.ch(c[1]), BeamFx.ch(c[2]), BeamFx.ch(edge * c[3])
-        };
-    }
-
-    private static float[] rgbToHsv(float r, float g, float b) {
-        float max = Math.max(r, Math.max(g, b)), min = Math.min(r, Math.min(g, b)), d = max - min;
-        float h = 0;
-        if (d > 1e-6f) {
-            if (max == r) h = ((g - b) / d) % 6f;
-            else if (max == g) h = (b - r) / d + 2f;
-            else h = (r - g) / d + 4f;
-            h /= 6f;
-            if (h < 0) h += 1f;
-        }
-        return new float[] {h, max <= 0 ? 0 : d / max, max};
-    }
-
-    private static float[] hsvToRgb(float h, float s, float v) {
-        int rgb = net.minecraft.util.Mth.hsvToRgb(h - (float) Math.floor(h), s, v);
-        return new float[] {
-            ((rgb >> 16) & 255) / 255f, ((rgb >> 8) & 255) / 255f, (rgb & 255) / 255f
-        };
     }
 
     // =========================================================================

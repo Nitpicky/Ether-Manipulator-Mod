@@ -29,6 +29,9 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v5
 
+      - name: Check trait ids
+        run: python3 .github/scripts/check_trait_ids.py
+
       - name: Build with Gradle
         run: ./gradlew build compilePlaytestJava
 

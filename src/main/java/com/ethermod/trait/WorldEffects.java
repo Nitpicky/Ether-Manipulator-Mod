@@ -31,8 +31,6 @@ public final class WorldEffects {
 
     private WorldEffects() {}
 
-    private record TimedLight(BlockPos pos, long expires) {}
-
     private record Well(Vec3 center, long expires, Entity owner) {}
 
     /** A block placed for a while (Frost bridges), then put back as it was. */
@@ -277,20 +275,6 @@ public final class WorldEffects {
             FIRES.computeIfAbsent(level, k -> new HashMap<>())
                     .put(pos.immutable(), new Fire(sp.getUUID(), Long.MAX_VALUE - 1000, false));
         }
-    }
-
-    /** True if the fire or lava touching this box was set by that player. */
-    public static boolean ownedNear(ServerLevel level, AABB box, java.util.UUID player) {
-        Map<BlockPos, Fire> m = FIRES.get(level);
-        if (m == null || m.isEmpty()) return false;
-        for (BlockPos p :
-                BlockPos.betweenClosed(
-                        BlockPos.containing(box.minX, box.minY, box.minZ),
-                        BlockPos.containing(box.maxX, box.maxY, box.maxZ))) {
-            Fire f = m.get(p);
-            if (f != null && f.owner().equals(player)) return true;
-        }
-        return false;
     }
 
     /** Puts out a player's own controlled fire (Controlled Burn III: beaming it). */

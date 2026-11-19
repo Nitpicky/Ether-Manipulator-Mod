@@ -100,8 +100,6 @@ public final class ClientMobility {
         }
     }
 
-    public static void onHookGone(BeamBallEntity hook) {}
-
     @SubscribeEvent
     public static void tick(ClientTickEvent.Post ev) {
         var mc = Minecraft.getInstance();
@@ -193,11 +191,6 @@ public final class ClientMobility {
                 coyote = false;
                 var v = p.getDeltaMovement();
                 p.setDeltaMovement(MovementPhysics.withUp(p, v, .42));
-            }
-            if (Traits.has(st, "pneumatic.triple_jump")) {
-                jumpChain = now - landedAt <= 5 ? (jumpChain % 3) + 1 : 1;
-                var v = p.getDeltaMovement();
-                p.setDeltaMovement(MovementPhysics.withUp(p, v, 0.42 + 0.18 * (jumpChain - 1)));
             }
         }
         // Pile Driver: Sneak on real ground charges a jump (full in 1 s); jumping unleashes it, up

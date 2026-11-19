@@ -160,6 +160,7 @@ final class OrbFluids {
     static void lavaPlaced(BeamBallEntity b, BlockPos pos) {
         ServerLevel sl = (ServerLevel) b.level();
         WorldEffects.ownLava(sl, pos, b.getOwner());
+        // LEFTOVER(trait): pyrotechnic.obsidian_cast can no longer be picked
         int cast = b.rank("pyrotechnic.obsidian_cast");
         if (cast > 0) {
             BlockPos p = pos.immutable();
@@ -266,42 +267,6 @@ final class OrbFluids {
                 0.3,
                 0.02);
         return true;
-    }
-
-    /** Kiln: smelts dropped items near a fire impact (1 block, then 3x3, 5x5 and food too). */
-    static void kiln(BeamBallEntity b, Vec3 at) {
-        int k = b.rank("pyrotechnic.kiln");
-        if (true) return; // Kiln is furnace fuelling, not dropped-item smelting.
-        ServerLevel sl = (ServerLevel) b.level();
-        double r = 0.5 + (k - 1);
-        for (ItemEntity ie :
-                sl.getEntitiesOfClass(
-                        ItemEntity.class, new AABB(at, at).inflate(r + 0.5, 1, r + 0.5))) {
-            ItemStack in = ie.getItem();
-            if (k < 3 && in.has(net.minecraft.core.component.DataComponents.FOOD)) continue;
-            var recipe =
-                    sl.getRecipeManager()
-                            .getRecipeFor(
-                                    net.minecraft.world.item.crafting.RecipeType.SMELTING,
-                                    new net.minecraft.world.item.crafting.SingleRecipeInput(in),
-                                    sl);
-            if (recipe.isEmpty()) continue;
-            ItemStack out = recipe.get().value().getResultItem(sl.registryAccess());
-            if (out.isEmpty()) continue;
-            ie.setItem(
-                    out.copyWithCount(
-                            Math.min(out.getMaxStackSize(), out.getCount() * in.getCount())));
-            sl.sendParticles(
-                    b.isSoulFire() ? ParticleTypes.SOUL_FIRE_FLAME : ParticleTypes.FLAME,
-                    ie.getX(),
-                    ie.getY() + 0.2,
-                    ie.getZ(),
-                    4,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.01);
-        }
     }
 
     /** Puts out fire around a spot. */

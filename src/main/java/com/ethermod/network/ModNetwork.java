@@ -24,7 +24,7 @@ import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 public final class ModNetwork {
 
-    private static final String VERSION = "17";
+    private static final String VERSION = "18";
 
     private ModNetwork() {}
 
@@ -184,10 +184,6 @@ public final class ModNetwork {
                                     if (ctx.player() instanceof ServerPlayer sp)
                                         com.ethermod.trait.MobilityEffects.airJump(sp);
                                 }));
-        reg.playToClient(
-                com.ethermod.network.payload.ModulePayloads.LodestarMark.TYPE,
-                com.ethermod.network.payload.ModulePayloads.LodestarMark.CODEC,
-                (p, ctx) -> ctx.enqueueWork(() -> com.ethermod.trait.Lodestar.clientMark = p));
     }
 
     private static void paint(ServerPlayer sp, boolean body, int invSlot) {

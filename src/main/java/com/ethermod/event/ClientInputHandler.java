@@ -29,7 +29,6 @@ public class ClientInputHandler {
     public static boolean jiggleActive = false;
 
     private static boolean wasBeamActive = false;
-    private static boolean wasSignal;
     private static boolean wasPick;
 
     @SubscribeEvent

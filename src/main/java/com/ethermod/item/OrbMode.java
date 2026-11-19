@@ -22,6 +22,8 @@ import net.minecraft.world.item.component.CustomData;
  */
 public enum OrbMode {
     ENERGY(0x20C1E9, Items.AMETHYST_SHARD),
+    // LEFTOVER: Vacuum is retired and never unlocked. The constant stays because saved modes are
+    // stored by ordinal: removing it would shift every later mode. Do not reuse or remove it.
     VACUUM(0xB070FF, Items.HOPPER),
     WATER(0x3F8CFF, Items.WATER_BUCKET),
     LAVA(0xFF7020, Items.LAVA_BUCKET),
@@ -33,15 +35,9 @@ public enum OrbMode {
     GUST(0xB8E8E0, Items.FEATHER),
     MASS(0xE0A040, Items.COBBLESTONE);
 
-    /** Base size of the shared tank, in units; each tank trait adds {@link #TANK_STEP}. */
-    public static final int TANK_CAPACITY = 6;
-
-    public static final int TANK_STEP = 2;
-
     private static final String TAG_MODE = "mm_orb_mode";
     /** The one tank every projectile draws from (the old water/lava/fertilizer tanks merged). */
     private static final String TAG_TANK = "mm_tank";
-
 
     /** RGB tint for the orb and HUD. */
     public final int color;
@@ -88,11 +84,6 @@ public enum OrbMode {
     /** Left clicks that charge like the right-click orbs (same behaviour, other button). */
     public boolean chargesOnLeft() {
         return this == WATER || this == LAVA;
-    }
-
-    /** Mass Driver: RMB lifts a block first, then charges as usual. */
-    public boolean isMass() {
-        return this == MASS;
     }
 
     /** Downward pull per tick on the projectile (0 = flies straight). */

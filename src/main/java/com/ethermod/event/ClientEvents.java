@@ -60,29 +60,6 @@ public class ClientEvents {
                 com.ethermod.client.ManipulatorHud::render);
     }
 
-    @SubscribeEvent
-    public static void particles(
-            net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent event) {
-        event.registerSpriteSet(
-                com.ethermod.registry.ModParticles.BASE.get(),
-                sprites ->
-                        (type, level, x, y, z, dx, dy, dz) ->
-                                new com.ethermod.client.GeyserParticle(
-                                        level, x, y, z, dx, dy, dz, sprites, 0));
-        event.registerSpriteSet(
-                com.ethermod.registry.ModParticles.PLUME.get(),
-                sprites ->
-                        (type, level, x, y, z, dx, dy, dz) ->
-                                new com.ethermod.client.GeyserParticle(
-                                        level, x, y, z, dx, dy, dz, sprites, 1));
-        event.registerSpriteSet(
-                com.ethermod.registry.ModParticles.POOF.get(),
-                sprites ->
-                        (type, level, x, y, z, dx, dy, dz) ->
-                                new com.ethermod.client.GeyserParticle(
-                                        level, x, y, z, dx, dy, dz, sprites, 2));
-    }
-
     /** Stasis: every living creature's renderer gets the amber tint layer (client StasisFx). */
     @SubscribeEvent
     @SuppressWarnings({"unchecked", "rawtypes"})

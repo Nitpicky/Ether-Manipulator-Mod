@@ -69,17 +69,12 @@ public final class ManipulatorAnimations {
     private static final RawAnimation TETHER = anim("tether");
     private static final RawAnimation TETHER_GRIP = anim("tether_grip");
     private static final RawAnimation TETHER_RELEASE = anim("tether_release");
-    private static final RawAnimation PULL = anim("pull");
     private static final RawAnimation GRENADE = anim("grenade");
     private static final RawAnimation BEACON = anim("beacon");
     /** Botanic left click: a sickle sweep over the crops. */
     private static final RawAnimation HARVEST = anim("harvest");
-    /** Signal click per strength band (1-4, 5-8, 9-12, 13-15), and the hold-to-ramp loop. */
-    private static final RawAnimation[] CYCLE = {
-        anim("cycle_1"), anim("cycle_2"), anim("cycle_3"), anim("cycle_4")
-    };
-
-    private static final RawAnimation CYCLE_RAMP = anim("cycle_ramp");
+    // LEFTOVER: the model file still holds pull, cycle_1-4, cycle_ramp and redstone (retired
+    // Gravitic pull and Redstone mode); clean them out in Blockbench, not by hand
     // pollen drift: the push that sends it off, then the guide pose while it flies
     private static final RawAnimation GROWTH_GUIDE =
             RawAnimation.begin()
@@ -95,7 +90,6 @@ public final class ManipulatorAnimations {
     private static final RawAnimation MASS_GRIP = anim("mass_grip");
     private static final RawAnimation MASS_RELEASE = anim("mass_release");
     private static final RawAnimation MASS_PLACE = anim("mass_place");
-
 
     /** Energy charge: each stage opens further; the spin itself comes from {@link #spin}. */
     private static final RawAnimation[] CHARGE_STAGES = new RawAnimation[3];
@@ -160,15 +154,11 @@ public final class ManipulatorAnimations {
     private static final float PULL_LEN = 0.5f;
     private static final float GRENADE_LEN = 0.55f;
     private static final float HARVEST_LEN = 0.66f;
-    private static final float CYCLE_LEN = 0.45f;
-    /** Holding the signal click this long means it is ramping (the server steps after 8 ticks). */
-    private static final float RAMP_AFTER = 0.4f;
     private static final float MASS_RELEASE_LEN = 0.45f;
     private static final float MASS_PLACE_LEN = 0.3f;
 
     /** Seconds a full charge is held before the prongs start to strain. */
     private static final float OVERCHARGE_AFTER = 2f;
-
 
     /** Per-holder memory to detect "just summoned", "just released" and "just let go". */
     private static final class Track {
@@ -291,9 +281,8 @@ public final class ManipulatorAnimations {
     static {
         ENDS_ON_IDLE.addAll(
                 List.of(
-                        SUMMON, MODE_SWITCH, FIDGET, INSPECT, FIRE, TETHER_RELEASE, PULL, GRENADE, HARVEST,
+                        SUMMON, MODE_SWITCH, FIDGET, INSPECT, FIRE, TETHER_RELEASE, GRENADE, HARVEST,
                         MASS_PLACE, MINE_END, GROWTH_END, RELOAD, RELOAD_TP));
-        ENDS_ON_IDLE.addAll(List.of(CYCLE));
         ENDS_ON_IDLE.addAll(FIRE_BY.values());
         SPINS.addAll(List.of(MINE));
         SPINS.addAll(
@@ -318,8 +307,7 @@ public final class ManipulatorAnimations {
         if (to == TETHER_RELEASE || to == MASS_PLACE || to == MASS_RELEASE) return 2;
         if (to == TETHER_GRIP) return 1; // the claw clamps on the hit
         if (to == TETHER) return 1; // the reach bursts open on the click
-        if (to == PULL || to == GRENADE || to == CYCLE_RAMP || to == HARVEST) return 2;
-        for (RawAnimation c : CYCLE) if (to == c) return 2;
+        if (to == GRENADE || to == HARVEST) return 2;
         if (to == BEAM_START) return 1;
         if (from == BEAM_START && to == MINE[0]) return 1;
         if (to == MINE_END) return 2;

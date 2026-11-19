@@ -46,15 +46,11 @@ final class OrbLight {
                 if (sl.getBlockState(p).is(Blocks.LIGHT) && b.mayBuild(p)) {
                     sl.removeBlock(p, false);
                     WorldEffects.forgetLight(sl, p);
-                    if (b.getOwner() instanceof ServerPlayer sp)
-                        com.ethermod.trait.BeaconNet.remove(sp, sl, p.immutable());
                     return;
                 }
             }
         if (!sl.getBlockState(at).isAir() || !b.mayBuild(at)) return;
         WorldEffects.tempLight(sl, at, 12 + b.getPhase(), b.lightLife);
-        if (b.getOwner() instanceof ServerPlayer sp)
-            com.ethermod.trait.BeaconNet.add(sp, sl, at, b.lightLife);
         sl.sendParticles(
                 ParticleTypes.END_ROD,
                 at.getX() + 0.5,

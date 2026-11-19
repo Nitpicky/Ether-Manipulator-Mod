@@ -23,7 +23,7 @@ public final class LeftClickFxData {
     private LeftClickFxData() {}
 
     /** How long each effect lasts, in ticks. */
-    static final int BURST_TICKS = 9, PULL_TICKS = 8, PUFF_TICKS = 40, CUT_TICKS = 10;
+    static final int BURST_TICKS = 9, CUT_TICKS = 10;
 
     static final class Grenade {
         Vec3 prev, pos;
@@ -33,16 +33,10 @@ public final class LeftClickFxData {
 
     record Burst(Vec3 pos, long start) {}
 
-    record Pull(int owner, Vec3 end, int target, long start) {}
-
-    record Puff(Vec3 pos, long start) {}
-
     record Cut(Vec3 pos, Vec3 dir, long start) {}
 
     static final Map<Integer, Grenade> GRENADES = new HashMap<>();
     static final List<Burst> BURSTS = new ArrayList<>();
-    static final List<Pull> PULLS = new ArrayList<>();
-    static final List<Puff> PUFFS = new ArrayList<>();
     static final List<Cut> CUTS = new ArrayList<>();
 
     private static long clientTime;
@@ -62,8 +56,6 @@ public final class LeftClickFxData {
                 GRENADES.remove(p.id());
                 BURSTS.add(new Burst(at, clientTime));
             }
-            case LeftClickFxPayload.PULL -> PULLS.add(new Pull(p.owner(), at, p.extra(), clientTime));
-            case LeftClickFxPayload.PUFF -> PUFFS.add(new Puff(at, clientTime));
             case LeftClickFxPayload.CUT -> {
                 double a = Math.toRadians(p.extra() / 10.0);
                 CUTS.add(new Cut(at, new Vec3(Math.cos(a), 0, Math.sin(a)), clientTime));
@@ -77,8 +69,6 @@ public final class LeftClickFxData {
         clientTime = gameTime;
         GRENADES.values().removeIf(g -> gameTime - g.seen > 10);
         BURSTS.removeIf(b -> gameTime - b.start > BURST_TICKS);
-        PULLS.removeIf(b -> gameTime - b.start > PULL_TICKS);
-        PUFFS.removeIf(b -> gameTime - b.start > PUFF_TICKS);
         CUTS.removeIf(b -> gameTime - b.start > CUT_TICKS);
     }
 
@@ -89,8 +79,6 @@ public final class LeftClickFxData {
     public static void clear() {
         GRENADES.clear();
         BURSTS.clear();
-        PULLS.clear();
-        PUFFS.clear();
         CUTS.clear();
     }
 

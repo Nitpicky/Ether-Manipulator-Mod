@@ -59,12 +59,6 @@ public final class ManipulatorColors {
         com.ethermod.manipulator.Manipulator.sync(p);
     }
 
-    /** The legacy gem colour stored on the stack (no longer shown). */
-    public static int storedBeam(ItemStack stack) {
-        CompoundTag t = tag(stack);
-        return t.contains(BEAM) ? t.getInt(BEAM) : DEFAULT_BEAM;
-    }
-
     /** The body colour (see {@link BodyPalette}), or -1 for the painted copper. */
     public static int body(ItemStack stack) {
         CompoundTag t = tag(stack);
@@ -96,41 +90,6 @@ public final class ManipulatorColors {
     public static int beamFrom(ItemStack gem) {
         int c = GemColors.colorOf(gem);
         return c < 0 ? DEFAULT_BEAM : c;
-    }
-
-    /**
-     * Plays the sound for changing a colour: a splash for a dye (trim), an amethyst block being
-     * placed for a gem (beam). Pitch varies a little so it never sounds the same twice.
-     */
-    public static void playChangeSound(net.minecraft.server.level.ServerPlayer sp, boolean body) {
-        var rnd = sp.getRandom();
-        if (body) {
-            var s =
-                    rnd.nextBoolean()
-                            ? com.ethermod.sound.ModSounds.UI_GENERIC_SPLASH
-                            : com.ethermod.sound.ModSounds.UI_PLAYER_SPLASH;
-            sp.level()
-                    .playSound(
-                            null,
-                            sp.getX(),
-                            sp.getY(),
-                            sp.getZ(),
-                            s,
-                            net.minecraft.sounds.SoundSource.PLAYERS,
-                            0.35f,
-                            0.9f + rnd.nextFloat() * 0.4f);
-        } else {
-            sp.level()
-                    .playSound(
-                            null,
-                            sp.getX(),
-                            sp.getY(),
-                            sp.getZ(),
-                            com.ethermod.sound.ModSounds.UI_AMETHYST_BLOCK_PLACE,
-                            net.minecraft.sounds.SoundSource.PLAYERS,
-                            0.9f,
-                            0.8f + rnd.nextFloat() * 0.5f);
-        }
     }
 
     public static int bodyFrom(ItemStack dye) {

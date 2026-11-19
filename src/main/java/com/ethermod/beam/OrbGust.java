@@ -25,26 +25,6 @@ final class OrbGust {
     static boolean gustTick(BeamBallEntity b) {
         ServerLevel sl = (ServerLevel) b.level();
         Entity owner = b.getOwner();
-        if (b.has("pneumatic.deflector")) {
-            for (Entity e :
-                    sl.getEntities(
-                            b,
-                            b.getBoundingBox().inflate(1.5),
-                            e ->
-                                    e instanceof net.minecraft.world.entity.projectile.Projectile pr
-                                            && !(e instanceof BeamBallEntity)
-                                            && pr.getOwner() != owner
-                                            && !b.deflected.contains(e.getId()))) {
-                b.deflected.add(e.getId());
-                ((net.minecraft.world.entity.projectile.Projectile) e)
-                        .deflect(
-                                net.minecraft.world.entity.projectile.ProjectileDeflection.REVERSE,
-                                b,
-                                owner,
-                                false);
-                sl.sendParticles(ParticleTypes.GUST, e.getX(), e.getY(), e.getZ(), 1, 0, 0, 0, 0);
-            }
-        }
         if (!b.has("pneumatic.cyclone") || b.getPhase() != 2) return false;
         // Cyclone: a slow whirlwind that lifts mobs and items, then bursts
         b.lifeTicks++;

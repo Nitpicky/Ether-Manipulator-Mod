@@ -17,7 +17,6 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
-
 /**
  * Tether mode: grapple hook, rope reeling, Swing, Recall, Hammer Throw and Zipline anchoring. Split
  * out of {@link BeamBallEntity}; every method takes the orb as {@code b}.
@@ -131,6 +130,7 @@ public final class OrbTether {
                                     .getType()
                                     .is(net.neoforged.neoforge.common.Tags.EntityTypes.BOSSES);
             // Displacement: sneak to swap places with it
+            // LEFTOVER(trait): gravitic.displacement can no longer be picked
             if (mob && b.has("gravitic.displacement") && sp.isShiftKeyDown()) {
                 Vec3 me = sp.position(), it = b.hooked.position();
                 b.hooked.teleportTo(me.x, me.y, me.z);
@@ -169,6 +169,7 @@ public final class OrbTether {
                 return false;
             }
             // Hammer Throw: whirl it around you
+            // LEFTOVER(trait): gravitic.hammer_throw can no longer be picked
             if (mob && b.has("gravitic.hammer_throw")) {
                 b.whirling = true;
                 double ang = b.lifeTicks++ * 0.45;
@@ -196,6 +197,7 @@ public final class OrbTether {
             Vec3 d = b.position().subtract(hands);
             boolean light =
                     false
+                            // LEFTOVER(trait): gravitic.recall can no longer be picked
                             && b.has("gravitic.recall")
                             && (!(b.hooked instanceof LivingEntity)
                                     || b.hooked.getBbWidth() * b.hooked.getBbHeight()
@@ -209,6 +211,7 @@ public final class OrbTether {
                     if (b.hooked instanceof ItemEntity ie) ie.setNoPickUpDelay();
                 }
                 // Recall II: everything loose near the hook comes along
+                // LEFTOVER(trait): gravitic.recall can no longer be picked
                 if (b.rank("gravitic.recall") >= 2) {
                     for (Entity e :
                             sl.getEntities(
@@ -473,26 +476,6 @@ public final class OrbTether {
         }
     }
 
-    /**
-     * Hammer Throw: let go and the whirled mob flies where you look, hurting itself on what it
-     * hits.
-     */
-    static void hammerThrow(BeamBallEntity b, ServerPlayer sp, ServerLevel sl) {
-        Vec3 look = sp.getLookAngle();
-        b.hooked.setDeltaMovement(look.scale(1.9).add(0, 0.35, 0));
-        b.hooked.hurtMarked = true;
-        if (b.hooked instanceof LivingEntity le) WorldEffects.thrown(sl, le, sp);
-        sl.playSound(
-                null,
-                sp.getX(),
-                sp.getY(),
-                sp.getZ(),
-                com.ethermod.sound.ModSounds.WORLD_BREEZE_SHOOT,
-                SoundSource.PLAYERS,
-                1f,
-                0.7f);
-    }
-
     /** Where the hook sits on what it caught: the struck spot, turning with the body. */
     static Vec3 hookPoint(BeamBallEntity b) {
         Entity e = b.hooked;
@@ -528,6 +511,7 @@ public final class OrbTether {
         b.hookAt = b.level().getGameTime() + HOOK_DELAY;
         b.hookPitch = 1.5f;
         // Weightless: a hooked mob floats helplessly
+        // LEFTOVER(trait): gravitic.weightless can no longer be picked
         int weightless = b.rank("gravitic.weightless");
         if (weightless > 0
                 && e instanceof LivingEntity le
@@ -538,7 +522,5 @@ public final class OrbTether {
                             weightless >= 2 ? 100 : 60,
                             0));
         }
-        if (b.has("gravitic.singularity"))
-            WorldEffects.gravityWell((ServerLevel) b.level(), b.position(), 60, owner);
     }
 }

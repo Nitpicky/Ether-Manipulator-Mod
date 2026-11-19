@@ -107,55 +107,6 @@ final class LeftClickFx {
                     vc, m, c, BeamFx.PX * (3 + 5 * ease), time * 0.5, 0.6, 1, 1, 1, 0.35f * fade);
         }
 
-        // ---- Gravitic pull: the Tether rope shoots out, hooks, and reels back in ----
-        for (var p : LeftClickFxData.PULLS) {
-            float age = age0 - p.start();
-            Entity owner = mc.level.getEntity(p.owner());
-            if (!(owner instanceof Player op)) continue;
-            Vec3 from =
-                    op == mc.player && BeamRenderer.nozzle != null
-                            ? BeamRenderer.nozzle
-                            : BeamRenderer.approximateMuzzle(op, pt);
-            Entity target = p.target() >= 0 ? mc.level.getEntity(p.target()) : null;
-            Vec3 to =
-                    target != null
-                            ? target.getPosition(pt).add(0, target.getBbHeight() * 0.5, 0)
-                            : p.end();
-            // out in 2 ticks, then a missed pull reels back in; a caught one follows its target
-            float out = Math.min(1f, age / 2f);
-            float back = target == null ? Math.max(0f, (age - 3) / 4f) : 0f;
-            float reach = Math.max(0f, out - back);
-            float fade = Math.min(1f, (LeftClickFxData.PULL_TICKS - age) / 3f);
-            if (reach <= 0 || fade <= 0) continue;
-            Vec3 a = from.subtract(cam);
-            Vec3 tip = a.add(to.subtract(cam).subtract(a).scale(reach));
-            BeamFx.prism(vc, m, a, tip, BeamFx.PX * 1.4f, time * 0.1, TETHER[0], TETHER[1], TETHER[2], 0.35f * fade);
-            BeamFx.prism(
-                    vc,
-                    m,
-                    a,
-                    tip,
-                    BeamFx.PX * 0.5f,
-                    time * 0.1,
-                    mix(TETHER[0], 1, 0.6f),
-                    mix(TETHER[1], 1, 0.6f),
-                    mix(TETHER[2], 1, 0.6f),
-                    0.95f * fade);
-            // the hook, as on the right-click Tether
-            BeamFx.spinCube(vc, m, tip, BeamFx.PX * 2, time * 0.3, 0.7, 0.9f, 0.9f, 1f, 0.95f * fade);
-        }
-
-        // ---- Poison puff: a Growth pollen cloud that blooms, lingers and thins out ----
-        for (var p : LeftClickFxData.PUFFS) {
-            float age = age0 - p.start();
-            float grow = Math.min(1f, age / 6f);
-            grow = 1 - (1 - grow) * (1 - grow);
-            float fade = Math.min(1f, (LeftClickFxData.PUFF_TICKS - age) / 10f);
-            if (fade <= 0) continue;
-            BeamBallRenderer.drawCloud(
-                    vc, m, p.pos().subtract(cam), GROWTH, time, 2, 0.5f + 0.7f * grow, 0.75f * fade);
-        }
-
         // ---- Botanic harvest: a slash streak through each crop in the sweep's direction, with chaff
         // pixels thrown on the way; crops are cut one column a tick, so the streaks chain into one
         // sickle pass ----

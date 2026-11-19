@@ -33,6 +33,7 @@ final class OrbNature {
     static void driftTick(BeamBallEntity b) {
         ServerLevel sl = (ServerLevel) b.level();
         // Lingering Bloom: twice as long, pulsing twice as often
+        // LEFTOVER(trait): botanic.lingering_bloom can no longer be picked
         boolean linger = b.has("botanic.lingering_bloom");
         int life = (b.getPhase() == 2 ? 100 : 80) * (linger ? 2 : 1);
         if (++b.lifeTicks > life) {
@@ -75,7 +76,9 @@ final class OrbNature {
         ProjectileEffects.growthCloud(b, b.traits);
         int r =
                 1
+                        // LEFTOVER(trait): botanic.lingering_bloom can no longer be picked
                         + Math.max(0, b.rank("botanic.lingering_bloom") - 1)
+                        // LEFTOVER(trait): kinetic.payload can no longer be picked
                         + (b.getPhase() == 2 ? b.rank("kinetic.payload") : 0); // Payload: a wider cloud
         BlockPos c = b.blockPosition();
         long now = sl.getGameTime();
@@ -151,6 +154,7 @@ final class OrbNature {
                 } else {
                     WorldEffects.placeFire(sl, firePos, owner);
                 }
+                // LEFTOVER(trait): pyrotechnic.incendiary can no longer be picked
                 int inc = b.rank("pyrotechnic.incendiary");
                 if (b.getPhase() == 2 && inc > 0)
                     WorldEffects.fireStar(sl, firePos, owner, inc >= 2 ? 3 : 2);
@@ -196,11 +200,16 @@ final class OrbNature {
         ServerLevel sl = (ServerLevel) b.level();
         int r =
                 (b.getPhase() == 2
+                                // LEFTOVER(trait): botanic.verdant_pulse can no longer be picked
                                 ? (b.has("botanic.verdant_pulse") ? 4 : 2)
+                                        // LEFTOVER(trait): kinetic.payload can no longer be picked
                                         + b.rank("kinetic.payload")
                                 : 0)
+                        // LEFTOVER(trait): botanic.lingering_bloom can no longer be picked
                         + Math.max(0, b.rank("botanic.lingering_bloom") - 1);
+        // LEFTOVER(trait): botanic.rewild can no longer be picked
         boolean rewild = b.has("botanic.rewild");
+        // LEFTOVER(trait): botanic.rewild can no longer be picked
         boolean moss = b.rank("botanic.rewild") >= 2;
         for (BlockPos p :
                 BlockPos.betweenClosed(hitPos.offset(-r, -1, -r), hitPos.offset(r, 1, r))) {

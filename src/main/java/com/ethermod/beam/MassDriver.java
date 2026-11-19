@@ -61,7 +61,6 @@ public final class MassDriver {
 
     private static final String TAG = "mm_mass_block";
     public static final double REACH = 6.0;
-    private static final int MAX_PIECES = 32;
     /** Ticks a freshly lifted block takes to fly into its slot. */
     private static final int ARRIVE = 4;
 
@@ -248,11 +247,6 @@ public final class MassDriver {
     /** Where a piece belongs in the formation right now. */
     private static Vec3 slot(Hold h, Piece q) {
         return h.center.add(turn(Vec3.atLowerCornerOf(q.offset).subtract(h.pivot), h.yaw, h.pitch));
-    }
-
-    /** Turns an offset with the formation (shared with the client preview and renderer). */
-    public static Vec3 rotate(BlockPos off, float yaw, float pitch) {
-        return turn(Vec3.atLowerCornerOf(off), yaw, pitch);
     }
 
     private static Vec3 turn(Vec3 v, float yaw, float pitch) {

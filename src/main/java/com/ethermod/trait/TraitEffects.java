@@ -40,20 +40,14 @@ public final class TraitEffects {
 
     private TraitEffects() {}
 
-    /** Items the Void Filter destroys. Datapacks can change this tag. */
-    public static final TagKey<Item> VOID_FILTER =
-            TagKey.create(
-                    Registries.ITEM,
-                    ResourceLocation.fromNamespaceAndPath(EtherMod.MODID, "void_filter"));
-
     private static final int VEIN_LIMIT = 64;
     private static boolean veinMining = false;
 
     // =========================================================================
-    // Drops: Auto-Smelt, Void Filter, Bountiful, Collector
+    // Drops: Collector
     // =========================================================================
 
-    // last, so drops other traits add (Bountiful) are collected too
+    // last, so drops other mods and traits add are collected too
     @SubscribeEvent(priority = net.neoforged.bus.api.EventPriority.LOWEST)
     public static void onBlockDrops(BlockDropsEvent event) {
         if (!(event.getBreaker() instanceof ServerPlayer player)) return;
@@ -61,59 +55,6 @@ public final class TraitEffects {
         if (!(tool.getItem() instanceof EtherManipulatorItem)) return;
         ServerLevel level = event.getLevel();
         List<ItemEntity> drops = event.getDrops();
-
-        if (Traits.has(tool, "tectonic.auto_smelt")) {
-            float xp = 0;
-            for (ItemEntity ie : drops) {
-                ItemStack in = ie.getItem();
-                var recipe =
-                        level.getRecipeManager()
-                                .getRecipeFor(
-                                        RecipeType.SMELTING, new SingleRecipeInput(in), level);
-                if (recipe.isEmpty()) continue;
-                ItemStack out =
-                        recipe.get()
-                                .value()
-                                .getResultItem(level.registryAccess())
-                                .copyWithCount(
-                                        recipe.get()
-                                                        .value()
-                                                        .getResultItem(level.registryAccess())
-                                                        .getCount()
-                                                * in.getCount());
-                if (out.isEmpty()) continue;
-                xp += recipe.get().value().getExperience() * in.getCount();
-                ie.setItem(out);
-            }
-            int whole = (int) xp;
-            if (level.random.nextFloat() < xp - whole) whole++;
-            if (Traits.rank(tool, "tectonic.auto_smelt") >= 2) whole *= 2; // II: double XP
-            event.setDroppedExperience(event.getDroppedExperience() + whole);
-        }
-
-        if (Traits.has(tool, "tectonic.void_filter")) {
-            drops.removeIf(ie -> ie.getItem().is(VOID_FILTER));
-        }
-
-        BlockState state = event.getState();
-        if (state.getBlock() instanceof CropBlock crop && crop.isMaxAge(state) && false) {
-            List<ItemEntity> extra = new ArrayList<>();
-            for (ItemEntity ie : drops) {
-                ItemStack s = ie.getItem();
-                if (s.is(Tags.Items.SEEDS)) continue;
-                ItemEntity copy =
-                        new ItemEntity(
-                                level,
-                                ie.getX(),
-                                ie.getY(),
-                                ie.getZ(),
-                                s.copyWithCount(
-                                        Traits.rank(tool, "botanic.bountiful")
-                                                + level.random.nextInt(2)));
-                extra.add(copy);
-            }
-            drops.addAll(extra);
-        }
 
         // Collector (Tectonic common): drops pop out, then fly to you
         if (Traits.hasCommon(tool, Traits.TECTONIC, 0)) {
@@ -136,7 +77,6 @@ public final class TraitEffects {
             return;
         ItemStack tool = player.getMainHandItem();
         BlockState state = event.getState();
-        com.ethermod.beam.BeamCastHelper.onBeamBreak(player, state);
         if (silkContainer(event, player, tool)) return;
         if (veinMining) return;
         if (!state.is(Tags.Blocks.ORES) || !Traits.has(tool, "tectonic.vein_miner")) return;

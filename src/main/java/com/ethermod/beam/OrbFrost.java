@@ -23,7 +23,7 @@ final class OrbFrost {
     /**
      * Charged Frost: lays a 1-wide ice bridge (3-wide with Glacier) one block under the shard's
      * flight, so a level shot makes a walkable path at your feet's height. 8 blocks at phase 2, 16
-     * at phase 3. The ice cracks and melts back after {@link #BRIDGE_TICKS}.
+     * at phase 3. The ice cracks and melts back after the frost time (server config).
      */
     static void frostBridge(BeamBallEntity b, Vec3 from, Vec3 movement) {
         if (b.getMode() != OrbMode.FROST || b.getPhase() == 0 || !com.ethermod.config.ServerConfig.waterAndFrost()) return;

@@ -50,6 +50,7 @@ final class UtilityBeam {
         ItemStack tool = player.getMainHandItem();
 
         boolean gardener = Traits.hasLine(tool, Traits.BOTANIC);
+        // LEFTOVER(trait): botanic.harvest_moon can no longer be picked
         int harvestR = Traits.has(tool, "botanic.harvest_moon") ? 3 : gardener ? 1 : 0;
         int areaR = gardener ? 1 : 0;
         // Groundskeeper and Sower reach wider with rank
@@ -58,6 +59,7 @@ final class UtilityBeam {
                         0,
                         Math.max(
                                         Traits.rank(tool, "botanic.groundskeeper"),
+                                        // LEFTOVER(trait): botanic.sower can no longer be picked
                                         Traits.rank(tool, "botanic.sower"))
                                 - 1);
 
@@ -139,6 +141,7 @@ final class UtilityBeam {
         // Sower: plant seeds from the inventory on farmland
         if (bs.getBlock() instanceof FarmBlock
                 && level.getBlockState(pos.above()).isAir()
+                // LEFTOVER(trait): botanic.sower can no longer be picked
                 && Traits.has(tool, "botanic.sower")) {
             if (sow(level, player, pos.above())) return true;
         }

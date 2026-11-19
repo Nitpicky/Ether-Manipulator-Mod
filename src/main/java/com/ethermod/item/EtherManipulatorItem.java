@@ -206,10 +206,7 @@ public class EtherManipulatorItem extends Item implements GeoItem {
         movement.putDouble("mm_charge_x", sp.getX());
         movement.putDouble("mm_charge_y", sp.getY());
         movement.putDouble("mm_charge_z", sp.getZ());
-        if (mode == OrbMode.VACUUM) {
-            com.ethermod.beam.VacuumCone.tick(sp, stack, held);
-            return;
-        }
+        if (mode == OrbMode.VACUUM) return; // LEFTOVER: retired mode, never unlocked
         if (mode == OrbMode.TETHER) {
             com.ethermod.trait.Ziplines.rideTick(sp);
             return;
@@ -299,14 +296,8 @@ public class EtherManipulatorItem extends Item implements GeoItem {
             return;
         }
         int count = Traits.has(stack, "kinetic.split") ? phase + 1 : 1;
+        // LEFTOVER(trait): kinetic.gunner can no longer be picked
         int bursts = Traits.has(stack, "kinetic.gunner") ? phase + 1 : 1;
-        if (Traits.has(stack, "kinetic.orbit")
-                && level.getEntitiesOfClass(
-                                        BeamBallEntity.class,
-                                        player.getBoundingBox().inflate(4),
-                                        e -> e.getOwner() == player && e.isOrbiting())
-                                .size()
-                        >= 3) return;
         if (mode.usesTank()) {
             mode.setTankLevel(stack, mode.tankLevel(stack) - cost);
             if (player instanceof ServerPlayer sp) Manipulator.sync(sp);
@@ -319,19 +310,11 @@ public class EtherManipulatorItem extends Item implements GeoItem {
                     () -> {
                         if (!player.isAlive() || player.level() != level) return;
                         for (int n = 0; n < shots; n++) {
-                            if (Traits.has(launchTraits, "kinetic.orbit")
-                                    && level.getEntitiesOfClass(
-                                                            BeamBallEntity.class,
-                                                            player.getBoundingBox().inflate(4),
-                                                            e ->
-                                                                    e.getOwner() == player
-                                                                            && e.isOrbiting())
-                                                    .size()
-                                            >= 3) break;
                             var orb = spawnOrb(level, player, launchTraits, phase, mode);
                             orb.setFiredLeft(left);
                             orb.scaleDamage(1f / (float) (shots * rounds));
                             if (shots > 1) orb.turn((n - (shots - 1) / 2f) * 10f);
+                            // LEFTOVER(trait): kinetic.orbit can no longer be picked
                             if (Traits.has(launchTraits, "kinetic.orbit")) orb.startOrbit();
                             else if (n == 0
                                     && sequence == 0

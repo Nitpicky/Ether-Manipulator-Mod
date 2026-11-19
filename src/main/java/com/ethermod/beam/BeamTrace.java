@@ -24,6 +24,7 @@ public final class BeamTrace {
     public static HitResult castWithEntities(Player player, double range, float pt) {
         BlockHitResult block = cast(player, range, pt);
         // Laser: the beam goes straight through creatures
+        // LEFTOVER(trait): photonic.laser can no longer be picked
         if (com.ethermod.trait.Traits.has(player.getMainHandItem(), "photonic.laser"))
             return block;
         Vec3 eye = player.getEyePosition(pt);

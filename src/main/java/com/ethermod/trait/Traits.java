@@ -83,7 +83,12 @@ public final class Traits {
         return 0;
     }
 
-    /** The rank a pick in this tier has at the stack's stage (see {@link #rank}). */
+    /**
+     * The rank a pick in this tier has at the stack's stage (see {@link #rank}).
+     *
+     * <p>LEFTOVER(rank): Mk ranks are retired, so this is always 1 and every {@code rank(...) >= 2}
+     * branch in the code is unreachable. Simplify those after release.
+     */
     public static int rankOfTier(ItemStack stack, int tier) {
         return 1; // Redesign: traits no longer rank up with MM Tier.
     }
@@ -117,6 +122,7 @@ public final class Traits {
      */
     public static float miningSpeedMultiplier(
             ItemStack stack, net.minecraft.world.level.block.state.BlockState state) {
+        // LEFTOVER(trait): tectonic.precision can no longer be picked
         int precision = rank(stack, "tectonic.precision");
         if (precision > 0 && isSoft(state))
             return precision >= 3 ? 12f : precision == 2 ? 2f : 1.5f;
@@ -139,6 +145,7 @@ public final class Traits {
             net.minecraft.core.BlockPos center,
             net.minecraft.world.phys.Vec3 look) {
         java.util.List<net.minecraft.core.BlockPos> out = new java.util.ArrayList<>();
+        // LEFTOVER(trait): tectonic.area_bore can no longer be picked
         int rank = rank(stack, "tectonic.area_bore");
         if (rank <= 0) return out;
         int r = 1;
