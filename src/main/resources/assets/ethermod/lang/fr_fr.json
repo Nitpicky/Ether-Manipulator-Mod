@@ -379,6 +379,7 @@
   "ethermod.configuration.gem_in_first_chest": "Gemme dans le premier coffre d'une structure",
   "ethermod.configuration.all_modules_unlocked": "Tous les modules débloqués",
   "ethermod.configuration.all_tiers_unlocked": "Tous les paliers débloqués",
+  "ethermod.configuration.gem_items": "Objets qui servent de gemmes",
   "ethermod.configuration.disabled_modules": "Modules désactivés",
   "ethermod.configuration.soulwake_blazelings": "Sillage d'âmes invoque des Blazelings",
   "ethermod.configuration.blazeling_lifetime_seconds": "Durée de vie des Blazelings (s)",

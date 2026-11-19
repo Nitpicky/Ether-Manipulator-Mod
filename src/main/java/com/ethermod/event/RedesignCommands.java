@@ -115,4 +115,25 @@ public final class RedesignCommands {
                                                             return 1;
                                                         })));
     }
+
+    /** Items listed in the server config's gem_items unlock their Module like that gem. */
+    @SubscribeEvent
+    public static void gemItem(net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.RightClickItem ev) {
+        var stack = ev.getItemStack();
+        if (stack.getItem() instanceof ModuleItem) return;
+        String module = com.ethermod.config.ServerConfig.gemModule(stack);
+        if (module == null) return;
+        var id = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("ethermod", module);
+        if (id.equals(Traits.PLASMIC) || id.equals(Traits.KINETIC)) return;
+        if (!(ev.getEntity() instanceof net.minecraft.server.level.ServerPlayer sp)) return;
+        if (!Manipulator.data(sp).owned()) return;
+        if (TraitLines.all(sp.registryAccess()).stream().noneMatch(e -> e.getKey().equals(id))) return;
+        // already known: the item keeps its own use
+        if (com.ethermod.trait.ModuleUnlocks.known(Manipulator.stack(sp), id)) return;
+        if (ModuleItem.grant(sp, id)) {
+            stack.consume(1, sp);
+            ev.setCanceled(true);
+            ev.setCancellationResult(net.minecraft.world.InteractionResult.SUCCESS);
+        }
+    }
 }

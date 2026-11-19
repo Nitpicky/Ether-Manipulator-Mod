@@ -379,6 +379,7 @@
   "ethermod.configuration.gem_in_first_chest": "Gema no primeiro baú de uma estrutura",
   "ethermod.configuration.all_modules_unlocked": "Todos os módulos desbloqueados",
   "ethermod.configuration.all_tiers_unlocked": "Todos os níveis desbloqueados",
+  "ethermod.configuration.gem_items": "Itens que funcionam como gemas",
   "ethermod.configuration.disabled_modules": "Módulos desativados",
   "ethermod.configuration.soulwake_blazelings": "Rastro de almas invoca Blazelings",
   "ethermod.configuration.blazeling_lifetime_seconds": "Duração dos Blazelings (s)",
