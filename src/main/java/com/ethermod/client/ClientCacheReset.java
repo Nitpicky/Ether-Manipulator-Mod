@@ -32,6 +32,5 @@ public final class ClientCacheReset {
         BlockGlow.clearCaches();
         BeamRenderer.clearCaches();
         Muzzle.clearCaches();
-        com.ethermod.beam.RemoteBeams.clear(); // keyed by entity id, meaningless in the next level
     }
 }
