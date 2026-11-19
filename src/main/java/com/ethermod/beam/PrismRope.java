@@ -256,7 +256,8 @@ final class PrismRope {
             }
         }
         st.tick = now;
-        st.arcs.removeIf(a -> now - a.born >= a.life);
+        // the clock can step back (world reload, time change): arcs from the "future" are dropped
+        st.arcs.removeIf(a -> now < a.born || now - a.born >= a.life);
         Vec3 look = pointAt(pts, 0.5).normalize();
         Vec3 right = look.cross(new Vec3(0, 1, 0));
         if (right.lengthSqr() < 1e-9) right = new Vec3(1, 0, 0);
