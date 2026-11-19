@@ -53,6 +53,7 @@ public class ModEvents {
         NeoForge.EVENT_BUS.register(com.ethermod.trait.PendingReverts.class);
         NeoForge.EVENT_BUS.register(com.ethermod.trait.RapidsCurrents.class);
         NeoForge.EVENT_BUS.register(com.ethermod.trait.MobilityEffects.class);
+        NeoForge.EVENT_BUS.register(VirtualHandGuard.class);
     }
 
     /**
