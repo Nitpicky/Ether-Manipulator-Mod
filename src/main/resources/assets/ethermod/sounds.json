@@ -792,14 +792,5 @@
       }
     ],
     "subtitle": "subtitles.ethermod.stasis.ding"
-  },
-  "ui/dry_beep": {
-    "sounds": [
-      {
-        "name": "minecraft:block.note_block.bit",
-        "type": "event"
-      }
-    ],
-    "subtitle": "subtitles.ethermod.dry_fire"
   }
 }

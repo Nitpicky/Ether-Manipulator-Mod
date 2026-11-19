@@ -7,7 +7,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 /**
- * A shot the tank cannot pay for: no message, the shooter's client beeps, flashes the Ether
+ * A shot the tank cannot pay for: no message, the shooter's client fizzes, flashes the Ether
  * counter a brighter red and puffs a little smoke from the emitter. Spaced so a held click
  * does not stutter.
  */

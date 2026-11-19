@@ -5,7 +5,7 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.phys.Vec3;
 
-/** The shooter's side of a refused shot: a low beep, a red flash on the counter, emitter smoke. */
+/** The shooter's side of a refused shot: a soft fizz, a red flash on the counter, emitter smoke. */
 public final class DryFireFx {
 
     private DryFireFx() {}
@@ -18,9 +18,8 @@ public final class DryFireFx {
         var p = mc.player;
         if (p == null || mc.level == null) return;
         flashAt = net.minecraft.Util.getMillis();
-        // two short square-wave blips, the second lower: "no"
-        mc.getSoundManager().play(SimpleSoundInstance.forUI(com.ethermod.sound.ModSounds.UI_DRY_BEEP, .9f, .45f));
-        mc.getSoundManager().playDelayed(SimpleSoundInstance.forUI(com.ethermod.sound.ModSounds.UI_DRY_BEEP, .7f, .45f), 3);
+        // the soft fizz of a dry shot
+        mc.getSoundManager().play(SimpleSoundInstance.forUI(com.ethermod.sound.ModSounds.SHOT_FIRE_EXTINGUISH, 1.8f, .12f));
         // a few wisps of smoke where the shot would leave the emitter
         Vec3 look = p.getLookAngle();
         Vec3 right = look.cross(new Vec3(0, 1, 0)).normalize();
