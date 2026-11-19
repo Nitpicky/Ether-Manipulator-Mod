@@ -379,6 +379,7 @@
   "ethermod.configuration.gem_in_first_chest": "结构首个箱子中的宝石",
   "ethermod.configuration.all_modules_unlocked": "解锁全部模块",
   "ethermod.configuration.all_tiers_unlocked": "解锁全部阶段",
+  "ethermod.configuration.gem_items": "可当作宝石使用的物品",
   "ethermod.configuration.disabled_modules": "禁用的模块",
   "ethermod.configuration.soulwake_blazelings": "魂迹召唤灵魂小烈焰",
   "ethermod.configuration.blazeling_lifetime_seconds": "灵魂小烈焰存在时间(秒)",

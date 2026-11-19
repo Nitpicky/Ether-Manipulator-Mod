@@ -103,5 +103,7 @@ if (project.hasProperty('playtest')) {
         // -PfxVariant=<name> picks how effects draw with a shader pack (client/Fx.VARIANT)
         if (project.hasProperty('fxVariant')) systemProperty 'ethermod.fxVariant', project.property('fxVariant')
         if (project.hasProperty('cloudTest')) systemProperty 'ethermod.cloudTest', 'true'
+        // -PkGifs records the K screen scenes for the mod page (KGifTour), frames in runs/client/screenshots
+        if (project.hasProperty('kGifs')) systemProperty 'ethermod.kGifs', 'true'
     }
 }

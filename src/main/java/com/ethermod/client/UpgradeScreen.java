@@ -41,7 +41,7 @@ public class UpgradeScreen extends Screen {
     private boolean colourPicker;
     private float hue = .45f, saturation = .5f, value = .8f;
     private int oldColour;
-    private static String primary = "petrol", accent = "copper";
+    private static String primary = "petrol", accent = "ember";
     private static boolean settingsLoaded;
     private static final DyeColor[] DYES = {
         DyeColor.WHITE,
@@ -288,9 +288,12 @@ public class UpgradeScreen extends Screen {
             g.pose().popPose();
         }
         g.pose().popPose();
-        if (hovered != null && !hovered.tip().isEmpty() && now - hoverAt >= .180)
+        if (showTooltips && hovered != null && !hovered.tip().isEmpty() && now - hoverAt >= .180)
             renderColourTooltip(g, hovered, mouseX, mouseY);
     }
+
+    /** Off only for the recorded mod-page GIFs, where a tooltip would be cut by the crop. */
+    static boolean showTooltips = true;
 
     private void renderColourTooltip(GuiGraphics g, Hit hit, int mouseX, int mouseY) {
         var lines = new ArrayList<FormattedCharSequence>();
@@ -1504,7 +1507,12 @@ public class UpgradeScreen extends Screen {
                                         ? 0xff000000
                                         : t == 'H'
                                                 ? pal.border()
-                                                : t == 'S' ? pal.shadow() : pal.bg());
+                                                : t == 'S'
+                                                        ? pal.shadow()
+                                                        // J: where the highlight meets the shadow
+                                                        : t == 'J'
+                                                                ? mix(pal.border(), pal.shadow(), .5)
+                                                                : pal.bg());
                 }
             }
         }

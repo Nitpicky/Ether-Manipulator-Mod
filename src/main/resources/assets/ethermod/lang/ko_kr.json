@@ -379,6 +379,7 @@
   "ethermod.configuration.gem_in_first_chest": "구조물 첫 상자에 보석",
   "ethermod.configuration.all_modules_unlocked": "모든 모듈 해금",
   "ethermod.configuration.all_tiers_unlocked": "모든 단계 해금",
+  "ethermod.configuration.gem_items": "보석으로 쓰이는 아이템",
   "ethermod.configuration.disabled_modules": "비활성화한 모듈",
   "ethermod.configuration.soulwake_blazelings": "영혼의 자취가 꼬마 블레이즈 소환",
   "ethermod.configuration.blazeling_lifetime_seconds": "꼬마 블레이즈 지속 시간(초)",

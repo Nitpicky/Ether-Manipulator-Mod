@@ -379,6 +379,7 @@
   "ethermod.configuration.gem_in_first_chest": "Самоцвет в первом сундуке строения",
   "ethermod.configuration.all_modules_unlocked": "Все модули открыты",
   "ethermod.configuration.all_tiers_unlocked": "Все уровни открыты",
+  "ethermod.configuration.gem_items": "Предметы, работающие как самоцветы",
   "ethermod.configuration.disabled_modules": "Отключённые модули",
   "ethermod.configuration.soulwake_blazelings": "След душ призывает всполошонков",
   "ethermod.configuration.blazeling_lifetime_seconds": "Время жизни всполошонков (с)",

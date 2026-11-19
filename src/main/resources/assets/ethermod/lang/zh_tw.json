@@ -379,6 +379,7 @@
   "ethermod.configuration.gem_in_first_chest": "結構首個箱子中的寶石",
   "ethermod.configuration.all_modules_unlocked": "解鎖全部模組",
   "ethermod.configuration.all_tiers_unlocked": "解鎖全部階段",
+  "ethermod.configuration.gem_items": "可當作寶石使用的物品",
   "ethermod.configuration.disabled_modules": "停用的模組",
   "ethermod.configuration.soulwake_blazelings": "魂跡召喚靈魂小烈焰",
   "ethermod.configuration.blazeling_lifetime_seconds": "靈魂小烈焰存在時間(秒)",

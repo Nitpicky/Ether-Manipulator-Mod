@@ -379,6 +379,7 @@
   "ethermod.configuration.gem_in_first_chest": "Gemma nel primo baule di una struttura",
   "ethermod.configuration.all_modules_unlocked": "Tutti i moduli sbloccati",
   "ethermod.configuration.all_tiers_unlocked": "Tutti i livelli sbloccati",
+  "ethermod.configuration.gem_items": "Oggetti che valgono come gemme",
   "ethermod.configuration.disabled_modules": "Moduli disattivati",
   "ethermod.configuration.soulwake_blazelings": "Scia di anime evoca Blazeling",
   "ethermod.configuration.blazeling_lifetime_seconds": "Durata dei Blazeling (s)",

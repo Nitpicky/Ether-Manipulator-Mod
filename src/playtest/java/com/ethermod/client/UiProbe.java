@@ -86,6 +86,7 @@ public final class UiProbe {
     }
 
     public static void step(Minecraft mc) {
+        if (Boolean.getBoolean("ethermod.kGifs")) { KGifTour.step(mc); return; }
         if (Boolean.getBoolean("ethermod.hoverScreenshots")) { HoverScreenshotTour.step(mc); return; }
         if (Boolean.getBoolean("ethermod.pairScreenshots")) { PairScreenshotTour.step(mc); return; }
         tick++;

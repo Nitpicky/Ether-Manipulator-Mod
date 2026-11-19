@@ -379,6 +379,7 @@
   "ethermod.configuration.gem_in_first_chest": "Ädelsten i första kistan i en struktur",
   "ethermod.configuration.all_modules_unlocked": "Alla moduler upplåsta",
   "ethermod.configuration.all_tiers_unlocked": "Alla nivåer upplåsta",
+  "ethermod.configuration.gem_items": "Föremål som fungerar som ädelstenar",
   "ethermod.configuration.disabled_modules": "Inaktiverade moduler",
   "ethermod.configuration.soulwake_blazelings": "Själsspår kallar brännlingar",
   "ethermod.configuration.blazeling_lifetime_seconds": "Brännlingarnas livslängd (s)",

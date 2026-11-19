@@ -35,6 +35,7 @@ public final class ServerConfig {
     private static final ModConfigSpec.DoubleValue GEM_CHANCE;
     // modules
     private static final ModConfigSpec.ConfigValue<List<? extends String>> DISABLED;
+    private static final ModConfigSpec.ConfigValue<List<? extends String>> GEM_ITEMS;
     private static final ModConfigSpec.BooleanValue BLAZELINGS, TETHER_PLAYERS, STASIS_PLAYERS;
     private static final ModConfigSpec.IntValue BLAZE_LIFE, MAX_SUMMONS, PHOTONIC_LIFE, FROST_MELT;
     // compatibility
@@ -96,6 +97,11 @@ public final class ServerConfig {
                 .define("all_modules_unlocked", false);
         ALL_TIERS = b.comment("Every Manipulator starts at Overclocked, with every trait tier open.")
                 .define("all_tiers_unlocked", false);
+        GEM_ITEMS = b.comment(
+                        "Other items that work like a gem: right click to unlock that Module and use the item up.",
+                        "Each entry is item=module or #tag=module, e.g. \"minecraft:heart_of_the_sea=hydraulic\".",
+                        "Modules: tectonic, hydraulic, pyrotechnic, pneumatic, photonic, gravitic, botanic.")
+                .defineListAllowEmpty("gem_items", List.of(), () -> "modid:item=hydraulic", ServerConfig::gemEntry);
         b.pop();
 
         b.comment("Modules and what they leave in the world.").push("modules");
@@ -165,6 +171,33 @@ public final class ServerConfig {
     public static boolean gemInFirstChest() { return or(GEM_GUARANTEE::get, true); }
     public static boolean allModules() { return or(ALL_MODULES::get, false); }
     public static boolean allTiers() { return or(ALL_TIERS::get, false); }
+
+    private static boolean gemEntry(Object o) {
+        if (!(o instanceof String str)) return false;
+        int eq = str.indexOf('=');
+        if (eq <= 0 || eq == str.length() - 1) return false;
+        String item = str.substring(0, eq).trim();
+        return ResourceLocation.tryParse(item.startsWith("#") ? item.substring(1) : item) != null;
+    }
+
+    /** The Module an item stands in for as a gem (config gem_items), or null. */
+    public static String gemModule(net.minecraft.world.item.ItemStack stack) {
+        if (stack.isEmpty()) return null;
+        List<? extends String> gems = or(GEM_ITEMS::get, List.of());
+        for (String e : gems) {
+            int eq = e.indexOf('=');
+            if (eq <= 0) continue;
+            String item = e.substring(0, eq).trim(), module = e.substring(eq + 1).trim().toLowerCase(java.util.Locale.ROOT);
+            if (item.startsWith("#")) {
+                ResourceLocation id = ResourceLocation.tryParse(item.substring(1));
+                if (id != null && stack.is(TagKey.create(Registries.ITEM, id))) return module;
+            } else {
+                ResourceLocation id = ResourceLocation.tryParse(item);
+                if (id != null && BuiltInRegistries.ITEM.getKey(stack.getItem()).equals(id)) return module;
+            }
+        }
+        return null;
+    }
 
     public static boolean moduleDisabled(String line) {
         List<? extends String> l = or(DISABLED::get, List.of());

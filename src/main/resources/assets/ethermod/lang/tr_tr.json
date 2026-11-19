@@ -379,6 +379,7 @@
   "ethermod.configuration.gem_in_first_chest": "Bir yapının ilk sandığında mücevher",
   "ethermod.configuration.all_modules_unlocked": "Tüm modüller açık",
   "ethermod.configuration.all_tiers_unlocked": "Tüm seviyeler açık",
+  "ethermod.configuration.gem_items": "Mücevher gibi çalışan eşyalar",
   "ethermod.configuration.disabled_modules": "Kapalı modüller",
   "ethermod.configuration.soulwake_blazelings": "Ruh İzi Alevcik çağırır",
   "ethermod.configuration.blazeling_lifetime_seconds": "Alevcik ömrü (s)",
