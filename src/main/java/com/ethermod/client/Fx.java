@@ -397,7 +397,11 @@ public final class Fx {
                         RenderSystem.defaultBlendFunc();
                     });
 
-    /** {@code particle_max}: beam brightest-wins; {@code particle_max_nd}: and no depth write. */
+    /**
+     * {@code particle_max}: beam brightest-wins; {@code particle_max_nd}: and no depth write;
+     * {@code particle_max_d2}: colour first without depth (the beam can't cut its own segments
+     * into bands), then a depth-only pass so the pack's clouds stay behind.
+     */
     static boolean particleFamily() {
         return VARIANT.startsWith("particle");
     }
@@ -435,7 +439,9 @@ public final class Fx {
                                     ? MAX_TRANSPARENCY
                                     : RenderStateShard.ADDITIVE_TRANSPARENCY);
             b.setWriteMaskState(
-                    VARIANT.equals("eyes2") || VARIANT.equals("particle_max_nd")
+                    VARIANT.equals("eyes2")
+                                    || VARIANT.equals("particle_max_nd")
+                                    || VARIANT.equals("particle_max_d2")
                             ? RenderStateShard.COLOR_WRITE
                             : RenderStateShard.COLOR_DEPTH_WRITE);
         }
@@ -454,7 +460,9 @@ public final class Fx {
     private static final RenderType SHADER_FX = shaderType("ethermod_fx", false);
     private static final RenderType SHADER_FX_BEAM = shaderType("ethermod_fx_beam", false, true);
     private static final RenderType SHADER_FX_DEPTH =
-            VARIANT.equals("eyes2") ? shaderType("ethermod_fx_depth", true) : null;
+            VARIANT.equals("eyes2") || VARIANT.equals("particle_max_d2")
+                    ? shaderType("ethermod_fx_depth", true)
+                    : null;
 
     private static void drawInWorld() {
         MultiBufferSource.BufferSource buf = Minecraft.getInstance().renderBuffers().bufferSource();
