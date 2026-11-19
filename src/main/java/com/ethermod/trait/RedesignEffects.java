@@ -415,6 +415,17 @@ public final class RedesignEffects {
         return FROZEN.containsKey(e.getUUID());
     }
 
+    /** The Stasis Grenade's burst: adds its strength to the stored push, keeping the last hit's aim. */
+    public static void burstInto(LivingEntity e, Vec3 push) {
+        var d = e.getPersistentData();
+        if (!inStasis(e) || d.getDouble("mm_stasis_force") <= 1e-6) {
+            if (inStasis(e)) store(e, push);
+            else impulse(e, push);
+            return;
+        }
+        d.putDouble("mm_stasis_force", Math.min(2.5, d.getDouble("mm_stasis_force") + push.length()));
+    }
+
     /** Lets a held creature go now, with all the knockback it stored. */
     public static void thaw(LivingEntity e) {
         var f = FROZEN.remove(e.getUUID());
@@ -460,8 +471,9 @@ public final class RedesignEffects {
     }
 
     /**
-     * What a Stasis Grenade's burst will add on release (it lands after the stored knockback, so
-     * the two add up); shown in the arrow before it happens.
+     * What a Stasis Grenade's burst will add on release: its strength joins the stored knockback,
+     * but the direction stays the last hit's (set up a big push, then aim it with one hit). With
+     * no hit stored, the burst's own direction is used. Shown in the arrow before it happens.
      */
     public static void expectBurst(LivingEntity e, Vec3 push) {
         var d = e.getPersistentData();
@@ -474,9 +486,12 @@ public final class RedesignEffects {
     /** The teal arrow over the held creature: where (and how hard) it will fly on release. */
     private static void sendForce(LivingEntity e) {
         var d = e.getPersistentData();
-        var v = new Vec3(d.getDouble("mm_stasis_x"), d.getDouble("mm_stasis_y"), d.getDouble("mm_stasis_z"))
-                .scale(d.getDouble("mm_stasis_force"))
-                .add(d.getDouble("mm_stasis_ex"), d.getDouble("mm_stasis_ey"), d.getDouble("mm_stasis_ez"));
+        var burst = new Vec3(d.getDouble("mm_stasis_ex"), d.getDouble("mm_stasis_ey"), d.getDouble("mm_stasis_ez"));
+        double force = d.getDouble("mm_stasis_force");
+        var dir = force > 1e-6
+                ? new Vec3(d.getDouble("mm_stasis_x"), d.getDouble("mm_stasis_y"), d.getDouble("mm_stasis_z"))
+                : burst.lengthSqr() > 1e-6 ? burst.normalize() : Vec3.ZERO;
+        var v = dir.scale(Math.min(2.5, force + burst.length()));
         net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingEntityAndSelf(
                 e, new com.ethermod.network.payload.StasisForcePayload(e.getId(), (float) v.x, (float) v.y, (float) v.z));
     }

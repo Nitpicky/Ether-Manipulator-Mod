@@ -285,9 +285,9 @@ public final class GustGrenade {
             } else if (e instanceof LivingEntity le) {
                 if (!RedesignEffects.enemy(g.owner, le) || !affects(g.owner, le)) continue;
                 le.hurt(sl.damageSources().playerAttack(g.owner), DAMAGE * (float) (0.5 + 0.5 * near));
-                // the held one lets go with everything it stored, and the burst adds on top
+                // the burst joins the stored push (aimed by the last hit), then the held one lets go
+                RedesignEffects.burstInto(le, push);
                 RedesignEffects.thaw(le);
-                RedesignEffects.impulse(le, push);
             } else if (e instanceof ItemEntity) {
                 e.setDeltaMovement(e.getDeltaMovement().add(push.scale(0.6)));
                 e.hurtMarked = true;
