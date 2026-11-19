@@ -135,6 +135,7 @@ final class OrbMass {
                 && sl.isUnobstructed(
                         c, front, net.minecraft.world.phys.shapes.CollisionContext.empty())) {
             sl.setBlockAndUpdate(front, c);
+            restoreBe(sl, front, b);
             var sound = c.getSoundType();
             sl.playSound(
                     null,
@@ -149,9 +150,27 @@ final class OrbMass {
         OrbMass.dropCarried(b, at);
     }
 
+    /** Puts a lifted container's contents back into the block just placed. */
+    static void restoreBe(ServerLevel sl, BlockPos at, BeamBallEntity b) {
+        if (b.carriedBe == null) return;
+        var be = sl.getBlockEntity(at);
+        if (be != null) {
+            be.loadWithComponents(b.carriedBe, sl.registryAccess());
+            be.setChanged();
+        }
+        b.carriedBe = null;
+    }
+
     static void dropCarried(BeamBallEntity b, Vec3 at) {
         BlockState c = b.getCarried();
         if (c.isAir()) return;
+        if (b.carriedBe != null && b.level() instanceof ServerLevel sl) {
+            BlockPos pos = BlockPos.containing(at);
+            var be = net.minecraft.world.level.block.entity.BlockEntity.loadStatic(pos, c, b.carriedBe, sl.registryAccess());
+            if (be instanceof net.minecraft.world.Container box)
+                net.minecraft.world.Containers.dropContents(sl, pos, box);
+            b.carriedBe = null;
+        }
         ItemStack drop = new ItemStack(c.getBlock().asItem());
         if (!drop.isEmpty()) {
             ItemEntity ie = new ItemEntity(b.level(), at.x, at.y, at.z, drop);

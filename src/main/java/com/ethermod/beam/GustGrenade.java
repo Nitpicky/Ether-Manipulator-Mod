@@ -7,7 +7,6 @@ import com.ethermod.trait.Traits;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -28,9 +27,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Pneumatic left click: a blast grenade. It latches onto the first block or creature it touches,
- * ticks for 1.5 s, then bursts: up to 4 damage and a push away from it in a 3-block radius. You
- * get pushed too (no damage), so it doubles as a jump. With Bank Shot it ricochets once first.
+ * Pneumatic left click: the Stasis Grenade. It latches onto the first block or creature it
+ * touches, ticks for 1.5 s, then bursts: up to 4 damage and a push away from it in a 3-block
+ * radius. A creature it sticks to is held in Stasis until the burst, storing every knockback it
+ * takes, and all of it lands at once with the burst. You get pushed too (no damage), so it
+ * doubles as a jump. With Bank Shot it ricochets once first.
  *
  * <p>No entity: the grenade is a point simulated on the server and drawn with particles.
  */
@@ -39,6 +40,8 @@ public final class GustGrenade {
     private GustGrenade() {}
 
     public static final int FUSE = 30;
+    /** The fuse once it sticks to a creature: the Stasis hold, long enough for a few hits. */
+    public static final int STASIS_FUSE = 60;
     public static final double RADIUS = 3;
     public static final float DAMAGE = 4;
 
@@ -64,6 +67,11 @@ public final class GustGrenade {
 
     private static final Map<ServerLevel, List<Grenade>> LIVE = new HashMap<>();
 
+    /** For the playtest: cut every live Stasis hold short so the burst lands within the tour. */
+    public static void hurry() {
+        for (List<Grenade> l : LIVE.values()) for (Grenade g : l) g.fuse = Math.min(g.fuse, 4);
+    }
+
     /**
      * Ticks between the click and the grenade leaving: the Manipulator's lob animation gathers for
      * these, then flicks it out (animations: "grenade", flick at 0.1 s).
@@ -88,7 +96,7 @@ public final class GustGrenade {
                         p.getX(),
                         p.getEyeY(),
                         p.getZ(),
-                        SoundEvents.BREEZE_SHOOT,
+                        com.ethermod.sound.ModSounds.WORLD_BREEZE_SHOOT,
                         SoundSource.PLAYERS,
                         0.6f,
                         1.8f);
@@ -133,7 +141,7 @@ public final class GustGrenade {
         g.age++;
         if (!g.landed) {
             Vec3 next = g.pos.add(g.vel);
-            FoliageCut.sweep(sl, g.owner, g.pos, next, false); // wind cuts foliage loose
+            if (com.ethermod.config.ServerConfig.gustCutsFoliage()) FoliageCut.sweep(sl, g.owner, g.pos, next, false); // wind cuts foliage loose
             var block =
                     sl.clip(
                             new ClipContext(
@@ -153,7 +161,8 @@ public final class GustGrenade {
                             e ->
                                     e instanceof LivingEntity le
                                             && !e.isSpectator()
-                                            && RedesignEffects.enemy(g.owner, le));
+                                            && RedesignEffects.enemy(g.owner, le)
+                                            && affects(g.owner, le));
             if (mob != null) {
                 g.stuck = mob.getEntity();
                 // latch where it touched, on the creature's skin (its box), and turn with it
@@ -172,6 +181,13 @@ public final class GustGrenade {
                 g.offset = skin.subtract(g.stuck.position()).yRot((float) Math.toRadians(bodyYaw(g.stuck)));
                 g.pos = skin;
                 land(sl, g);
+                // Stasis: the creature it sticks to is held until the burst; every knockback it
+                // takes meanwhile is stored and lands together with the burst
+                if (g.stuck instanceof LivingEntity le) {
+                    g.fuse = STASIS_FUSE; // time to set up hits on it
+                    RedesignEffects.stasis(le, g.fuse + 5);
+                    if (RedesignEffects.inStasis(le)) RedesignEffects.expectBurst(le, heldPush(g, le));
+                }
             } else if (block.getType() != HitResult.Type.MISS) {
                 var n = Vec3.atLowerCornerOf(block.getDirection().getNormal());
                 if (g.ricochet && g.bounces == 0) {
@@ -184,7 +200,7 @@ public final class GustGrenade {
                             g.pos.x,
                             g.pos.y,
                             g.pos.z,
-                            SoundEvents.BREEZE_SHOOT,
+                            com.ethermod.sound.ModSounds.WORLD_BREEZE_SHOOT,
                             SoundSource.PLAYERS,
                             0.5f,
                             1.6f);
@@ -208,13 +224,17 @@ public final class GustGrenade {
             g.fuse--;
             // ticks faster as it nears the burst
             int every = g.fuse > 12 ? 6 : 3;
-            if (g.fuse % every == 0) {
+            // held in Stasis, the creature's own quickening tick replaces the fuse's (StasisFx)
+            boolean held = g.stuck instanceof LivingEntity le && RedesignEffects.inStasis(le);
+            if (held && g.fuse % 4 == 0) // the thrower may move: keep the arrow's burst current
+                RedesignEffects.expectBurst((LivingEntity) g.stuck, heldPush(g, (LivingEntity) g.stuck));
+            if (!held && g.fuse % every == 0) {
                 sl.playSound(
                         null,
                         g.pos.x,
                         g.pos.y,
                         g.pos.z,
-                        SoundEvents.NOTE_BLOCK_HAT.value(),
+                        com.ethermod.sound.ModSounds.WORLD_NOTE_BLOCK_HAT,
                         SoundSource.PLAYERS,
                         0.6f,
                         g.fuse > 12 ? 1.4f : 1.9f);
@@ -242,7 +262,7 @@ public final class GustGrenade {
                 g.pos.x,
                 g.pos.y,
                 g.pos.z,
-                SoundEvents.SLIME_ATTACK,
+                com.ethermod.sound.ModSounds.WORLD_SLIME_ATTACK,
                 SoundSource.PLAYERS,
                 0.5f,
                 1.6f);
@@ -258,7 +278,7 @@ public final class GustGrenade {
                 at.x,
                 at.y,
                 at.z,
-                SoundEvents.WIND_CHARGE_BURST.value(),
+                com.ethermod.sound.ModSounds.WORLD_WIND_CHARGE_BURST,
                 SoundSource.PLAYERS,
                 1f,
                 0.9f);
@@ -266,21 +286,59 @@ public final class GustGrenade {
             Vec3 centre = e.position().add(0, e.getBbHeight() * 0.5, 0);
             double d = centre.distanceTo(at);
             if (d > RADIUS || e.isSpectator()) continue;
+            Vec3 push = push(e, at);
             double near = 1 - d / RADIUS;
-            Vec3 away = d < 0.01 ? new Vec3(0, 1, 0) : centre.subtract(at).normalize();
-            Vec3 push = away.scale(0.5 + 1.1 * near).add(0, 0.35, 0);
             if (e == g.owner) {
                 // your own grenade launches you but never hurts you
                 e.setDeltaMovement(e.getDeltaMovement().add(push));
                 e.hurtMarked = true;
             } else if (e instanceof LivingEntity le) {
-                if (!RedesignEffects.enemy(g.owner, le)) continue;
-                le.hurt(sl.damageSources().playerAttack(g.owner), DAMAGE * (float) (0.5 + 0.5 * near));
-                RedesignEffects.impulse(le, push);
+                if (!RedesignEffects.enemy(g.owner, le) || !affects(g.owner, le)) continue;
+                float dmg = DAMAGE * (float) (0.5 + 0.5 * near);
+                if (RedesignEffects.inStasis(le)) {
+                    // the burst joins the stored push (aimed by the last hit); the hit lands while
+                    // still held with its knockback dropped (vanilla knockback would halve the launch
+                    // and cap its lift at 0.4), then the creature lets go
+                    RedesignEffects.burstInto(le, heldPush(g, le));
+                    RedesignEffects.hurtQuietly(le, sl.damageSources().playerAttack(g.owner), dmg);
+                    RedesignEffects.thaw(le);
+                } else {
+                    // hit first, push after: the hit's own knockback must not halve the push
+                    le.hurt(sl.damageSources().playerAttack(g.owner), dmg);
+                    RedesignEffects.impulse(le, push);
+                }
             } else if (e instanceof ItemEntity) {
                 e.setDeltaMovement(e.getDeltaMovement().add(push.scale(0.6)));
                 e.hurtMarked = true;
             }
         }
+    }
+
+    /** The burst's push on {@code e}: away from the grenade, harder up close, and a little up. */
+    private static Vec3 push(Entity e, Vec3 at) {
+        Vec3 centre = e.position().add(0, e.getBbHeight() * 0.5, 0);
+        double d = centre.distanceTo(at);
+        double near = Math.max(0, 1 - d / RADIUS);
+        Vec3 away = d < 0.01 ? new Vec3(0, 1, 0) : centre.subtract(at).normalize();
+        return away.scale(0.5 + 1.1 * near).add(0, 0.35, 0);
+    }
+
+    /**
+     * The burst's push on the creature it holds: straight away from where the grenade stuck on
+     * the body (on its side, level; on top, down; underneath, up). This sets the launch direction;
+     * hits stored meanwhile only add strength.
+     */
+    private static Vec3 heldPush(Grenade g, LivingEntity e) {
+        Vec3 centre = e.position().add(0, e.getBbHeight() * 0.5, 0);
+        Vec3 away = centre.subtract(g.pos);
+        if (away.lengthSqr() < 1e-4) return new Vec3(0, 1.6, 0);
+        return away.normalize().scale(1.6);
+    }
+
+    /** Other players only when the server allows it (PvP on, and the Stasis Grenade setting). */
+    private static boolean affects(ServerPlayer owner, LivingEntity e) {
+        if (!(e instanceof net.minecraft.world.entity.player.Player)) return true;
+        return com.ethermod.config.ServerConfig.stasisGrenadePlayers()
+                && owner.server.isPvpAllowed();
     }
 }

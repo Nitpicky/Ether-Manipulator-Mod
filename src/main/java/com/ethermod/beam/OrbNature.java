@@ -8,7 +8,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Entity;
@@ -35,7 +34,7 @@ final class OrbNature {
         ServerLevel sl = (ServerLevel) b.level();
         // Lingering Bloom: twice as long, pulsing twice as often
         boolean linger = b.has("botanic.lingering_bloom");
-        int life = (b.getPhase() == 2 ? 160 : 80) * (linger ? 2 : 1);
+        int life = (b.getPhase() == 2 ? 100 : 80) * (linger ? 2 : 1);
         if (++b.lifeTicks > life) {
             b.impactFx(b.position());
             b.discard();
@@ -137,7 +136,8 @@ final class OrbNature {
                                             .BlockStateProperties.LIT,
                                     true),
                     Block.UPDATE_ALL_IMMEDIATE);
-        } else if (bs.getBlock() instanceof net.minecraft.world.level.block.TntBlock) {
+        } else if (bs.getBlock() instanceof net.minecraft.world.level.block.TntBlock
+                && com.ethermod.config.ServerConfig.fireAndLava()) {
             bs.onCaughtFire(sl, hitPos, face, owner instanceof LivingEntity le ? le : null);
             sl.removeBlock(hitPos, false);
         } else {
@@ -162,7 +162,7 @@ final class OrbNature {
         sl.playSound(
                 null,
                 hitPos,
-                SoundEvents.FLINTANDSTEEL_USE,
+                com.ethermod.sound.ModSounds.WORLD_FLINTANDSTEEL_USE,
                 SoundSource.BLOCKS,
                 1f,
                 0.9f + b.getRandom().nextFloat() * 0.2f);

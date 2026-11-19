@@ -30,6 +30,9 @@ public final class Lang {
     }
 
     public static String traitDesc(Trait t) {
+        // without Blazelings (server config) Soulwake only turns burns into soulfire
+        if (t.id().equals("pyrotechnic.soulwake") && !com.ethermod.config.ServerConfig.blazelings())
+            return raw("trait.ethermod.pyrotechnic.soulwake_nosummon.desc", t.description());
         return raw("trait.ethermod." + t.id() + ".desc", t.description());
     }
 

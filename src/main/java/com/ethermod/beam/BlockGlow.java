@@ -76,6 +76,7 @@ public final class BlockGlow {
             MultiBufferSource.BufferSource buf,
             Matrix4f m) {
         long now = mc.level.getGameTime();
+        if (!com.ethermod.config.ClientConfig.minedGlow()) return;
         float[] c = com.ethermod.item.ManipulatorColors.beamRgba(held);
         R = c[0];
         G = c[1];
@@ -84,10 +85,11 @@ public final class BlockGlow {
         // only Beam mode mines, so only it previews what it would mine
         if (!player.isShiftKeyDown()
                 && com.ethermod.item.OrbMode.get(held) == com.ethermod.item.OrbMode.ENERGY) {
-            HitResult hit = BeamTrace.cast(player, Traits.beamRange(held), pt);
+            // a creature in the way takes the beam: the blocks behind it are not being mined
+            HitResult hit = BeamTrace.castWithEntities(player, Traits.beamRange(held), pt);
             if (hit instanceof BlockHitResult bh && hit.getType() == HitResult.Type.BLOCK) {
                 for (BlockPos p : affected(mc, player, held, bh.getBlockPos())) {
-                    aimed.add(p.asLong());
+                    // the aim itself shows vanilla's outline now (user); only mined blocks glow
                     if (BeamRenderState.beamActive) touch(p.asLong(), now);
                 }
             }
@@ -138,7 +140,9 @@ public final class BlockGlow {
             glow.merge(e.getKey(), a, Math::max);
         }
 
-        VertexConsumer vc = com.ethermod.client.Fx.glow();
+        VertexConsumer vc = com.ethermod.client.Fx.faceGlow();
+        // packs jitter and rebuild depth: a face this close to its block flickers through it
+        float lift = com.ethermod.client.ShaderCompat.shadersActive() ? 0.02f : 0.008f;
         // Each block glows in its own shape (a stair as an L, a slab as half a cube), like
         // vanilla's outline; faces shared with another glowing block vanish, so a group of
         // blocks glows as one shape.
@@ -163,7 +167,7 @@ public final class BlockGlow {
                                 && ShapeSurface.contains(
                                         boxes, x - q.getX(), y - q.getY(), z - q.getZ());
                     },
-                    (d, x0, y0, z0, x1, y1, z1) -> rect(vc, m, d, x0, y0, z0, x1, y1, z1, camPos, 0.004f, a));
+                    (d, x0, y0, z0, x1, y1, z1) -> rect(vc, m, d, x0, y0, z0, x1, y1, z1, camPos, lift, a));
         }
     }
 

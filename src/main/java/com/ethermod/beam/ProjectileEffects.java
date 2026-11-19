@@ -22,8 +22,11 @@ public final class ProjectileEffects {
 
     /** Ground Slam shares Gust's target effects, but never recoils its owner. */
     public static void gust(ServerLevel sl, ServerPlayer owner, ItemStack st, Vec3 at, int phase, boolean recoilOwner) {
-        double radius = Traits.has(st, "pneumatic.convergence") ? 3 + phase * 2 : 2 + phase;
-        double force = Traits.has(st, "pneumatic.gale_force") ? 1.4 + phase * .7 : .6 + phase * .35;
+        // Gale Force widens the blast; charge widens it too, but barely adds push, so a full
+        // charge can't fling (and wall-slam) anything to death from safety
+        boolean gale = Traits.has(st, "pneumatic.gale_force");
+        double radius = Traits.has(st, "pneumatic.convergence") ? 3 + phase * 2 : gale ? 3 + phase * 1.5 : 2 + phase;
+        double force = .6 + phase * .1;
         for (var e :
                 sl.getEntitiesOfClass(
                         LivingEntity.class,
@@ -34,18 +37,11 @@ public final class ProjectileEffects {
             Vec3 push = away.normalize().scale(force).add(0, .2, 0);
             if (Traits.has(st, "pneumatic.convergence"))
                 push = at.subtract(e.position()).normalize().scale(force);
-            // Gale Force: harder knockback by charge (above), and the fall after it hurts more
-            if (Traits.has(st, "pneumatic.gale_force") && !(e instanceof Player))
+            // Gale Force: the fall after it hurts more
+            if (gale && !(e instanceof Player))
                 e.getPersistentData().putLong("mm_updraft_until", sl.getGameTime() + 200);
-            if (Traits.has(st, "pneumatic.stasis"))
-                RedesignEffects.stasis(e, com.ethermod.config.EtherConfig.STASIS_TICKS.get());
             RedesignEffects.impulse(e, push);
             GustMotion.track(e, owner, Traits.has(st, "pneumatic.rebound"));
-            if (e instanceof Mob mob && !mob.getMainHandItem().isEmpty()) {
-                var item = mob.getMainHandItem().copy();
-                mob.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
-                mob.spawnAtLocation(item);
-            }
         }
         sl.sendParticles(ParticleTypes.GUST_EMITTER_LARGE, at.x, at.y, at.z, 1, 0, 0, 0, 0);
     }
@@ -119,7 +115,7 @@ public final class ProjectileEffects {
                 var q = pos.immutable();
                 if (done.add(q)
                         && sl.hasChunkAt(q)
-                        && sl.mayInteract(p, q)
+                        && com.ethermod.util.Protect.may(sl, p, q)
                         && sl.getBlockState(q).is(Blocks.WATER))
                     WorldEffects.tempBlock(sl, q, Blocks.AIR.defaultBlockState(), 400);
             }

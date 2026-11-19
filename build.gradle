@@ -37,15 +37,15 @@ runs {
     client {
         // CI playtest: a fixed 1280x720 window for the screenshots
         if (System.getenv('ETHERMOD_AUTOTEST') != null) {
-            programArguments.addAll '--width', '1280', '--height', '720'
+            arguments.addAll '--width', '1280', '--height', '720'
         }
     }
     server {
-        programArguments.add '--nogui'
+        arguments.add '--nogui'
     }
 
     data {
-        programArguments.addAll '--mod', 'ethermod', '--all',
+        arguments.addAll '--mod', 'ethermod', '--all',
                 '--output', file('src/generated/resources/').absolutePath,
                 '--existing', file('src/main/resources/').absolutePath
     }
@@ -101,6 +101,8 @@ if (project.hasProperty('playtest')) {
         // -PstopAfter=<tick> ends the screenshot tour early (the shader-pack run only needs the beam)
         if (project.hasProperty('stopAfter')) systemProperty 'ethermod.stopAfter', project.property('stopAfter')
         // -PcloudTest fires the beam from above the clouds (Fancy, then Fabulous) instead of the rest of the tour
+        // -PfxVariant=<name> picks how effects draw with a shader pack (client/Fx.VARIANT)
+        if (project.hasProperty('fxVariant')) systemProperty 'ethermod.fxVariant', project.property('fxVariant')
         if (project.hasProperty('cloudTest')) systemProperty 'ethermod.cloudTest', 'true'
         // -PkGifs records the K screen scenes for the mod page (KGifTour), frames in runs/client/screenshots
         if (project.hasProperty('kGifs')) systemProperty 'ethermod.kGifs', 'true'

@@ -16,9 +16,11 @@ import com.mojang.blaze3d.vertex.VertexSorting;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
@@ -151,6 +153,10 @@ public final class Fx {
 
     private static final Layer BEAM = new Layer();
     private static final Layer GLOW = new Layer();
+    /** Soft glow around a brighter core: adds like GLOW, but never writes depth with a pack. */
+    private static final Layer SOFT = new Layer();
+    /** Glowing block faces: add like GLOW, but with a pack never write depth (they sit on a surface). */
+    private static final Layer FACE = new Layer();
 
     /**
      * Where additive effects record their quads. Positions go through the caller's matrix
@@ -159,6 +165,22 @@ public final class Fx {
      */
     public static VertexConsumer glow() {
         return ShaderCompat.inShadowPass() ? NONE : GLOW;
+    }
+
+    /**
+     * Like {@link #glow()}, for a soft shell around a core drawn into glow(): with a shader pack
+     * only the core writes depth, so the shell's twisting faces can't cut the rope into bands.
+     */
+    public static VertexConsumer softGlow() {
+        return ShaderCompat.inShadowPass() ? NONE : SOFT;
+    }
+
+    /**
+     * Like {@link #glow()}, for faces lying on a block: with a pack they write no depth, so the
+     * pack's depth effects can't fight the block under them (speckled artifacts).
+     */
+    public static VertexConsumer faceGlow() {
+        return ShaderCompat.inShadowPass() ? NONE : FACE;
     }
 
     /** Where the beam ribbons record their quads (brightest wins where they overlap). */
@@ -182,15 +204,20 @@ public final class Fx {
 
     /** The stage at which the world's effects are produced and everything is drawn. */
     public static RenderLevelStageEvent.Stage drawStage() {
-        return ShaderCompat.shadersActive()
-                ? RenderLevelStageEvent.Stage.AFTER_WEATHER
-                : RenderLevelStageEvent.Stage.AFTER_LEVEL;
+        if (!ShaderCompat.shadersActive()) return RenderLevelStageEvent.Stage.AFTER_LEVEL;
+        // drawn with the particles (the pack places them right, before its clouds), or late
+        if (VARIANT.contains("_sort_t")) return RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS;
+        return PARTICLE_STAGE
+                ? RenderLevelStageEvent.Stage.AFTER_PARTICLES
+                : RenderLevelStageEvent.Stage.AFTER_WEATHER;
     }
 
     /** Start of a world frame: forget anything a skipped frame left behind. */
     public static void beginFrame() {
         BEAM.clear();
         GLOW.clear();
+        SOFT.clear();
+        FACE.clear();
     }
 
     private static TextureTarget layer;
@@ -233,13 +260,15 @@ public final class Fx {
         }
         try {
             produce.run();
-            if (BEAM.quads() + GLOW.quads() > 0) {
+            if (BEAM.quads() + GLOW.quads() + SOFT.quads() + FACE.quads() > 0) {
                 if (ShaderCompat.shadersActive()) drawInWorld();
                 else if (depthReady) drawLayered();
             }
         } finally {
             BEAM.clear();
             GLOW.clear();
+        SOFT.clear();
+        FACE.clear();
             depthReady = false;
             if (afterLevel) {
                 mv.popMatrix();
@@ -266,14 +295,18 @@ public final class Fx {
             RenderSystem.blendEquation(GL14.GL_FUNC_ADD);
             composite(main, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         }
-        if (GLOW.quads() > 0) {
+        if (GLOW.quads() + SOFT.quads() + FACE.quads() > 0) {
             // light: adds up
             begin();
             RenderSystem.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
+            draw(FACE);
+            draw(SOFT);
             draw(GLOW);
             composite(main, GlStateManager.DestFactor.ONE);
         }
 
+        RenderSystem.polygonOffset(0f, 0f);
+        RenderSystem.disablePolygonOffset();
         RenderSystem.depthMask(true);
         RenderSystem.enableDepthTest();
         RenderSystem.depthFunc(GL11.GL_LEQUAL);
@@ -294,6 +327,10 @@ public final class Fx {
         RenderSystem.depthMask(false);
         RenderSystem.disableCull();
         RenderSystem.enableBlend();
+        // glows sit a hair off a block's face; without a pull toward the camera the copied depth
+        // wins on some faces (most at grazing angles), so a glowing block lit only some sides
+        RenderSystem.polygonOffset(-1f, -10f);
+        RenderSystem.enablePolygonOffset();
     }
 
     /** Draws a layer's quads with premultiplied colour (rgb * alpha). */
@@ -350,41 +387,227 @@ public final class Fx {
             ResourceLocation.fromNamespaceAndPath(EtherMod.MODID, "textures/misc/white.png");
 
     /**
-     * Packs run the vanilla lightning type through a program that leaves it out or smears it like
-     * a cloud, so with a pack the effects use the beacon-beam program instead (every pack shows it
-     * as a glow): a plain white texture with the effects' own colours, both sides, writing depth.
+     * How the effects are drawn with a shader pack. The pack decides which of its programs runs a
+     * render type and when its clouds and sky are laid over, so each setup is checked with a real
+     * pack on CI (-PfxVariant picks one there):
+     *
+     * <ul>
+     *   <li>{@code beacon}: beacon-beam program, translucent, writes depth (in front of clouds,
+     *       but packs light it like a solid: washed-out white)
+     *   <li>{@code beacon_add}: beacon-beam program, added light, writes depth
+     *   <li>{@code eyes}: eyes program (Enderman eyes), added light, writes depth
+     *   <li>{@code eyes2}: eyes program colour only, then a depth-only pass
+     *   <li>{@code emissive}: glowing-entity program, added light, writes depth
+     *   <li>{@code particle}: the particle program in the particle stage (the beam's End Rod
+     *       sparks look right with packs), added light, writes depth
+     *   <li>{@code <setup>_p}: that setup, drawn in the particle stage
+     * </ul>
      */
-    private static final RenderType SHADER_FX =
-            RenderType.create(
-                    "ethermod_fx",
-                    DefaultVertexFormat.BLOCK,
-                    VertexFormat.Mode.QUADS,
-                    1536,
-                    false,
-                    true,
-                    RenderType.CompositeState.builder()
-                            .setShaderState(RenderStateShard.RENDERTYPE_BEACON_BEAM_SHADER)
-                            .setTextureState(
-                                    new RenderStateShard.TextureStateShard(WHITE, false, false))
-                            .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
-                            .setCullState(RenderStateShard.NO_CULL)
-                            .setWriteMaskState(RenderStateShard.COLOR_DEPTH_WRITE)
-                            .createCompositeState(false));
+    // particle_sort_nd: no depth anywhere; particle_sort_t / _tnd: in the translucent stage
+    static final String VARIANT = System.getProperty("ethermod.fxVariant", "particle_sort_t");
+
+    /**
+     * {@code particle}, or any setup ending in {@code _p} or {@code _sort}: drawn in the particle
+     * stage. {@code eyes_sort} / {@code emissive_sort}: as particle_sort, with a program that
+     * takes the vertex normal: the particle program has none, so packs derive one per face and
+     * light every beam segment flat on its own (the bands).
+     */
+    static final boolean PARTICLE_STAGE = VARIANT.startsWith("particle") || VARIANT.endsWith("_p") || VARIANT.contains("_sort");
+
+    /** Brightest wins where beam strands overlap (as without a pack), instead of adding up. */
+    private static final RenderStateShard.TransparencyStateShard MAX_TRANSPARENCY =
+            new RenderStateShard.TransparencyStateShard(
+                    "ethermod_max",
+                    () -> {
+                        RenderSystem.enableBlend();
+                        RenderSystem.blendEquation(GL14.GL_MAX);
+                        RenderSystem.blendFunc(
+                                GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
+                    },
+                    () -> {
+                        RenderSystem.blendEquation(GL14.GL_FUNC_ADD);
+                        RenderSystem.disableBlend();
+                        RenderSystem.defaultBlendFunc();
+                    });
+
+    /**
+     * Depth-only pass that can't change the picture: packs may run their own colour output whatever
+     * the write mask says (a plain depth pass came out as flat beam or as sky), so the blend keeps
+     * what is there (source x 0 + destination x 1).
+     */
+    private static final RenderStateShard.TransparencyStateShard KEEP_TRANSPARENCY =
+            new RenderStateShard.TransparencyStateShard(
+                    "ethermod_keep",
+                    () -> {
+                        RenderSystem.enableBlend();
+                        RenderSystem.blendFunc(
+                                GlStateManager.SourceFactor.ZERO, GlStateManager.DestFactor.ONE);
+                    },
+                    () -> {
+                        RenderSystem.disableBlend();
+                        RenderSystem.defaultBlendFunc();
+                    });
+
+    /**
+     * {@code particle_keep}: as without a pack (beam brightest-wins, glows add, no depth write),
+     * then a depth pass that keeps the colour, so the pack's clouds stay behind.
+     *
+     * <p>{@code particle_max}: beam brightest-wins; {@code particle_max_nd}: and no depth write;
+     * {@code particle_max_d2}: colour first without depth (the beam can't cut its own segments
+     * into bands), then a depth-only pass so the pack's clouds stay behind.
+     */
+    static boolean particleFamily() {
+        return VARIANT.startsWith("particle");
+    }
+
+    private static RenderType shaderType(String name, boolean depthOnly) {
+        return shaderType(name, depthOnly, false);
+    }
+
+    private static RenderType shaderType(String name, boolean depthOnly, boolean beamLayer) {
+        return shaderType(name, depthOnly, beamLayer, false);
+    }
+
+    private static RenderType shaderType(
+            String name, boolean depthOnly, boolean beamLayer, boolean soft) {
+        boolean beacon = VARIANT.startsWith("beacon");
+        boolean particle = particleFamily();
+        RenderStateShard.ShaderStateShard shader =
+                particle
+                        ? new RenderStateShard.ShaderStateShard(GameRenderer::getParticleShader)
+                        : beacon
+                        ? RenderStateShard.RENDERTYPE_BEACON_BEAM_SHADER
+                        : VARIANT.startsWith("emissive")
+                                ? RenderStateShard.RENDERTYPE_ENTITY_TRANSLUCENT_EMISSIVE_SHADER
+                                : RenderStateShard.RENDERTYPE_EYES_SHADER;
+        var b =
+                RenderType.CompositeState.builder()
+                        .setShaderState(shader)
+                        .setTextureState(new RenderStateShard.TextureStateShard(WHITE, false, false))
+                        .setCullState(RenderStateShard.NO_CULL)
+                        .setLayeringState(RenderStateShard.POLYGON_OFFSET_LAYERING);
+        if (VARIANT.startsWith("emissive") || particle)
+            b.setLightmapState(RenderStateShard.LIGHTMAP).setOverlayState(RenderStateShard.OVERLAY);
+        if (depthOnly) {
+            if (VARIANT.equals("particle_keep")) b.setTransparencyState(KEEP_TRANSPARENCY);
+            b.setWriteMaskState(
+                    VARIANT.equals("particle_keep")
+                            ? RenderStateShard.COLOR_DEPTH_WRITE
+                            : RenderStateShard.DEPTH_WRITE);
+        } else {
+            b.setTransparencyState(
+                    VARIANT.equals("beacon")
+                            ? RenderStateShard.TRANSLUCENT_TRANSPARENCY
+                            : beamLayer
+                                            && (VARIANT.startsWith("particle_max")
+                                                    || VARIANT.equals("particle_keep")
+                                                    || VARIANT.contains("_sort"))
+                                    ? MAX_TRANSPARENCY
+                                    : RenderStateShard.ADDITIVE_TRANSPARENCY);
+            b.setWriteMaskState(
+                    soft
+                                    || VARIANT.equals("eyes2")
+                                    || VARIANT.equals("particle_max_nd")
+                                    || VARIANT.equals("particle_max_d2")
+                                    || VARIANT.equals("particle_keep")
+                                    || VARIANT.endsWith("nd")
+                            ? RenderStateShard.COLOR_WRITE
+                            : RenderStateShard.COLOR_DEPTH_WRITE);
+        }
+        return RenderType.create(
+                name,
+                particle
+                        ? DefaultVertexFormat.PARTICLE
+                        : beacon ? DefaultVertexFormat.BLOCK : DefaultVertexFormat.NEW_ENTITY,
+                VertexFormat.Mode.QUADS,
+                1536,
+                false,
+                !depthOnly,
+                b.createCompositeState(false));
+    }
+
+    /** How strong the effects' light is with a pack, against without one. */
+    static final float SHADER_GAIN = Float.parseFloat(System.getProperty("ethermod.fxGain", "0.5"));
+
+    private static final RenderType SHADER_FX = shaderType("ethermod_fx", false);
+    private static final RenderType SHADER_FX_BEAM = shaderType("ethermod_fx_beam", false, true);
+    private static final RenderType SHADER_FX_SOFT =
+            shaderType("ethermod_fx_soft", false, false, false); // strips: depth is safe again
+    private static final RenderType SHADER_FX_FACE =
+            shaderType("ethermod_fx_face", false, false, true); // colour only
+    private static final RenderType SHADER_FX_DEPTH =
+            VARIANT.equals("eyes2")
+                            || VARIANT.equals("particle_max_d2")
+                            || VARIANT.equals("particle_keep")
+                    ? shaderType("ethermod_fx_depth", true)
+                    : null;
+
+    /**
+     * Vertex order for a layer. {@code particle_sort}: quads far to near, so with depth written
+     * no part of the beam ever hides a farther part drawn after it (that cut the rope into bands);
+     * everything adds up as without a pack, and the depth still keeps the pack's clouds behind.
+     */
+    private static int[] order(Layer l) {
+        int quads = l.quads();
+        int[] out = new int[quads * 4];
+        Integer[] q = new Integer[quads];
+        for (int i = 0; i < quads; i++) q[i] = i;
+        if (VARIANT.contains("_sort")) {
+            double[] d = new double[quads];
+            for (int i = 0; i < quads; i++) {
+                double x = 0, y = 0, z = 0;
+                for (int v = 0; v < 4; v++) {
+                    int o = 3 * (4 * i + v);
+                    x += l.pos[o];
+                    y += l.pos[o + 1];
+                    z += l.pos[o + 2];
+                }
+                d[i] = x * x + y * y + z * z;
+            }
+            java.util.Arrays.sort(q, (a, b) -> Double.compare(d[b], d[a]));
+        }
+        for (int i = 0; i < quads; i++) for (int v = 0; v < 4; v++) out[4 * i + v] = 4 * q[i] + v;
+        return out;
+    }
+
+    private static final float[] UV_U = {0f, 1f, 1f, 0f}, UV_V = {0f, 0f, 1f, 1f};
 
     private static void drawInWorld() {
         MultiBufferSource.BufferSource buf = Minecraft.getInstance().renderBuffers().bufferSource();
-        VertexConsumer vc = buf.getBuffer(SHADER_FX);
-        for (Layer l : new Layer[] {BEAM, GLOW}) {
-            int verts = l.quads() * 4;
-            for (int i = 0; i < verts; i++) {
-                int c = l.col[i];
-                vc.addVertex(l.pos[3 * i], l.pos[3 * i + 1], l.pos[3 * i + 2])
-                        .setColor(c >> 16 & 255, c >> 8 & 255, c & 255, c >>> 24)
-                        .setUv(0.5f, 0.5f)
-                        .setUv2(240, 240)
-                        .setNormal(0f, 1f, 0f);
+        boolean beacon = VARIANT.startsWith("beacon"), particle = particleFamily();
+        boolean premultiply = !VARIANT.equals("beacon"); // added light ignores alpha
+        // packs take our light as emissive and bloom it: at full strength it blinds
+        float gain = SHADER_GAIN;
+        // the beam first (its own blend), then soft shells (no depth), the glows, an optional depth pass
+        RenderType[] types = {SHADER_FX_FACE, SHADER_FX_BEAM, SHADER_FX_SOFT, SHADER_FX, SHADER_FX_DEPTH};
+        Layer[][] layers = {{FACE}, {BEAM}, {SOFT}, {GLOW}, {BEAM, SOFT, GLOW}};
+        for (int t = 0; t < types.length; t++) {
+            RenderType type = types[t];
+            if (type == null) continue;
+            VertexConsumer vc = buf.getBuffer(type);
+            for (Layer l : layers[t]) {
+                for (int i : order(l)) {
+                    int c = l.col[i];
+                    int a = c >>> 24, k = (int) ((premultiply ? a : 255) * gain);
+                    vc.addVertex(l.pos[3 * i], l.pos[3 * i + 1], l.pos[3 * i + 2])
+                            .setColor(
+                                    (c >> 16 & 255) * k / 255,
+                                    (c >> 8 & 255) * k / 255,
+                                    (c & 255) * k / 255,
+                                    premultiply ? 255 : a)
+                            // a real UV span: packs that lock lighting to the texture's texels
+                            // (pixel-locked shading) took a single point UV as ONE texel for the
+                            // whole quad, so every beam segment came out as one flat band
+                            .setUv(UV_U[i & 3], UV_V[i & 3]);
+                    if (particle) {
+                        vc.setLight(LightTexture.FULL_BRIGHT); // particles carry no normal
+                        continue;
+                    }
+                    if (!beacon) vc.setOverlay(OverlayTexture.NO_OVERLAY);
+                    vc.setLight(LightTexture.FULL_BRIGHT).setNormal(0f, 1f, 0f);
+                }
             }
+            buf.endBatch(type);
         }
-        buf.endBatch(SHADER_FX);
     }
 }

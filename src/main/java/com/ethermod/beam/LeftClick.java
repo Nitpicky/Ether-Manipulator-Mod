@@ -12,7 +12,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -77,19 +76,14 @@ public final class LeftClick {
         OrbMode mode = OrbMode.get(st);
         stop(p);
         // Detonator: left click again while your left-click shot is in the air bursts it
-        if (BeamBallEntity.detonateFor(p, st, true) || GustGrenade.detonateFor(p, st))
-            return;
+        if (BeamBallEntity.detonateFor(p, st, true)) return;
         switch (mode) {
-            case WATER, LAVA -> {
+            case WATER, LAVA, GUST -> {
                 if (mode.tankLevel(st) < mode.shotCost(st, 0)) {
                     empty(p);
                     return;
                 }
                 HOLDS.put(p.getUUID(), new Hold(mode));
-            }
-            case GUST -> {
-                if (ready(p, 10) && spend(p, st, OrbMode.GRENADE_COST))
-                    GustGrenade.throwFrom(p, st);
             }
             case LIGHT -> {
                 HOLDS.put(p.getUUID(), new Hold(mode));
@@ -151,6 +145,16 @@ public final class LeftClick {
         }
     }
 
+    /**
+     * Right click in Pneumatic mode: throws the Stasis Grenade, or bursts the one already out
+     * (Detonator-style, like the other tools' second click).
+     */
+    public static void throwGrenade(ServerPlayer p) {
+        ItemStack st = Manipulator.stack(p);
+        if (GustGrenade.detonateFor(p, st)) return;
+        if (ready(p, 10) && spend(p, st, OrbMode.GRENADE_COST)) GustGrenade.throwFrom(p, st);
+    }
+
     /** True while LMB is held for an action (the playtest reads it). */
     public static boolean holding(ServerPlayer p) {
         return HOLDS.containsKey(p.getUUID());
@@ -168,10 +172,7 @@ public final class LeftClick {
     }
 
     private static void empty(ServerPlayer p) {
-        p.displayClientMessage(
-                Component.translatable("message.ethermod.not_enough_ether")
-                        .withStyle(ChatFormatting.RED),
-                true);
+        DryFire.signal(p);
     }
 
     /** False (and nothing happens) until {@code cooldown} ticks after the last use. */
@@ -310,7 +311,7 @@ public final class LeftClick {
                 p.getX(),
                 p.getEyeY(),
                 p.getZ(),
-                SoundEvents.FISHING_BOBBER_RETRIEVE,
+                com.ethermod.sound.ModSounds.WORLD_FISHING_BOBBER_RETRIEVE,
                 SoundSource.PLAYERS,
                 0.8f,
                 target == null ? 0.7f : 1.2f);
@@ -381,7 +382,7 @@ public final class LeftClick {
         while (!todo.isEmpty() && cut.size() < 256) {
             BlockPos q = todo.poll();
             var state = sl.getBlockState(q);
-            if (!ripe(state) || !sl.mayInteract(p, q)) continue;
+            if (!ripe(state) || !com.ethermod.util.Protect.may(sl, p, q)) continue;
             cut.add(q);
             if (overgrowth)
                 for (BlockPos n : BlockPos.betweenClosed(q.offset(-1, -1, -1), q.offset(1, 1, 1))) {
@@ -408,7 +409,7 @@ public final class LeftClick {
         sl.playSound(
                 null,
                 center,
-                SoundEvents.PLAYER_ATTACK_SWEEP,
+                com.ethermod.sound.ModSounds.WORLD_PLAYER_ATTACK_SWEEP,
                 SoundSource.PLAYERS,
                 0.5f,
                 1.4f);
@@ -418,7 +419,7 @@ public final class LeftClick {
     private static void cutCrop(ServerPlayer p, BlockPos q, Vec3 right) {
         if (p.isRemoved() || !(p.level() instanceof ServerLevel sl) || !sl.isLoaded(q)) return;
         var state = sl.getBlockState(q);
-        if (!ripe(state) || !sl.mayInteract(p, q)) return;
+        if (!ripe(state) || !com.ethermod.util.Protect.may(sl, p, q)) return;
         harvesting = p;
         try {
             if (!p.gameMode.destroyBlock(q)) return;
@@ -501,6 +502,7 @@ public final class LeftClick {
     /** A crop ready to harvest: a fully grown crop, nether wart or cocoa, or a melon/pumpkin. */
     private static boolean ripe(net.minecraft.world.level.block.state.BlockState s) {
         var b = s.getBlock();
+        if (com.ethermod.util.FoliageHelper.extraRipe(s)) return true;
         if (b instanceof net.minecraft.world.level.block.CropBlock crop) return crop.isMaxAge(s);
         if (b instanceof net.minecraft.world.level.block.NetherWartBlock)
             return s.getValue(net.minecraft.world.level.block.NetherWartBlock.AGE) >= 3;
@@ -527,7 +529,7 @@ public final class LeftClick {
                 at.x,
                 at.y,
                 at.z,
-                SoundEvents.PUFFER_FISH_BLOW_OUT,
+                com.ethermod.sound.ModSounds.WORLD_PUFFER_FISH_BLOW_OUT,
                 SoundSource.PLAYERS,
                 0.8f,
                 1.3f);

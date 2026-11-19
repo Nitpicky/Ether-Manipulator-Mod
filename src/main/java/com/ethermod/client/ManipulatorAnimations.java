@@ -54,6 +54,11 @@ public final class ManipulatorAnimations {
     private static final RawAnimation UNSUMMON = anim("unsummon");
     private static final RawAnimation MODE_SWITCH = anim("mode_switch");
     private static final RawAnimation INSPECT = anim("inspect");
+    /** Reload ("intake", FX bench): tips up, prongs flare, the ring spins the Ether in, prongs clamp at 1.16s. */
+    private static final RawAnimation RELOAD = anim("reload");
+    /** The same without moving the tool itself: third person only moves prongs and ring. */
+    private static final RawAnimation RELOAD_TP = anim("reload_tp");
+    private static final float RELOAD_LEN = 1.6f, RELOAD_CLAMP = 1.16f;
     private static final RawAnimation BEAM_START = anim("beam_start");
     private static final RawAnimation[] MINE = {
         anim("mine"), anim("mine_2"), anim("mine_3"), anim("mine_4")
@@ -185,6 +190,7 @@ public final class ManipulatorAnimations {
         OrbMode lastMode;
         float modeSwitchAt = -100;
         float leftPressAt = -100;
+        float grenadeAt = -100;
         OrbMode leftPressMode;
         // the left click was a set-down (it came while carrying), not a grab
         boolean leftPressPlaces;
@@ -287,7 +293,7 @@ public final class ManipulatorAnimations {
         ENDS_ON_IDLE.addAll(
                 List.of(
                         SUMMON, MODE_SWITCH, FIDGET, INSPECT, FIRE, TETHER_RELEASE, PULL, GRENADE, HARVEST,
-                        MASS_PLACE, MINE_END, GROWTH_END));
+                        MASS_PLACE, MINE_END, GROWTH_END, RELOAD, RELOAD_TP));
         ENDS_ON_IDLE.addAll(List.of(CYCLE));
         ENDS_ON_IDLE.addAll(FIRE_BY.values());
         SPINS.addAll(List.of(MINE));
@@ -341,6 +347,7 @@ public final class ManipulatorAnimations {
                 || ctx == net.minecraft.world.item.ItemDisplayContext.THIRD_PERSON_LEFT_HAND;
         Player holder = inHand ? holder(stack) : null;
         RawAnimation next = pick(holder, stack);
+        if (next == RELOAD && ctx != null && !ctx.firstPerson()) next = RELOAD_TP;
         AnimationController<EtherManipulatorItem> c = state.getController();
         RawAnimation last = LAST.get(c);
         Track t = holder == null ? null : track(holder);
@@ -416,6 +423,13 @@ public final class ManipulatorAnimations {
     private static boolean screenOpen;
 
     /** Local player pressed left click in this mode (instant left clicks animate from here). */
+    /** Right click in Pneumatic mode: the Stasis Grenade throw. */
+    public static void grenadeThrow(Player p) {
+        Track t = track(p);
+        t.grenadeAt = now(Minecraft.getInstance());
+        t.restart = true;
+    }
+
     public static void leftPress(Player p, OrbMode mode) {
         Track t = track(p);
         t.leftPressAt = now(Minecraft.getInstance());
@@ -424,6 +438,25 @@ public final class ManipulatorAnimations {
                 mode == OrbMode.MASS
                         && !com.ethermod.beam.MassDriver.carried(p.getMainHandItem()).isAir();
         t.restart = true;
+    }
+
+    /** Whether the local player's reload animation is playing (the server announced the fill). */
+    public static boolean reloading(float now) {
+        float t = reloadTime(now);
+        return t >= 0 && t < RELOAD_LEN - HANDOVER;
+    }
+
+    /** Seconds into the reload animation (negative or past its length when none plays). */
+    public static float reloadTime(float now) {
+        long fill = com.ethermod.beam.RemoteBeams.reloadFillAt();
+        if (fill == Long.MIN_VALUE) return -1;
+        return now - (fill / 20f - RELOAD_CLAMP);
+    }
+
+    /** Seconds into the reload animation, for the star and the Ether motes. */
+    public static float reloadTime() {
+        Minecraft mc = Minecraft.getInstance();
+        return mc.level == null ? -1 : reloadTime(now(mc));
     }
 
     /** Middle click while summoned: show the tool off. */
@@ -664,7 +697,7 @@ public final class ManipulatorAnimations {
             if (held == OrbMode.LIGHT) return BEACON;
             float since = now - t.leftPressAt;
             if (t.leftPressMode == OrbMode.TETHER && since < PULL_LEN - HANDOVER) return TETHER;
-            if (t.leftPressMode == OrbMode.GUST && since < GRENADE_LEN - HANDOVER) return GRENADE;
+            if (now - t.grenadeAt < GRENADE_LEN - HANDOVER) return GRENADE;
             if (t.leftPressMode == OrbMode.GROWTH && since < HARVEST_LEN - HANDOVER) return HARVEST;
         }
         if (t.carrying) return MASS_GRIP;
@@ -686,6 +719,7 @@ public final class ManipulatorAnimations {
         if (now - t.heldSince < SUMMON_LEN - HANDOVER) return SUMMON;
         if (now - t.inspectAt < INSPECT_LEN - HANDOVER) return INSPECT;
         if (now - t.modeSwitchAt < MODE_SWITCH_LEN - HANDOVER) return MODE_SWITCH;
+        if (local && !t.beaming && !BeamRenderState.isCharging && reloading(now)) return RELOAD;
 
         if (t.beaming) {
             if (p.isShiftKeyDown()) return TILL;

@@ -82,7 +82,7 @@ public final class ModeWheel {
         if (pick != null && pick != current && mc.player != null) {
             ModNetwork.sendOrbMode(pick);
             OrbMode.set(Manipulator.stack(mc.player), pick); // predict; the server confirms
-            mc.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.4f));
+            com.ethermod.beam.BeamAudio.modeCue(pick); // a cue of the Module, not a UI click
         }
     }
 

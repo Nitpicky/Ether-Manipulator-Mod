@@ -127,6 +127,7 @@ public class ManipulatorKeys {
         Minecraft mc = Minecraft.getInstance();
         LocalPlayer player = mc.player;
         if (player == null
+                || !com.ethermod.config.ClientConfig.sneakScroll()
                 || mc.screen != null
                 || !player.isShiftKeyDown()
                 || !Manipulator.isSummoned(player)) return;

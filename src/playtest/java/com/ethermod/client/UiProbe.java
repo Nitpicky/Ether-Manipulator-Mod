@@ -174,7 +174,7 @@ public final class UiProbe {
                                     TraitBuild.setLine(st, 1, Traits.PNEUMATIC);
                                     TraitBuild.setPick(st, 1, 0, "pneumatic.updraft");
                                     TraitBuild.setPick(st, 1, 1, "pneumatic.bunny_hop");
-                                    TraitBuild.setPick(st, 1, 2, "pneumatic.stasis");
+                                    TraitBuild.setPick(st, 1, 2, "pneumatic.cyclone");
                                     TraitBuild.setLine(st, 2, Traits.PHOTONIC);
                                     TraitBuild.setPick(st, 2, 0, "photonic.prism");
                                     TraitBuild.setPick(st, 2, 1, "photonic.radiance");
@@ -327,9 +327,8 @@ public final class UiProbe {
                                 check("Module switch retains tank", OrbMode.tank(st) == 3);
                                 TraitBuild.setPick(st, 0, 0, "hydraulic.reservoir");
                                 check(
-                                        "Reload waits 4s at Prototype",
-                                        com.ethermod.config.EtherConfig.ETHER_REFILL.get()
-                                                == 80);
+                                        "Reload waits 15s at Prototype",
+                                        com.ethermod.trait.RedesignEffects.reloadDelay(new net.minecraft.world.item.ItemStack(com.ethermod.registry.ModItems.ETHER_MANIPULATOR.get())) == 300);
                                 TraitRules.equip(p, 1, Traits.PYROTECHNIC);
                                 TraitRules.pick(p, 1, 0, 1);
                                 check("Crucible grows the shared tank", OrbMode.capacity(st) == 10);
@@ -345,7 +344,10 @@ public final class UiProbe {
                                 check(
                                         "Ignite/Lava costs",
                                         OrbMode.IGNITE.shotCost(st, 0) == 1
-                                                && OrbMode.LAVA.shotCost(st, 0) == 3);
+                                                && OrbMode.LAVA.shotCost(st, 0) == 4
+                                                && OrbMode.WATER.shotCost(st, 0) == 4
+                                                && OrbMode.GROWTH.shotCost(st, 2) == 4
+                                                && OrbMode.GRENADE_COST == 2);
                                 check("Vacuum removed", !OrbMode.VACUUM.isUnlocked(st));
                                 check(
                                         "No Tier scaling",
@@ -403,7 +405,7 @@ public final class UiProbe {
                                 check(
                                         "Stasis accumulates force",
                                         zombie.getPersistentData().getDouble("mm_stasis_force")
-                                                == 2.5);
+                                                == RedesignEffects.STASIS_MAX);
                                 check(
                                         "Stasis last impulse sets direction",
                                         zombie.getPersistentData().getDouble("mm_stasis_z") == 1);
@@ -662,9 +664,7 @@ public final class UiProbe {
                                                 && pet.getPersistentData()
                                                                 .getLong("mm_summon_expires")
                                                         == sl.getGameTime()
-                                                                + com.ethermod.config.EtherConfig
-                                                                        .SOUL_LIFETIME
-                                                                        .get());
+                                                                + 600);
                                 check(
                                         "Blazeling cannot target owner or summons",
                                         !pet.validTarget(p, p)
@@ -998,7 +998,7 @@ public final class UiProbe {
                                         sl, p, st, 2, OrbMode.WATER);
                                 check(
                                         "Split pays once per whole shot",
-                                        OrbMode.tank(st) == 5);
+                                        OrbMode.tank(st) == 6 - 4);
                                 OrbMode.setTank(st, 16);
                                 check(
                                         "Retired Gunner/Orbit dropped from old builds",
@@ -1042,7 +1042,7 @@ public final class UiProbe {
                                 check(
                                         "Energy orb spends the shared tank, Tether does not",
                                         OrbMode.ENERGY.usesTank()
-                                                && OrbMode.ENERGY.shotCost(st, 2) == 2
+                                                && OrbMode.ENERGY.shotCost(st, 2) == 1
                                                 && !OrbMode.TETHER.usesTank());
                                 TraitBuild.setLine(st, 0, Traits.HYDRAULIC);
                                 TraitBuild.setPick(st, 0, 0, "hydraulic.reservoir");

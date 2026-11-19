@@ -3,7 +3,6 @@ package com.ethermod.beam;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
@@ -46,10 +45,10 @@ final class OrbGust {
                 sl.sendParticles(ParticleTypes.GUST, e.getX(), e.getY(), e.getZ(), 1, 0, 0, 0, 0);
             }
         }
-        if (!b.has("pneumatic.cyclone")) return false;
+        if (!b.has("pneumatic.cyclone") || b.getPhase() != 2) return false;
         // Cyclone: a slow whirlwind that lifts mobs and items, then bursts
         b.lifeTicks++;
-        int life = b.rank("pneumatic.cyclone") >= 2 ? 100 : 60;
+        int life = 60;
         Vec3 v = b.getDeltaMovement();
         Vec3 next = b.position().add(v);
         if (!sl.noCollision(b, b.getBoundingBox().move(v))) v = Vec3.ZERO;
@@ -100,7 +99,7 @@ final class OrbGust {
                     c.x,
                     c.y,
                     c.z,
-                    SoundEvents.BREEZE_IDLE_AIR,
+                    com.ethermod.sound.ModSounds.WORLD_BREEZE_IDLE_AIR,
                     SoundSource.PLAYERS,
                     0.8f,
                     0.8f);

@@ -111,15 +111,18 @@ public class EtherManipulatorItem extends Item implements GeoItem {
             return InteractionResultHolder.fail(stack);
 
         OrbMode mode = OrbMode.get(stack);
+        // Pneumatic: right click throws the Stasis Grenade (the Gust shot charges on left click)
+        if (mode == OrbMode.GUST) {
+            if (player instanceof ServerPlayer sp) com.ethermod.beam.LeftClick.throwGrenade(sp);
+            else com.ethermod.client.ManipulatorAnimations.grenadeThrow(player);
+            return InteractionResultHolder.fail(stack);
+        }
         // the projectile this tool charges on right click (Hydraulic: the ice shard)
         OrbMode shot = mode.rmbShot();
-        if (shot.usesTank() && shot.tankLevel(stack) < shot.shotCost(stack, 0)) {
-            if (!level.isClientSide) {
-                player.displayClientMessage(
-                        Component.translatable("message.ethermod.tank_refilling", mode.title())
-                                .withStyle(ChatFormatting.RED),
-                        true);
-            }
+        // the tank lives on the Manipulator's own stack (synced to the client), not on the copy in
+        // hand, which can be stale on the client and let an empty tank start a charge
+        if (shot.isDry(player)) {
+            if (player instanceof net.minecraft.server.level.ServerPlayer sp) com.ethermod.beam.DryFire.signal(sp);
             return InteractionResultHolder.fail(stack);
         }
 
@@ -145,8 +148,22 @@ public class EtherManipulatorItem extends Item implements GeoItem {
                 if (hook != null) {
                     if (com.ethermod.beam.OrbTether.press(hook, sp))
                         return InteractionResultHolder.fail(stack);
-                } else if (sp.isShiftKeyDown() || !com.ethermod.trait.Ziplines.tryRide(sp))
-                    return InteractionResultHolder.fail(stack);
+                } else {
+                    // no hook out: a double tap while gravity is shifted puts it back to normal
+                    var data = sp.getPersistentData();
+                    long now = sp.level().getGameTime();
+                    boolean shifted =
+                            com.ethermod.trait.MovementPhysics.down(sp)
+                                    != net.minecraft.core.Direction.DOWN;
+                    if (shifted && now - data.getLong("mm_tether_tap") <= com.ethermod.beam.OrbTether.DOUBLE_TAP) {
+                        data.remove("mm_tether_tap");
+                        com.ethermod.trait.MovementPhysics.setGravity(sp, net.minecraft.core.Direction.DOWN);
+                        return InteractionResultHolder.fail(stack);
+                    }
+                    data.putLong("mm_tether_tap", now);
+                    if (sp.isShiftKeyDown() || !com.ethermod.trait.Ziplines.tryRide(sp))
+                        return InteractionResultHolder.fail(stack);
+                }
             }
             // (the client can't see the Ziplines it might ride: it holds, the server decides)
         }
@@ -287,6 +304,11 @@ public class EtherManipulatorItem extends Item implements GeoItem {
     public static void fireVolley(
             Level level, Player player, ItemStack stack, int charged, OrbMode mode, boolean left) {
         if (mode == OrbMode.MASS) return; // Persistent Mass Driver handles its own release.
+        // Pollen Drift: needs one charge stage, and then always drifts as a full cloud
+        if (mode == OrbMode.GROWTH) {
+            if (charged < 1) return;
+            charged = 2;
+        }
         // Short on tank: the shot drops to the strongest charge you can still pay for
         int affordable = charged;
         while (affordable > 0
@@ -295,10 +317,7 @@ public class EtherManipulatorItem extends Item implements GeoItem {
         final int phase = affordable;
         int cost = mode.shotCost(stack, phase);
         if (mode.usesTank() && mode.tankLevel(stack) < cost) {
-            player.displayClientMessage(
-                    Component.translatable("message.ethermod.not_enough_ether")
-                            .withStyle(ChatFormatting.RED),
-                    true);
+            if (player instanceof ServerPlayer sp) com.ethermod.beam.DryFire.signal(sp);
             return;
         }
         int count = Traits.has(stack, "kinetic.split") ? phase + 1 : 1;
@@ -343,15 +362,7 @@ public class EtherManipulatorItem extends Item implements GeoItem {
                                     && Traits.has(launchTraits, "hydraulic.tidecaller"))
                                 orb.carryOwner();
                         }
-                        level.playSound(
-                                null,
-                                player.getX(),
-                                player.getEyeY(),
-                                player.getZ(),
-                                net.minecraft.sounds.SoundEvents.BREEZE_SHOOT,
-                                net.minecraft.sounds.SoundSource.PLAYERS,
-                                0.6f,
-                                1.5f - 0.2f * phase);
+                        com.ethermod.beam.ShotSounds.launch(level, player, mode, phase);
                     };
             if (sequence == 0) shot.run();
             else
@@ -393,14 +404,14 @@ public class EtherManipulatorItem extends Item implements GeoItem {
             ItemStack stack, net.minecraft.world.level.block.state.BlockState state) {
         float baseSpeed = ManipulatorStage.get(stack).miningSpeed();
         float skillBonus = Traits.miningSpeedBonus(stack);
-        return baseSpeed + skillBonus;
+        return (baseSpeed + skillBonus) * com.ethermod.config.ServerConfig.miningSpeed();
     }
 
     /** Harvest level follows the stage: Stone can't take diamond ore, Iron can't take obsidian. */
     @Override
     public boolean isCorrectToolForDrops(
             ItemStack stack, net.minecraft.world.level.block.state.BlockState state) {
-        return ManipulatorStage.get(stack).canHarvest(state);
+        return ManipulatorStage.get(stack).canHarvest(state) || com.ethermod.config.ServerConfig.alwaysHarvest(state);
     }
 
     // =========================================================================

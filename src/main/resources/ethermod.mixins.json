@@ -12,6 +12,7 @@
     "GravityLivingMixin",
     "DazzleMixin",
     "MovementConnectionMixin",
+    "AdvancementLayoutMixin",
     "SoulFireMixin",
     "FluidPocketMixin",
     "GravityFallAccessor",
@@ -28,6 +29,8 @@
     "FlightEquipmentMixin",
     "GravityOverlayMixin",
     "ChargeArmTremblerMixin",
-    "NoUseDipMixin"
+    "NoUseDipMixin",
+    "SoundVolumeAccessor",
+    "GemGlintMixin"
   ]
 }

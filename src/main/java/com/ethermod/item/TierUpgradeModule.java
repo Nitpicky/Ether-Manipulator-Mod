@@ -5,7 +5,6 @@ import com.ethermod.manipulator.Manipulator;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -80,7 +79,7 @@ public class TierUpgradeModule extends Item {
                     .playSound(
                             null,
                             sp.blockPosition(),
-                            SoundEvents.BEACON_POWER_SELECT,
+                            com.ethermod.sound.ModSounds.UI_BEACON_POWER_SELECT,
                             SoundSource.PLAYERS,
                             0.8f,
                             1.4f);
@@ -105,7 +104,7 @@ public class TierUpgradeModule extends Item {
         for (int i = 0; i < inv.getContainerSize(); i++) {
             ItemStack s = inv.getItem(i);
             if (s.getItem() instanceof TierUpgradeModule m && m.requiredStage == current) {
-                install(sp, s, false);
+                install(sp, s, true); // the upgrade screen gets the same sound as a right click
                 return;
             }
         }

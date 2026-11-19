@@ -59,10 +59,12 @@ public final class GemLootModifier extends LootModifier {
 
     @Override
     protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> loot, LootContext ctx) {
+        if (gem instanceof com.ethermod.item.ModuleItem mi
+                && com.ethermod.config.ServerConfig.moduleDisabled(mi.module().getPath())) return loot;
         boolean give = false;
         Vec3 origin = ctx.getParamOrNull(LootContextParams.ORIGIN);
         ServerLevel level = ctx.getLevel();
-        if (origin != null && !guaranteeIn.isEmpty()) {
+        if (origin != null && !guaranteeIn.isEmpty() && com.ethermod.config.ServerConfig.gemInFirstChest()) {
             BlockPos pos = BlockPos.containing(origin);
             var structures = level.registryAccess().registryOrThrow(Registries.STRUCTURE);
             String key = null;
@@ -82,7 +84,8 @@ public final class GemLootModifier extends LootModifier {
                     && GemGuarantees.get(level).claim(key + "/" + BuiltInRegistries.ITEM.getKey(gem)))
                 give = true;
         }
-        if (!give && chance > 0 && ctx.getRandom().nextFloat() < chance) give = true;
+        float odds = chance * com.ethermod.config.ServerConfig.gemChance();
+        if (!give && odds > 0 && ctx.getRandom().nextFloat() < odds) give = true;
         if (give) loot.add(new ItemStack(gem));
         return loot;
     }

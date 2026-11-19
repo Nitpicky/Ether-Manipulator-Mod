@@ -8,7 +8,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
@@ -57,13 +56,15 @@ final class OrbFluids {
             net.minecraft.world.level.material.FlowingFluid fluid) {
         ServerLevel sl = (ServerLevel) b.level();
         ServerPlayer owner = b.getOwner() instanceof ServerPlayer sp ? sp : null;
-        if (owner != null && !sl.mayInteract(owner, pos)) return false;
+        if (owner != null && !com.ethermod.util.Protect.may(sl, owner, pos)) return false;
+        if (fluid == Fluids.LAVA ? !com.ethermod.config.ServerConfig.fireAndLava() : !com.ethermod.config.ServerConfig.waterAndFrost())
+            return false;
 
         if (fluid == Fluids.WATER && sl.dimensionType().ultraWarm()) {
             sl.playSound(
                     null,
                     pos,
-                    SoundEvents.FIRE_EXTINGUISH,
+                    com.ethermod.sound.ModSounds.WORLD_FIRE_EXTINGUISH,
                     SoundSource.BLOCKS,
                     0.5f,
                     2.6f + (b.getRandom().nextFloat() - b.getRandom().nextFloat()) * 0.8f);
@@ -101,7 +102,7 @@ final class OrbFluids {
         sl.playSound(
                 null,
                 pos,
-                fluid == Fluids.LAVA ? SoundEvents.BUCKET_EMPTY_LAVA : SoundEvents.BUCKET_EMPTY,
+                fluid == Fluids.LAVA ? com.ethermod.sound.ModSounds.WORLD_BUCKET_EMPTY_LAVA : com.ethermod.sound.ModSounds.WORLD_BUCKET_EMPTY,
                 SoundSource.PLAYERS,
                 1f,
                 1f);
@@ -196,7 +197,7 @@ final class OrbFluids {
             sl.playSound(
                     null,
                     pos,
-                    fluid == Fluids.LAVA ? SoundEvents.BUCKET_EMPTY_LAVA : SoundEvents.BUCKET_EMPTY,
+                    fluid == Fluids.LAVA ? com.ethermod.sound.ModSounds.WORLD_BUCKET_EMPTY_LAVA : com.ethermod.sound.ModSounds.WORLD_BUCKET_EMPTY,
                     SoundSource.BLOCKS,
                     1f,
                     1f);
@@ -218,7 +219,7 @@ final class OrbFluids {
         sl.playSound(
                 null,
                 pos,
-                fluid == Fluids.LAVA ? SoundEvents.BUCKET_EMPTY_LAVA : SoundEvents.BUCKET_EMPTY,
+                fluid == Fluids.LAVA ? com.ethermod.sound.ModSounds.WORLD_BUCKET_EMPTY_LAVA : com.ethermod.sound.ModSounds.WORLD_BUCKET_EMPTY,
                 SoundSource.BLOCKS,
                 1f,
                 1f);
@@ -252,7 +253,7 @@ final class OrbFluids {
                     Block.UPDATE_ALL);
         }
         furnace.setChanged();
-        sl.playSound(null, pos, SoundEvents.BUCKET_EMPTY_LAVA, SoundSource.BLOCKS, 1f, 0.9f);
+        sl.playSound(null, pos, com.ethermod.sound.ModSounds.WORLD_BUCKET_EMPTY_LAVA, SoundSource.BLOCKS, 1f, 0.9f);
         sl.sendParticles(
                 b.isSoulFire() ? ParticleTypes.SOUL_FIRE_FLAME : ParticleTypes.FLAME,
                 pos.getX() + 0.5,

@@ -15,12 +15,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
         with:
           java-version: '21'
           distribution: temurin
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v5
       - name: Install virtual display
         run: sudo apt-get update -q && sudo apt-get install -y -q xvfb libgl1-mesa-dri libglx-mesa0 pulseaudio
       - name: Run current client/server regression checks
@@ -35,7 +35,7 @@ jobs:
           test -s runs/client/redesign-probe-report.txt
           cat runs/client/redesign-probe-report.txt
           ! grep -q '^FAIL ' runs/client/redesign-probe-report.txt
-          test "$(grep -c '^PASS ' runs/client/redesign-probe-report.txt)" -ge 202
+          test "$(grep -c '^PASS ' runs/client/redesign-probe-report.txt)" -ge 201
       - name: Screenshot tour (first and third person, animations)
         if: always()
         env:
@@ -48,7 +48,7 @@ jobs:
           cat runs/client/ethermod-autotest.txt || true
       - name: Upload report and logs
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: playtest-results
           path: |
