@@ -165,7 +165,7 @@ public final class BlockGlow {
                                 && ShapeSurface.contains(
                                         boxes, x - q.getX(), y - q.getY(), z - q.getZ());
                     },
-                    (d, x0, y0, z0, x1, y1, z1) -> rect(vc, m, d, x0, y0, z0, x1, y1, z1, camPos, 0.004f, a));
+                    (d, x0, y0, z0, x1, y1, z1) -> rect(vc, m, d, x0, y0, z0, x1, y1, z1, camPos, 0.008f, a));
         }
     }
 

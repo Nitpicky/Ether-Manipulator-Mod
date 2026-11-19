@@ -276,6 +276,8 @@ public final class Fx {
             composite(main, GlStateManager.DestFactor.ONE);
         }
 
+        RenderSystem.polygonOffset(0f, 0f);
+        RenderSystem.disablePolygonOffset();
         RenderSystem.depthMask(true);
         RenderSystem.enableDepthTest();
         RenderSystem.depthFunc(GL11.GL_LEQUAL);
@@ -296,6 +298,10 @@ public final class Fx {
         RenderSystem.depthMask(false);
         RenderSystem.disableCull();
         RenderSystem.enableBlend();
+        // glows sit a hair off a block's face; without a pull toward the camera the copied depth
+        // wins on some faces (most at grazing angles), so a glowing block lit only some sides
+        RenderSystem.polygonOffset(-1f, -10f);
+        RenderSystem.enablePolygonOffset();
     }
 
     /** Draws a layer's quads with premultiplied colour (rgb * alpha). */
@@ -373,6 +379,7 @@ public final class Fx {
                                     new RenderStateShard.TextureStateShard(WHITE, false, false))
                             .setTransparencyState(RenderStateShard.ADDITIVE_TRANSPARENCY)
                             .setCullState(RenderStateShard.NO_CULL)
+                            .setLayeringState(RenderStateShard.POLYGON_OFFSET_LAYERING)
                             .setWriteMaskState(RenderStateShard.COLOR_WRITE)
                             .createCompositeState(false));
 
@@ -393,6 +400,7 @@ public final class Fx {
                             .setTextureState(
                                     new RenderStateShard.TextureStateShard(WHITE, false, false))
                             .setCullState(RenderStateShard.NO_CULL)
+                            .setLayeringState(RenderStateShard.POLYGON_OFFSET_LAYERING)
                             .setWriteMaskState(RenderStateShard.DEPTH_WRITE)
                             .createCompositeState(false));
 
