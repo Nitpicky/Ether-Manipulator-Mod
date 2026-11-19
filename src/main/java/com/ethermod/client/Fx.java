@@ -155,6 +155,8 @@ public final class Fx {
     private static final Layer GLOW = new Layer();
     /** Soft glow around a brighter core: adds like GLOW, but never writes depth with a pack. */
     private static final Layer SOFT = new Layer();
+    /** Glowing block faces: add like GLOW, but with a pack never write depth (they sit on a surface). */
+    private static final Layer FACE = new Layer();
 
     /**
      * Where additive effects record their quads. Positions go through the caller's matrix
@@ -171,6 +173,14 @@ public final class Fx {
      */
     public static VertexConsumer softGlow() {
         return ShaderCompat.inShadowPass() ? NONE : SOFT;
+    }
+
+    /**
+     * Like {@link #glow()}, for faces lying on a block: with a pack they write no depth, so the
+     * pack's depth effects can't fight the block under them (speckled artifacts).
+     */
+    public static VertexConsumer faceGlow() {
+        return ShaderCompat.inShadowPass() ? NONE : FACE;
     }
 
     /** Where the beam ribbons record their quads (brightest wins where they overlap). */
@@ -207,6 +217,7 @@ public final class Fx {
         BEAM.clear();
         GLOW.clear();
         SOFT.clear();
+        FACE.clear();
     }
 
     private static TextureTarget layer;
@@ -249,7 +260,7 @@ public final class Fx {
         }
         try {
             produce.run();
-            if (BEAM.quads() + GLOW.quads() + SOFT.quads() > 0) {
+            if (BEAM.quads() + GLOW.quads() + SOFT.quads() + FACE.quads() > 0) {
                 if (ShaderCompat.shadersActive()) drawInWorld();
                 else if (depthReady) drawLayered();
             }
@@ -257,6 +268,7 @@ public final class Fx {
             BEAM.clear();
             GLOW.clear();
         SOFT.clear();
+        FACE.clear();
             depthReady = false;
             if (afterLevel) {
                 mv.popMatrix();
@@ -283,10 +295,11 @@ public final class Fx {
             RenderSystem.blendEquation(GL14.GL_FUNC_ADD);
             composite(main, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         }
-        if (GLOW.quads() + SOFT.quads() > 0) {
+        if (GLOW.quads() + SOFT.quads() + FACE.quads() > 0) {
             // light: adds up
             begin();
             RenderSystem.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
+            draw(FACE);
             draw(SOFT);
             draw(GLOW);
             composite(main, GlStateManager.DestFactor.ONE);
@@ -520,6 +533,8 @@ public final class Fx {
     private static final RenderType SHADER_FX_BEAM = shaderType("ethermod_fx_beam", false, true);
     private static final RenderType SHADER_FX_SOFT =
             shaderType("ethermod_fx_soft", false, false, false); // strips: depth is safe again
+    private static final RenderType SHADER_FX_FACE =
+            shaderType("ethermod_fx_face", false, false, true); // colour only
     private static final RenderType SHADER_FX_DEPTH =
             VARIANT.equals("eyes2")
                             || VARIANT.equals("particle_max_d2")
@@ -564,8 +579,8 @@ public final class Fx {
         // packs take our light as emissive and bloom it: at full strength it blinds
         float gain = SHADER_GAIN;
         // the beam first (its own blend), then soft shells (no depth), the glows, an optional depth pass
-        RenderType[] types = {SHADER_FX_BEAM, SHADER_FX_SOFT, SHADER_FX, SHADER_FX_DEPTH};
-        Layer[][] layers = {{BEAM}, {SOFT}, {GLOW}, {BEAM, SOFT, GLOW}};
+        RenderType[] types = {SHADER_FX_FACE, SHADER_FX_BEAM, SHADER_FX_SOFT, SHADER_FX, SHADER_FX_DEPTH};
+        Layer[][] layers = {{FACE}, {BEAM}, {SOFT}, {GLOW}, {BEAM, SOFT, GLOW}};
         for (int t = 0; t < types.length; t++) {
             RenderType type = types[t];
             if (type == null) continue;
