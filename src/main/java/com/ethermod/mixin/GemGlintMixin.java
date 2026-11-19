@@ -36,16 +36,16 @@ public abstract class GemGlintMixin {
     @Inject(method = "getFoilBuffer", at = @At("HEAD"), cancellable = true)
     private static void mm$gemFoil(MultiBufferSource buffers, RenderType type, boolean isItem, boolean glint,
             CallbackInfoReturnable<VertexConsumer> cir) {
-        if (!glint) return;
-        var g = GemGlint.forCurrent(false);
+        if (!glint || !isItem) return;
+        var g = GemGlint.forCurrent();
         if (g != null) cir.setReturnValue(VertexMultiConsumer.create(buffers.getBuffer(g), buffers.getBuffer(type)));
     }
 
     @Inject(method = "getFoilBufferDirect", at = @At("HEAD"), cancellable = true)
     private static void mm$gemFoilDirect(MultiBufferSource buffers, RenderType type, boolean noEntity, boolean glint,
             CallbackInfoReturnable<VertexConsumer> cir) {
-        if (!glint) return;
-        var g = GemGlint.forCurrent(true);
+        if (!glint || !noEntity) return;
+        var g = GemGlint.forCurrent();
         if (g != null) cir.setReturnValue(VertexMultiConsumer.create(buffers.getBuffer(g), buffers.getBuffer(type)));
     }
 }

@@ -34,29 +34,29 @@ public final class GemGlint extends RenderType {
                     "atenite", 0xE9C820,
                     "oculite", 0x9520E9);
 
-    private static final Map<String, RenderType[]> TYPES = new HashMap<>();
+    private static final Map<String, RenderType> TYPES = new HashMap<>();
 
     /** The current item being drawn (set around ItemRenderer.render). */
     public static ItemStack current = ItemStack.EMPTY;
 
     /** The tinted glint for the item being drawn, or null for vanilla's. */
-    public static RenderType forCurrent(boolean direct) {
+    public static RenderType forCurrent() {
         if (current.isEmpty()) return null;
         var id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(current.getItem());
         if (!"ethermod".equals(id.getNamespace())) return null;
         Integer c = COLOURS.get(id.getPath());
         if (c == null) return null;
-        return TYPES.computeIfAbsent(id.getPath(), k -> new RenderType[] {make(k, c, false), make(k, c, true)})[direct ? 1 : 0];
+        return TYPES.computeIfAbsent(id.getPath(), k -> make(k, c));
     }
 
     private static float lift(int c, int shift) {
         return Math.min(1f, ((c >> shift) & 255) / 255f * 1.25f + .08f);
     }
 
-    private static RenderType make(String gem, int c, boolean direct) {
+    private static RenderType make(String gem, int c) {
         float r = lift(c, 16), g = lift(c, 8), b = lift(c, 0);
         var tint =
-                new RenderStateShard.TexturingStateShard(
+                new TexturingStateShard(
                         "ethermod_gem_tint",
                         () -> {
                             GLINT_TEXTURING.setupRenderState();
@@ -67,14 +67,14 @@ public final class GemGlint extends RenderType {
                             GLINT_TEXTURING.clearRenderState();
                         });
         return create(
-                "ethermod_gem_glint_" + gem + (direct ? "_direct" : ""),
+                "ethermod_gem_glint_" + gem,
                 DefaultVertexFormat.POSITION_TEX,
                 VertexFormat.Mode.QUADS,
                 1536,
                 false,
                 false,
                 CompositeState.builder()
-                        .setShaderState(direct ? RENDERTYPE_GLINT_DIRECT_SHADER : RENDERTYPE_GLINT_SHADER)
+                        .setShaderState(RENDERTYPE_GLINT_SHADER)
                         .setTextureState(new TextureStateShard(TEXTURE, true, false))
                         .setWriteMaskState(COLOR_WRITE)
                         .setCullState(NO_CULL)

@@ -48,7 +48,7 @@ jobs:
           cat runs/client/ethermod-autotest.txt || true
       - name: Upload report and logs
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: playtest-results
           path: |

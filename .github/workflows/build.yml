@@ -33,7 +33,7 @@ jobs:
         run: ./gradlew build
 
       - name: Upload mod jar
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: ether-manipulator-jar
           path: build/libs/*.jar
@@ -66,7 +66,7 @@ jobs:
           if grep -nE 'NoClassDefFoundError|RuntimeDistCleaner|attempted to load class .* for invalid dist|Exception in server tick loop' server.log; then tail -n 150 server.log; exit 1; fi
       - name: Upload server log
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: dedicated-server-log
           path: |
