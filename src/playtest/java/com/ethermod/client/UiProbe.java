@@ -563,6 +563,32 @@ public final class UiProbe {
                                                                 "hydraulic.glacier"),
                                                         1)
                                                 .equals("hydraulic.glacier"));
+                                {
+                                    // Stasis keeps the creature's own flags on it, so a save
+                                    // mid-stasis can't leave it floating forever
+                                    var held = net.minecraft.world.entity.EntityType.PIG.create(sl);
+                                    held.setPos(p.position().add(0, 0, 6));
+                                    sl.addFreshEntity(held);
+                                    RedesignEffects.stasis(held, 40);
+                                    boolean saved =
+                                            held.getPersistentData().contains("mm_stasis_restore");
+                                    RedesignEffects.thaw(held);
+                                    check(
+                                            "Stasis saves and restores the creature's own flags",
+                                            saved
+                                                    && !held.getPersistentData()
+                                                            .contains("mm_stasis_restore")
+                                                    && !held.isNoGravity()
+                                                    && !held.isNoAi());
+                                    held.discard();
+                                    var other =
+                                            net.neoforged.neoforge.common.util.FakePlayerFactory
+                                                    .getMinecraft(sl);
+                                    check(
+                                            "Other players are no enemies while hurt_players is off",
+                                            com.ethermod.config.ServerConfig.hurtPlayers()
+                                                    || !RedesignEffects.enemy(p, other));
+                                }
                                 var stone = p.blockPosition().offset(0, 1, 4);
                                 sl.setBlockAndUpdate(
                                         stone,

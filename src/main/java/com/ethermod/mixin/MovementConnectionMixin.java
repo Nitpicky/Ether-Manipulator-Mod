@@ -25,8 +25,7 @@ public abstract class MovementConnectionMixin {
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void mm$legitimateHover(CallbackInfo ci) {
-        var st = com.ethermod.manipulator.Manipulator.stack(player);
-        if (com.ethermod.trait.MovementPhysics.down(player) != net.minecraft.core.Direction.DOWN
-                || com.ethermod.trait.Traits.has(st, "gravitic.airwalk")) clientIsFloating = false;
+        // tether hangs, reels and zipline rides hold a player up longer than vanilla's 80 ticks
+        if (com.ethermod.trait.MobilityEffects.legitimatelyAirborne(player)) clientIsFloating = false;
     }
 }

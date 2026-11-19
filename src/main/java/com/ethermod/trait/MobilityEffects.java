@@ -37,6 +37,20 @@ public final class MobilityEffects {
         player.getPersistentData().putLong(SOFT_LANDING, player.level().getGameTime());
     }
 
+    /**
+     * True while a Module legitimately holds the player in the air: shifted gravity, Airwalk, a
+     * zipline ride, or a tether/reel/launch that marked a soft landing in the last 10 ticks (the
+     * taut rope marks every tick). Clears vanilla's "Flying is not enabled" hover counter.
+     */
+    public static boolean legitimatelyAirborne(ServerPlayer sp) {
+        if (MovementPhysics.down(sp) != net.minecraft.core.Direction.DOWN) return true;
+        if (Traits.has(Manipulator.stack(sp), "gravitic.airwalk")) return true;
+        if (Ziplines.isRiding(sp)) return true;
+        var d = sp.getPersistentData();
+        return d.contains(SOFT_LANDING)
+                && sp.level().getGameTime() - d.getLong(SOFT_LANDING) < 10;
+    }
+
     private static final String NO_FALL = "ethermod_no_fall";
     private static final String AIR_JUMP = "ethermod_air_jump";
 

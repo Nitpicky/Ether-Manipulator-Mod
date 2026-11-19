@@ -35,6 +35,10 @@ public final class RedesignEffects {
 
     @SubscribeEvent
     public static void loaded(net.neoforged.neoforge.event.entity.EntityJoinLevelEvent ev) {
+        // a creature saved mid-stasis (chunk unloaded, logout, Save and Quit) gets its flags back
+        if (ev.getEntity() instanceof LivingEntity held
+                && held.getPersistentData().contains(STASIS_RESTORE)
+                && !FROZEN.containsKey(held.getUUID())) restoreStasisFlags(held);
         if (ev.getEntity() instanceof LivingEntity e
                 && (e.getPersistentData().hasUUID("mm_burn_owner")
                         || e.getPersistentData().hasUUID("mm_summoner"))) track(e);
@@ -336,6 +340,15 @@ public final class RedesignEffects {
     }
 
     public static boolean enemy(ServerPlayer owner, LivingEntity e) {
+        // other players only when both the hurt_players setting and the server's PvP allow it
+        if (e instanceof Player && e != owner
+                && !(com.ethermod.config.ServerConfig.hurtPlayers() && owner.server.isPvpAllowed()))
+            return false;
+        return enemyIgnoringPvp(owner, e);
+    }
+
+    /** As {@link #enemy}, without the player rule: for callers with their own player setting. */
+    public static boolean enemyIgnoringPvp(ServerPlayer owner, LivingEntity e) {
         return !com.ethermod.beam.Mounts.own(owner, e)
                 && e.isAlive()
                 && !ally(owner, e)
@@ -389,6 +402,19 @@ public final class RedesignEffects {
 
     private static final Map<UUID, Frozen> FROZEN = new HashMap<>();
 
+    /**
+     * Saved on the creature while it is held: its own NoGravity/NoAI flags, so they come back even
+     * if it leaves the world before the stasis ends (FROZEN only lives in memory).
+     */
+    private static final String STASIS_RESTORE = "mm_stasis_restore";
+
+    private static void restoreStasisFlags(LivingEntity e) {
+        var r = e.getPersistentData().getCompound(STASIS_RESTORE);
+        e.setNoGravity(r.getBoolean("gravity"));
+        if (e instanceof Mob m) m.setNoAi(r.getBoolean("ai"));
+        e.getPersistentData().remove(STASIS_RESTORE);
+    }
+
     public static void stasis(LivingEntity e, int ticks) {
         if (!(e.level() instanceof ServerLevel sl)
                 || FROZEN.containsKey(e.getUUID())
@@ -403,6 +429,10 @@ public final class RedesignEffects {
                         e.isNoGravity(),
                         e instanceof Mob m && m.isNoAi()));
         e.getPersistentData().putDouble("mm_stasis_force", 0);
+        var restore = new net.minecraft.nbt.CompoundTag();
+        restore.putBoolean("gravity", e.isNoGravity());
+        restore.putBoolean("ai", e instanceof Mob m0 && m0.isNoAi());
+        e.getPersistentData().put(STASIS_RESTORE, restore);
         e.setDeltaMovement(Vec3.ZERO);
         e.setNoGravity(true);
         if (e instanceof Mob m) m.setNoAi(true);
@@ -442,6 +472,7 @@ public final class RedesignEffects {
         var v = launch(e, false);
         e.setNoGravity(f.noGravity());
         if (e instanceof Mob m) m.setNoAi(f.noAi());
+        d.remove(STASIS_RESTORE);
         e.setDeltaMovement(v);
         e.hurtMarked = true;
         d.putLong("mm_stasis_cooldown", now + 40);
@@ -702,6 +733,9 @@ public final class RedesignEffects {
 
     @SubscribeEvent
     public static void stop(net.neoforged.neoforge.event.server.ServerStoppingEvent ev) {
+        // put held creatures back before they are saved
+        for (var f : FROZEN.values())
+            if (f.level().getEntity(f.entity()) instanceof LivingEntity e) restoreStasisFlags(e);
         FROZEN.clear();
         ACTIVE.clear();
     }

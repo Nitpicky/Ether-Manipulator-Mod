@@ -70,7 +70,7 @@ public final class ServerConfig {
         PROTECTION = b.comment("Check claims and spawn protection before every block the Manipulator changes.")
                 .define("respect_protection", true);
         BLACKLIST = b.comment("Blocks the beam can't break and the Mass Driver can't lift. Block ids or #tags.")
-                .defineListAllowEmpty("block_blacklist", List.of("minecraft:spawner", "minecraft:trial_spawner", "minecraft:vault"), () -> "modid:block", ServerConfig::idOrTag);
+                .defineListAllowEmpty("block_blacklist", List.of("minecraft:spawner", "minecraft:trial_spawner", "minecraft:vault", "minecraft:budding_amethyst"), () -> "modid:block", ServerConfig::idOrTag);
         MASS_BE = b.comment("Whether the Mass Driver can lift blocks with contents (chests, furnaces, machines).")
                 .define("mass_driver_lifts_containers", false);
         MASS_MAX = b.comment("Most blocks the Mass Driver holds at once.").defineInRange("mass_driver_max_blocks", 32, 1, 256);

@@ -334,7 +334,7 @@ public final class WorldEffects {
     // Scheduled work (Echo, Obsidian Cast, Wave)
     // =========================================================================
 
-    private record Task(long at, Runnable run) {}
+    private record Task(long at, Runnable run, boolean runOnStop) {}
 
     private static final Map<ServerLevel, List<Task>> TASKS = new HashMap<>();
 
@@ -342,8 +342,16 @@ public final class WorldEffects {
      * Runs {@code r} on the server after {@code delay} ticks (dropped if the server stops first).
      */
     public static void schedule(ServerLevel level, int delay, Runnable r) {
+        schedule(level, delay, r, false);
+    }
+
+    /**
+     * As {@link #schedule(ServerLevel, int, Runnable)}; with {@code runOnStop} the task runs early
+     * when the server stops instead of being dropped (clean-ups that must not be skipped).
+     */
+    public static void schedule(ServerLevel level, int delay, Runnable r, boolean runOnStop) {
         TASKS.computeIfAbsent(level, k -> new ArrayList<>())
-                .add(new Task(level.getGameTime() + delay, r));
+                .add(new Task(level.getGameTime() + delay, r, runOnStop));
     }
 
     /**
@@ -495,8 +503,9 @@ public final class WorldEffects {
             while (it.hasNext()) {
                 Map.Entry<BlockPos, Long> e = it.next();
                 if (e.getValue() > now) continue;
-                if (level.isLoaded(e.getKey())
-                        && level.getBlockState(e.getKey()).is(Blocks.LIGHT)) {
+                // keep tracking it until its chunk is back, or the Light block stays forever
+                if (!level.isLoaded(e.getKey())) continue;
+                if (level.getBlockState(e.getKey()).is(Blocks.LIGHT)) {
                     level.removeBlock(e.getKey(), false);
                 }
                 PendingReverts.remove(level, e.getKey());
@@ -647,6 +656,21 @@ public final class WorldEffects {
                                         }));
         LIGHTS.clear();
         WELLS.clear();
+        // clean-ups such as shot fluids drying up would otherwise leave permanent blocks
+        TASKS.values()
+                .forEach(
+                        list ->
+                                list.stream()
+                                        .filter(Task::runOnStop)
+                                        .forEach(
+                                                t -> {
+                                                    try {
+                                                        t.run().run();
+                                                    } catch (RuntimeException e) {
+                                                        com.ethermod.EtherMod.LOGGER.warn(
+                                                                "Clean-up task failed on stop", e);
+                                                    }
+                                                }));
         TASKS.clear();
         FIRES.clear();
         THROWN.clear();

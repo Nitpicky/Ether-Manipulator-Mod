@@ -136,7 +136,8 @@ final class OrbFluids {
                     if (sl.hasChunkAt(at) && f.isSource() && f.getType().isSame(fluid)
                             && sl.getBlockState(at).getBlock() instanceof net.minecraft.world.level.block.LiquidBlock)
                         sl.setBlockAndUpdate(at, Blocks.AIR.defaultBlockState());
-                });
+                },
+                true);
     }
 
     /** Payload: extra sources around the first, in a square of radius {@code r} (air only). */

@@ -161,7 +161,7 @@ public final class GustGrenade {
                             e ->
                                     e instanceof LivingEntity le
                                             && !e.isSpectator()
-                                            && RedesignEffects.enemy(g.owner, le)
+                                            && RedesignEffects.enemyIgnoringPvp(g.owner, le)
                                             && affects(g.owner, le));
             if (mob != null) {
                 g.stuck = mob.getEntity();
@@ -293,7 +293,7 @@ public final class GustGrenade {
                 e.setDeltaMovement(e.getDeltaMovement().add(push));
                 e.hurtMarked = true;
             } else if (e instanceof LivingEntity le) {
-                if (!RedesignEffects.enemy(g.owner, le) || !affects(g.owner, le)) continue;
+                if (!RedesignEffects.enemyIgnoringPvp(g.owner, le) || !affects(g.owner, le)) continue;
                 float dmg = DAMAGE * (float) (0.5 + 0.5 * near);
                 if (RedesignEffects.inStasis(le)) {
                     // the burst joins the stored push (aimed by the last hit); the hit lands while

@@ -35,7 +35,16 @@ public class ClientInputHandler {
     @SubscribeEvent
     public static void onClientTick(ClientTickEvent.Post event) {
         Minecraft mc = Minecraft.getInstance();
-        if (mc.player == null || mc.level == null || mc.screen != null) return;
+        if (mc.player == null || mc.level == null) return;
+        if (mc.screen != null) {
+            // Opening chat, the inventory or the K screen mid-press releases the left click:
+            // the server has no timeout, so it would keep mining and spending Ether until close.
+            if (wasBeamActive) {
+                endLeftClick(false);
+                lmbBlocked = true;
+            }
+            return;
+        }
 
         ItemStack held = mc.player.getMainHandItem();
         if (!(held.getItem() instanceof EtherManipulatorItem manip)) {
