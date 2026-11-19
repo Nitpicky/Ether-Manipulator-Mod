@@ -184,9 +184,11 @@ public final class Fx {
 
     /** The stage at which the world's effects are produced and everything is drawn. */
     public static RenderLevelStageEvent.Stage drawStage() {
-        return ShaderCompat.shadersActive()
-                ? RenderLevelStageEvent.Stage.AFTER_WEATHER
-                : RenderLevelStageEvent.Stage.AFTER_LEVEL;
+        if (!ShaderCompat.shadersActive()) return RenderLevelStageEvent.Stage.AFTER_LEVEL;
+        // drawn with the particles (the pack places them right, before its clouds), or late
+        return PARTICLE_STAGE
+                ? RenderLevelStageEvent.Stage.AFTER_PARTICLES
+                : RenderLevelStageEvent.Stage.AFTER_WEATHER;
     }
 
     /** Start of a world frame: forget anything a skipped frame left behind. */
@@ -369,14 +371,23 @@ public final class Fx {
      *   <li>{@code eyes}: eyes program (Enderman eyes), added light, writes depth
      *   <li>{@code eyes2}: eyes program colour only, then a depth-only pass
      *   <li>{@code emissive}: glowing-entity program, added light, writes depth
+     *   <li>{@code particle}: the particle program in the particle stage (the beam's End Rod
+     *       sparks look right with packs), added light, writes depth
+     *   <li>{@code <setup>_p}: that setup, drawn in the particle stage
      * </ul>
      */
     static final String VARIANT = System.getProperty("ethermod.fxVariant", "eyes");
 
+    /** {@code particle}, or any setup ending in {@code _p}: drawn in the particle stage. */
+    static final boolean PARTICLE_STAGE = VARIANT.equals("particle") || VARIANT.endsWith("_p");
+
     private static RenderType shaderType(String name, boolean depthOnly) {
         boolean beacon = VARIANT.startsWith("beacon");
+        boolean particle = VARIANT.equals("particle");
         RenderStateShard.ShaderStateShard shader =
-                beacon
+                particle
+                        ? new RenderStateShard.ShaderStateShard(GameRenderer::getParticleShader)
+                        : beacon
                         ? RenderStateShard.RENDERTYPE_BEACON_BEAM_SHADER
                         : VARIANT.equals("emissive")
                                 ? RenderStateShard.RENDERTYPE_ENTITY_TRANSLUCENT_EMISSIVE_SHADER
@@ -387,7 +398,7 @@ public final class Fx {
                         .setTextureState(new RenderStateShard.TextureStateShard(WHITE, false, false))
                         .setCullState(RenderStateShard.NO_CULL)
                         .setLayeringState(RenderStateShard.POLYGON_OFFSET_LAYERING);
-        if (VARIANT.equals("emissive"))
+        if (VARIANT.equals("emissive") || particle)
             b.setLightmapState(RenderStateShard.LIGHTMAP).setOverlayState(RenderStateShard.OVERLAY);
         if (depthOnly) {
             b.setWriteMaskState(RenderStateShard.DEPTH_WRITE);
@@ -403,7 +414,9 @@ public final class Fx {
         }
         return RenderType.create(
                 name,
-                beacon ? DefaultVertexFormat.BLOCK : DefaultVertexFormat.NEW_ENTITY,
+                particle
+                        ? DefaultVertexFormat.PARTICLE
+                        : beacon ? DefaultVertexFormat.BLOCK : DefaultVertexFormat.NEW_ENTITY,
                 VertexFormat.Mode.QUADS,
                 1536,
                 false,
@@ -417,7 +430,7 @@ public final class Fx {
 
     private static void drawInWorld() {
         MultiBufferSource.BufferSource buf = Minecraft.getInstance().renderBuffers().bufferSource();
-        boolean beacon = VARIANT.startsWith("beacon");
+        boolean beacon = VARIANT.startsWith("beacon"), particle = VARIANT.equals("particle");
         boolean premultiply = !VARIANT.equals("beacon"); // added light ignores alpha
         for (RenderType type : new RenderType[] {SHADER_FX, SHADER_FX_DEPTH}) {
             if (type == null) continue;
@@ -434,6 +447,10 @@ public final class Fx {
                                     (c & 255) * k / 255,
                                     premultiply ? 255 : a)
                             .setUv(0.5f, 0.5f);
+                    if (particle) {
+                        vc.setLight(LightTexture.FULL_BRIGHT); // particles carry no normal
+                        continue;
+                    }
                     if (!beacon) vc.setOverlay(OverlayTexture.NO_OVERLAY);
                     vc.setLight(LightTexture.FULL_BRIGHT).setNormal(0f, 1f, 0f);
                 }
