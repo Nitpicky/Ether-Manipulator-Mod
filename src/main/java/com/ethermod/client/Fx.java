@@ -16,9 +16,11 @@ import com.mojang.blaze3d.vertex.VertexSorting;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
@@ -351,24 +353,27 @@ public final class Fx {
 
     /**
      * Packs run the vanilla lightning type through a program that leaves it out or smears it like
-     * a cloud, so with a pack the effects use the beacon-beam program instead (every pack shows it
-     * as a glow): a plain white texture with the effects' own colours, both sides, writing depth.
+     * a cloud, and the beacon-beam program lights it like a solid (washed-out white, dithered
+     * halos). With a pack the effects use the eyes program instead (spider and Enderman eyes):
+     * every pack draws it as pure emissive light, added on top, keeping its colour. Additive blending
+     * ignores alpha, so colours are premultiplied when written; no depth write, so glows overlap
+     * softly instead of cutting into each other.
      */
     private static final RenderType SHADER_FX =
             RenderType.create(
                     "ethermod_fx",
-                    DefaultVertexFormat.BLOCK,
+                    DefaultVertexFormat.NEW_ENTITY,
                     VertexFormat.Mode.QUADS,
                     1536,
                     false,
                     true,
                     RenderType.CompositeState.builder()
-                            .setShaderState(RenderStateShard.RENDERTYPE_BEACON_BEAM_SHADER)
+                            .setShaderState(RenderStateShard.RENDERTYPE_EYES_SHADER)
                             .setTextureState(
                                     new RenderStateShard.TextureStateShard(WHITE, false, false))
-                            .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
+                            .setTransparencyState(RenderStateShard.ADDITIVE_TRANSPARENCY)
                             .setCullState(RenderStateShard.NO_CULL)
-                            .setWriteMaskState(RenderStateShard.COLOR_DEPTH_WRITE)
+                            .setWriteMaskState(RenderStateShard.COLOR_WRITE)
                             .createCompositeState(false));
 
     private static void drawInWorld() {
@@ -378,10 +383,16 @@ public final class Fx {
             int verts = l.quads() * 4;
             for (int i = 0; i < verts; i++) {
                 int c = l.col[i];
+                int a = c >>> 24;
                 vc.addVertex(l.pos[3 * i], l.pos[3 * i + 1], l.pos[3 * i + 2])
-                        .setColor(c >> 16 & 255, c >> 8 & 255, c & 255, c >>> 24)
+                        .setColor(
+                                (c >> 16 & 255) * a / 255,
+                                (c >> 8 & 255) * a / 255,
+                                (c & 255) * a / 255,
+                                255)
                         .setUv(0.5f, 0.5f)
-                        .setUv2(240, 240)
+                        .setOverlay(OverlayTexture.NO_OVERLAY)
+                        .setLight(LightTexture.FULL_BRIGHT)
                         .setNormal(0f, 1f, 0f);
             }
         }
