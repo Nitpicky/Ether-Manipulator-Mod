@@ -1,0 +1,88 @@
+shot 01_idle_first_person
+shot 02_mining_first_person
+shot 03_mining_later
+PASS mining: stone ahead broke after 12 ticks of beam
+PASS crystal after mining: e99f20 (want e99f20)
+PASS drops: mined stone gave cobblestone (empty hotbar slot selected: false)
+shot 04_beam_side_view
+shot 05_beam_side_view_later
+shot 06_combat_level1
+shot 07_combat_ramped
+shot 08_orb_charge_phase1
+shot 09_orb_charge_full
+shot 10_orb_fired
+PASS crystal after an Energy orb: 20c1e9 (want 20c1e9)
+shot 11_orb_charge_side_view
+shot 12_orb_fired_side_view
+shot 13_trait_screen
+shot 13b_colours_tab
+shot 13c_loadouts_tab
+shot 15_custom_colour_sweep
+PASS colour: orbs follow the mode (20c1e9), the beam is Plasmic orange (true)
+shot 16_custom_colour_model
+shot 17_sneak_beam
+PASS sneak beam, no water near: grass ahead is now block.minecraft.dirt_path (beamActive=true, sneaking=true, hit=net.minecraft.world.phys.BlockHitResult@7d9c448f)
+PASS sneak beam, water near: grass ahead is now block.minecraft.farmland
+PASS swing: a sword still swings with the Manipulator put away
+shot 14_sword_swing
+shot 18_beam_water_front
+shot 19_beam_water_first_person
+shot 20a_frost_charging
+PASS frost: charged shard laid an ice bridge over the trench (10/10 blocks)
+shot 20_frost_bridge
+PASS water: a tap placed a water source like a bucket
+shot 21_water_tap
+PASS colour: crystal switched to the Lava colour (ff7020)
+shot 22_lava_mode_crystal
+shot 23a_growth_charging
+shot 23_pollen_cloud
+shot 24_light_bounce
+shot 25_tether_rope
+PASS tether: the hook reeled the player up (2.1 blocks)
+shot 26_gust_grenade_latched
+shot 26b_gust_grenade_burst
+PASS gust: left click threw a grenade that burst (bursts 1, pig hurt true)
+tether: aiming at the pig 12.0 blocks out, pitch 5.6
+tether: aiming at the pig 12.0 blocks out, pitch 5.6
+tether pig v=0.60 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
+tether pig at 10.8
+tether pig v=0.60 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
+tether pig at 8.4
+shot 27_tether_pull
+tether pig v=0.60 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
+tether pig at 6.1
+tether pig v=0.59 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
+tether pig at 3.3
+tether pig v=0.48 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=false full=false
+tether pig at 1.7
+PASS tether: a right click tap reeled the hooked pig from 12 to 0.7 blocks (pig pulled 12.2)
+shot 28_light_beacon
+PASS light: the Beacon lights where it lands (1 light blocks)
+PASS mining is Beam-only: 20 ticks of left click in Light mode left the stone
+PASS light: the Beacon's light goes with it (0 left [], 0 were there before)
+shot 29_harvest
+PASS growth: left click harvested 9 of 9 ripe wheat
+PASS mass driver: left click lifted the stone
+shot 30_mass_throw
+PASS mass driver: right click threw the carried stone
+PASS gems: chests/shipwreck_treasure gave sirenite 92/400, other gems 0
+PASS gems: chests/underwater_ruin_big gave sirenite 151/400, other gems 0
+PASS gems: chests/ruined_portal gave gehennite 400/400, other gems 0
+PASS gems: chests/nether_bridge gave gehennite 53/400, other gems 0
+PASS gems: chests/abandoned_mineshaft gave stratite 35/400, other gems 0
+PASS gems: chests/trial_chambers/reward gave zephyrite 65/400, other gems 0
+PASS gems: chests/jungle_temple gave quetzalite 108/400, other gems 0
+PASS gems: chests/desert_pyramid gave atenite 42/400, other gems 0
+PASS gems: chests/stronghold_library gave oculite 39/400, other gems 0
+PASS gems: chests/end_city_treasure gave oculite 249/400, other gems 0
+PASS gems: buried treasure held exactly one gem in 100/100
+PASS advancements: 22/22 in the Manipulator tab
+PASS advancements: summoning earns the root
+PASS advancements: only holding a Sirenite earns nothing yet
+PASS gems: using a Quetzalite unlocks the Botanic Module (before false)
+PASS advancements: unlocking the Botanic Module earns Feathered Serpent only
+PASS gems: the Module items are gone
+PASS recipes: upgrade_iron is gem between two blocks, ingot fins top right and bottom left
+PASS recipes: upgrade_diamond is gem between two blocks, ingot fins top right and bottom left
+PASS gems: placed desert_pyramid, 4 chests, 2 with atenite: 0,0,-2+gem -2,0,0+gem 2,0,0 0,0,2
+PASS gems: placed jungle_pyramid, 4 chests, 1 with quetzalite: 1,-2,-10 3,-3,-5 10,-3,-4+gem+sticky 3,-2,-4
