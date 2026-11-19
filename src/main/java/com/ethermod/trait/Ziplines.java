@@ -74,15 +74,13 @@ public final class Ziplines {
         double d = a.position().distanceTo(hook.position());
         if (d < 3 || d > 64) return;
         PENDING.remove(sp.getUUID());
-        int rank = Traits.rank(Manipulator.stack(sp), "gravitic.zipline");
-        int life = rank >= 2 ? 12000 : 2400;
+        int life = 2400;
         hook.makeAnchor(life, a.getId());
         a.linkAnchor(hook.getId(), life);
         Deque<int[]> list = ROPES.computeIfAbsent(sp.getUUID(), k -> new ArrayDeque<>());
         list.removeIf(pair -> !(sl.getEntity(pair[0]) instanceof BeamBallEntity e) || !e.isAlive());
         list.addLast(new int[] {a.getId(), hook.getId()});
-        int max = rank >= 2 ? 3 : 1;
-        while (list.size() > max) {
+        while (list.size() > 1) {
             int[] o = list.removeFirst();
             for (int id : o) if (sl.getEntity(id) instanceof BeamBallEntity e) e.discard();
         }

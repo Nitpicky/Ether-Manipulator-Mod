@@ -186,10 +186,6 @@ public final class BlockGlow {
         List<BlockPos> out = new ArrayList<>();
         if (!minable(mc, center)) return out;
         out.add(center);
-        Vec3 look = player.getLookAngle();
-        for (BlockPos p : Traits.areaBore(held, center, look)) {
-            if (minable(mc, p)) out.add(p);
-        }
         return out;
     }
 

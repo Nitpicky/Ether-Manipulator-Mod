@@ -214,7 +214,6 @@ public final class BeamRenderer {
                         color,
                         hitSomething);
                 drawArcs(m, camPos, player, held, hit, level, time, color);
-                drawRefraction(m, camPos, player, held, level, time, color, extend);
             }
             spawnImpactFx(mc.level, hit, localTip, nozzle, color, level, dt, hitSomething, -1);
             Vec3 toW = localTip;
@@ -284,7 +283,6 @@ public final class BeamRenderer {
                     color,
                     hitSomething);
             drawArcs(m, camPos, p, held, hit, lvl, time, color);
-            drawRefraction(m, camPos, p, held, lvl, time, color, Math.min(1f, heldTicks / 2.5f));
             spawnImpactFx(level, hit, toW, fromW, color, lvl, dt, hitSomething, p.getId());
         }
     }
@@ -351,49 +349,6 @@ public final class BeamRenderer {
                     time + i * 7,
                     color,
                     true);
-        }
-    }
-
-    /** Photonic: Refraction, extra rays fanning out behind the glass the beam went through. */
-    private static void drawRefraction(
-            Matrix4f m,
-            Vec3 camPos,
-            Player player,
-            ItemStack held,
-            int level,
-            float time,
-            float[] color,
-            float extend) {
-        Vec3 from = BeamTrace.lastRefract;
-        if (from == null) return;
-        Vec3 look = player.getLookAngle();
-        double range = com.ethermod.trait.Traits.beamRange(held);
-        int k = 0;
-        for (Vec3 dir :
-                BeamCastHelper.refractRays(
-                        // LEFTOVER(trait): photonic.refraction can no longer be picked
-                        look, com.ethermod.trait.Traits.rank(held, "photonic.refraction"))) {
-            var hit =
-                    player.level()
-                            .clip(
-                                    new net.minecraft.world.level.ClipContext(
-                                            from,
-                                            from.add(dir.scale(range)),
-                                            net.minecraft.world.level.ClipContext.Block.COLLIDER,
-                                            net.minecraft.world.level.ClipContext.Fluid.NONE,
-                                            player));
-            drawBeam(
-                    -(player.getId() * 32 + 16 + k),
-                    m,
-                    camPos,
-                    from,
-                    dir,
-                    hit.getLocation(),
-                    extend,
-                    Math.max(1, level - 1),
-                    time + 11 * ++k,
-                    color,
-                    hit.getType() != HitResult.Type.MISS);
         }
     }
 

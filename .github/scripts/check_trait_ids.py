@@ -17,20 +17,7 @@ MODULES = {"plasmic", "kinetic", "hydraulic", "pyrotechnic", "tectonic",
            "pneumatic", "botanic", "photonic", "gravitic"}
 
 # Retired traits still referenced inside live formulas (delete after release).
-KNOWN_LEFTOVER_IDS = {
-    "botanic.gentle_hands", "botanic.harvest_moon", "botanic.lingering_bloom",
-    "botanic.rewild", "botanic.sower", "botanic.verdant_pulse",
-    "gravitic.displacement", "gravitic.hammer_throw", "gravitic.recall",
-    "gravitic.weightless",
-    "hydraulic.permafrost", "hydraulic.quench", "hydraulic.wave",
-    "kinetic.echo", "kinetic.gunner", "kinetic.orbit", "kinetic.overcharge",
-    "kinetic.payload", "kinetic.piercing",
-    "photonic.laser", "photonic.refraction", "photonic.sunfire",
-    "plasmic.ionize",
-    "pneumatic.convergence",
-    "pyrotechnic.incendiary", "pyrotechnic.obsidian_cast",
-    "tectonic.area_bore", "tectonic.precision",
-}
+KNOWN_LEFTOVER_IDS: set = set()
 
 
 def read(path):

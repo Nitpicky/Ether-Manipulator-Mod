@@ -129,108 +129,8 @@ public final class OrbTether {
                             && !b.hooked
                                     .getType()
                                     .is(net.neoforged.neoforge.common.Tags.EntityTypes.BOSSES);
-            // Displacement: sneak to swap places with it
-            // LEFTOVER(trait): gravitic.displacement can no longer be picked
-            if (mob && b.has("gravitic.displacement") && sp.isShiftKeyDown()) {
-                Vec3 me = sp.position(), it = b.hooked.position();
-                b.hooked.teleportTo(me.x, me.y, me.z);
-                sp.teleportTo(it.x, it.y, it.z);
-                sp.resetFallDistance();
-                sl.playSound(
-                        null,
-                        me.x,
-                        me.y,
-                        me.z,
-                        com.ethermod.sound.ModSounds.WORLD_ENDERMAN_TELEPORT,
-                        SoundSource.PLAYERS,
-                        0.8f,
-                        1.3f);
-                sl.sendParticles(
-                        ParticleTypes.REVERSE_PORTAL,
-                        me.x,
-                        me.y + 1,
-                        me.z,
-                        30,
-                        0.3,
-                        0.6,
-                        0.3,
-                        0.05);
-                sl.sendParticles(
-                        ParticleTypes.REVERSE_PORTAL,
-                        it.x,
-                        it.y + 1,
-                        it.z,
-                        30,
-                        0.3,
-                        0.6,
-                        0.3,
-                        0.05);
-                b.discard();
-                return false;
-            }
-            // Hammer Throw: whirl it around you
-            // LEFTOVER(trait): gravitic.hammer_throw can no longer be picked
-            if (mob && b.has("gravitic.hammer_throw")) {
-                b.whirling = true;
-                double ang = b.lifeTicks++ * 0.45;
-                double r = 2.6;
-                Vec3 c = sp.position().add(0, 1.0, 0);
-                Vec3 want = c.add(Math.cos(ang) * r, 0.2, Math.sin(ang) * r);
-                b.hooked.setDeltaMovement(want.subtract(b.hooked.position()).scale(0.6));
-                b.hooked.hurtMarked = true;
-                b.hooked.resetFallDistance();
-                if (b.hooked instanceof net.minecraft.world.entity.Mob m) m.getNavigation().stop();
-                b.setPos(hookPoint(b));
-                if (b.lifeTicks % 8 == 0)
-                    sl.playSound(
-                            null,
-                            sp.getX(),
-                            sp.getY(),
-                            sp.getZ(),
-                            com.ethermod.sound.ModSounds.WORLD_BREEZE_IDLE_GROUND,
-                            SoundSource.PLAYERS,
-                            0.5f,
-                            1.6f);
-                return false;
-            }
             b.setPos(hookPoint(b));
             Vec3 d = b.position().subtract(hands);
-            boolean light =
-                    false
-                            // LEFTOVER(trait): gravitic.recall can no longer be picked
-                            && b.has("gravitic.recall")
-                            && (!(b.hooked instanceof LivingEntity)
-                                    || b.hooked.getBbWidth() * b.hooked.getBbHeight()
-                                            <= sp.getBbWidth() * sp.getBbHeight());
-            if (light) {
-                if (d.length() > 1.5) {
-                    b.hooked.setDeltaMovement(d.normalize().scale(-0.55).add(0, 0.08, 0));
-                    b.hooked.hurtMarked = true;
-                } else if (!(b.hooked instanceof LivingEntity)) {
-                    b.hooked.teleportTo(sp.getX(), sp.getY() + 0.5, sp.getZ());
-                    if (b.hooked instanceof ItemEntity ie) ie.setNoPickUpDelay();
-                }
-                // Recall II: everything loose near the hook comes along
-                // LEFTOVER(trait): gravitic.recall can no longer be picked
-                if (b.rank("gravitic.recall") >= 2) {
-                    for (Entity e :
-                            sl.getEntities(
-                                    b,
-                                    b.getBoundingBox().inflate(2),
-                                    e ->
-                                            e != b.hooked
-                                                    && (e instanceof ItemEntity
-                                                            || e instanceof ExperienceOrb))) {
-                        e.setDeltaMovement(
-                                hands.subtract(e.position())
-                                        .normalize()
-                                        .scale(0.55)
-                                        .add(0, 0.08, 0));
-                        e.hurtMarked = true;
-                    }
-                }
-                return false;
-            }
             if (!b.reeling) return false;
             if (mob || b.hooked instanceof ItemEntity || b.hooked instanceof ExperienceOrb) {
                 // the hooked thing comes to you; a tap brings it all the way
@@ -510,17 +410,5 @@ public final class OrbTether {
         b.lifeTicks = 0;
         b.hookAt = b.level().getGameTime() + HOOK_DELAY;
         b.hookPitch = 1.5f;
-        // Weightless: a hooked mob floats helplessly
-        // LEFTOVER(trait): gravitic.weightless can no longer be picked
-        int weightless = b.rank("gravitic.weightless");
-        if (weightless > 0
-                && e instanceof LivingEntity le
-                && !(e instanceof net.minecraft.world.entity.player.Player)) {
-            le.addEffect(
-                    new net.minecraft.world.effect.MobEffectInstance(
-                            net.minecraft.world.effect.MobEffects.LEVITATION,
-                            weightless >= 2 ? 100 : 60,
-                            0));
-        }
     }
 }

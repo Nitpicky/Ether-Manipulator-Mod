@@ -77,7 +77,6 @@ public final class TraitEffects {
             return;
         ItemStack tool = player.getMainHandItem();
         BlockState state = event.getState();
-        if (silkContainer(event, player, tool)) return;
         if (veinMining) return;
         if (!state.is(Tags.Blocks.ORES) || !Traits.has(tool, "tectonic.vein_miner")) return;
         if (!(event.getLevel() instanceof ServerLevel level)) return;
@@ -116,47 +115,5 @@ public final class TraitEffects {
                                 veinMining = false;
                             }
                         });
-    }
-
-    // =========================================================================
-    // Silk Touch II: containers keep their contents
-    // =========================================================================
-
-    /**
-     * Silk Touch II: a chest, barrel (or any container block) comes out as an item that still holds
-     * what was inside, placed back as it was. Shulker boxes already do this in vanilla.
-     */
-    private static boolean silkContainer(
-            BlockEvent.BreakEvent event, ServerPlayer player, ItemStack tool) {
-        if (Traits.rank(tool, "tectonic.silk_touch") < 2
-                || !(event.getLevel() instanceof ServerLevel level)) return false;
-        BlockPos pos = event.getPos();
-        var be = level.getBlockEntity(pos);
-        if (!(be
-                        instanceof
-                        net.minecraft.world.level.block.entity.BaseContainerBlockEntity container)
-                || be instanceof net.minecraft.world.level.block.entity.ShulkerBoxBlockEntity)
-            return false;
-        if (container.isEmpty()) return false;
-        List<ItemStack> items = new ArrayList<>();
-        for (int i = 0; i < container.getContainerSize(); i++)
-            items.add(container.getItem(i).copy());
-        ItemStack drop = new ItemStack(event.getState().getBlock().asItem());
-        if (drop.isEmpty()) return false;
-        drop.set(
-                net.minecraft.core.component.DataComponents.CONTAINER,
-                net.minecraft.world.item.component.ItemContainerContents.fromItems(items));
-        if (container.hasCustomName())
-            drop.set(
-                    net.minecraft.core.component.DataComponents.CUSTOM_NAME,
-                    container.getCustomName());
-        container.clearContent();
-        event.setCanceled(true);
-        level.removeBlock(pos, false);
-        level.levelEvent(2001, pos, Block.getId(event.getState()));
-        if (Traits.hasCommon(tool, Traits.TECTONIC, 0) && player.getInventory().add(drop))
-            return true;
-        Block.popResource(level, pos, drop);
-        return true;
     }
 }

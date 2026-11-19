@@ -49,7 +49,6 @@ public final class Traits {
 
     /** A choice trait ("tectonic.fortune") is picked in an open tier of an equipped line. */
     public static boolean has(ItemStack stack, String traitId) {
-        if (traitId.equals("plasmic.sustain")) return hasLine(stack, PLASMIC);
         if (traitId.equals("hydraulic.helmsman")) return hasLine(stack, HYDRAULIC);
         if (traitId.equals("pyrotechnic.kiln")) return hasLine(stack, PYROTECHNIC);
         if (traitId.equals("photonic.prism")) return hasLine(stack, PHOTONIC);
@@ -67,30 +66,16 @@ public final class Traits {
     }
 
     /**
-     * How strong a picked choice is: 0 if not picked; otherwise 1, plus one for every stage reached
-     * after its tier opened. Calibrated picks reach rank 3 at Overclocked, Augmented picks rank 2,
-     * Overclocked picks rank 1.
+     * How strong a picked choice is: 0 if not picked, otherwise 1. Ranks no longer grow with the
+     * stage (see {@link #rankOfTier}), so this is {@code has(...) ? 1 : 0}.
      */
     public static int rank(ItemStack stack, String traitId) {
-        if (!has(stack, traitId)) return 0;
-        if (traitId.equals("plasmic.sustain") || traitId.equals("hydraulic.helmsman") || traitId.equals("pyrotechnic.kiln") || traitId.equals("photonic.prism") || traitId.equals("gravitic.freeflight") || traitId.equals("pyrotechnic.phoenix") || traitId.equals("gravitic.gravity_skate") || traitId.equals("tectonic.ore_sense")) return 1;
-        for (int slot = 0; slot < TraitBuild.MAX_SLOTS; slot++) {
-            for (int tier = 0; tier < TraitLine.TIERS; tier++) {
-                if (traitId.equals(TraitBuild.pick(stack, slot, tier)))
-                    return rankOfTier(stack, tier);
-            }
-        }
-        return 0;
+        return has(stack, traitId) ? 1 : 0;
     }
 
-    /**
-     * The rank a pick in this tier has at the stack's stage (see {@link #rank}).
-     *
-     * <p>LEFTOVER(rank): Mk ranks are retired, so this is always 1 and every {@code rank(...) >= 2}
-     * branch in the code is unreachable. Simplify those after release.
-     */
+    /** The rank a pick in this tier has at the stack's stage: always 1 (traits no longer rank up). */
     public static int rankOfTier(ItemStack stack, int tier) {
-        return 1; // Redesign: traits no longer rank up with MM Tier.
+        return 1;
     }
 
     // ---- Derived numbers ----------------------------------------------------------
@@ -114,58 +99,6 @@ public final class Traits {
     /** Mining speed: +2 with the Excavation badge. */
     public static float miningSpeedBonus(ItemStack stack) {
         return hasLine(stack, TECTONIC) ? 2.0f : 0f;
-    }
-
-    /**
-     * Multiplier on mining speed for this block: Precision speeds up soft blocks (x1.5, x2, then
-     * almost instant).
-     */
-    public static float miningSpeedMultiplier(
-            ItemStack stack, net.minecraft.world.level.block.state.BlockState state) {
-        // LEFTOVER(trait): tectonic.precision can no longer be picked
-        int precision = rank(stack, "tectonic.precision");
-        if (precision > 0 && isSoft(state))
-            return precision >= 3 ? 12f : precision == 2 ? 2f : 1.5f;
-        return 1f;
-    }
-
-    /** Dirt, sand, gravel, leaves and the like. */
-    public static boolean isSoft(net.minecraft.world.level.block.state.BlockState state) {
-        return state.is(net.minecraft.tags.BlockTags.MINEABLE_WITH_SHOVEL)
-                || state.is(net.minecraft.tags.BlockTags.LEAVES)
-                || state.is(net.minecraft.tags.BlockTags.WOOL);
-    }
-
-    /**
-     * Area Bore's extra blocks around {@code center}, by rank: a 3x3 face, one, two, then three
-     * blocks deep. The centre itself is not included.
-     */
-    public static java.util.List<net.minecraft.core.BlockPos> areaBore(
-            ItemStack stack,
-            net.minecraft.core.BlockPos center,
-            net.minecraft.world.phys.Vec3 look) {
-        java.util.List<net.minecraft.core.BlockPos> out = new java.util.ArrayList<>();
-        // LEFTOVER(trait): tectonic.area_bore can no longer be picked
-        int rank = rank(stack, "tectonic.area_bore");
-        if (rank <= 0) return out;
-        int r = 1;
-        int depth = rank;
-        net.minecraft.core.Direction dir =
-                net.minecraft.core.Direction.getNearest(look.x, look.y, look.z);
-        for (int d = 0; d < depth; d++) {
-            for (int u = -r; u <= r; u++)
-                for (int v = -r; v <= r; v++) {
-                    if (d == 0 && u == 0 && v == 0) continue;
-                    net.minecraft.core.BlockPos p =
-                            switch (dir.getAxis()) {
-                                case X -> center.offset(0, u, v);
-                                case Y -> center.offset(u, 0, v);
-                                case Z -> center.offset(u, v, 0);
-                            };
-                    out.add(p.relative(dir, d));
-                }
-        }
-        return out;
     }
 
     /** Combat badge: +beam damage (base value before the beam's per-hit scaling). */

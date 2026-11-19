@@ -25,8 +25,7 @@ public final class ProjectileEffects {
         // Gale Force widens the blast; charge widens it too, but barely adds push, so a full
         // charge can't fling (and wall-slam) anything to death from safety
         boolean gale = Traits.has(st, "pneumatic.gale_force");
-        // LEFTOVER(trait): pneumatic.convergence can no longer be picked
-        double radius = Traits.has(st, "pneumatic.convergence") ? 3 + phase * 2 : gale ? 3 + phase * 1.5 : 2 + phase;
+        double radius = gale ? 3 + phase * 1.5 : 2 + phase;
         double force = .6 + phase * .1;
         for (var e :
                 sl.getEntitiesOfClass(

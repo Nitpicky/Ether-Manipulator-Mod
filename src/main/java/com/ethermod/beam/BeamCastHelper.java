@@ -133,40 +133,7 @@ public final class BeamCastHelper {
         boolean strike = state.hitCooldown == 0;
 
         // --- Foliage-aware block ray-cast ------------------------------------
-        lastRefract = null;
         Vec3 hitPos = castThroughFoliage(level, player, eye, look, range);
-        // --- Photonic: Refraction, the beam splits behind glass and ice
-        if (lastRefract != null && strike) {
-            float base = (stage.beamTickDamage() + Traits.beamDamageBonus(tool)) * DAMAGE_SCALE;
-            // LEFTOVER(trait): photonic.refraction can no longer be picked
-            for (Vec3 dir : refractRays(look, Traits.rank(tool, "photonic.refraction"))) {
-                Vec3 from = lastRefract;
-                Vec3 to =
-                        level.clip(
-                                        new ClipContext(
-                                                from,
-                                                from.add(dir.scale(range)),
-                                                ClipContext.Block.COLLIDER,
-                                                ClipContext.Fluid.NONE,
-                                                player))
-                                .getLocation();
-                findEntityOnRay(level, player, from, dir, (float) to.distanceTo(from))
-                        .ifPresent(
-                                h ->
-                                        beamHit(
-                                                level,
-                                                player,
-                                                tool,
-                                                (LivingEntity) h.getEntity(),
-                                                base * 0.6f));
-            }
-        }
-
-        // --- Pyrotechnics: Heat Ray lights what the beam touches; Controlled Burn III puts your
-        // fire out
-        BlockPos touched = BlockPos.containing(hitPos.add(look.scale(0.05)));
-        BlockPos before = BlockPos.containing(hitPos.subtract(look.scale(0.05)));
-
         // --- Entity: Lock-On keeps the last target inside a small cone ---------
         LivingEntity target = null;
         Vec3 targetPoint = null;
@@ -198,41 +165,14 @@ public final class BeamCastHelper {
             target.getPersistentData().putInt("mm_combat_pressure", combatLevel);
             if (!strike) {
                 sync(player, state, combatLevel, false, List.of());
-                // LEFTOVER(trait): photonic.laser can no longer be picked
-                return Traits.has(tool, "photonic.laser") ? hitPos : targetPoint;
+                return targetPoint;
             }
             state.hitCooldown = BeamState.hitInterval(combatLevel);
             float dmg =
                     (stage.beamTickDamage() + Traits.beamDamageBonus(tool))
                             * DAMAGE_SCALE
-                            * BeamState.levelMultiplier(combatLevel)
-                            // Overload II: the 4th level hits 25% harder
-                            * (combatLevel >= 4 && Traits.rank(tool, "plasmic.overload") >= 2
-                                    ? 1.25f
-                                    : 1f);
+                            * BeamState.levelMultiplier(combatLevel);
             beamHit(level, player, tool, target, dmg);
-            // Photonic: Laser, the beam goes through and hits everything in its line
-            // LEFTOVER(trait): photonic.laser can no longer be picked
-            if (Traits.has(tool, "photonic.laser")) {
-                final LivingEntity first = target;
-                Vec3 end = eye.add(look.scale(hitPos.distanceTo(eye)));
-                for (LivingEntity e :
-                        level.getEntitiesOfClass(
-                                LivingEntity.class,
-                                player.getBoundingBox().expandTowards(end.subtract(eye)).inflate(1),
-                                e ->
-                                        !com.ethermod.beam.Mounts.own(player, e)
-                                                && e != first
-                                                && e.isAlive()
-                                                && e.isPickable()
-                                                && e.getBoundingBox()
-                                                        .inflate(0.1)
-                                                        .clip(eye, end)
-                                                        .isPresent())) {
-                    beamHit(level, player, tool, e, dmg);
-                }
-                targetPoint = hitPos;
-            }
 
             // Arc: pressure jumps the strike to the nearest other creatures, one more per level
             // from level 2 (1 / 2 / 3), each taking half the strike
@@ -289,53 +229,13 @@ public final class BeamCastHelper {
             float speed =
                     (stage.miningSpeed() + Traits.miningSpeedBonus(tool))
                             * (momentum ? BeamState.miningMultiplier(pressure) : 1f);
-            // Crack ids must not equal the player's entity id: the server skips
-            // sending crack progress to the player whose id matches.
-            int id = player.getId();
-            Float centerHardness =
-                    mine(
-                            level,
-                            player,
-                            stage,
-                            tool,
-                            blockPos,
-                            speed,
-                            ramp,
-                            interval,
-                            crackId(id, 0),
-                            null);
-            if (centerHardness != null) {
-                // Area Bore: 3x3, deeper with rank (see Traits.areaBore)
-                int n = 1;
-                for (BlockPos p : Traits.areaBore(tool, blockPos, look)) {
-                    mine(
-                            level,
-                            player,
-                            stage,
-                            tool,
-                            p,
-                            speed,
-                            ramp,
-                            interval,
-                            crackId(id, n++),
-                            centerHardness);
-                }
-            }
+            mine(level, player, stage, tool, blockPos, speed, ramp, interval);
         }
         return hitPos;
     }
 
-    /** A negative id per player and sub-block, so it never matches an entity id. */
-    private static int crackId(int playerId, int n) {
-        return -1 - ((playerId << 6) + (n & 63));
-    }
-
-    /**
-     * Applies one beam tick of mining to a block. Returns its hardness, or null if it can't be
-     * mined. Neighbours (area mining) pass the centre hardness and are skipped if they are much
-     * harder, unharvestable or protected.
-     */
-    private static Float mine(
+    /** Applies one beam tick of mining to a block (nothing if it can't be mined). */
+    private static void mine(
             ServerLevel level,
             ServerPlayer player,
             ManipulatorStage stage,
@@ -343,46 +243,24 @@ public final class BeamCastHelper {
             BlockPos pos,
             float speed,
             float ramp,
-            int interval,
-            int breakerId,
-            Float centerHardness) {
+            int interval) {
         BlockState block = level.getBlockState(pos);
         if (block.isAir()
                 || !block.getFluidState().isEmpty()
                         && block.getBlock() instanceof net.minecraft.world.level.block.LiquidBlock)
-            return null;
+            return;
         float hardness = block.getDestroySpeed(level, pos);
-        if (hardness < 0) return null;
-        // Gentle Hands: leave crops that aren't ripe
+        if (hardness < 0) return;
+        // Botanic: the beam leaves crops that aren't ripe
         if (block.getBlock() instanceof CropBlock crop
                 && !crop.isMaxAge(block)
-                && Traits.hasLine(tool, Traits.BOTANIC)) {
-            // Gentle Hands II: the beam's warmth sometimes grows the crop a stage
-            if (centerHardness == null
-                    // LEFTOVER(trait): botanic.gentle_hands can no longer be picked
-                    && Traits.rank(tool, "botanic.gentle_hands") >= 2
-                    && level.random.nextFloat() < 0.04f * interval) {
-                level.setBlockAndUpdate(
-                        pos,
-                        crop.getStateForAge(Math.min(crop.getMaxAge(), crop.getAge(block) + 1)));
-                level.levelEvent(1505, pos, 4);
-            }
-            return null;
-        }
-        if (centerHardness != null) {
-            if (!stage.canHarvest(block) || hardness > centerHardness * 2 + 0.5f) return null;
-            if (!com.ethermod.util.Protect.may(level, player, pos)) return null;
-        }
+                && Traits.hasLine(tool, Traits.BOTANIC)) return;
         float dmg;
         if (hardness == 0f || player.isCreative()) {
             dmg = 1.0f;
         } else {
             // Vanilla: speed / hardness / 30 per tick with the right tool, / 100 without.
-            // Precision: soft blocks (dirt, sand, gravel, leaves) faster, almost instant at III
-            float perTick =
-                    speed
-                            * Traits.miningSpeedMultiplier(tool, block)
-                            / (stage.canHarvest(block) ? 30.0f : 100.0f);
+            float perTick = speed / (stage.canHarvest(block) ? 30.0f : 100.0f);
             dmg = perTick * interval * (0.8f + 1.2f * ramp) / hardness;
         }
         // One crack id per player and block: a block keeps its crack (and its
@@ -390,8 +268,7 @@ public final class BeamCastHelper {
         int crack = -1 - ((pos.hashCode() * 31 + player.getId()) & 0x3fffffff);
         MiningDamageTracker.applyDamage(level, pos, crack, dmg, player);
         // Vanilla's mining hit sound, every 4 ticks like a pickaxe (the main block only)
-        if (centerHardness == null
-                && level.getGameTime() % 4 < interval
+        if (level.getGameTime() % 4 < interval
                 && !level.getBlockState(pos).isAir()) {
             net.minecraft.world.level.block.SoundType st = block.getSoundType(level, pos, player);
             level.playSound(
@@ -402,7 +279,6 @@ public final class BeamCastHelper {
                     (st.getVolume() + 1f) / 8f,
                     st.getPitch() * 0.5f);
         }
-        return hardness;
     }
 
     /** One beam hit on a creature, with the Combat line's on-hit traits. */
@@ -423,18 +299,6 @@ public final class BeamCastHelper {
             dmg *= 1.15f;
             target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 30, 0, false, false, true));
         }
-        // Disrupt II: the beam also slows what it holds
-        if (Traits.rank(tool, "plasmic.disrupt") >= 2) {
-            target.addEffect(
-                    new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 30, 0, false, true, true));
-        }
-        // Photonic: Sunfire, the beam burns the undead
-        // LEFTOVER(trait): photonic.sunfire can no longer be picked
-        int sun = Traits.rank(tool, "photonic.sunfire");
-        if (sun > 0 && target.getType().is(net.minecraft.tags.EntityTypeTags.UNDEAD)) {
-            dmg *= 1f + 0.5f * sun;
-            target.igniteForSeconds(3);
-        }
         dmg *= com.ethermod.config.ServerConfig.beamDamage();
         Vec3 incomingVelocity = target.getDeltaMovement();
         float before = target.getHealth();
@@ -449,29 +313,9 @@ public final class BeamCastHelper {
                         "mm_combat_pressure",
                         Math.max(1, player.getPersistentData().getInt("mm_beam_level")));
 
-        // LEFTOVER(trait): plasmic.ionize can no longer be picked
-        int ionize = Traits.rank(tool, "plasmic.ionize");
-        if (ionize > 0) {
-            target.getPersistentData().putLong(IONIZED_TAG, level.getGameTime());
-            target.getPersistentData().putInt(IONIZED_TAG + "_rank", ionize);
-        }
-
         // Continuous damage must not erase the target's voluntary movement.
         // Restore the incoming velocity after damage, without repeatedly pinning it.
 
-    }
-
-    /** Set on creatures hit by an Ionize beam; orbs deal +20% for 3 s after. */
-    public static final String IONIZED_TAG = "ethermod_ionized";
-
-    public static boolean isIonized(Entity e) {
-        long t = e.getPersistentData().getLong(IONIZED_TAG);
-        return t != 0 && e.level().getGameTime() - t < 60;
-    }
-
-    /** Orb damage multiplier on an ionized creature: +20%, +35% at rank II. */
-    public static float ionizeBonus(Entity e) {
-        return e.getPersistentData().getInt(IONIZED_TAG + "_rank") >= 2 ? 1.35f : 1.2f;
     }
 
     // =========================================================================
@@ -495,26 +339,6 @@ public final class BeamCastHelper {
         }
     }
 
-    /** Where the beam came out of glass this tick (Refraction), or null. Server thread only. */
-    private static Vec3 lastRefract;
-
-    /** Refraction: glass and ice let the beam through. */
-    public static boolean refracts(ItemStack tool, BlockState state) {
-        return (state.is(net.neoforged.neoforge.common.Tags.Blocks.GLASS_BLOCKS)
-                        || state.is(net.neoforged.neoforge.common.Tags.Blocks.GLASS_PANES)
-                        || state.is(net.minecraft.tags.BlockTags.ICE))
-                // LEFTOVER(trait): photonic.refraction can no longer be picked
-                && Traits.has(tool, "photonic.refraction");
-    }
-
-    /** The extra rays behind the glass: one at I, two at II. */
-    public static java.util.List<Vec3> refractRays(Vec3 look, int rank) {
-        java.util.List<Vec3> out = new java.util.ArrayList<>();
-        out.add(look.yRot((float) Math.toRadians(7)));
-        if (rank >= 2) out.add(look.yRot((float) Math.toRadians(-7)));
-        return out;
-    }
-
     private static Vec3 castThroughFoliage(
             ServerLevel level, ServerPlayer player, Vec3 start, Vec3 dir, float range) {
         Vec3 current = start;
@@ -536,15 +360,6 @@ public final class BeamCastHelper {
             BlockPos pos = hit.getBlockPos();
             BlockState state = level.getBlockState(pos);
 
-            if (lastRefract == null && refracts(player.getMainHandItem(), state)) {
-                // Refraction: pass through the glass; the rays split where it comes out
-                Vec3 face = Vec3.atCenterOf(pos);
-                float step = (float) current.distanceTo(face) + 0.6f;
-                remaining -= step;
-                current = current.add(dir.scale(step));
-                lastRefract = current;
-                continue;
-            }
             if (FoliageHelper.isFoliage(state)) {
                 // foliage the server lets the beam pass (grass, flowers… and leaves if set) stays standing
                 Vec3 face = Vec3.atCenterOf(pos);
