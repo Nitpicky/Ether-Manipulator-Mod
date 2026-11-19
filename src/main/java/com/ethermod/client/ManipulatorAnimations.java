@@ -73,8 +73,6 @@ public final class ManipulatorAnimations {
     private static final RawAnimation BEACON = anim("beacon");
     /** Botanic left click: a sickle sweep over the crops. */
     private static final RawAnimation HARVEST = anim("harvest");
-    // LEFTOVER: the model file still holds pull, cycle_1-4, cycle_ramp and redstone (retired
-    // Gravitic pull and Redstone mode); clean them out in Blockbench, not by hand
     // pollen drift: the push that sends it off, then the guide pose while it flies
     private static final RawAnimation GROWTH_GUIDE =
             RawAnimation.begin()

@@ -4,6 +4,7 @@ import net.minecraft.advancements.AdvancementNode;
 import net.minecraft.advancements.TreeNodePosition;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -19,7 +20,7 @@ import java.util.List;
 @Mixin(TreeNodePosition.class)
 public abstract class AdvancementLayoutMixin {
     /** Top rows: {advancement, its child on the same row (or null)}. */
-    private static final String[][] TOP = {
+    @Unique private static final String[][] TOP = {
         // the default Modules first, as in the Module order
         {"let_it_go", null},
         {"ping_pong", null},
@@ -32,7 +33,7 @@ public abstract class AdvancementLayoutMixin {
         {"oculite", "fish_out_of_water"}
     };
 
-    private static final List<String> LINE = List.of("calibrated", "augmented", "overclocked");
+    @Unique private static final List<String> LINE = List.of("calibrated", "augmented", "overclocked");
 
     @Inject(method = "run", at = @At("TAIL"))
     private static void mm$layout(AdvancementNode root, CallbackInfo ci) {
@@ -49,11 +50,13 @@ public abstract class AdvancementLayoutMixin {
         place(root, "spectrum", 2, line + 1);
     }
 
+    @Unique
     private static void place(AdvancementNode root, String name, int x, int y) {
         var node = find(root, "manipulator/" + name);
         if (node != null) node.holder().value().display().ifPresent(d -> d.setLocation(x, y));
     }
 
+    @Unique
     private static AdvancementNode find(AdvancementNode n, String path) {
         if (n.holder().id().getPath().equals(path) && "ethermod".equals(n.holder().id().getNamespace())) return n;
         for (var c : n.children()) {

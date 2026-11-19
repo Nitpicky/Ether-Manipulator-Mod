@@ -35,6 +35,17 @@ public final class RedesignEffects {
 
     @SubscribeEvent
     public static void loaded(net.neoforged.neoforge.event.entity.EntityJoinLevelEvent ev) {
+        // held, then moved to another level (a player changing dimension): the hold ends there and
+        // its own flags come back; the old level's tick would only drop the entry and leave
+        // NoGravity on
+        if (ev.getLevel() instanceof ServerLevel joined
+                && ev.getEntity() instanceof LivingEntity moved) {
+            Frozen held = FROZEN.get(moved.getUUID());
+            if (held != null && held.level() != joined) {
+                FROZEN.remove(moved.getUUID());
+                restoreStasisFlags(moved);
+            }
+        }
         // a creature saved mid-stasis (chunk unloaded, logout, Save and Quit) gets its flags back
         if (ev.getEntity() instanceof LivingEntity held
                 && held.getPersistentData().contains(STASIS_RESTORE)
@@ -287,10 +298,6 @@ public final class RedesignEffects {
                 target,
                 new com.ethermod.network.payload.ModulePayloads.SoulFlame(
                         target.getId(), d.getBoolean("mm_soul")));
-        d.putBoolean("mm_weak_burn", false /* Heat Exhaustion retired; Phoenix is the second Common. */);
-        // LEFTOVER: mm_weak_burn and mm_inferno are always false/0 now (Heat Exhaustion and the
-        // old Inferno burn are retired); the readers in the burn tick never fire
-        d.putInt("mm_inferno", wasBurning ? d.getInt("mm_inferno") : 0);
         if (wasBurning
                 && Traits.has(st, "pyrotechnic.flashover")
                 && target.tickCount - d.getInt("mm_flashover") > 20) {
@@ -306,8 +313,6 @@ public final class RedesignEffects {
                 e.getPersistentData().putUUID("mm_burn_owner", owner.getUUID());
                 e.getPersistentData()
                         .putBoolean("mm_soul", Traits.has(st, "pyrotechnic.soulwake"));
-                e.getPersistentData()
-                        .putBoolean("mm_weak_burn", false /* Heat Exhaustion retired; Phoenix is the second Common. */);
             }
         }
     }
@@ -626,12 +631,6 @@ public final class RedesignEffects {
                         e,
                         new com.ethermod.network.payload.ModulePayloads.SoulFlame(
                                 e.getId(), d.getBoolean("mm_soul")));
-            if (d.getBoolean("mm_weak_burn") && e.isOnFire())
-                e.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 15, 0, false, false, true));
-            if (e.isOnFire() && d.getInt("mm_inferno") > 0 && e instanceof LivingEntity) {
-                if (now % (Math.max(5, 20 - 5 * d.getInt("mm_inferno"))) == 0)
-                    e.hurt(sl.damageSources().onFire(), 1);
-            }
             if (d.hasUUID("mm_summoner")) {
                 if (now >= d.getLong("mm_summon_expires")) {
                     e.hurt(sl.damageSources().genericKill(), Float.MAX_VALUE);

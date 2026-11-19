@@ -204,10 +204,6 @@ public class EtherManipulatorItem extends Item implements GeoItem {
         return 72000;
     }
 
-    /** Orbit: the orb circling each player right now, by player. Server-side. */
-    private static final java.util.Map<java.util.UUID, Integer> ORBITING =
-            new java.util.HashMap<>();
-
     /** Hold modes work every tick while RMB is down. No speed penalty while charging. */
     @Override
     public void onUseTick(Level level, LivingEntity entity, ItemStack stack, int remaining) {
@@ -228,7 +224,6 @@ public class EtherManipulatorItem extends Item implements GeoItem {
         movement.putDouble("mm_charge_x", sp.getX());
         movement.putDouble("mm_charge_y", sp.getY());
         movement.putDouble("mm_charge_z", sp.getZ());
-        if (mode == OrbMode.VACUUM) return; // LEFTOVER: retired mode, never unlocked
         if (mode == OrbMode.TETHER) {
             com.ethermod.trait.Ziplines.rideTick(sp);
             return;
@@ -291,7 +286,7 @@ public class EtherManipulatorItem extends Item implements GeoItem {
         fireVolley(level, player, stack, phase, mode.rmbShot());
     }
 
-    /** Fires one charged shot (or a Split / Gunner volley) of {@code mode}'s projectile. */
+    /** Fires one charged shot (or a Split volley) of {@code mode}'s projectile. */
     public static void fireVolley(
             Level level, Player player, ItemStack stack, int charged, OrbMode mode) {
         fireVolley(level, player, stack, charged, mode, false);
@@ -317,40 +312,25 @@ public class EtherManipulatorItem extends Item implements GeoItem {
             if (player instanceof ServerPlayer sp) com.ethermod.beam.DryFire.signal(sp);
             return;
         }
-        int count = Traits.has(stack, "kinetic.split") ? phase + 1 : 1;
-        // LEFTOVER(trait): kinetic.gunner can no longer be picked
-        int bursts = Traits.has(stack, "kinetic.gunner") ? phase + 1 : 1;
+        int shots = Traits.has(stack, "kinetic.split") ? phase + 1 : 1;
         if (mode.usesTank()) {
             mode.setTankLevel(stack, mode.tankLevel(stack) - cost);
             if (player instanceof ServerPlayer sp) Manipulator.sync(sp);
         }
-        final int shots = count, rounds = bursts;
         final ItemStack launchTraits = stack.copy();
-        for (int round = 0; round < bursts; round++) {
-            final int sequence = round;
-            Runnable shot =
-                    () -> {
-                        if (!player.isAlive() || player.level() != level) return;
-                        for (int n = 0; n < shots; n++) {
-                            var orb = spawnOrb(level, player, launchTraits, phase, mode);
-                            orb.setFiredLeft(left);
-                            orb.scaleDamage(1f / (float) (shots * rounds));
-                            if (shots > 1) orb.turn((n - (shots - 1) / 2f) * 10f);
-                            // LEFTOVER(trait): kinetic.orbit can no longer be picked
-                            if (Traits.has(launchTraits, "kinetic.orbit")) orb.startOrbit();
-                            else if (n == 0
-                                    && sequence == 0
-                                    && mode == OrbMode.WATER
-                                    && phase == 2
-                                    && Traits.has(launchTraits, "hydraulic.tidecaller"))
-                                orb.carryOwner();
-                        }
-                        com.ethermod.beam.ShotSounds.launch(level, player, mode, phase);
-                    };
-            if (sequence == 0) shot.run();
-            else
-                com.ethermod.trait.WorldEffects.schedule(
-                        (net.minecraft.server.level.ServerLevel) level, sequence * 4, shot);
+        if (player.isAlive() && player.level() == level) {
+            for (int n = 0; n < shots; n++) {
+                var orb = spawnOrb(level, player, launchTraits, phase, mode);
+                orb.setFiredLeft(left);
+                orb.scaleDamage(1f / (float) shots);
+                if (shots > 1) orb.turn((n - (shots - 1) / 2f) * 10f);
+                if (n == 0
+                        && mode == OrbMode.WATER
+                        && phase == 2
+                        && Traits.has(launchTraits, "hydraulic.tidecaller"))
+                    orb.carryOwner();
+            }
+            com.ethermod.beam.ShotSounds.launch(level, player, mode, phase);
         }
         if (mode == OrbMode.GUST) {
             if (player.onGround() || !player.getPersistentData().getBoolean("mm_gust_boosted")) {

@@ -9,7 +9,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -32,10 +31,7 @@ final class OrbNature {
      */
     static void driftTick(BeamBallEntity b) {
         ServerLevel sl = (ServerLevel) b.level();
-        // Lingering Bloom: twice as long, pulsing twice as often
-        // LEFTOVER(trait): botanic.lingering_bloom can no longer be picked
-        boolean linger = b.has("botanic.lingering_bloom");
-        int life = (b.getPhase() == 2 ? 100 : 80) * (linger ? 2 : 1);
+        int life = b.getPhase() == 2 ? 100 : 80;
         if (++b.lifeTicks > life) {
             b.impactFx(b.position());
             b.discard();
@@ -74,12 +70,7 @@ final class OrbNature {
         b.setPos(p.x, p.y, p.z);
 
         ProjectileEffects.growthCloud(b, b.traits);
-        int r =
-                1
-                        // LEFTOVER(trait): botanic.lingering_bloom can no longer be picked
-                        + Math.max(0, b.rank("botanic.lingering_bloom") - 1)
-                        // LEFTOVER(trait): kinetic.payload can no longer be picked
-                        + (b.getPhase() == 2 ? b.rank("kinetic.payload") : 0); // Payload: a wider cloud
+        int r = 1;
         BlockPos c = b.blockPosition();
         long now = sl.getGameTime();
         for (BlockPos bp : BlockPos.betweenClosed(c.offset(-r, -3, -r), c.offset(r, 0, r))) {
@@ -89,7 +80,7 @@ final class OrbNature {
             long key = bp.asLong();
             Long next = b.growSeen.get(key);
             if (next != null && next > now) continue;
-            b.growSeen.put(key, now + (linger ? 10 : 20));
+            b.growSeen.put(key, now + 20);
             if (!b.mayBuild(bp)) continue;
             boneMeal(sl, bp.immutable(), 6);
         }
@@ -154,11 +145,7 @@ final class OrbNature {
                 } else {
                     WorldEffects.placeFire(sl, firePos, owner);
                 }
-                // LEFTOVER(trait): pyrotechnic.incendiary can no longer be picked
-                int inc = b.rank("pyrotechnic.incendiary");
-                if (b.getPhase() == 2 && inc > 0)
-                    WorldEffects.fireStar(sl, firePos, owner, inc >= 2 ? 3 : 2);
-                else if (b.getPhase() >= 1)
+                if (b.getPhase() >= 1)
                     WorldEffects.fireRing(
                             sl, firePos, owner, b.getPhase()); // charged: ring of 1, then 2
             }
@@ -192,61 +179,14 @@ final class OrbNature {
         return false;
     }
 
-    /**
-     * Bone meal on the block hit. Phase 3 covers 5x5 (9x9 with Verdant Pulse, wider with Payload);
-     * Rewild greens bare dirt and spreads flowers (II: moss onto stone and cobblestone).
-     */
+    /** Bone meal on the block hit: phase 3 covers 5x5. */
     static void grow(BeamBallEntity b, BlockPos hitPos) {
         ServerLevel sl = (ServerLevel) b.level();
-        int r =
-                (b.getPhase() == 2
-                                // LEFTOVER(trait): botanic.verdant_pulse can no longer be picked
-                                ? (b.has("botanic.verdant_pulse") ? 4 : 2)
-                                        // LEFTOVER(trait): kinetic.payload can no longer be picked
-                                        + b.rank("kinetic.payload")
-                                : 0)
-                        // LEFTOVER(trait): botanic.lingering_bloom can no longer be picked
-                        + Math.max(0, b.rank("botanic.lingering_bloom") - 1);
-        // LEFTOVER(trait): botanic.rewild can no longer be picked
-        boolean rewild = b.has("botanic.rewild");
-        // LEFTOVER(trait): botanic.rewild can no longer be picked
-        boolean moss = b.rank("botanic.rewild") >= 2;
+        int r = b.getPhase() == 2 ? 2 : 0;
         for (BlockPos p :
                 BlockPos.betweenClosed(hitPos.offset(-r, -1, -r), hitPos.offset(r, 1, r))) {
             if (!b.mayBuild(p)) continue;
-            BlockPos q = p.immutable();
-            BlockState here = sl.getBlockState(q);
-            if (rewild && here.is(Blocks.DIRT) && sl.getBlockState(q.above()).isAir()) {
-                sl.setBlockAndUpdate(q, Blocks.GRASS_BLOCK.defaultBlockState());
-            } else if (moss
-                    && (here.is(Blocks.STONE) || here.is(Blocks.COBBLESTONE))
-                    && sl.getBlockState(q.above()).isAir()
-                    && b.getRandom().nextInt(3) > 0) {
-                sl.setBlockAndUpdate(
-                        q,
-                        (here.is(Blocks.COBBLESTONE) ? Blocks.MOSSY_COBBLESTONE : Blocks.MOSS_BLOCK)
-                                .defaultBlockState());
-            }
-            boneMeal(sl, q, 15);
-        }
-        if (rewild) {
-            BlockPos top = hitPos.above();
-            for (int i = 0; i < 4 + 4 * b.getPhase(); i++) {
-                BlockPos p =
-                        top.offset(b.getRandom().nextInt(5) - 2, 0, b.getRandom().nextInt(5) - 2);
-                if (sl.getBlockState(p).isAir()
-                        && sl.getBlockState(p.below()).is(BlockTags.DIRT)
-                        && b.mayBuild(p)) {
-                    BlockState flower =
-                            b.getRandom().nextInt(4) == 0
-                                    ? Blocks.MOSS_CARPET.defaultBlockState()
-                                    : (b.getRandom().nextBoolean()
-                                                    ? Blocks.POPPY
-                                                    : Blocks.DANDELION)
-                                            .defaultBlockState();
-                    if (flower.canSurvive(sl, p)) sl.setBlockAndUpdate(p, flower);
-                }
-            }
+            boneMeal(sl, p.immutable(), 15);
         }
     }
 }

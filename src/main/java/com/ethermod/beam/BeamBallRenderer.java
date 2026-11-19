@@ -108,7 +108,7 @@ public class BeamBallRenderer extends EntityRenderer<BeamBallEntity> {
                         ? new float[] {.18f, .9f, 1f, 1f}
                         : colorFor(mode, entity.getBeamColor());
         int phase = Math.max(0, Math.min(2, entity.getPhase()));
-        float radius = PHASE_RADIUS[phase] * (entity.isOvercharged() ? 1.5f : 1f);
+        float radius = PHASE_RADIUS[phase];
         float time = age;
 
         // ---- Trail: shrinking pixel cubes (not for a hook on its rope, or a pollen cloud) ----
@@ -152,7 +152,7 @@ public class BeamBallRenderer extends EntityRenderer<BeamBallEntity> {
                     drawZipline(vc, m, mc, entity, rel, camPos, partialTick, time);
                 else drawRope(vc, m, mc, entity, rel, camPos, partialTick, time);
             }
-            case GUST -> drawGust(vc, m, rel, time, phase, entity.isOvercharged() ? 1.3f : 1f);
+            case GUST -> drawGust(vc, m, rel, time, phase, 1f);
             case MASS -> {}
             default -> drawOrb(vc, m, rel, radius, col, time, 1f);
         }

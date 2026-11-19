@@ -29,7 +29,7 @@ final class OrbLight {
             for (LivingEntity e :
                     sl.getEntitiesOfClass(
                             LivingEntity.class,
-                            new AABB(at).inflate(12 + 8 * (b.rank("photonic.flare") - 1)),
+                            new AABB(at).inflate(12),
                             e ->
                                     e != b.getOwner()
                                             && !(e
@@ -50,7 +50,7 @@ final class OrbLight {
                 }
             }
         if (!sl.getBlockState(at).isAir() || !b.mayBuild(at)) return;
-        WorldEffects.tempLight(sl, at, 12 + b.getPhase(), b.lightLife);
+        WorldEffects.tempLight(sl, at, 12 + b.getPhase(), BeamBallEntity.BOUNCE_LIGHT_TICKS);
         sl.sendParticles(
                 ParticleTypes.END_ROD,
                 at.getX() + 0.5,

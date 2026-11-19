@@ -11,7 +11,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.BeehiveBlock;
@@ -36,8 +35,7 @@ import net.neoforged.neoforge.common.ItemAbility;
  * farmland is near, else path side of dirt or grass → path log / wood → strip copper → scrape
  * oxidation, then wax
  *
- * <p>Cultivation: the badge makes it 3x3 and harvests ripe crops (7x7 with Harvest Moon);
- * Groundskeeper shears; Sower plants seeds on farmland.
+ * <p>Cultivation: the badge makes it 3x3 and harvests ripe crops; Groundskeeper shears.
  */
 final class UtilityBeam {
 
@@ -50,20 +48,10 @@ final class UtilityBeam {
         ItemStack tool = player.getMainHandItem();
 
         boolean gardener = Traits.hasLine(tool, Traits.BOTANIC);
-        // LEFTOVER(trait): botanic.harvest_moon can no longer be picked
-        int harvestR = Traits.has(tool, "botanic.harvest_moon") ? 3 : gardener ? 1 : 0;
+        int harvestR = gardener ? 1 : 0;
         int areaR = gardener ? 1 : 0;
-        // Groundskeeper and Sower reach wider with rank
-        areaR +=
-                Math.max(
-                        0,
-                        Math.max(
-                                        Traits.rank(tool, "botanic.groundskeeper"),
-                                        // LEFTOVER(trait): botanic.sower can no longer be picked
-                                        Traits.rank(tool, "botanic.sower"))
-                                - 1);
 
-        // Harvest ripe crops (Cultivation badge: 3x3; Harvest Moon: 7x7)
+        // Harvest ripe crops (Cultivation badge: 3x3)
         if (harvestR > 0 && isRipeCrop(level.getBlockState(pos))) {
             for (BlockPos p :
                     BlockPos.betweenClosed(
@@ -138,14 +126,6 @@ final class UtilityBeam {
             }
         }
 
-        // Sower: plant seeds from the inventory on farmland
-        if (bs.getBlock() instanceof FarmBlock
-                && level.getBlockState(pos.above()).isAir()
-                // LEFTOVER(trait): botanic.sower can no longer be picked
-                && Traits.has(tool, "botanic.sower")) {
-            if (sow(level, player, pos.above())) return true;
-        }
-
         UseOnContext ctx = new UseOnContext(player, InteractionHand.MAIN_HAND, hit);
         boolean airAbove = level.getBlockState(pos.above()).isAir();
         // The top of dirt can become farmland or a path: till only where a
@@ -199,23 +179,6 @@ final class UtilityBeam {
         BlockState bs = level.getBlockState(p);
         if (!isRipeCrop(bs) || !com.ethermod.util.Protect.may(level, player, p)) return;
         if (!MiningDamageTracker.breakAsPlayer(player, p)) return;
-    }
-
-    private static boolean sow(ServerLevel level, ServerPlayer player, BlockPos at) {
-        var inv = player.getInventory();
-        for (int i = 0; i < inv.getContainerSize(); i++) {
-            ItemStack s = inv.getItem(i);
-            if (s.isEmpty()
-                    || !(s.getItem() instanceof BlockItem bi)
-                    || !(bi.getBlock() instanceof CropBlock crop)) continue;
-            BlockState plant = crop.defaultBlockState();
-            if (!plant.canSurvive(level, at)) continue;
-            level.setBlockAndUpdate(at, plant);
-            level.playSound(null, at, com.ethermod.sound.ModSounds.WORLD_CROP_PLANTED, SoundSource.BLOCKS, 1f, 1f);
-            if (!player.getAbilities().instabuild) s.shrink(1);
-            return true;
-        }
-        return false;
     }
 
     private static boolean isShearable(BlockState bs) {

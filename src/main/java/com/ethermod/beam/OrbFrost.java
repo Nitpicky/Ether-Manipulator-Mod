@@ -69,9 +69,4 @@ final class OrbFrost {
     static int bridgeTicks(BeamBallEntity b) {
         return com.ethermod.config.ServerConfig.frostTicks() * (b.has("hydraulic.glacier") ? 3 : 1);
     }
-
-    /** Permafrost: Frost ice never cracks while someone stands on it. */
-    static boolean permafrost(BeamBallEntity b) {
-        return true;
-    }
 }

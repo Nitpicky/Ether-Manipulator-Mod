@@ -50,7 +50,7 @@ import net.minecraft.world.phys.Vec3;
  * tap: a puff that bonemeals what it hits; charged: a slow pollen cloud that drifts where you look,
  * growing what it passes LIGHT bouncing ball: leaves a light where it stops, and (charged) a light
  * at every bounce for 3 minutes TETHER grapple hook: sticks, then reels you in while RMB is held
- * (Vacuum was retired; its constant stays as a save-data placeholder)
+ * (OrbMode.VACUUM is only a save-data placeholder; no orb uses it)
  *
  * <p>Every projectile does its job where it stops at max range too.
  *
@@ -69,14 +69,11 @@ public class BeamBallEntity extends Projectile {
             SynchedEntityData.defineId(BeamBallEntity.class, EntityDataSerializers.INT);
     static final EntityDataAccessor<Integer> COLOR =
             SynchedEntityData.defineId(BeamBallEntity.class, EntityDataSerializers.INT);
-    static final EntityDataAccessor<Boolean> OVERCHARGED =
-            SynchedEntityData.defineId(BeamBallEntity.class, EntityDataSerializers.BOOLEAN);
 
     /** Tether hook that has caught a block. */
     static final EntityDataAccessor<Boolean> STUCK =
             SynchedEntityData.defineId(BeamBallEntity.class, EntityDataSerializers.BOOLEAN);
 
-    /** Orbit: circling its owner as a shield until RMB is let go. */
     /** Mass Driver: the block it carries. */
     static final EntityDataAccessor<BlockState> CARRIED =
             SynchedEntityData.defineId(BeamBallEntity.class, EntityDataSerializers.BLOCK_STATE);
@@ -90,8 +87,6 @@ public class BeamBallEntity extends Projectile {
 
     static final EntityDataAccessor<Integer> PARTNER =
             SynchedEntityData.defineId(BeamBallEntity.class, EntityDataSerializers.INT);
-    static final EntityDataAccessor<Boolean> ORBITING =
-            SynchedEntityData.defineId(BeamBallEntity.class, EntityDataSerializers.BOOLEAN);
 
     /** Mass Driver: held in a formation (the client then only follows the server, no physics). */
     static final EntityDataAccessor<Boolean> MASS_HELD =
@@ -167,26 +162,13 @@ public class BeamBallEntity extends Projectile {
     /** Tidecaller: the owner rides along this Water orb. */
     boolean carrying;
 
-    /** Meteor: 1 rising, 2 falling on its target. */
-    int meteor;
-
-    /** Echo: this is the echo of an earlier impact (it doesn't echo again). */
-    boolean echo;
-
     /** Zipline anchor: ticks left. */
     int anchorLife;
-
-    /** Hammer Throw: the hooked mob is being whirled around the owner. */
-    boolean whirling;
-
-    /** How long a Light orb's lights last (Prism II doubles it). */
-    int lightLife = BOUNCE_LIGHT_TICKS;
 
     // Server-only — NOT synced intentionally (defaults to 0 on client)
     float damage;
     float maxRange;
     float traveledDistance;
-    boolean burningLight;
 
     public static final float[] PHASE_RADIUS = {0.18f, 0.35f, 0.58f};
 
@@ -197,7 +179,6 @@ public class BeamBallEntity extends Projectile {
     static final String TAG_PHASE = "mm_phase";
     static final String TAG_DAMAGE = "mm_ball_dmg";
     static final String TAG_RANGE = "mm_ball_range";
-    static final String TAG_BURNING = "mm_ball_burn";
     static final String TAG_TRAVEL = "mm_ball_travel";
 
     // =========================================================================
@@ -228,7 +209,6 @@ public class BeamBallEntity extends Projectile {
 
         this.damage = stage.ballDamage(p) * com.ethermod.config.ServerConfig.shotDamage();
         this.maxRange = mode.gravity() > 0 ? 96f : stage.ballRange();
-        this.burningLight = false;
         this.traveledDistance = 0f;
 
         // Server-side spawn: approximate barrel tip offset from eye.
@@ -259,9 +239,7 @@ public class BeamBallEntity extends Projectile {
     ItemStack traits = ItemStack.EMPTY;
 
     int bouncesLeft;
-    int piercesLeft;
     java.util.UUID seekerTarget;
-    final java.util.Set<Integer> pierced = new java.util.HashSet<>();
 
     public void scaleDamage(float amount) {
         damage *= amount;
@@ -269,92 +247,7 @@ public class BeamBallEntity extends Projectile {
 
     /** Applies the Orb line's launch-time traits. Call before spawning. */
     public void configure(ItemStack manipulator) {
-        entityData.set(COLOR, getMode().color);
-        this.traits = manipulator.copy();
-        entityData.set(SOULFIRE, Traits.has(manipulator, "pyrotechnic.soulwake"));
-        zipPlacing =
-                getMode() == OrbMode.TETHER
-                        && has("gravitic.zipline")
-                        && getOwner() != null
-                        && getOwner().isShiftKeyDown();
-        if (Traits.hasCommon(traits, Traits.KINETIC, 1)) maxRange += 16;
-        // LEFTOVER(trait): kinetic.overcharge can no longer be picked
-        int overcharge = Traits.rank(traits, "kinetic.overcharge");
-        if (getPhase() == 2 && overcharge > 0) {
-            damage *= 1.25f + 0.25f * overcharge; // x1.5, x1.75, x2
-            entityData.set(OVERCHARGED, true);
-        }
-        if (getMode() == OrbMode.GUST) {
-            maxRange = 32;
-            // Cyclone: a charged Gust becomes a slow whirlwind
-            if (getPhase() == 2 && Traits.has(traits, "pneumatic.cyclone"))
-                setDeltaMovement(getDeltaMovement().normalize().scale(0.22));
-        }
-        if (getMode() == OrbMode.MASS) maxRange = 64;
-        // Bank Shot: every mode bounces (not the hook, nor a drifting pollen cloud)
-        int bank = Traits.rank(traits, "kinetic.bank_shot");
-        if (getMode() != OrbMode.TETHER && !isDrifting())
-            bouncesLeft = bank > 0 ? getPhase() + 1 : 0;
-        // LEFTOVER(trait): kinetic.piercing can no longer be picked
-        piercesLeft = has("kinetic.piercing") ? getPhase() : 0;
-        if (has("kinetic.marksman")
-                && getOwner() != null
-                && getOwner().getPersistentData().getInt("mm_charge_still") >= 10)
-            setDeltaMovement(getDeltaMovement().scale(1.6));
-        if (has("kinetic.seeker") && getOwner() instanceof ServerPlayer p) {
-            var look = p.getLookAngle();
-            var eye = p.getEyePosition();
-            ((ServerLevel) level())
-                            .getEntitiesOfClass(
-                                    LivingEntity.class,
-                                    p.getBoundingBox()
-                                            .expandTowards(look.scale(maxRange))
-                                            .inflate(4),
-                                    e ->
-                                            !com.ethermod.beam.Mounts.own(p, e)
-                                                    && e.isAlive()
-                                                    && !com.ethermod.trait.RedesignEffects.ally(
-                                                            p, e)
-                                                    && p.hasLineOfSight(e)
-                                                    && e.getBoundingBox()
-                                                                    .getCenter()
-                                                                    .subtract(eye)
-                                                                    .normalize()
-                                                                    .dot(look)
-                                                            > .978)
-                            .stream()
-                            .min(
-                                    java.util.Comparator.comparingDouble(
-                                            e ->
-                                                    1
-                                                            - e.getBoundingBox()
-                                                                    .getCenter()
-                                                                    .subtract(eye)
-                                                                    .normalize()
-                                                                    .dot(look)))
-                            .ifPresent(e -> seekerTarget = e.getUUID());
-        }
-        // Light: a Moira-style ball that bounces 2, then 4 times when charged; Prism adds 2, 4, 6;
-        // Bank Shot one more than other modes
-        if (getMode() == OrbMode.LIGHT) {
-            int prism = Traits.rank(traits, "photonic.prism");
-            bouncesLeft =
-                    (getPhase() == 0 ? 0 : getPhase() == 1 ? 2 : 4)
-                            + 2 * prism
-                            + (bank > 0 ? bank + 1 : 0);
-            if (prism >= 2) lightLife = BOUNCE_LIGHT_TICKS * 2;
-        }
-    }
-
-    /** Orbit: start circling the owner. */
-    public void startOrbit() {
-        entityData.set(ORBITING, true);
-        setDeltaMovement(Vec3.ZERO);
-        lifeTicks = 0;
-    }
-
-    public boolean isOrbiting() {
-        return entityData.get(ORBITING);
+        OrbFlight.configure(this, manipulator);
     }
 
     /** Mass Driver: the carried block (air if none). */
@@ -438,9 +331,7 @@ public class BeamBallEntity extends Projectile {
         builder.define(MODE, 0);
         builder.define(STAGE, 0);
         builder.define(COLOR, com.ethermod.item.ManipulatorColors.DEFAULT_BEAM);
-        builder.define(OVERCHARGED, false);
         builder.define(STUCK, false);
-        builder.define(ORBITING, false);
         builder.define(CARRIED, Blocks.AIR.defaultBlockState());
         builder.define(ANCHOR, false);
         builder.define(PARTNER, -1);
@@ -468,10 +359,6 @@ public class BeamBallEntity extends Projectile {
 
     public int getPhase() {
         return entityData.get(PHASE);
-    }
-
-    public boolean isOvercharged() {
-        return entityData.get(OVERCHARGED);
     }
 
     public boolean isStuck() {
@@ -507,26 +394,28 @@ public class BeamBallEntity extends Projectile {
     // Tick
     // =========================================================================
 
+    /**
+     * The local player's rope physics on a stuck tether (ClientMobility.ropeTick). Set by the
+     * client setup, so this common class never names a client class; null on a dedicated server.
+     */
+    public static java.util.function.Consumer<BeamBallEntity> clientRopeTick;
+
     @Override
     public void tick() {
         OrbMode mode = getMode();
         // CLIENT: only advance position (with the mode's gravity), no game logic.
         // (maxRange = 0 on client, so a range check would instantly discard)
         if (level().isClientSide) {
-            if (isOrbiting()) {
-                orbitPosition();
-                return;
-            }
             if (isStuck()) {
-                if (mode == OrbMode.TETHER && !isAnchor())
-                    com.ethermod.client.ClientMobility.ropeTick(this);
+                if (mode == OrbMode.TETHER && !isAnchor() && clientRopeTick != null)
+                    clientRopeTick.accept(this);
                 return;
             }
             // a held Mass Driver block goes exactly where the server puts it: moving it on here
             // too made it run ahead and snap back on every wall
             if (mode == OrbMode.MASS && isMassHeld()) return;
             if (mode.gravity() > 0 && !isDrifting())
-                setDeltaMovement(getDeltaMovement().add(0, -gravityNow(), 0));
+                setDeltaMovement(getDeltaMovement().add(0, -OrbFlight.gravity(this), 0));
             // thrown blocks fall as they do on the server
             if (mode == OrbMode.MASS) setDeltaMovement(getDeltaMovement().add(0, -.08, 0));
             Vec3 pos = position();
@@ -555,10 +444,6 @@ public class BeamBallEntity extends Projectile {
             }
         super.tick();
 
-        if (isOrbiting()) {
-            orbitTick();
-            return;
-        }
         if (isAnchor()) {
             anchorTick();
             return;
@@ -573,9 +458,8 @@ public class BeamBallEntity extends Projectile {
             return;
         }
         lifeTicks++;
-        if (mode.gravity() > 0) setDeltaMovement(getDeltaMovement().add(0, -gravityNow(), 0));
+        if (mode.gravity() > 0) setDeltaMovement(getDeltaMovement().add(0, -OrbFlight.gravity(this), 0));
         if (mode == OrbMode.WATER || mode == OrbMode.FROST) OrbFluids.steerWater(this);
-        if (meteor > 0) meteorTick();
         if (mode == OrbMode.MASS) {
             setDeltaMovement(getDeltaMovement().add(0, -.08, 0));
         }
@@ -589,10 +473,10 @@ public class BeamBallEntity extends Projectile {
                         && Traits.hasCommon(traits, Traits.HYDRAULIC, 1);
         if (!slip) traveledDistance += movement.length(); // Slipstream: no range spent underwater
         if (traveledDistance > maxRange || lifeTicks > 600) {
-            expire();
+            OrbImpact.expire(this);
             return;
         }
-        if (carrying) carryTick();
+        if (carrying) OrbFlight.carry(this);
 
         // fire and wind tear through foliage; every other shot passes through it
         if ((mode == OrbMode.LAVA || mode == OrbMode.IGNITE) && com.ethermod.config.ServerConfig.fireAndLava()
@@ -604,15 +488,13 @@ public class BeamBallEntity extends Projectile {
                     position().add(movement),
                     mode != OrbMode.GUST);
 
-        pathTraits();
+        OrbFlight.seek(this);
         OrbFrost.frostBridge(this, position(), movement);
         movement = getDeltaMovement(); // Seeker may have steered
 
         // Hit detection. Grass and flowers have no collision; leaves do, and shots hit them unless
         // the server lets everything pass through leaves (then a leaf hit is looked past)
-        java.util.function.Predicate<Entity> canHit =
-                e ->
-                        canHitEntity(e) && !pierced.contains(e.getId());
+        java.util.function.Predicate<Entity> canHit = this::canHitEntity;
         HitResult hit = ProjectileUtil.getHitResultOnMoveVector(this, canHit);
         if (leaves(hit) && movement.lengthSqr() > 1e-6) {
             Vec3 end = position().add(movement), dir = movement.normalize();
@@ -650,207 +532,9 @@ public class BeamBallEntity extends Projectile {
                 && level().getBlockState(bh.getBlockPos()).is(net.minecraft.tags.BlockTags.LEAVES);
     }
 
-    /** Gravity this tick: Slipstream floats liquid orbs in water, Tidecaller rides flatter. */
-    float gravityNow() {
-        OrbMode mode = getMode();
-        if (meteor == 2) return 0.12f;
-        if (mode == OrbMode.WATER
-                && isInWater()
-                && !traits.isEmpty()
-                && Traits.hasCommon(traits, Traits.HYDRAULIC, 1)) return 0f;
-        if (carrying) return mode.gravity() * 0.35f;
-        return mode.gravity();
-    }
-
-    /** Tidecaller: pulls the owner along just behind the orb. */
-    void carryTick() {
-        if (!(getOwner() instanceof ServerPlayer sp) || !sp.isAlive() || sp.level() != level()) {
-            carrying = false;
-            return;
-        }
-        Vec3 v = getDeltaMovement();
-        Vec3 spot =
-                position()
-                        .subtract(v.lengthSqr() > 1e-4 ? v.normalize().scale(2.2) : Vec3.ZERO)
-                        .subtract(0, sp.getBbHeight() * 0.5, 0);
-        Vec3 want = spot.subtract(sp.position());
-        Vec3 nv = want.scale(0.5);
-        if (nv.length() > 2.2) nv = nv.normalize().scale(2.2);
-        sp.setDeltaMovement(nv);
-        sp.hurtMarked = true;
-        // the trident's riptide spin, kept going for as long as the shot carries you
-        if (!sp.isAutoSpinAttack() || tickCount % 4 == 0) sp.startAutoSpinAttack(6, 6f, traits);
-        sp.resetFallDistance();
-        com.ethermod.trait.MobilityEffects.markSoftLanding(sp);
-    }
-
-    /** Meteor: once the glob slows at the top, it drops onto where its owner aims. */
-    void meteorTick() {
-        if (meteor != 1 || (getDeltaMovement().y > 0.15 && lifeTicks < 40)) return;
-        meteor = 2;
-        if (getOwner() instanceof ServerPlayer sp && sp.level() == level()) {
-            Vec3 eye = sp.getEyePosition();
-            Vec3 aim =
-                    level().clip(
-                                    new net.minecraft.world.level.ClipContext(
-                                            eye,
-                                            eye.add(sp.getLookAngle().scale(96)),
-                                            net.minecraft.world.level.ClipContext.Block.COLLIDER,
-                                            net.minecraft.world.level.ClipContext.Fluid.NONE,
-                                            sp))
-                            .getLocation();
-            double y = Math.max(getY(), aim.y + 24);
-            setPos(aim.x, y, aim.z);
-        }
-        setDeltaMovement(0, -1.2, 0);
-        ((ServerLevel) level())
-                .playSound(
-                        null,
-                        getX(),
-                        getY(),
-                        getZ(),
-                        com.ethermod.sound.ModSounds.WORLD_BLAZE_SHOOT,
-                        SoundSource.PLAYERS,
-                        1f,
-                        0.6f);
-    }
-
-    /** Orbit: where the orb sits on its circle around the owner (both sides run this). */
-    void orbitPosition() {
-        Entity o = getOwner();
-        if (o == null) return;
-        var peers =
-                level().getEntitiesOfClass(
-                                BeamBallEntity.class,
-                                o.getBoundingBox().inflate(4),
-                                e -> e.getOwner() == o && e.isOrbiting());
-        peers.sort(java.util.Comparator.comparingInt(Entity::getId));
-        int index = Math.max(0, peers.indexOf(this));
-        double a =
-                level().getGameTime() * 0.22 + index * (Math.PI * 2.0 / Math.max(1, peers.size()));
-        Vec3 c = o.position().add(0, o.getBbHeight() * 0.55, 0);
-        setPos(c.x + Math.cos(a) * 1.6, c.y, c.z + Math.sin(a) * 1.6);
-    }
-
-    /** Orbit: circle, hurt what it touches, launch when RMB is let go (or after 30 s). */
-    void orbitTick() {
-        if (!(getOwner() instanceof ServerPlayer sp) || !sp.isAlive() || sp.level() != level()) {
-            discard();
-            return;
-        }
-        orbitPosition();
-        lifeTicks++;
-        ServerLevel sl = (ServerLevel) level();
-        // LEFTOVER(trait): kinetic.orbit can no longer be picked
-        if (lifeTicks > 600 || !Traits.has(Manipulator.stack(sp), "kinetic.orbit")) {
-            discard();
-            return;
-        }
-        HitResult block =
-                sl.clip(
-                        new net.minecraft.world.level.ClipContext(
-                                sp.getEyePosition(),
-                                position(),
-                                net.minecraft.world.level.ClipContext.Block.COLLIDER,
-                                net.minecraft.world.level.ClipContext.Fluid.NONE,
-                                sp));
-        if (block instanceof BlockHitResult bh && block.getType() == HitResult.Type.BLOCK) {
-            onHitBlock(bh);
-            discard();
-            return;
-        }
-        for (var e :
-                sl.getEntitiesOfClass(
-                        LivingEntity.class,
-                        getBoundingBox().inflate(0.35),
-                        e ->
-                                !com.ethermod.beam.Mounts.own(sp, e)
-                                        && e.isAlive()
-                                        && !com.ethermod.trait.RedesignEffects.ally(sp, e))) {
-            onHitEntity(new EntityHitResult(e));
-            break;
-        }
-    }
-
-    /**
-     * Max range reached without hitting anything: the projectile still does its job where it is,
-     * instead of just vanishing.
-     */
-    void expire() {
-        if (getMode() == OrbMode.TETHER && has("gravitic.skyhook") && !zipPlacing) {
-            OrbTether.hookAir(this);
-            return;
-        }
-
-        ServerLevel sl = (ServerLevel) level();
-        Vec3 at = position();
-        BlockPos here = blockPosition();
-        switch (getMode()) {
-            case ENERGY -> {
-                double r = PHASE_RADIUS[getPhase()] * 2 + 1;
-                for (LivingEntity e :
-                        sl.getEntitiesOfClass(
-                                LivingEntity.class,
-                                getBoundingBox().inflate(r),
-                                e -> e != getOwner() && e.isAlive())) {
-                    e.hurt(
-                            damageSources()
-                                    .thrown(
-                                            this,
-                                            getOwner() instanceof LivingEntity le ? le : this),
-                            damage * 0.6f);
-                }
-            }
-            case WATER -> {
-                OrbFluids.placeFluid(this, here, Direction.UP, Fluids.WATER);
-                ProjectileEffects.waterImpact(this, traits, at);
-            }
-            case LAVA -> {
-                if (OrbFluids.placeFluid(this, here, Direction.UP, Fluids.LAVA))
-                    OrbFluids.lavaPlaced(this, here);
-            }
-            case IGNITE -> OrbNature.ignite(this, here.below(), Direction.UP);
-            case FROST -> {
-                if (mayBuild(here))
-                    WorldEffects.tempBlock(
-                            sl,
-                            here,
-                            Blocks.PACKED_ICE.defaultBlockState(),
-                            OrbFrost.bridgeTicks(this),
-                            OrbFrost.permafrost(this));
-            }
-            case LIGHT -> {
-                OrbLight.lightImpact(this, here, null);
-                OrbLight.lightExtras(this, at);
-            }
-            case GUST -> OrbGust.gustBurst(this, at);
-            case MASS -> OrbMass.dropCarried(this, at);
-            case GROWTH -> OrbNature.grow(this, here);
-            default -> {}
-        }
-        impactFx(at);
-        discard();
-    }
-
     // =========================================================================
     // Flight traits (Orb line: paths and Seeker)
     // =========================================================================
-
-    void pathTraits() {
-        ServerLevel sl = (ServerLevel) level();
-        BlockPos here = blockPosition();
-
-        if (seekerTarget != null
-                && getMode() != OrbMode.TETHER
-                && getMode() != OrbMode.MASS
-                && sl.getEntity(seekerTarget) instanceof LivingEntity target
-                && target.isAlive()) {
-            Vec3 v = getDeltaMovement();
-            Vec3 wish = target.getBoundingBox().getCenter().subtract(position()).normalize();
-            setDeltaMovement(
-                    v.normalize().scale(.85).add(wish.scale(.15)).normalize().scale(v.length()));
-        }
-    }
 
     // =========================================================================
     // Hit resolution
@@ -858,718 +542,33 @@ public class BeamBallEntity extends Projectile {
 
     @Override
     protected void onHitEntity(EntityHitResult result) {
-        if (level().isClientSide) return;
-        ServerLevel sl = (ServerLevel) level();
-        Entity target = result.getEntity();
-        Entity owner = getOwner();
-        if (getMode() == OrbMode.WATER)
-            ProjectileEffects.waterImpact(this, traits, result.getLocation());
-        if (getMode() == OrbMode.WATER
-                && target instanceof net.minecraft.world.entity.monster.EnderMan
-                && owner instanceof ServerPlayer rain)
-            com.ethermod.advancement.ManipulatorTrigger.fire(rain, "rain_check");
-        int ph = getPhase();
-        if (owner instanceof ServerPlayer sp
-                && target instanceof LivingEntity le
-                && (getMode() == OrbMode.LAVA || getMode() == OrbMode.IGNITE))
-            com.ethermod.trait.RedesignEffects.burn(le, sp, 4 + ph * 2, ph);
-        switch (getMode()) {
-            case ENERGY -> {
-                float dmg = damage;
-                if (BeamCastHelper.isIonized(target)) dmg *= BeamCastHelper.ionizeBonus(target);
-                target.hurt(
-                        damageSources().thrown(this, owner instanceof LivingEntity le ? le : this),
-                        dmg);
-                if (burningLight && target instanceof LivingEntity le) le.igniteForSeconds(5);
-            }
-            case VACUUM -> {}
-            case WATER -> {
-                target.clearFire();
-                int pressure = 0; // (the old Pressure bonus; Pressure now keeps placed water)
-                double force = pressure > 0 ? 1.0 + 0.6 * ph : 0.4 + 0.3 * ph;
-                if (pressure > 0)
-                    target.hurt(
-                            damageSources()
-                                    .thrown(this, owner instanceof LivingEntity o ? o : this),
-                            2 + 2 * ph);
-                Vec3 push = getDeltaMovement().normalize().scale(force);
-                target.setDeltaMovement(
-                        target.getDeltaMovement().add(push.x, 0.15 + force * 0.1, push.z));
-                target.hurtMarked = true;
-                if (pressure > 0) OrbFluids.extinguish(this, target.blockPosition(), 1 + pressure);
-                OrbFluids.placeFluid(this, target.blockPosition(), null, Fluids.WATER);
-            }
-            case LAVA -> {
-                target.igniteForSeconds(5);
-                if (OrbFluids.placeFluid(this, target.blockPosition(), null, Fluids.LAVA))
-                    OrbFluids.lavaPlaced(this, target.blockPosition());
-            }
-            case FROST -> {
-                if (target instanceof LivingEntity le) {
-                    le.addEffect(
-                            new net.minecraft.world.effect.MobEffectInstance(
-                                    net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN,
-                                    100 + 60 * ph,
-                                    1 + ph));
-                    le.setTicksFrozen(
-                            Math.max(le.getTicksFrozen(), le.getTicksRequiredToFreeze() + 60));
-                    le.hurt(damageSources().freeze(), 1f + ph);
-                }
-            }
-            case IGNITE -> {
-                // LEFTOVER(trait): pyrotechnic.incendiary can no longer be picked
-                int inc = rank("pyrotechnic.incendiary");
-                target.igniteForSeconds(inc >= 2 ? 12 : inc == 1 ? 8 : 4 + 2 * ph);
-            }
-            case GROWTH -> {
-                if (target instanceof LivingEntity victim
-                        && owner instanceof ServerPlayer sp
-                        && com.ethermod.trait.RedesignEffects.enemy(sp, victim)
-                        && (victim instanceof net.minecraft.world.entity.monster.Enemy
-                                || victim instanceof net.minecraft.world.entity.Mob m
-                                        && m.getTarget() == sp)) {
-                    int potency = 0;
-                    victim.addEffect(
-                            new net.minecraft.world.effect.MobEffectInstance(
-                                    net.minecraft.world.effect.MobEffects.POISON, 100, potency));
-                    victim.addEffect(
-                            new net.minecraft.world.effect.MobEffectInstance(
-                                    net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN,
-                                    100,
-                                    potency));
-                }
-                if (target instanceof net.minecraft.world.entity.AgeableMob baby && baby.isBaby()) {
-                    baby.ageUp(
-                            net.minecraft.world.entity.AgeableMob.getSpeedUpSecondsWhenFeeding(
-                                    -baby.getAge()),
-                            true);
-                }
-            }
-            case LIGHT -> {
-                if (target instanceof LivingEntity le) {
-
-                    // Sunfire: Light burns the undead
-                    // LEFTOVER(trait): photonic.sunfire can no longer be picked
-                    int sun = rank("photonic.sunfire");
-                    if (sun > 0 && le.getType().is(net.minecraft.tags.EntityTypeTags.UNDEAD)) {
-                        le.hurt(
-                                damageSources()
-                                        .thrown(this, owner instanceof LivingEntity o ? o : this),
-                                3f + 1.5f * sun + 2f * ph);
-                        le.igniteForSeconds(5);
-                    }
-                }
-                OrbLight.lightImpact(this, target.blockPosition(), null);
-                OrbLight.lightExtras(this, result.getLocation());
-            }
-            case GUST -> OrbGust.gustBurst(this, result.getLocation());
-            case MASS -> {
-                // the block bounces back off the creature and flies on, then lands as usual
-                OrbMass.massHitEntity(this, target, result.getLocation());
-                return;
-            }
-            case TETHER -> {
-                // the hook catches the creature and holds; right click reels it in (tetherTick)
-                if (owner instanceof ServerPlayer sp) OrbTether.catchEntity(this, target, sp);
-                return;
-            }
-            default -> {}
-        }
-        impactFx(result.getLocation());
-        afterImpact(result.getLocation());
-        if (piercesLeft-- > 0 && !isOrbiting()) {
-            pierced.add(target.getId());
-            setPos(result.getLocation().add(getDeltaMovement().normalize().scale(0.5)));
-            return;
-        }
-        discard();
+        OrbImpact.onEntity(this, result);
     }
 
     @Override
     protected void onHitBlock(BlockHitResult result) {
-        if (level().isClientSide) {
-            discard();
-            return;
-        }
-        ServerLevel sl = (ServerLevel) level();
-        BlockPos hitPos = result.getBlockPos();
-        Direction face = result.getDirection();
-        BlockPos front = hitPos.relative(face);
-        int ph = getPhase();
-        if (getMode() == OrbMode.WATER)
-            ProjectileEffects.waterImpact(this, traits, result.getLocation());
-        // LEFTOVER(trait): kinetic.payload can no longer be picked
-        int payload = ph == 2 ? rank("kinetic.payload") : 0; // Payload: 3x3, then 5x5
-
-        // Tether: the hook catches the block and holds (see tetherTick)
-        if (getMode() == OrbMode.TETHER) {
-            // Blink and Gravity Shift wait for a double tap of right click (OrbTether.press)
-            hookFace = face;
-            Vec3 at = result.getLocation();
-            setPos(at.x, at.y, at.z);
-            setDeltaMovement(Vec3.ZERO);
-            entityData.set(STUCK, true);
-            stuckBlock = virtualHit ? null : hitPos;
-            if (getOwner() instanceof ServerPlayer sp) ropeStart = sp.getEyePosition();
-            // the sound and the reel wait for the claw to clamp (OrbTether.HOOK_DELAY)
-            hookAt = sl.getGameTime() + OrbTether.HOOK_DELAY;
-            hookPitch = 1.3f;
-            if (getOwner() instanceof ServerPlayer sp) {
-                if (zipPlacing) {
-                    com.ethermod.trait.Ziplines.onHookStuck(sp, this);
-                    if (!isAnchor()) com.ethermod.trait.Ziplines.pin(sp, this);
-                }
-            }
-            return;
-        }
-
-        // Bank Shot (and the Light orb's own bounces)
-        if (bouncesLeft > 0 && meteor != 2) {
-            bouncesLeft--;
-            if (getMode() == OrbMode.LIGHT) traveledDistance = 0f;
-            if (getMode() == OrbMode.LIGHT && mayBuild(front) && sl.getBlockState(front).isAir()) {
-                WorldEffects.tempLight(sl, front, 13, lightLife);
-                sl.sendParticles(
-                        ParticleTypes.END_ROD,
-                        front.getX() + 0.5,
-                        front.getY() + 0.5,
-                        front.getZ() + 0.5,
-                        6,
-                        0.2,
-                        0.2,
-                        0.2,
-                        0.05);
-            }
-            Vec3 v = getDeltaMovement();
-            Vec3 n = new Vec3(face.getStepX(), face.getStepY(), face.getStepZ());
-            Vec3 r = v.subtract(n.scale(2 * v.dot(n)));
-            setDeltaMovement(r);
-            if (getMode() == OrbMode.LIGHT)
-                ProjectileEffects.lightBounce(this, traits, result.getLocation().add(n.scale(0.3)));
-            Vec3 at = result.getLocation().add(n.scale(0.2));
-            setPos(at.x, at.y, at.z);
-            sl.playSound(
-                    null,
-                    at.x,
-                    at.y,
-                    at.z,
-                    com.ethermod.sound.ModSounds.WORLD_AMETHYST_BLOCK_HIT,
-                    SoundSource.PLAYERS,
-                    0.8f,
-                    1.6f);
-            return;
-        }
-
-        switch (getMode()) {
-            case ENERGY, VACUUM -> {}
-            case WATER -> {
-                carrying = false;
-                // Cauldrons and other mods' tanks take the bucket
-                if (OrbFluids.fillContainer(this, hitPos, face, Fluids.WATER)) break;
-                BlockState hitState = sl.getBlockState(hitPos);
-                boolean placed =
-                        (hitState.getBlock() instanceof SimpleWaterloggedBlock
-                                        && OrbFluids.placeFluid(this, hitPos, face, Fluids.WATER))
-                                || OrbFluids.placeFluid(this, front, face, Fluids.WATER);
-                if (placed && payload > 0) OrbFluids.spill(this, front, payload, Fluids.WATER);
-                // Quench: lava it lands on turns to obsidian or cobblestone, II in a 3x3
-                // LEFTOVER(trait): hydraulic.quench can no longer be picked
-                if (has("hydraulic.quench"))
-                    // LEFTOVER(trait): hydraulic.quench can no longer be picked
-                    OrbFluids.quenchLava(this, front, rank("hydraulic.quench") >= 2 ? 1 : 0);
-                OrbFluids.extinguish(
-                        this,
-                        front,
-                        Math.max(
-                                ph,
-                                1));
-                if (ph >= 1) {
-                    // a splash: shove creatures back from the impact
-                    for (LivingEntity e :
-                            sl.getEntitiesOfClass(
-                                    LivingEntity.class,
-                                    new AABB(front).inflate(1 + ph),
-                                    e -> e != getOwner())) {
-                        Vec3 away = e.position().subtract(Vec3.atCenterOf(front));
-                        away = away.lengthSqr() < 1e-4 ? new Vec3(0, 1, 0) : away.normalize();
-                        e.setDeltaMovement(
-                                e.getDeltaMovement()
-                                        .add(away.x * 0.6 * ph, 0.25, away.z * 0.6 * ph));
-                        e.hurtMarked = true;
-                        e.clearFire();
-                    }
-                }
-                if (ph == 2) {
-                    // and soak the soil: farmland 5x5 becomes fully watered
-                    for (BlockPos bp :
-                            BlockPos.betweenClosed(
-                                    front.offset(-2, -2, -2), front.offset(2, 1, 2))) {
-                        BlockState fs = sl.getBlockState(bp);
-                        if (fs.getBlock() instanceof net.minecraft.world.level.block.FarmBlock
-                                && mayBuild(bp)) {
-                            sl.setBlock(
-                                    bp,
-                                    fs.setValue(
-                                            net.minecraft.world.level.block.FarmBlock.MOISTURE, 7),
-                                    Block.UPDATE_CLIENTS);
-                        }
-                    }
-                    sl.sendParticles(
-                            ParticleTypes.SPLASH,
-                            front.getX() + 0.5,
-                            front.getY() + 0.2,
-                            front.getZ() + 0.5,
-                            40,
-                            1.5,
-                            0.2,
-                            1.5,
-                            0.1);
-                    // Wave: the water rolls on along the ground
-                    // LEFTOVER(trait): hydraulic.wave can no longer be picked
-                    if (has("hydraulic.wave")) {
-                        Vec3 v = getDeltaMovement();
-                        Direction dir = Direction.getNearest(v.x, 0, v.z);
-                        if (dir.getAxis().isHorizontal())
-                            WorldEffects.wave(sl, front.relative(dir), dir, getOwner(), 14);
-                    }
-                }
-            }
-            case LAVA -> {
-                if (OrbFluids.forgeHeart(this, hitPos)) break;
-                if (OrbFluids.fillContainer(this, hitPos, face, Fluids.LAVA)) break;
-                if (OrbFluids.placeFluid(this, front, face, Fluids.LAVA)) {
-                    OrbFluids.lavaPlaced(this, front);
-                    if (payload > 0) OrbFluids.spill(this, front, payload, Fluids.LAVA);
-                    // charged: fire splashes out around the pool
-                    if (ph >= 1) WorldEffects.fireRing(sl, front, getOwner(), ph);
-                }
-                if (meteor == 2) meteorImpact(result.getLocation());
-            }
-            case FROST -> {
-                // Tap: freeze the water block hit, or the air in front of the face, into ice
-                if (sl.getBlockState(hitPos).is(Blocks.WATER) && mayBuild(hitPos)) {
-                    WorldEffects.tempBlock(
-                            sl,
-                            hitPos,
-                            Blocks.PACKED_ICE.defaultBlockState(),
-                            OrbFrost.bridgeTicks(this),
-                            OrbFrost.permafrost(this));
-                } else if (mayBuild(front)) {
-                    WorldEffects.tempBlock(
-                            sl,
-                            front,
-                            Blocks.PACKED_ICE.defaultBlockState(),
-                            OrbFrost.bridgeTicks(this),
-                            OrbFrost.permafrost(this));
-                }
-                // Charged: freeze a patch of water (lava turns to obsidian for good)
-                // LEFTOVER(trait): hydraulic.permafrost can no longer be picked
-                int r = (ph == 2 ? 2 : ph) + (rank("hydraulic.permafrost") >= 2 ? 1 : 0) + payload;
-                for (BlockPos p :
-                        BlockPos.betweenClosed(front.offset(-r, -1, -r), front.offset(r, 0, r))) {
-                    if (sl.getBlockState(p).is(Blocks.WATER)
-                            && sl.getFluidState(p).isSource()
-                            && mayBuild(p)) {
-                        WorldEffects.tempBlock(
-                                sl,
-                                p.immutable(),
-                                Blocks.PACKED_ICE.defaultBlockState(),
-                                OrbFrost.bridgeTicks(this),
-                                OrbFrost.permafrost(this));
-                    } else if (sl.getBlockState(p).is(Blocks.LAVA)
-                            && sl.getFluidState(p).isSource()
-                            && mayBuild(p)) {
-                        sl.setBlockAndUpdate(p, Blocks.OBSIDIAN.defaultBlockState());
-                    }
-                }
-                for (LivingEntity e :
-                        sl.getEntitiesOfClass(
-                                LivingEntity.class,
-                                new AABB(front).inflate(1 + r),
-                                e -> e != getOwner())) {
-                    e.addEffect(
-                            new net.minecraft.world.effect.MobEffectInstance(
-                                    net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN,
-                                    100,
-                                    1));
-                }
-            }
-            case IGNITE -> {
-                if (!OrbFluids.forgeHeart(this, hitPos)) OrbNature.ignite(this, hitPos, face);
-            }
-            case GROWTH -> OrbNature.grow(this, hitPos);
-            case LIGHT -> {
-                OrbLight.lightImpact(this, front, hitPos);
-                OrbLight.lightExtras(this, result.getLocation());
-            }
-            case GUST -> OrbGust.gustBurst(this, result.getLocation());
-            case MASS -> {
-                // a thrown block bounces off the first thing it hits, then places itself
-                if (massBounces > 0) {
-                    massBounces--;
-                    OrbMass.bounce(this, face, result.getLocation());
-                    return;
-                }
-                OrbMass.massPlace(this, hitPos, face, result.getLocation());
-            }
-            default -> {}
-        }
-        impactFx(result.getLocation());
-        afterImpact(result.getLocation());
-        discard();
-    }
-
-    /** Effects that follow any impact. */
-    void afterImpact(Vec3 at) {
-        scheduleEcho(at);
-    }
-
-    /** Echo: a phase 3 impact happens again a second later, at half strength (full at II). */
-    void scheduleEcho(Vec3 at) {
-        if (echo
-                || getPhase() != 2
-                // LEFTOVER(trait): kinetic.echo can no longer be picked
-                || !has("kinetic.echo")
-                || isDrifting()
-                || !(getOwner() instanceof LivingEntity owner)) return;
-        ServerLevel sl = (ServerLevel) level();
-        Vec3 v = getDeltaMovement().lengthSqr() > 1e-4 ? getDeltaMovement() : new Vec3(0, -0.5, 0);
-        ItemStack snap = traits.copy();
-        OrbMode mode = getMode();
-        ManipulatorStage stage = getStage();
-        // LEFTOVER(trait): kinetic.echo can no longer be picked
-        float dmg = damage * (rank("kinetic.echo") >= 2 ? 1f : 0.5f);
-        WorldEffects.schedule(
-                sl,
-                20,
-                () -> {
-                    if (!owner.isAlive() || owner.level() != sl) return;
-                    BeamBallEntity e = new BeamBallEntity(sl, owner, 2, stage, mode);
-                    e.configure(snap);
-                    e.damage = dmg;
-                    e.echo = true;
-                    e.bouncesLeft = 0;
-                    Vec3 start = at.subtract(v.normalize().scale(1.5));
-                    e.setPos(start.x, start.y, start.z);
-                    e.setDeltaMovement(v);
-                    sl.addFreshEntity(e);
-                });
+        OrbImpact.onBlock(this, result);
     }
 
     // =========================================================================
-    // Mode effects
+    // Mode effects (the bodies live in OrbImpact, OrbFx and the other Orb* helpers)
     // =========================================================================
 
     boolean mayBuild(BlockPos pos) {
         return !(getOwner() instanceof ServerPlayer sp) || com.ethermod.util.Protect.may(level(), sp, pos);
     }
 
-    /** Meteor landing: a blast that hurts and burns, without breaking blocks. */
-    void meteorImpact(Vec3 at) {
-        ServerLevel sl = (ServerLevel) level();
-        for (LivingEntity e :
-                sl.getEntitiesOfClass(
-                        LivingEntity.class,
-                        new AABB(at, at).inflate(3.5),
-                        e -> e != getOwner() && e.isAlive())) {
-            e.hurt(
-                    damageSources().thrown(this, getOwner() instanceof LivingEntity le ? le : this),
-                    10f);
-            if (getOwner() instanceof ServerPlayer sp)
-                com.ethermod.trait.RedesignEffects.burn(e, sp, 6, getPhase());
-            else e.igniteForSeconds(6);
-            Vec3 away = e.position().subtract(at);
-            away = away.lengthSqr() < 1e-4 ? new Vec3(0, 1, 0) : away.normalize();
-            e.setDeltaMovement(e.getDeltaMovement().add(away.x, 0.5, away.z));
-            e.hurtMarked = true;
-        }
-        WorldEffects.fireRing(sl, BlockPos.containing(at), getOwner(), 2);
-        sl.sendParticles(ParticleTypes.EXPLOSION_EMITTER, at.x, at.y, at.z, 1, 0, 0, 0, 0);
-        sl.sendParticles(ParticleTypes.LAVA, at.x, at.y, at.z, 30, 1.5, 0.5, 1.5, 0.2);
-        sl.playSound(
-                null,
-                at.x,
-                at.y,
-                at.z,
-                com.ethermod.sound.ModSounds.WORLD_GENERIC_EXPLODE,
-                SoundSource.PLAYERS,
-                1.2f,
-                0.8f);
-    }
-
     /** Impact burst, visible to everyone nearby. */
     void impactFx(Vec3 pos) {
-        if (!(level() instanceof ServerLevel sl)) return;
-        int ph = getPhase();
-
-        switch (getMode()) {
-            case ENERGY -> {
-                sl.sendParticles(ParticleTypes.FLASH, pos.x, pos.y, pos.z, 1, 0, 0, 0, 0);
-                sl.sendParticles(
-                        ParticleTypes.ELECTRIC_SPARK,
-                        pos.x,
-                        pos.y,
-                        pos.z,
-                        12 + 10 * ph,
-                        0.2,
-                        0.2,
-                        0.2,
-                        0.5 + 0.3 * ph);
-                sl.sendParticles(
-                        ParticleTypes.END_ROD,
-                        pos.x,
-                        pos.y,
-                        pos.z,
-                        4 + 4 * ph,
-                        0.1,
-                        0.1,
-                        0.1,
-                        0.12);
-                sl.playSound(
-                        null,
-                        pos.x,
-                        pos.y,
-                        pos.z,
-                        com.ethermod.sound.ModSounds.WORLD_AMETHYST_CLUSTER_BREAK,
-                        SoundSource.PLAYERS,
-                        0.7f + 0.2f * ph,
-                        1.6f - 0.25f * ph);
-            }
-            case VACUUM -> {
-                sl.sendParticles(
-                        ParticleTypes.REVERSE_PORTAL,
-                        pos.x,
-                        pos.y,
-                        pos.z,
-                        30 + 15 * ph,
-                        0.6,
-                        0.6,
-                        0.6,
-                        0.1);
-                sl.playSound(
-                        null,
-                        pos.x,
-                        pos.y,
-                        pos.z,
-                        com.ethermod.sound.ModSounds.WORLD_ENDERMAN_TELEPORT,
-                        SoundSource.PLAYERS,
-                        0.5f,
-                        1.8f);
-            }
-            case WATER -> {
-                sl.sendParticles(
-                        ParticleTypes.SPLASH,
-                        pos.x,
-                        pos.y,
-                        pos.z,
-                        30 + 15 * ph,
-                        0.4,
-                        0.3,
-                        0.4,
-                        0.2);
-                sl.sendParticles(
-                        ParticleTypes.BUBBLE_POP, pos.x, pos.y, pos.z, 10, 0.3, 0.3, 0.3, 0.05);
-                sl.playSound(
-                        null,
-                        pos.x,
-                        pos.y,
-                        pos.z,
-                        com.ethermod.sound.ModSounds.WORLD_PLAYER_SPLASH,
-                        SoundSource.PLAYERS,
-                        0.6f,
-                        1.3f);
-            }
-            case LAVA -> {
-                sl.sendParticles(
-                        ParticleTypes.LAVA, pos.x, pos.y, pos.z, 10 + 6 * ph, 0.3, 0.2, 0.3, 0.1);
-                sl.sendParticles(
-                        ParticleTypes.LARGE_SMOKE, pos.x, pos.y, pos.z, 6, 0.3, 0.3, 0.3, 0.02);
-                sl.playSound(
-                        null,
-                        pos.x,
-                        pos.y,
-                        pos.z,
-                        com.ethermod.sound.ModSounds.WORLD_LAVA_EXTINGUISH,
-                        SoundSource.PLAYERS,
-                        0.5f,
-                        1.2f);
-            }
-            case FROST -> {
-                sl.sendParticles(
-                        ParticleTypes.SNOWFLAKE,
-                        pos.x,
-                        pos.y,
-                        pos.z,
-                        25 + 15 * ph,
-                        0.5,
-                        0.4,
-                        0.5,
-                        0.05);
-                sl.sendParticles(
-                        ParticleTypes.ITEM_SNOWBALL, pos.x, pos.y, pos.z, 10, 0.3, 0.3, 0.3, 0.1);
-                sl.playSound(
-                        null,
-                        pos.x,
-                        pos.y,
-                        pos.z,
-                        com.ethermod.sound.ModSounds.WORLD_GLASS_BREAK,
-                        SoundSource.PLAYERS,
-                        0.7f,
-                        1.5f);
-            }
-            case IGNITE -> {
-                sl.sendParticles(
-                        isSoulFire() ? ParticleTypes.SOUL_FIRE_FLAME : ParticleTypes.FLAME,
-                        pos.x,
-                        pos.y,
-                        pos.z,
-                        16 + 8 * ph,
-                        0.3,
-                        0.3,
-                        0.3,
-                        0.04);
-                sl.sendParticles(ParticleTypes.SMOKE, pos.x, pos.y, pos.z, 8, 0.2, 0.2, 0.2, 0.02);
-                sl.playSound(
-                        null,
-                        pos.x,
-                        pos.y,
-                        pos.z,
-                        com.ethermod.sound.ModSounds.WORLD_FIRECHARGE_USE,
-                        SoundSource.PLAYERS,
-                        0.6f,
-                        1.3f);
-            }
-            case GROWTH -> {
-                sl.sendParticles(
-                        ParticleTypes.HAPPY_VILLAGER,
-                        pos.x,
-                        pos.y,
-                        pos.z,
-                        15 + 10 * ph,
-                        0.6,
-                        0.4,
-                        0.6,
-                        0.05);
-                sl.sendParticles(
-                        ParticleTypes.CHERRY_LEAVES,
-                        pos.x,
-                        pos.y + 0.5,
-                        pos.z,
-                        8,
-                        0.5,
-                        0.3,
-                        0.5,
-                        0.02);
-                sl.playSound(
-                        null,
-                        pos.x,
-                        pos.y,
-                        pos.z,
-                        com.ethermod.sound.ModSounds.WORLD_BONE_MEAL_USE,
-                        SoundSource.PLAYERS,
-                        0.8f,
-                        1.2f);
-            }
-            case LIGHT -> {
-                sl.sendParticles(ParticleTypes.FLASH, pos.x, pos.y, pos.z, 1, 0, 0, 0, 0);
-                sl.sendParticles(
-                        ParticleTypes.END_ROD,
-                        pos.x,
-                        pos.y,
-                        pos.z,
-                        10 + 6 * ph,
-                        0.3,
-                        0.3,
-                        0.3,
-                        0.08);
-                sl.playSound(
-                        null,
-                        pos.x,
-                        pos.y,
-                        pos.z,
-                        com.ethermod.sound.ModSounds.WORLD_AMETHYST_BLOCK_CHIME,
-                        SoundSource.PLAYERS,
-                        1f,
-                        1.6f);
-            }
-            case TETHER -> {
-                sl.sendParticles(ParticleTypes.WITCH, pos.x, pos.y, pos.z, 12, 0.3, 0.3, 0.3, 0.05);
-            }
-            case MASS -> {
-                BlockState c = getCarried();
-                if (!c.isAir())
-                    sl.sendParticles(
-                            new net.minecraft.core.particles.BlockParticleOption(
-                                    ParticleTypes.BLOCK, c),
-                            pos.x,
-                            pos.y,
-                            pos.z,
-                            20,
-                            0.3,
-                            0.3,
-                            0.3,
-                            0.1);
-            }
-            default -> {}
-        }
+        OrbFx.impact(this, pos);
     }
-
-    // =========================================================================
-    // Photonic
-    // =========================================================================
-
-    // =========================================================================
-    // Pneumatic: Gust
-    // =========================================================================
-
-    // =========================================================================
-    // Tectonic: Mass Driver
-    // =========================================================================
 
     // =========================================================================
     // Kinetic: Detonator
     // =========================================================================
 
-    /** Detonator: burst right where it is, with its full impact effect. */
-    static void blinkTo(ServerPlayer player, Vec3 at) {
-        ServerLevel sl = player.serverLevel();
-        Vec3 old = player.position();
-        sl.sendParticles(ParticleTypes.PORTAL, old.x, old.y + 1, old.z, 32, .3, .7, .3, .15);
-        player.teleportTo(
-                sl, at.x, at.y, at.z, java.util.Set.of(), player.getYRot(), player.getXRot());
-        sl.sendParticles(ParticleTypes.PORTAL, at.x, at.y + 1, at.z, 32, .3, .7, .3, .15);
-        sl.playSound(
-                null,
-                old.x,
-                old.y,
-                old.z,
-                com.ethermod.sound.ModSounds.WORLD_ENDERMAN_TELEPORT,
-                SoundSource.PLAYERS,
-                .8f,
-                1f);
-        sl.playSound(
-                null,
-                at.x,
-                at.y,
-                at.z,
-                com.ethermod.sound.ModSounds.WORLD_ENDERMAN_TELEPORT,
-                SoundSource.PLAYERS,
-                .8f,
-                1f);
-    }
-
     public void detonate() {
-        if (level().isClientSide
-                || isRemoved()
-                || isStuck()
-                || isAnchor()
-                || getMode() == OrbMode.TETHER
-                || getMode() == OrbMode.VACUUM
-                || MassDriver.isHeld(this)) return;
-        entityData.set(ORBITING, false);
-        bouncesLeft = 0;
-        BlockPos here = blockPosition();
-        onHitBlock(new BlockHitResult(position(), Direction.UP, here.below(), false));
+        OrbImpact.detonate(this);
     }
 
     public void setFiredLeft(boolean left) {
@@ -1580,32 +579,9 @@ public class BeamBallEntity extends Projectile {
         return entityData.get(FIRED_LEFT);
     }
 
-    /** In the air and able to burst: not a hook, an anchor, a cone or a held block. */
-    private boolean detonatable() {
-        return !isRemoved()
-                && !isStuck()
-                && !isAnchor()
-                && getMode() != OrbMode.TETHER
-                && getMode() != OrbMode.VACUUM
-                && getMode() != OrbMode.MASS;
-    }
-
-    /**
-     * Detonator: pressing the input that fired a projectile again, while it is still in the air,
-     * bursts it (every one, for a Split volley) instead of firing another. True when something
-     * burst, so the press fires nothing; on the client it only answers whether one would.
-     */
+    /** Detonator: bursts this player's orbs fired with that input (see {@link OrbImpact#detonateFor}). */
     public static boolean detonateFor(Player p, ItemStack stack, boolean left) {
-        if (!Traits.has(stack, "kinetic.detonator")) return false;
-        var live =
-                p.level()
-                        .getEntitiesOfClass(
-                                BeamBallEntity.class,
-                                p.getBoundingBox().inflate(160),
-                                b -> b.getOwner() == p && b.firedLeft() == left && b.detonatable());
-        if (live.isEmpty()) return false;
-        if (!p.level().isClientSide) for (BeamBallEntity b : live) b.detonate();
-        return true;
+        return OrbImpact.detonateFor(p, stack, left);
     }
 
     // =========================================================================
@@ -1622,7 +598,6 @@ public class BeamBallEntity extends Projectile {
         tag.putInt("mm_color", entityData.get(COLOR));
         tag.putFloat(TAG_DAMAGE, damage);
         tag.putFloat(TAG_RANGE, maxRange);
-        tag.putBoolean(TAG_BURNING, burningLight);
         tag.putFloat(TAG_TRAVEL, traveledDistance);
         if (!getCarried().isAir())
             tag.put("mm_carried", net.minecraft.nbt.NbtUtils.writeBlockState(getCarried()));
@@ -1640,7 +615,6 @@ public class BeamBallEntity extends Projectile {
         if (tag.contains("mm_color")) entityData.set(COLOR, tag.getInt("mm_color"));
         damage = tag.getFloat(TAG_DAMAGE);
         maxRange = tag.getFloat(TAG_RANGE);
-        burningLight = tag.getBoolean(TAG_BURNING);
         traveledDistance = tag.getFloat(TAG_TRAVEL);
         if (tag.contains("mm_carried"))
             setCarried(

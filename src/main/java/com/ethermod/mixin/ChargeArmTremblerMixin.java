@@ -11,6 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -28,11 +29,12 @@ public abstract class ChargeArmTremblerMixin {
     @Shadow @Final public ModelPart leftArm;
 
     // a faint tremor: the hands only just shake, harder each stage
-    private static final float[] AMP = {0.003f, 0.007f, 0.012f, 0.02f};
+    @Unique private static final float[] AMP = {0.003f, 0.007f, 0.012f, 0.02f};
 
     @Inject(
             method = "setupAnim(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V",
-            at = @At("TAIL"))
+            at = @At("TAIL"),
+            require = 0)
     private void mm$chargeTremble(
             LivingEntity entity,
             float limbSwing,

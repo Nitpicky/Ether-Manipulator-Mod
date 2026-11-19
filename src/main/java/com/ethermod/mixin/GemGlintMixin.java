@@ -21,19 +21,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 /** Enchanted Gemstones glint in their Module's colour instead of vanilla purple. */
 @Mixin(ItemRenderer.class)
 public abstract class GemGlintMixin {
-    @Inject(method = "render", at = @At("HEAD"))
+    @Inject(method = "render", at = @At("HEAD"), require = 0)
     private void mm$gemStart(ItemStack stack, ItemDisplayContext ctx, boolean left, PoseStack pose,
             MultiBufferSource buffers, int light, int overlay, BakedModel model, CallbackInfo ci) {
         GemGlint.current = stack;
     }
 
-    @Inject(method = "render", at = @At("RETURN"))
+    @Inject(method = "render", at = @At("RETURN"), require = 0)
     private void mm$gemEnd(ItemStack stack, ItemDisplayContext ctx, boolean left, PoseStack pose,
             MultiBufferSource buffers, int light, int overlay, BakedModel model, CallbackInfo ci) {
         GemGlint.current = ItemStack.EMPTY;
     }
 
-    @Inject(method = "getFoilBuffer", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "getFoilBuffer", at = @At("HEAD"), cancellable = true, require = 0)
     private static void mm$gemFoil(MultiBufferSource buffers, RenderType type, boolean isItem, boolean glint,
             CallbackInfoReturnable<VertexConsumer> cir) {
         if (!glint || !isItem) return;
@@ -41,7 +41,7 @@ public abstract class GemGlintMixin {
         if (g != null) cir.setReturnValue(VertexMultiConsumer.create(buffers.getBuffer(g), buffers.getBuffer(type)));
     }
 
-    @Inject(method = "getFoilBufferDirect", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "getFoilBufferDirect", at = @At("HEAD"), cancellable = true, require = 0)
     private static void mm$gemFoilDirect(MultiBufferSource buffers, RenderType type, boolean noEntity, boolean glint,
             CallbackInfoReturnable<VertexConsumer> cir) {
         if (!glint || !noEntity) return;

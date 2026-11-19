@@ -36,7 +36,8 @@ public abstract class GravityCameraMixin {
     // Vanilla zoom must test terrain from the rotated eye and along the rotated view.
     @Inject(
             method = "setup",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Camera;getMaxZoom(F)F"))
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Camera;getMaxZoom(F)F"),
+            require = 0)
     private void mm$thirdPerson(
             BlockGetter level,
             Entity entity,
@@ -47,7 +48,7 @@ public abstract class GravityCameraMixin {
         if (entity instanceof Player p && MovementPhysics.isTurning(p)) mm$align(p, partial);
     }
 
-    @Inject(method = "setup", at = @At("TAIL"))
+    @Inject(method = "setup", at = @At("TAIL"), require = 0)
     private void mm$firstPerson(
             BlockGetter level,
             Entity entity,

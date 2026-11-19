@@ -43,7 +43,7 @@ final class OrbFluids {
         if (speed < 1e-3) return;
         Vec3 target = sp.getEyePosition().add(sp.getLookAngle().scale(48));
         Vec3 want = target.subtract(b.position()).normalize();
-        double k = helm >= 2 ? 0.22 : 0.12;
+        double k = 0.12;
         b.setDeltaMovement(
                 v.scale(1 / speed).scale(1 - k).add(want.scale(k)).normalize().scale(speed));
     }
@@ -140,40 +140,10 @@ final class OrbFluids {
                 true);
     }
 
-    /** Payload: extra sources around the first, in a square of radius {@code r} (air only). */
-    static void spill(
-            BeamBallEntity b,
-            BlockPos center,
-            int r,
-            net.minecraft.world.level.material.FlowingFluid fluid) {
-        ServerLevel sl = (ServerLevel) b.level();
-        for (BlockPos p :
-                BlockPos.betweenClosed(center.offset(-r, 0, -r), center.offset(r, 0, r))) {
-            if (p.equals(center) || !sl.getBlockState(p).isAir() || !b.mayBuild(p)) continue;
-            sl.setBlock(p, fluid.defaultFluidState().createLegacyBlock(), Block.UPDATE_ALL);
-            settle(b, p.immutable(), fluid);
-            if (fluid == Fluids.LAVA) OrbFluids.lavaPlaced(b, p.immutable());
-        }
-    }
-
-    /** Lava from an orb: remembered as the owner's (Fire Ward), and Obsidian Cast hardens it. */
+    /** Lava from an orb: remembered as the owner's (Fire Ward). */
     static void lavaPlaced(BeamBallEntity b, BlockPos pos) {
         ServerLevel sl = (ServerLevel) b.level();
         WorldEffects.ownLava(sl, pos, b.getOwner());
-        // LEFTOVER(trait): pyrotechnic.obsidian_cast can no longer be picked
-        int cast = b.rank("pyrotechnic.obsidian_cast");
-        if (cast > 0) {
-            BlockPos p = pos.immutable();
-            WorldEffects.schedule(
-                    sl,
-                    cast >= 2 ? 60 : 200,
-                    () -> {
-                        if (sl.getBlockState(p).is(Blocks.LAVA) && sl.getFluidState(p).isSource()) {
-                            sl.setBlockAndUpdate(p, Blocks.OBSIDIAN.defaultBlockState());
-                            sl.levelEvent(1501, p, 0);
-                        }
-                    });
-        }
     }
 
     /** Fluid Link (built in): cauldrons and other mods' tanks take the liquid instead. */
@@ -228,7 +198,7 @@ final class OrbFluids {
         return true;
     }
 
-    /** Forge Heart: a Lava orb fuels a furnace, smoker or blast furnace for 32 items (64 at II). */
+    /** Forge Heart: a Lava orb fuels a furnace, smoker or blast furnace for 32 items. */
     static boolean forgeHeart(BeamBallEntity b, BlockPos pos) {
         int heart = b.getMode() == OrbMode.IGNITE ? b.rank("pyrotechnic.kiln") : 0;
         if (heart <= 0 || !b.mayBuild(pos)) return false;
@@ -237,7 +207,7 @@ final class OrbFluids {
                 instanceof
                 net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity furnace))
             return false;
-        int items = heart >= 2 ? 64 : 32;
+        int items = 32;
         // a furnace cooks an item in 200 ticks; smokers and blast furnaces in 100
         int perItem =
                 furnace instanceof net.minecraft.world.level.block.entity.FurnaceBlockEntity
@@ -277,17 +247,5 @@ final class OrbFluids {
         }
         for (LivingEntity e : sl.getEntitiesOfClass(LivingEntity.class, new AABB(pos).inflate(r)))
             e.clearFire();
-    }
-
-    /** Water on lava: sources become obsidian, flowing lava cobblestone. */
-    static void quenchLava(BeamBallEntity b, BlockPos pos, int r) {
-        ServerLevel sl = (ServerLevel) b.level();
-        for (BlockPos bp : BlockPos.betweenClosed(pos.offset(-r, -1, -r), pos.offset(r, 1, r))) {
-            FluidState fs = sl.getFluidState(bp);
-            if (!fs.is(FluidTags.LAVA) || !b.mayBuild(bp)) continue;
-            sl.setBlockAndUpdate(
-                    bp, (fs.isSource() ? Blocks.OBSIDIAN : Blocks.COBBLESTONE).defaultBlockState());
-            sl.levelEvent(1501, bp, 0);
-        }
     }
 }

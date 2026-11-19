@@ -31,8 +31,6 @@ public final class WorldEffects {
 
     private WorldEffects() {}
 
-    private record Well(Vec3 center, long expires, Entity owner) {}
-
     /** A block placed for a while (Frost bridges), then put back as it was. */
     public static boolean showsExpiryCracks(
             net.minecraft.world.level.block.state.BlockState state) {
@@ -108,7 +106,6 @@ public final class WorldEffects {
     }
 
     private static final Map<ServerLevel, Map<BlockPos, Long>> LIGHTS = new HashMap<>();
-    private static final Map<ServerLevel, List<Well>> WELLS = new HashMap<>();
 
     /** Places an invisible light that removes itself after {@code ticks}. */
     public static void tempLight(ServerLevel level, BlockPos pos, int brightness, int ticks) {
@@ -150,12 +147,6 @@ public final class WorldEffects {
         PendingReverts.remove(level, pos);
     }
 
-    /** Pulls creatures and items toward a point for a while (Gravity Well). */
-    public static void gravityWell(ServerLevel level, Vec3 at, int ticks, Entity owner) {
-        WELLS.computeIfAbsent(level, k -> new ArrayList<>())
-                .add(new Well(at, level.getGameTime() + ticks, owner));
-    }
-
     /** A ring of fire of the given radius (1 = the 8 blocks around the centre). */
     public static void fireRing(ServerLevel level, BlockPos center, Entity owner, int radius) {
         for (BlockPos p :
@@ -164,19 +155,6 @@ public final class WorldEffects {
             int dx = Math.abs(p.getX() - center.getX()), dz = Math.abs(p.getZ() - center.getZ());
             if (Math.max(dx, dz) != radius) continue;
             placeFire(level, p.immutable(), owner);
-        }
-    }
-
-    /** Incendiary: fire in a 4-point star (a plus sign) with arms {@code arm} blocks long. */
-    public static void fireStar(ServerLevel level, BlockPos center, Entity owner, int arm) {
-        placeFire(level, center, owner);
-        for (net.minecraft.core.Direction d : net.minecraft.core.Direction.Plane.HORIZONTAL) {
-            for (int i = 1; i <= arm; i++) {
-                BlockPos p = center.relative(d, i);
-                // follow the ground a block up or down
-                if (!placeFire(level, p, owner) && !placeFire(level, p.above(), owner))
-                    placeFire(level, p.below(), owner);
-            }
         }
     }
 
@@ -193,7 +171,7 @@ public final class WorldEffects {
 
     /**
      * Lights a fire like flint and steel would, remembering whose it is. With Controlled Burn it
-     * never spreads and burns out after 30 s (10 s at II).
+     * never spreads and burns out after 30 s.
      */
     public static boolean placeFire(ServerLevel level, BlockPos pos, Entity owner) {
         if (!com.ethermod.config.ServerConfig.fireAndLava()) return false;
@@ -219,7 +197,7 @@ public final class WorldEffects {
             FIRES.computeIfAbsent(level, k -> new HashMap<>())
                     .put(
                             pos.immutable(),
-                            new Fire(sp.getUUID(), now + (burn >= 2 ? 200 : 600), burn > 0));
+                            new Fire(sp.getUUID(), now + 600, burn > 0));
         }
         return true;
     }
@@ -277,25 +255,6 @@ public final class WorldEffects {
         }
     }
 
-    /** Puts out a player's own controlled fire (Controlled Burn III: beaming it). */
-    public static boolean putOut(ServerLevel level, BlockPos pos, java.util.UUID player) {
-        Map<BlockPos, Fire> m = FIRES.get(level);
-        Fire f = m == null ? null : m.get(pos);
-        if (f == null
-                || !f.owner().equals(player)
-                || !level.getBlockState(pos).is(net.minecraft.tags.BlockTags.FIRE)) return false;
-        level.removeBlock(pos, false);
-        m.remove(pos);
-        level.playSound(
-                null,
-                pos,
-                com.ethermod.sound.ModSounds.WORLD_FIRE_EXTINGUISH,
-                net.minecraft.sounds.SoundSource.BLOCKS,
-                0.4f,
-                1.6f);
-        return true;
-    }
-
     /**
      * Called from the fire block's tick (FireBlockMixin). For a controlled fire: keep it lit
      * without spreading until it burns out, and return true so vanilla's spreading tick is skipped.
@@ -315,7 +274,7 @@ public final class WorldEffects {
     }
 
     // =========================================================================
-    // Scheduled work (Echo, Obsidian Cast, Wave)
+    // Scheduled work
     // =========================================================================
 
     private record Task(long at, Runnable run, boolean runOnStop) {}
@@ -336,126 +295,6 @@ public final class WorldEffects {
     public static void schedule(ServerLevel level, int delay, Runnable r, boolean runOnStop) {
         TASKS.computeIfAbsent(level, k -> new ArrayList<>())
                 .add(new Task(level.getGameTime() + delay, r, runOnStop));
-    }
-
-    /**
-     * Wave: a 3-wide roll of water moving along the ground from {@code start}, one block every 3
-     * ticks, shoving creatures and items along. Each block of it drains away a moment later.
-     */
-    public static void wave(
-            ServerLevel level,
-            BlockPos start,
-            net.minecraft.core.Direction dir,
-            Entity owner,
-            int steps) {
-        net.minecraft.core.Direction side = dir.getClockWise();
-        for (int i = 0; i < steps; i++) {
-            final int step = i;
-            schedule(
-                    level,
-                    3 * i,
-                    () -> {
-                        BlockPos c = start.relative(dir, step);
-                        for (int w = -1; w <= 1; w++) {
-                            BlockPos q = c.relative(side, w);
-                            if (!level.getBlockState(q).isAir()) q = q.above();
-                            else if (level.getBlockState(q.below()).isAir()) q = q.below();
-                            if (owner instanceof ServerPlayer sp && !com.ethermod.util.Protect.may(level, sp, q))
-                                continue;
-                            if (level.getBlockState(q).isAir())
-                                tempBlock(level, q, Blocks.WATER.defaultBlockState(), 8);
-                            for (Entity e :
-                                    level.getEntities(
-                                            owner,
-                                            new AABB(q).inflate(0.6),
-                                            e ->
-                                                    e instanceof LivingEntity
-                                                            || e instanceof ItemEntity
-                                                            || e instanceof ExperienceOrb)) {
-                                e.setDeltaMovement(
-                                        e.getDeltaMovement()
-                                                .scale(0.3)
-                                                .add(
-                                                        dir.getStepX() * 0.9,
-                                                        0.25,
-                                                        dir.getStepZ() * 0.9));
-                                e.hurtMarked = true;
-                                e.clearFire();
-                            }
-                            level.sendParticles(
-                                    net.minecraft.core.particles.ParticleTypes.SPLASH,
-                                    q.getX() + 0.5,
-                                    q.getY() + 1,
-                                    q.getZ() + 0.5,
-                                    6,
-                                    0.4,
-                                    0.2,
-                                    0.4,
-                                    0.1);
-                        }
-                        if (step % 3 == 0)
-                            level.playSound(
-                                    null,
-                                    c,
-                                    com.ethermod.sound.ModSounds.WORLD_PLAYER_SPLASH_HIGH_SPEED,
-                                    net.minecraft.sounds.SoundSource.PLAYERS,
-                                    0.4f,
-                                    1.2f);
-                    });
-        }
-    }
-
-    // =========================================================================
-    // Gravitic: Hammer Throw
-    // =========================================================================
-
-    private record Thrown(
-            java.lang.ref.WeakReference<net.minecraft.world.entity.LivingEntity> mob,
-            ServerPlayer by,
-            long since) {}
-
-    private static final Map<ServerLevel, List<Thrown>> THROWN = new HashMap<>();
-
-    /** A mob flung by Hammer Throw: it gets hurt by whatever it slams into. */
-    public static void thrown(
-            ServerLevel level, net.minecraft.world.entity.LivingEntity mob, ServerPlayer by) {
-        THROWN.computeIfAbsent(level, k -> new ArrayList<>())
-                .add(new Thrown(new java.lang.ref.WeakReference<>(mob), by, level.getGameTime()));
-    }
-
-    private static void tickThrown(ServerLevel level, long now) {
-        List<Thrown> list = THROWN.get(level);
-        if (list == null || list.isEmpty()) return;
-        list.removeIf(
-                t -> {
-                    var mob = t.mob().get();
-                    if (mob == null || !mob.isAlive() || now - t.since() > 60) return true;
-                    if (now - t.since() < 2) return false;
-                    if (mob.horizontalCollision || mob.onGround()) {
-                        double speed = mob.getDeltaMovement().length();
-                        float dmg = (float) (6 + speed * 6);
-                        mob.hurt(level.damageSources().playerAttack(t.by()), dmg);
-                        level.sendParticles(
-                                net.minecraft.core.particles.ParticleTypes.EXPLOSION,
-                                mob.getX(),
-                                mob.getY() + 0.5,
-                                mob.getZ(),
-                                1,
-                                0,
-                                0,
-                                0,
-                                0);
-                        level.playSound(
-                                null,
-                                mob.blockPosition(),
-                                com.ethermod.sound.ModSounds.WORLD_MACE_SMASH_GROUND,
-                                net.minecraft.sounds.SoundSource.PLAYERS,
-                                0.8f,
-                                1f);
-                        return true;
-                    }
-                    return false;
-                });
     }
 
     @SubscribeEvent
@@ -510,7 +349,6 @@ public final class WorldEffects {
                     });
             for (Task t : due) t.run().run();
         }
-        tickThrown(level, now);
         Map<BlockPos, Fire> fires = FIRES.get(level);
         if (fires != null && now % 100 == 0)
             fires.entrySet()
@@ -590,41 +428,6 @@ public final class WorldEffects {
                 }
             }
         }
-
-        List<Well> wells = WELLS.get(level);
-        if (wells != null && !wells.isEmpty()) {
-            wells.removeIf(w -> w.expires() <= now);
-            for (Well w : wells) {
-                for (Entity e :
-                        level.getEntities(
-                                (Entity) null,
-                                new AABB(w.center(), w.center()).inflate(5),
-                                e ->
-                                        e != w.owner()
-                                                && (e instanceof LivingEntity
-                                                        || e instanceof ItemEntity
-                                                        || e instanceof ExperienceOrb)
-                                                && !(e instanceof ServerPlayer))) {
-                    Vec3 d = w.center().subtract(e.position());
-                    if (d.lengthSqr() < 0.25) continue;
-                    e.setDeltaMovement(
-                            e.getDeltaMovement().scale(0.6).add(d.normalize().scale(0.25)));
-                    e.hurtMarked = true;
-                }
-                if (now % 4 == 0) {
-                    level.sendParticles(
-                            net.minecraft.core.particles.ParticleTypes.REVERSE_PORTAL,
-                            w.center().x,
-                            w.center().y,
-                            w.center().z,
-                            8,
-                            1.5,
-                            1.5,
-                            1.5,
-                            0.05);
-                }
-            }
-        }
     }
 
     /** Don't leave temporary lights behind in the save. */
@@ -639,7 +442,6 @@ public final class WorldEffects {
                                                 level.removeBlock(p, false);
                                         }));
         LIGHTS.clear();
-        WELLS.clear();
         // clean-ups such as shot fluids drying up would otherwise leave permanent blocks
         TASKS.values()
                 .forEach(
@@ -657,7 +459,6 @@ public final class WorldEffects {
                                                 }));
         TASKS.clear();
         FIRES.clear();
-        THROWN.clear();
         Ziplines.clear();
         TEMP_BLOCKS.forEach(
                 (level, m) ->
