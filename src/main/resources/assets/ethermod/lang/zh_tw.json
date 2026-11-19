@@ -259,7 +259,7 @@
   "trait.ethermod.pyrotechnic.rekindle.desc": "火焰與熔岩會治療你。",
   "module.ethermod.pneumatic": "氣動",
   "trait.ethermod.pneumatic.badge": "風箱核心",
-  "trait.ethermod.pneumatic.badge.desc": "解鎖[color=#20E9C1]疾風模式[/color]:推開並繳械。射擊帶有後座力,被吹飛的生物會受到傷害。二段跳。靜滯手榴彈:被它黏住的目標會被定住,隨後一次性承受累積的全部擊退。",
+  "trait.ethermod.pneumatic.badge.desc": "解鎖[color=#20E9C1]疾風模式[/color]:推開目標。射擊帶有後座力,被吹飛的生物會受到傷害。二段跳。靜滯手榴彈:被它黏住的目標會被定住,隨後一次性承受累積的全部擊退。",
   "trait.ethermod.pneumatic.gale_force": "狂風之力",
   "trait.ethermod.pneumatic.gale_force.desc": "陣風的命中範圍更大。被命中的敵人受到更多摔落傷害。",
   "trait.ethermod.pneumatic.bellows": "風箱",

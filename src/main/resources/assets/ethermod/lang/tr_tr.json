@@ -259,7 +259,7 @@
   "trait.ethermod.pyrotechnic.rekindle.desc": "Ateş ve lav seni iyileştirir.",
   "module.ethermod.pneumatic": "Pnömatik",
   "trait.ethermod.pneumatic.badge": "Körük Çekirdeği",
-  "trait.ethermod.pneumatic.badge.desc": "[color=#20E9C1]Rüzgâr modunu[/color] açar: iter ve silahsızlandırır. Atışların geri tepmesi vardır; savrulan yaratıklar hasar alır. Çift zıplama. Staz Bombası: yapıştığı şey tutulur, sonra biriken tüm geri tepmeyi bir anda alır.",
+  "trait.ethermod.pneumatic.badge.desc": "[color=#20E9C1]Rüzgâr modunu[/color] açar: iter. Atışların geri tepmesi vardır; savrulan yaratıklar hasar alır. Çift zıplama. Staz Bombası: yapıştığı şey tutulur, sonra biriken tüm geri tepmeyi bir anda alır.",
   "trait.ethermod.pneumatic.gale_force": "Fırtına Gücü",
   "trait.ethermod.pneumatic.gale_force.desc": "Rüzgâr daha geniş bir alana vurur. Vurulan düşmanlar daha fazla düşme hasarı alır.",
   "trait.ethermod.pneumatic.bellows": "Körük",

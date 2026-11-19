@@ -42,11 +42,6 @@ public final class ProjectileEffects {
                 e.getPersistentData().putLong("mm_updraft_until", sl.getGameTime() + 200);
             RedesignEffects.impulse(e, push);
             GustMotion.track(e, owner, Traits.has(st, "pneumatic.rebound"));
-            if (e instanceof Mob mob && !mob.getMainHandItem().isEmpty()) {
-                var item = mob.getMainHandItem().copy();
-                mob.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
-                mob.spawnAtLocation(item);
-            }
         }
         sl.sendParticles(ParticleTypes.GUST_EMITTER_LARGE, at.x, at.y, at.z, 1, 0, 0, 0, 0);
     }

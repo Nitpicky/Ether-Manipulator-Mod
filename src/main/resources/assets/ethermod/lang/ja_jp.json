@@ -259,7 +259,7 @@
   "trait.ethermod.pyrotechnic.rekindle.desc": "火と溶岩で回復する。",
   "module.ethermod.pneumatic": "ニューマチック",
   "trait.ethermod.pneumatic.badge": "ふいごコア",
-  "trait.ethermod.pneumatic.badge.desc": "[color=#20E9C1]ガストモード[/color]を解放:押し出して武装解除する。ショットには反動があり、吹き飛ばされたモブはダメージを受ける。二段ジャンプ。ステイシスグレネード:張り付いた相手を止め、溜まったノックバックをまとめて一度に与える。",
+  "trait.ethermod.pneumatic.badge.desc": "[color=#20E9C1]ガストモード[/color]を解放:押し出す。ショットには反動があり、吹き飛ばされたモブはダメージを受ける。二段ジャンプ。ステイシスグレネード:張り付いた相手を止め、溜まったノックバックをまとめて一度に与える。",
   "trait.ethermod.pneumatic.gale_force": "疾風の力",
   "trait.ethermod.pneumatic.gale_force.desc": "ガストの命中範囲が広がる。命中した敵は落下ダメージが増える。",
   "trait.ethermod.pneumatic.bellows": "ふいご",

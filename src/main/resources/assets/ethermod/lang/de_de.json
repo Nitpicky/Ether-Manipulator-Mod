@@ -259,7 +259,7 @@
   "trait.ethermod.pyrotechnic.rekindle.desc": "Feuer und Lava heilen dich.",
   "module.ethermod.pneumatic": "Pneumatik",
   "trait.ethermod.pneumatic.badge": "Blasebalgkern",
-  "trait.ethermod.pneumatic.badge.desc": "Schaltet den [color=#20E9C1]Böe-Modus[/color] frei: wegstoßen und entwaffnen. Schüsse haben Rückstoß; geschleuderte Kreaturen nehmen Schaden. Doppelsprung. Stasisgranate: Woran sie haftet, wird festgehalten und erhält dann allen gespeicherten Rückstoß auf einmal.",
+  "trait.ethermod.pneumatic.badge.desc": "Schaltet den [color=#20E9C1]Böe-Modus[/color] frei: wegstoßen. Schüsse haben Rückstoß; geschleuderte Kreaturen nehmen Schaden. Doppelsprung. Stasisgranate: Woran sie haftet, wird festgehalten und erhält dann allen gespeicherten Rückstoß auf einmal.",
   "trait.ethermod.pneumatic.gale_force": "Sturmkraft",
   "trait.ethermod.pneumatic.gale_force.desc": "Die Böe trifft einen größeren Bereich. Getroffene Feinde erleiden mehr Fallschaden.",
   "trait.ethermod.pneumatic.bellows": "Blasebalg",

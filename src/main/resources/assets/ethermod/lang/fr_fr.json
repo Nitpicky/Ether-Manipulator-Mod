@@ -259,7 +259,7 @@
   "trait.ethermod.pyrotechnic.rekindle.desc": "Le feu et la lave vous soignent.",
   "module.ethermod.pneumatic": "Pneumatique",
   "trait.ethermod.pneumatic.badge": "Cœur à soufflets",
-  "trait.ethermod.pneumatic.badge.desc": "Débloque le [color=#20E9C1]mode Rafale[/color] : repousse et désarme. Les tirs ont du recul ; les créatures projetées subissent des dégâts. Double saut. Grenade de stase : ce qu'elle touche est figé, puis subit d'un coup tout le recul accumulé.",
+  "trait.ethermod.pneumatic.badge.desc": "Débloque le [color=#20E9C1]mode Rafale[/color] : repousse. Les tirs ont du recul ; les créatures projetées subissent des dégâts. Double saut. Grenade de stase : ce qu'elle touche est figé, puis subit d'un coup tout le recul accumulé.",
   "trait.ethermod.pneumatic.gale_force": "Force du vent",
   "trait.ethermod.pneumatic.gale_force.desc": "La Rafale touche une zone plus large. Les ennemis touchés subissent plus de dégâts de chute.",
   "trait.ethermod.pneumatic.bellows": "Soufflet",

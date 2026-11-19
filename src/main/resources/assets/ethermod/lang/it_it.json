@@ -259,7 +259,7 @@
   "trait.ethermod.pyrotechnic.rekindle.desc": "Fuoco e lava ti curano.",
   "module.ethermod.pneumatic": "Pneumatico",
   "trait.ethermod.pneumatic.badge": "Nucleo a mantice",
-  "trait.ethermod.pneumatic.badge.desc": "Sblocca la [color=#20E9C1]modalità Raffica[/color]: spinge e disarma. I colpi hanno rinculo; le creature scagliate subiscono danni. Doppio salto. Granata di stasi: ciò a cui si attacca resta bloccato, poi subisce in un colpo tutto il contraccolpo accumulato.",
+  "trait.ethermod.pneumatic.badge.desc": "Sblocca la [color=#20E9C1]modalità Raffica[/color]: spinge via. I colpi hanno rinculo; le creature scagliate subiscono danni. Doppio salto. Granata di stasi: ciò a cui si attacca resta bloccato, poi subisce in un colpo tutto il contraccolpo accumulato.",
   "trait.ethermod.pneumatic.gale_force": "Forza di burrasca",
   "trait.ethermod.pneumatic.gale_force.desc": "La Raffica colpisce un'area più ampia. I nemici colpiti subiscono più danni da caduta.",
   "trait.ethermod.pneumatic.bellows": "Mantice",

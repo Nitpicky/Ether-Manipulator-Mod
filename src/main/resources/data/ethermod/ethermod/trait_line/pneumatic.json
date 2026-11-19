@@ -1,13 +1,13 @@
 {
   "name": "Pneumatic",
-  "description": "Unlocks [color=#20E9C1]Gust Mode[/color]: push and disarm. Shots recoil; slammed mobs take damage. Coyote jump and double jump. Stasis Grenade: what it sticks to is held, then takes all its stored knockback at once.",
+  "description": "Unlocks [color=#20E9C1]Gust Mode[/color]: push things away. Shots recoil; slammed mobs take damage. Coyote jump and double jump. Stasis Grenade: what it sticks to is held, then takes all its stored knockback at once.",
   "color": "#B8E8E0",
   "icon": "minecraft:feather",
   "order": 6,
   "badge": {
     "id": "pneumatic.badge",
     "name": "Bellows Core",
-    "description": "Unlocks [color=#20E9C1]Gust Mode[/color]: push and disarm. Shots recoil; slammed mobs take damage. Double jump. Stasis Grenade: what it sticks to is held, then takes all its stored knockback at once."
+    "description": "Unlocks [color=#20E9C1]Gust Mode[/color]: push things away. Shots recoil; slammed mobs take damage. Double jump. Stasis Grenade: what it sticks to is held, then takes all its stored knockback at once."
   },
   "commons": [
     {

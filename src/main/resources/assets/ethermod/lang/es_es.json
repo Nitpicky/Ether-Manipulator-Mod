@@ -259,7 +259,7 @@
   "trait.ethermod.pyrotechnic.rekindle.desc": "El fuego y la lava te curan.",
   "module.ethermod.pneumatic": "Neumático",
   "trait.ethermod.pneumatic.badge": "Núcleo de fuelle",
-  "trait.ethermod.pneumatic.badge.desc": "Desbloquea el [color=#20E9C1]modo Ráfaga[/color]: empuja y desarma. Los disparos tienen retroceso; las criaturas lanzadas reciben daño. Doble salto. Granada de estasis: lo que toca queda retenido y luego recibe de golpe todo el retroceso acumulado.",
+  "trait.ethermod.pneumatic.badge.desc": "Desbloquea el [color=#20E9C1]modo Ráfaga[/color]: empuja. Los disparos tienen retroceso; las criaturas lanzadas reciben daño. Doble salto. Granada de estasis: lo que toca queda retenido y luego recibe de golpe todo el retroceso acumulado.",
   "trait.ethermod.pneumatic.gale_force": "Fuerza vendaval",
   "trait.ethermod.pneumatic.gale_force.desc": "La Ráfaga alcanza un área mayor. Los enemigos alcanzados reciben más daño por caída.",
   "trait.ethermod.pneumatic.bellows": "Fuelle",

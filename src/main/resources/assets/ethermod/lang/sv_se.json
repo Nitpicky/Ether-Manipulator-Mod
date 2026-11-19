@@ -259,7 +259,7 @@
   "trait.ethermod.pyrotechnic.rekindle.desc": "Eld och lava helar dig.",
   "module.ethermod.pneumatic": "Pneumatik",
   "trait.ethermod.pneumatic.badge": "Bälgkärna",
-  "trait.ethermod.pneumatic.badge.desc": "Låser upp [color=#20E9C1]Vindstötsläget[/color]: knuffa och avväpna. Skott har rekyl; slungade varelser tar skada. Dubbelhopp. Stasisgranat: det den fastnar på hålls kvar och får sedan all lagrad knuff på en gång.",
+  "trait.ethermod.pneumatic.badge.desc": "Låser upp [color=#20E9C1]Vindstötsläget[/color]: knuffa undan. Skott har rekyl; slungade varelser tar skada. Dubbelhopp. Stasisgranat: det den fastnar på hålls kvar och får sedan all lagrad knuff på en gång.",
   "trait.ethermod.pneumatic.gale_force": "Stormkraft",
   "trait.ethermod.pneumatic.gale_force.desc": "Vindstöten träffar ett större område. Träffade fiender tar mer fallskada.",
   "trait.ethermod.pneumatic.bellows": "Bälg",

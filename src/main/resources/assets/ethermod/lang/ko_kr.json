@@ -259,7 +259,7 @@
   "trait.ethermod.pyrotechnic.rekindle.desc": "불과 용암이 당신을 치유합니다.",
   "module.ethermod.pneumatic": "공압",
   "trait.ethermod.pneumatic.badge": "풀무 코어",
-  "trait.ethermod.pneumatic.badge.desc": "[color=#20E9C1]돌풍 모드[/color]를 해금합니다: 밀쳐내고 무장 해제합니다. 사격에 반동이 있고, 날아간 몹은 피해를 입습니다. 이단 점프. 정지 수류탄: 달라붙은 대상을 붙잡아 두었다가, 쌓인 넉백을 한 번에 가한다.",
+  "trait.ethermod.pneumatic.badge.desc": "[color=#20E9C1]돌풍 모드[/color]를 해금합니다: 밀쳐냅니다. 사격에 반동이 있고, 날아간 몹은 피해를 입습니다. 이단 점프. 정지 수류탄: 달라붙은 대상을 붙잡아 두었다가, 쌓인 넉백을 한 번에 가한다.",
   "trait.ethermod.pneumatic.gale_force": "질풍의 힘",
   "trait.ethermod.pneumatic.gale_force.desc": "돌풍의 명중 범위가 넓어진다. 맞은 적은 낙하 피해를 더 받는다.",
   "trait.ethermod.pneumatic.bellows": "풀무",

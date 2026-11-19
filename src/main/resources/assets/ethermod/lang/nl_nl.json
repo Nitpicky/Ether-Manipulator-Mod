@@ -259,7 +259,7 @@
   "trait.ethermod.pyrotechnic.rekindle.desc": "Vuur en lava genezen je.",
   "module.ethermod.pneumatic": "Pneumatiek",
   "trait.ethermod.pneumatic.badge": "Blaasbalgkern",
-  "trait.ethermod.pneumatic.badge.desc": "Ontgrendelt de [color=#20E9C1]Windvlaag-modus[/color]: wegduwen en ontwapenen. Schoten hebben terugslag; weggeslingerde wezens krijgen schade. Dubbele sprong. Stasisgranaat: waar hij aan blijft plakken wordt vastgehouden en krijgt daarna alle opgeslagen terugslag tegelijk.",
+  "trait.ethermod.pneumatic.badge.desc": "Ontgrendelt de [color=#20E9C1]Windvlaag-modus[/color]: wegduwen. Schoten hebben terugslag; weggeslingerde wezens krijgen schade. Dubbele sprong. Stasisgranaat: waar hij aan blijft plakken wordt vastgehouden en krijgt daarna alle opgeslagen terugslag tegelijk.",
   "trait.ethermod.pneumatic.gale_force": "Stormkracht",
   "trait.ethermod.pneumatic.gale_force.desc": "De Windstoot raakt een groter gebied. Geraakte vijanden krijgen meer valschade.",
   "trait.ethermod.pneumatic.bellows": "Blaasbalg",

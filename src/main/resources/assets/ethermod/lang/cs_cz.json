@@ -259,7 +259,7 @@
   "trait.ethermod.pyrotechnic.rekindle.desc": "Oheň a láva tě léčí.",
   "module.ethermod.pneumatic": "Pneumatický",
   "trait.ethermod.pneumatic.badge": "Jádro měchů",
-  "trait.ethermod.pneumatic.badge.desc": "Odemyká [color=#20E9C1]režim Poryv[/color]: odhazuje a odzbrojuje. Výstřely mají zpětný ráz; odhození tvorové dostávají poškození. Dvojitý skok. Granát stáze: co zasáhne, zůstane držet a pak dostane naráz všechen nasbíraný odhoz.",
+  "trait.ethermod.pneumatic.badge.desc": "Odemyká [color=#20E9C1]režim Poryv[/color]: odhazuje. Výstřely mají zpětný ráz; odhození tvorové dostávají poškození. Dvojitý skok. Granát stáze: co zasáhne, zůstane držet a pak dostane naráz všechen nasbíraný odhoz.",
   "trait.ethermod.pneumatic.gale_force": "Síla vichru",
   "trait.ethermod.pneumatic.gale_force.desc": "Poryv zasáhne větší oblast. Zasažení nepřátelé utrpí větší zranění pádem.",
   "trait.ethermod.pneumatic.bellows": "Měchy",

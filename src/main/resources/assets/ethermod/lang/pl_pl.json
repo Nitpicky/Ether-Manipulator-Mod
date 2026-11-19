@@ -259,7 +259,7 @@
   "trait.ethermod.pyrotechnic.rekindle.desc": "Ogień i lawa cię leczą.",
   "module.ethermod.pneumatic": "Pneumatyczny",
   "trait.ethermod.pneumatic.badge": "Rdzeń miechowy",
-  "trait.ethermod.pneumatic.badge.desc": "Odblokowuje [color=#20E9C1]tryb Podmuchu[/color]: odpycha i rozbraja. Strzały mają odrzut; ciśnięte stworzenia otrzymują obrażenia. Podwójny skok. Granat stazy: to, do czego się przyczepi, zostaje unieruchomione, a potem dostaje naraz cały zgromadzony odrzut.",
+  "trait.ethermod.pneumatic.badge.desc": "Odblokowuje [color=#20E9C1]tryb Podmuchu[/color]: odpycha. Strzały mają odrzut; ciśnięte stworzenia otrzymują obrażenia. Podwójny skok. Granat stazy: to, do czego się przyczepi, zostaje unieruchomione, a potem dostaje naraz cały zgromadzony odrzut.",
   "trait.ethermod.pneumatic.gale_force": "Siła wichury",
   "trait.ethermod.pneumatic.gale_force.desc": "Podmuch trafia większy obszar. Trafieni wrogowie otrzymują więcej obrażeń od upadku.",
   "trait.ethermod.pneumatic.bellows": "Miech",

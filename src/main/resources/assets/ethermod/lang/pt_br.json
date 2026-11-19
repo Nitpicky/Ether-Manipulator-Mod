@@ -259,7 +259,7 @@
   "trait.ethermod.pyrotechnic.rekindle.desc": "Fogo e lava curam você.",
   "module.ethermod.pneumatic": "Pneumático",
   "trait.ethermod.pneumatic.badge": "Núcleo de fole",
-  "trait.ethermod.pneumatic.badge.desc": "Desbloqueia o [color=#20E9C1]modo Rajada[/color]: empurra e desarma. Os disparos têm recuo; criaturas arremessadas sofrem dano. Pulo duplo. Granada de estase: o que ela atinge fica preso e depois recebe de uma vez todo o recuo acumulado.",
+  "trait.ethermod.pneumatic.badge.desc": "Desbloqueia o [color=#20E9C1]modo Rajada[/color]: empurra. Os disparos têm recuo; criaturas arremessadas sofrem dano. Pulo duplo. Granada de estase: o que ela atinge fica preso e depois recebe de uma vez todo o recuo acumulado.",
   "trait.ethermod.pneumatic.gale_force": "Força do vendaval",
   "trait.ethermod.pneumatic.gale_force.desc": "A Rajada atinge uma área maior. Inimigos atingidos sofrem mais dano de queda.",
   "trait.ethermod.pneumatic.bellows": "Fole",
