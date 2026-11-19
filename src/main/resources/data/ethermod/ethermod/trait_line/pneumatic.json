@@ -13,7 +13,7 @@
     {
       "id": "pneumatic.common_featherfall",
       "name": "Featherfall",
-      "description": "No fall damage. Hold Jump to fall slowly."
+      "description": "No fall damage. Hold Jump to fall slowly. Charging a weapon in the air slows your fall even more."
     },
     {
       "id": "pneumatic.common_air_control",

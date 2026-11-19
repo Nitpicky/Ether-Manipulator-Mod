@@ -639,8 +639,8 @@ public class BeamBallEntity extends Projectile {
         OrbFrost.frostBridge(this, position(), movement);
         movement = getDeltaMovement(); // Seeker may have steered
 
-        // Hit detection. Grass and flowers have no collision; leaves do, but shots pass through
-        // them too (nothing in the way is broken), so a leaf hit is looked past
+        // Hit detection. Grass and flowers have no collision; leaves do, and shots hit them unless
+        // the server lets everything pass through leaves (then a leaf hit is looked past)
         java.util.function.Predicate<Entity> canHit =
                 e ->
                         canHitEntity(e) && !pierced.contains(e.getId());
@@ -673,8 +673,10 @@ public class BeamBallEntity extends Projectile {
         setPos(pos.x + movement.x, pos.y + movement.y, pos.z + movement.z);
     }
 
+    /** Leaves let shots through only when the server makes them non-solid (see solid_leaves). */
     private boolean leaves(HitResult h) {
-        return h instanceof net.minecraft.world.phys.BlockHitResult bh
+        return !com.ethermod.config.ServerConfig.beamMinesLeaves()
+                && h instanceof net.minecraft.world.phys.BlockHitResult bh
                 && h.getType() == HitResult.Type.BLOCK
                 && level().getBlockState(bh.getBlockPos()).is(net.minecraft.tags.BlockTags.LEAVES);
     }

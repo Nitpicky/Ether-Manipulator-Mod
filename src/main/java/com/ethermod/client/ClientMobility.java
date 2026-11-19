@@ -270,10 +270,13 @@ public final class ClientMobility {
             p.setDeltaMovement(MovementPhysics.withUp(p, v, 0.55));
             ModNetwork.send(new ModulePayloads.AirJump());
         }
-        if (!p.onGround() && Traits.hasCommon(st, Traits.PNEUMATIC, 0) && jump) {
+        if (!p.onGround() && Traits.hasCommon(st, Traits.PNEUMATIC, 0) && !p.isFallFlying() && !p.isInWater()) {
+            // Bullet Time: charging any weapon in the air (bow, crossbow, trident, modded ones,
+            // the Manipulator's shots) slows the fall even more, no Jump needed
+            double cap = chargingWeapon(p) ? -.03 : jump ? -.08 : Double.NEGATIVE_INFINITY;
             var up = MovementPhysics.vector(MovementPhysics.down(p).getOpposite());
-            if (p.getDeltaMovement().dot(up) < -.08)
-                p.setDeltaMovement(MovementPhysics.withUp(p, p.getDeltaMovement(), -.08));
+            if (p.getDeltaMovement().dot(up) < cap)
+                p.setDeltaMovement(MovementPhysics.withUp(p, p.getDeltaMovement(), cap));
         }
         if (!p.onGround() && !p.isFallFlying()) {
             var v = p.getDeltaMovement();
@@ -406,5 +409,17 @@ public final class ClientMobility {
                         p.input.forwardImpulse * Math.cos(yaw)
                                 + p.input.leftImpulse * Math.sin(yaw))
                 .normalize();
+    }
+
+    /** Drawing a bow or crossbow, raising a trident (or a modded weapon that does the same), or charging a Manipulator shot. */
+    static boolean chargingWeapon(net.minecraft.world.entity.player.Player p) {
+        if (com.ethermod.beam.BeamRenderState.chargeMode != null) return true;
+        if (!p.isUsingItem()) return false;
+        var use = p.getUseItem();
+        if (use.getItem() instanceof com.ethermod.item.EtherManipulatorItem) return true;
+        var anim = use.getUseAnimation();
+        return anim == net.minecraft.world.item.UseAnim.BOW
+                || anim == net.minecraft.world.item.UseAnim.CROSSBOW
+                || anim == net.minecraft.world.item.UseAnim.SPEAR;
     }
 }

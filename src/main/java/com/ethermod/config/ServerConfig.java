@@ -76,8 +76,8 @@ public final class ServerConfig {
         MASS_MAX = b.comment("Most blocks the Mass Driver holds at once.").defineInRange("mass_driver_max_blocks", 32, 1, 256);
         FIRE = b.comment("Whether Pyrotechnic can set fire and place lava.").define("fire_and_lava", true);
         WATER = b.comment("Whether Hydraulic can place water and freeze bridges.").define("water_and_frost", true);
-        BEAM_LEAVES = b.comment("Whether the beam mines leaves like other blocks. Off: it passes through them (the sneak beam still shears them).")
-                .define("beam_mines_leaves", true);
+        BEAM_LEAVES = b.comment("Whether leaves are solid to the Manipulator: the beam mines them and every shot hits them. Off: the beam and shots pass through them (the sneak beam still shears them).")
+                .define("solid_leaves", true);
         BEAM_PLANTS = b.comment("Whether the beam breaks grass, flowers, vines and other small plants. Off: it passes through them.")
                 .define("beam_breaks_small_plants", false);
         GUST_FOLIAGE = b.comment("Whether Gust shots and the gust grenade cut leaves and plants.")
