@@ -34,7 +34,7 @@ final class OrbNature {
         ServerLevel sl = (ServerLevel) b.level();
         // Lingering Bloom: twice as long, pulsing twice as often
         boolean linger = b.has("botanic.lingering_bloom");
-        int life = (b.getPhase() == 2 ? 160 : 80) * (linger ? 2 : 1);
+        int life = (b.getPhase() == 2 ? 100 : 80) * (linger ? 2 : 1);
         if (++b.lifeTicks > life) {
             b.impactFx(b.position());
             b.discard();

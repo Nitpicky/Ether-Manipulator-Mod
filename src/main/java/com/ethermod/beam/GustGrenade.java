@@ -27,9 +27,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Pneumatic left click: a blast grenade. It latches onto the first block or creature it touches,
- * ticks for 1.5 s, then bursts: up to 4 damage and a push away from it in a 3-block radius. You
- * get pushed too (no damage), so it doubles as a jump. With Bank Shot it ricochets once first.
+ * Pneumatic left click: the Stasis Grenade. It latches onto the first block or creature it
+ * touches, ticks for 1.5 s, then bursts: up to 4 damage and a push away from it in a 3-block
+ * radius. A creature it sticks to is held in Stasis until the burst, storing every knockback it
+ * takes, and all of it lands at once with the burst. You get pushed too (no damage), so it
+ * doubles as a jump. With Bank Shot it ricochets once first.
  *
  * <p>No entity: the grenade is a point simulated on the server and drawn with particles.
  */
@@ -152,7 +154,8 @@ public final class GustGrenade {
                             e ->
                                     e instanceof LivingEntity le
                                             && !e.isSpectator()
-                                            && RedesignEffects.enemy(g.owner, le));
+                                            && RedesignEffects.enemy(g.owner, le)
+                                            && affects(g.owner, le));
             if (mob != null) {
                 g.stuck = mob.getEntity();
                 // latch where it touched, on the creature's skin (its box), and turn with it
@@ -171,6 +174,9 @@ public final class GustGrenade {
                 g.offset = skin.subtract(g.stuck.position()).yRot((float) Math.toRadians(bodyYaw(g.stuck)));
                 g.pos = skin;
                 land(sl, g);
+                // Stasis: the creature it sticks to is held until the burst; every knockback it
+                // takes meanwhile is stored and lands together with the burst
+                if (g.stuck instanceof LivingEntity le) RedesignEffects.stasis(le, g.fuse + 5);
             } else if (block.getType() != HitResult.Type.MISS) {
                 var n = Vec3.atLowerCornerOf(block.getDirection().getNormal());
                 if (g.ricochet && g.bounces == 0) {
@@ -207,7 +213,9 @@ public final class GustGrenade {
             g.fuse--;
             // ticks faster as it nears the burst
             int every = g.fuse > 12 ? 6 : 3;
-            if (g.fuse % every == 0) {
+            // held in Stasis, the creature's own quickening tick replaces the fuse's (StasisFx)
+            boolean held = g.stuck instanceof LivingEntity le && RedesignEffects.inStasis(le);
+            if (!held && g.fuse % every == 0) {
                 sl.playSound(
                         null,
                         g.pos.x,
@@ -273,13 +281,22 @@ public final class GustGrenade {
                 e.setDeltaMovement(e.getDeltaMovement().add(push));
                 e.hurtMarked = true;
             } else if (e instanceof LivingEntity le) {
-                if (!RedesignEffects.enemy(g.owner, le)) continue;
+                if (!RedesignEffects.enemy(g.owner, le) || !affects(g.owner, le)) continue;
                 le.hurt(sl.damageSources().playerAttack(g.owner), DAMAGE * (float) (0.5 + 0.5 * near));
                 RedesignEffects.impulse(le, push);
+                // the held one lets go now, with everything it stored
+                RedesignEffects.thaw(le);
             } else if (e instanceof ItemEntity) {
                 e.setDeltaMovement(e.getDeltaMovement().add(push.scale(0.6)));
                 e.hurtMarked = true;
             }
         }
+    }
+
+    /** Other players only when the server allows it (PvP on, and the Stasis Grenade setting). */
+    private static boolean affects(ServerPlayer owner, LivingEntity e) {
+        if (!(e instanceof net.minecraft.world.entity.player.Player)) return true;
+        return com.ethermod.config.ServerConfig.stasisGrenadePlayers()
+                && owner.server.isPvpAllowed();
     }
 }

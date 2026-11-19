@@ -19,9 +19,9 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 
 /**
- * Pneumatic's Stasis, seen and heard: the held creature takes an amber tint that pulses, and a
- * ding ticks over it, slow at first and faster and faster until it lets go (a time-lock you can
- * read without a timer). The release lands with a low ring.
+ * The Stasis Grenade's hold, seen and heard: the held creature takes Pneumatic's teal tint that
+ * pulses, and the grenade's fuse tick (with a soft ding under it) quickens until it lets go (a
+ * time-lock you can read without a timer). The release is the grenade's own wind burst.
  */
 public final class StasisFx {
 
@@ -47,8 +47,7 @@ public final class StasisFx {
 
     private static void release(int entity) {
         var mc = Minecraft.getInstance();
-        if (HELD.remove(entity) != null && mc.level != null && mc.level.getEntity(entity) instanceof Entity e)
-            play(e, ModSounds.WORLD_STASIS_RELEASE, 0.5f, 0.7f);
+        HELD.remove(entity);
         NEXT_DING.remove(entity);
     }
 
@@ -70,8 +69,10 @@ public final class StasisFx {
             }
             if (now >= NEXT_DING.getOrDefault(id, now)) {
                 float left = (h.end - now) / (float) Math.max(1, h.end - h.start); // 1 -> 0
-                play(e, ModSounds.WORLD_STASIS_DING, 0.35f, 1.4f + 0.5f * (1 - left));
-                NEXT_DING.put(id, now + Math.max(2, Math.round(2 + 10 * left))); // 12 ticks apart, then 2
+                float pitch = 1.4f + 0.5f * (1 - left);
+                play(e, ModSounds.WORLD_NOTE_BLOCK_HAT, 0.6f, pitch); // the grenade's fuse tick
+                play(e, ModSounds.WORLD_STASIS_DING, 0.18f, pitch); // with the hold's ding under it
+                NEXT_DING.put(id, now + Math.max(2, Math.round(2 + 6 * left))); // 8 ticks apart, then 2
             }
         }
     }
@@ -94,7 +95,7 @@ public final class StasisFx {
         return p;
     }
 
-    /** Drawn over every living creature's model: the amber tint while held. */
+    /** Drawn over every living creature's model: the teal tint while held. */
     public static final class Layer<T extends LivingEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
         private final LivingEntityRenderer<T, M> parent;
 
@@ -108,7 +109,7 @@ public final class StasisFx {
             float p = pulse(e, pt);
             if (p < 0) return;
             int a = (int) (255 * (0.25f + 0.35f * p));
-            int color = (a << 24) | 0xFFB43C; // amber
+            int color = (a << 24) | 0x20E9C1; // Pneumatic teal
             var vc = buf.getBuffer(RenderType.entityTranslucentEmissive(parent.getTextureLocation(e)));
             getParentModel().renderToBuffer(pose, vc, 0xF000F0, OverlayTexture.NO_OVERLAY, color);
         }

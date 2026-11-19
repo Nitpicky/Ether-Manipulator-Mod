@@ -45,10 +45,10 @@ final class OrbGust {
                 sl.sendParticles(ParticleTypes.GUST, e.getX(), e.getY(), e.getZ(), 1, 0, 0, 0, 0);
             }
         }
-        if (!b.has("pneumatic.cyclone")) return false;
+        if (!b.has("pneumatic.cyclone") || b.getPhase() != 2) return false;
         // Cyclone: a slow whirlwind that lifts mobs and items, then bursts
         b.lifeTicks++;
-        int life = b.rank("pneumatic.cyclone") >= 2 ? 100 : 60;
+        int life = 60;
         Vec3 v = b.getDeltaMovement();
         Vec3 next = b.position().add(v);
         if (!sl.noCollision(b, b.getBoundingBox().move(v))) v = Vec3.ZERO;

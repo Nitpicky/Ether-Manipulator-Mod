@@ -411,6 +411,30 @@ public final class RedesignEffects {
                 e, new com.ethermod.network.payload.StasisPayload(e.getId(), ticks));
     }
 
+    public static boolean inStasis(LivingEntity e) {
+        return FROZEN.containsKey(e.getUUID());
+    }
+
+    /** Lets a held creature go now, with all the knockback it stored. */
+    public static void thaw(LivingEntity e) {
+        var f = FROZEN.remove(e.getUUID());
+        if (f != null) let(e, f, e.level().getGameTime());
+    }
+
+    private static void let(LivingEntity e, Frozen f, long now) {
+        var d = e.getPersistentData();
+        var v =
+                new Vec3(d.getDouble("mm_stasis_x"), d.getDouble("mm_stasis_y"), d.getDouble("mm_stasis_z"))
+                        .scale(d.getDouble("mm_stasis_force"));
+        e.setNoGravity(f.noGravity());
+        if (e instanceof Mob m) m.setNoAi(f.noAi());
+        e.setDeltaMovement(v);
+        e.hurtMarked = true;
+        d.putLong("mm_stasis_cooldown", now + 40);
+        net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingEntityAndSelf(
+                e, new com.ethermod.network.payload.StasisPayload(e.getId(), 0));
+    }
+
     public static void impulse(LivingEntity e, Vec3 force) {
         if (FROZEN.containsKey(e.getUUID())) {
             store(e, force);
@@ -456,24 +480,15 @@ public final class RedesignEffects {
                 continue;
             }
             if (now >= f.expires()) {
-                var d = e.getPersistentData();
-                var v =
-                        new Vec3(
-                                        d.getDouble("mm_stasis_x"),
-                                        d.getDouble("mm_stasis_y"),
-                                        d.getDouble("mm_stasis_z"))
-                                .scale(d.getDouble("mm_stasis_force"));
-                e.setNoGravity(f.noGravity());
-                if (e instanceof Mob m) m.setNoAi(f.noAi());
-                e.setDeltaMovement(v);
-                e.hurtMarked = true;
-                d.putLong("mm_stasis_cooldown", now + 40);
-                net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingEntityAndSelf(
-                        e, new com.ethermod.network.payload.StasisPayload(e.getId(), 0));
+                let(e, f, now);
                 it.remove();
             } else {
                 if (e.getDeltaMovement().lengthSqr() > .09) store(e, e.getDeltaMovement());
-                e.setPos(f.at());
+                if (e instanceof ServerPlayer sp) {
+                    // players move on their own side: pull them back to the spot when they drift
+                    if (sp.position().distanceToSqr(f.at()) > 1e-4)
+                        sp.connection.teleport(f.at().x, f.at().y, f.at().z, sp.getYRot(), sp.getXRot());
+                } else e.setPos(f.at());
                 e.setDeltaMovement(Vec3.ZERO);
                 e.resetFallDistance();
                 if (e instanceof Mob m) m.getNavigation().stop();

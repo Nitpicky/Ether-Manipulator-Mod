@@ -173,7 +173,7 @@ public final class UiProbe {
                                     TraitBuild.setLine(st, 1, Traits.PNEUMATIC);
                                     TraitBuild.setPick(st, 1, 0, "pneumatic.updraft");
                                     TraitBuild.setPick(st, 1, 1, "pneumatic.bunny_hop");
-                                    TraitBuild.setPick(st, 1, 2, "pneumatic.stasis");
+                                    TraitBuild.setPick(st, 1, 2, "pneumatic.cyclone");
                                     TraitBuild.setLine(st, 2, Traits.PHOTONIC);
                                     TraitBuild.setPick(st, 2, 0, "photonic.prism");
                                     TraitBuild.setPick(st, 2, 1, "photonic.radiance");
@@ -343,7 +343,10 @@ public final class UiProbe {
                                 check(
                                         "Ignite/Lava costs",
                                         OrbMode.IGNITE.shotCost(st, 0) == 1
-                                                && OrbMode.LAVA.shotCost(st, 0) == 3);
+                                                && OrbMode.LAVA.shotCost(st, 0) == 4
+                                                && OrbMode.WATER.shotCost(st, 0) == 4
+                                                && OrbMode.GROWTH.shotCost(st, 2) == 4
+                                                && OrbMode.GRENADE_COST == 2);
                                 check("Vacuum removed", !OrbMode.VACUUM.isUnlocked(st));
                                 check(
                                         "No Tier scaling",
@@ -1038,7 +1041,7 @@ public final class UiProbe {
                                 check(
                                         "Energy orb spends the shared tank, Tether does not",
                                         OrbMode.ENERGY.usesTank()
-                                                && OrbMode.ENERGY.shotCost(st, 2) == 2
+                                                && OrbMode.ENERGY.shotCost(st, 2) == 1
                                                 && !OrbMode.TETHER.usesTank());
                                 TraitBuild.setLine(st, 0, Traits.HYDRAULIC);
                                 TraitBuild.setPick(st, 0, 0, "hydraulic.reservoir");

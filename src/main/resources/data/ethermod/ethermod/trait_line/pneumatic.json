@@ -1,13 +1,13 @@
 {
   "name": "Pneumatic",
-  "description": "Unlocks [color=#20E9C1]Gust Mode[/color]: push and disarm. Shots recoil; slammed mobs take damage. Coyote jump and double jump.",
+  "description": "Unlocks [color=#20E9C1]Gust Mode[/color]: push and disarm. Shots recoil; slammed mobs take damage. Coyote jump and double jump. Stasis Grenade: what it sticks to is held, then takes all its stored knockback at once.",
   "color": "#B8E8E0",
   "icon": "minecraft:feather",
   "order": 6,
   "badge": {
     "id": "pneumatic.badge",
     "name": "Bellows Core",
-    "description": "Unlocks [color=#20E9C1]Gust Mode[/color]: push and disarm. Shots recoil; slammed mobs take damage. Double jump."
+    "description": "Unlocks [color=#20E9C1]Gust Mode[/color]: push and disarm. Shots recoil; slammed mobs take damage. Double jump. Stasis Grenade: what it sticks to is held, then takes all its stored knockback at once."
   },
   "commons": [
     {
@@ -25,7 +25,7 @@
     {
       "id": "pneumatic.gale_force",
       "name": "Gale Force",
-      "description": "Charge boosts Gust knockback, yours too. Hit enemies take more fall damage."
+      "description": "Gust hits a wider area. Hit enemies take more fall damage."
     },
     {
       "id": "pneumatic.bellows",
@@ -47,9 +47,9 @@
   ],
   "grandmaster": [
     {
-      "id": "pneumatic.stasis",
-      "name": "Stasis",
-      "description": "Freeze enemies briefly. Knockback piles up and lands all at once when they thaw."
+      "id": "pneumatic.cyclone",
+      "name": "Cyclone",
+      "description": "A full-charge Gust becomes a slow whirlwind that lifts mobs and items for 3s, then bursts."
     },
     {
       "id": "pneumatic.rebound",

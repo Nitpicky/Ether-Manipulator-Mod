@@ -282,6 +282,11 @@ public class EtherManipulatorItem extends Item implements GeoItem {
     public static void fireVolley(
             Level level, Player player, ItemStack stack, int charged, OrbMode mode, boolean left) {
         if (mode == OrbMode.MASS) return; // Persistent Mass Driver handles its own release.
+        // Pollen Drift: needs one charge stage, and then always drifts as a full cloud
+        if (mode == OrbMode.GROWTH) {
+            if (charged < 1) return;
+            charged = 2;
+        }
         // Short on tank: the shot drops to the strongest charge you can still pay for
         int affordable = charged;
         while (affordable > 0

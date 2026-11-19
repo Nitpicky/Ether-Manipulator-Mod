@@ -35,7 +35,7 @@ public final class ServerConfig {
     private static final ModConfigSpec.DoubleValue GEM_CHANCE;
     // modules
     private static final ModConfigSpec.ConfigValue<List<? extends String>> DISABLED;
-    private static final ModConfigSpec.BooleanValue BLAZELINGS, TETHER_PLAYERS;
+    private static final ModConfigSpec.BooleanValue BLAZELINGS, TETHER_PLAYERS, STASIS_PLAYERS;
     private static final ModConfigSpec.IntValue BLAZE_LIFE, MAX_SUMMONS, PHOTONIC_LIFE, FROST_MELT;
     // compatibility
     private static final ModConfigSpec.ConfigValue<List<? extends String>> HARVEST_TAGS, FOLIAGE, CROPS;
@@ -106,6 +106,8 @@ public final class ServerConfig {
                 .defineInRange("photonic_light_seconds", 30, 1, 1200);
         FROST_MELT = b.comment("Seconds a frost bridge stays before it melts (Glacier makes it three times longer).").defineInRange("frost_bridge_seconds", 10, 1, 1200);
         TETHER_PLAYERS = b.comment("Whether Gravitic's tether can grab other players.").define("tether_grabs_players", false);
+        STASIS_PLAYERS = b.comment("Whether Pneumatic's Stasis Grenade can hold and launch other players (needs PvP on).")
+                .define("stasis_grenade_hits_players", true);
         b.pop();
 
         b.comment("Other mods.").push("compatibility");
@@ -170,6 +172,7 @@ public final class ServerConfig {
     public static int photonicTicks() { return or(PHOTONIC_LIFE::get, 30) * 20; }
     public static int frostTicks() { return or(FROST_MELT::get, 10) * 20; }
     public static boolean tetherPlayers() { return or(TETHER_PLAYERS::get, false); }
+    public static boolean stasisGrenadePlayers() { return or(STASIS_PLAYERS::get, true); }
 
     public static boolean blacklisted(BlockState s) { return matches(s, or(BLACKLIST::get, List.of())); }
     public static boolean alwaysHarvest(BlockState s) { return matches(s, or(HARVEST_TAGS::get, List.of())); }

@@ -793,15 +793,6 @@
     ],
     "subtitle": "subtitles.ethermod.stasis.ding"
   },
-  "world/stasis.release": {
-    "sounds": [
-      {
-        "name": "minecraft:block.bell.use",
-        "type": "event"
-      }
-    ],
-    "subtitle": "subtitles.ethermod.stasis.release"
-  },
   "ui/dry_beep": {
     "sounds": [
       {
