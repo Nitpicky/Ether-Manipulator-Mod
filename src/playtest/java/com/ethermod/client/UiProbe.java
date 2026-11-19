@@ -404,7 +404,7 @@ public final class UiProbe {
                                 check(
                                         "Stasis accumulates force",
                                         zombie.getPersistentData().getDouble("mm_stasis_force")
-                                                == 2.5);
+                                                == RedesignEffects.STASIS_MAX);
                                 check(
                                         "Stasis last impulse sets direction",
                                         zombie.getPersistentData().getDouble("mm_stasis_z") == 1);

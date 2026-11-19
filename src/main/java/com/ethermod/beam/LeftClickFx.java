@@ -57,7 +57,7 @@ final class LeftClickFx {
                             0.6f * (1 - t));
                 }
             } else {
-                float urgency = 1 - g.fuse / (float) GustGrenade.FUSE; // 0 → 1 as it nears the burst
+                float urgency = Math.max(0, 1 - g.fuse / (float) GustGrenade.FUSE); // 0 → 1 as it nears the burst
                 float rate = 0.35f + urgency * 1.4f;
                 float pulse = 0.5f + 0.5f * (float) Math.sin(time * rate * 2);
                 BeamBallRenderer.drawGust(vc, m, at, time * (1 + urgency), 0, 0.7f + 0.3f * urgency);
