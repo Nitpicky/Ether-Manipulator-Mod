@@ -27,9 +27,29 @@ public final class FoliageHelper {
         return true;
     }
 
+    /**
+     * Does the beam pass through this block? Leaves and the smaller plants (grass, flowers, vines…)
+     * each follow their own server setting: by default the beam mines leaves like any block and
+     * passes through the small plants.
+     */
     public static boolean isFoliage(BlockState state) {
+        if (!isPlant(state)) return false;
+        if (isLeaves(state)) return !com.ethermod.config.ServerConfig.beamMinesLeaves();
+        return !com.ethermod.config.ServerConfig.beamMinesPlants();
+    }
+
+    public static boolean isLeaves(BlockState state) {
+        return state.is(net.minecraft.tags.BlockTags.LEAVES);
+    }
+
+    /**
+     * Leaves, grass, flowers, vines and the like, whatever the beam settings: what Gust and fire
+     * shots cut and the sneak beam shears.
+     */
+    public static boolean isPlant(BlockState state) {
         Block b = state.getBlock();
         if (com.ethermod.config.ServerConfig.extraFoliage(state)) return true;
+        if (isLeaves(state)) return true;
 
         // Leaves
         if (b == Blocks.OAK_LEAVES

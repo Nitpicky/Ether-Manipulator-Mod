@@ -612,7 +612,7 @@ public final class BeamCastHelper {
                 continue;
             }
             if (FoliageHelper.isFoliage(state)) {
-                // foliage (leaves, grass, flowers and the like) is passed through and left standing
+                // foliage the server lets the beam pass (grass, flowers… and leaves if set) stays standing
                 Vec3 face = Vec3.atCenterOf(pos);
                 float step = (float) current.distanceTo(face) + 0.01f;
                 remaining -= step;

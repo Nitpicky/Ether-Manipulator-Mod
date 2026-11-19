@@ -106,7 +106,7 @@ final class UtilityBeam {
 
         // The sneak beam shears foliage (leaves, grass, flowers...) like shears would: the beam
         // passes through it otherwise, so this is the way to take it
-        if (com.ethermod.util.FoliageHelper.isFoliage(bs)) {
+        if (com.ethermod.util.FoliageHelper.isPlant(bs)) {
             level.removeBlock(pos, false);
             Block.popResource(level, pos, new ItemStack(bs.getBlock()));
             level.playSound(null, pos, com.ethermod.sound.ModSounds.WORLD_SHEEP_SHEAR, SoundSource.BLOCKS, 0.8f, 1.2f);

@@ -386,6 +386,8 @@
   "ethermod.configuration.photonic_light_seconds": "Photonic light lifetime (s)",
   "ethermod.configuration.frost_bridge_seconds": "Frost bridge lifetime (s)",
   "ethermod.configuration.tether_grabs_players": "Tether grabs players",
+  "ethermod.configuration.beam_mines_leaves": "Beam mines leaves",
+  "ethermod.configuration.beam_breaks_small_plants": "Beam breaks small plants",
   "ethermod.configuration.stasis_grenade_hits_players": "Stasis Grenade hits players",
   "ethermod.configuration.always_harvest": "Always harvest (block tags)",
   "ethermod.configuration.extra_foliage": "Extra foliage blocks",

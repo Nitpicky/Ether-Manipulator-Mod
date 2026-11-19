@@ -26,7 +26,7 @@ public final class ServerConfig {
     private static final ModConfigSpec.DoubleValue RELOAD_FIRST, RELOAD_LAST, BEAM_DMG, ORB_DMG, MINING, CHARGE;
     private static final ModConfigSpec.BooleanValue PVP;
     // world
-    private static final ModConfigSpec.BooleanValue PROTECTION, MASS_BE, FIRE, WATER, GUST_FOLIAGE;
+    private static final ModConfigSpec.BooleanValue PROTECTION, MASS_BE, FIRE, WATER, GUST_FOLIAGE, BEAM_LEAVES, BEAM_PLANTS;
     private static final ModConfigSpec.ConfigValue<List<? extends String>> BLACKLIST;
     private static final ModConfigSpec.IntValue MASS_MAX;
     private static final ModConfigSpec.DoubleValue RANGE;
@@ -76,6 +76,10 @@ public final class ServerConfig {
         MASS_MAX = b.comment("Most blocks the Mass Driver holds at once.").defineInRange("mass_driver_max_blocks", 32, 1, 256);
         FIRE = b.comment("Whether Pyrotechnic can set fire and place lava.").define("fire_and_lava", true);
         WATER = b.comment("Whether Hydraulic can place water and freeze bridges.").define("water_and_frost", true);
+        BEAM_LEAVES = b.comment("Whether the beam mines leaves like other blocks. Off: it passes through them (the sneak beam still shears them).")
+                .define("beam_mines_leaves", true);
+        BEAM_PLANTS = b.comment("Whether the beam breaks grass, flowers, vines and other small plants. Off: it passes through them.")
+                .define("beam_breaks_small_plants", false);
         GUST_FOLIAGE = b.comment("Whether Gust shots and the gust grenade cut leaves and plants.")
                 .define("gust_cuts_foliage", true);
         RANGE = b.comment("Multiplies the beam's reach.").defineInRange("beam_range_multiplier", 1.0, 0.1, 4.0);
@@ -152,6 +156,8 @@ public final class ServerConfig {
     public static boolean fireAndLava() { return or(FIRE::get, true); }
     public static boolean waterAndFrost() { return or(WATER::get, true); }
     public static boolean gustCutsFoliage() { return or(GUST_FOLIAGE::get, true); }
+    public static boolean beamMinesLeaves() { return or(BEAM_LEAVES::get, true); }
+    public static boolean beamMinesPlants() { return or(BEAM_PLANTS::get, false); }
     public static float rangeMultiplier() { return or(() -> RANGE.get().floatValue(), 1f); }
 
     public static boolean giveOnFirstJoin() { return or(FIRST_JOIN::get, true); }

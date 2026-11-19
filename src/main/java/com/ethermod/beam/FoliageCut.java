@@ -27,7 +27,7 @@ final class FoliageCut {
                         BlockPos.containing(swept.minX, swept.minY, swept.minZ),
                         BlockPos.containing(swept.maxX, swept.maxY, swept.maxZ))) {
             var bs = sl.getBlockState(bp);
-            if (!FoliageHelper.isFoliage(bs)) continue;
+            if (!FoliageHelper.isPlant(bs)) continue;
             BlockPos at = bp.immutable();
             if (owner != null && !com.ethermod.util.Protect.may(sl, owner, at)) continue;
             if (burn) {
