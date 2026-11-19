@@ -376,7 +376,7 @@ public final class Fx {
      *   <li>{@code <setup>_p}: that setup, drawn in the particle stage
      * </ul>
      */
-    static final String VARIANT = System.getProperty("ethermod.fxVariant", "particle_max");
+    static final String VARIANT = System.getProperty("ethermod.fxVariant", "particle_sort");
 
     /** {@code particle}, or any setup ending in {@code _p}: drawn in the particle stage. */
     static final boolean PARTICLE_STAGE = VARIANT.startsWith("particle") || VARIANT.endsWith("_p");
