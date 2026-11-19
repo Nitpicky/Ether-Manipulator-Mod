@@ -15,25 +15,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
           fetch-tags: true
 
       - name: Setup JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: '21'
           distribution: 'temurin'
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v5
 
       - name: Build with Gradle
         run: ./gradlew build
 
       - name: Upload mod jar
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ether-manipulator-jar
           path: build/libs/*.jar
@@ -44,12 +44,12 @@ jobs:
     # client-only class only crashes here.
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
         with:
           java-version: '21'
           distribution: 'temurin'
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v5
       - name: Boot dedicated server and wait for "Done"
         run: |
           mkdir -p runs/server && echo 'eula=true' > runs/server/eula.txt
@@ -66,7 +66,7 @@ jobs:
           if grep -nE 'NoClassDefFoundError|RuntimeDistCleaner|attempted to load class .* for invalid dist|Exception in server tick loop' server.log; then tail -n 150 server.log; exit 1; fi
       - name: Upload server log
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: dedicated-server-log
           path: |
