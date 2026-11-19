@@ -505,6 +505,9 @@ public final class Fx {
                 b.createCompositeState(false));
     }
 
+    /** How strong the effects' light is with a pack, against without one. */
+    static final float SHADER_GAIN = Float.parseFloat(System.getProperty("ethermod.fxGain", "0.5"));
+
     private static final RenderType SHADER_FX = shaderType("ethermod_fx", false);
     private static final RenderType SHADER_FX_BEAM = shaderType("ethermod_fx_beam", false, true);
     private static final RenderType SHADER_FX_SOFT =
@@ -548,6 +551,8 @@ public final class Fx {
         MultiBufferSource.BufferSource buf = Minecraft.getInstance().renderBuffers().bufferSource();
         boolean beacon = VARIANT.startsWith("beacon"), particle = particleFamily();
         boolean premultiply = !VARIANT.equals("beacon"); // added light ignores alpha
+        // packs take our light as emissive and bloom it: at full strength it blinds
+        float gain = SHADER_GAIN;
         // the beam first (its own blend), then soft shells (no depth), the glows, an optional depth pass
         RenderType[] types = {SHADER_FX_BEAM, SHADER_FX_SOFT, SHADER_FX, SHADER_FX_DEPTH};
         Layer[][] layers = {{BEAM}, {SOFT}, {GLOW}, {BEAM, SOFT, GLOW}};
@@ -558,7 +563,7 @@ public final class Fx {
             for (Layer l : layers[t]) {
                 for (int i : order(l)) {
                     int c = l.col[i];
-                    int a = c >>> 24, k = premultiply ? a : 255;
+                    int a = c >>> 24, k = (int) ((premultiply ? a : 255) * gain);
                     vc.addVertex(l.pos[3 * i], l.pos[3 * i + 1], l.pos[3 * i + 2])
                             .setColor(
                                     (c >> 16 & 255) * k / 255,
