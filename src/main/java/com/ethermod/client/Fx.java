@@ -376,26 +376,48 @@ public final class Fx {
                             .setWriteMaskState(RenderStateShard.COLOR_WRITE)
                             .createCompositeState(false));
 
+    /**
+     * The same quads again, depth only: the pack's clouds (drawn later) stay behind the effects,
+     * while the glows themselves still overlap softly in the colour pass.
+     */
+    private static final RenderType SHADER_FX_DEPTH =
+            RenderType.create(
+                    "ethermod_fx_depth",
+                    DefaultVertexFormat.NEW_ENTITY,
+                    VertexFormat.Mode.QUADS,
+                    1536,
+                    false,
+                    false,
+                    RenderType.CompositeState.builder()
+                            .setShaderState(RenderStateShard.RENDERTYPE_EYES_SHADER)
+                            .setTextureState(
+                                    new RenderStateShard.TextureStateShard(WHITE, false, false))
+                            .setCullState(RenderStateShard.NO_CULL)
+                            .setWriteMaskState(RenderStateShard.DEPTH_WRITE)
+                            .createCompositeState(false));
+
     private static void drawInWorld() {
         MultiBufferSource.BufferSource buf = Minecraft.getInstance().renderBuffers().bufferSource();
-        VertexConsumer vc = buf.getBuffer(SHADER_FX);
-        for (Layer l : new Layer[] {BEAM, GLOW}) {
-            int verts = l.quads() * 4;
-            for (int i = 0; i < verts; i++) {
-                int c = l.col[i];
-                int a = c >>> 24;
-                vc.addVertex(l.pos[3 * i], l.pos[3 * i + 1], l.pos[3 * i + 2])
-                        .setColor(
-                                (c >> 16 & 255) * a / 255,
-                                (c >> 8 & 255) * a / 255,
-                                (c & 255) * a / 255,
-                                255)
-                        .setUv(0.5f, 0.5f)
-                        .setOverlay(OverlayTexture.NO_OVERLAY)
-                        .setLight(LightTexture.FULL_BRIGHT)
-                        .setNormal(0f, 1f, 0f);
+        for (RenderType type : new RenderType[] {SHADER_FX, SHADER_FX_DEPTH}) {
+            VertexConsumer vc = buf.getBuffer(type);
+            for (Layer l : new Layer[] {BEAM, GLOW}) {
+                int verts = l.quads() * 4;
+                for (int i = 0; i < verts; i++) {
+                    int c = l.col[i];
+                    int a = c >>> 24;
+                    vc.addVertex(l.pos[3 * i], l.pos[3 * i + 1], l.pos[3 * i + 2])
+                            .setColor(
+                                    (c >> 16 & 255) * a / 255,
+                                    (c >> 8 & 255) * a / 255,
+                                    (c & 255) * a / 255,
+                                    255)
+                            .setUv(0.5f, 0.5f)
+                            .setOverlay(OverlayTexture.NO_OVERLAY)
+                            .setLight(LightTexture.FULL_BRIGHT)
+                            .setNormal(0f, 1f, 0f);
+                }
             }
+            buf.endBatch(type);
         }
-        buf.endBatch(SHADER_FX);
     }
 }

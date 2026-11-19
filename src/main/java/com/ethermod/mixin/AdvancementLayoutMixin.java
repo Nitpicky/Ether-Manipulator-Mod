@@ -20,15 +20,16 @@ import java.util.List;
 public abstract class AdvancementLayoutMixin {
     /** Top rows: {advancement, its child on the same row (or null)}. */
     private static final String[][] TOP = {
+        // the default Modules first, as in the Module order
+        {"let_it_go", null},
+        {"ping_pong", null},
         {"sirenite", "rain_check"},
         {"gehennite", "this_is_fine"},
         {"stratite", "return_to_sender"},
         {"zephyrite", "gone_with_the_wind"},
         {"quetzalite", "green_thumb"},
         {"atenite", "night_light"},
-        {"oculite", "fish_out_of_water"},
-        {"let_it_go", null},
-        {"ping_pong", null}
+        {"oculite", "fish_out_of_water"}
     };
 
     private static final List<String> LINE = List.of("calibrated", "augmented", "overclocked");
