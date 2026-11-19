@@ -153,6 +153,8 @@ public final class Fx {
 
     private static final Layer BEAM = new Layer();
     private static final Layer GLOW = new Layer();
+    /** Soft glow around a brighter core: adds like GLOW, but never writes depth with a pack. */
+    private static final Layer SOFT = new Layer();
 
     /**
      * Where additive effects record their quads. Positions go through the caller's matrix
@@ -161,6 +163,14 @@ public final class Fx {
      */
     public static VertexConsumer glow() {
         return ShaderCompat.inShadowPass() ? NONE : GLOW;
+    }
+
+    /**
+     * Like {@link #glow()}, for a soft shell around a core drawn into glow(): with a shader pack
+     * only the core writes depth, so the shell's twisting faces can't cut the rope into bands.
+     */
+    public static VertexConsumer softGlow() {
+        return ShaderCompat.inShadowPass() ? NONE : SOFT;
     }
 
     /** Where the beam ribbons record their quads (brightest wins where they overlap). */
@@ -195,6 +205,7 @@ public final class Fx {
     public static void beginFrame() {
         BEAM.clear();
         GLOW.clear();
+        SOFT.clear();
     }
 
     private static TextureTarget layer;
@@ -237,13 +248,14 @@ public final class Fx {
         }
         try {
             produce.run();
-            if (BEAM.quads() + GLOW.quads() > 0) {
+            if (BEAM.quads() + GLOW.quads() + SOFT.quads() > 0) {
                 if (ShaderCompat.shadersActive()) drawInWorld();
                 else if (depthReady) drawLayered();
             }
         } finally {
             BEAM.clear();
             GLOW.clear();
+        SOFT.clear();
             depthReady = false;
             if (afterLevel) {
                 mv.popMatrix();
@@ -270,10 +282,11 @@ public final class Fx {
             RenderSystem.blendEquation(GL14.GL_FUNC_ADD);
             composite(main, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
         }
-        if (GLOW.quads() > 0) {
+        if (GLOW.quads() + SOFT.quads() > 0) {
             // light: adds up
             begin();
             RenderSystem.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
+            draw(SOFT);
             draw(GLOW);
             composite(main, GlStateManager.DestFactor.ONE);
         }
@@ -432,6 +445,11 @@ public final class Fx {
     }
 
     private static RenderType shaderType(String name, boolean depthOnly, boolean beamLayer) {
+        return shaderType(name, depthOnly, beamLayer, false);
+    }
+
+    private static RenderType shaderType(
+            String name, boolean depthOnly, boolean beamLayer, boolean soft) {
         boolean beacon = VARIANT.startsWith("beacon");
         boolean particle = particleFamily();
         RenderStateShard.ShaderStateShard shader =
@@ -467,7 +485,8 @@ public final class Fx {
                                     ? MAX_TRANSPARENCY
                                     : RenderStateShard.ADDITIVE_TRANSPARENCY);
             b.setWriteMaskState(
-                    VARIANT.equals("eyes2")
+                    soft
+                                    || VARIANT.equals("eyes2")
                                     || VARIANT.equals("particle_max_nd")
                                     || VARIANT.equals("particle_max_d2")
                                     || VARIANT.equals("particle_keep")
@@ -488,6 +507,8 @@ public final class Fx {
 
     private static final RenderType SHADER_FX = shaderType("ethermod_fx", false);
     private static final RenderType SHADER_FX_BEAM = shaderType("ethermod_fx_beam", false, true);
+    private static final RenderType SHADER_FX_SOFT =
+            shaderType("ethermod_fx_soft", false, false, true);
     private static final RenderType SHADER_FX_DEPTH =
             VARIANT.equals("eyes2")
                             || VARIANT.equals("particle_max_d2")
@@ -527,9 +548,9 @@ public final class Fx {
         MultiBufferSource.BufferSource buf = Minecraft.getInstance().renderBuffers().bufferSource();
         boolean beacon = VARIANT.startsWith("beacon"), particle = particleFamily();
         boolean premultiply = !VARIANT.equals("beacon"); // added light ignores alpha
-        // the beam first (its own blend), then the glows, then the optional depth pass
-        RenderType[] types = {SHADER_FX_BEAM, SHADER_FX, SHADER_FX_DEPTH};
-        Layer[][] layers = {{BEAM}, {GLOW}, {BEAM, GLOW}};
+        // the beam first (its own blend), then soft shells (no depth), the glows, an optional depth pass
+        RenderType[] types = {SHADER_FX_BEAM, SHADER_FX_SOFT, SHADER_FX, SHADER_FX_DEPTH};
+        Layer[][] layers = {{BEAM}, {SOFT}, {GLOW}, {BEAM, SOFT, GLOW}};
         for (int t = 0; t < types.length; t++) {
             RenderType type = types[t];
             if (type == null) continue;

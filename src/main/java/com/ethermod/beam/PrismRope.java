@@ -58,8 +58,8 @@ final class PrismRope {
             a1[i] = 0.45f * fade[i];
             a2[i] = 0.95f * fade[i];
         }
-        tube(pts, su, h1, r, color, a1);
-        tube(pts, su, h2, r, wc, a2);
+        tube(pts, su, h1, r, color, a1, com.ethermod.client.Fx.softGlow());
+        tube(pts, su, h2, r, wc, a2, com.ethermod.client.Fx.glow());
         var me = net.minecraft.client.Minecraft.getInstance().player;
         boolean simple = me != null && owner != me.getId() && com.ethermod.config.ClientConfig.simpleOtherBeams();
         if (simple) return; // client setting: other players' beams as a plain rope
@@ -79,9 +79,9 @@ final class PrismRope {
      * caps), only the faces turned toward the camera, face-shaded and additive like the Tether
      * rope and the orbs' cubes.
      */
-    private static void tube(Vec3[] pts, Vec3 su, float[] h, float[] roll, float[] c, float[] a) {
+    private static void tube(
+            Vec3[] pts, Vec3 su, float[] h, float[] roll, float[] c, float[] a, VertexConsumer vc) {
         int n = pts.length - 1;
-        VertexConsumer vc = com.ethermod.client.Fx.glow();
         Vec3[][] cs = new Vec3[n + 1][];
         for (int j = 0; j <= n; j++) {
             Vec3[] fr = frame(pts, j, su);
@@ -200,8 +200,8 @@ final class PrismRope {
             ag[j] = 0.5f * bump * fi;
             ac[j] = 0.95f * bump * fi;
         }
-        tube(sp, su, hg, rr, color, ag);
-        tube(sp, su, hc, rr, mix3(color, 0.55f), ac);
+        tube(sp, su, hg, rr, color, ag, com.ethermod.client.Fx.softGlow());
+        tube(sp, su, hc, rr, mix3(color, 0.55f), ac, com.ethermod.client.Fx.glow());
     }
 
     // ---------------------------------------------------------------- surface arcs
