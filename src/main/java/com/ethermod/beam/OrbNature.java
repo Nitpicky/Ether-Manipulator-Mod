@@ -75,8 +75,11 @@ final class OrbNature {
         long now = sl.getGameTime();
         for (BlockPos bp : BlockPos.betweenClosed(c.offset(-r, -3, -r), c.offset(r, 0, r))) {
             BlockState bs = sl.getBlockState(bp);
-            if (!(bs.getBlock() instanceof net.minecraft.world.level.block.BonemealableBlock)
-                    && !bs.getFluidState().is(net.minecraft.tags.FluidTags.WATER)) continue;
+            // fully grown plants are skipped before the claim probe (bone meal would do nothing)
+            boolean growable =
+                    bs.getBlock() instanceof net.minecraft.world.level.block.BonemealableBlock meal
+                            && meal.isValidBonemealTarget(sl, bp, bs);
+            if (!growable && !bs.getFluidState().is(net.minecraft.tags.FluidTags.WATER)) continue;
             long key = bp.asLong();
             Long next = b.growSeen.get(key);
             if (next != null && next > now) continue;

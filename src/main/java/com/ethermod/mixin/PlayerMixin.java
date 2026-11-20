@@ -86,7 +86,57 @@ public abstract class PlayerMixin {
         if (slot != EquipmentSlot.MAINHAND) return;
         Player self = (Player) (Object) this;
         if (Manipulator.isSummoned(self)) {
-            cir.setReturnValue(Manipulator.stack(self));
+            // inside a block/entity interaction the Manipulator is invisible: an empty hand
+            cir.setReturnValue(
+                    com.ethermod.manipulator.ManipulatorVeil.veiled(self)
+                            ? ItemStack.EMPTY
+                            : Manipulator.stack(self));
         }
+    }
+
+    /**
+     * Entity interactions (item frames, allays, villagers, horses, modded display entities...) run
+     * with the main hand reading as empty while the Manipulator is summoned, so none of them can
+     * take or store it. Called the same way on both sides (MultiPlayerGameMode.interact and the
+     * server's interact packet). When the entity passes, vanilla goes on to Item#use as before.
+     */
+    @Inject(method = "interactOn", at = @At("HEAD"))
+    private void ethermod$veilEntityOpen(
+            net.minecraft.world.entity.Entity target,
+            net.minecraft.world.InteractionHand hand,
+            CallbackInfoReturnable<net.minecraft.world.InteractionResult> cir,
+            @com.llamalad7.mixinextras.sugar.Share("veil")
+                    com.llamalad7.mixinextras.sugar.ref.LocalRef<Player> previous) {
+        previous.set(com.ethermod.manipulator.ManipulatorVeil.open((Player) (Object) this));
+    }
+
+    @Inject(method = "interactOn", at = @At("RETURN"))
+    private void ethermod$veilEntityClose(
+            net.minecraft.world.entity.Entity target,
+            net.minecraft.world.InteractionHand hand,
+            CallbackInfoReturnable<net.minecraft.world.InteractionResult> cir,
+            @com.llamalad7.mixinextras.sugar.Share("veil")
+                    com.llamalad7.mixinextras.sugar.ref.LocalRef<Player> previous) {
+        com.ethermod.manipulator.ManipulatorVeil.close(previous.get());
+    }
+
+    /**
+     * Under a veil the "empty" main hand is really the hidden hotbar slot, and a block or entity that
+     * gives its item to an empty hand (armor stand, allay, a pedestal) would overwrite the item in it.
+     * What it gives goes into the inventory instead (dropped when full), and clearing the hand
+     * clears nothing.
+     */
+    @Inject(method = "setItemSlot", at = @At("HEAD"), cancellable = true)
+    private void ethermod$veiledHandWrite(
+            EquipmentSlot slot,
+            ItemStack stack,
+            org.spongepowered.asm.mixin.injection.callback.CallbackInfo ci) {
+        if (slot != EquipmentSlot.MAINHAND) return;
+        Player self = (Player) (Object) this;
+        if (!com.ethermod.manipulator.ManipulatorVeil.veiled(self)) return;
+        ci.cancel();
+        // the server is authoritative over the inventory and syncs it; the client just skips
+        if (!stack.isEmpty() && !self.level().isClientSide())
+            self.getInventory().placeItemBackInInventory(stack);
     }
 }

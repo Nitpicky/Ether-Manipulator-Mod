@@ -63,6 +63,7 @@ public final class BeamRenderer {
         spikes.clear();
         remoteTips.clear();
         remoteAims.clear();
+        PrismRope.clear();
     }
 
     /** How far the beam's bend trails the aim: the time to close half the gap. */
@@ -243,6 +244,9 @@ public final class BeamRenderer {
             Matrix4f m) {
         ClientLevel level = mc.level;
         long gameTime = level.getGameTime();
+        // a remote beam that stopped: its rope's roll and arc state go with it
+        for (int gone : remoteTips.keySet())
+            if (!RemoteBeams.active().containsKey(gone)) PrismRope.forget(gone);
         remoteTips.keySet().retainAll(RemoteBeams.active().keySet());
         remoteAims.keySet().retainAll(RemoteBeams.active().keySet());
         for (Map.Entry<Integer, Long> e : RemoteBeams.active().entrySet()) {

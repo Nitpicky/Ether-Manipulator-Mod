@@ -91,11 +91,11 @@ final class OrbMass {
         BlockState c = b.getCarried();
         BlockPos front = hitPos.relative(face);
         if (!c.isAir()
-                && b.mayBuild(front)
                 && sl.getBlockState(front).canBeReplaced()
                 && c.canSurvive(sl, front)
                 && sl.isUnobstructed(
-                        c, front, net.minecraft.world.phys.shapes.CollisionContext.empty())) {
+                        c, front, net.minecraft.world.phys.shapes.CollisionContext.empty())
+                && b.mayBuild(front)) { // the claim probe last, once the block would really go here
             sl.setBlockAndUpdate(front, c);
             restoreBe(sl, front, b);
             var sound = c.getSoundType();

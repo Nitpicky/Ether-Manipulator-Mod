@@ -75,6 +75,12 @@ final class PrismRope {
         ARCS.remove(owner);
     }
 
+    /** Level change (via BeamRenderer.clearCaches): entity ids mean nothing in the next world. */
+    static void clear() {
+        ROLL.clear();
+        ARCS.clear();
+    }
+
     // ---------------------------------------------------------------- tube
 
     /**

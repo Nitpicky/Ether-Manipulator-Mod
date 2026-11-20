@@ -31,6 +31,15 @@ public final class SecretAdvancements {
         BEAM_KILLS.put(p.getUUID(), 0);
     }
 
+    /** Logout ends the beam, and with it the count (a new beam starts from zero anyway). */
+    public static void forget(UUID player) {
+        BEAM_KILLS.remove(player);
+    }
+
+    public static void clear() {
+        BEAM_KILLS.clear();
+    }
+
     /** Plasmic, (Don't) Let It Go: three kills with one beam, never letting go. */
     @SubscribeEvent
     public static void kill(LivingDeathEvent ev) {

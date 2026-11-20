@@ -24,4 +24,13 @@ public final class DryFire {
         LAST.put(p.getUUID(), now);
         PacketDistributor.sendToPlayer(p, com.ethermod.network.payload.DryFirePayload.INSTANCE);
     }
+
+    /** Logout: the spacing is only for a click being held right now. */
+    public static void forget(UUID player) {
+        LAST.remove(player);
+    }
+
+    public static void clear() {
+        LAST.clear();
+    }
 }

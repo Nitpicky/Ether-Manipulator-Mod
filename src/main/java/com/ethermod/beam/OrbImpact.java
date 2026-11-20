@@ -244,7 +244,7 @@ final class OrbImpact {
         if (b.bouncesLeft > 0) {
             b.bouncesLeft--;
             if (b.getMode() == OrbMode.LIGHT) b.traveledDistance = 0f;
-            if (b.getMode() == OrbMode.LIGHT && b.mayBuild(front) && sl.getBlockState(front).isAir()) {
+            if (b.getMode() == OrbMode.LIGHT && sl.getBlockState(front).isAir() && b.mayBuild(front)) {
                 TempLights.tempLight(sl, front, 13, BeamBallEntity.BOUNCE_LIGHT_TICKS);
                 sl.sendParticles(
                         ParticleTypes.END_ROD,

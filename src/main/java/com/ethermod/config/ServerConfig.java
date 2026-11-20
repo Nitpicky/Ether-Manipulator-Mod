@@ -68,7 +68,11 @@ public final class ServerConfig {
         b.pop();
 
         b.comment("What the Manipulator may do to the world.").push("world");
-        PROTECTION = b.comment("Check claims and spawn protection before every block the Manipulator changes.")
+        PROTECTION = b.comment(
+                        "Check claims and spawn protection before every block the Manipulator changes.",
+                        "Claims are asked the way claim mods expect: with a block break event posted just before the change.",
+                        "Grief loggers, quest and statistics mods may record these checks as broken blocks; turn this off",
+                        "if that matters more than claims (spawn protection and the world border are still respected).")
                 .define("respect_protection", true);
         BLACKLIST = b.comment("Blocks the beam can't break and the Mass Driver can't lift. Block ids or #tags.")
                 .defineListAllowEmpty("block_blacklist", List.of("minecraft:spawner", "minecraft:trial_spawner", "minecraft:vault", "minecraft:budding_amethyst"), () -> "modid:block", ServerConfig::idOrTag);

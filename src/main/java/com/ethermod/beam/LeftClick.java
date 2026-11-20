@@ -310,6 +310,8 @@ public final class LeftClick {
         while (!todo.isEmpty() && cut.size() < 256) {
             BlockPos q = todo.poll();
             var state = sl.getBlockState(q);
+            // probed here (not left to cutCrop's real break) so Overgrowth never spreads across a
+            // claim and green_thumb only counts crops this player may cut
             if (!ripe(state) || !com.ethermod.util.Protect.may(sl, p, q)) continue;
             cut.add(q);
             if (overgrowth)
@@ -347,8 +349,8 @@ public final class LeftClick {
     private static void cutCrop(ServerPlayer p, BlockPos q, Vec3 right) {
         if (p.isRemoved() || !(p.level() instanceof ServerLevel sl) || !sl.isLoaded(q)) return;
         var state = sl.getBlockState(q);
-        if (!ripe(state) || !com.ethermod.util.Protect.may(sl, p, q)) return;
-        if (!p.gameMode.destroyBlock(q)) return;
+        if (!ripe(state) || !com.ethermod.util.Protect.mayInteract(sl, p, q)) return;
+        if (!p.gameMode.destroyBlock(q)) return; // posts the BreakEvent claims may cancel
         harvested++;
         // vanilla sends the break particles and sound to everyone but the breaker (whose client
         // predicts its own), so the harvester gets them here
@@ -397,7 +399,7 @@ public final class LeftClick {
             long age = e.level().getGameTime() - pl.start();
             var owner = e.level().getPlayerByUUID(pl.owner());
             if (owner == null || age > 80 || owner.distanceToSqr(e) > 32 * 32) {
-                e.setNoGravity(false);
+                releasePull(e);
                 it.remove();
                 continue;
             }
@@ -407,16 +409,47 @@ public final class LeftClick {
             e.setNoPickUpDelay();
             if (d < .8) {
                 // arrived: picked up on touch, or (inventory full) left to fall where you stand
-                e.setNoGravity(false);
+                releasePull(e);
                 e.setDeltaMovement(Vec3.ZERO);
                 it.remove();
                 continue;
             }
             e.setNoGravity(true);
+            // saved with the entity: a pull cut off by an unload, a dimension change or a crash
+            // is undone when the item is loaded again (see restoreDroppedPull)
+            e.getPersistentData().putBoolean(PULL_TAG, true);
             double speed = Math.min(.9, .12 + .05 * (age - 6));
             e.setDeltaMovement(to.scale(Math.min(speed, d) / d));
             e.hasImpulse = true;
         }
+    }
+
+    private static final String PULL_TAG = "ethermod_pulled";
+
+    /** Gives a pulled item its gravity back. */
+    private static void releasePull(ItemEntity e) {
+        e.setNoGravity(false);
+        e.getPersistentData().remove(PULL_TAG);
+    }
+
+    /** Server stop: every item still in flight falls again before the world is saved. */
+    @SubscribeEvent
+    public static void stopPulls(net.neoforged.neoforge.event.server.ServerStoppingEvent ev) {
+        for (Pull pl : PULLS) releasePull(pl.item());
+        PULLS.clear();
+    }
+
+    /**
+     * An item that was saved mid-pull (chunk unloaded, moved through a portal, server killed) comes
+     * back without its pull: it gets its gravity back as it joins a level.
+     */
+    @SubscribeEvent
+    public static void restoreDroppedPull(
+            net.neoforged.neoforge.event.entity.EntityJoinLevelEvent ev) {
+        if (ev.getLevel().isClientSide() || !(ev.getEntity() instanceof ItemEntity e)) return;
+        if (!e.getPersistentData().getBoolean(PULL_TAG)) return;
+        for (Pull pl : PULLS) if (pl.item() == e) return;
+        releasePull(e);
     }
 
     /** A crop ready to harvest: a fully grown crop, nether wart or cocoa, or a melon/pumpkin. */

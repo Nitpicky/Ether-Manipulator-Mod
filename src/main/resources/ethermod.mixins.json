@@ -15,7 +15,8 @@
     "SoulFireMixin",
     "FluidPocketMixin",
     "OwnedFireMixin",
-    "OwnedLavaMixin"
+    "OwnedLavaMixin",
+    "ManipulatorBlockUseMixin"
   ],
   "injectors": {
     "defaultRequire": 1
