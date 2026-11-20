@@ -3,7 +3,7 @@
 Versions are MAJOR.FEATURE.PATCH. A version that isn't marked as a release rolls into the
 next release's notes.
 
-## 1.0.1 (in progress, not released)
+## 1.0.1 (release)
 
 ### Changes
 - Ziplines: no more chat-bar text when you place the first end or finish the rope (the sounds
@@ -18,6 +18,7 @@ next release's notes.
 ### Fixes
 - Ziplines: riding no longer swings you from side to side. You now build up speed along the
   rope, turn around smoothly, keep the momentum you jumped on with, and stop cleanly at the ends.
+- Ziplines: a half-strung rope still finishes after you rejoin.
 - The Ether Manipulator can no longer be put into, or taken by, any display: item frames, armor
   stands, allays, decorated pots, and modded pedestals, display cases and cutting boards. Blocks
   and creatures act exactly as if your hand were empty while it is summoned: chests, doors,
