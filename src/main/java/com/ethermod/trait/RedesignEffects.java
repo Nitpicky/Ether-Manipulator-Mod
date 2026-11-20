@@ -60,6 +60,7 @@ public final class RedesignEffects {
         var st = Manipulator.stack(p);
         long now = p.level().getGameTime();
         if (p.tickCount % 10 == 0) {
+            PhotonicGlowSync.tick(p);
             attribute(
                     p,
                     Attributes.ATTACK_DAMAGE,

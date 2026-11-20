@@ -59,4 +59,9 @@ final class ClientSideHooks extends SideHooks {
     public void stasisMark(int entity, int ticks) {
         StasisFx.mark(entity, ticks);
     }
+
+    @Override
+    public void photonicGlow(int entity, boolean on) {
+        PhotonicGlow.setGlowing(entity, on);
+    }
 }

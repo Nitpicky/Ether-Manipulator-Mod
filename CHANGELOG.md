@@ -6,7 +6,8 @@ next release's notes.
 ## 1.0.1 (in progress, not released)
 
 ### Changes
-- Photonic: the light that follows you is now a smooth moving glow, like dynamic-lights mods. It
+- Photonic: the light that follows you (whenever the Photonic line is equipped, summoned or not)
+  is now a smooth moving glow, like dynamic-lights mods. It
   fades with distance from your exact position instead of jumping from block to block, other
   players see it too, and it places no blocks (so it never touches claims). It works with Sodium
   and Iris. Client setting `photonic_dynamic_light` turns it off. Since it is purely visual, it

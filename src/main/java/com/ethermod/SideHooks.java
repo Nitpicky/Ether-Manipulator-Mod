@@ -54,4 +54,6 @@ public class SideHooks {
     public void stasisForce(int entity, float x, float y, float z) {}
 
     public void stasisMark(int entity, int ticks) {}
+
+    public void photonicGlow(int entity, boolean on) {}
 }

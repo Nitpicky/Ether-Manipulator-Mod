@@ -76,18 +76,23 @@ public final class PhotonicGlow {
     private static ClientLevel trackedLevel;
     private static long ticks;
 
-    /** True while this player gives off the Photonic glow. */
+    /** Players the server says give off the glow (PhotonicGlowPayload); kept until disconnect. */
+    private static final java.util.Set<Integer> GLOWING = new java.util.HashSet<>();
+
+    public static void setGlowing(int entity, boolean on) {
+        if (on) GLOWING.add(entity);
+        else GLOWING.remove(entity);
+    }
+
+    /**
+     * True while this player gives off the Photonic glow: the Photonic line is equipped, summoned
+     * or not (a passive, like the other line bonuses). This player reads their own build; others
+     * come from the server's flag.
+     */
     static boolean glows(Player p, Player local) {
         if (p.isSpectator() || !p.isAlive()) return false;
-        ItemStack st;
-        if (p == local) {
-            if (!Manipulator.isSummoned(p)) return false;
-            st = Manipulator.stack(p);
-        } else {
-            st = p.getMainHandItem();
-            if (!(st.getItem() instanceof EtherManipulatorItem)) return false;
-        }
-        return Traits.hasLine(st, Traits.PHOTONIC);
+        if (p == local) return Traits.hasLine(Manipulator.stack(p), Traits.PHOTONIC);
+        return GLOWING.contains(p.getId());
     }
 
     @SubscribeEvent
@@ -95,7 +100,10 @@ public final class PhotonicGlow {
         Minecraft mc = Minecraft.getInstance();
         ClientLevel level = mc.level;
         if (level != trackedLevel) clearCaches(); // the old level's sections are gone with it
-        if (level == null) return;
+        if (level == null) {
+            GLOWING.clear(); // disconnected: entity ids mean nothing any more
+            return;
+        }
         trackedLevel = level;
         ticks++;
         if (!ClientConfig.photonicDynamicLight()) {

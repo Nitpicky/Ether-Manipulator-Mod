@@ -230,6 +230,7 @@ public class ModEvents {
         com.ethermod.advancement.SecretAdvancements.forget(event.getEntity().getUUID());
         com.ethermod.trait.Ziplines.forget(event.getEntity().getUUID());
         com.ethermod.beam.OrbTether.forget(event.getEntity().getUUID());
+        com.ethermod.trait.PhotonicGlowSync.forget(event.getEntity().getUUID());
         // held movement keys live in memory only; older versions saved them with the player
         com.ethermod.trait.MovementPhysics.forgetInput(event.getEntity().getUUID());
         event.getEntity().getPersistentData().remove("mm_motion");
@@ -238,6 +239,8 @@ public class ModEvents {
     /** A player who comes into view mid-beam should see it too. */
     @SubscribeEvent
     public static void onStartTracking(PlayerEvent.StartTracking event) {
+        if (event.getTarget() instanceof ServerPlayer t && event.getEntity() instanceof ServerPlayer w)
+            com.ethermod.trait.PhotonicGlowSync.startTracking(t, w);
         if (event.getTarget() instanceof ServerPlayer p
                 && event.getEntity() instanceof ServerPlayer watcher)
             PacketDistributor.sendToPlayer(
@@ -262,6 +265,7 @@ public class ModEvents {
         beamActivePlayers.clear();
         restingBeams.clear();
         com.ethermod.trait.TraitRules.clear();
+        com.ethermod.trait.PhotonicGlowSync.clear();
         MiningDamageTracker.clear();
         com.ethermod.util.Protect.clear();
         com.ethermod.beam.DryFire.clear();

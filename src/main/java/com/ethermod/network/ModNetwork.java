@@ -19,7 +19,7 @@ import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 public final class ModNetwork {
 
-    private static final String VERSION = "18";
+    private static final String VERSION = "19";
 
     private ModNetwork() {}
 
@@ -100,6 +100,10 @@ public final class ModNetwork {
                 com.ethermod.network.payload.StasisPayload.TYPE,
                 com.ethermod.network.payload.StasisPayload.CODEC,
                 (payload, ctx) -> ctx.enqueueWork(() -> com.ethermod.SideHooks.get().stasisMark(payload.entity(), payload.ticks())));
+        reg.playToClient(
+                com.ethermod.network.payload.PhotonicGlowPayload.TYPE,
+                com.ethermod.network.payload.PhotonicGlowPayload.CODEC,
+                (payload, ctx) -> ctx.enqueueWork(() -> com.ethermod.SideHooks.get().photonicGlow(payload.entity(), payload.on())));
         reg.playToClient(
                 com.ethermod.network.payload.ReloadPayload.TYPE,
                 com.ethermod.network.payload.ReloadPayload.CODEC,
