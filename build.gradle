@@ -82,10 +82,15 @@ neoForge {
 repositories {
     mavenLocal()
     maven { url = "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/" }
+    // GeckoLib 5 for 26.3 isn't on its own maven: CurseForge file 8945638 (5.5.7)
+    exclusiveContent {
+        forRepository { maven { url = "https://cursemaven.com" } }
+        filter { includeGroup "curse.maven" }
+    }
 }
 
 dependencies {
-    implementation "software.bernie.geckolib:geckolib-neoforge-${mcVersion}:${geckoVersion}"
+    implementation "curse.maven:geckolib-388172:8945638" // GeckoLib ${geckoVersion} for ${mcVersion}
     playtestImplementation sourceSets.main.output
 }
 

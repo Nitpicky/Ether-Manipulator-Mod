@@ -10,6 +10,9 @@ concurrency:
   group: build-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -29,16 +32,26 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v5
 
-      - name: Port probe (available 26.3 versions)
-        run: |
-          curl -s https://maven.neoforged.net/releases/net/neoforged/neoforge/maven-metadata.xml | grep -o '<version>26\.3[^<]*' | tail -3 || true
-          curl -s https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/software/bernie/geckolib/geckolib-neoforge-26.3/maven-metadata.xml | grep -o '<version>[^<]*' | tail -3 || true
-
       - name: Check trait ids
         run: python3 .github/scripts/check_trait_ids.py
 
       - name: Build with Gradle
-        run: ./gradlew build compilePlaytestJava
+        run: |
+          set -o pipefail
+          ./gradlew build compilePlaytestJava --continue 2>&1 | tee build.log
+
+      - name: Publish the build log (port branch)
+        if: always()
+        run: |
+          SHA=$(git rev-parse --short HEAD)
+          cp build.log /tmp/build.log 2>/dev/null || exit 0
+          git config user.name "playtest-bot"
+          git config user.email "playtest-bot@users.noreply.github.com"
+          git fetch -q origin playtest-results
+          git worktree add -q /tmp/pr origin/playtest-results
+          cd /tmp/pr && git checkout -q -B playtest-results
+          mkdir -p "port/$SHA" && cp /tmp/build.log "port/$SHA/build.log"
+          git add -A && git commit -qm "Port build log for $SHA" && git push -q origin playtest-results || true
 
       - name: Upload mod jar
         uses: actions/upload-artifact@v6
