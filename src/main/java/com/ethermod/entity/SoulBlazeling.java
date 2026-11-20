@@ -81,15 +81,15 @@ public final class SoulBlazeling extends FlyingMob {
     }
 
     public ServerPlayer summoner() {
-        return level().getServer() != null && getPersistentData().hasUUID("mm_summoner")
+        return level().getServer() != null && getPersistentData().read("mm_summoner", net.minecraft.core.UUIDUtil.CODEC).isPresent()
                 ? level().getServer()
                         .getPlayerList()
-                        .getPlayer(getPersistentData().getUUID("mm_summoner"))
+                        .getPlayer(getPersistentData().read("mm_summoner", net.minecraft.core.UUIDUtil.CODEC).orElse(null))
                 : null;
     }
 
     public void configure(ServerPlayer owner) {
-        getPersistentData().putUUID("mm_summoner", owner.getUUID());
+        getPersistentData().store("mm_summoner", net.minecraft.core.UUIDUtil.CODEC, owner.getUUID());
         getPersistentData()
                 .putLong(
                         "mm_summon_expires",
@@ -99,7 +99,7 @@ public final class SoulBlazeling extends FlyingMob {
 
     public boolean validTarget(ServerPlayer owner, LivingEntity e) {
         return e != null
-                && !e.getPersistentData().hasUUID("mm_summoner")
+                && !e.getPersistentData().read("mm_summoner", net.minecraft.core.UUIDUtil.CODEC).isPresent()
                 && Allegiance.enemy(owner, e);
     }
 
@@ -111,8 +111,8 @@ public final class SoulBlazeling extends FlyingMob {
             return;
         }
         if (!isAlive()) return;
-        if (getPersistentData().hasUUID("mm_summoner")
-                && level().getGameTime() >= getPersistentData().getLong("mm_summon_expires")) {
+        if (getPersistentData().read("mm_summoner", net.minecraft.core.UUIDUtil.CODEC).isPresent()
+                && level().getGameTime() >= getPersistentData().getLongOr("mm_summon_expires", 0L)) {
             hurt(damageSources().genericKill(), Float.MAX_VALUE);
             return;
         }
@@ -249,7 +249,7 @@ public final class SoulBlazeling extends FlyingMob {
     @Override
     public void readAdditionalSaveData(CompoundTag t) {
         super.readAdditionalSaveData(t);
-        shotCooldown = t.contains("shot_cooldown") ? t.getInt("shot_cooldown") : 60;
+        shotCooldown = t.contains("shot_cooldown") ? t.getIntOr("shot_cooldown", 0) : 60;
         setNoGravity(true);
     }
 }

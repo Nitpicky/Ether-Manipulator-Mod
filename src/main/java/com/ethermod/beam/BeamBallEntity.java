@@ -620,19 +620,19 @@ public class BeamBallEntity extends Projectile {
     @Override
     protected void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        carriedBe = tag.contains("mm_carried_be") ? tag.getCompound("mm_carried_be") : null;
-        entityData.set(PHASE, tag.getInt(TAG_PHASE));
-        entityData.set(MODE, tag.getInt("mm_mode"));
-        entityData.set(SOULFIRE, tag.getBoolean("mm_soul_projectile"));
-        entityData.set(STAGE, tag.getInt("mm_stage"));
-        if (tag.contains("mm_color")) entityData.set(COLOR, tag.getInt("mm_color"));
-        damage = tag.getFloat(TAG_DAMAGE);
-        maxRange = tag.getFloat(TAG_RANGE);
-        traveledDistance = tag.getFloat(TAG_TRAVEL);
+        carriedBe = tag.contains("mm_carried_be") ? tag.getCompoundOrEmpty("mm_carried_be") : null;
+        entityData.set(PHASE, tag.getIntOr(TAG_PHASE, 0));
+        entityData.set(MODE, tag.getIntOr("mm_mode", 0));
+        entityData.set(SOULFIRE, tag.getBooleanOr("mm_soul_projectile", false));
+        entityData.set(STAGE, tag.getIntOr("mm_stage", 0));
+        if (tag.contains("mm_color")) entityData.set(COLOR, tag.getIntOr("mm_color", 0));
+        damage = tag.getFloatOr(TAG_DAMAGE, 0f);
+        maxRange = tag.getFloatOr(TAG_RANGE, 0f);
+        traveledDistance = tag.getFloatOr(TAG_TRAVEL, 0f);
         if (tag.contains("mm_carried"))
             setCarried(
                     net.minecraft.nbt.NbtUtils.readBlockState(
                             net.minecraft.core.registries.BuiltInRegistries.BLOCK.asLookup(),
-                            tag.getCompound("mm_carried")));
+                            tag.getCompoundOrEmpty("mm_carried")));
     }
 }

@@ -19,7 +19,7 @@ public final class MovementPhysics {
     private MovementPhysics() {}
 
     public static Direction down(Player p) {
-        int n = p.getPersistentData().getInt("mm_gravity");
+        int n = p.getPersistentData().getIntOr("mm_gravity", 0);
         return n >= 0 && n < 6 ? Direction.from3DDataValue(n) : Direction.DOWN;
     }
 
@@ -220,7 +220,7 @@ public final class MovementPhysics {
 
     /** Jump held: the client reads its own keys (ClientMobility), the server the last Motion. */
     public static boolean jump(Player p) {
-        if (p.level().isClientSide()) return (p.getPersistentData().getInt("mm_motion") & 1) != 0;
+        if (p.level().isClientSide()) return (p.getPersistentData().getIntOr("mm_motion", 0) & 1) != 0;
         return (MOTION.getOrDefault(p.getUUID(), 0) & 1) != 0;
     }
 
@@ -464,7 +464,7 @@ public final class MovementPhysics {
      */
     private static void footsteps(Player p, Vec3 moved, Vec3 up) {
         var data = p.getPersistentData();
-        float walked = data.getFloat("mm_step") + (float) moved.length() * .6f;
+        float walked = data.getFloatOr("mm_step", 0f) + (float) moved.length() * .6f;
         if (walked < 1) {
             data.putFloat("mm_step", walked);
             return;
@@ -493,9 +493,9 @@ public final class MovementPhysics {
             Vec3 last =
                     data.contains("mm_step_x")
                             ? new Vec3(
-                                    data.getDouble("mm_step_x"),
-                                    data.getDouble("mm_step_y"),
-                                    data.getDouble("mm_step_z"))
+                                    data.getDoubleOr("mm_step_x", 0.0),
+                                    data.getDoubleOr("mm_step_y", 0.0),
+                                    data.getDoubleOr("mm_step_z", 0.0))
                             : p.position();
             Vec3 up = vector(down(p).getOpposite()), moved = p.position().subtract(last);
             if (p.onGround() && !p.isInWater() && !p.isSpectator() && moved.lengthSqr() < 4)
@@ -518,21 +518,21 @@ public final class MovementPhysics {
             data.putDouble("mm_air_peak", height);
             data.putBoolean("mm_slam_ready", false);
         } else {
-            data.putDouble("mm_air_peak", Math.max(data.getDouble("mm_air_peak"), height));
+            data.putDouble("mm_air_peak", Math.max(data.getDoubleOr("mm_air_peak", 0.0), height));
             if (!p.isShiftKeyDown()) data.putBoolean("mm_slam_ready", true);
         }
         if (p.isShiftKeyDown()
                 && !p.onGround()
-                && data.getBoolean("mm_slam_ready")
+                && data.getBooleanOr("mm_slam_ready", false)
                 && Traits.has(st, "pneumatic.ground_slam")
                 && !p.isInWater()) {
             data.putBoolean("mm_slamming", true);
             p.setDeltaMovement(p.getDeltaMovement().add(vector(down(p)).scale(.7)));
-            p.hurtMarked = true;
+            p.needsSync = true;
         }
-        if (p.onGround() && data.getBoolean("mm_slamming")) {
+        if (p.onGround() && data.getBooleanOr("mm_slamming", false)) {
             data.remove("mm_slamming");
-            double fell = Math.max(0, data.getDouble("mm_slam_peak") - height);
+            double fell = Math.max(0, data.getDoubleOr("mm_slam_peak", 0.0) - height);
             // everything grows from almost nothing: a plain jump is a nudge, a big fall a quake
             float damage = (float) Math.min(24, 1 + fell * 1.3);
             double reach = Math.min(8, 2 + fell / 3);
@@ -567,7 +567,7 @@ public final class MovementPhysics {
                             Math.min(1.2f, .5f + (float) fell * .05f),
                             .9f);
         }
-        if (!data.getBoolean("mm_slamming") || p.onGround())
-            data.putDouble("mm_slam_peak", data.getDouble("mm_air_peak"));
+        if (!data.getBooleanOr("mm_slamming", false) || p.onGround())
+            data.putDouble("mm_slam_peak", data.getDoubleOr("mm_air_peak", 0.0));
     }
 }

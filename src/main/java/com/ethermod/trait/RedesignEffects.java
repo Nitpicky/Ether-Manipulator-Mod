@@ -204,7 +204,7 @@ public final class RedesignEffects {
     @SubscribeEvent
     public static void loot(LivingDropsEvent ev) {
         // a summon's drops are cleared (Burning.loot)
-        if (ev.getEntity().getPersistentData().hasUUID("mm_summoner")) return;
+        if (ev.getEntity().getPersistentData().read("mm_summoner", net.minecraft.core.UUIDUtil.CODEC).isPresent()) return;
         if (!(ev.getSource().getEntity() instanceof ServerPlayer p)
                 || !Traits.has(Manipulator.stack(p), "plasmic.dissolve")) return;
         int level =
@@ -212,7 +212,7 @@ public final class RedesignEffects {
                         1,
                         Math.min(
                                 4,
-                                com.ethermod.util.MobMemory.peek(ev.getEntity()).getInt("mm_combat_pressure")));
+                                com.ethermod.util.MobMemory.peek(ev.getEntity()).getIntOr("mm_combat_pressure", 0)));
         if (level <= 1) return;
         var extra = new ArrayList<net.minecraft.world.entity.item.ItemEntity>();
         for (var item : ev.getDrops())

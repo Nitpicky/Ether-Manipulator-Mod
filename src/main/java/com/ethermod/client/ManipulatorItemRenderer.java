@@ -13,8 +13,8 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
-import software.bernie.geckolib.cache.object.GeoBone;
-import software.bernie.geckolib.renderer.GeoItemRenderer;
+import com.geckolib.cache.model.GeoBone;
+import com.geckolib.renderer.GeoItemRenderer;
 
 @OnlyIn(Dist.CLIENT)
 public class ManipulatorItemRenderer extends GeoItemRenderer<EtherManipulatorItem> {

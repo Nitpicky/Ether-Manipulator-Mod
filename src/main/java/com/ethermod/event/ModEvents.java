@@ -163,13 +163,12 @@ public class ModEvents {
         }
         if (data.owned() && !data.greeted()) {
             data.setGreeted(true);
-            sp.displayClientMessage(
+            sp.sendSystemMessage(
                     Component.translatable("message.ethermod.intro")
                             .withStyle(ChatFormatting.AQUA)
                             .append(
                                     Component.translatable("message.ethermod.intro_keys")
-                                            .withStyle(ChatFormatting.GRAY)),
-                    false);
+                                            .withStyle(ChatFormatting.GRAY)));
         }
         Manipulator.sync(sp);
         PacketDistributor.sendToPlayer(

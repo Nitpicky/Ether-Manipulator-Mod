@@ -5,7 +5,7 @@ import com.ethermod.manipulator.Manipulator;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -52,8 +52,8 @@ public final class SecretAdvancements {
     /** Pyrotechnic, This Is Fine: drinking something while standing in fire you started. */
     @SubscribeEvent
     public static void drink(LivingEntityUseItemEvent.Finish ev) {
-        if (!(ev.getEntity() instanceof ServerPlayer sp) || ev.getItem().getUseAnimation() != UseAnim.DRINK) return;
-        if (sp.getPersistentData().getLong(PYRO_TAG) < sp.level().getGameTime()) return;
+        if (!(ev.getEntity() instanceof ServerPlayer sp) || ev.getItem().getUseAnimation() != ItemUseAnimation.DRINK) return;
+        if (sp.getPersistentData().getLongOr(PYRO_TAG, 0L) < sp.level().getGameTime()) return;
         var at = sp.blockPosition();
         if (sp.level().getBlockState(at).getBlock() instanceof BaseFireBlock
                 || sp.level().getBlockState(at.above()).getBlock() instanceof BaseFireBlock)

@@ -2,12 +2,12 @@ package com.ethermod.item;
 
 import com.ethermod.manipulator.Manipulator;
 
+import net.minecraft.world.InteractionResult;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -38,13 +38,13 @@ public class TierUpgradeModule extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(
+    public InteractionResult use(
             Level level, Player player, InteractionHand hand) {
         ItemStack module = player.getItemInHand(hand);
-        if (!(player instanceof ServerPlayer sp)) return InteractionResultHolder.success(module);
+        if (!(player instanceof ServerPlayer sp)) return InteractionResult.SUCCESS;
         return install(sp, module)
-                ? InteractionResultHolder.consume(module)
-                : InteractionResultHolder.fail(module);
+                ? InteractionResult.CONSUME
+                : InteractionResult.FAIL;
     }
 
     /**
@@ -65,7 +65,7 @@ public class TierUpgradeModule extends Item {
                             ? Component.translatable("message.ethermod.upgrade_past")
                             : Component.translatable(
                                     "message.ethermod.upgrade_first", m.requiredStage.title());
-            sp.displayClientMessage(msg.copy().withStyle(ChatFormatting.RED), true);
+            sp.sendOverlayMessage(msg.copy().withStyle(ChatFormatting.RED));
             return false;
         }
         if (!ManipulatorStage.tryUpgrade(manipulator)) return false;
@@ -83,16 +83,14 @@ public class TierUpgradeModule extends Item {
                             SoundSource.PLAYERS,
                             0.8f,
                             1.4f);
-        sp.displayClientMessage(
+        sp.sendSystemMessage(
                 Component.translatable(
                                 "message.ethermod.upgraded",
                                 next.title().withStyle(ChatFormatting.AQUA))
-                        .withStyle(ChatFormatting.GRAY),
-                false);
-        sp.displayClientMessage(
+                        .withStyle(ChatFormatting.GRAY));
+        sp.sendOverlayMessage(
                 Component.translatable("message.ethermod.upgraded_hint", next.title())
-                        .withStyle(ChatFormatting.GREEN),
-                true);
+                        .withStyle(ChatFormatting.GREEN));
         Manipulator.sync(sp);
         return true;
     }
@@ -108,13 +106,12 @@ public class TierUpgradeModule extends Item {
                 return;
             }
         }
-        sp.displayClientMessage(
+        sp.sendOverlayMessage(
                 (current.next() == null
                                 ? Component.translatable("message.ethermod.max_stage")
                                 : Component.translatable(
                                         "message.ethermod.need_chip", current.next().title()))
-                        .withStyle(ChatFormatting.RED),
-                true);
+                        .withStyle(ChatFormatting.RED));
     }
 
     @Override

@@ -48,7 +48,7 @@ public final class MobilityEffects {
         if (Ziplines.isRiding(sp)) return true;
         var d = sp.getPersistentData();
         return d.contains(SOFT_LANDING)
-                && sp.level().getGameTime() - d.getLong(SOFT_LANDING) < 10;
+                && sp.level().getGameTime() - d.getLongOr(SOFT_LANDING, 0L) < 10;
     }
 
     private static final String NO_FALL = "ethermod_no_fall";
@@ -73,8 +73,8 @@ public final class MobilityEffects {
                 || sp.getAbilities().flying
                 || sp.isSpectator()) return;
         long now = sp.level().getGameTime();
-        if (sp.getPersistentData().getBoolean("mm_airjump_used")) return;
-        if (now - sp.getPersistentData().getLong(AIR_JUMP) < 8) return;
+        if (sp.getPersistentData().getBooleanOr("mm_airjump_used", false)) return;
+        if (now - sp.getPersistentData().getLongOr(AIR_JUMP, 0L) < 8) return;
         sp.getPersistentData().putBoolean("mm_airjump_used", true);
         sp.getPersistentData().putLong(AIR_JUMP, now);
         sp.resetFallDistance();
@@ -109,13 +109,13 @@ public final class MobilityEffects {
             event.setDamageMultiplier(0);
             return;
         }
-        long nf = p.getPersistentData().getLong(NO_FALL);
+        long nf = p.getPersistentData().getLongOr(NO_FALL, 0L);
         if (nf != 0 && p.level().getGameTime() - nf <= 200) {
             event.setDamageMultiplier(0);
             p.getPersistentData().remove(NO_FALL);
             return;
         }
-        long t = p.getPersistentData().getLong(SOFT_LANDING);
+        long t = p.getPersistentData().getLongOr(SOFT_LANDING, 0L);
         if (t == 0 || p.level().getGameTime() - t > 100) return;
         if (Traits.hasCommon(Manipulator.stack(p), Traits.GRAVITIC, 0)) {
             event.setDamageMultiplier(0);
@@ -198,7 +198,7 @@ public final class MobilityEffects {
         if (!(event.getEntity() instanceof ServerPlayer sp)) return;
         if (!Traits.has(Manipulator.stack(sp), "pyrotechnic.phoenix")) return;
         long now = sp.level().getGameTime();
-        long last = sp.getPersistentData().getLong(PHOENIX);
+        long last = sp.getPersistentData().getLongOr(PHOENIX, 0L);
         if (last != 0 && now - last < 12000) return;
         event.setCanceled(true);
         sp.setHealth(8f);
@@ -227,9 +227,8 @@ public final class MobilityEffects {
                 0.3);
         sl.playSound(
                 null, sp.blockPosition(), com.ethermod.sound.ModSounds.WORLD_TOTEM_USE, SoundSource.PLAYERS, 0.8f, 1.3f);
-        sp.displayClientMessage(
-                Component.translatable("message.ethermod.phoenix").withStyle(ChatFormatting.GOLD),
-                true);
+        sp.sendOverlayMessage(
+                Component.translatable("message.ethermod.phoenix").withStyle(ChatFormatting.GOLD));
     }
 
     /** Keeps an ambient, icon-only effect topped up while a trait holds it. */

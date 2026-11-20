@@ -295,7 +295,7 @@ public final class BeamCastHelper {
             p.disableShield();
         }
         if (Traits.has(tool, "plasmic.disrupt")
-                && player.getPersistentData().getInt("mm_beam_level") >= 2) {
+                && player.getPersistentData().getIntOr("mm_beam_level", 0) >= 2) {
             dmg *= 1.15f;
             target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 30, 0, false, false, true));
         }
@@ -311,7 +311,7 @@ public final class BeamCastHelper {
         com.ethermod.util.MobMemory.of(target)
                 .putInt(
                         "mm_combat_pressure",
-                        Math.max(1, player.getPersistentData().getInt("mm_beam_level")));
+                        Math.max(1, player.getPersistentData().getIntOr("mm_beam_level", 0)));
 
         // Continuous damage must not erase the target's voluntary movement.
         // Restore the incoming velocity after damage, without repeatedly pinning it.
@@ -335,7 +335,7 @@ public final class BeamCastHelper {
             if (p.distanceToSqr(start.add(dir.scale(t))) > 2.25) continue;
             Vec3 pull = player.position().add(0, 0.6, 0).subtract(p).normalize().scale(0.35);
             e.setDeltaMovement(e.getDeltaMovement().scale(0.5).add(pull));
-            e.hurtMarked = true;
+            e.needsSync = true;
         }
     }
 

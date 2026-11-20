@@ -21,9 +21,9 @@ public final class TankReload {
         int cap = OrbMode.capacity(st), tank = OrbMode.tank(st);
         var data = p.getPersistentData();
         // spent since last tick: restart the wait
-        if (tank < data.getInt("mm_tank_last")) {
+        if (tank < data.getIntOr("mm_tank_last", 0)) {
             // fired during the reload animation: call it off
-            if (reloadDelay(st) - data.getInt("mm_refill_ether") <= RELOAD_LEAD)
+            if (reloadDelay(st) - data.getIntOr("mm_refill_ether", 0) <= RELOAD_LEAD)
                 net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(
                         p, new com.ethermod.network.payload.ReloadPayload(-100));
             data.putInt("mm_refill_ether", 0);
@@ -31,7 +31,7 @@ public final class TankReload {
         data.putInt("mm_tank_last", tank);
         if (tank < cap) {
             int delay = reloadDelay(st);
-            int idle = data.getInt("mm_refill_ether") + 1;
+            int idle = data.getIntOr("mm_refill_ether", 0) + 1;
             int lead = delay - idle;
             // the reload (FX bench "intake"): the animation starts RELOAD_LEAD ticks before the fill, so its clamp
             // lands on it; Ether is drawn in with a soft charge, and a small click when the tank is full

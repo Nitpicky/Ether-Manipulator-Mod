@@ -17,7 +17,7 @@ public final class DryFireFx {
         var mc = Minecraft.getInstance();
         var p = mc.player;
         if (p == null || mc.level == null) return;
-        flashAt = net.minecraft.Util.getMillis();
+        flashAt = net.minecraft.util.Util.getMillis();
         // the soft fizz of a dry shot
         mc.getSoundManager().play(SimpleSoundInstance.forUI(com.ethermod.sound.ModSounds.SHOT_FIRE_EXTINGUISH, 1.8f, .12f));
         // a few wisps of smoke where the shot would leave the emitter
@@ -41,7 +41,7 @@ public final class DryFireFx {
 
     /** 1 just after a refused shot, easing to 0 over 450ms. */
     static float flash() {
-        long since = net.minecraft.Util.getMillis() - flashAt;
+        long since = net.minecraft.util.Util.getMillis() - flashAt;
         return since >= 450 ? 0 : 1 - since / 450f;
     }
 }

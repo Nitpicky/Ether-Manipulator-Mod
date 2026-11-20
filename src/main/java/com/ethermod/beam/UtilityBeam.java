@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.CandleBlock;
 import net.minecraft.world.level.block.CandleCakeBlock;
 import net.minecraft.world.level.block.CropBlock;
-import net.minecraft.world.level.block.FarmBlock;
+import net.minecraft.world.level.block.FarmlandBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -169,7 +169,7 @@ final class UtilityBeam {
      */
     private static boolean wantsFarmland(ServerLevel level, BlockPos pos) {
         for (Direction d : Direction.Plane.HORIZONTAL) {
-            if (level.getBlockState(pos.relative(d)).getBlock() instanceof FarmBlock) return true;
+            if (level.getBlockState(pos.relative(d)).getBlock() instanceof FarmlandBlock) return true;
         }
         for (BlockPos p : BlockPos.betweenClosed(pos.offset(-4, 0, -4), pos.offset(4, 1, 4))) {
             if (level.getFluidState(p).is(net.minecraft.tags.FluidTags.WATER)) return true;

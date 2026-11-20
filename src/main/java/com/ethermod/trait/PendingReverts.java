@@ -84,14 +84,14 @@ public final class PendingReverts extends SavedData {
     private static PendingReverts load(CompoundTag tag, HolderLookup.Provider registries) {
         PendingReverts data = new PendingReverts();
         var blocks = registries.lookupOrThrow(Registries.BLOCK);
-        ListTag list = tag.getList("entries", Tag.TAG_COMPOUND);
+        ListTag list = tag.getListOrEmpty("entries");
         for (int i = 0; i < list.size(); i++) {
-            CompoundTag e = list.getCompound(i);
+            CompoundTag e = list.getCompoundOrEmpty(i);
             data.entries.put(
-                    BlockPos.of(e.getLong("pos")),
+                    BlockPos.of(e.getLongOr("pos", 0L)),
                     new Entry(
-                            NbtUtils.readBlockState(blocks, e.getCompound("placed")),
-                            NbtUtils.readBlockState(blocks, e.getCompound("restore"))));
+                            NbtUtils.readBlockState(blocks, e.getCompoundOrEmpty("placed")),
+                            NbtUtils.readBlockState(blocks, e.getCompoundOrEmpty("restore"))));
         }
         return data;
     }

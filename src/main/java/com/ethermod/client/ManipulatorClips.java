@@ -2,8 +2,8 @@ package com.ethermod.client;
 
 import com.ethermod.item.OrbMode;
 
-import software.bernie.geckolib.animation.EasingType;
-import software.bernie.geckolib.animation.RawAnimation;
+import com.geckolib.animation.object.EasingType;
+import com.geckolib.animation.RawAnimation;
 
 import java.util.EnumMap;
 import java.util.HashSet;

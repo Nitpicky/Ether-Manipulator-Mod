@@ -7,7 +7,6 @@ import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -50,7 +49,7 @@ public abstract class ManipulatorBlockUseMixin {
             Player player,
             InteractionHand hand,
             BlockHitResult hit,
-            CallbackInfoReturnable<ItemInteractionResult> cir,
+            CallbackInfoReturnable<InteractionResult> cir,
             @Share("veilItem") LocalRef<Player> previous) {
         previous.set(ManipulatorVeil.open(player));
     }
@@ -62,7 +61,7 @@ public abstract class ManipulatorBlockUseMixin {
             Player player,
             InteractionHand hand,
             BlockHitResult hit,
-            CallbackInfoReturnable<ItemInteractionResult> cir,
+            CallbackInfoReturnable<InteractionResult> cir,
             @Share("veilItem") LocalRef<Player> previous) {
         ManipulatorVeil.close(previous.get());
     }

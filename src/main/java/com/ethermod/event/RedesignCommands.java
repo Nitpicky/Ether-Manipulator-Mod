@@ -28,12 +28,11 @@ public final class RedesignCommands {
                                                                                 d.setOwned(true);
                                                                                 if (!d.greeted()) {
                                                                                     d.setGreeted(true);
-                                                                                    p.displayClientMessage(
+                                                                                    p.sendSystemMessage(
                                                                                             net.minecraft.network.chat.Component.translatable("message.ethermod.intro")
                                                                                                     .withStyle(net.minecraft.ChatFormatting.AQUA)
                                                                                                     .append(net.minecraft.network.chat.Component.translatable("message.ethermod.intro_keys")
-                                                                                                            .withStyle(net.minecraft.ChatFormatting.GRAY)),
-                                                                                            false);
+                                                                                                            .withStyle(net.minecraft.ChatFormatting.GRAY)));
                                                                                 }
                                                                                 Manipulator.sync(p);
                                                                             }

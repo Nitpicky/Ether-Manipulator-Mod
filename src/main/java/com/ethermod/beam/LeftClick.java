@@ -453,7 +453,7 @@ public final class LeftClick {
     public static void restoreDroppedPull(
             net.neoforged.neoforge.event.entity.EntityJoinLevelEvent ev) {
         if (ev.getLevel().isClientSide() || !(ev.getEntity() instanceof ItemEntity e)) return;
-        if (!e.getPersistentData().getBoolean(PULL_TAG)) return;
+        if (!e.getPersistentData().getBooleanOr(PULL_TAG, false)) return;
         for (Pull pl : PULLS) if (pl.item() == e) return;
         releasePull(e);
     }

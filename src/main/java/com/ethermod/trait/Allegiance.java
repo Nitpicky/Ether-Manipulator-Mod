@@ -10,8 +10,8 @@ public final class Allegiance {
 
     public static boolean ally(ServerPlayer owner, LivingEntity e) {
         return e == owner
-                || (e.getPersistentData().hasUUID("mm_summoner")
-                        && owner.getUUID().equals(e.getPersistentData().getUUID("mm_summoner")))
+                || (e.getPersistentData().read("mm_summoner", net.minecraft.core.UUIDUtil.CODEC).isPresent()
+                        && owner.getUUID().equals(e.getPersistentData().read("mm_summoner", net.minecraft.core.UUIDUtil.CODEC).orElse(null)))
                 || owner.isAlliedTo(e)
                 || (e instanceof net.minecraft.world.entity.TamableAnimal t
                         && owner.getUUID().equals(t.getOwnerUUID()));

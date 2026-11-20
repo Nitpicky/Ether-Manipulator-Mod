@@ -58,15 +58,15 @@ public final class LightDecoy extends PathfinderMob {
     @Override
     public void addAdditionalSaveData(CompoundTag t) {
         super.addAdditionalSaveData(t);
-        t.putUUID("owner", owner());
+        t.store("owner", net.minecraft.core.UUIDUtil.CODEC, owner());
         t.putInt("life", lifetime);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag t) {
         super.readAdditionalSaveData(t);
-        if (t.hasUUID("owner")) entityData.set(OWNER, Optional.of(t.getUUID("owner")));
-        lifetime = t.getInt("life");
+        if (t.read("owner", net.minecraft.core.UUIDUtil.CODEC).isPresent()) entityData.set(OWNER, Optional.of(t.read("owner", net.minecraft.core.UUIDUtil.CODEC).orElse(null)));
+        lifetime = t.getIntOr("life", 0);
     }
 
     public static AttributeSupplier.Builder attributes() {

@@ -71,7 +71,7 @@ final class OrbFlight {
             b.bouncesLeft = bank > 0 ? b.getPhase() + 1 : 0;
         if (b.has("kinetic.marksman")
                 && b.getOwner() != null
-                && b.getOwner().getPersistentData().getInt("mm_charge_still") >= 10)
+                && b.getOwner().getPersistentData().getIntOr("mm_charge_still", 0) >= 10)
             b.setDeltaMovement(b.getDeltaMovement().scale(1.6));
         if (b.has("kinetic.seeker") && b.getOwner() instanceof ServerPlayer p) {
             var look = p.getLookAngle();
@@ -143,7 +143,7 @@ final class OrbFlight {
         Vec3 nv = want.scale(0.5);
         if (nv.length() > 2.2) nv = nv.normalize().scale(2.2);
         sp.setDeltaMovement(nv);
-        sp.hurtMarked = true;
+        sp.needsSync = true;
         // the trident's riptide spin, kept going for as long as the shot carries you
         if (!sp.isAutoSpinAttack() || b.tickCount % 4 == 0) sp.startAutoSpinAttack(6, 6f, b.traits);
         sp.resetFallDistance();

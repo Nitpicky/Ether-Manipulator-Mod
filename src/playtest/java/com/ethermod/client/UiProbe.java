@@ -698,7 +698,7 @@ public final class UiProbe {
                                         sl.getEntitiesOfClass(
                                                 com.ethermod.entity.SoulBlazeling.class,
                                                 p.getBoundingBox().inflate(16),
-                                                e -> e.getPersistentData().hasUUID("mm_summoner"));
+                                                e -> e.getPersistentData().read("mm_summoner", net.minecraft.core.UUIDUtil.CODEC).isPresent());
                                 check("Soulfire kill raises allied Blazeling", pets.size() == 1);
                                 var pet = pets.get(0);
                                 check(

@@ -27,7 +27,7 @@ public abstract class SoulFlameRenderMixin {
             Material material,
             Operation<TextureAtlasSprite> original,
             @Local(argsOnly = true) Entity entity) {
-        if (entity != null && entity.getPersistentData().getBoolean("mm_soul"))
+        if (entity != null && entity.getPersistentData().getBooleanOr("mm_soul", false))
             return net.minecraft.client.Minecraft.getInstance()
                     .getTextureAtlas(net.minecraft.world.inventory.InventoryMenu.BLOCK_ATLAS)
                     .apply(

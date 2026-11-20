@@ -9,7 +9,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 
-import software.bernie.geckolib.animation.AnimationController;
+import com.geckolib.animation.AnimationController;
 
 /** The client's {@link SideHooks}: forwards each hook to the client class that does the work. */
 @OnlyIn(Dist.CLIENT)

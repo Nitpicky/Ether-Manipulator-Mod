@@ -7,11 +7,11 @@ import com.ethermod.manipulator.ManipulatorData;
 import com.ethermod.trait.TraitBuild;
 import com.ethermod.trait.Traits;
 
+import net.minecraft.world.InteractionResult;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -23,11 +23,11 @@ import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.ItemAbility;
 
-import software.bernie.geckolib.animatable.GeoItem;
-import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.AnimatableManager;
-import software.bernie.geckolib.util.GeckoLibUtil;
+import com.geckolib.animatable.GeoItem;
+import com.geckolib.animatable.SingletonGeoAnimatable;
+import com.geckolib.animatable.instance.AnimatableInstanceCache;
+import com.geckolib.animatable.manager.AnimatableManager;
+import com.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -101,20 +101,20 @@ public class EtherManipulatorItem extends Item implements GeoItem {
     // =========================================================================
 
     @Override
-    public InteractionResultHolder<ItemStack> use(
+    public InteractionResult use(
             Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (hand != InteractionHand.MAIN_HAND) return InteractionResultHolder.pass(stack);
+        if (hand != InteractionHand.MAIN_HAND) return InteractionResult.PASS;
         // Detonator: right click again while your right-click shot is in the air bursts it
         if (com.ethermod.beam.BeamBallEntity.detonateFor(player, stack, false))
-            return InteractionResultHolder.fail(stack);
+            return InteractionResult.FAIL;
 
         OrbMode mode = OrbMode.get(stack);
         // Pneumatic: right click throws the Stasis Grenade (the Gust shot charges on left click)
         if (mode == OrbMode.GUST) {
             if (player instanceof ServerPlayer sp) com.ethermod.beam.LeftClick.throwGrenade(sp);
             else SideHooks.get().grenadeThrow(player);
-            return InteractionResultHolder.fail(stack);
+            return InteractionResult.FAIL;
         }
         // the projectile this tool charges on right click (Hydraulic: the ice shard)
         OrbMode shot = mode.rmbShot();
@@ -122,7 +122,7 @@ public class EtherManipulatorItem extends Item implements GeoItem {
         // hand, which can be stale on the client and let an empty tank start a charge
         if (shot.isDry(player)) {
             if (player instanceof net.minecraft.server.level.ServerPlayer sp) com.ethermod.beam.DryFire.signal(sp);
-            return InteractionResultHolder.fail(stack);
+            return InteractionResult.FAIL;
         }
 
         if (mode == OrbMode.MASS) {
@@ -131,9 +131,9 @@ public class EtherManipulatorItem extends Item implements GeoItem {
                     ? com.ethermod.beam.MassDriver.carried(stack).isAir()
                     : !(player instanceof ServerPlayer sp
                             && com.ethermod.beam.MassDriver.holding(sp)))
-                return InteractionResultHolder.fail(stack);
+                return InteractionResult.FAIL;
             player.startUsingItem(hand);
-            return InteractionResultHolder.consume(stack);
+            return InteractionResult.CONSUME;
         }
         // Beam mode: the crystal keeps the colour of the last thing you did (mine or charge)
         if (mode == OrbMode.ENERGY && player instanceof ServerPlayer sp)
@@ -146,7 +146,7 @@ public class EtherManipulatorItem extends Item implements GeoItem {
                 var hook = com.ethermod.beam.OrbTether.activeHook(sp);
                 if (hook != null) {
                     if (com.ethermod.beam.OrbTether.press(hook, sp))
-                        return InteractionResultHolder.fail(stack);
+                        return InteractionResult.FAIL;
                 } else {
                     // no hook out: a double tap while gravity is shifted puts it back to normal
                     var data = sp.getPersistentData();
@@ -154,14 +154,14 @@ public class EtherManipulatorItem extends Item implements GeoItem {
                     boolean shifted =
                             com.ethermod.trait.MovementPhysics.down(sp)
                                     != net.minecraft.core.Direction.DOWN;
-                    if (shifted && now - data.getLong("mm_tether_tap") <= com.ethermod.beam.OrbTether.DOUBLE_TAP) {
+                    if (shifted && now - data.getLongOr("mm_tether_tap", 0L) <= com.ethermod.beam.OrbTether.DOUBLE_TAP) {
                         data.remove("mm_tether_tap");
                         com.ethermod.trait.MovementPhysics.setGravity(sp, net.minecraft.core.Direction.DOWN);
-                        return InteractionResultHolder.fail(stack);
+                        return InteractionResult.FAIL;
                     }
                     data.putLong("mm_tether_tap", now);
                     if (sp.isShiftKeyDown() || !com.ethermod.trait.Ziplines.tryRide(sp))
-                        return InteractionResultHolder.fail(stack);
+                        return InteractionResult.FAIL;
                 }
             }
             // (the client can't see the Ziplines it might ride: it holds, the server decides)
@@ -169,7 +169,7 @@ public class EtherManipulatorItem extends Item implements GeoItem {
 
         // Start charging the orb (or holding the cone / the rope)
         player.startUsingItem(hand);
-        return InteractionResultHolder.consume(stack);
+        return InteractionResult.CONSUME;
     }
 
     /**
@@ -188,10 +188,9 @@ public class EtherManipulatorItem extends Item implements GeoItem {
                 ManipulatorStage.get(stack) != ManipulatorStage.STONE || !TraitBuild.isEmpty(stack);
         if (ownUntouched && incomingProgressed) {
             data.setStack(stack.copyWithCount(1));
-            sp.displayClientMessage(
+            sp.sendSystemMessage(
                     Component.translatable("message.ethermod.moved_to_slot")
-                            .withStyle(ChatFormatting.AQUA),
-                    false);
+                            .withStyle(ChatFormatting.AQUA));
         }
         sp.getInventory().setItem(slot, ItemStack.EMPTY);
         Manipulator.sync(sp);
@@ -214,12 +213,12 @@ public class EtherManipulatorItem extends Item implements GeoItem {
                 sp.position()
                         .distanceToSqr(
                                 new net.minecraft.world.phys.Vec3(
-                                        movement.getDouble("mm_charge_x"),
-                                        movement.getDouble("mm_charge_y"),
-                                        movement.getDouble("mm_charge_z")));
+                                        movement.getDoubleOr("mm_charge_x", 0.0),
+                                        movement.getDoubleOr("mm_charge_y", 0.0),
+                                        movement.getDoubleOr("mm_charge_z", 0.0)));
         movement.putInt(
                 "mm_charge_still",
-                held > 1 && moved < .0004 ? movement.getInt("mm_charge_still") + 1 : 0);
+                held > 1 && moved < .0004 ? movement.getIntOr("mm_charge_still", 0) + 1 : 0);
         movement.putDouble("mm_charge_x", sp.getX());
         movement.putDouble("mm_charge_y", sp.getY());
         movement.putDouble("mm_charge_z", sp.getZ());
@@ -332,10 +331,10 @@ public class EtherManipulatorItem extends Item implements GeoItem {
             com.ethermod.beam.ShotSounds.launch(level, player, mode, phase);
         }
         if (mode == OrbMode.GUST) {
-            if (player.onGround() || !player.getPersistentData().getBoolean("mm_gust_boosted")) {
+            if (player.onGround() || !player.getPersistentData().getBooleanOr("mm_gust_boosted", false)) {
                 var recoil = player.getLookAngle().scale(-(0.3 + 0.3 * phase));
                 player.setDeltaMovement(player.getDeltaMovement().add(recoil));
-                player.hurtMarked = true;
+                player.needsSync = true;
                 player.getPersistentData().putBoolean("mm_gust_boosted", true);
             }
         }

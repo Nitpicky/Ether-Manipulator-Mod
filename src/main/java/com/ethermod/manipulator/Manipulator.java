@@ -8,7 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.PacketDistributor;
 
-import software.bernie.geckolib.animatable.GeoItem;
+import com.geckolib.animatable.GeoItem;
 
 /**
  * Entry point for the player's Manipulator: it lives in its own slot (a data attachment), is given

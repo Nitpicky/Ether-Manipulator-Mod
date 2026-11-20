@@ -48,7 +48,7 @@ public final class ManipulatorColors {
 
     /** Beam mode: whether the last thing used was the Energy orb (else the mining beam). */
     public static boolean lastOrb(ItemStack stack) {
-        return tag(stack).getBoolean(LAST_ORB);
+        return tag(stack).getBooleanOr(LAST_ORB, false);
     }
 
     /** Remembers whether the player last mined or charged an orb; syncs only on a change. */
@@ -62,7 +62,7 @@ public final class ManipulatorColors {
     /** The body colour (see {@link BodyPalette}), or -1 for the painted copper. */
     public static int body(ItemStack stack) {
         CompoundTag t = tag(stack);
-        return t.contains(BODY) ? t.getInt(BODY) : -1;
+        return t.contains(BODY) ? t.getIntOr(BODY, 0) : -1;
     }
 
     /**

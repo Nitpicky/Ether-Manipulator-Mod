@@ -35,16 +35,16 @@ public final class Stasis {
     private static final String STASIS_RESTORE = "mm_stasis_restore";
 
     private static void restoreStasisFlags(LivingEntity e) {
-        var r = e.getPersistentData().getCompound(STASIS_RESTORE);
-        e.setNoGravity(r.getBoolean("gravity"));
-        if (e instanceof Mob m) m.setNoAi(r.getBoolean("ai"));
+        var r = e.getPersistentData().getCompoundOrEmpty(STASIS_RESTORE);
+        e.setNoGravity(r.getBooleanOr("gravity", false));
+        if (e instanceof Mob m) m.setNoAi(r.getBooleanOr("ai", false));
         e.getPersistentData().remove(STASIS_RESTORE);
     }
 
     public static void stasis(LivingEntity e, int ticks) {
         if (!(e.level() instanceof ServerLevel sl)
                 || FROZEN.containsKey(e.getUUID())
-                || com.ethermod.util.MobMemory.peek(e).getLong("mm_stasis_cooldown") > sl.getGameTime()) return;
+                || com.ethermod.util.MobMemory.peek(e).getLongOr("mm_stasis_cooldown", 0L) > sl.getGameTime()) return;
         FROZEN.put(
                 e.getUUID(),
                 new Frozen(
@@ -84,7 +84,7 @@ public final class Stasis {
             d.putDouble("mm_stasis_y", n.y);
             d.putDouble("mm_stasis_z", n.z);
         }
-        d.putDouble("mm_stasis_force", Math.min(STASIS_MAX, d.getDouble("mm_stasis_force") + push.length()));
+        d.putDouble("mm_stasis_force", Math.min(STASIS_MAX, d.getDoubleOr("mm_stasis_force", 0.0) + push.length()));
     }
 
     /** Lets a held creature go now, with all the knockback it stored. */
@@ -100,7 +100,7 @@ public final class Stasis {
         if (e instanceof Mob m) m.setNoAi(f.noAi());
         e.getPersistentData().remove(STASIS_RESTORE);
         e.setDeltaMovement(v);
-        e.hurtMarked = true;
+        e.needsSync = true;
         d.putLong("mm_stasis_cooldown", now + 40);
         d.remove("mm_stasis_ex");
         d.remove("mm_stasis_ey");
@@ -115,7 +115,7 @@ public final class Stasis {
             return;
         }
         e.setDeltaMovement(e.getDeltaMovement().add(force));
-        e.hurtMarked = true;
+        e.needsSync = true;
     }
 
     /**
@@ -129,7 +129,7 @@ public final class Stasis {
         var d = com.ethermod.util.MobMemory.of(e);
         d.putDouble(
                 "mm_stasis_force",
-                Math.min(STASIS_MAX, d.getDouble("mm_stasis_force") + force.length() * STASIS_GAIN));
+                Math.min(STASIS_MAX, d.getDoubleOr("mm_stasis_force", 0.0) + force.length() * STASIS_GAIN));
         var n = force.normalize();
         d.putDouble("mm_stasis_x", n.x);
         d.putDouble("mm_stasis_y", n.y);
@@ -159,15 +159,15 @@ public final class Stasis {
     private static Vec3 launch(LivingEntity e, boolean withBurst) {
         var d = com.ethermod.util.MobMemory.peek(e);
         var burst = withBurst
-                ? new Vec3(d.getDouble("mm_stasis_ex"), d.getDouble("mm_stasis_ey"), d.getDouble("mm_stasis_ez"))
+                ? new Vec3(d.getDoubleOr("mm_stasis_ex", 0.0), d.getDoubleOr("mm_stasis_ey", 0.0), d.getDoubleOr("mm_stasis_ez", 0.0))
                 : Vec3.ZERO;
-        double force = Math.min(STASIS_MAX, d.getDouble("mm_stasis_force") + burst.length());
+        double force = Math.min(STASIS_MAX, d.getDoubleOr("mm_stasis_force", 0.0) + burst.length());
         if (force < 1e-6) return Vec3.ZERO;
         // the Stasis Grenade's spot on the body sets the direction (stored hits only add
         // strength); without a pending burst, the last stored direction
         var dir = burst.lengthSqr() > 1e-6
                 ? burst.normalize()
-                : new Vec3(d.getDouble("mm_stasis_x"), d.getDouble("mm_stasis_y"), d.getDouble("mm_stasis_z"));
+                : new Vec3(d.getDoubleOr("mm_stasis_x", 0.0), d.getDoubleOr("mm_stasis_y", 0.0), d.getDoubleOr("mm_stasis_z", 0.0));
         var v = dir.scale(force);
         // lift so a level push flies instead of dragging along the ground; a push aimed down
         // (grenade on top) stays down

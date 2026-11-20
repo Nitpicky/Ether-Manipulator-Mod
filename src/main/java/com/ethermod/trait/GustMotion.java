@@ -83,7 +83,7 @@ public final class GustMotion {
                                         : Vec3.atLowerCornerOf(hit.getDirection().getNormal());
                         v = m.v.subtract(n.scale(2 * m.v.dot(n))).scale(.8);
                         e.setDeltaMovement(v);
-                        e.hurtMarked = true;
+                        e.needsSync = true;
                     } else {
                         it.remove();
                         continue;
@@ -98,7 +98,7 @@ public final class GustMotion {
     public static void fall(net.neoforged.neoforge.event.entity.living.LivingFallEvent ev) {
         if (ev.getEntity() instanceof net.minecraft.world.entity.player.Player) return;
         var d = ev.getEntity().getPersistentData();
-        if (d.getLong("mm_updraft_until") > ev.getEntity().level().getGameTime())
+        if (d.getLongOr("mm_updraft_until", 0L) > ev.getEntity().level().getGameTime())
             ev.setDamageMultiplier(ev.getDamageMultiplier() * 2);
     }
 

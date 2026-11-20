@@ -145,11 +145,10 @@ public class ManipulatorKeys {
         var next = modes.get(Math.floorMod(i + (d < 0 ? 1 : -1), modes.size()));
         com.ethermod.item.OrbMode.set(stack, next);
         ModNetwork.sendOrbMode(next);
-        player.displayClientMessage(
+        player.sendOverlayMessage(
                 net.minecraft.network.chat.Component.translatable(
                                 "message.ethermod.orb_selected", next.title())
-                        .withStyle(s -> s.withColor(next.color)),
-                true);
+                        .withStyle(s -> s.withColor(next.color)));
     }
 
     /** Predict locally so the hand swaps instantly; the server confirms with a sync. */

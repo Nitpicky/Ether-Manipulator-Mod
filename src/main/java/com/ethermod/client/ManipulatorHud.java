@@ -65,7 +65,7 @@ public final class ManipulatorHud {
         int n = Math.max(1, modes.size());
         float step = (float) (Math.PI * 2 / n);
 
-        long now = net.minecraft.Util.getMillis();
+        long now = net.minecraft.util.Util.getMillis();
         float dt = lastFrame == 0 ? 0 : Math.min(100, now - lastFrame);
         lastFrame = now;
 

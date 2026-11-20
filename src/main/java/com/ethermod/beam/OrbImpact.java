@@ -138,7 +138,7 @@ final class OrbImpact {
                 Vec3 push = b.getDeltaMovement().normalize().scale(force);
                 target.setDeltaMovement(
                         target.getDeltaMovement().add(push.x, 0.15 + force * 0.1, push.z));
-                target.hurtMarked = true;
+                target.needsSync = true;
                 OrbFluids.placeFluid(b, target.blockPosition(), null, Fluids.WATER);
             }
             case LAVA -> {
@@ -301,7 +301,7 @@ final class OrbImpact {
                         e.setDeltaMovement(
                                 e.getDeltaMovement()
                                         .add(away.x * 0.6 * ph, 0.25, away.z * 0.6 * ph));
-                        e.hurtMarked = true;
+                        e.needsSync = true;
                         e.clearFire();
                     }
                 }
@@ -311,12 +311,12 @@ final class OrbImpact {
                             BlockPos.betweenClosed(
                                     front.offset(-2, -2, -2), front.offset(2, 1, 2))) {
                         BlockState fs = sl.getBlockState(bp);
-                        if (fs.getBlock() instanceof net.minecraft.world.level.block.FarmBlock
+                        if (fs.getBlock() instanceof net.minecraft.world.level.block.FarmlandBlock
                                 && b.mayBuild(bp)) {
                             sl.setBlock(
                                     bp,
                                     fs.setValue(
-                                            net.minecraft.world.level.block.FarmBlock.MOISTURE, 7),
+                                            net.minecraft.world.level.block.FarmlandBlock.MOISTURE, 7),
                                     Block.UPDATE_CLIENTS);
                         }
                     }

@@ -51,7 +51,7 @@ final class OrbMass {
             com.ethermod.advancement.ManipulatorTrigger.fire(sp, "mass_self");
         Vec3 push = v.normalize().scale(0.4 + 0.2 * b.getPhase());
         target.setDeltaMovement(target.getDeltaMovement().add(push.x, 0.2, push.z));
-        target.hurtMarked = true;
+        target.needsSync = true;
         // recoil: the block bounces back off the creature (and up), then falls and lands
         b.setDeltaMovement(v.x * -.35, Math.max(.25, -v.y * .3), v.z * -.35);
         b.hasImpulse = true;

@@ -20,16 +20,16 @@ public final class ModuleUnlocks {
         if (com.ethermod.config.ServerConfig.moduleDisabled(id.getPath())) return false;
         if (com.ethermod.config.ServerConfig.allModules()) return true;
         var tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).getUnsafe();
-        var list = tag.getList(KEY, Tag.TAG_STRING);
+        var list = tag.getListOrEmpty(KEY);
         for (int i = 0; i < list.size(); i++)
-            if (list.getString(i).equals(id.toString())) return true;
+            if (list.getStringOr(i, "").equals(id.toString())) return true;
         return false;
     }
 
     public static boolean unlock(ItemStack stack, Identifier id) {
         if (known(stack, id)) return false;
         var tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
-        var list = tag.getList(KEY, Tag.TAG_STRING);
+        var list = tag.getListOrEmpty(KEY);
         list.add(StringTag.valueOf(id.toString()));
         tag.put(KEY, list);
         stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));

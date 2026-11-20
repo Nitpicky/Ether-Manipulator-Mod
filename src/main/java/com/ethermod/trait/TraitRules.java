@@ -110,8 +110,7 @@ public final class TraitRules {
     }
 
     private static void deny(ServerPlayer player, String msg) {
-        player.displayClientMessage(
-                Component.translatable("message.ethermod." + msg).withStyle(ChatFormatting.RED),
-                true);
+        player.sendOverlayMessage(
+                Component.translatable("message.ethermod." + msg).withStyle(ChatFormatting.RED));
     }
 }

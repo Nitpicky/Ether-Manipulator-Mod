@@ -416,8 +416,8 @@ public final class ClientMobility {
         var use = p.getUseItem();
         if (use.getItem() instanceof com.ethermod.item.EtherManipulatorItem) return true;
         var anim = use.getUseAnimation();
-        return anim == net.minecraft.world.item.UseAnim.BOW
-                || anim == net.minecraft.world.item.UseAnim.CROSSBOW
-                || anim == net.minecraft.world.item.UseAnim.SPEAR;
+        return anim == net.minecraft.world.item.ItemUseAnimation.BOW
+                || anim == net.minecraft.world.item.ItemUseAnimation.CROSSBOW
+                || anim == net.minecraft.world.item.ItemUseAnimation.SPEAR;
     }
 }

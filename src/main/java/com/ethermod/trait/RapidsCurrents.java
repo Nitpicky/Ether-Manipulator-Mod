@@ -28,7 +28,7 @@ public final class RapidsCurrents {
         Level level =
                 view instanceof Level l
                         ? l
-                        : view instanceof net.minecraft.world.level.BlockAndTintGetter
+                        : view instanceof net.minecraft.client.renderer.block.BlockAndTintGetter
                                 ? clientLevel.get()
                                 : null;
         if (level == null) return null;
@@ -136,7 +136,7 @@ public final class RapidsCurrents {
                     v.x + dir.x * push - sideways.x * .08,
                     v.y,
                     v.z + dir.z * push - sideways.z * .08);
-            if (!level.isClientSide()) e.hurtMarked = true;
+            if (!level.isClientSide()) e.needsSync = true;
         }
     }
 

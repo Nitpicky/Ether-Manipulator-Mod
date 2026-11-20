@@ -36,7 +36,7 @@ public final class PhotonicEffects {
                 || e instanceof Player
                 || e instanceof Animal
                 || Allegiance.ally(owner, e)
-                || e.getPersistentData().hasUUID("mm_summoner");
+                || e.getPersistentData().read("mm_summoner", net.minecraft.core.UUIDUtil.CODEC).isPresent();
     }
 
     public static void flight(BeamBallEntity b, ItemStack st) {
@@ -146,8 +146,8 @@ public final class PhotonicEffects {
                     && friend
                     && e.distanceToSqr(at) <= 16 * power * power) {
                 var data = com.ethermod.util.MobMemory.of(e);
-                boolean fresh = data.getLong("mm_radiance_next") <= now;
-                int prior = fresh ? 0 : data.getInt("mm_radiance_power");
+                boolean fresh = data.getLongOr("mm_radiance_next", 0L) <= now;
+                int prior = fresh ? 0 : data.getIntOr("mm_radiance_power", 0);
                 if (power > prior) {
                     e.heal(
                             (float)

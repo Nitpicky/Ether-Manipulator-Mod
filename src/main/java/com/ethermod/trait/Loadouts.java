@@ -41,11 +41,11 @@ public final class Loadouts {
     public static List<Entry> list(ItemStack stack) {
         CompoundTag root =
                 stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).getUnsafe();
-        ListTag l = root.getList(TAG, Tag.TAG_COMPOUND);
+        ListTag l = root.getListOrEmpty(TAG);
         List<Entry> out = new ArrayList<>();
         for (int i = 0; i < l.size(); i++) {
-            CompoundTag e = l.getCompound(i);
-            out.add(new Entry(e.getString("name"), e.getList("build", Tag.TAG_COMPOUND)));
+            CompoundTag e = l.getCompoundOrEmpty(i);
+            out.add(new Entry(e.getStringOr("name", ""), e.getListOrEmpty("build")));
         }
         return out;
     }
@@ -54,7 +54,7 @@ public final class Loadouts {
     public static List<String> lineIds(Entry e) {
         List<String> ids = new ArrayList<>();
         for (int i = 0; i < e.build().size(); i++) {
-            String s = e.build().getCompound(i).getString("line");
+            String s = e.build().getCompoundOrEmpty(i).getStringOr("line", "");
             if (!s.isEmpty()) ids.add(s);
         }
         return ids;
@@ -65,8 +65,8 @@ public final class Loadouts {
         ItemStack stack = Manipulator.stack(player);
         CompoundTag root =
                 stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
-        ListTag l = root.getList(TAG, Tag.TAG_COMPOUND);
-        ListTag current = root.getList("mm_traits", Tag.TAG_COMPOUND);
+        ListTag l = root.getListOrEmpty(TAG);
+        ListTag current = root.getListOrEmpty("mm_traits");
         name = clean(name);
         boolean valid = index >= 0 && index < l.size();
         switch (op) {
@@ -82,11 +82,11 @@ public final class Loadouts {
             }
             case OVERWRITE -> {
                 if (!valid) return;
-                l.getCompound(index).put("build", current.copy());
+                l.getCompoundOrEmpty(index).put("build", current.copy());
             }
             case RENAME -> {
                 if (!valid || name.isEmpty()) return;
-                l.getCompound(index).putString("name", name);
+                l.getCompoundOrEmpty(index).putString("name", name);
             }
             case UP, DOWN -> {
                 int to = op == UP ? index - 1 : index + 1;
@@ -101,7 +101,7 @@ public final class Loadouts {
             }
             case LOAD -> {
                 if (!valid) return;
-                ListTag build = l.getCompound(index).getList("build", Tag.TAG_COMPOUND);
+                ListTag build = l.getCompoundOrEmpty(index).getListOrEmpty("build");
                 if (build.equals(current)) return;
                 if (!TraitBuild.isEmpty(stack) && TraitRules.inCombat(player)) {
                     deny(player, "combat_load_set");
@@ -109,22 +109,21 @@ public final class Loadouts {
                 }
                 var safe = build.copy();
                 for (int slot = 0; slot < safe.size(); slot++) {
-                    var entry = safe.getCompound(slot);
+                    var entry = safe.getCompoundOrEmpty(slot);
                     var id =
                             net.minecraft.resources.Identifier.tryParse(
-                                    entry.getString("line"));
+                                    entry.getStringOr("line", ""));
                     if (id != null && !ModuleUnlocks.known(stack, id)) {
                         deny(player, "set_module_unknown");
                         return;
                     }
                 }
                 root.put("mm_traits", safe);
-                player.displayClientMessage(
+                player.sendOverlayMessage(
                         Component.translatable(
                                         "message.ethermod.set_loaded",
-                                        l.getCompound(index).getString("name"))
-                                .withStyle(ChatFormatting.AQUA),
-                        true);
+                                        l.getCompoundOrEmpty(index).getStringOr("name", ""))
+                                .withStyle(ChatFormatting.AQUA));
             }
             default -> {
                 return;
@@ -143,9 +142,8 @@ public final class Loadouts {
     }
 
     private static void deny(ServerPlayer player, String msg, Object... args) {
-        player.displayClientMessage(
+        player.sendOverlayMessage(
                 Component.translatable("message.ethermod." + msg, args)
-                        .withStyle(ChatFormatting.RED),
-                true);
+                        .withStyle(ChatFormatting.RED));
     }
 }

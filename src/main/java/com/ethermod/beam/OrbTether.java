@@ -214,7 +214,7 @@ public final class OrbTether {
                 // the hooked thing comes to you; a tap brings it all the way
                 if (d.length() > 2) {
                     b.hooked.setDeltaMovement(d.normalize().scale(-0.6).add(0, 0.1, 0));
-                    b.hooked.hurtMarked = true;
+                    b.hooked.needsSync = true;
                     // a hooked creature can't run off (a hurt pig panics away and halves the reel)
                     if (b.hooked instanceof net.minecraft.world.entity.Mob m) m.getNavigation().stop();
                     b.hooked.resetFallDistance();
@@ -261,7 +261,7 @@ public final class OrbTether {
         if (out > 0) v = v.add(in.scale(out));
         v = v.add(in.scale(Math.min(.4, (dist - b.ropeLength) * .5)));
         sp.setDeltaMovement(v);
-        sp.hurtMarked = true;
+        sp.needsSync = true;
         sp.resetFallDistance();
         com.ethermod.trait.MobilityEffects.markSoftLanding(sp);
     }
@@ -407,14 +407,14 @@ public final class OrbTether {
         com.ethermod.trait.MobilityEffects.markSoftLanding(sp);
         if (dist < .35 || sl.getGameTime() - b.landingSince > 80) {
             sp.setDeltaMovement(Vec3.ZERO);
-            sp.hurtMarked = true;
+            sp.needsSync = true;
             sl.playSound(null, sp.blockPosition(), com.ethermod.sound.ModSounds.WORLD_AMETHYST_BLOCK_STEP, SoundSource.PLAYERS, .8f, .8f);
             b.discard();
             return;
         }
         double speed = Math.min(1.1, .12 + dist * .28);
         sp.setDeltaMovement(sp.getDeltaMovement().lerp(d.scale(speed / dist), .5));
-        sp.hurtMarked = true;
+        sp.needsSync = true;
     }
 
     /** Straight reel toward the hook, hanging there once close. */
@@ -434,7 +434,7 @@ public final class OrbTether {
             sp.setDeltaMovement(
                     sp.onGround() ? v.subtract(up.scale(v.dot(up))) : v.add(up.scale(.08)));
         }
-        sp.hurtMarked = true;
+        sp.needsSync = true;
         sp.resetFallDistance();
         com.ethermod.trait.MobilityEffects.markSoftLanding(sp);
     }
@@ -454,7 +454,7 @@ public final class OrbTether {
                                                     com.ethermod.trait.MovementPhysics.down(sp)
                                                             .getOpposite())
                                             .scale(.45)));
-            sp.hurtMarked = true;
+            sp.needsSync = true;
             com.ethermod.trait.MobilityEffects.markSoftLanding(sp);
             if (sling >= 3) com.ethermod.trait.MobilityEffects.markNoFall(sp);
             sl.playSound(

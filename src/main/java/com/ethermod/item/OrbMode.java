@@ -171,7 +171,7 @@ public enum OrbMode {
 
     /** The selected mode, or Energy if the selected one is no longer unlocked. */
     public static OrbMode get(ItemStack stack) {
-        OrbMode m = byId(tag(stack).getInt(TAG_MODE)).tool();
+        OrbMode m = byId(tag(stack).getIntOr(TAG_MODE, 0)).tool();
         return m.isUnlocked(stack) ? m : ENERGY;
     }
 
@@ -193,7 +193,7 @@ public enum OrbMode {
     public static int tank(ItemStack stack) {
         CompoundTag t = tag(stack);
         int cap = capacity(stack);
-        return t.contains(TAG_TANK) ? Math.max(0, Math.min(cap, t.getInt(TAG_TANK))) : cap;
+        return t.contains(TAG_TANK) ? Math.max(0, Math.min(cap, t.getIntOr(TAG_TANK, 0))) : cap;
     }
 
     public static void setTank(ItemStack stack, int units) {

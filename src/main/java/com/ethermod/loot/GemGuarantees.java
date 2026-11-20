@@ -22,8 +22,8 @@ public final class GemGuarantees extends SavedData {
 
     private static GemGuarantees load(CompoundTag tag, HolderLookup.Provider registries) {
         var g = new GemGuarantees();
-        var list = tag.getList("claimed", Tag.TAG_STRING);
-        for (int i = 0; i < list.size(); i++) g.claimed.add(list.getString(i));
+        var list = tag.getListOrEmpty("claimed");
+        for (int i = 0; i < list.size(); i++) g.claimed.add(list.getStringOr(i, ""));
         return g;
     }
 

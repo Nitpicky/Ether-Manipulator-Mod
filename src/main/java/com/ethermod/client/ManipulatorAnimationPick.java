@@ -17,7 +17,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
-import software.bernie.geckolib.animation.RawAnimation;
+import com.geckolib.animation.RawAnimation;
 
 /** Which animation the Manipulator plays, from what its holder is doing (see {@link ManipulatorAnimations}). */
 final class ManipulatorAnimationPick {

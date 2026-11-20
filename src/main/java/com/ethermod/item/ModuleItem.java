@@ -24,14 +24,14 @@ public final class ModuleItem extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(
+    public InteractionResult use(
             Level level, Player player, InteractionHand hand) {
         var item = player.getItemInHand(hand);
         if (player instanceof ServerPlayer sp) {
-            if (!grant(sp, module)) return InteractionResultHolder.fail(item);
+            if (!grant(sp, module)) return InteractionResult.FAIL;
             item.consume(1, sp);
         }
-        return InteractionResultHolder.sidedSuccess(item, level.isClientSide());
+        return InteractionResult.SUCCESS;
     }
 
     /**
@@ -42,16 +42,16 @@ public final class ModuleItem extends Item {
      */
     public static boolean grant(ServerPlayer sp, Identifier module) {
         if (com.ethermod.config.ServerConfig.moduleDisabled(module.getPath())) {
-            sp.displayClientMessage(Component.translatable("message.ethermod.module_disabled"), true);
+            sp.sendOverlayMessage(Component.translatable("message.ethermod.module_disabled"));
             return false;
         }
         if (!ModuleUnlocks.unlock(Manipulator.stack(sp), module)) {
-            sp.displayClientMessage(Component.translatable("message.ethermod.module_known"), true);
+            sp.sendOverlayMessage(Component.translatable("message.ethermod.module_known"));
             return false;
         }
         com.ethermod.advancement.ManipulatorTrigger.fire(sp, "module_" + module.getPath());
         Manipulator.sync(sp);
-        sp.displayClientMessage(Component.translatable("message.ethermod.module_unlocked"), true);
+        sp.sendOverlayMessage(Component.translatable("message.ethermod.module_unlocked"));
         unlockSound(sp, module.getPath());
         return true;
     }

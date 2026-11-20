@@ -37,7 +37,7 @@ public final class TraitBuild {
     private static ListTag slotsTag(ItemStack stack) {
         CompoundTag root =
                 stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).getUnsafe();
-        return root.getList(TAG, Tag.TAG_COMPOUND);
+        return root.getListOrEmpty(TAG);
     }
 
     /** The line in a slot, or null. Slots above the open count read as empty. */
@@ -46,16 +46,16 @@ public final class TraitBuild {
         if (slot < 0 || slot >= openSlots(stack)) return null;
         ListTag list = slotsTag(stack);
         if (slot >= list.size()) return null;
-        String s = list.getCompound(slot).getString("line");
+        String s = list.getCompoundOrEmpty(slot).getStringOr("line", "");
         return s.isEmpty() ? null : Identifier.tryParse(s);
     }
 
     /** The chosen trait id for a slot and tier, or "" (also "" if the tier isn't open). */
     public static String pick(ItemStack stack, int slot, int tier) {
         if (tier < 0 || tier >= openTiers(stack) || line(stack, slot) == null) return "";
-        ListTag picks = slotsTag(stack).getCompound(slot).getList("picks", Tag.TAG_STRING);
+        ListTag picks = slotsTag(stack).getCompoundOrEmpty(slot).getListOrEmpty("picks");
         java.util.List<String> saved = new java.util.ArrayList<>();
-        for (int i = 0; i < picks.size(); i++) saved.add(picks.getString(i));
+        for (int i = 0; i < picks.size(); i++) saved.add(picks.getStringOr(i, ""));
         return TraitChoices.resolve(line(stack, slot).getPath(), saved, tier);
     }
 
@@ -87,7 +87,7 @@ public final class TraitBuild {
         edit(
                 stack,
                 list -> {
-                    CompoundTag s = list.getCompound(slot);
+                    CompoundTag s = list.getCompoundOrEmpty(slot);
                     ListTag picks = new ListTag();
                     for (String id : normalized) picks.add(net.minecraft.nbt.StringTag.valueOf(id));
                     while (picks.size() <= tier) picks.add(net.minecraft.nbt.StringTag.valueOf(""));
@@ -100,7 +100,7 @@ public final class TraitBuild {
     private static void edit(ItemStack stack, java.util.function.Consumer<ListTag> f) {
         CompoundTag root =
                 stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
-        ListTag list = root.getList(TAG, Tag.TAG_COMPOUND);
+        ListTag list = root.getListOrEmpty(TAG);
         while (list.size() < MAX_SLOTS) list.add(new CompoundTag());
         f.accept(list);
         root.put(TAG, list);

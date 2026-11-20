@@ -33,15 +33,15 @@ public final class Burning {
         boolean wasBurning = target.isOnFire();
         target.igniteForSeconds(seconds);
         var d = com.ethermod.util.MobMemory.of(target);
-        d.putUUID("mm_burn_owner", owner.getUUID());
+        d.store("mm_burn_owner", net.minecraft.core.UUIDUtil.CODEC, owner.getUUID());
         d.putBoolean("mm_soul", Traits.has(st, "pyrotechnic.soulwake"));
         net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingEntityAndSelf(
                 target,
                 new com.ethermod.network.payload.ModulePayloads.SoulFlame(
-                        target.getId(), d.getBoolean("mm_soul")));
+                        target.getId(), d.getBooleanOr("mm_soul", false)));
         if (wasBurning
                 && Traits.has(st, "pyrotechnic.flashover")
-                && target.tickCount - d.getInt("mm_flashover") > 20) {
+                && target.tickCount - d.getIntOr("mm_flashover", 0) > 20) {
             d.putInt("mm_flashover", target.tickCount);
             for (var e :
                     owner.level()
@@ -52,7 +52,7 @@ public final class Burning {
                 track(e);
                 e.igniteForSeconds(seconds);
                 var ed = com.ethermod.util.MobMemory.of(e);
-                ed.putUUID("mm_burn_owner", owner.getUUID());
+                ed.store("mm_burn_owner", net.minecraft.core.UUIDUtil.CODEC, owner.getUUID());
                 ed.putBoolean("mm_soul", Traits.has(st, "pyrotechnic.soulwake"));
             }
         }
@@ -79,12 +79,12 @@ public final class Burning {
     @SubscribeEvent
     public static void friendlyFire(LivingIncomingDamageEvent ev) {
         if (ev.getSource().getEntity() instanceof Mob summon
-                && summon.getPersistentData().hasUUID("mm_summoner")) {
+                && summon.getPersistentData().read("mm_summoner", net.minecraft.core.UUIDUtil.CODEC).isPresent()) {
             var owner =
                     summon.level()
                             .getServer()
                             .getPlayerList()
-                            .getPlayer(summon.getPersistentData().getUUID("mm_summoner"));
+                            .getPlayer(summon.getPersistentData().read("mm_summoner", net.minecraft.core.UUIDUtil.CODEC).orElse(null));
             if (owner != null && Allegiance.ally(owner, ev.getEntity())) ev.setCanceled(true);
         }
     }
@@ -94,14 +94,14 @@ public final class Burning {
      * soul burn it is under right now (in memory).
      */
     public static boolean soul(net.minecraft.world.entity.Entity e) {
-        return com.ethermod.util.MobMemory.peek(e).getBoolean("mm_soul")
-                || e.getPersistentData().getBoolean("mm_soul");
+        return com.ethermod.util.MobMemory.peek(e).getBooleanOr("mm_soul", false)
+                || e.getPersistentData().getBooleanOr("mm_soul", false);
     }
 
     /** The player whose fire this entity is burning in, or null. */
     public static java.util.UUID burnOwner(net.minecraft.world.entity.Entity e) {
         var d = com.ethermod.util.MobMemory.peek(e);
-        return d.hasUUID("mm_burn_owner") ? d.getUUID("mm_burn_owner") : null;
+        return d.read("mm_burn_owner", net.minecraft.core.UUIDUtil.CODEC).isPresent() ? d.read("mm_burn_owner", net.minecraft.core.UUIDUtil.CODEC).orElse(null) : null;
     }
 
     @SubscribeEvent
@@ -111,10 +111,10 @@ public final class Burning {
         com.ethermod.util.MobMemory.tidy(ev.getEntity());
         if (ev.getEntity() instanceof LivingEntity e
                 && !(e instanceof com.ethermod.entity.SoulBlazeling)
-                && !e.getPersistentData().hasUUID("mm_summoner"))
+                && !e.getPersistentData().read("mm_summoner", net.minecraft.core.UUIDUtil.CODEC).isPresent())
             e.getPersistentData().remove("mm_soul");
         if (ev.getEntity() instanceof LivingEntity e
-                && e.getPersistentData().hasUUID("mm_summoner")) track(e);
+                && e.getPersistentData().read("mm_summoner", net.minecraft.core.UUIDUtil.CODEC).isPresent()) track(e);
     }
 
     @SubscribeEvent
@@ -130,7 +130,7 @@ public final class Burning {
                 active.remove(uuid);
                 continue;
             }
-            if (!e.isOnFire() && !e.getPersistentData().hasUUID("mm_summoner")) {
+            if (!e.isOnFire() && !e.getPersistentData().read("mm_summoner", net.minecraft.core.UUIDUtil.CODEC).isPresent()) {
                 active.remove(uuid);
                 net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingEntityAndSelf(
                         e,
@@ -147,12 +147,12 @@ public final class Burning {
                         e,
                         new com.ethermod.network.payload.ModulePayloads.SoulFlame(
                                 e.getId(), soul(e)));
-            if (d.hasUUID("mm_summoner")) {
-                if (now >= d.getLong("mm_summon_expires")) {
+            if (d.read("mm_summoner", net.minecraft.core.UUIDUtil.CODEC).isPresent()) {
+                if (now >= d.getLongOr("mm_summon_expires", 0L)) {
                     e.hurt(sl.damageSources().genericKill(), Float.MAX_VALUE);
                     continue;
                 }
-                var owner = sl.getServer().getPlayerList().getPlayer(d.getUUID("mm_summoner"));
+                var owner = sl.getServer().getPlayerList().getPlayer(d.read("mm_summoner", net.minecraft.core.UUIDUtil.CODEC).orElse(null));
                 if (e instanceof Mob mob
                         && !(e instanceof com.ethermod.entity.SoulBlazeling)
                         && owner != null) {
@@ -167,12 +167,12 @@ public final class Burning {
 
     @SubscribeEvent
     public static void noSummonXp(LivingExperienceDropEvent ev) {
-        if (ev.getEntity().getPersistentData().hasUUID("mm_summoner")) ev.setDroppedExperience(0);
+        if (ev.getEntity().getPersistentData().read("mm_summoner", net.minecraft.core.UUIDUtil.CODEC).isPresent()) ev.setDroppedExperience(0);
     }
 
     @SubscribeEvent
     public static void loot(LivingDropsEvent ev) {
-        if (ev.getEntity().getPersistentData().hasUUID("mm_summoner")) ev.getDrops().clear();
+        if (ev.getEntity().getPersistentData().read("mm_summoner", net.minecraft.core.UUIDUtil.CODEC).isPresent()) ev.getDrops().clear();
     }
 
     @SubscribeEvent
@@ -183,7 +183,7 @@ public final class Burning {
                 || !victim.isOnFire()
                 || !soul(victim)
                 || burner == null
-                || victim.getPersistentData().hasUUID("mm_summoner")) return;
+                || victim.getPersistentData().read("mm_summoner", net.minecraft.core.UUIDUtil.CODEC).isPresent()) return;
         var owner = sl.getServer().getPlayerList().getPlayer(burner);
         if (owner == null
                 || !com.ethermod.config.ServerConfig.blazelings()
@@ -194,9 +194,9 @@ public final class Burning {
                                 Mob.class,
                                 owner.getBoundingBox().inflate(64),
                                 s ->
-                                        s.getPersistentData().hasUUID("mm_summoner")
+                                        s.getPersistentData().read("mm_summoner", net.minecraft.core.UUIDUtil.CODEC).isPresent()
                                                 && s.getPersistentData()
-                                                        .getUUID("mm_summoner")
+                                                        .read("mm_summoner", net.minecraft.core.UUIDUtil.CODEC).orElse(null)
                                                         .equals(owner.getUUID()))
                         .size()
                 >= com.ethermod.config.ServerConfig.maxSummons()) return;

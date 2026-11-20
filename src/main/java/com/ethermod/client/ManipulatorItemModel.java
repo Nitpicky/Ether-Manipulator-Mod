@@ -8,9 +8,9 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
-import software.bernie.geckolib.animation.AnimationState;
-import software.bernie.geckolib.constant.DataTickets;
-import software.bernie.geckolib.model.GeoModel;
+import com.geckolib.animation.state.AnimationTest;
+import com.geckolib.constant.DataTickets;
+import com.geckolib.model.GeoModel;
 
 /**
  * GeckoLib model wiring for the Ether Manipulator.
@@ -52,7 +52,7 @@ public class ManipulatorItemModel extends GeoModel<EtherManipulatorItem> {
     public void setCustomAnimations(
             EtherManipulatorItem animatable,
             long instanceId,
-            AnimationState<EtherManipulatorItem> animationState) {
+            AnimationTest<EtherManipulatorItem> animationState) {
         super.setCustomAnimations(animatable, instanceId, animationState);
         var holder =
                 ManipulatorAnimations.holder(animationState.getData(DataTickets.ITEMSTACK));
@@ -87,7 +87,7 @@ public class ManipulatorItemModel extends GeoModel<EtherManipulatorItem> {
             blending =
                     main != null
                             && main.getAnimationState()
-                                    == software.bernie.geckolib.animation.AnimationController
+                                    == com.geckolib.animation.AnimationController
                                             .State.TRANSITIONING;
         }
         float raw = (float) Math.toDegrees(ring.getRotZ());

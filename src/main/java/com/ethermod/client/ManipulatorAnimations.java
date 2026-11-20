@@ -10,11 +10,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
-import software.bernie.geckolib.animation.AnimationController;
-import software.bernie.geckolib.animation.AnimationState;
-import software.bernie.geckolib.animation.PlayState;
-import software.bernie.geckolib.animation.RawAnimation;
-import software.bernie.geckolib.constant.DataTickets;
+import com.geckolib.animation.AnimationController;
+import com.geckolib.animation.state.AnimationTest;
+import com.geckolib.animation.object.PlayState;
+import com.geckolib.animation.RawAnimation;
+import com.geckolib.constant.DataTickets;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -93,7 +93,7 @@ public final class ManipulatorAnimations {
     private static final Map<AnimationController<?>, Integer> BLEND = new WeakHashMap<>();
 
 
-    private static PlayState predicate(AnimationState<EtherManipulatorItem> state) {
+    private static PlayState predicate(AnimationTest<EtherManipulatorItem> state) {
         ItemStack stack = state.getData(DataTickets.ITEMSTACK);
         // only a tool in a hand follows its holder: an icon drawn meanwhile (creative tab, slot, frame) must not
         // consume the holder's restarts and ring state, or both spin erratically

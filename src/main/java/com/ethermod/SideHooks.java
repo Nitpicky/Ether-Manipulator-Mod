@@ -6,7 +6,7 @@ import com.ethermod.network.payload.ModulePayloads;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 
-import software.bernie.geckolib.animation.AnimationController;
+import com.geckolib.animation.AnimationController;
 
 /**
  * The one way common code reaches client-only code. This base class does nothing (a dedicated
