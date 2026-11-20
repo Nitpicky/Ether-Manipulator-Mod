@@ -5,6 +5,8 @@ on:
   push:
     branches: ['port/**']
     paths: ['.github/port-lookup.txt']
+permissions:
+  contents: write
 jobs:
   lookup:
     runs-on: ubuntu-latest
@@ -18,6 +20,7 @@ jobs:
       - run: ./gradlew createMinecraftArtifacts dependencies --configuration compileClasspath -q > /dev/null || true
       - name: Lookup
         run: |
+          exec > >(tee api.txt) 2>&1
           CLASSES=$(sed -n 1p .github/port-lookup.txt); LIST=$(sed -n 2p .github/port-lookup.txt)
           JARS=$( (find build -name '*.jar' -path '*moddev*' ; find ~/.gradle/caches -name '*.jar' \( -path '*geckolib*' -o -path '*curse.maven*' \)) | sort -u)
           echo "$JARS"
@@ -27,7 +30,14 @@ jobs:
           sort -u all.txt -o all.txt
           if [ -n "$LIST" ]; then echo "=== LIST $LIST"; grep -E "$LIST" all.txt | grep -v '\$[0-9]' | head -3000; fi
           for c in $CLASSES; do
-            for m in $(grep -E "^($c)$" all.txt | head -60); do
-              echo "=== $m"; javap -cp "$CP" -public "${m//\//.}" 2>&1 | head -400
+            for m in $(grep -E "^($c)$" all.txt | head -200); do
+              echo "=== $m"; javap -cp "$CP" -public "${m//\//.}" 2>&1 | head -600
             done
           done
+      - name: Publish
+        run: |
+          SHA=$(git rev-parse --short HEAD); cp api.txt /tmp/api.txt
+          git config user.name "playtest-bot"; git config user.email "playtest-bot@users.noreply.github.com"
+          git fetch -q origin playtest-results && git worktree add -q /tmp/pr origin/playtest-results
+          cd /tmp/pr && git checkout -q -B playtest-results && mkdir -p port/api && cp /tmp/api.txt port/api/$SHA.txt
+          git add -A && git commit -qm "Port API lookup $SHA" && git push -q origin playtest-results
