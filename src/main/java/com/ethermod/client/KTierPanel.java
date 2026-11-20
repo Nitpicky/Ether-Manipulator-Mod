@@ -104,6 +104,9 @@ final class KTierPanel {
         }
     }
 
+    /** Node and link positions in the panel: the two choices of each tier, and the commons. */
+    private static final int[] NODE_X = {41, 85, 129}, COMMON_X = {63, 107};
+
     void draw(GuiGraphics g) {
         int y = 20 + slot * 45;
         var id = TraitBuild.line(ui.stack, slot);
@@ -140,8 +143,32 @@ final class KTierPanel {
         };
         int[] route = new int[146 * 40];
         Arrays.fill(route, -1);
+        int routeLength = drawLinks(r, pal, chosen, route);
+        for (int t = 0; t < 3; t++) {
+            drawNodes(r, pal, id, line, chosen, t, y);
+            if (t < 2) drawCommon(r, pal, id, line, chosen, t, y);
+        }
+        drawBadge(r, pal, id, line, y);
+        finalPixels = r.pixels.clone();
+        double age = ui.now - switched;
+        if (age < 1.43) KPanelFx.switchPixels(r, pal, age, route, routeLength, groups);
+        else if (previous != null && ui.now - changed < .28) {
+            int[] fill = KPanelFx.selectionRoute(changedTier, newChoice, ui.stage());
+            int total = 0;
+            for (int distance : fill) total = Math.max(total, distance);
+            KPanelFx.traitFade(r, pal, fill, total, ui.now - changed, previous, oldLink, newLink, newChoice);
+        }
+        upload(g, r, 84, y);
+        drawScanlines(g, pal, y, age);
+    }
+
+    /**
+     * The links between the nodes, the chosen path lit; fills {@code route} with each lit pixel's
+     * distance along the path (for the switch animation) and returns the path's length.
+     */
+    private int drawLinks(Raster r, Palette pal, int[] chosen, int[] route) {
+        int[] nx = NODE_X, cx = COMMON_X;
         int routeLength = 0;
-        int[] nx = {41, 85, 129}, cx = {63, 107};
         for (int t = 0; t < 3; t++) {
             int source = t == 0 ? 29 : cx[t - 1] + 10;
             r.owner = t * 2;
@@ -174,120 +201,133 @@ final class KTierPanel {
                 }
             }
         }
-        for (int t = 0; t < 3; t++) {
-            for (int n = 0; n < 2; n++) {
-                int yy = 6 + n * 17;
-                boolean sel = chosen[t] == n, open = t < ui.stage();
-                r.owner = 5 + t * 3 + n;
+        return routeLength;
+    }
+
+    /** Tier {@code t}'s two choice nodes, their hover glow, hit areas and A/B letters. */
+    private void drawNodes(
+            Raster r, Palette pal, ResourceLocation id, TraitLine line, int[] chosen, int t, int y) {
+        int[] nx = NODE_X;
+        for (int n = 0; n < 2; n++) {
+            int yy = 6 + n * 17;
+            boolean sel = chosen[t] == n, open = t < ui.stage();
+            r.owner = 5 + t * 3 + n;
+            r.outline(
+                    nx[t],
+                    yy,
+                    11,
+                    11,
+                    sel ? pal.accent() : open ? pal.border() : pal.ramp()[1],
+                    sel ? pal.ramp()[1] : pal.bg(),
+                    0);
+            int tr = t, ch = n;
+            String key = "node" + slot + t + n;
+            if (line != null) {
+                var trait = line.tier(t).get(n);
+                if (!trait.id().isEmpty())
+                    ui.hit(
+                            key,
+                            84 + nx[t],
+                            y + yy,
+                            11,
+                            11,
+                            open && (t == 0 || chosen[t - 1] >= 0)
+                                    ? () -> {
+                                        send(new TraitPayloads.Pick(slot, tr, ch));
+                                        onPick.run();
+                                    }
+                                    : null,
+                            KTooltips.traitTip(id, trait, t),
+                            pal.accent(),
+                            open);
+            }
+            double light = ui.hoverLevels.getOrDefault(key, 0d);
+            if (open && light > .001 && ui.now - changed >= .28 && ui.now - switched >= 1.43) {
+                int c =
+                        mix(
+                                sel ? pal.accent() : pal.border(),
+                                mix(pal.accent(), pal.ramp()[5], .38),
+                                light * .65 * (.6 + .4 * Math.pow(Math.sin(ui.now * 5), 2)));
                 r.outline(
                         nx[t],
                         yy,
                         11,
                         11,
-                        sel ? pal.accent() : open ? pal.border() : pal.ramp()[1],
-                        sel ? pal.ramp()[1] : pal.bg(),
+                        c,
+                        mix(sel ? pal.ramp()[1] : pal.bg(), pal.accent(), light * .13),
                         0);
-                int tr = t, ch = n;
-                String key = "node" + slot + t + n;
-                if (line != null) {
-                    var trait = line.tier(t).get(n);
-                    if (!trait.id().isEmpty())
-                        ui.hit(
-                                key,
-                                84 + nx[t],
-                                y + yy,
-                                11,
-                                11,
-                                open && (t == 0 || chosen[t - 1] >= 0)
-                                        ? () -> {
-                                            send(new TraitPayloads.Pick(slot, tr, ch));
-                                            onPick.run();
-                                        }
-                                        : null,
-                                KTooltips.traitTip(id, trait, t),
-                                pal.accent(),
-                                open);
-                }
-                double light = ui.hoverLevels.getOrDefault(key, 0d);
-                if (open && light > .001 && ui.now - changed >= .28 && ui.now - switched >= 1.43) {
-                    int c =
-                            mix(
-                                    sel ? pal.accent() : pal.border(),
-                                    mix(pal.accent(), pal.ramp()[5], .38),
-                                    light * .65 * (.6 + .4 * Math.pow(Math.sin(ui.now * 5), 2)));
-                    r.outline(
-                            nx[t],
-                            yy,
-                            11,
-                            11,
-                            c,
-                            mix(sel ? pal.ramp()[1] : pal.bg(), pal.accent(), light * .13),
-                            0);
-                }
-                // A marks the first choice of a tier, B the second
-                r.owner = 5 + t * 3 + n;
-                glyph(
-                        r,
-                        n == 0 ? GLYPH_A : GLYPH_B,
-                        nx[t] + 4,
-                        yy + 3,
-                        mix(sel ? pal.accent() : open ? pal.border() : pal.ramp()[1], pal.text(),
-                                open && ui.now - changed >= .28 && ui.now - switched >= 1.43
-                                        ? light * .75 * (.6 + .4 * Math.pow(Math.sin(ui.now * 5), 2)) : 0));
             }
-            if (t < 2) {
-                boolean on = chosen[t] >= 0 && t + 1 < ui.stage();
-                r.owner = 14 + t;
-                r.outline(
-                        cx[t],
-                        15,
-                        11,
-                        11,
-                        on ? pal.accent() : t + 1 < ui.stage() ? pal.border() : pal.ramp()[1],
-                        on ? pal.ramp()[1] : pal.bg(),
-                        2);
-                if (t + 1 >= ui.stage()) {
-                    smallLock(r, cx[t] + 3, 17, pal.border());
-                }
-                double commonHover = ui.hoverLevels.getOrDefault("common" + slot + t, 0d);
-                if (commonHover > .001
-                        && t + 1 < ui.stage()
-                        && ui.now - changed >= .28
-                        && ui.now - switched >= 1.43) {
-                    double strength =
-                            commonHover * .65 * (.6 + .4 * Math.pow(Math.sin(ui.now * 5), 2));
-                    r.outline(
-                            cx[t],
-                            15,
-                            11,
-                            11,
-                            mix(
-                                    on ? pal.accent() : pal.border(),
-                                    mix(pal.accent(), pal.ramp()[5], .38),
-                                    strength),
-                            mix(on ? pal.ramp()[1] : pal.bg(), pal.accent(), commonHover * .12),
-                            2);
-                }
-                if (t + 1 < ui.stage()) {
-                    String[] numeral = t == 0 ? GLYPH_II : GLYPH_III;
-                    double emphasis = ui.now - changed >= .28 && ui.now - switched >= 1.43
-                            ? commonHover * .75 * (.6 + .4 * Math.pow(Math.sin(ui.now * 5), 2)) : 0;
-                    glyph(r, numeral, cx[t] + (11 - numeral[0].length()) / 2, 18,
-                            mix(on ? pal.accent() : t + 1 < ui.stage() ? pal.border() : pal.ramp()[1], pal.text(), emphasis));
-                }
-                if (line != null)
-                    ui.hit(
-                            "common" + slot + t,
-                            84 + cx[t],
-                            y + 15,
-                            11,
-                            11,
-                            null,
-                            KTooltips.commonTip(id, line.commons().get(t), t, ui.stage()),
-                            pal.accent(),
-                            false);
-            }
+            // A marks the first choice of a tier, B the second
+            r.owner = 5 + t * 3 + n;
+            glyph(
+                    r,
+                    n == 0 ? GLYPH_A : GLYPH_B,
+                    nx[t] + 4,
+                    yy + 3,
+                    mix(sel ? pal.accent() : open ? pal.border() : pal.ramp()[1], pal.text(),
+                            open && ui.now - changed >= .28 && ui.now - switched >= 1.43
+                                    ? light * .75 * (.6 + .4 * Math.pow(Math.sin(ui.now * 5), 2)) : 0));
         }
+    }
+
+    /** The common node after tier {@code t} (II, III): locked until the next stage. */
+    private void drawCommon(
+            Raster r, Palette pal, ResourceLocation id, TraitLine line, int[] chosen, int t, int y) {
+        int[] cx = COMMON_X;
+        boolean on = chosen[t] >= 0 && t + 1 < ui.stage();
+        r.owner = 14 + t;
+        r.outline(
+                cx[t],
+                15,
+                11,
+                11,
+                on ? pal.accent() : t + 1 < ui.stage() ? pal.border() : pal.ramp()[1],
+                on ? pal.ramp()[1] : pal.bg(),
+                2);
+        if (t + 1 >= ui.stage()) {
+            smallLock(r, cx[t] + 3, 17, pal.border());
+        }
+        double commonHover = ui.hoverLevels.getOrDefault("common" + slot + t, 0d);
+        if (commonHover > .001
+                && t + 1 < ui.stage()
+                && ui.now - changed >= .28
+                && ui.now - switched >= 1.43) {
+            double strength =
+                    commonHover * .65 * (.6 + .4 * Math.pow(Math.sin(ui.now * 5), 2));
+            r.outline(
+                    cx[t],
+                    15,
+                    11,
+                    11,
+                    mix(
+                            on ? pal.accent() : pal.border(),
+                            mix(pal.accent(), pal.ramp()[5], .38),
+                            strength),
+                    mix(on ? pal.ramp()[1] : pal.bg(), pal.accent(), commonHover * .12),
+                    2);
+        }
+        if (t + 1 < ui.stage()) {
+            String[] numeral = t == 0 ? GLYPH_II : GLYPH_III;
+            double emphasis = ui.now - changed >= .28 && ui.now - switched >= 1.43
+                    ? commonHover * .75 * (.6 + .4 * Math.pow(Math.sin(ui.now * 5), 2)) : 0;
+            glyph(r, numeral, cx[t] + (11 - numeral[0].length()) / 2, 18,
+                    mix(on ? pal.accent() : t + 1 < ui.stage() ? pal.border() : pal.ramp()[1], pal.text(), emphasis));
+        }
+        if (line != null)
+            ui.hit(
+                    "common" + slot + t,
+                    84 + cx[t],
+                    y + 15,
+                    11,
+                    11,
+                    null,
+                    KTooltips.commonTip(id, line.commons().get(t), t, ui.stage()),
+                    pal.accent(),
+                    false);
+    }
+
+    /** The module badge on the left: opens the module picker. */
+    private void drawBadge(Raster r, Palette pal, ResourceLocation id, TraitLine line, int y) {
         r.owner = 16;
         double badgeHover =
                 ui.now - changed < .28 || ui.now - switched < 1.43
@@ -316,17 +356,6 @@ final class KTierPanel {
                 line == null ? List.of() : KTooltips.moduleTip(id, line),
                 pal.accent(),
                 false);
-        finalPixels = r.pixels.clone();
-        double age = ui.now - switched;
-        if (age < 1.43) KPanelFx.switchPixels(r, pal, age, route, routeLength, groups);
-        else if (previous != null && ui.now - changed < .28) {
-            int[] fill = KPanelFx.selectionRoute(changedTier, newChoice, ui.stage());
-            int total = 0;
-            for (int distance : fill) total = Math.max(total, distance);
-            KPanelFx.traitFade(r, pal, fill, total, ui.now - changed, previous, oldLink, newLink, newChoice);
-        }
-        upload(g, r, 84, y);
-        drawScanlines(g, pal, y, age);
     }
 
     /** Smooth moving scanlines are drawn last and clipped inside the panel frame. */
