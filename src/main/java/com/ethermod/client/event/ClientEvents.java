@@ -1,8 +1,8 @@
-package com.ethermod.event;
+package com.ethermod.client.event;
 
 import com.ethermod.EtherMod;
-import com.ethermod.beam.BeamBallRenderer;
-import com.ethermod.beam.BeamRenderer;
+import com.ethermod.client.beam.BeamBallRenderer;
+import com.ethermod.client.beam.BeamRenderer;
 import com.ethermod.registry.ModEntities;
 
 import net.neoforged.api.distmarker.Dist;
@@ -40,7 +40,7 @@ public class ClientEvents {
         com.ethermod.entity.SoulBlazeling.smokeEmitter = com.ethermod.client.BlazelingSmoke::emit;
         com.ethermod.beam.BeamBallEntity.clientRopeTick = com.ethermod.client.ClientMobility::ropeTick;
         NeoForge.EVENT_BUS.register(BeamRenderer.class);
-        NeoForge.EVENT_BUS.register(com.ethermod.beam.MuzzleEvents.class);
+        NeoForge.EVENT_BUS.register(com.ethermod.client.beam.MuzzleEvents.class);
         if (Boolean.getBoolean("ethermod.playtest")) {
             try {
                 NeoForge.EVENT_BUS.register(
@@ -49,7 +49,7 @@ public class ClientEvents {
                 throw new IllegalStateException("Playtest classes missing; run with -Pplaytest", e);
             }
         }
-        NeoForge.EVENT_BUS.register(com.ethermod.beam.BeamAudio.class);
+        NeoForge.EVENT_BUS.register(com.ethermod.client.beam.BeamAudio.class);
         NeoForge.EVENT_BUS.register(com.ethermod.client.ClientCacheReset.class);
         NeoForge.EVENT_BUS.register(ManipulatorKeys.class);
         NeoForge.EVENT_BUS.register(com.ethermod.client.ModeWheel.class);

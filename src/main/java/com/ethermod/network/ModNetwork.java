@@ -35,7 +35,7 @@ public final class ModNetwork {
                 (p, ctx) ->
                         ctx.enqueueWork(
                                 () -> {
-                                    com.ethermod.client.ClientPayloadHandlers.waterCurrent(p);
+                                    com.ethermod.SideHooks.get().waterCurrent(p);
                                 }));
         reg.playToClient(
                 com.ethermod.network.payload.ModulePayloads.SoulFlame.TYPE,
@@ -43,7 +43,7 @@ public final class ModNetwork {
                 (p, ctx) ->
                         ctx.enqueueWork(
                                 () -> {
-                                    com.ethermod.client.ClientPayloadHandlers.soulFlame(p);
+                                    com.ethermod.SideHooks.get().soulFlame(p);
                                 }));
         reg.playToClient(
                 com.ethermod.network.payload.ModulePayloads.Gravity.TYPE,
@@ -51,7 +51,7 @@ public final class ModNetwork {
                 (p, ctx) ->
                         ctx.enqueueWork(
                                 () ->
-                                        com.ethermod.client.ClientMobility.gravity(
+                                        com.ethermod.SideHooks.get().gravity(
                                                 p.entity(), p.down(), p.start())));
         reg.playToServer(
                 BeamActivePayload.TYPE, BeamActivePayload.CODEC, ServerPayloadHandlers::beamActive);
@@ -91,15 +91,15 @@ public final class ModNetwork {
         reg.playToClient(
                 com.ethermod.network.payload.DryFirePayload.TYPE,
                 com.ethermod.network.payload.DryFirePayload.CODEC,
-                (payload, ctx) -> ctx.enqueueWork(com.ethermod.client.DryFireFx::fire));
+                (payload, ctx) -> ctx.enqueueWork(() -> com.ethermod.SideHooks.get().dryFire()));
         reg.playToClient(
                 com.ethermod.network.payload.StasisForcePayload.TYPE,
                 com.ethermod.network.payload.StasisForcePayload.CODEC,
-                (payload, ctx) -> ctx.enqueueWork(() -> com.ethermod.client.StasisFx.force(payload.entity(), payload.x(), payload.y(), payload.z())));
+                (payload, ctx) -> ctx.enqueueWork(() -> com.ethermod.SideHooks.get().stasisForce(payload.entity(), payload.x(), payload.y(), payload.z())));
         reg.playToClient(
                 com.ethermod.network.payload.StasisPayload.TYPE,
                 com.ethermod.network.payload.StasisPayload.CODEC,
-                (payload, ctx) -> ctx.enqueueWork(() -> com.ethermod.client.StasisFx.mark(payload.entity(), payload.ticks())));
+                (payload, ctx) -> ctx.enqueueWork(() -> com.ethermod.SideHooks.get().stasisMark(payload.entity(), payload.ticks())));
         reg.playToClient(
                 com.ethermod.network.payload.ReloadPayload.TYPE,
                 com.ethermod.network.payload.ReloadPayload.CODEC,

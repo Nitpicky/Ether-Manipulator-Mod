@@ -494,7 +494,7 @@ public final class PlaytestBootstrap {
                                 + " sneak beam, no water near: grass ahead is now "
                                 + st.getBlock().getDescriptionId()
                                 + " (beamActive="
-                                + com.ethermod.beam.BeamRenderState.beamActive
+                                + com.ethermod.client.beam.BeamRenderState.beamActive
                                 + ", sneaking="
                                 + mc.player.isShiftKeyDown()
                                 + ", hit="

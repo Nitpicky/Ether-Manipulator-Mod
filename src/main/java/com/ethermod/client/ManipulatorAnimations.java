@@ -1,7 +1,7 @@
 package com.ethermod.client;
 
 import com.ethermod.beam.BeamBallEntity;
-import com.ethermod.beam.BeamRenderState;
+import com.ethermod.client.beam.BeamRenderState;
 import com.ethermod.beam.RemoteBeams;
 import com.ethermod.item.EtherManipulatorItem;
 import com.ethermod.item.OrbMode;
@@ -29,7 +29,7 @@ import java.util.WeakHashMap;
 /**
  * Client-only: picks the Manipulator's keyframed animation from what its holder is doing. Loop and
  * hold behaviour come from the animation file. Only referenced from {@link
- * EtherManipulatorItem#registerControllers} behind a client-dist check.
+ * EtherManipulatorItem#registerControllers} through the client's SideHooks.
  *
  * <p>One controller, "main", drives the prongs and ring. The ring itself is physical, applied in
  * {@link ManipulatorItemModel#setCustomAnimations}: the keyframes and the Energy charge's motor

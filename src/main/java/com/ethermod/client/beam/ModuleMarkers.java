@@ -1,4 +1,4 @@
-package com.ethermod.beam;
+package com.ethermod.client.beam;
 
 import com.ethermod.client.ClientMobility;
 import com.ethermod.network.payload.ModulePayloads;

@@ -1,7 +1,7 @@
-package com.ethermod.event;
+package com.ethermod.client.event;
 
-import com.ethermod.beam.BeamAudio;
-import com.ethermod.beam.BeamRenderState;
+import com.ethermod.client.beam.BeamAudio;
+import com.ethermod.client.beam.BeamRenderState;
 import com.ethermod.item.ManipulatorStage;
 import com.ethermod.item.EtherManipulatorItem;
 import com.ethermod.network.ModNetwork;

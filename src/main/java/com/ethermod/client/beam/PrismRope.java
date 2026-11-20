@@ -1,4 +1,7 @@
-package com.ethermod.beam;
+package com.ethermod.client.beam;
+
+import com.ethermod.beam.BeamState;
+import com.ethermod.beam.RemoteBeams;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import java.util.ArrayList;

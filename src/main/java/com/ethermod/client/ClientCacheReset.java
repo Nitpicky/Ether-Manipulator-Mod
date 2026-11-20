@@ -1,8 +1,8 @@
 package com.ethermod.client;
 
-import com.ethermod.beam.BeamRenderer;
-import com.ethermod.beam.BlockGlow;
-import com.ethermod.beam.Muzzle;
+import com.ethermod.client.beam.BeamRenderer;
+import com.ethermod.client.beam.BlockGlow;
+import com.ethermod.client.beam.Muzzle;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;

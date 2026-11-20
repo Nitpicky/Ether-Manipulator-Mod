@@ -106,9 +106,9 @@ public final class ManipulatorHud {
         // switches the slot to Kinetic and it stays there until a left click switches it back
         boolean charging =
                 mode == OrbMode.ENERGY
-                        && (com.ethermod.beam.BeamRenderState.isCharging
+                        && (com.ethermod.client.beam.BeamRenderState.isCharging
                                 || com.ethermod.item.ManipulatorColors.lastOrb(stack))
-                        && !com.ethermod.beam.BeamRenderState.beamActive;
+                        && !com.ethermod.client.beam.BeamRenderState.beamActive;
         String slotNow = Badges.module(mode, charging);
         if (slotBadge != null && !slotNow.equals(slotBadge) && !spinning) {
             swapFrom = slotBadge;
@@ -179,7 +179,7 @@ public final class ManipulatorHud {
         if (mode.usesTank() || mode.rmbShot().usesTank()) {
             int cap = OrbMode.capacity(stack), have = Math.min(cap, OrbMode.tank(stack));
             // charging a shot that spends Ether brings the counter up right away
-            var charge = com.ethermod.beam.BeamRenderState.chargeMode;
+            var charge = com.ethermod.client.beam.BeamRenderState.chargeMode;
             if (have != lastTank || have < cap || charge != null && charge.usesTank()) fullSince = now;
             lastTank = have;
             var counter = com.ethermod.config.ClientConfig.counter();

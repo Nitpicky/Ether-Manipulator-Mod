@@ -1,4 +1,4 @@
-package com.ethermod.beam;
+package com.ethermod.client.beam;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 

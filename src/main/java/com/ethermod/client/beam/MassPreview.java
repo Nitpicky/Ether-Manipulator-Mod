@@ -1,4 +1,7 @@
-package com.ethermod.beam;
+package com.ethermod.client.beam;
+
+import com.ethermod.beam.BeamBallEntity;
+import com.ethermod.beam.MassDriver;
 
 import com.ethermod.item.OrbMode;
 import com.ethermod.trait.Traits;

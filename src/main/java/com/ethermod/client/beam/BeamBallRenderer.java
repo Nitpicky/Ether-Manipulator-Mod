@@ -1,4 +1,6 @@
-package com.ethermod.beam;
+package com.ethermod.client.beam;
+
+import com.ethermod.beam.BeamBallEntity;
 
 import com.ethermod.EtherMod;
 import com.ethermod.item.OrbMode;

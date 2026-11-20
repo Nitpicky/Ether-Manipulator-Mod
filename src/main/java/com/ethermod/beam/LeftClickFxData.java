@@ -23,21 +23,21 @@ public final class LeftClickFxData {
     private LeftClickFxData() {}
 
     /** How long each effect lasts, in ticks. */
-    static final int BURST_TICKS = 9, CUT_TICKS = 10;
+    public static final int BURST_TICKS = 9, CUT_TICKS = 10;
 
-    static final class Grenade {
-        Vec3 prev, pos;
-        int fuse;
-        long seen;
+    public static final class Grenade {
+        public Vec3 prev, pos;
+        public int fuse;
+        public long seen;
     }
 
-    record Burst(Vec3 pos, long start) {}
+    public record Burst(Vec3 pos, long start) {}
 
-    record Cut(Vec3 pos, Vec3 dir, long start) {}
+    public record Cut(Vec3 pos, Vec3 dir, long start) {}
 
-    static final Map<Integer, Grenade> GRENADES = new HashMap<>();
-    static final List<Burst> BURSTS = new ArrayList<>();
-    static final List<Cut> CUTS = new ArrayList<>();
+    public static final Map<Integer, Grenade> GRENADES = new HashMap<>();
+    public static final List<Burst> BURSTS = new ArrayList<>();
+    public static final List<Cut> CUTS = new ArrayList<>();
 
     private static long clientTime;
 
@@ -72,7 +72,7 @@ public final class LeftClickFxData {
         CUTS.removeIf(b -> gameTime - b.start > CUT_TICKS);
     }
 
-    static long now() {
+    public static long now() {
         return clientTime;
     }
 

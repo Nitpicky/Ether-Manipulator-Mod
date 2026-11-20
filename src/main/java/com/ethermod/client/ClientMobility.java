@@ -411,7 +411,7 @@ public final class ClientMobility {
     private static long bulletUntil;
 
     static boolean chargingWeapon(net.minecraft.world.entity.player.Player p) {
-        if (com.ethermod.beam.BeamRenderState.chargeMode != null) return true;
+        if (com.ethermod.client.beam.BeamRenderState.chargeMode != null) return true;
         if (!p.isUsingItem()) return false;
         var use = p.getUseItem();
         if (use.getItem() instanceof com.ethermod.item.EtherManipulatorItem) return true;

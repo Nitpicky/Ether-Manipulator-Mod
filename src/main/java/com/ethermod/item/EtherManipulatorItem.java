@@ -1,7 +1,7 @@
 package com.ethermod.item;
 
+import com.ethermod.SideHooks;
 import com.ethermod.beam.BeamBallEntity;
-import com.ethermod.client.ManipulatorClientExtensions;
 import com.ethermod.manipulator.Manipulator;
 import com.ethermod.manipulator.ManipulatorData;
 import com.ethermod.trait.TraitBuild;
@@ -19,7 +19,6 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.ItemAbility;
@@ -71,9 +70,9 @@ public class EtherManipulatorItem extends Item implements GeoItem {
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         // Keyframed prong animations, picked on the client from what the holder is doing.
         // Charge shake is part of the animations (first person) and the arm pose (third person).
-        if (FMLEnvironment.dist.isClient()) {
-            controllers.add(com.ethermod.client.ManipulatorAnimations.controller(this));
-        }
+        // (client only: a server's SideHooks has no controller)
+        var controller = SideHooks.get().manipulatorController(this);
+        if (controller != null) controllers.add(controller);
     }
 
     // =========================================================================
@@ -94,7 +93,7 @@ public class EtherManipulatorItem extends Item implements GeoItem {
         //   - getArmPose()               → BOW_AND_ARROW while beam/charge active
         //   - applyForgeHandTransform()  → snapshots hand matrix for muzzle capture
         // All three must be on the SAME registered instance.
-        consumer.accept(ManipulatorClientExtensions.INSTANCE);
+        consumer.accept(SideHooks.get().manipulatorExtensions());
     }
 
     // =========================================================================
@@ -114,7 +113,7 @@ public class EtherManipulatorItem extends Item implements GeoItem {
         // Pneumatic: right click throws the Stasis Grenade (the Gust shot charges on left click)
         if (mode == OrbMode.GUST) {
             if (player instanceof ServerPlayer sp) com.ethermod.beam.LeftClick.throwGrenade(sp);
-            else com.ethermod.client.ManipulatorAnimations.grenadeThrow(player);
+            else SideHooks.get().grenadeThrow(player);
             return InteractionResultHolder.fail(stack);
         }
         // the projectile this tool charges on right click (Hydraulic: the ice shard)

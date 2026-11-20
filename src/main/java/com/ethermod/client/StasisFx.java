@@ -79,9 +79,9 @@ public final class StasisFx {
             var h1 = tip.add(dir.scale(-.4)).add(side.scale(.28)).subtract(cam);
             var h2 = tip.add(dir.scale(-.4)).add(side.scale(-.28)).subtract(cam);
             for (var seg : new net.minecraft.world.phys.Vec3[][] {{a, t}, {t, h1}, {t, h2}}) {
-                com.ethermod.beam.BeamFx.prism(vc, m, seg[0], seg[1], com.ethermod.beam.BeamFx.PX * 1.4f, time * .1,
+                com.ethermod.client.beam.BeamFx.prism(vc, m, seg[0], seg[1], com.ethermod.client.beam.BeamFx.PX * 1.4f, time * .1,
                         TEAL_R, TEAL_G, TEAL_B, .3f + .1f * p);
-                com.ethermod.beam.BeamFx.prism(vc, m, seg[0], seg[1], com.ethermod.beam.BeamFx.PX * .5f, time * .1,
+                com.ethermod.client.beam.BeamFx.prism(vc, m, seg[0], seg[1], com.ethermod.client.beam.BeamFx.PX * .5f, time * .1,
                         .73f, .95f, .84f, .95f);
             }
         }
