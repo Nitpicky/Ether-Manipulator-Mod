@@ -27,7 +27,12 @@ public final class ShotSounds {
                 };
         play(sl, p, 0, com.ethermod.sound.ModSounds.SHOT_BREEZE_SHOOT, 0.32f, kick - 0.1f * phase);
         switch (mode) {
-            case WATER -> play(sl, p, 0, com.ethermod.sound.ModSounds.SHOT_BUCKET_FILL, 0.25f, 1.6f);
+            case WATER -> {
+                play(sl, p, 0, com.ethermod.sound.ModSounds.SHOT_BUCKET_FILL, 0.25f, 1.6f);
+                // the slosh in flight (FX bench)
+                play(sl, p, 2, com.ethermod.sound.ModSounds.SHOT_BUBBLE_COLUMN_BUBBLE_POP, 0.35f, 1f);
+                play(sl, p, 4, com.ethermod.sound.ModSounds.SHOT_BUBBLE_COLUMN_BUBBLE_POP, 0.3f, 1.2f);
+            }
             case FROST -> {
                 play(sl, p, 0, com.ethermod.sound.ModSounds.SHOT_GLASS_BREAK, 0.08f, 1.9f);
                 play(sl, p, 0, com.ethermod.sound.ModSounds.SHOT_POWDER_SNOW_BREAK, 0.25f, 1.6f);

@@ -112,7 +112,7 @@ public class BeamBallEntity extends Projectile {
     boolean virtualHit, airReelAfterRelease;
 
     /** Tether reeling: a tap reels all the way (reelFull), holding reels while held (reeling). */
-    boolean reelFull, reeling, jumpWas;
+    boolean reelFull, reeling, jumpWas, reelWas;
 
     /** Playtest: the tether's reel state. */
     public String debugTether() {
@@ -145,6 +145,8 @@ public class BeamBallEntity extends Projectile {
     int bridgeLaid;
     final java.util.Set<Long> bridgeSeen = new java.util.HashSet<>();
     final java.util.Map<Long, Long> growSeen = new java.util.HashMap<>();
+    /** Game time of the pollen cloud's last bloom pop (one pop per second at most). */
+    long popAt = -100;
     BlockPos stuckBlock;
 
     /** Tether: what the hook caught, if a creature or item (Recall). */

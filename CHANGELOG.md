@@ -24,6 +24,14 @@ next release's notes.
 - A jump held while logging out no longer counts as held on the next join.
 - Frost bridges no longer leave leftover data behind on long-running servers.
 
+### Sounds and effects
+- Tether: the hook now sounds as designed. The shot, the latch, the start of the reel and the
+  hook letting go each get a faint End layer, and the latch and release give off small purple
+  sparks.
+- Water orb: a little slosh in flight and a lighter, cup-sized splash on impact.
+- Gust grenade: a fuller, deeper burst.
+- Growth pollen cloud: a soft pop as plants grow under it, once a second at most.
+
 ### Compatibility
 - Claim and protection checks no longer post extra fake block-break events while the beam rests
   on a block, while the Mass Driver lifts, or while a sweep or harvest is planned. Grief-logger,

@@ -57,9 +57,79 @@ public final class OrbTether {
                 b.getZ(),
                 com.ethermod.sound.ModSounds.WORLD_CHAIN_PLACE,
                 SoundSource.PLAYERS,
-                1f,
-                b.hookPitch);
+                .6f,
+                b.hookPitch - .2f); // 1.1 on blocks (FX bench), a touch higher on creatures
+        // the End layer under the latch (FX bench)
+        sl.playSound(
+                null,
+                b.getX(),
+                b.getY(),
+                b.getZ(),
+                com.ethermod.sound.ModSounds.WORLD_END_PORTAL_FRAME_FILL,
+                SoundSource.PLAYERS,
+                .4f,
+                1.3f);
         sl.sendParticles(ParticleTypes.CRIT, b.getX(), b.getY(), b.getZ(), 6, 0.1, 0.1, 0.1, 0.1);
+        sl.sendParticles(ParticleTypes.REVERSE_PORTAL, b.getX(), b.getY(), b.getZ(), 10, 0.15, 0.15, 0.15, 0.02);
+    }
+
+    /** Reeling starts: the bobber's retrieve over a short End whoosh (the portal hum, cut at .5s). */
+    private static void reelFx(BeamBallEntity b, ServerLevel sl) {
+        sl.playSound(
+                null,
+                b.getX(),
+                b.getY(),
+                b.getZ(),
+                com.ethermod.sound.ModSounds.WORLD_FISHING_BOBBER_RETRIEVE,
+                SoundSource.PLAYERS,
+                .4f,
+                .8f);
+        if (b.getOwner() instanceof ServerPlayer sp)
+            sl.playSound(
+                    null,
+                    sp.getX(),
+                    sp.getEyeY(),
+                    sp.getZ(),
+                    com.ethermod.sound.ModSounds.WORLD_PORTAL_TRIGGER,
+                    SoundSource.PLAYERS,
+                    .08f,
+                    1.8f);
+        Vec3 at = b.position();
+        com.ethermod.trait.Scheduler.schedule(
+                sl,
+                10,
+                () -> {
+                    var stop =
+                            new net.minecraft.network.protocol.game.ClientboundStopSoundPacket(
+                                    com.ethermod.sound.ModSounds.WORLD_PORTAL_TRIGGER.getLocation(),
+                                    SoundSource.PLAYERS);
+                    for (ServerPlayer p : sl.players())
+                        if (p.position().distanceToSqr(at) < 64 * 64) p.connection.send(stop);
+                });
+    }
+
+    /** The hook lets go of what it held: the chain's clink over a faint teleport. */
+    static void unhookFx(BeamBallEntity b, ServerLevel sl) {
+        if (!b.isStuck() || b.hookAt >= 0) return;
+        sl.playSound(
+                null,
+                b.getX(),
+                b.getY(),
+                b.getZ(),
+                com.ethermod.sound.ModSounds.WORLD_CHAIN_HIT,
+                SoundSource.PLAYERS,
+                .35f,
+                1.2f);
+        sl.playSound(
+                null,
+                b.getX(),
+                b.getY(),
+                b.getZ(),
+                com.ethermod.sound.ModSounds.WORLD_ENDERMAN_TELEPORT,
+                SoundSource.PLAYERS,
+                .15f,
+                1.8f);
+        sl.sendParticles(ParticleTypes.REVERSE_PORTAL, b.getX(), b.getY(), b.getZ(), 8, 0.15, 0.15, 0.15, 0.02);
     }
 
     static boolean tetherTick(BeamBallEntity b) {
@@ -91,6 +161,7 @@ public final class OrbTether {
                 }
                 if (!sp.onGround()) OrbTether.letGo(b, sp, sl);
             }
+            unhookFx(b, sl);
             b.discard();
             return false;
         }
@@ -109,6 +180,8 @@ public final class OrbTether {
             clamp(b, sl);
             return false;
         }
+        if (b.reeling && !b.reelWas) reelFx(b, sl);
+        b.reelWas = b.reeling;
         Vec3 hands = sp.getBoundingBox().getCenter();
 
         // A caught creature or item
@@ -209,8 +282,10 @@ public final class OrbTether {
                 sl.getEntitiesOfClass(
                         BeamBallEntity.class,
                         sp.getBoundingBox().inflate(192),
-                        e -> e.getOwner() == sp && e.getMode() == OrbMode.TETHER && !e.isAnchor()))
+                        e -> e.getOwner() == sp && e.getMode() == OrbMode.TETHER && !e.isAnchor())) {
+            unhookFx(old, sl);
             old.discard();
+        }
         BeamBallEntity hook =
                 new BeamBallEntity(
                         sl, sp, 0, com.ethermod.item.ManipulatorStage.get(stack), OrbMode.TETHER);
@@ -223,8 +298,18 @@ public final class OrbTether {
                 sp.getZ(),
                 com.ethermod.sound.ModSounds.WORLD_CROSSBOW_SHOOT,
                 SoundSource.PLAYERS,
-                0.7f,
-                1.4f);
+                0.6f,
+                1.3f);
+        // the End layer under the shot (FX bench)
+        sl.playSound(
+                null,
+                sp.getX(),
+                sp.getEyeY(),
+                sp.getZ(),
+                com.ethermod.sound.ModSounds.WORLD_CHORUS_FRUIT_TELEPORT,
+                SoundSource.PLAYERS,
+                0.22f,
+                1.7f);
     }
 
     /** Ticks of right click that still count as a tap, and between the taps of a double tap. */

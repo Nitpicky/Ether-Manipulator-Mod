@@ -85,7 +85,16 @@ final class OrbNature {
             if (next != null && next > now) continue;
             b.growSeen.put(key, now + 20);
             if (!b.mayBuild(bp)) continue;
-            boneMeal(sl, bp.immutable(), 6);
+            if (boneMeal(sl, bp.immutable(), 6) && now - b.popAt >= 20) {
+                // a bloom opens: a berry pick over a bubble pop (FX bench), once a second at most
+                b.popAt = now;
+                sl.playSound(null, bp, com.ethermod.sound.ModSounds.WORLD_SWEET_BERRY_BUSH_PICK_BERRIES, SoundSource.PLAYERS, .3f, 1.5f);
+                BlockPos at = bp.immutable();
+                com.ethermod.trait.Scheduler.schedule(
+                        sl,
+                        1,
+                        () -> sl.playSound(null, at, com.ethermod.sound.ModSounds.WORLD_BUBBLE_COLUMN_BUBBLE_POP, SoundSource.PLAYERS, .25f, 1.6f));
+            }
         }
         if (now % 2 == 0) {
             sl.sendParticles(

@@ -104,8 +104,10 @@ final class OrbFx {
                         pos.z,
                         com.ethermod.sound.ModSounds.WORLD_PLAYER_SPLASH,
                         SoundSource.PLAYERS,
-                        0.6f,
-                        1.3f);
+                        0.22f,
+                        1.8f);
+                // a cup-sized splash (FX bench)
+                sl.playSound(null, pos.x, pos.y, pos.z, com.ethermod.sound.ModSounds.WORLD_BUCKET_EMPTY, SoundSource.PLAYERS, .25f, 1.7f);
             }
             case LAVA -> {
                 sl.sendParticles(
