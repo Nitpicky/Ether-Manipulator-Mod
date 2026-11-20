@@ -20,7 +20,7 @@ public final class ManipulatorData {
                             i.group(
                                             ItemStack.OPTIONAL_CODEC
                                                     .optionalFieldOf("stack", ItemStack.EMPTY)
-                                                    .forGetter(d -> d.stack),
+                                                    .forGetter(ManipulatorData::repaired),
                                             Codec.BOOL
                                                     .optionalFieldOf("introduced", false)
                                                     .forGetter(d -> d.introduced),
@@ -67,8 +67,31 @@ public final class ManipulatorData {
         this.greeted = greeted;
     }
 
+    /**
+     * The stored stack, with a shrunk-away Manipulator brought back. While summoned the
+     * Manipulator is the main-hand stack, so a vanilla interaction that consumes the held item
+     * (item frame, allay, decorated pot...) can shrink it to 0; it is still the same Manipulator
+     * with all its progress, so it gets its count back instead of being replaced. A mod that grows or
+     * splits it through an event's held stack is undone the same way: it is always exactly one.
+     */
+    private ItemStack repaired() {
+        if (stack != ItemStack.EMPTY && stack.getCount() != 1) {
+            ItemStack shrunk = stack;
+            int count = shrunk.getCount();
+            shrunk.setCount(1); // an empty stack reports AIR; with a count it shows its real item
+            if (shrunk.is(ModItems.ETHER_MANIPULATOR.get())) {
+                com.ethermod.EtherMod.LOGGER.warn(
+                        "Ether Manipulator stack had count {} after an interaction; restored it to 1", count);
+            } else {
+                shrunk.setCount(count);
+            }
+        }
+        return stack;
+    }
+
     /** The Manipulator stack. Created on first access if missing or corrupted. */
     public ItemStack stack() {
+        repaired();
         if (stack.isEmpty() || !stack.is(ModItems.ETHER_MANIPULATOR.get())) {
             stack = new ItemStack(ModItems.ETHER_MANIPULATOR.get());
         }

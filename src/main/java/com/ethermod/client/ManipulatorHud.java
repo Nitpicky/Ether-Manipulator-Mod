@@ -106,9 +106,9 @@ public final class ManipulatorHud {
         // switches the slot to Kinetic and it stays there until a left click switches it back
         boolean charging =
                 mode == OrbMode.ENERGY
-                        && (com.ethermod.beam.BeamRenderState.isCharging
+                        && (com.ethermod.client.beam.BeamRenderState.isCharging
                                 || com.ethermod.item.ManipulatorColors.lastOrb(stack))
-                        && !com.ethermod.beam.BeamRenderState.beamActive;
+                        && !com.ethermod.client.beam.BeamRenderState.beamActive;
         String slotNow = Badges.module(mode, charging);
         if (slotBadge != null && !slotNow.equals(slotBadge) && !spinning) {
             swapFrom = slotBadge;
@@ -179,7 +179,7 @@ public final class ManipulatorHud {
         if (mode.usesTank() || mode.rmbShot().usesTank()) {
             int cap = OrbMode.capacity(stack), have = Math.min(cap, OrbMode.tank(stack));
             // charging a shot that spends Ether brings the counter up right away
-            var charge = com.ethermod.beam.BeamRenderState.chargeMode;
+            var charge = com.ethermod.client.beam.BeamRenderState.chargeMode;
             if (have != lastTank || have < cap || charge != null && charge.usesTank()) fullSince = now;
             lastTank = have;
             var counter = com.ethermod.config.ClientConfig.counter();
@@ -190,7 +190,7 @@ public final class ManipulatorHud {
             ammoAlpha += (target - ammoAlpha) * Math.min(1, dt / 180f);
             // empty: tinted red; a refused shot flashes it a brighter, hotter red
             float red = have == 0 || flash > 0 ? Math.max(have == 0 ? .55f : 0, flash) : -1;
-            if (ammoAlpha > .02f) ammo(g, have + "/" + cap, (int) cx, (int) cy + 16, ammoAlpha, red);
+            if (ammoAlpha > .02f) ammo(g, ammoText(have, cap), (int) cx, (int) cy + 16, ammoAlpha, red);
         } else ammoAlpha = 0;
     }
 
@@ -204,6 +204,19 @@ public final class ManipulatorHud {
     private static float ammoAlpha;
 
     /** Pixel digits (3x5, from ammo_digits.png: 0-9 then '/'), centred on x, blended like the crosshair. */
+    private static int ammoHave = -1, ammoCap = -1;
+    private static String ammoString = "";
+
+    /** "have/cap", rebuilt only when either changes. */
+    private static String ammoText(int have, int cap) {
+        if (have != ammoHave || cap != ammoCap) {
+            ammoHave = have;
+            ammoCap = cap;
+            ammoString = have + "/" + cap;
+        }
+        return ammoString;
+    }
+
     private static void ammo(GuiGraphics g, String text, int x, int y, float alpha, float red) {
         int w = text.length() * 4 - 1;
         int left = x - w / 2;
@@ -245,8 +258,25 @@ public final class ManipulatorHud {
 
     /** The modes on the ring, in a fixed order. */
     static List<OrbMode> modes(ItemStack stack) {
-        return java.util.Arrays.stream(OrbMode.values()).filter(m -> m.isUnlocked(stack)).toList();
+        // asked every frame: worked out again only on a new tick or when the stack or its data
+        // changed (the unlocked modes come from the trait slots in its custom data)
+        Minecraft mc = Minecraft.getInstance();
+        long tick = mc.level == null ? Long.MIN_VALUE : mc.level.getGameTime();
+        Object data = stack.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
+        if (stack != modesStack || data != modesData || tick != modesTick || mc.level == null) {
+            modesCache =
+                    java.util.Arrays.stream(OrbMode.values()).filter(m -> m.isUnlocked(stack)).toList();
+            modesStack = stack;
+            modesData = data;
+            modesTick = tick;
+        }
+        return modesCache;
     }
+
+    private static ItemStack modesStack;
+    private static Object modesData;
+    private static long modesTick = Long.MIN_VALUE;
+    private static List<OrbMode> modesCache = List.of();
 
     /**
      * The mode on the side the mouse points to. With four modes the screen's corner-to-corner

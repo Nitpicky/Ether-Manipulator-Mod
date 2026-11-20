@@ -1,7 +1,7 @@
 package com.ethermod.beam;
 
 import com.ethermod.trait.Traits;
-import com.ethermod.trait.WorldEffects;
+import com.ethermod.trait.OwnedFire;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -9,7 +9,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -32,9 +31,7 @@ final class OrbNature {
      */
     static void driftTick(BeamBallEntity b) {
         ServerLevel sl = (ServerLevel) b.level();
-        // Lingering Bloom: twice as long, pulsing twice as often
-        boolean linger = b.has("botanic.lingering_bloom");
-        int life = (b.getPhase() == 2 ? 100 : 80) * (linger ? 2 : 1);
+        int life = b.getPhase() == 2 ? 100 : 80;
         if (++b.lifeTicks > life) {
             b.impactFx(b.position());
             b.discard();
@@ -73,22 +70,31 @@ final class OrbNature {
         b.setPos(p.x, p.y, p.z);
 
         ProjectileEffects.growthCloud(b, b.traits);
-        int r =
-                1
-                        + Math.max(0, b.rank("botanic.lingering_bloom") - 1)
-                        + (b.getPhase() == 2 ? b.rank("kinetic.payload") : 0); // Payload: a wider cloud
+        int r = 1;
         BlockPos c = b.blockPosition();
         long now = sl.getGameTime();
         for (BlockPos bp : BlockPos.betweenClosed(c.offset(-r, -3, -r), c.offset(r, 0, r))) {
             BlockState bs = sl.getBlockState(bp);
-            if (!(bs.getBlock() instanceof net.minecraft.world.level.block.BonemealableBlock)
-                    && !bs.getFluidState().is(net.minecraft.tags.FluidTags.WATER)) continue;
+            // fully grown plants are skipped before the claim probe (bone meal would do nothing)
+            boolean growable =
+                    bs.getBlock() instanceof net.minecraft.world.level.block.BonemealableBlock meal
+                            && meal.isValidBonemealTarget(sl, bp, bs);
+            if (!growable && !bs.getFluidState().is(net.minecraft.tags.FluidTags.WATER)) continue;
             long key = bp.asLong();
             Long next = b.growSeen.get(key);
             if (next != null && next > now) continue;
-            b.growSeen.put(key, now + (linger ? 10 : 20));
+            b.growSeen.put(key, now + 20);
             if (!b.mayBuild(bp)) continue;
-            boneMeal(sl, bp.immutable(), 6);
+            if (boneMeal(sl, bp.immutable(), 6) && now - b.popAt >= 20) {
+                // a bloom opens: a berry pick over a bubble pop (FX bench), once a second at most
+                b.popAt = now;
+                sl.playSound(null, bp, com.ethermod.sound.ModSounds.WORLD_SWEET_BERRY_BUSH_PICK_BERRIES, SoundSource.PLAYERS, .3f, 1.5f);
+                BlockPos at = bp.immutable();
+                com.ethermod.trait.Scheduler.schedule(
+                        sl,
+                        1,
+                        () -> sl.playSound(null, at, com.ethermod.sound.ModSounds.WORLD_BUBBLE_COLUMN_BUBBLE_POP, SoundSource.PLAYERS, .25f, 1.6f));
+            }
         }
         if (now % 2 == 0) {
             sl.sendParticles(
@@ -147,15 +153,12 @@ final class OrbNature {
                 // a portal frame lights through vanilla's own placement
                 if (net.minecraft.world.level.block.BaseFireBlock.getState(sl, firePos)
                         .is(Blocks.FIRE)) {
-                    WorldEffects.placeFire(sl, firePos, owner);
+                    OwnedFire.placeFire(sl, firePos, owner);
                 } else {
-                    WorldEffects.placeFire(sl, firePos, owner);
+                    OwnedFire.placeFire(sl, firePos, owner);
                 }
-                int inc = b.rank("pyrotechnic.incendiary");
-                if (b.getPhase() == 2 && inc > 0)
-                    WorldEffects.fireStar(sl, firePos, owner, inc >= 2 ? 3 : 2);
-                else if (b.getPhase() >= 1)
-                    WorldEffects.fireRing(
+                if (b.getPhase() >= 1)
+                    OwnedFire.fireRing(
                             sl, firePos, owner, b.getPhase()); // charged: ring of 1, then 2
             }
         }
@@ -188,56 +191,14 @@ final class OrbNature {
         return false;
     }
 
-    /**
-     * Bone meal on the block hit. Phase 3 covers 5x5 (9x9 with Verdant Pulse, wider with Payload);
-     * Rewild greens bare dirt and spreads flowers (II: moss onto stone and cobblestone).
-     */
+    /** Bone meal on the block hit: phase 3 covers 5x5. */
     static void grow(BeamBallEntity b, BlockPos hitPos) {
         ServerLevel sl = (ServerLevel) b.level();
-        int r =
-                (b.getPhase() == 2
-                                ? (b.has("botanic.verdant_pulse") ? 4 : 2)
-                                        + b.rank("kinetic.payload")
-                                : 0)
-                        + Math.max(0, b.rank("botanic.lingering_bloom") - 1);
-        boolean rewild = b.has("botanic.rewild");
-        boolean moss = b.rank("botanic.rewild") >= 2;
+        int r = b.getPhase() == 2 ? 2 : 0;
         for (BlockPos p :
                 BlockPos.betweenClosed(hitPos.offset(-r, -1, -r), hitPos.offset(r, 1, r))) {
             if (!b.mayBuild(p)) continue;
-            BlockPos q = p.immutable();
-            BlockState here = sl.getBlockState(q);
-            if (rewild && here.is(Blocks.DIRT) && sl.getBlockState(q.above()).isAir()) {
-                sl.setBlockAndUpdate(q, Blocks.GRASS_BLOCK.defaultBlockState());
-            } else if (moss
-                    && (here.is(Blocks.STONE) || here.is(Blocks.COBBLESTONE))
-                    && sl.getBlockState(q.above()).isAir()
-                    && b.getRandom().nextInt(3) > 0) {
-                sl.setBlockAndUpdate(
-                        q,
-                        (here.is(Blocks.COBBLESTONE) ? Blocks.MOSSY_COBBLESTONE : Blocks.MOSS_BLOCK)
-                                .defaultBlockState());
-            }
-            boneMeal(sl, q, 15);
-        }
-        if (rewild) {
-            BlockPos top = hitPos.above();
-            for (int i = 0; i < 4 + 4 * b.getPhase(); i++) {
-                BlockPos p =
-                        top.offset(b.getRandom().nextInt(5) - 2, 0, b.getRandom().nextInt(5) - 2);
-                if (sl.getBlockState(p).isAir()
-                        && sl.getBlockState(p.below()).is(BlockTags.DIRT)
-                        && b.mayBuild(p)) {
-                    BlockState flower =
-                            b.getRandom().nextInt(4) == 0
-                                    ? Blocks.MOSS_CARPET.defaultBlockState()
-                                    : (b.getRandom().nextBoolean()
-                                                    ? Blocks.POPPY
-                                                    : Blocks.DANDELION)
-                                            .defaultBlockState();
-                    if (flower.canSurvive(sl, p)) sl.setBlockAndUpdate(p, flower);
-                }
-            }
+            boneMeal(sl, p.immutable(), 15);
         }
     }
 }

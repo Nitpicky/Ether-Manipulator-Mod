@@ -119,7 +119,8 @@ public final class PlaytestBootstrap {
     /**
      * -PcloudTest: after the beam is on (combat on the pig), stand above the cloud layer and fire
      * down past it, so every cloud on screen is behind the beam; once with Fancy graphics, once
-     * with Fabulous. Nothing may cover the beam.
+     * with Fabulous. Nothing may cover the beam. Then Ore Sense, back on the ground before the
+     * ore wall, with more ores buried behind it. Then the Photonic glow in a dark room, on and off.
      */
     private static void cloudStep(Minecraft mc) {
         switch (t) {
@@ -138,7 +139,70 @@ public final class PlaytestBootstrap {
                 mc.levelRenderer.allChanged();
             }
             case 290 -> shot(mc, "07c_clouds_fabulous");
-            case 292 -> mc.stop();
+            // ---- Ore Sense (Tectonic grandmaster): ores near the player glow through the
+            // stone. It draws with a lightning-style render type that shader packs may drop,
+            // so the shader run shows whether it survives
+            case 292 -> {
+                mc.options.keyAttack.setDown(false);
+                mc.options.graphicsMode().set(net.minecraft.client.GraphicsStatus.FANCY);
+                mc.levelRenderer.allChanged();
+                server(
+                        mc,
+                        (s, p) -> {
+                            int x = base.getX(), y = base.getY(), z = base.getZ();
+                            // behind the ore wall (z - 4): two more layers of stone, ores
+                            // buried in the back one where nothing shows them but Ore Sense
+                            run(s, "fill " + (x - 3) + " " + y + " " + (z - 6) + " " + (x + 3) + " " + (y + 2) + " " + (z - 5) + " stone");
+                            run(s, "setblock " + (x - 2) + " " + y + " " + (z - 6) + " diamond_ore");
+                            run(s, "setblock " + x + " " + (y + 1) + " " + (z - 6) + " gold_ore");
+                            run(s, "setblock " + (x + 2) + " " + (y + 2) + " " + (z - 6) + " redstone_ore");
+                            run(s, "setblock " + x + " " + y + " " + (z - 5) + " copper_ore");
+                            run(s, "tp @p " + (x + 0.5) + " " + y + " " + (z + 0.5) + " 180 10");
+                            orbMode(p, com.ethermod.item.OrbMode.MASS); // Tectonic in slot 0
+                            // a tier only counts once the tiers before it are picked
+                            com.ethermod.trait.TraitBuild.setPick(Manipulator.stack(p), 0, 0, "tectonic.momentum");
+                            com.ethermod.trait.TraitBuild.setPick(Manipulator.stack(p), 0, 1, "tectonic.fortune");
+                            com.ethermod.trait.TraitBuild.setPick(
+                                    Manipulator.stack(p), 0, 2, "tectonic.vein_miner"); // brings Ore Sense
+                            Manipulator.sync(p);
+                            log(
+                                    (com.ethermod.trait.Traits.has(Manipulator.stack(p), "tectonic.ore_sense") ? "PASS" : "FAIL")
+                                            + " ore sense: tectonic.ore_sense active for the shot");
+                        });
+            }
+            case 330 -> shot(mc, "07d_ore_sense");
+            // ---- Photonic glow (client-side dynamic light): at midnight in a closed stone room,
+            // the only light is the glow around the player; then the same view with it off
+            case 332 ->
+                    server(
+                            mc,
+                            (s, p) -> {
+                                int x = base.getX() + 30, y = base.getY(), z = base.getZ();
+                                run(s, "fill " + x + " " + (y - 1) + " " + z + " " + (x + 8) + " " + (y + 5) + " " + (z + 8) + " stone hollow");
+                                run(s, "time set 18000");
+                                run(s, "tp @p " + (x + 4.5) + " " + y + " " + (z + 4.5) + " 180 25");
+                                orbMode(p, com.ethermod.item.OrbMode.LIGHT); // Photonic in slot 0
+                                Manipulator.setSummoned(p, true);
+                            });
+            case 400 -> { // room built and chunks rebuilt on llvmpipe: give it time
+                BlockPos eye = BlockPos.containing(mc.player.getEyePosition());
+                double glow = PhotonicGlow.level(eye.getX() + 0.5, eye.getY() + 0.5, eye.getZ() + 0.5);
+                log(
+                        (glow >= 13 ? "PASS" : "FAIL")
+                                + " Photonic glow in the dark room: "
+                                + String.format("%.1f", glow) + " at the eyes ("
+                                + PhotonicGlow.sourceCount() + " sources)");
+                shot(mc, "07e_photonic_glow");
+            }
+            case 402 -> com.ethermod.config.ClientConfig.setPhotonicDynamicLight(false);
+            case 470 -> {
+                log(
+                        (PhotonicGlow.sourceCount() == 0 ? "PASS" : "FAIL")
+                                + " Photonic glow off: no light sources");
+                shot(mc, "07f_photonic_glow_off");
+                com.ethermod.config.ClientConfig.setPhotonicDynamicLight(true);
+            }
+            case 472 -> mc.stop();
             default -> {}
         }
     }
@@ -461,7 +525,7 @@ public final class PlaytestBootstrap {
                                 + " sneak beam, no water near: grass ahead is now "
                                 + st.getBlock().getDescriptionId()
                                 + " (beamActive="
-                                + com.ethermod.beam.BeamRenderState.beamActive
+                                + com.ethermod.client.beam.BeamRenderState.beamActive
                                 + ", sneaking="
                                 + mc.player.isShiftKeyDown()
                                 + ", hit="
@@ -727,8 +791,8 @@ public final class PlaytestBootstrap {
                 mc.player.setYRot(0);
                 mc.player.setXRot(11);
             }
-            case 968 -> opts.keyAttack.setDown(true);
-            case 970 -> opts.keyAttack.setDown(false);
+            case 968 -> opts.keyUse.setDown(true); // Pneumatic: right click throws the grenade
+            case 970 -> opts.keyUse.setDown(false);
             case 978 -> shot(mc, "26_gust_grenade_latched"); // +2: grenade wind-up
             // the Stasis hold lasts 3s; cut it short so the burst lands before the check
             case 996 -> server(mc, (s, p) -> com.ethermod.beam.GustGrenade.hurry());
@@ -744,7 +808,7 @@ public final class PlaytestBootstrap {
                                         (com.ethermod.beam.GustGrenade.bursts > bursts && hurt
                                                         ? "PASS"
                                                         : "FAIL")
-                                                + " gust: left click threw a grenade that burst"
+                                                + " gust: right click threw a grenade that burst"
                                                 + " (bursts "
                                                 + (com.ethermod.beam.GustGrenade.bursts - bursts)
                                                 + ", pig hurt "
@@ -839,16 +903,29 @@ public final class PlaytestBootstrap {
                         (stone ? "PASS" : "FAIL")
                                 + " mining is Beam-only: 20 ticks of left click in Light mode"
                                 + " left the stone");
+                // the Photonic glow follows the player on the client: a light source, no light block
+                boolean source = PhotonicGlow.isSource(mc.player.getId());
+                BlockPos eye = BlockPos.containing(mc.player.getEyePosition());
+                int lit = (net.minecraft.client.renderer.LevelRenderer.getLightColor(mc.level, eye) & 0xFFFF) >> 4;
+                double glow = PhotonicGlow.level(eye.getX() + 0.5, eye.getY() + 0.5, eye.getZ() + 0.5);
+                log(
+                        (source && glow >= 13 && lit >= 13 ? "PASS" : "FAIL")
+                                + " Photonic glow: the player is a moving light source ("
+                                + PhotonicGlow.sourceCount() + " sources, glow "
+                                + String.format("%.1f", glow) + ", block light at the eyes " + lit + ")");
+                server(mc, (s, p) -> {
+                    boolean block = false;
+                    for (BlockPos q : BlockPos.betweenClosed(p.blockPosition().offset(-1, 0, -1), p.blockPosition().offset(1, 2, 1)))
+                        if (p.level().getBlockState(q).is(net.minecraft.world.level.block.Blocks.LIGHT)) block = true;
+                    log((block ? "FAIL" : "PASS") + " Photonic glow places no light block over the player");
+                });
             }
             case 1100 -> opts.keyAttack.setDown(false);
             case 1113 -> {
                 // the client hears about the removed light blocks a few ticks late
                 var left = lightSpots(mc);
                 left.removeAll(lightsBefore);
-                // the Photonic badge's own glow follows the player (a level 10 light over the head): not the Beacon's
-                BlockPos head = mc.player.blockPosition();
-                left.removeIf(q -> Math.abs(q.getX() - head.getX()) <= 1 && Math.abs(q.getZ() - head.getZ()) <= 1
-                        && q.getY() - head.getY() >= 0 && q.getY() - head.getY() <= 2);
+                // the Photonic badge's own glow is client-side (PhotonicGlow), so no light block is left over the head either
                 log(
                         (left.isEmpty() ? "PASS" : "FAIL")
                                 + " light: the Beacon's light goes with it ("
@@ -953,6 +1030,58 @@ public final class PlaytestBootstrap {
                                                             : "FAIL")
                                                     + " mass driver: right click threw the"
                                                     + " carried stone"));
+            // Zipline: two sneaking hooks string a rope, right click aimed at it rides it
+            case 1215 ->
+                    server(
+                            mc,
+                            (s, p) -> {
+                                int bx = base.getX() + 90, y = base.getY(), bz = base.getZ();
+                                run(s, "fill " + (bx - 10) + " " + (y - 1) + " " + (bz - 3) + " " + (bx + 10) + " " + (y - 1) + " " + (bz + 9) + " stone");
+                                run(s, "fill " + (bx - 10) + " " + y + " " + (bz - 3) + " " + (bx + 10) + " " + (y + 9) + " " + (bz + 9) + " air");
+                                run(s, "setblock " + (bx - 7) + " " + (y + 5) + " " + (bz + 6) + " stone");
+                                run(s, "setblock " + (bx + 7) + " " + (y + 5) + " " + (bz + 6) + " stone");
+                                run(s, "tp @p " + bx + ".5 " + y + " " + bz + ".5 0 0");
+                                orbMode(p, com.ethermod.item.OrbMode.TETHER);
+                                var mm = Manipulator.stack(p);
+                                com.ethermod.trait.TraitBuild.setPick(mm, 0, 0, "gravitic.blink");
+                                com.ethermod.trait.TraitBuild.setPick(mm, 0, 1, "gravitic.zipline");
+                                Manipulator.sync(p);
+                                zipBase = new BlockPos(bx, y, bz);
+                            });
+            case 1220 -> {
+                opts.keyShift.setDown(true);
+                aimAt(mc, zipBase.getX() - 6.5, zipBase.getY() + 5.5, zipBase.getZ() + 6.5);
+            }
+            case 1222 -> opts.keyAttack.setDown(true);
+            case 1224 -> opts.keyAttack.setDown(false);
+            case 1240 -> {
+                logZip(mc, "after the first sneaking hook");
+                aimAt(mc, zipBase.getX() + 7.5, zipBase.getY() + 5.5, zipBase.getZ() + 6.5);
+            }
+            case 1242 -> opts.keyAttack.setDown(true);
+            case 1244 -> opts.keyAttack.setDown(false);
+            case 1262 -> {
+                logZip(mc, "after the second sneaking hook");
+                opts.keyShift.setDown(false);
+            }
+            case 1266 -> {
+                aimAt(mc, zipBase.getX() + 0.5, zipBase.getY() + 5.5, zipBase.getZ() + 6.5);
+                startY = mc.player.getY();
+                opts.keyUse.setDown(true);
+            }
+            case 1270 -> logZip(mc, "right click on the rope");
+            case 1286 -> logZip(mc, "while riding");
+            case 1290 -> {
+                boolean riding = zipRiding;
+                log(
+                        (riding && mc.player.getY() > startY + 1.5 ? "PASS" : "FAIL")
+                                + " zipline: right click aimed at the rope rides it (riding="
+                                + riding
+                                + ", rose "
+                                + String.format("%.1f", mc.player.getY() - startY)
+                                + " blocks)");
+                opts.keyUse.setDown(false);
+            }
             // (Mechatronic Golem checks shelved with the Module, see docs/MECHATRONIC.md)
             case 1447 -> server(mc, (s, p) -> {
                 checkGemLoot(s, p);
@@ -960,9 +1089,37 @@ public final class PlaytestBootstrap {
             });
             case 1449 -> server(mc, (s, p) -> checkGemGuarantee(s, p, "desert_pyramid", "atenite", false));
             case 1451 -> server(mc, (s, p) -> checkGemGuarantee(s, p, "jungle_pyramid", "quetzalite", true));
+            // the gems' Module-coloured glint, in the inventory
+            case 1455 -> server(mc, (s, p) -> {
+                for (String gem : com.ethermod.registry.ModItems.GEMS.keySet()) run(s, "give @p ethermod:" + gem);
+            });
+            case 1460 -> mc.setScreen(new net.minecraft.client.gui.screens.inventory.InventoryScreen(mc.player));
+            case 1470 -> shot(mc, "35_gem_glint");
+            case 1474 -> mc.setScreen(null);
+            // the advancement tab's layout (gems and Module challenges on top, upgrade line, dyes last)
+            case 1478 -> {
+                var adv = mc.player.connection.getAdvancements();
+                var root = adv.getTree().get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("ethermod", "manipulator/root"));
+                mc.setScreen(new net.minecraft.client.gui.screens.advancements.AdvancementsScreen(adv));
+                if (root != null) adv.setSelectedTab(root.holder(), true);
+                // the mouse off the window, so no tooltip covers the tree
+                org.lwjgl.glfw.GLFW.glfwSetCursorPos(mc.getWindow().getWindow(), 0, 0);
+                if (root != null) logAdvancements(root);
+            }
+            case 1486 -> shot(mc, "36_advancements");
+            case 1487 -> mc.screen.mouseDragged(0, 0, 0, 0, -400); // scroll to the bottom rows
+            case 1489 -> shot(mc, "36b_advancements_bottom");
+            case 1492 -> mc.setScreen(null);
             case 1572 -> finish(mc);
             default -> {}
         }
+    }
+
+    /** Logs where each advancement of the tab sits (x, y in tree cells). */
+    private static void logAdvancements(net.minecraft.advancements.AdvancementNode n) {
+        n.holder().value().display().ifPresent(d -> com.ethermod.EtherMod.LOGGER.info(
+                "[autotest] ADV {} at {} {}", n.holder().id().getPath(), d.getX(), d.getY()));
+        for (var c : n.children()) logAdvancements(c);
     }
 
     /** Turns the player to look at the middle of the nearest pig. */
@@ -1173,6 +1330,46 @@ public final class PlaytestBootstrap {
     }
 
     private static double startY;
+    private static BlockPos zipBase = BlockPos.ZERO;
+    private static volatile boolean zipRiding;
+
+    private static void aimAt(Minecraft mc, double x, double y, double z) {
+        mc.player.lookAt(
+                net.minecraft.commands.arguments.EntityAnchorArgument.Anchor.EYES,
+                new net.minecraft.world.phys.Vec3(x, y, z));
+    }
+
+    /** Logs the player's Zipline anchors and hook (server side). */
+    private static void logZip(Minecraft mc, String when) {
+        server(
+                mc,
+                (s, p) -> {
+                    var list =
+                            p.serverLevel()
+                                    .getEntitiesOfClass(
+                                            com.ethermod.beam.BeamBallEntity.class,
+                                            p.getBoundingBox().inflate(40),
+                                            e -> e.getMode() == com.ethermod.item.OrbMode.TETHER);
+                    StringBuilder sb = new StringBuilder("zipline " + when + ":");
+                    for (var e : list)
+                        sb.append(" [anchor=")
+                                .append(e.isAnchor())
+                                .append(" partner=")
+                                .append(e.getPartnerId())
+                                .append(" stuck=")
+                                .append(e.isStuck())
+                                .append(" at ")
+                                .append(e.blockPosition().toShortString())
+                                .append("]");
+                    var hook = com.ethermod.beam.OrbTether.activeHook(p);
+                    zipRiding = com.ethermod.trait.Ziplines.isRiding(p);
+                    sb.append(" hook=").append(hook == null ? "none" : hook.debugTether())
+                            .append(" riding=").append(zipRiding)
+                            .append(" using=").append(p.isUsingItem())
+                            .append(" crouch=").append(p.isShiftKeyDown());
+                    log(sb.toString());
+                });
+    }
     private static int bursts;
 
     private static int harvested;

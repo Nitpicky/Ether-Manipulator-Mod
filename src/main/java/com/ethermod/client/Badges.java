@@ -27,13 +27,32 @@ public final class Badges {
         };
     }
 
+    /** Colours found so far, for the assets they were read from (asked several times a frame). */
+    private static final java.util.Map<String, Integer> COLORS = new java.util.HashMap<>();
+
+    private static Object colorsFrom;
+
+    /** Badge textures by Module. */
+    private static final java.util.Map<String, net.minecraft.resources.ResourceLocation> TEXTURES =
+            new java.util.HashMap<>();
+
     /** The Module's own colour (opaque ARGB). */
     public static int color(String module) {
         ensure();
+        if (colorsFrom != UpgradeVisuals.assets) {
+            COLORS.clear();
+            colorsFrom = UpgradeVisuals.assets;
+        }
+        Integer known = COLORS.get(module);
+        if (known != null) return known;
+        int found = 0xFFFFFFFF;
         for (var m : UpgradeVisuals.modules.values())
-            if (m.has("sprite") && m.get("sprite").getAsString().equals(module))
-                return UpgradeVisuals.hex(m.get("color").getAsString());
-        return 0xFFFFFFFF;
+            if (m.has("sprite") && m.get("sprite").getAsString().equals(module)) {
+                found = UpgradeVisuals.hex(m.get("color").getAsString());
+                break;
+            }
+        COLORS.put(module, found);
+        return found;
     }
 
     /**
@@ -43,8 +62,11 @@ public final class Badges {
      */
     public static void draw(GuiGraphics g, String module, int x, int y, int scale, int argb) {
         var tex =
-                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(
-                        "ethermod", "textures/gui/badge/" + module + ".png");
+                TEXTURES.computeIfAbsent(
+                        module,
+                        k ->
+                                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(
+                                        "ethermod", "textures/gui/badge/" + k + ".png"));
         com.mojang.blaze3d.systems.RenderSystem.enableBlend();
         com.mojang.blaze3d.systems.RenderSystem.defaultBlendFunc();
         g.setColor(

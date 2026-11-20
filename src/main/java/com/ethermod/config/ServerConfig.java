@@ -35,6 +35,7 @@ public final class ServerConfig {
     private static final ModConfigSpec.DoubleValue GEM_CHANCE;
     // modules
     private static final ModConfigSpec.ConfigValue<List<? extends String>> DISABLED;
+    private static final ModConfigSpec.ConfigValue<List<? extends String>> GEM_ITEMS;
     private static final ModConfigSpec.BooleanValue BLAZELINGS, TETHER_PLAYERS, STASIS_PLAYERS;
     private static final ModConfigSpec.IntValue BLAZE_LIFE, MAX_SUMMONS, PHOTONIC_LIFE, FROST_MELT;
     // compatibility
@@ -67,10 +68,14 @@ public final class ServerConfig {
         b.pop();
 
         b.comment("What the Manipulator may do to the world.").push("world");
-        PROTECTION = b.comment("Check claims and spawn protection before every block the Manipulator changes.")
+        PROTECTION = b.comment(
+                        "Check claims and spawn protection before every block the Manipulator changes.",
+                        "Claims are asked the way claim mods expect: with a block break event posted just before the change.",
+                        "Grief loggers, quest and statistics mods may record these checks as broken blocks; turn this off",
+                        "if that matters more than claims (spawn protection and the world border are still respected).")
                 .define("respect_protection", true);
         BLACKLIST = b.comment("Blocks the beam can't break and the Mass Driver can't lift. Block ids or #tags.")
-                .defineListAllowEmpty("block_blacklist", List.of("minecraft:spawner", "minecraft:trial_spawner", "minecraft:vault"), () -> "modid:block", ServerConfig::idOrTag);
+                .defineListAllowEmpty("block_blacklist", List.of("minecraft:spawner", "minecraft:trial_spawner", "minecraft:vault", "minecraft:budding_amethyst"), () -> "modid:block", ServerConfig::idOrTag);
         MASS_BE = b.comment("Whether the Mass Driver can lift blocks with contents (chests, furnaces, machines).")
                 .define("mass_driver_lifts_containers", false);
         MASS_MAX = b.comment("Most blocks the Mass Driver holds at once.").defineInRange("mass_driver_max_blocks", 32, 1, 256);
@@ -96,6 +101,11 @@ public final class ServerConfig {
                 .define("all_modules_unlocked", false);
         ALL_TIERS = b.comment("Every Manipulator starts at Overclocked, with every trait tier open.")
                 .define("all_tiers_unlocked", false);
+        GEM_ITEMS = b.comment(
+                        "Other items that work like a gem: right click to unlock that Module and use the item up.",
+                        "Each entry is item=module or #tag=module, e.g. \"minecraft:heart_of_the_sea=hydraulic\".",
+                        "Modules: tectonic, hydraulic, pyrotechnic, pneumatic, photonic, gravitic, botanic.")
+                .defineListAllowEmpty("gem_items", List.of(), () -> "modid:item=hydraulic", ServerConfig::gemEntry);
         b.pop();
 
         b.comment("Modules and what they leave in the world.").push("modules");
@@ -106,7 +116,7 @@ public final class ServerConfig {
                 .define("soulwake_blazelings", true);
         BLAZE_LIFE = b.comment("Seconds a Soulfire Blazeling lives.").defineInRange("blazeling_lifetime_seconds", 30, 1, 600);
         MAX_SUMMONS = b.comment("Most summons each player can have at once.").defineInRange("max_summons_per_player", 8, 0, 64);
-        PHOTONIC_LIFE = b.comment("Seconds Photonic's lasting lights (Lodestar decoys and lights) stay.")
+        PHOTONIC_LIFE = b.comment("Seconds Photonic's lasting lights (Mirage decoys and lights) stay.")
                 .defineInRange("photonic_light_seconds", 30, 1, 1200);
         FROST_MELT = b.comment("Seconds a frost bridge stays before it melts (Glacier makes it three times longer).").defineInRange("frost_bridge_seconds", 10, 1, 1200);
         TETHER_PLAYERS = b.comment("Whether Gravitic's tether can grab other players.").define("tether_grabs_players", false);
@@ -166,10 +176,111 @@ public final class ServerConfig {
     public static boolean allModules() { return or(ALL_MODULES::get, false); }
     public static boolean allTiers() { return or(ALL_TIERS::get, false); }
 
+    private static boolean gemEntry(Object o) {
+        if (!(o instanceof String str)) return false;
+        int eq = str.indexOf('=');
+        if (eq <= 0 || eq == str.length() - 1) return false;
+        String item = str.substring(0, eq).trim();
+        return ResourceLocation.tryParse(item.startsWith("#") ? item.substring(1) : item) != null;
+    }
+
+    // ---- parsed lists, cached: built once per config value, dropped on config load/reload ----
+
+    /** One gem_items entry: an item tag or an item id, and the Module it stands in for. */
+    private record GemEntry(TagKey<net.minecraft.world.item.Item> tag, ResourceLocation id, String module) {}
+
+    /** Block ids and block tags parsed from one config list. */
+    private record BlockMatch(java.util.Set<ResourceLocation> ids, List<TagKey<Block>> tags) {
+        static final BlockMatch NONE = new BlockMatch(java.util.Set.of(), List.of());
+
+        static BlockMatch parse(List<? extends String> list) {
+            if (list.isEmpty()) return NONE;
+            var ids = new java.util.HashSet<ResourceLocation>();
+            var tags = new java.util.ArrayList<TagKey<Block>>();
+            for (String e : list) {
+                String t = e.trim();
+                if (t.startsWith("#")) {
+                    ResourceLocation id = ResourceLocation.tryParse(t.substring(1));
+                    if (id != null) tags.add(TagKey.create(Registries.BLOCK, id));
+                } else {
+                    ResourceLocation id = ResourceLocation.tryParse(t);
+                    if (id != null) ids.add(id);
+                }
+            }
+            return new BlockMatch(java.util.Set.copyOf(ids), List.copyOf(tags));
+        }
+
+        boolean test(BlockState s) {
+            if (ids.isEmpty() && tags.isEmpty()) return false;
+            if (!ids.isEmpty() && ids.contains(BuiltInRegistries.BLOCK.getKey(s.getBlock()))) return true;
+            for (TagKey<Block> tag : tags) if (s.is(tag)) return true;
+            return false;
+        }
+    }
+
+    /** A value parsed from a config list, kept while the config hands out the same list. */
+    private record Parsed<T>(Object source, T value) {}
+
+    private static volatile Parsed<BlockMatch> blacklistCache, harvestCache, foliageCache, cropsCache;
+    private static volatile Parsed<List<GemEntry>> gemCache;
+    private static volatile Parsed<java.util.Set<String>> disabledCache;
+
+    /** Config loaded or reloaded (mod bus): parse the lists again on next use. */
+    public static void onConfig(net.neoforged.fml.event.config.ModConfigEvent ev) {
+        if (ev.getConfig().getSpec() != SPEC) return;
+        blacklistCache = harvestCache = foliageCache = cropsCache = null;
+        gemCache = null;
+        disabledCache = null;
+    }
+
+    private static <T> boolean fresh(Parsed<T> p, Object source) {
+        return p != null && p.source() == source;
+    }
+
+    /** The Module an item stands in for as a gem (config gem_items), or null. */
+    public static String gemModule(net.minecraft.world.item.ItemStack stack) {
+        if (stack.isEmpty()) return null;
+        List<? extends String> gems = or(GEM_ITEMS::get, List.of());
+        if (gems.isEmpty()) return null;
+        var cache = gemCache;
+        if (!fresh(cache, gems)) {
+            var parsed = new java.util.ArrayList<GemEntry>();
+            for (String e : gems) {
+                int eq = e.indexOf('=');
+                if (eq <= 0) continue;
+                String item = e.substring(0, eq).trim(), module = e.substring(eq + 1).trim().toLowerCase(java.util.Locale.ROOT);
+                if (item.startsWith("#")) {
+                    ResourceLocation id = ResourceLocation.tryParse(item.substring(1));
+                    if (id != null) parsed.add(new GemEntry(TagKey.create(Registries.ITEM, id), null, module));
+                } else {
+                    ResourceLocation id = ResourceLocation.tryParse(item);
+                    if (id != null) parsed.add(new GemEntry(null, id, module));
+                }
+            }
+            gemCache = cache = new Parsed<>(gems, List.copyOf(parsed));
+        }
+        ResourceLocation key = null;
+        for (GemEntry e : cache.value()) {
+            if (e.tag() != null) {
+                if (stack.is(e.tag())) return e.module();
+            } else {
+                if (key == null) key = BuiltInRegistries.ITEM.getKey(stack.getItem());
+                if (key.equals(e.id())) return e.module();
+            }
+        }
+        return null;
+    }
+
     public static boolean moduleDisabled(String line) {
         List<? extends String> l = or(DISABLED::get, List.of());
-        for (String s : l) if (s.trim().equalsIgnoreCase(line)) return true;
-        return false;
+        if (l.isEmpty() || line == null) return false;
+        var cache = disabledCache;
+        if (!fresh(cache, l)) {
+            var set = new java.util.HashSet<String>();
+            for (String s : l) set.add(s.trim().toLowerCase(java.util.Locale.ROOT));
+            disabledCache = cache = new Parsed<>(l, java.util.Set.copyOf(set));
+        }
+        return cache.value().contains(line.toLowerCase(java.util.Locale.ROOT));
     }
 
     public static boolean blazelings() { return or(BLAZELINGS::get, true); }
@@ -180,26 +291,36 @@ public final class ServerConfig {
     public static boolean tetherPlayers() { return or(TETHER_PLAYERS::get, false); }
     public static boolean stasisGrenadePlayers() { return or(STASIS_PLAYERS::get, true); }
 
-    public static boolean blacklisted(BlockState s) { return matches(s, or(BLACKLIST::get, List.of())); }
-    public static boolean alwaysHarvest(BlockState s) { return matches(s, or(HARVEST_TAGS::get, List.of())); }
-    public static boolean extraFoliage(BlockState s) { return matches(s, or(FOLIAGE::get, List.of())); }
-    public static boolean extraCrop(BlockState s) { return matches(s, or(CROPS::get, List.of())); }
-
-    private static boolean matches(BlockState s, List<? extends String> list) {
-        if (list.isEmpty()) return false;
-        for (String e : list) {
-            String t = e.trim();
-            if (t.startsWith("#")) {
-                ResourceLocation id = ResourceLocation.tryParse(t.substring(1));
-                if (id != null && s.is(TagKey.create(Registries.BLOCK, id))) return true;
-            } else {
-                ResourceLocation id = ResourceLocation.tryParse(t);
-                if (id != null && BuiltInRegistries.BLOCK.getKey(s.getBlock()).equals(id)) return true;
-            }
-        }
-        return false;
+    public static boolean blacklisted(BlockState s) {
+        List<? extends String> l = or(BLACKLIST::get, List.of());
+        if (l.isEmpty()) return false;
+        var c = blacklistCache;
+        if (!fresh(c, l)) blacklistCache = c = new Parsed<>(l, BlockMatch.parse(l));
+        return c.value().test(s);
     }
 
-    /** For callers holding a Block. */
-    public static boolean blacklisted(Block b) { return blacklisted(b.defaultBlockState()); }
+    public static boolean alwaysHarvest(BlockState s) {
+        List<? extends String> l = or(HARVEST_TAGS::get, List.of());
+        if (l.isEmpty()) return false;
+        var c = harvestCache;
+        if (!fresh(c, l)) harvestCache = c = new Parsed<>(l, BlockMatch.parse(l));
+        return c.value().test(s);
+    }
+
+    public static boolean extraFoliage(BlockState s) {
+        List<? extends String> l = or(FOLIAGE::get, List.of());
+        if (l.isEmpty()) return false;
+        var c = foliageCache;
+        if (!fresh(c, l)) foliageCache = c = new Parsed<>(l, BlockMatch.parse(l));
+        return c.value().test(s);
+    }
+
+    public static boolean extraCrop(BlockState s) {
+        List<? extends String> l = or(CROPS::get, List.of());
+        if (l.isEmpty()) return false;
+        var c = cropsCache;
+        if (!fresh(c, l)) cropsCache = c = new Parsed<>(l, BlockMatch.parse(l));
+        return c.value().test(s);
+    }
+
 }

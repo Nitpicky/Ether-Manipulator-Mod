@@ -26,13 +26,15 @@ public class EtherMod {
         ModItems.register(modEventBus);
         ModEntities.register(modEventBus);
         com.ethermod.loot.ModLoot.register(modEventBus);
-        com.ethermod.registry.ModParticles.register(modEventBus);
         ModCreativeTabs.register(modEventBus);
         com.ethermod.advancement.ManipulatorTrigger.register(modEventBus);
         ModAttachments.register(modEventBus);
 
         // Register network payloads via mod event bus
         modEventBus.addListener(ModEvents::onRegisterPayloads);
+        // parsed config lists are rebuilt after the server config loads or changes
+        modEventBus.addListener(net.neoforged.fml.event.config.ModConfigEvent.Loading.class, com.ethermod.config.ServerConfig::onConfig);
+        modEventBus.addListener(net.neoforged.fml.event.config.ModConfigEvent.Reloading.class, com.ethermod.config.ServerConfig::onConfig);
         modEventBus.addListener(com.ethermod.trait.TraitLines::onNewRegistry);
 
         // Register server-side game events (NeoForge bus)

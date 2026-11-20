@@ -40,7 +40,7 @@ public final class SoulBolt extends SmallFireball {
                 || !(getOwner() instanceof SoulBlazeling pet)) return;
         var owner = pet.summoner();
         if (owner == null || !pet.validTarget(owner, target)) return;
-        com.ethermod.trait.RedesignEffects.soulBurn(target, owner, 5);
+        com.ethermod.trait.Burning.soulBurn(target, owner, 5);
         // Vanilla five-damage hit and enchantment hooks, attributed to the summoning player.
         setOwner(owner);
         try {

@@ -19,6 +19,7 @@ public final class ModSounds {
     public static final SoundEvent SHOT_AMETHYST_BLOCK_CHIME = a("shot/block.amethyst_block.chime");
     public static final SoundEvent SHOT_BEACON_POWER_SELECT = a("shot/block.beacon.power_select");
     public static final SoundEvent SHOT_BREEZE_SHOOT = a("shot/entity.breeze.shoot");
+    public static final SoundEvent SHOT_BUBBLE_COLUMN_BUBBLE_POP = a("shot/block.bubble_column.bubble_pop");
     public static final SoundEvent SHOT_BUCKET_FILL = a("shot/item.bucket.fill");
     public static final SoundEvent SHOT_BUCKET_FILL_LAVA = a("shot/item.bucket.fill_lava");
     public static final SoundEvent SHOT_COPPER_BULB_TURN_ON = a("shot/block.copper_bulb.turn_on");
@@ -52,17 +53,20 @@ public final class ModSounds {
     public static final SoundEvent WORLD_BREEZE_INHALE = a("world/entity.breeze.inhale");
     public static final SoundEvent WORLD_BREEZE_JUMP = a("world/entity.breeze.jump");
     public static final SoundEvent WORLD_BREEZE_SHOOT = a("world/entity.breeze.shoot");
+    public static final SoundEvent WORLD_BUBBLE_COLUMN_BUBBLE_POP = a("world/block.bubble_column.bubble_pop");
     public static final SoundEvent WORLD_BUCKET_EMPTY = a("world/item.bucket.empty");
     public static final SoundEvent WORLD_BUCKET_EMPTY_LAVA = a("world/item.bucket.empty_lava");
     public static final SoundEvent WORLD_BUCKET_FILL = a("world/item.bucket.fill");
     public static final SoundEvent WORLD_BUCKET_FILL_LAVA = a("world/item.bucket.fill_lava");
     public static final SoundEvent WORLD_CHAIN_HIT = a("world/block.chain.hit");
     public static final SoundEvent WORLD_CHAIN_PLACE = a("world/block.chain.place");
+    public static final SoundEvent WORLD_CHORUS_FRUIT_TELEPORT = a("world/item.chorus_fruit.teleport");
     public static final SoundEvent WORLD_CROP_PLANTED = a("world/item.crop.plant");
     public static final SoundEvent WORLD_CROSSBOW_SHOOT = a("world/item.crossbow.shoot");
     public static final SoundEvent WORLD_DEEPSLATE_BREAK = a("world/block.deepslate.break");
     public static final SoundEvent WORLD_DISPENSER_FAIL = a("world/block.dispenser.fail");
     public static final SoundEvent WORLD_ENDERMAN_TELEPORT = a("world/entity.enderman.teleport");
+    public static final SoundEvent WORLD_END_PORTAL_FRAME_FILL = a("world/block.end_portal_frame.fill");
     public static final SoundEvent WORLD_FIRECHARGE_USE = a("world/item.firecharge.use");
     public static final SoundEvent WORLD_FIRE_EXTINGUISH = a("world/block.fire.extinguish");
     public static final SoundEvent WORLD_FISHING_BOBBER_RETRIEVE = a("world/entity.fishing_bobber.retrieve");
@@ -83,12 +87,14 @@ public final class ModSounds {
     public static final SoundEvent WORLD_PLAYER_ATTACK_SWEEP = a("world/entity.player.attack.sweep");
     public static final SoundEvent WORLD_PLAYER_SPLASH = a("world/entity.player.splash");
     public static final SoundEvent WORLD_PLAYER_SPLASH_HIGH_SPEED = a("world/entity.player.splash.high_speed");
+    public static final SoundEvent WORLD_PORTAL_TRIGGER = a("world/block.portal.trigger");
     public static final SoundEvent WORLD_PUFFER_FISH_BLOW_OUT = a("world/entity.puffer_fish.blow_out");
     public static final SoundEvent WORLD_SHEEP_SHEAR = a("world/entity.sheep.shear");
     public static final SoundEvent WORLD_SHOVEL_FLATTEN = a("world/item.shovel.flatten");
     public static final SoundEvent WORLD_SLIME_ATTACK = a("world/entity.slime.attack");
-    public static final SoundEvent WORLD_TOTEM_USE = a("world/item.totem.use");
-    public static final SoundEvent WORLD_WIND_CHARGE_BURST = a("world/entity.wind_charge.wind_burst");
     // Stasis (Pneumatic): a ding that speeds up, a low ring on release
     public static final SoundEvent WORLD_STASIS_DING = a("world/stasis.ding");
+    public static final SoundEvent WORLD_SWEET_BERRY_BUSH_PICK_BERRIES = a("world/block.sweet_berry_bush.pick_berries");
+    public static final SoundEvent WORLD_TOTEM_USE = a("world/item.totem.use");
+    public static final SoundEvent WORLD_WIND_CHARGE_BURST = a("world/entity.wind_charge.wind_burst");
 }

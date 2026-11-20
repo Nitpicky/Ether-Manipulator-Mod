@@ -13,15 +13,48 @@ import java.util.Map;
 
 /**
  * The Enchanted Gemstones' glint: vanilla's item glint (same scroll, same additive blend), drawn
- * with the mod's own grey glint texture tinted to the gem's Module colour.
+ * with a grey copy of the vanilla glint tinted to the gem's Module colour.
  */
 public final class GemGlint extends RenderType {
     private GemGlint(String n, VertexFormat f, VertexFormat.Mode m, int s, boolean a, boolean b, Runnable u, Runnable c) {
         super(n, f, m, s, a, b, u, c);
     }
 
+    /**
+     * A grey copy of the vanilla item glint (or a resource pack's), made at runtime from the
+     * game's own texture on every resource reload, then tinted per gem. Nothing is shipped.
+     */
     private static final ResourceLocation TEXTURE =
-            ResourceLocation.fromNamespaceAndPath("ethermod", "textures/misc/gem_glint.png");
+            ResourceLocation.fromNamespaceAndPath("ethermod", "dynamic/gem_glint");
+
+    private static final ResourceLocation VANILLA =
+            ResourceLocation.withDefaultNamespace("textures/misc/enchanted_glint_item.png");
+
+    /** Rebuilds the grey glint from the current vanilla one (called on resource reload). */
+    public static void rebuildTexture(net.minecraft.server.packs.resources.ResourceManager rm) {
+        try (var in = rm.open(VANILLA)) {
+            var img = com.mojang.blaze3d.platform.NativeImage.read(in);
+            int w = img.getWidth(), h = img.getHeight(), max = 1;
+            int[] lum = new int[w * h];
+            for (int y = 0; y < h; y++)
+                for (int x = 0; x < w; x++) {
+                    int c = img.getPixelRGBA(x, y);
+                    int l = ((c & 255) + ((c >> 8) & 255) + ((c >> 16) & 255)) / 3;
+                    lum[y * w + x] = l;
+                    max = Math.max(max, l);
+                }
+            for (int y = 0; y < h; y++)
+                for (int x = 0; x < w; x++) {
+                    int l = Math.min(255, lum[y * w + x] * 255 / max);
+                    img.setPixelRGBA(x, y, 0xFF000000 | l << 16 | l << 8 | l);
+                }
+            net.minecraft.client.Minecraft.getInstance()
+                    .getTextureManager()
+                    .register(TEXTURE, new net.minecraft.client.renderer.texture.DynamicTexture(img));
+        } catch (Exception e) {
+            com.ethermod.EtherMod.LOGGER.warn("Could not build the gem glint", e);
+        }
+    }
 
     /** Gem id -> Module colour (ui/screen.json), lifted a little so dark hues still shine. */
     private static final Map<String, Integer> COLOURS =
@@ -35,6 +68,17 @@ public final class GemGlint extends RenderType {
                     "oculite", 0x9520E9);
 
     private static final Map<String, RenderType> TYPES = new HashMap<>();
+
+    /**
+     * Every gem's glint type, for the fixed render buffers (RegisterRenderBuffersEvent): a glint
+     * must be drawn after the item it lies on (it depth-tests EQUAL), which only the fixed
+     * buffers guarantee; a shared buffer can flush it before the item and it never shows.
+     */
+    public static java.util.List<RenderType> all() {
+        var out = new java.util.ArrayList<RenderType>();
+        COLOURS.forEach((gem, c) -> out.add(TYPES.computeIfAbsent(gem, k -> make(k, c))));
+        return out;
+    }
 
     /** The current item being drawn (set around ItemRenderer.render). */
     public static ItemStack current = ItemStack.EMPTY;

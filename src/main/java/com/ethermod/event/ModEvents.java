@@ -42,6 +42,10 @@ public class ModEvents {
         NeoForge.EVENT_BUS.register(RedesignCommands.class);
         NeoForge.EVENT_BUS.register(com.ethermod.trait.TraitEffects.class);
         NeoForge.EVENT_BUS.register(com.ethermod.trait.RedesignEffects.class);
+        NeoForge.EVENT_BUS.register(com.ethermod.trait.TankReload.class);
+        NeoForge.EVENT_BUS.register(com.ethermod.trait.VirtualHand.class);
+        NeoForge.EVENT_BUS.register(com.ethermod.trait.Stasis.class);
+        NeoForge.EVENT_BUS.register(com.ethermod.trait.Burning.class);
         NeoForge.EVENT_BUS.register(com.ethermod.trait.MovementPhysics.class);
         NeoForge.EVENT_BUS.register(com.ethermod.trait.GustMotion.class);
         NeoForge.EVENT_BUS.register(com.ethermod.advancement.SecretAdvancements.class);
@@ -53,6 +57,7 @@ public class ModEvents {
         NeoForge.EVENT_BUS.register(com.ethermod.trait.PendingReverts.class);
         NeoForge.EVENT_BUS.register(com.ethermod.trait.RapidsCurrents.class);
         NeoForge.EVENT_BUS.register(com.ethermod.trait.MobilityEffects.class);
+        NeoForge.EVENT_BUS.register(VirtualHandGuard.class);
     }
 
     /**
@@ -97,6 +102,11 @@ public class ModEvents {
     public static void showBeam(ServerPlayer player, boolean on) {
         PacketDistributor.sendToPlayersTrackingEntity(
                 player, new BeamStatePayload(player.getId(), on));
+    }
+
+    @SubscribeEvent
+    public static void resetVeil(net.neoforged.neoforge.event.tick.ServerTickEvent.Pre event) {
+        com.ethermod.manipulator.ManipulatorVeil.reset();
     }
 
     @SubscribeEvent
@@ -185,6 +195,7 @@ public class ModEvents {
     @SubscribeEvent
     public static void onChangeDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
         if (event.getEntity() instanceof ServerPlayer sp) {
+            com.ethermod.beam.LeftClick.changedLevel(sp, sp.server.getLevel(event.getFrom()));
             com.ethermod.beam.MassDriver.release(sp, false);
             com.ethermod.trait.MovementPhysics.setGravity(sp, net.minecraft.core.Direction.DOWN);
             Manipulator.sync(sp);
@@ -215,11 +226,21 @@ public class ModEvents {
         beamActivePlayers.remove(event.getEntity().getUUID());
         restingBeams.remove(event.getEntity().getUUID());
         com.ethermod.trait.TraitRules.forget(event.getEntity().getUUID());
+        com.ethermod.beam.DryFire.forget(event.getEntity().getUUID());
+        com.ethermod.advancement.SecretAdvancements.forget(event.getEntity().getUUID());
+        com.ethermod.trait.Ziplines.forget(event.getEntity().getUUID());
+        com.ethermod.beam.OrbTether.forget(event.getEntity().getUUID());
+        com.ethermod.trait.PhotonicGlowSync.forget(event.getEntity().getUUID());
+        // held movement keys live in memory only; older versions saved them with the player
+        com.ethermod.trait.MovementPhysics.forgetInput(event.getEntity().getUUID());
+        event.getEntity().getPersistentData().remove("mm_motion");
     }
 
     /** A player who comes into view mid-beam should see it too. */
     @SubscribeEvent
     public static void onStartTracking(PlayerEvent.StartTracking event) {
+        if (event.getTarget() instanceof ServerPlayer t && event.getEntity() instanceof ServerPlayer w)
+            com.ethermod.trait.PhotonicGlowSync.startTracking(t, w);
         if (event.getTarget() instanceof ServerPlayer p
                 && event.getEntity() instanceof ServerPlayer watcher)
             PacketDistributor.sendToPlayer(
@@ -227,10 +248,14 @@ public class ModEvents {
                     new com.ethermod.network.payload.ModulePayloads.Gravity(
                             p.getId(),
                             com.ethermod.trait.MovementPhysics.down(p).get3DDataValue()));
+        // always say whether the beam is on, so a watcher that kept a stale "on" (it missed the
+        // stop while out of range) clears the beam and its hum
         if (event.getTarget() instanceof ServerPlayer target
-                && event.getEntity() instanceof ServerPlayer watcher
-                && beamActivePlayers.containsKey(target.getUUID())) {
-            PacketDistributor.sendToPlayer(watcher, new BeamStatePayload(target.getId(), true));
+                && event.getEntity() instanceof ServerPlayer watcher) {
+            PacketDistributor.sendToPlayer(
+                    watcher,
+                    new BeamStatePayload(
+                            target.getId(), beamActivePlayers.containsKey(target.getUUID())));
         }
     }
 
@@ -240,7 +265,14 @@ public class ModEvents {
         beamActivePlayers.clear();
         restingBeams.clear();
         com.ethermod.trait.TraitRules.clear();
+        com.ethermod.trait.PhotonicGlowSync.clear();
         MiningDamageTracker.clear();
+        com.ethermod.util.Protect.clear();
+        com.ethermod.beam.DryFire.clear();
+        com.ethermod.advancement.SecretAdvancements.clear();
+        com.ethermod.trait.MovementPhysics.clearInputs();
+        com.ethermod.util.MobMemory.clear();
+        com.ethermod.beam.OrbTether.clear();
     }
 
     public static void onRegisterPayloads(RegisterPayloadHandlersEvent event) {

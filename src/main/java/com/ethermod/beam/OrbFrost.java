@@ -1,7 +1,7 @@
 package com.ethermod.beam;
 
 import com.ethermod.item.OrbMode;
-import com.ethermod.trait.WorldEffects;
+import com.ethermod.trait.TempBlocks;
 import com.ethermod.util.FoliageHelper;
 
 import net.minecraft.core.BlockPos;
@@ -23,7 +23,7 @@ final class OrbFrost {
     /**
      * Charged Frost: lays a 1-wide ice bridge (3-wide with Glacier) one block under the shard's
      * flight, so a level shot makes a walkable path at your feet's height. 8 blocks at phase 2, 16
-     * at phase 3. The ice cracks and melts back after {@link #BRIDGE_TICKS}.
+     * at phase 3. The ice cracks and melts back after the frost time (server config).
      */
     static void frostBridge(BeamBallEntity b, Vec3 from, Vec3 movement) {
         if (b.getMode() != OrbMode.FROST || b.getPhase() == 0 || !com.ethermod.config.ServerConfig.waterAndFrost()) return;
@@ -59,19 +59,14 @@ final class OrbFrost {
             if (!b.bridgeSeen.add(q.asLong()) || !b.mayBuild(q)) continue;
             if (b.getOwner() != null && b.getOwner().getBoundingBox().intersects(new AABB(q)))
                 continue;
-            if (WorldEffects.tempBlock(
+            if (TempBlocks.tempBlock(
                     sl, q, Blocks.PACKED_ICE.defaultBlockState(), OrbFrost.bridgeTicks(b), true))
-                WorldEffects.markBridge(sl, q, b.getUUID());
+                TempBlocks.markBridge(sl, q, b.getUUID());
         }
     }
 
     /** Frost bridges last 3x longer with Glacier (10s, 30s with it). */
     static int bridgeTicks(BeamBallEntity b) {
         return com.ethermod.config.ServerConfig.frostTicks() * (b.has("hydraulic.glacier") ? 3 : 1);
-    }
-
-    /** Permafrost: Frost ice never cracks while someone stands on it. */
-    static boolean permafrost(BeamBallEntity b) {
-        return true;
     }
 }

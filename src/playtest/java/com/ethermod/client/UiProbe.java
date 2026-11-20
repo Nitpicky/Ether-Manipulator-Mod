@@ -40,6 +40,19 @@ public final class UiProbe {
         }
     }
 
+    /**
+     * Sets a pick and fails loudly if it is not a real choice for that tier. An invalid id is
+     * silently dropped by TraitChoices.resolve (and blanks the tiers above it), so a setup with a
+     * typo or retired id would otherwise test fewer traits than it claims.
+     */
+    static void setPickChecked(
+            net.minecraft.world.item.ItemStack st, int slot, int tier, String id) {
+        String module = id.substring(0, Math.max(0, id.indexOf('.')));
+        if (!id.isEmpty() && !TraitChoices.accepts(module, tier, id)) // "" clears the pick
+            check("Setup pick is a real choice: " + id + " (tier " + tier + ")", false);
+        TraitBuild.setPick(st, slot, tier, id);
+    }
+
     static void check(String name, boolean ok) {
         String line = (ok ? "PASS " : "FAIL ") + name;
         report.add(line);
@@ -73,6 +86,7 @@ public final class UiProbe {
     }
 
     public static void step(Minecraft mc) {
+        if (Boolean.getBoolean("ethermod.kGifs")) { KGifTour.step(mc); return; }
         if (Boolean.getBoolean("ethermod.hoverScreenshots")) { HoverScreenshotTour.step(mc); return; }
         if (Boolean.getBoolean("ethermod.pairScreenshots")) { PairScreenshotTour.step(mc); return; }
         tick++;
@@ -93,9 +107,9 @@ public final class UiProbe {
                                         for (int slot = 0; slot < 3; slot++)
                                             TraitBuild.setLine(st, slot, null);
                                         TraitBuild.setLine(st, 0, Traits.PYROTECHNIC);
-                                        TraitBuild.setPick(st, 0, 0, "pyrotechnic.crucible");
-                                        TraitBuild.setPick(st, 0, 1, "pyrotechnic.flashover");
-                                        TraitBuild.setPick(st, 0, 2, "pyrotechnic.soulwake");
+                                        setPickChecked(st, 0, 0, "pyrotechnic.crucible");
+                                        setPickChecked(st, 0, 1, "pyrotechnic.flashover");
+                                        setPickChecked(st, 0, 2, "pyrotechnic.soulwake");
                                         OrbMode.set(st, OrbMode.IGNITE);
                                         OrbMode.setTank(st, 40);
                                         Manipulator.setSummoned(p, true);
@@ -167,17 +181,17 @@ public final class UiProbe {
                                         ModuleUnlocks.unlock(st, line.getKey());
                                     for (int i = 0; i < 3; i++) TraitBuild.setLine(st, i, null);
                                     TraitBuild.setLine(st, 0, Traits.GRAVITIC);
-                                    TraitBuild.setPick(st, 0, 0, "gravitic.gravity_shift");
-                                    TraitBuild.setPick(st, 0, 1, "gravitic.skyhook");
-                                    TraitBuild.setPick(st, 0, 2, "gravitic.airwalk");
+                                    setPickChecked(st, 0, 0, "gravitic.gravity_shift");
+                                    setPickChecked(st, 0, 1, "gravitic.skyhook");
+                                    setPickChecked(st, 0, 2, "gravitic.airwalk");
                                     TraitBuild.setLine(st, 1, Traits.PNEUMATIC);
-                                    TraitBuild.setPick(st, 1, 0, "pneumatic.updraft");
-                                    TraitBuild.setPick(st, 1, 1, "pneumatic.bunny_hop");
-                                    TraitBuild.setPick(st, 1, 2, "pneumatic.cyclone");
+                                    setPickChecked(st, 1, 0, "pneumatic.gale_force");
+                                    setPickChecked(st, 1, 1, "pneumatic.bunny_hop");
+                                    setPickChecked(st, 1, 2, "pneumatic.cyclone");
                                     TraitBuild.setLine(st, 2, Traits.PHOTONIC);
-                                    TraitBuild.setPick(st, 2, 0, "photonic.prism");
-                                    TraitBuild.setPick(st, 2, 1, "photonic.radiance");
-                                    TraitBuild.setPick(st, 2, 2, "photonic.constellation");
+                                    setPickChecked(st, 2, 0, "photonic.radiance");
+                                    setPickChecked(st, 2, 1, "photonic.daybreak");
+                                    setPickChecked(st, 2, 2, "photonic.constellation");
                                     OrbMode.set(st, OrbMode.TETHER);
                                     p.getServer().getPlayerList().op(p.getGameProfile());
                                     p.setHealth(p.getMaxHealth());
@@ -292,6 +306,10 @@ public final class UiProbe {
                                 for (int slot = 0; slot < 3; slot++)
                                     TraitBuild.setLine(st, slot, null);
                                 check(
+                                        "Client SideHooks installed (common code reaches client code)",
+                                        com.ethermod.SideHooks.get().getClass()
+                                                != com.ethermod.SideHooks.class);
+                                check(
                                         "Nine Module definitions (Mechatronic shelved)",
                                         TraitLines.all(p.registryAccess()).size() == 9);
                                 check(
@@ -313,21 +331,21 @@ public final class UiProbe {
                                 check(
                                         "Common follows prior choice",
                                         Traits.hasCommon(st, Traits.HYDRAULIC, 0));
-                                TraitBuild.setPick(st, 0, 0, "");
+                                setPickChecked(st, 0, 0, "");
                                 check(
                                         "Common inactive without choice",
                                         !Traits.hasCommon(st, Traits.HYDRAULIC, 0));
-                                TraitBuild.setPick(st, 0, 0, "hydraulic.reservoir");
+                                setPickChecked(st, 0, 0, "hydraulic.reservoir");
                                 OrbMode.setTank(st, 3);
                                 OrbMode.set(st, OrbMode.FROST);
                                 check("Mode switch retains tank", OrbMode.tank(st) == 3);
                                 TraitBuild.setLine(st, 0, null);
                                 TraitBuild.setLine(st, 0, Traits.HYDRAULIC);
                                 check("Module switch retains tank", OrbMode.tank(st) == 3);
-                                TraitBuild.setPick(st, 0, 0, "hydraulic.reservoir");
+                                setPickChecked(st, 0, 0, "hydraulic.reservoir");
                                 check(
                                         "Reload waits 15s at Prototype",
-                                        com.ethermod.trait.RedesignEffects.reloadDelay(new net.minecraft.world.item.ItemStack(com.ethermod.registry.ModItems.ETHER_MANIPULATOR.get())) == 300);
+                                        com.ethermod.trait.TankReload.reloadDelay(new net.minecraft.world.item.ItemStack(com.ethermod.registry.ModItems.ETHER_MANIPULATOR.get())) == 300);
                                 TraitRules.equip(p, 1, Traits.PYROTECHNIC);
                                 TraitRules.pick(p, 1, 0, 1);
                                 check("Crucible grows the shared tank", OrbMode.capacity(st) == 10);
@@ -350,8 +368,8 @@ public final class UiProbe {
                                 check("Vacuum removed", !OrbMode.VACUUM.isUnlocked(st));
                                 check(
                                         "No Tier scaling",
-                                        Traits.rankOfTier(st, 0) == 1
-                                                && Traits.rankOfTier(st, 1) == 1);
+                                        // at the top stage a pick is still rank 1 at most
+                                        Traits.rank(st, "hydraulic.reservoir") <= 1);
                                 Manipulator.setSummoned(p, true);
                                 Manipulator.sync(p);
                             });
@@ -366,7 +384,7 @@ public final class UiProbe {
                                 var sl = p.serverLevel();
                                 var st = Manipulator.stack(p);
                                 TraitBuild.setLine(st, 0, Traits.GRAVITIC);
-                                TraitBuild.setPick(st, 0, 0, "gravitic.gravity_shift");
+                                setPickChecked(st, 0, 0, "gravitic.gravity_shift");
                                 MovementPhysics.setGravity(p, net.minecraft.core.Direction.EAST);
                                 check(
                                         "Gravity changes player bounds",
@@ -396,18 +414,18 @@ public final class UiProbe {
                                         net.minecraft.world.entity.EntityType.ZOMBIE.create(sl);
                                 zombie.setPos(p.position().add(0, 0, 3));
                                 sl.addFreshEntity(zombie);
-                                RedesignEffects.stasis(zombie, 20);
-                                RedesignEffects.impulse(
+                                Stasis.stasis(zombie, 20);
+                                Stasis.impulse(
                                         zombie, new net.minecraft.world.phys.Vec3(1, 0, 0));
-                                RedesignEffects.impulse(
+                                Stasis.impulse(
                                         zombie, new net.minecraft.world.phys.Vec3(0, 0, 2));
                                 check(
                                         "Stasis accumulates force",
-                                        zombie.getPersistentData().getDouble("mm_stasis_force")
-                                                == RedesignEffects.STASIS_MAX);
+                                        com.ethermod.util.MobMemory.peek(zombie).getDouble("mm_stasis_force")
+                                                == Stasis.STASIS_MAX);
                                 check(
                                         "Stasis last impulse sets direction",
-                                        zombie.getPersistentData().getDouble("mm_stasis_z") == 1);
+                                        com.ethermod.util.MobMemory.peek(zombie).getDouble("mm_stasis_z") == 1);
                                 var decoy =
                                         com.ethermod.registry.ModEntities.LIGHT_DECOY
                                                 .get()
@@ -431,20 +449,20 @@ public final class UiProbe {
                                         pocket.east(),
                                         net.minecraft.world.level.block.Blocks.WATER
                                                 .defaultBlockState());
-                                WorldEffects.tempBlock(
+                                TempBlocks.tempBlock(
                                         sl,
                                         pocket,
                                         net.minecraft.world.level.block.Blocks.AIR
                                                 .defaultBlockState(),
                                         400);
-                                WorldEffects.schedule(
+                                Scheduler.schedule(
                                         sl,
                                         30,
                                         () ->
                                                 check(
                                                         "Diving Bell blocks water entry",
                                                         sl.getBlockState(pocket).isAir()
-                                                                && WorldEffects.isAirPocket(
+                                                                && TempBlocks.isAirPocket(
                                                                         sl, pocket)));
                                 var currentCell = p.blockPosition().offset(-9, 3, 0);
                                 sl.setBlockAndUpdate(
@@ -470,7 +488,7 @@ public final class UiProbe {
                                 check(
                                         "Rapids preserves water blocks",
                                         sl.getBlockState(currentCell).equals(originalWater));
-                                WorldEffects.schedule(
+                                Scheduler.schedule(
                                         sl,
                                         101,
                                         () ->
@@ -507,8 +525,8 @@ public final class UiProbe {
                                 p.setPos(saved);
                                 // A sustained source effect, not an entity-hit-only impulse.
                                 TraitBuild.setLine(st, 0, Traits.HYDRAULIC);
-                                TraitBuild.setPick(st, 0, 0, "hydraulic.reservoir");
-                                TraitBuild.setPick(st, 0, 1, "hydraulic.geyser");
+                                setPickChecked(st, 0, 0, "hydraulic.reservoir");
+                                setPickChecked(st, 0, 1, "hydraulic.rapids");
                                 var water = p.blockPosition().offset(9, 4, 0);
                                 sl.setBlockAndUpdate(
                                         water.below(),
@@ -534,7 +552,7 @@ public final class UiProbe {
                                 waterShot.setPos(net.minecraft.world.phys.Vec3.atCenterOf(water));
                                 com.ethermod.beam.ProjectileEffects.waterImpact(
                                         waterShot, st.copy(), waterShot.position());
-                                WorldEffects.schedule(
+                                Scheduler.schedule(
                                         sl,
                                         4,
                                         () ->
@@ -550,6 +568,32 @@ public final class UiProbe {
                                                                 "hydraulic.glacier"),
                                                         1)
                                                 .equals("hydraulic.glacier"));
+                                {
+                                    // Stasis keeps the creature's own flags on it, so a save
+                                    // mid-stasis can't leave it floating forever
+                                    var stasisPig = net.minecraft.world.entity.EntityType.PIG.create(sl);
+                                    stasisPig.setPos(p.position().add(0, 0, 6));
+                                    sl.addFreshEntity(stasisPig);
+                                    Stasis.stasis(stasisPig, 40);
+                                    boolean stasisSaved =
+                                            stasisPig.getPersistentData().contains("mm_stasis_restore");
+                                    Stasis.thaw(stasisPig);
+                                    check(
+                                            "Stasis saves and restores the creature's own flags",
+                                            stasisSaved
+                                                    && !stasisPig.getPersistentData()
+                                                            .contains("mm_stasis_restore")
+                                                    && !stasisPig.isNoGravity()
+                                                    && !stasisPig.isNoAi());
+                                    stasisPig.discard();
+                                    var otherPlayer =
+                                            net.neoforged.neoforge.common.util.FakePlayerFactory
+                                                    .getMinecraft(sl);
+                                    check(
+                                            "Other players are no enemies while hurt_players is off",
+                                            com.ethermod.config.ServerConfig.hurtPlayers()
+                                                    || !Allegiance.enemy(p, otherPlayer));
+                                }
                                 var stone = p.blockPosition().offset(0, 1, 4);
                                 sl.setBlockAndUpdate(
                                         stone,
@@ -581,9 +625,9 @@ public final class UiProbe {
                                                         .size()
                                                 == 1);
                                 TraitBuild.setLine(st, 0, Traits.BOTANIC);
-                                TraitBuild.setPick(st, 0, 0, "botanic.seedbank");
-                                TraitBuild.setPick(st, 0, 1, "botanic.sower");
-                                TraitBuild.setPick(st, 0, 2, "botanic.regrowth");
+                                setPickChecked(st, 0, 0, "botanic.seedbank");
+                                setPickChecked(st, 0, 1, "botanic.groundskeeper");
+                                setPickChecked(st, 0, 2, "botanic.bountiful");
                                 var crop = p.blockPosition().offset(-2, 0, 2);
                                 sl.setBlockAndUpdate(
                                         crop.below(),
@@ -598,7 +642,7 @@ public final class UiProbe {
                                                                 .AGE,
                                                         7));
                                 p.gameMode.destroyBlock(crop);
-                                WorldEffects.schedule(
+                                Scheduler.schedule(
                                         sl,
                                         3,
                                         () ->
@@ -621,9 +665,9 @@ public final class UiProbe {
                                                                                                 .AGE)
                                                                         == 0));
                                 TraitBuild.setLine(st, 0, Traits.PHOTONIC);
-                                TraitBuild.setPick(st, 0, 0, "photonic.prism");
-                                TraitBuild.setPick(st, 0, 1, "photonic.radiance");
-                                TraitBuild.setPick(st, 0, 2, "photonic.supernova");
+                                setPickChecked(st, 0, 0, "photonic.radiance");
+                                setPickChecked(st, 0, 1, "photonic.daybreak");
+                                setPickChecked(st, 0, 2, "photonic.supernova");
                                 var light =
                                         new com.ethermod.beam.BeamBallEntity(
                                                 sl,
@@ -633,7 +677,7 @@ public final class UiProbe {
                                                 OrbMode.LIGHT);
                                 light.configure(st);
                                 light.setPos(p.position());
-                                p.getPersistentData().remove("mm_radiance_next");
+                                com.ethermod.util.MobMemory.of(p).remove("mm_radiance_next");
                                 p.setHealth(10);
                                 com.ethermod.beam.PhotonicEffects.flight(light, st);
                                 float healed = p.getHealth();
@@ -641,14 +685,14 @@ public final class UiProbe {
                                 com.ethermod.beam.PhotonicEffects.flight(light, st);
                                 check("Radiance overlap does not stack", p.getHealth() == healed);
                                 TraitBuild.setLine(st, 0, Traits.PYROTECHNIC);
-                                TraitBuild.setPick(st, 0, 0, "pyrotechnic.crucible");
-                                TraitBuild.setPick(st, 0, 1, "pyrotechnic.flashover");
-                                TraitBuild.setPick(st, 0, 2, "pyrotechnic.soulwake");
+                                setPickChecked(st, 0, 0, "pyrotechnic.crucible");
+                                setPickChecked(st, 0, 1, "pyrotechnic.flashover");
+                                setPickChecked(st, 0, 2, "pyrotechnic.soulwake");
                                 var victim =
                                         net.minecraft.world.entity.EntityType.ZOMBIE.create(sl);
                                 victim.setPos(p.position().add(0, 0, -3));
                                 sl.addFreshEntity(victim);
-                                RedesignEffects.burn(victim, p, 5, 0);
+                                Burning.burn(victim, p, 5, 0);
                                 victim.hurt(sl.damageSources().playerAttack(p), 1000);
                                 var pets =
                                         sl.getEntitiesOfClass(
@@ -668,7 +712,7 @@ public final class UiProbe {
                                         "Blazeling cannot target owner or summons",
                                         !pet.validTarget(p, p)
                                                 && !pet.validTarget(p, pet)
-                                                && RedesignEffects.ally(p, pet));
+                                                && Allegiance.ally(p, pet));
                                 var boltTarget =
                                         net.minecraft.world.entity.EntityType.ZOMBIE.create(sl);
                                 boltTarget.setNoAi(true);
@@ -704,15 +748,11 @@ public final class UiProbe {
                                             boltTarget.getHealth() < 20
                                                     && boltTarget.getHealth() > 14
                                                     && boltTarget.isOnFire()
-                                                    && boltTarget
-                                                            .getPersistentData()
-                                                            .getBoolean("mm_soul")
+                                                    && com.ethermod.trait.Burning.soul(boltTarget)
                                                     && p.getUUID()
                                                             .equals(
-                                                                    boltTarget
-                                                                            .getPersistentData()
-                                                                            .getUUID(
-                                                                                    "mm_burn_owner")));
+                                                                    com.ethermod.trait.Burning.burnOwner(
+                                                                            boltTarget)));
                                     boltTarget.invulnerableTime = 0;
                                     boltTarget.setHealth(1);
                                     var lethal =
@@ -767,7 +807,7 @@ public final class UiProbe {
                                             net.minecraft.world.entity.EntityType.ZOMBIE.create(sl);
                                     killed.setPos(p.position().add(0, 0, 5));
                                     sl.addFreshEntity(killed);
-                                    RedesignEffects.soulBurn(killed, p, 3);
+                                    Burning.soulBurn(killed, p, 3);
                                     killed.hurt(sl.damageSources().playerAttack(p), 1000);
                                 }
                                 check(
@@ -785,7 +825,7 @@ public final class UiProbe {
                                                 .defaultBlockState());
                                 check(
                                         "Soulwake terrain fire is actual soul fire",
-                                        WorldEffects.placeFire(sl, ground, p)
+                                        OwnedFire.placeFire(sl, ground, p)
                                                 && sl.getBlockState(ground)
                                                         .is(
                                                                 net.minecraft.world.level.block
@@ -797,30 +837,27 @@ public final class UiProbe {
                                 touching.setPos(
                                         net.minecraft.world.phys.Vec3.atBottomCenterOf(ground));
                                 sl.addFreshEntity(touching);
-                                WorldEffects.burnFromOwnedFire(sl, ground, touching);
+                                OwnedFire.burnFromOwnedFire(sl, ground, touching);
                                 check(
                                         "Placed soul fire attributes burns to player",
                                         touching.isOnFire()
-                                                && touching.getPersistentData()
-                                                        .getBoolean("mm_soul")
-                                                && touching.getPersistentData()
-                                                        .getUUID("mm_burn_owner")
-                                                        .equals(p.getUUID()));
+                                                && com.ethermod.trait.Burning.soul(touching)
+                                                && p.getUUID()
+                                                        .equals(com.ethermod.trait.Burning.burnOwner(touching)));
                                 var lava = ground.offset(3, 0, 0);
                                 sl.setBlockAndUpdate(
                                         lava,
                                         net.minecraft.world.level.block.Blocks.LAVA
                                                 .defaultBlockState());
-                                WorldEffects.ownLava(sl, lava, p);
+                                OwnedFire.ownLava(sl, lava, p);
                                 touching.setPos(
                                         net.minecraft.world.phys.Vec3.atBottomCenterOf(lava));
                                 touching.clearFire();
-                                WorldEffects.burnFromOwnedLava(sl, touching);
+                                OwnedFire.burnFromOwnedLava(sl, touching);
                                 check(
                                         "Player lava inflicts owned soul burn",
                                         touching.isOnFire()
-                                                && touching.getPersistentData()
-                                                        .getBoolean("mm_soul"));
+                                                && com.ethermod.trait.Burning.soul(touching));
                                 touching.discard();
                                 var ember =
                                         new com.ethermod.beam.BeamBallEntity(
@@ -945,14 +982,14 @@ public final class UiProbe {
                                 p.setPos(ownerBeforeIdle);
                                 check(
                                         "Fire expiry has no cracks but ice retains them",
-                                        !WorldEffects.showsExpiryCracks(
+                                        !TempBlocks.showsExpiryCracks(
                                                         net.minecraft.world.level.block.Blocks
                                                                 .SOUL_FIRE
                                                                 .defaultBlockState())
-                                                && !WorldEffects.showsExpiryCracks(
+                                                && !TempBlocks.showsExpiryCracks(
                                                         net.minecraft.world.level.block.Blocks.FIRE
                                                                 .defaultBlockState())
-                                                && WorldEffects.showsExpiryCracks(
+                                                && TempBlocks.showsExpiryCracks(
                                                         net.minecraft.world.level.block.Blocks.ICE
                                                                 .defaultBlockState()));
                                 var expires =
@@ -984,11 +1021,11 @@ public final class UiProbe {
                                                         == pet.getPersistentData()
                                                                 .getLong("mm_summon_expires"));
                                 TraitBuild.setLine(st, 0, Traits.KINETIC);
-                                TraitBuild.setPick(st, 0, 0, "kinetic.split");
-                                TraitBuild.setPick(st, 0, 1, "kinetic.marksman");
-                                TraitBuild.setPick(st, 0, 2, "kinetic.detonator");
+                                setPickChecked(st, 0, 0, "kinetic.split");
+                                setPickChecked(st, 0, 1, "kinetic.marksman");
+                                setPickChecked(st, 0, 2, "kinetic.detonator");
                                 TraitBuild.setLine(st, 1, Traits.HYDRAULIC);
-                                TraitBuild.setPick(st, 1, 0, "hydraulic.pressure");
+                                setPickChecked(st, 1, 0, "hydraulic.pressure");
                                 OrbMode.set(st, OrbMode.WATER);
                                 OrbMode.setTank(st, 6);
                                 var item = com.ethermod.registry.ModItems.ETHER_MANIPULATOR.get();
@@ -1015,9 +1052,9 @@ public final class UiProbe {
                                         "Seeker is a Kinetic Grandmaster choice",
                                         TraitChoices.accepts("kinetic", 2, "kinetic.seeker"));
                                 TraitBuild.setLine(st, 1, Traits.PYROTECHNIC);
-                                TraitBuild.setPick(st, 1, 0, "pyrotechnic.crucible");
+                                setPickChecked(st, 1, 0, "pyrotechnic.crucible");
                                 TraitBuild.setLine(st, 0, Traits.HYDRAULIC);
-                                TraitBuild.setPick(st, 0, 0, "hydraulic.reservoir");
+                                setPickChecked(st, 0, 0, "hydraulic.reservoir");
                                 p.getPersistentData().putInt("mm_refill_ether", 0);
                                 Manipulator.sync(p);
                             });
@@ -1044,19 +1081,19 @@ public final class UiProbe {
                                                 && OrbMode.ENERGY.shotCost(st, 2) == 1
                                                 && !OrbMode.TETHER.usesTank());
                                 TraitBuild.setLine(st, 0, Traits.HYDRAULIC);
-                                TraitBuild.setPick(st, 0, 0, "hydraulic.reservoir");
+                                setPickChecked(st, 0, 0, "hydraulic.reservoir");
                                 TraitBuild.setLine(st, 1, Traits.PYROTECHNIC);
-                                TraitBuild.setPick(st, 1, 0, "pyrotechnic.crucible");
+                                setPickChecked(st, 1, 0, "pyrotechnic.crucible");
                                 TraitBuild.setLine(st, 2, Traits.BOTANIC);
-                                TraitBuild.setPick(st, 2, 0, "botanic.seedbank");
+                                setPickChecked(st, 2, 0, "botanic.seedbank");
                                 OrbMode.setTank(st, 0);
                                 p.getPersistentData().putInt("mm_tank_last", 0);
                                 p.getPersistentData()
                                         .putInt(
                                                 "mm_refill_ether",
-                                                com.ethermod.trait.RedesignEffects.reloadDelay(st)
+                                                com.ethermod.trait.TankReload.reloadDelay(st)
                                                         - 1);
-                                WorldEffects.schedule(
+                                Scheduler.schedule(
                                         p.serverLevel(),
                                         2,
                                         () -> {
@@ -1072,7 +1109,7 @@ public final class UiProbe {
                                                     "Tank never exceeds capacity",
                                                     OrbMode.tank(over) == OrbMode.capacity(over));
                                             TraitBuild.setLine(st, 2, Traits.PNEUMATIC);
-                                            TraitBuild.setPick(st, 2, 0, "pneumatic.bellows");
+                                            setPickChecked(st, 2, 0, "pneumatic.bellows");
                                             check(
                                                     "Bellows grows the shared tank",
                                                     OrbMode.capacity(st) == 12);
@@ -1089,9 +1126,9 @@ public final class UiProbe {
                                                 .getPlayer(mc.player.getUUID());
                                 var st = Manipulator.stack(p);
                                 TraitBuild.setLine(st, 0, Traits.GRAVITIC);
-                                TraitBuild.setPick(st, 0, 0, "gravitic.gravity_shift");
-                                TraitBuild.setPick(st, 0, 1, "gravitic.skyhook");
-                                TraitBuild.setPick(st, 0, 2, "gravitic.gravity_skate");
+                                setPickChecked(st, 0, 0, "gravitic.gravity_shift");
+                                setPickChecked(st, 0, 1, "gravitic.skyhook");
+                                setPickChecked(st, 0, 2, "gravitic.airwalk");
                                 OrbMode.set(st, OrbMode.TETHER);
                                 for (var dir : net.minecraft.core.Direction.values()) {
                                     var up =
@@ -1312,7 +1349,7 @@ public final class UiProbe {
                                         p.getXRot());
                                 MovementPhysics.setGravity(p, net.minecraft.core.Direction.EAST);
                                 Manipulator.sync(p);
-                                WorldEffects.schedule(
+                                Scheduler.schedule(
                                         p.serverLevel(),
                                         5,
                                         () -> {
@@ -1341,7 +1378,7 @@ public final class UiProbe {
                                                 noCrackFire.below(),
                                                 net.minecraft.world.level.block.Blocks.STONE
                                                         .defaultBlockState());
-                                WorldEffects.tempBlock(
+                                TempBlocks.tempBlock(
                                         p.serverLevel(),
                                         noCrackFire,
                                         net.minecraft.world.level.block.Blocks.SOUL_FIRE
@@ -1559,7 +1596,7 @@ public final class UiProbe {
                         try {
                             for (int slot = 0; slot < 3; slot++) TraitBuild.setLine(st, slot, null);
                             TraitBuild.setLine(st, 0, Traits.PNEUMATIC);
-                            TraitBuild.setPick(st, 0, 0, "pneumatic.gale_force");
+                            setPickChecked(st, 0, 0, "pneumatic.gale_force");
                             mc.options.keyJump.setDown(false);
                             p.setOnGround(true);
                             p.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);

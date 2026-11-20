@@ -1,7 +1,7 @@
 package com.ethermod.item;
 
+import com.ethermod.SideHooks;
 import com.ethermod.beam.BeamBallEntity;
-import com.ethermod.client.ManipulatorClientExtensions;
 import com.ethermod.manipulator.Manipulator;
 import com.ethermod.manipulator.ManipulatorData;
 import com.ethermod.trait.TraitBuild;
@@ -19,7 +19,6 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.ItemAbility;
@@ -71,9 +70,9 @@ public class EtherManipulatorItem extends Item implements GeoItem {
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         // Keyframed prong animations, picked on the client from what the holder is doing.
         // Charge shake is part of the animations (first person) and the arm pose (third person).
-        if (FMLEnvironment.dist.isClient()) {
-            controllers.add(com.ethermod.client.ManipulatorAnimations.controller(this));
-        }
+        // (client only: a server's SideHooks has no controller)
+        var controller = SideHooks.get().manipulatorController(this);
+        if (controller != null) controllers.add(controller);
     }
 
     // =========================================================================
@@ -94,7 +93,7 @@ public class EtherManipulatorItem extends Item implements GeoItem {
         //   - getArmPose()               → BOW_AND_ARROW while beam/charge active
         //   - applyForgeHandTransform()  → snapshots hand matrix for muzzle capture
         // All three must be on the SAME registered instance.
-        consumer.accept(ManipulatorClientExtensions.INSTANCE);
+        consumer.accept(SideHooks.get().manipulatorExtensions());
     }
 
     // =========================================================================
@@ -111,9 +110,17 @@ public class EtherManipulatorItem extends Item implements GeoItem {
             return InteractionResultHolder.fail(stack);
 
         OrbMode mode = OrbMode.get(stack);
+        // Pneumatic: right click throws the Stasis Grenade (the Gust shot charges on left click)
+        if (mode == OrbMode.GUST) {
+            if (player instanceof ServerPlayer sp) com.ethermod.beam.LeftClick.throwGrenade(sp);
+            else SideHooks.get().grenadeThrow(player);
+            return InteractionResultHolder.fail(stack);
+        }
         // the projectile this tool charges on right click (Hydraulic: the ice shard)
         OrbMode shot = mode.rmbShot();
-        if (shot.usesTank() && shot.tankLevel(stack) < shot.shotCost(stack, 0)) {
+        // the tank lives on the Manipulator's own stack (synced to the client), not on the copy in
+        // hand, which can be stale on the client and let an empty tank start a charge
+        if (shot.isDry(player)) {
             if (player instanceof net.minecraft.server.level.ServerPlayer sp) com.ethermod.beam.DryFire.signal(sp);
             return InteractionResultHolder.fail(stack);
         }
@@ -140,8 +147,22 @@ public class EtherManipulatorItem extends Item implements GeoItem {
                 if (hook != null) {
                     if (com.ethermod.beam.OrbTether.press(hook, sp))
                         return InteractionResultHolder.fail(stack);
-                } else if (sp.isShiftKeyDown() || !com.ethermod.trait.Ziplines.tryRide(sp))
-                    return InteractionResultHolder.fail(stack);
+                } else {
+                    // no hook out: a double tap while gravity is shifted puts it back to normal
+                    var data = sp.getPersistentData();
+                    long now = sp.level().getGameTime();
+                    boolean shifted =
+                            com.ethermod.trait.MovementPhysics.down(sp)
+                                    != net.minecraft.core.Direction.DOWN;
+                    if (shifted && now - data.getLong("mm_tether_tap") <= com.ethermod.beam.OrbTether.DOUBLE_TAP) {
+                        data.remove("mm_tether_tap");
+                        com.ethermod.trait.MovementPhysics.setGravity(sp, net.minecraft.core.Direction.DOWN);
+                        return InteractionResultHolder.fail(stack);
+                    }
+                    data.putLong("mm_tether_tap", now);
+                    if (sp.isShiftKeyDown() || !com.ethermod.trait.Ziplines.tryRide(sp))
+                        return InteractionResultHolder.fail(stack);
+                }
             }
             // (the client can't see the Ziplines it might ride: it holds, the server decides)
         }
@@ -182,10 +203,6 @@ public class EtherManipulatorItem extends Item implements GeoItem {
         return 72000;
     }
 
-    /** Orbit: the orb circling each player right now, by player. Server-side. */
-    private static final java.util.Map<java.util.UUID, Integer> ORBITING =
-            new java.util.HashMap<>();
-
     /** Hold modes work every tick while RMB is down. No speed penalty while charging. */
     @Override
     public void onUseTick(Level level, LivingEntity entity, ItemStack stack, int remaining) {
@@ -206,10 +223,6 @@ public class EtherManipulatorItem extends Item implements GeoItem {
         movement.putDouble("mm_charge_x", sp.getX());
         movement.putDouble("mm_charge_y", sp.getY());
         movement.putDouble("mm_charge_z", sp.getZ());
-        if (mode == OrbMode.VACUUM) {
-            com.ethermod.beam.VacuumCone.tick(sp, stack, held);
-            return;
-        }
         if (mode == OrbMode.TETHER) {
             com.ethermod.trait.Ziplines.rideTick(sp);
             return;
@@ -272,7 +285,7 @@ public class EtherManipulatorItem extends Item implements GeoItem {
         fireVolley(level, player, stack, phase, mode.rmbShot());
     }
 
-    /** Fires one charged shot (or a Split / Gunner volley) of {@code mode}'s projectile. */
+    /** Fires one charged shot (or a Split volley) of {@code mode}'s projectile. */
     public static void fireVolley(
             Level level, Player player, ItemStack stack, int charged, OrbMode mode) {
         fireVolley(level, player, stack, charged, mode, false);
@@ -298,54 +311,25 @@ public class EtherManipulatorItem extends Item implements GeoItem {
             if (player instanceof ServerPlayer sp) com.ethermod.beam.DryFire.signal(sp);
             return;
         }
-        int count = Traits.has(stack, "kinetic.split") ? phase + 1 : 1;
-        int bursts = Traits.has(stack, "kinetic.gunner") ? phase + 1 : 1;
-        if (Traits.has(stack, "kinetic.orbit")
-                && level.getEntitiesOfClass(
-                                        BeamBallEntity.class,
-                                        player.getBoundingBox().inflate(4),
-                                        e -> e.getOwner() == player && e.isOrbiting())
-                                .size()
-                        >= 3) return;
+        int shots = Traits.has(stack, "kinetic.split") ? phase + 1 : 1;
         if (mode.usesTank()) {
             mode.setTankLevel(stack, mode.tankLevel(stack) - cost);
             if (player instanceof ServerPlayer sp) Manipulator.sync(sp);
         }
-        final int shots = count, rounds = bursts;
         final ItemStack launchTraits = stack.copy();
-        for (int round = 0; round < bursts; round++) {
-            final int sequence = round;
-            Runnable shot =
-                    () -> {
-                        if (!player.isAlive() || player.level() != level) return;
-                        for (int n = 0; n < shots; n++) {
-                            if (Traits.has(launchTraits, "kinetic.orbit")
-                                    && level.getEntitiesOfClass(
-                                                            BeamBallEntity.class,
-                                                            player.getBoundingBox().inflate(4),
-                                                            e ->
-                                                                    e.getOwner() == player
-                                                                            && e.isOrbiting())
-                                                    .size()
-                                            >= 3) break;
-                            var orb = spawnOrb(level, player, launchTraits, phase, mode);
-                            orb.setFiredLeft(left);
-                            orb.scaleDamage(1f / (float) (shots * rounds));
-                            if (shots > 1) orb.turn((n - (shots - 1) / 2f) * 10f);
-                            if (Traits.has(launchTraits, "kinetic.orbit")) orb.startOrbit();
-                            else if (n == 0
-                                    && sequence == 0
-                                    && mode == OrbMode.WATER
-                                    && phase == 2
-                                    && Traits.has(launchTraits, "hydraulic.tidecaller"))
-                                orb.carryOwner();
-                        }
-                        com.ethermod.beam.ShotSounds.launch(level, player, mode, phase);
-                    };
-            if (sequence == 0) shot.run();
-            else
-                com.ethermod.trait.WorldEffects.schedule(
-                        (net.minecraft.server.level.ServerLevel) level, sequence * 4, shot);
+        if (player.isAlive() && player.level() == level) {
+            for (int n = 0; n < shots; n++) {
+                var orb = spawnOrb(level, player, launchTraits, phase, mode);
+                orb.setFiredLeft(left);
+                orb.scaleDamage(1f / (float) shots);
+                if (shots > 1) orb.turn((n - (shots - 1) / 2f) * 10f);
+                if (n == 0
+                        && mode == OrbMode.WATER
+                        && phase == 2
+                        && Traits.has(launchTraits, "hydraulic.tidecaller"))
+                    orb.carryOwner();
+            }
+            com.ethermod.beam.ShotSounds.launch(level, player, mode, phase);
         }
         if (mode == OrbMode.GUST) {
             if (player.onGround() || !player.getPersistentData().getBoolean("mm_gust_boosted")) {

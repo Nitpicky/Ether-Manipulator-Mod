@@ -27,7 +27,8 @@ import java.util.List;
 /**
  * Adds an Enchanted Gemstone to a structure chest. {@code chance}: the odds for any chest. {@code
  * guarantee_in}: structures where the first chest opened in each one always holds a gem
- * ({@link GemGuarantees} remembers which structures already gave theirs). {@code hidden_chest}:
+ * ({@link GemGuarantees} remembers which structures already gave theirs; only a real player
+ * opening the chest uses it up). {@code hidden_chest}:
  * the guarantee only goes to a chest next to sticky pistons (the Jungle Pyramid's lever-puzzle
  * chest).
  */
@@ -64,7 +65,11 @@ public final class GemLootModifier extends LootModifier {
         boolean give = false;
         Vec3 origin = ctx.getParamOrNull(LootContextParams.ORIGIN);
         ServerLevel level = ctx.getLevel();
-        if (origin != null && !guaranteeIn.isEmpty() && com.ethermod.config.ServerConfig.gemInFirstChest()) {
+        // Only a real player opening the chest uses up the guarantee: loot rolled by a hopper
+        // minecart, a /loot command or a fake player (machines) only gets the normal chance
+        boolean realPlayer = ctx.getParamOrNull(LootContextParams.THIS_ENTITY) instanceof net.minecraft.server.level.ServerPlayer sp
+                && !(sp instanceof net.neoforged.neoforge.common.util.FakePlayer);
+        if (realPlayer && origin != null && !guaranteeIn.isEmpty() && com.ethermod.config.ServerConfig.gemInFirstChest()) {
             BlockPos pos = BlockPos.containing(origin);
             var structures = level.registryAccess().registryOrThrow(Registries.STRUCTURE);
             String key = null;

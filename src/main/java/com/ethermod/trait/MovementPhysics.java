@@ -194,12 +194,34 @@ public final class MovementPhysics {
                         p.getId(), Direction.DOWN.get3DDataValue(), start));
     }
 
+    /** Known held-key bits of the Motion payload: jump, sneak, sprint, forward, back, left, right. */
+    public static final int MOTION_BITS = 127;
+
+    /**
+     * Server: the movement keys each player holds (Motion payload). Kept in memory only, never in
+     * the player's saved data; cleared on logout and server stop.
+     */
+    private static final Map<UUID, Integer> MOTION = new HashMap<>();
+
     public static void input(ServerPlayer p, int flags) {
-        p.getPersistentData().putInt("mm_motion", flags);
+        flags &= MOTION_BITS;
+        if (flags == 0) MOTION.remove(p.getUUID());
+        else MOTION.put(p.getUUID(), flags);
     }
 
+    /** Forgets a player's held keys (logout). */
+    public static void forgetInput(UUID player) {
+        MOTION.remove(player);
+    }
+
+    public static void clearInputs() {
+        MOTION.clear();
+    }
+
+    /** Jump held: the client reads its own keys (ClientMobility), the server the last Motion. */
     public static boolean jump(Player p) {
-        return (p.getPersistentData().getInt("mm_motion") & 1) != 0;
+        if (p.level().isClientSide) return (p.getPersistentData().getInt("mm_motion") & 1) != 0;
+        return (MOTION.getOrDefault(p.getUUID(), 0) & 1) != 0;
     }
 
     public static AABB bounds(Player p) {
@@ -269,55 +291,6 @@ public final class MovementPhysics {
             z = Math.abs(z) <= .05 ? 0 : z - Math.copySign(.05, z);
         }
         return rotate(new Vec3(x, v.y, z), down(p));
-    }
-
-    private record Edge(long first, long last, int taps, boolean pressed) {}
-
-    private static final Map<Player, Edge> EDGES = new WeakHashMap<>();
-
-    public static Vec3 edge(Player p, Vec3 v) {
-        var st = Manipulator.stack(p);
-        if (!Traits.has(st, "gravitic.surefoot")
-                || !p.onGround()
-                || p.isPassenger()
-                || Traits.has(st, "gravitic.airwalk")
-                || p.getDeltaMovement().length() > 1.2) return v;
-        var d = vector(down(p));
-        var lateral = v.subtract(d.scale(v.dot(d)));
-        long now = p.level().getGameTime();
-        var old = EDGES.get(p);
-        boolean pressed = (p.getPersistentData().getInt("mm_motion") & 120) != 0;
-        if (lateral.lengthSqr() < 1e-6) {
-            if (old != null && now - old.last() > 6) EDGES.remove(p);
-            else if (old != null && !pressed)
-                EDGES.put(p, new Edge(old.first(), old.last(), old.taps(), false));
-            return v;
-        }
-        var at = p.position().add(lateral.normalize().scale(0.35)).add(lateral);
-        var hit =
-                p.level()
-                        .clip(
-                                new ClipContext(
-                                        at,
-                                        at.add(d.scale(4)),
-                                        ClipContext.Block.COLLIDER,
-                                        ClipContext.Fluid.NONE,
-                                        p));
-        if (hit.getType() != HitResult.Type.MISS) {
-            EDGES.remove(p);
-            return v;
-        }
-        if (!pressed) {
-            if (old != null) EDGES.put(p, new Edge(old.first(), old.last(), old.taps(), false));
-            return d.scale(v.dot(d));
-        }
-        Edge e;
-        if (old == null || now - old.last() > 6) e = new Edge(now, now, 1, true);
-        else e = new Edge(old.first(), now, old.taps() + (!old.pressed() ? 1 : 0), true);
-        EDGES.put(p, e);
-        if (now - e.first() >= 7 || e.taps() >= 2) return v;
-
-        return d.scale(v.dot(d));
     }
 
     public static Vec3 local(Player p, Vec3 world) {
@@ -417,7 +390,6 @@ public final class MovementPhysics {
                             : p.isSprinting() ? .026 : .02;
             v = v.add(wish.scale(acceleration));
         }
-        v = edge(p, v);
         Vec3 before = p.position();
         p.move(MoverType.SELF, v);
         Vec3 actual = p.position().subtract(before);
@@ -561,26 +533,29 @@ public final class MovementPhysics {
         if (p.onGround() && data.getBoolean("mm_slamming")) {
             data.remove("mm_slamming");
             double fell = Math.max(0, data.getDouble("mm_slam_peak") - height);
-            float damage = (float) Math.min(24, 4 + fell * 1.2);
-            double reach = Math.min(8, 3 + fell / 3);
+            // everything grows from almost nothing: a plain jump is a nudge, a big fall a quake
+            float damage = (float) Math.min(24, 1 + fell * 1.3);
+            double reach = Math.min(8, 2 + fell / 3);
             int phase = fell >= 10 ? 2 : fell >= 4 ? 1 : 0;
             for (var target :
                     p.serverLevel()
                             .getEntitiesOfClass(
                                     net.minecraft.world.entity.LivingEntity.class,
                                     p.getBoundingBox().inflate(reach),
-                                    e -> RedesignEffects.enemy(p, e))) {
+                                    e -> Allegiance.enemy(p, e))) {
                 double near = 1 - Math.min(1, target.distanceTo(p) / (reach + 1));
                 target.hurt(p.damageSources().playerAttack(p), damage * (float) (.5 + .5 * near));
                 // the shock throws them away and up, harder the further you fell
                 Vec3 away = target.position().subtract(p.position()).multiply(1, 0, 1);
                 if (away.lengthSqr() < 1e-4) away = p.getLookAngle().multiply(1, 0, 1);
-                double force = (.5 + fell * .08) * (.4 + .6 * near);
-                RedesignEffects.impulse(
-                        target, away.normalize().scale(Math.min(2.2, force)).add(0, .3 + Math.min(.6, fell * .03), 0));
+                double force = Math.min(2.2, .2 + fell * .09) * (.4 + .6 * near);
+                Stasis.impulse(
+                        target, away.normalize().scale(force).add(0, Math.min(.6, .08 + fell * .03), 0));
             }
-            com.ethermod.beam.ProjectileEffects.gust(
-                    p.serverLevel(), p, st, p.position(), phase, false);
+            // the gust blast (which can throw mobs into a fall) only from a real fall
+            if (fell >= 4)
+                com.ethermod.beam.ProjectileEffects.gust(
+                        p.serverLevel(), p, st, p.position(), phase, false);
             p.serverLevel()
                     .playSound(
                             null,

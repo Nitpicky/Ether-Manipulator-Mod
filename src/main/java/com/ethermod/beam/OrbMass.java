@@ -22,44 +22,6 @@ final class OrbMass {
 
     private OrbMass() {}
 
-    /** The carried block homes toward what its owner aims at. */
-    static void massSteer(BeamBallEntity b) {
-        if (b.lifeTicks < 3
-                || !(b.getOwner() instanceof ServerPlayer sp)
-                || sp.level() != b.level()) return;
-        Vec3 eye = sp.getEyePosition(), look = sp.getLookAngle();
-        Vec3 end = eye.add(look.scale(64));
-        Vec3 aim =
-                b.level()
-                        .clip(
-                                new net.minecraft.world.level.ClipContext(
-                                        eye,
-                                        end,
-                                        net.minecraft.world.level.ClipContext.Block.COLLIDER,
-                                        net.minecraft.world.level.ClipContext.Fluid.NONE,
-                                        sp))
-                        .getLocation();
-        var hit =
-                ProjectileUtil.getEntityHitResult(
-                        b.level(),
-                        sp,
-                        eye,
-                        aim,
-                        sp.getBoundingBox().expandTowards(aim.subtract(eye)).inflate(1),
-                        e ->
-                                e instanceof LivingEntity
-                                        && e.isAlive()
-                                        && !com.ethermod.beam.Mounts.own(sp, e)
-                                        && !e.isSpectator());
-        if (hit != null) aim = hit.getEntity().getBoundingBox().getCenter();
-        Vec3 v = b.getDeltaMovement();
-        double speed = Math.max(0.6, v.length());
-        Vec3 want = aim.subtract(b.position());
-        if (want.lengthSqr() < 0.01) return;
-        Vec3 nd = v.normalize().scale(0.75).add(want.normalize().scale(0.25)).normalize();
-        b.setDeltaMovement(nd.scale(speed));
-    }
-
     /** Hardness makes it hurt: dirt barely, obsidian a lot. */
     static float massDamage(BeamBallEntity b) {
         BlockState c = b.getCarried();
@@ -71,8 +33,8 @@ final class OrbMass {
     static void massHitEntity(BeamBallEntity b, Entity target, Vec3 at) {
         // one hit per creature per throw
         long now = b.level().getGameTime();
-        if (target.getPersistentData().getLong("mm_mass_hit") > now) return;
-        target.getPersistentData().putLong("mm_mass_hit", now + 10);
+        if (com.ethermod.util.MobMemory.peek(target).getLong("mm_mass_hit") > now) return;
+        com.ethermod.util.MobMemory.of(target).putLong("mm_mass_hit", now + 10);
         Vec3 v = b.getDeltaMovement();
         if (b.massGentle) {
             // Steady Hand doesn't fight: the block just drops off the creature
@@ -129,11 +91,11 @@ final class OrbMass {
         BlockState c = b.getCarried();
         BlockPos front = hitPos.relative(face);
         if (!c.isAir()
-                && b.mayBuild(front)
                 && sl.getBlockState(front).canBeReplaced()
                 && c.canSurvive(sl, front)
                 && sl.isUnobstructed(
-                        c, front, net.minecraft.world.phys.shapes.CollisionContext.empty())) {
+                        c, front, net.minecraft.world.phys.shapes.CollisionContext.empty())
+                && b.mayBuild(front)) { // the claim probe last, once the block would really go here
             sl.setBlockAndUpdate(front, c);
             restoreBe(sl, front, b);
             var sound = c.getSoundType();

@@ -3,9 +3,7 @@ package com.ethermod.trait;
 import com.ethermod.beam.BeamBallEntity;
 import com.ethermod.manipulator.Manipulator;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
@@ -30,7 +28,17 @@ public final class Ziplines {
     private static final Map<UUID, Integer> PENDING = new HashMap<>();
     private static final Map<UUID, Deque<int[]>> ROPES = new HashMap<>();
 
-    private record Ride(int a, int b) {}
+    /** speed[0]: the rider's speed along the rope (blocks per tick, signed toward b). */
+    private record Ride(int a, int b, double[] speed) {}
+
+    /** How fast a rider slides, and how quickly they reach that speed or turn around. */
+    private static final double RIDE_SPEED = 0.6, RIDE_ACCEL = 0.08;
+    /**
+     * How much of the sideways and vertical gap to the rope is closed each tick. Kept low on
+     * purpose: the server only sees the rider's position a few ticks late, and a stronger pull
+     * overshoots and swings the rider from side to side.
+     */
+    private static final double RIDE_PULL = 0.15;
 
     private static final Map<UUID, Ride> RIDES = new HashMap<>();
 
@@ -53,10 +61,6 @@ public final class Ziplines {
                 SoundSource.PLAYERS,
                 1f,
                 0.8f);
-        sp.displayClientMessage(
-                Component.translatable("message.ethermod.zipline_first")
-                        .withStyle(ChatFormatting.LIGHT_PURPLE),
-                true);
     }
 
     /** A hook just stuck: if a first end is waiting, string the rope. */
@@ -74,15 +78,13 @@ public final class Ziplines {
         double d = a.position().distanceTo(hook.position());
         if (d < 3 || d > 64) return;
         PENDING.remove(sp.getUUID());
-        int rank = Traits.rank(Manipulator.stack(sp), "gravitic.zipline");
-        int life = rank >= 2 ? 12000 : 2400;
+        int life = 2400;
         hook.makeAnchor(life, a.getId());
         a.linkAnchor(hook.getId(), life);
         Deque<int[]> list = ROPES.computeIfAbsent(sp.getUUID(), k -> new ArrayDeque<>());
         list.removeIf(pair -> !(sl.getEntity(pair[0]) instanceof BeamBallEntity e) || !e.isAlive());
         list.addLast(new int[] {a.getId(), hook.getId()});
-        int max = rank >= 2 ? 3 : 1;
-        while (list.size() > max) {
+        while (list.size() > 1) {
             int[] o = list.removeFirst();
             for (int id : o) if (sl.getEntity(id) instanceof BeamBallEntity e) e.discard();
         }
@@ -95,10 +97,6 @@ public final class Ziplines {
                 SoundSource.PLAYERS,
                 1f,
                 1.2f);
-        sp.displayClientMessage(
-                Component.translatable("message.ethermod.zipline_done")
-                        .withStyle(ChatFormatting.LIGHT_PURPLE),
-                true);
     }
 
     /** Tether pressed: ride a rope you aim at, if there is one in reach. */
@@ -125,7 +123,11 @@ public final class Ziplines {
             RIDES.remove(sp.getUUID());
             return false;
         }
-        RIDES.put(sp.getUUID(), new Ride(bestA.getId(), bestB.getId()));
+        // the rider keeps the momentum they jumped on with, along the rope only
+        Vec3 ab = bestB.position().subtract(bestA.position());
+        double along = ab.lengthSqr() > 1e-6 ? sp.getDeltaMovement().dot(ab.normalize()) : 0;
+        along = Math.max(-1.2, Math.min(1.2, along));
+        RIDES.put(sp.getUUID(), new Ride(bestA.getId(), bestB.getId(), new double[] {along}));
         sl.playSound(
                 null,
                 sp.getX(),
@@ -166,9 +168,17 @@ public final class Ziplines {
         double t = Math.max(0, Math.min(len, hands.subtract(A).dot(dir)));
         double way = Math.signum(sp.getLookAngle().dot(dir));
         if (way == 0) way = dir.y < 0 ? 1 : -1;
-        t = Math.max(0, Math.min(len, t + 0.6 * way));
-        Vec3 target = A.add(dir.scale(t)).subtract(0, 2.1, 0);
-        Vec3 v = target.subtract(sp.position());
+        // ease toward full speed the way you look, so a turn-around is a smooth stop and go
+        double[] speed = r.speed();
+        speed[0] += Math.max(-RIDE_ACCEL, Math.min(RIDE_ACCEL, RIDE_SPEED * way - speed[0]));
+        // stop at the ends instead of pushing into the hook
+        if ((t <= 0 && speed[0] < 0) || (t >= len && speed[0] > 0)) speed[0] = 0;
+        // along the rope at that speed; sideways and up/down, a soft pull back under the rope.
+        // Only the gap across the rope counts, so momentum never turns into a zig-zag, and the
+        // pull lifts by the gravity the client adds each tick so the rider doesn't sag.
+        Vec3 gap = A.add(dir.scale(t)).subtract(hands);
+        gap = gap.subtract(dir.scale(gap.dot(dir)));
+        Vec3 v = dir.scale(speed[0]).add(gap.scale(RIDE_PULL)).add(0, 0.08, 0);
         if (v.length() > 1.2) v = v.normalize().scale(1.2);
         sp.setDeltaMovement(v);
         sp.hurtMarked = true;
@@ -212,6 +222,15 @@ public final class Ziplines {
 
     private static double clamp(double v) {
         return Math.max(0, Math.min(1, v));
+    }
+
+    /**
+     * Logout: the ride ends. The half-strung first end and the rope record stay (entity ids keep
+     * while the server runs), so a quick relog can still finish the rope and a new rope still
+     * replaces the old one; both are bounded by the player count and cleared on server stop.
+     */
+    public static void forget(UUID player) {
+        RIDES.remove(player);
     }
 
     public static void clear() {

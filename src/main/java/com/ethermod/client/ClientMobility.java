@@ -100,8 +100,6 @@ public final class ClientMobility {
         }
     }
 
-    public static void onHookGone(BeamBallEntity hook) {}
-
     @SubscribeEvent
     public static void tick(ClientTickEvent.Post ev) {
         var mc = Minecraft.getInstance();
@@ -193,11 +191,6 @@ public final class ClientMobility {
                 coyote = false;
                 var v = p.getDeltaMovement();
                 p.setDeltaMovement(MovementPhysics.withUp(p, v, .42));
-            }
-            if (Traits.has(st, "pneumatic.triple_jump")) {
-                jumpChain = now - landedAt <= 5 ? (jumpChain % 3) + 1 : 1;
-                var v = p.getDeltaMovement();
-                p.setDeltaMovement(MovementPhysics.withUp(p, v, 0.42 + 0.18 * (jumpChain - 1)));
             }
         }
         // Pile Driver: Sneak on real ground charges a jump (full in 1 s); jumping unleashes it, up
@@ -418,7 +411,7 @@ public final class ClientMobility {
     private static long bulletUntil;
 
     static boolean chargingWeapon(net.minecraft.world.entity.player.Player p) {
-        if (com.ethermod.beam.BeamRenderState.chargeMode != null) return true;
+        if (com.ethermod.client.beam.BeamRenderState.chargeMode != null) return true;
         if (!p.isUsingItem()) return false;
         var use = p.getUseItem();
         if (use.getItem() instanceof com.ethermod.item.EtherManipulatorItem) return true;

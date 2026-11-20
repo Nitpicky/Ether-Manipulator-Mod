@@ -11,7 +11,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.BeehiveBlock;
@@ -36,8 +35,7 @@ import net.neoforged.neoforge.common.ItemAbility;
  * farmland is near, else path side of dirt or grass → path log / wood → strip copper → scrape
  * oxidation, then wax
  *
- * <p>Cultivation: the badge makes it 3x3 and harvests ripe crops (7x7 with Harvest Moon);
- * Groundskeeper shears; Sower plants seeds on farmland.
+ * <p>Cultivation: the badge makes it 3x3 and harvests ripe crops; Groundskeeper shears.
  */
 final class UtilityBeam {
 
@@ -50,18 +48,10 @@ final class UtilityBeam {
         ItemStack tool = player.getMainHandItem();
 
         boolean gardener = Traits.hasLine(tool, Traits.BOTANIC);
-        int harvestR = Traits.has(tool, "botanic.harvest_moon") ? 3 : gardener ? 1 : 0;
+        int harvestR = gardener ? 1 : 0;
         int areaR = gardener ? 1 : 0;
-        // Groundskeeper and Sower reach wider with rank
-        areaR +=
-                Math.max(
-                        0,
-                        Math.max(
-                                        Traits.rank(tool, "botanic.groundskeeper"),
-                                        Traits.rank(tool, "botanic.sower"))
-                                - 1);
 
-        // Harvest ripe crops (Cultivation badge: 3x3; Harvest Moon: 7x7)
+        // Harvest ripe crops (Cultivation badge: 3x3)
         if (harvestR > 0 && isRipeCrop(level.getBlockState(pos))) {
             for (BlockPos p :
                     BlockPos.betweenClosed(
@@ -90,13 +80,16 @@ final class UtilityBeam {
     private static boolean single(
             ServerLevel level, ServerPlayer player, ItemStack tool, BlockHitResult hit) {
         BlockPos pos = hit.getBlockPos();
-        if (!com.ethermod.util.Protect.may(level, player, pos) || !player.mayUseItemAt(pos, hit.getDirection(), tool))
+        // the beam sits on a block for many ticks: the claim probe (a synthetic break event, see
+        // Protect) is only posted once there is something to change, right before changing it
+        if (!com.ethermod.util.Protect.mayInteract(level, player, pos) || !player.mayUseItemAt(pos, hit.getDirection(), tool))
             return false;
         BlockState bs = level.getBlockState(pos);
 
         if (CampfireBlock.canLight(bs)
                 || CandleBlock.canLight(bs)
                 || CandleCakeBlock.canLight(bs)) {
+            if (!com.ethermod.util.Protect.may(level, player, pos)) return false;
             level.setBlock(
                     pos, bs.setValue(BlockStateProperties.LIT, true), Block.UPDATE_ALL_IMMEDIATE);
             level.playSound(null, pos, com.ethermod.sound.ModSounds.WORLD_FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1f, 1.2f);
@@ -107,6 +100,7 @@ final class UtilityBeam {
         // The sneak beam shears foliage (leaves, grass, flowers...) like shears would: the beam
         // passes through it otherwise, so this is the way to take it
         if (com.ethermod.util.FoliageHelper.isPlant(bs)) {
+            if (!com.ethermod.util.Protect.may(level, player, pos)) return false;
             level.removeBlock(pos, false);
             Block.popResource(level, pos, new ItemStack(bs.getBlock()));
             level.playSound(null, pos, com.ethermod.sound.ModSounds.WORLD_SHEEP_SHEAR, SoundSource.BLOCKS, 0.8f, 1.2f);
@@ -116,6 +110,7 @@ final class UtilityBeam {
         // Groundskeeper: shear leaves, vines, cobwebs and grasses; take honeycomb
         if (Traits.has(tool, "botanic.groundskeeper")) {
             if (isShearable(bs)) {
+                if (!com.ethermod.util.Protect.may(level, player, pos)) return false;
                 level.removeBlock(pos, false);
                 Block.popResource(level, pos, new ItemStack(bs.getBlock()));
                 level.playSound(null, pos, com.ethermod.sound.ModSounds.WORLD_SHEEP_SHEAR, SoundSource.BLOCKS, 0.8f, 1.2f);
@@ -123,6 +118,7 @@ final class UtilityBeam {
             }
             if (bs.getBlock() instanceof BeehiveBlock hive
                     && bs.getValue(BeehiveBlock.HONEY_LEVEL) >= BeehiveBlock.MAX_HONEY_LEVELS) {
+                if (!com.ethermod.util.Protect.may(level, player, pos)) return false;
                 BeehiveBlock.dropHoneycomb(level, pos);
                 hive.releaseBeesAndResetHoneyLevel(
                         level,
@@ -134,13 +130,6 @@ final class UtilityBeam {
                 level.playSound(null, pos, com.ethermod.sound.ModSounds.WORLD_BEEHIVE_SHEAR, SoundSource.BLOCKS, 1f, 1f);
                 return true;
             }
-        }
-
-        // Sower: plant seeds from the inventory on farmland
-        if (bs.getBlock() instanceof FarmBlock
-                && level.getBlockState(pos.above()).isAir()
-                && Traits.has(tool, "botanic.sower")) {
-            if (sow(level, player, pos.above())) return true;
         }
 
         UseOnContext ctx = new UseOnContext(player, InteractionHand.MAIN_HAND, hit);
@@ -159,7 +148,10 @@ final class UtilityBeam {
             boolean needsAir =
                     ability == ItemAbilities.HOE_TILL || ability == ItemAbilities.SHOVEL_FLATTEN;
             if (needsAir && !airAbove) continue;
-            BlockState next = bs.getToolModifiedState(ctx, ability, false);
+            BlockState next = bs.getToolModifiedState(ctx, ability, true);
+            if (next == null || next == bs) continue;
+            if (!com.ethermod.util.Protect.may(level, player, pos)) return false;
+            next = bs.getToolModifiedState(ctx, ability, false);
             if (next == null || next == bs) continue;
             level.setBlock(pos, next, Block.UPDATE_ALL_IMMEDIATE);
             level.playSound(null, pos, soundFor(ability), SoundSource.BLOCKS, 1f, 1f);
@@ -194,25 +186,9 @@ final class UtilityBeam {
     private static void harvest(
             ServerLevel level, ServerPlayer player, ItemStack tool, BlockPos p) {
         BlockState bs = level.getBlockState(p);
-        if (!isRipeCrop(bs) || !com.ethermod.util.Protect.may(level, player, p)) return;
+        // breakAsPlayer posts the real break event claims answer, so no probe before it
+        if (!isRipeCrop(bs) || !com.ethermod.util.Protect.mayInteract(level, player, p)) return;
         if (!MiningDamageTracker.breakAsPlayer(player, p)) return;
-    }
-
-    private static boolean sow(ServerLevel level, ServerPlayer player, BlockPos at) {
-        var inv = player.getInventory();
-        for (int i = 0; i < inv.getContainerSize(); i++) {
-            ItemStack s = inv.getItem(i);
-            if (s.isEmpty()
-                    || !(s.getItem() instanceof BlockItem bi)
-                    || !(bi.getBlock() instanceof CropBlock crop)) continue;
-            BlockState plant = crop.defaultBlockState();
-            if (!plant.canSurvive(level, at)) continue;
-            level.setBlockAndUpdate(at, plant);
-            level.playSound(null, at, com.ethermod.sound.ModSounds.WORLD_CROP_PLANTED, SoundSource.BLOCKS, 1f, 1f);
-            if (!player.getAbilities().instabuild) s.shrink(1);
-            return true;
-        }
-        return false;
     }
 
     private static boolean isShearable(BlockState bs) {

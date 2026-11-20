@@ -61,7 +61,6 @@ public final class MassDriver {
 
     private static final String TAG = "mm_mass_block";
     public static final double REACH = 6.0;
-    private static final int MAX_PIECES = 32;
     /** Ticks a freshly lifted block takes to fly into its slot. */
     private static final int ARRIVE = 4;
 
@@ -173,15 +172,14 @@ public final class MassDriver {
         entity.configure(st);
         entity.setCarried(bs);
         var be = level.getBlockEntity(at);
-        if (be != null) {
-            entity.carriedBe = be.saveWithFullMetadata(level.registryAccess());
-            if (be instanceof net.minecraft.world.Container box) box.clearContent(); // no spill when removed
-        }
+        if (be != null) entity.carriedBe = be.saveWithFullMetadata(level.registryAccess());
         entity.setPos(Vec3.atCenterOf(at));
         entity.setDeltaMovement(Vec3.ZERO);
         var piece = new Piece(entity, at.subtract(h.origin));
         entity.setMassHeld(true, piece.offset);
-        if (!level.addFreshEntity(entity)) return false;
+        if (!level.addFreshEntity(entity)) return false; // nothing taken: the block keeps its contents
+        // emptied only once the piece carries the copy, so removing the block spills nothing
+        if (be instanceof net.minecraft.world.Container box) box.clearContent();
         level.setBlock(at, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
         // the rip (FX bench): the block's own break, low, over gravel and deepslate, once per grab
         level.playSound(null, at, bs.getSoundType().getBreakSound(), SoundSource.BLOCKS, .4f, .8f);
@@ -248,11 +246,6 @@ public final class MassDriver {
     /** Where a piece belongs in the formation right now. */
     private static Vec3 slot(Hold h, Piece q) {
         return h.center.add(turn(Vec3.atLowerCornerOf(q.offset).subtract(h.pivot), h.yaw, h.pitch));
-    }
-
-    /** Turns an offset with the formation (shared with the client preview and renderer). */
-    public static Vec3 rotate(BlockPos off, float yaw, float pitch) {
-        return turn(Vec3.atLowerCornerOf(off), yaw, pitch);
     }
 
     private static Vec3 turn(Vec3 v, float yaw, float pitch) {
@@ -328,13 +321,13 @@ public final class MassDriver {
             AABB box = AABB.ofSize(slot(h, q), 1, 1, 1);
             for (var mob :
                     sl.getEntitiesOfClass(
-                            LivingEntity.class, box.inflate(.1), e -> com.ethermod.trait.RedesignEffects.enemy(p, e))) {
-                if (mob.getPersistentData().getLong("mm_mass_hit") > now) continue;
+                            LivingEntity.class, box.inflate(.1), e -> com.ethermod.trait.Allegiance.enemy(p, e))) {
+                if (com.ethermod.util.MobMemory.peek(mob).getLong("mm_mass_hit") > now) continue;
                 if (speed < .08) continue;
-                mob.getPersistentData().putLong("mm_mass_hit", now + 8);
+                com.ethermod.util.MobMemory.of(mob).putLong("mm_mass_hit", now + 8);
                 float hard = Math.max(1, q.entity.getCarried().getDestroySpeed(sl, q.entity.blockPosition()));
                 mob.hurt(p.damageSources().playerAttack(p), (float) Math.min(16, (2 + hard * .5) * (1 + Math.min(1.4, speed) * .5)));
-                com.ethermod.trait.RedesignEffects.impulse(mob, v.scale(.8).add(0, .25, 0));
+                com.ethermod.trait.Stasis.impulse(mob, v.scale(.8).add(0, .25, 0));
                 Vec3 away = h.center.subtract(mob.getBoundingBox().getCenter());
                 away = away.lengthSqr() < 1e-4 ? v.scale(-1) : away;
                 h.velocity = away.normalize().scale(Math.max(.35, speed * .7));
@@ -393,12 +386,19 @@ public final class MassDriver {
         var sl = p.serverLevel();
         if (place && steady(p)) {
             BlockPos base = steadyBase(h);
-            for (var q : h.pieces) {
-                BlockPos at = base.offset(q.offset);
-                if (!canPlace(sl, p, q.entity.getCarried(), at)) {
-                    sl.playSound(null, p.blockPosition(), com.ethermod.sound.ModSounds.WORLD_DISPENSER_FAIL, SoundSource.PLAYERS, .6f, 1.4f);
-                    return; // the shape must fit as a whole; the ghosts show what is in the way
-                }
+            // the shape must fit as a whole; the ghosts show what is in the way. The world checks
+            // go first for every block, so claims are only asked once the whole shape fits
+            boolean fits = true;
+            for (var q : h.pieces) fits &= fitsHere(sl, q.entity.getCarried(), base.offset(q.offset));
+            if (fits)
+                for (var q : h.pieces)
+                    if (!com.ethermod.util.Protect.may(sl, p, base.offset(q.offset))) {
+                        fits = false;
+                        break;
+                    }
+            if (!fits) {
+                sl.playSound(null, p.blockPosition(), com.ethermod.sound.ModSounds.WORLD_DISPENSER_FAIL, SoundSource.PLAYERS, .6f, 1.4f);
+                return;
             }
             HOLDS.remove(p.getUUID());
             for (var q : h.pieces) {
@@ -431,10 +431,14 @@ public final class MassDriver {
 
     /** Could this block be set down here (same rules as the client's ghosts)? */
     public static boolean canPlace(Level level, Player p, BlockState bs, BlockPos at) {
+        return fitsHere(level, bs, at) && com.ethermod.util.Protect.may(level, p, at);
+    }
+
+    /** The world half of {@link #canPlace}: room and support, no protection probe. */
+    private static boolean fitsHere(Level level, BlockState bs, BlockPos at) {
         return level.hasChunkAt(at)
                 && level.getBlockState(at).canBeReplaced()
                 && bs.canSurvive(level, at)
-                && com.ethermod.util.Protect.may(level, p, at)
                 && level.isUnobstructed(bs, at, CollisionContext.empty());
     }
 
@@ -508,6 +512,8 @@ public final class MassDriver {
         if (bs.hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF) || bs.hasProperty(BlockStateProperties.BED_PART))
             return false;
         if (bs.getBlock().asItem() == net.minecraft.world.item.Items.AIR) return false;
-        return com.ethermod.util.Protect.may(level, p, pos);
+        // claims answer the BreakEvent take() posts for the lift itself; probing here as well
+        // would post two break events for one lifted block
+        return com.ethermod.util.Protect.mayInteract(level, p, pos);
     }
 }

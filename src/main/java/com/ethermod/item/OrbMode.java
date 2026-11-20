@@ -18,10 +18,12 @@ import net.minecraft.world.item.component.CustomData;
  * (Gust), Tectonic (Mass Driver).
  *
  * <p>FROST and IGNITE are no longer wheel modes, only the right-click projectiles of the
- * Hydraulic and Pyrotechnic tools. VACUUM is gone.
+ * Hydraulic and Pyrotechnic tools. VACUUM is only an ordinal placeholder.
  */
 public enum OrbMode {
     ENERGY(0x20C1E9, Items.AMETHYST_SHARD),
+    // Ordinal placeholder, never unlocked; do not remove or reorder. Saved modes are stored by
+    // ordinal, so removing it would shift every later mode.
     VACUUM(0xB070FF, Items.HOPPER),
     WATER(0x3F8CFF, Items.WATER_BUCKET),
     LAVA(0xFF7020, Items.LAVA_BUCKET),
@@ -33,15 +35,9 @@ public enum OrbMode {
     GUST(0xB8E8E0, Items.FEATHER),
     MASS(0xE0A040, Items.COBBLESTONE);
 
-    /** Base size of the shared tank, in units; each tank trait adds {@link #TANK_STEP}. */
-    public static final int TANK_CAPACITY = 6;
-
-    public static final int TANK_STEP = 2;
-
     private static final String TAG_MODE = "mm_orb_mode";
     /** The one tank every projectile draws from (the old water/lava/fertilizer tanks merged). */
     private static final String TAG_TANK = "mm_tank";
-
 
     /** RGB tint for the orb and HUD. */
     public final int color;
@@ -87,12 +83,8 @@ public enum OrbMode {
 
     /** Left clicks that charge like the right-click orbs (same behaviour, other button). */
     public boolean chargesOnLeft() {
-        return this == WATER || this == LAVA;
-    }
-
-    /** Mass Driver: RMB lifts a block first, then charges as usual. */
-    public boolean isMass() {
-        return this == MASS;
+        // Pneumatic: the Gust shot charges on left click, the Stasis Grenade is thrown on right
+        return this == WATER || this == LAVA || this == GUST;
     }
 
     /** Downward pull per tick on the projectile (0 = flies straight). */
@@ -139,9 +131,9 @@ public enum OrbMode {
     public boolean isUnlocked(ItemStack stack) {
         return switch (this) {
             case ENERGY -> true;
-            case VACUUM -> false;
-            // the ice shard and fire seed are the right clicks of Hydraulic and Pyrotechnic
-            case FROST, IGNITE -> false;
+            // the ice shard and fire seed are the right clicks of Hydraulic and Pyrotechnic;
+            // VACUUM is an ordinal placeholder
+            case FROST, IGNITE, VACUUM -> false;
             case WATER -> Traits.hasLine(stack, Traits.HYDRAULIC);
             case LAVA -> Traits.hasLine(stack, Traits.PYROTECHNIC);
             case GROWTH -> Traits.hasLine(stack, Traits.BOTANIC);
@@ -157,7 +149,7 @@ public enum OrbMode {
      * (Tectonic); and, outside projectiles, mining and the Light Beacon.
      */
     public boolean usesTank() {
-        return this != TETHER && this != MASS && this != VACUUM;
+        return this != TETHER && this != MASS;
     }
 
     public static OrbMode byId(int id) {
@@ -218,6 +210,12 @@ public enum OrbMode {
             case WATER, LAVA, GROWTH -> 4;
             default -> 0;
         };
+    }
+
+    /** True when this shot spends Ether and the player's tank can't pay its smallest charge. */
+    public boolean isDry(net.minecraft.world.entity.player.Player player) {
+        ItemStack s = com.ethermod.manipulator.Manipulator.stack(player);
+        return usesTank() && tank(s) < shotCost(s, 0);
     }
 
     /** Left-click cost that is not a charged shot: Gust's Stasis Grenade. */

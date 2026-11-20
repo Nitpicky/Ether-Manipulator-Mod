@@ -1,6 +1,6 @@
 package com.ethermod.beam;
 
-import com.ethermod.trait.WorldEffects;
+import com.ethermod.trait.TempLights;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -29,7 +29,7 @@ final class OrbLight {
             for (LivingEntity e :
                     sl.getEntitiesOfClass(
                             LivingEntity.class,
-                            new AABB(at).inflate(12 + 8 * (b.rank("photonic.flare") - 1)),
+                            new AABB(at).inflate(12),
                             e ->
                                     e != b.getOwner()
                                             && !(e
@@ -45,16 +45,12 @@ final class OrbLight {
             for (BlockPos p : BlockPos.betweenClosed(at.offset(-1, -1, -1), at.offset(1, 1, 1))) {
                 if (sl.getBlockState(p).is(Blocks.LIGHT) && b.mayBuild(p)) {
                     sl.removeBlock(p, false);
-                    WorldEffects.forgetLight(sl, p);
-                    if (b.getOwner() instanceof ServerPlayer sp)
-                        com.ethermod.trait.BeaconNet.remove(sp, sl, p.immutable());
+                    TempLights.forgetLight(sl, p);
                     return;
                 }
             }
         if (!sl.getBlockState(at).isAir() || !b.mayBuild(at)) return;
-        WorldEffects.tempLight(sl, at, 12 + b.getPhase(), b.lightLife);
-        if (b.getOwner() instanceof ServerPlayer sp)
-            com.ethermod.trait.BeaconNet.add(sp, sl, at, b.lightLife);
+        TempLights.tempLight(sl, at, 12 + b.getPhase(), BeamBallEntity.BOUNCE_LIGHT_TICKS);
         sl.sendParticles(
                 ParticleTypes.END_ROD,
                 at.getX() + 0.5,

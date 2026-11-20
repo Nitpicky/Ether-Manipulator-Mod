@@ -1,11 +1,16 @@
 modLoader="javafml"
 loaderVersion="[4,)"
 license="All Rights Reserved"
+issueTrackerURL="https://www.curseforge.com/minecraft/mc-mods/ether-manipulator/comments"
 
 [[mods]]
 modId="ethermod"
 version="${mod_version}"
 displayName="Ether Manipulator"
+# Shown in the Mods list (400x400 PNG at the jar root).
+logoFile="ethermod_logo.png"
+authors="Woomwoomed"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/ether-manipulator"
 description='''
 A Starbound-inspired multitool that replaces every tool: a continuous beam and a charged orb.
 Every player owns one from the start. Summon it with R; equip elemental Modules and progress through Prototype, Calibrated, Augmented and Overclocked Tiers.

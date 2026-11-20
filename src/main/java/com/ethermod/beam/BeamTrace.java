@@ -23,9 +23,6 @@ public final class BeamTrace {
      */
     public static HitResult castWithEntities(Player player, double range, float pt) {
         BlockHitResult block = cast(player, range, pt);
-        // Laser: the beam goes straight through creatures
-        if (com.ethermod.trait.Traits.has(player.getMainHandItem(), "photonic.laser"))
-            return block;
         Vec3 eye = player.getEyePosition(pt);
         Vec3 dir = player.getViewVector(pt);
         double maxDist = block.getLocation().distanceTo(eye);
@@ -57,12 +54,7 @@ public final class BeamTrace {
         return best != null ? best : block;
     }
 
-    /** Where the last cast came out of glass (Refraction), or null. Client render thread. */
-    public static Vec3 lastRefract;
-
     public static BlockHitResult cast(Player player, double range, float pt) {
-        lastRefract = null;
-        net.minecraft.world.item.ItemStack tool = player.getMainHandItem();
         Vec3 dir = player.getViewVector(pt);
         Vec3 cur = player.getEyePosition(pt);
         Vec3 end = cur.add(dir.scale(range));
@@ -81,13 +73,6 @@ public final class BeamTrace {
             if (hit.getType() == HitResult.Type.MISS) break;
             net.minecraft.world.level.block.state.BlockState bs =
                     player.level().getBlockState(hit.getBlockPos());
-            if (lastRefract == null && BeamCastHelper.refracts(tool, bs)) {
-                double step = cur.distanceTo(Vec3.atCenterOf(hit.getBlockPos())) + 0.6;
-                remaining -= step;
-                cur = cur.add(dir.scale(step));
-                lastRefract = cur;
-                continue;
-            }
             if (!FoliageHelper.isFoliage(bs)) return hit;
             Vec3 centre = Vec3.atCenterOf(hit.getBlockPos());
             double step = cur.distanceTo(centre) + 0.01;

@@ -7,8 +7,8 @@ import net.minecraft.world.phys.Vec3;
 
 /**
  * Client-side bodies of play-to-client payload handlers that touch client-only classes (Minecraft,
- * ClientLevel). Keeping them here means ModNetwork, which a dedicated server also loads, never
- * references a client class itself.
+ * ClientLevel). ModNetwork, which a dedicated server also loads, reaches them through
+ * {@link com.ethermod.SideHooks}, so it never names a client class itself.
  */
 public final class ClientPayloadHandlers {
 

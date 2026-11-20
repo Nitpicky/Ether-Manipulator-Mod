@@ -3,9 +3,9 @@ package com.ethermod.beam;
 import com.ethermod.item.EtherManipulatorItem;
 import com.ethermod.item.OrbMode;
 import com.ethermod.manipulator.Manipulator;
-import com.ethermod.trait.RedesignEffects;
 import com.ethermod.trait.Traits;
-import com.ethermod.trait.WorldEffects;
+import com.ethermod.trait.TempLights;
+import com.ethermod.trait.Scheduler;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -41,8 +41,8 @@ import java.util.UUID;
  *       right-click orbs charge.
  *   <li>Pneumatic: a blast grenade ({@link GustGrenade}).
  *   <li>Photonic: a beacon of light out of the nozzle while held, no cooldown.
- *   <li>Gravitic: yank the creature or item you aim at toward you.
- *   <li>Botanic: a poison puff in front of you.
+ *   <li>Gravitic: fire the tether hook (Skyhook anchors on release).
+ *   <li>Botanic: harvest the ripe crops ahead.
  *   <li>Tectonic: grab the block you aim at (hold to sweep up more); press again to set it down.
  * </ul>
  */
@@ -68,7 +68,6 @@ public final class LeftClick {
     private static final Map<UUID, java.util.Set<BlockPos>> LIT_ALL = new HashMap<>();
 
     public static final double BEACON_RANGE = 48;
-    public static final double PULL_RANGE = 24;
 
     /** LMB pressed in a non-Beam mode. */
     public static void press(ServerPlayer p) {
@@ -76,19 +75,14 @@ public final class LeftClick {
         OrbMode mode = OrbMode.get(st);
         stop(p);
         // Detonator: left click again while your left-click shot is in the air bursts it
-        if (BeamBallEntity.detonateFor(p, st, true) || GustGrenade.detonateFor(p, st))
-            return;
+        if (BeamBallEntity.detonateFor(p, st, true)) return;
         switch (mode) {
-            case WATER, LAVA -> {
+            case WATER, LAVA, GUST -> {
                 if (mode.tankLevel(st) < mode.shotCost(st, 0)) {
                     empty(p);
                     return;
                 }
                 HOLDS.put(p.getUUID(), new Hold(mode));
-            }
-            case GUST -> {
-                if (ready(p, 10) && spend(p, st, OrbMode.GRENADE_COST))
-                    GustGrenade.throwFrom(p, st);
             }
             case LIGHT -> {
                 HOLDS.put(p.getUUID(), new Hold(mode));
@@ -131,10 +125,23 @@ public final class LeftClick {
 
     /** Ends any held left click (the Beacon's lights go out with it). */
     private static Hold stop(ServerPlayer p) {
+        return stop(p, p.serverLevel());
+    }
+
+    /**
+     * The player changed dimension: ends any held left click, putting the Beacon's lights out in
+     * the level they were lit in ({@code from}; null if it is gone, then they are only forgotten
+     * and run out on their own timer). The new level is never touched at the old coordinates.
+     */
+    public static void changedLevel(ServerPlayer p, ServerLevel from) {
+        stop(p, from);
+    }
+
+    private static Hold stop(ServerPlayer p, ServerLevel lightsIn) {
         var lit = LIT.remove(p.getUUID());
-        if (lit != null) unlight(p.serverLevel(), lit, java.util.Set.of());
+        if (lit != null && lightsIn != null) unlight(lightsIn, lit, java.util.Set.of());
         var all = LIT_ALL.remove(p.getUUID());
-        if (all != null) unlight(p.serverLevel(), all, java.util.Set.of());
+        if (all != null && lightsIn != null) unlight(lightsIn, all, java.util.Set.of());
         Hold h = HOLDS.remove(p.getUUID());
         if (h != null && h.mode == OrbMode.LIGHT) com.ethermod.event.ModEvents.showBeam(p, false);
         return h;
@@ -146,8 +153,18 @@ public final class LeftClick {
             if (keep.contains(q)) continue;
             if (sl.isLoaded(q) && sl.getBlockState(q).is(net.minecraft.world.level.block.Blocks.LIGHT))
                 sl.removeBlock(q, false);
-            WorldEffects.forgetLight(sl, q);
+            TempLights.forgetLight(sl, q);
         }
+    }
+
+    /**
+     * Right click in Pneumatic mode: throws the Stasis Grenade, or bursts the one already out
+     * (Detonator-style, like the other tools' second click).
+     */
+    public static void throwGrenade(ServerPlayer p) {
+        ItemStack st = Manipulator.stack(p);
+        if (GustGrenade.detonateFor(p, st)) return;
+        if (ready(p, 10) && spend(p, st, OrbMode.GRENADE_COST)) GustGrenade.throwFrom(p, st);
     }
 
     /** True while LMB is held for an action (the playtest reads it). */
@@ -236,11 +253,12 @@ public final class LeftClick {
         now.forEach(
                 (q, level) -> {
                     var was = sl.getBlockState(q);
-                    // only light air (or our own light): never touch someone else's light block
-                    if (was.isAir()
+                    // only light air (or our own light): never touch someone else's light block,
+                    // and never light up a spot the player may not build at (claims)
+                    if (was.isAir() && com.ethermod.util.Protect.may(sl, p, q)
                             || before.contains(q)
                                     && was.is(net.minecraft.world.level.block.Blocks.LIGHT)) {
-                        WorldEffects.tempLight(sl, q, level, 20);
+                        TempLights.tempLight(sl, q, level, 20);
                         lit.add(q);
                     } else if (before.contains(q)) lit.add(q);   // still ours: keep tracking it so letting go clears it
                 });
@@ -256,92 +274,8 @@ public final class LeftClick {
             e.addEffect(new MobEffectInstance(MobEffects.GLOWING, 30, 0, false, false));
     }
 
-    // ---- Gravitic: pull -------------------------------------------------------------
+    // ---- Botanic: harvest ------------------------------------------------------------
 
-    /** Yanks the creature or item under the crosshair toward you. */
-    private static void pull(ServerPlayer p) {
-        ServerLevel sl = p.serverLevel();
-        Vec3 eye = p.getEyePosition(), look = p.getLookAngle();
-        var wall =
-                sl.clip(
-                        new ClipContext(
-                                eye,
-                                eye.add(look.scale(PULL_RANGE)),
-                                ClipContext.Block.COLLIDER,
-                                ClipContext.Fluid.NONE,
-                                p));
-        Vec3 end = wall.getLocation();
-        Entity target = null;
-        double best = Double.MAX_VALUE;
-        for (Entity e : sl.getEntities(p, new AABB(eye, end).inflate(1.5))) {
-            boolean pullable =
-                    e instanceof ItemEntity
-                            || e instanceof ExperienceOrb
-                            || e instanceof LivingEntity le
-                                    && RedesignEffects.enemy(p, le)
-                                    && !e.getType()
-                                            .is(net.neoforged.neoforge.common.Tags.EntityTypes.BOSSES);
-            if (!pullable || e.isSpectator() || com.ethermod.beam.Mounts.own(p, e)) continue;
-            // small things are easier to catch
-            double grow = e instanceof LivingEntity ? 0.3 : 0.6;
-            var through = e.getBoundingBox().inflate(grow).clip(eye, end);
-            if (through.isEmpty()) continue;
-            double d = through.get().distanceToSqr(eye);
-            if (d < best) {
-                best = d;
-                target = e;
-            }
-        }
-        Vec3 to = target == null ? end : target.position().add(0, target.getBbHeight() * .5, 0);
-        // the Tether rope shoots out to it (drawn on the clients: LeftClickFx)
-        LeftClickFxData.send(
-                sl,
-                com.ethermod.network.payload.LeftClickFxPayload.PULL,
-                0,
-                p.getId(),
-                to,
-                target == null ? -1 : target.getId());
-        sl.playSound(
-                null,
-                p.getX(),
-                p.getEyeY(),
-                p.getZ(),
-                com.ethermod.sound.ModSounds.WORLD_FISHING_BOBBER_RETRIEVE,
-                SoundSource.PLAYERS,
-                0.8f,
-                target == null ? 0.7f : 1.2f);
-        if (target == null) return;
-        Vec3 flat = new Vec3(p.getX() - target.getX(), 0, p.getZ() - target.getZ());
-        double dist = flat.length();
-        if (dist < 1.2) return;
-        double dy = p.getY() - target.getY();
-        Vec3 v;
-        if (target instanceof LivingEntity le) {
-            // ground friction eats most of it: lands a couple of blocks in front of you
-            v =
-                    flat.normalize()
-                            .scale(Math.min(1.8, 0.3 + dist * 0.06))
-                            .add(0, Math.max(0.3, Math.min(0.9, 0.42 + dy * 0.05)), 0);
-            RedesignEffects.impulse(le, v);
-        } else {
-            v =
-                    flat.normalize()
-                            .scale(Math.min(2, dist * 0.055))
-                            .add(0, Math.max(0.2, Math.min(0.8, 0.3 + dy * 0.05)), 0);
-            target.setDeltaMovement(v);
-            target.hurtMarked = true;
-        }
-        pulls++;
-    }
-
-    /** For the playtest: successful pulls so far. */
-    public static int pulls;
-
-    // ---- Botanic: poison puff --------------------------------------------------------
-
-    public static final double PUFF_RANGE = 3.5;
-
-    /** A small cloud a few blocks ahead: Poison I for 4 s to anything hostile inside, for 2 s. */
     /** For the playtest: crops the Botanic left click has harvested. */
     public static int harvested;
 
@@ -377,6 +311,8 @@ public final class LeftClick {
         while (!todo.isEmpty() && cut.size() < 256) {
             BlockPos q = todo.poll();
             var state = sl.getBlockState(q);
+            // probed here (not left to cutCrop's real break) so Overgrowth never spreads across a
+            // claim and green_thumb only counts crops this player may cut
             if (!ripe(state) || !com.ethermod.util.Protect.may(sl, p, q)) continue;
             cut.add(q);
             if (overgrowth)
@@ -399,7 +335,7 @@ public final class LeftClick {
                             20,
                             Math.round(most - rel.dot(right))
                                     + Math.round(Math.max(0, rel.horizontalDistance() - 1.5) * .5));
-            WorldEffects.schedule(sl, 1 + delay, () -> cutCrop(p, q, right));
+            Scheduler.schedule(sl, 1 + delay, () -> cutCrop(p, q, right));
         }
         sl.playSound(
                 null,
@@ -414,13 +350,8 @@ public final class LeftClick {
     private static void cutCrop(ServerPlayer p, BlockPos q, Vec3 right) {
         if (p.isRemoved() || !(p.level() instanceof ServerLevel sl) || !sl.isLoaded(q)) return;
         var state = sl.getBlockState(q);
-        if (!ripe(state) || !com.ethermod.util.Protect.may(sl, p, q)) return;
-        harvesting = p;
-        try {
-            if (!p.gameMode.destroyBlock(q)) return;
-        } finally {
-            harvesting = null;
-        }
+        if (!ripe(state) || !com.ethermod.util.Protect.mayInteract(sl, p, q)) return;
+        if (!p.gameMode.destroyBlock(q)) return; // posts the BreakEvent claims may cancel
         harvested++;
         // vanilla sends the break particles and sound to everyone but the breaker (whose client
         // predicts its own), so the harvester gets them here
@@ -438,9 +369,6 @@ public final class LeftClick {
                 new Vec3(q.getX() + .5, q.getY() + .3, q.getZ() + .5),
                 (int) Math.round(Math.toDegrees(Math.atan2(sweep.z, sweep.x)) * 10));
     }
-
-    /** The player whose Botanic harvest is breaking blocks right now (drops get pulled to them). */
-    public static ServerPlayer harvesting;
 
     private record Pull(ItemEntity item, UUID owner, long start) {}
 
@@ -472,7 +400,7 @@ public final class LeftClick {
             long age = e.level().getGameTime() - pl.start();
             var owner = e.level().getPlayerByUUID(pl.owner());
             if (owner == null || age > 80 || owner.distanceToSqr(e) > 32 * 32) {
-                e.setNoGravity(false);
+                releasePull(e);
                 it.remove();
                 continue;
             }
@@ -482,16 +410,52 @@ public final class LeftClick {
             e.setNoPickUpDelay();
             if (d < .8) {
                 // arrived: picked up on touch, or (inventory full) left to fall where you stand
-                e.setNoGravity(false);
+                releasePull(e);
                 e.setDeltaMovement(Vec3.ZERO);
                 it.remove();
                 continue;
             }
             e.setNoGravity(true);
+            // saved with the entity: a pull cut off by an unload, a dimension change or a crash
+            // is undone when the item is loaded again (see restoreDroppedPull)
+            e.getPersistentData().putBoolean(PULL_TAG, true);
             double speed = Math.min(.9, .12 + .05 * (age - 6));
             e.setDeltaMovement(to.scale(Math.min(speed, d) / d));
             e.hasImpulse = true;
         }
+    }
+
+    private static final String PULL_TAG = "ethermod_pulled";
+
+    /** Gives a pulled item its gravity back. */
+    private static void releasePull(ItemEntity e) {
+        e.setNoGravity(false);
+        e.getPersistentData().remove(PULL_TAG);
+    }
+
+    /** Server stop: every item still in flight falls again before the world is saved. */
+    @SubscribeEvent
+    public static void stopPulls(net.neoforged.neoforge.event.server.ServerStoppingEvent ev) {
+        for (Pull pl : PULLS) releasePull(pl.item());
+        PULLS.clear();
+        // per-player state (the lights themselves are cleared by TempLights on stop)
+        HOLDS.clear();
+        READY.clear();
+        LIT.clear();
+        LIT_ALL.clear();
+    }
+
+    /**
+     * An item that was saved mid-pull (chunk unloaded, moved through a portal, server killed) comes
+     * back without its pull: it gets its gravity back as it joins a level.
+     */
+    @SubscribeEvent
+    public static void restoreDroppedPull(
+            net.neoforged.neoforge.event.entity.EntityJoinLevelEvent ev) {
+        if (ev.getLevel().isClientSide() || !(ev.getEntity() instanceof ItemEntity e)) return;
+        if (!e.getPersistentData().getBoolean(PULL_TAG)) return;
+        for (Pull pl : PULLS) if (pl.item() == e) return;
+        releasePull(e);
     }
 
     /** A crop ready to harvest: a fully grown crop, nether wart or cocoa, or a melon/pumpkin. */
@@ -507,42 +471,4 @@ public final class LeftClick {
                 || s.is(net.minecraft.world.level.block.Blocks.PUMPKIN);
     }
 
-    private static void puff(ServerPlayer p) {
-        ServerLevel sl = p.serverLevel();
-        Vec3 eye = p.getEyePosition(), look = p.getLookAngle();
-        var hit =
-                sl.clip(
-                        new ClipContext(
-                                eye,
-                                eye.add(look.scale(PUFF_RANGE)),
-                                ClipContext.Block.COLLIDER,
-                                ClipContext.Fluid.NONE,
-                                p));
-        Vec3 at = hit.getLocation().subtract(look.scale(0.4));
-        sl.playSound(
-                null,
-                at.x,
-                at.y,
-                at.z,
-                com.ethermod.sound.ModSounds.WORLD_PUFFER_FISH_BLOW_OUT,
-                SoundSource.PLAYERS,
-                0.8f,
-                1.3f);
-        // a Growth pollen cloud, drawn on the clients like the right-click one (LeftClickFx)
-        LeftClickFxData.send(
-                sl, com.ethermod.network.payload.LeftClickFxPayload.PUFF, 0, p.getId(), at, 0);
-        for (int k = 0; k < 8; k++) {
-            WorldEffects.schedule(
-                    sl,
-                    k * 5,
-                    () -> {
-                        for (var e :
-                                sl.getEntitiesOfClass(
-                                        LivingEntity.class,
-                                        new AABB(at, at).inflate(1.6),
-                                        e -> RedesignEffects.enemy(p, e)))
-                            e.addEffect(new MobEffectInstance(MobEffects.POISON, 80, 0));
-                    });
-        }
-    }
 }

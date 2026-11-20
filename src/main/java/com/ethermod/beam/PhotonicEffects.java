@@ -35,7 +35,7 @@ public final class PhotonicEffects {
         return e == owner
                 || e instanceof Player
                 || e instanceof Animal
-                || RedesignEffects.ally(owner, e)
+                || Allegiance.ally(owner, e)
                 || e.getPersistentData().hasUUID("mm_summoner");
     }
 
@@ -54,26 +54,10 @@ public final class PhotonicEffects {
     public static void end(BeamBallEntity b, ItemStack st, Vec3 at) {
         if (!(b.getOwner() instanceof ServerPlayer p)) return;
         boolean nova = Traits.has(st, "photonic.supernova");
-        if (!Traits.has(st, "photonic.lodestar") && !Traits.has(st, "photonic.constellation"))
-            add(p, at, null, st, 3600);
+        if (!Traits.has(st, "photonic.constellation")) add(p, at, null, st, 3600);
         apply(p, at, st, nova ? 2 : 1, true);
         if (Traits.has(st, "photonic.mirage"))
-            decoy(
-                    p,
-                    at,
-                    Traits.has(st, "photonic.lodestar")
-                            ? com.ethermod.config.ServerConfig.photonicTicks()
-                            : nova ? 240 : 120);
-        if (Traits.has(st, "photonic.lodestar")) {
-            int life = com.ethermod.config.ServerConfig.photonicTicks();
-            add(p, at, null, st, life);
-            net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(
-                    p,
-                    new com.ethermod.network.payload.ModulePayloads.LodestarMark(
-                            BlockPos.containing(at),
-                            p.level().dimension().location(),
-                            p.level().getGameTime() + life));
-        }
+            decoy(p, at, nova ? 240 : 120);
         if (Traits.has(st, "photonic.constellation"))
             add(p, at, PREVIOUS.remove(b.getUUID()), st, 200);
         else PREVIOUS.remove(b.getUUID());
@@ -81,9 +65,11 @@ public final class PhotonicEffects {
             for (var dir : Direction.values()) {
                 var spot = BlockPos.containing(at).relative(dir, 3);
                 if (p.serverLevel().hasChunkAt(spot) && com.ethermod.util.Protect.may(p.serverLevel(), p, spot))
-                    WorldEffects.tempLight(p.serverLevel(), spot, 15, 80);
+                    TempLights.tempLight(p.serverLevel(), spot, 15, 80);
             }
-            WorldEffects.tempLight(p.serverLevel(), BlockPos.containing(at), 15, 80);
+            var centre = BlockPos.containing(at);
+            if (com.ethermod.util.Protect.may(p.serverLevel(), p, centre))
+                TempLights.tempLight(p.serverLevel(), centre, 15, 80);
             p.serverLevel().sendParticles(ParticleTypes.FLASH, at.x, at.y, at.z, 1, 0, 0, 0, 0);
         }
     }
@@ -159,7 +145,7 @@ public final class PhotonicEffects {
             if (Traits.has(st, "photonic.radiance")
                     && friend
                     && e.distanceToSqr(at) <= 16 * power * power) {
-                var data = e.getPersistentData();
+                var data = com.ethermod.util.MobMemory.of(e);
                 boolean fresh = data.getLong("mm_radiance_next") <= now;
                 int prior = fresh ? 0 : data.getInt("mm_radiance_power");
                 if (power > prior) {
@@ -173,14 +159,6 @@ public final class PhotonicEffects {
             }
 
             if (e instanceof Mob mob && !friend) {
-                if (impact
-                        && Traits.has(st, "photonic.dazzle")
-                        && e.distanceToSqr(at) <= 9 * power * power) {
-                    e.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 40 * power));
-                    e.getPersistentData().putLong("mm_dazzled_until", now + 40 * power);
-                    mob.setTarget(null);
-                    mob.getNavigation().stop();
-                }
                 boolean dark =
                         e.getType().is(net.minecraft.tags.EntityTypeTags.UNDEAD)
                                 || e instanceof net.minecraft.world.entity.monster.Spider;

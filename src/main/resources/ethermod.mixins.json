@@ -10,26 +10,29 @@
     "FurnaceAccessor",
     "GravityEntityMixin",
     "GravityLivingMixin",
-    "DazzleMixin",
     "MovementConnectionMixin",
+    "AdvancementLayoutMixin",
     "SoulFireMixin",
     "FluidPocketMixin",
-    "GravityFallAccessor",
     "OwnedFireMixin",
-    "OwnedLavaMixin"
+    "OwnedLavaMixin",
+    "ManipulatorBlockUseMixin"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "client": [
-    "GravityCameraMixin",
-    "ChargeMovementMixin",
-    "SoulFlameRenderMixin",
-    "FlightEquipmentMixin",
-    "GravityOverlayMixin",
     "ChargeArmTremblerMixin",
+    "ChargeMovementMixin",
+    "FlightEquipmentMixin",
+    "GemGlintMixin",
+    "GravityCameraMixin",
+    "GravityOverlayMixin",
+    "LevelRendererInvoker",
     "NoUseDipMixin",
-    "SoundVolumeAccessor",
-    "GemGlintMixin"
+    "PhotonicGlowEntityMixin",
+    "PhotonicGlowMixin",
+    "SoulFlameRenderMixin",
+    "SoundVolumeAccessor"
   ]
 }

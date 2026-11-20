@@ -25,22 +25,20 @@ public final class ProjectileEffects {
         // Gale Force widens the blast; charge widens it too, but barely adds push, so a full
         // charge can't fling (and wall-slam) anything to death from safety
         boolean gale = Traits.has(st, "pneumatic.gale_force");
-        double radius = Traits.has(st, "pneumatic.convergence") ? 3 + phase * 2 : gale ? 3 + phase * 1.5 : 2 + phase;
+        double radius = gale ? 3 + phase * 1.5 : 2 + phase;
         double force = .6 + phase * .1;
         for (var e :
                 sl.getEntitiesOfClass(
                         LivingEntity.class,
                         new AABB(at, at).inflate(radius),
-                        e -> e.isAlive() && !RedesignEffects.ally(owner, e))) {
+                        e -> e.isAlive() && !Allegiance.ally(owner, e))) {
             Vec3 away = e.position().add(0, e.getBbHeight() * .4, 0).subtract(at);
             if (away.lengthSqr() < .1) away = owner.getLookAngle();
             Vec3 push = away.normalize().scale(force).add(0, .2, 0);
-            if (Traits.has(st, "pneumatic.convergence"))
-                push = at.subtract(e.position()).normalize().scale(force);
             // Gale Force: the fall after it hurts more
             if (gale && !(e instanceof Player))
                 e.getPersistentData().putLong("mm_updraft_until", sl.getGameTime() + 200);
-            RedesignEffects.impulse(e, push);
+            Stasis.impulse(e, push);
             GustMotion.track(e, owner, Traits.has(st, "pneumatic.rebound"));
         }
         sl.sendParticles(ParticleTypes.GUST_EMITTER_LARGE, at.x, at.y, at.z, 1, 0, 0, 0, 0);
@@ -55,7 +53,7 @@ public final class ProjectileEffects {
                                 LivingEntity.class,
                                 b.getBoundingBox().inflate(2),
                                 e ->
-                                        RedesignEffects.enemy(p, e)
+                                        Allegiance.enemy(p, e)
                                                 && (e
                                                                 instanceof
                                                                 net.minecraft.world.entity.monster
@@ -115,9 +113,9 @@ public final class ProjectileEffects {
                 var q = pos.immutable();
                 if (done.add(q)
                         && sl.hasChunkAt(q)
-                        && com.ethermod.util.Protect.may(sl, p, q)
-                        && sl.getBlockState(q).is(Blocks.WATER))
-                    WorldEffects.tempBlock(sl, q, Blocks.AIR.defaultBlockState(), 400);
+                        && sl.getBlockState(q).is(Blocks.WATER) // only water is changed: probe nothing else
+                        && com.ethermod.util.Protect.may(sl, p, q))
+                    TempBlocks.tempBlock(sl, q, Blocks.AIR.defaultBlockState(), 400);
             }
         }
     }
@@ -126,85 +124,6 @@ public final class ProjectileEffects {
         if (!(b.getOwner() instanceof ServerPlayer p)) return;
         var sl = p.serverLevel();
         int phase = b.getPhase();
-        if (Traits.has(st, "hydraulic.geyser"))
-            WorldEffects.schedule(
-                    sl,
-                    2,
-                    () -> {
-                        var tile = waterNear(sl, at);
-                        if (tile == null) return;
-                        var center = Vec3.atCenterOf(tile).add(0, .5, 0);
-                        for (int tick = 0; tick < 80; tick++) {
-                            final int step = tick;
-                            WorldEffects.schedule(
-                                    sl,
-                                    tick,
-                                    () -> {
-                                        if (!sl.hasChunkAt(tile)
-                                                || !sl.getFluidState(tile).is(FluidTags.WATER))
-                                            return;
-                                        double height = 3 + phase * 2;
-                                        var box =
-                                                new AABB(
-                                                        center.x - .65,
-                                                        center.y - .8,
-                                                        center.z - .65,
-                                                        center.x + .65,
-                                                        center.y + height,
-                                                        center.z + .65);
-                                        for (var e :
-                                                sl.getEntities(
-                                                        (Entity) null,
-                                                        box,
-                                                        e ->
-                                                                e instanceof LivingEntity
-                                                                        || e
-                                                                                instanceof
-                                                                                net.minecraft.world
-                                                                                        .entity
-                                                                                        .vehicle
-                                                                                        .Boat)) {
-                                            var v = e.getDeltaMovement();
-                                            e.setDeltaMovement(
-                                                    v.x, Math.max(v.y, .65 + phase * .3), v.z);
-                                            e.hurtMarked = true;
-                                            e.resetFallDistance();
-                                        }
-                                        if (step % 3 == 0) {
-                                            sl.sendParticles(
-                                                    com.ethermod.registry.ModParticles.BASE.get(),
-                                                    center.x,
-                                                    center.y,
-                                                    center.z,
-                                                    1,
-                                                    0,
-                                                    0,
-                                                    0,
-                                                    0);
-                                            sl.sendParticles(
-                                                    com.ethermod.registry.ModParticles.PLUME.get(),
-                                                    center.x,
-                                                    center.y,
-                                                    center.z,
-                                                    0,
-                                                    0,
-                                                    .25 + phase * .12,
-                                                    0,
-                                                    1);
-                                            sl.sendParticles(
-                                                    com.ethermod.registry.ModParticles.POOF.get(),
-                                                    center.x,
-                                                    center.y + height * .8,
-                                                    center.z,
-                                                    2,
-                                                    .3,
-                                                    .2,
-                                                    .3,
-                                                    .03);
-                                        }
-                                    });
-                        }
-                    });
         if (Traits.has(st, "hydraulic.rapids")) {
             var tile = waterNear(sl, at);
             if (tile != null) surge(b, tile);

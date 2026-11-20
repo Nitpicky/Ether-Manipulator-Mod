@@ -37,6 +37,20 @@ public final class MobilityEffects {
         player.getPersistentData().putLong(SOFT_LANDING, player.level().getGameTime());
     }
 
+    /**
+     * True while a Module legitimately holds the player in the air: shifted gravity, Airwalk, a
+     * zipline ride, or a tether/reel/launch that marked a soft landing in the last 10 ticks (the
+     * taut rope marks every tick). Clears vanilla's "Flying is not enabled" hover counter.
+     */
+    public static boolean legitimatelyAirborne(ServerPlayer sp) {
+        if (MovementPhysics.down(sp) != net.minecraft.core.Direction.DOWN) return true;
+        if (Traits.has(Manipulator.stack(sp), "gravitic.airwalk")) return true;
+        if (Ziplines.isRiding(sp)) return true;
+        var d = sp.getPersistentData();
+        return d.contains(SOFT_LANDING)
+                && sp.level().getGameTime() - d.getLong(SOFT_LANDING) < 10;
+    }
+
     private static final String NO_FALL = "ethermod_no_fall";
     private static final String AIR_JUMP = "ethermod_air_jump";
 
@@ -46,6 +60,18 @@ public final class MobilityEffects {
      */
     public static void airJump(ServerPlayer sp) {
         if (!Traits.hasLine(Manipulator.stack(sp), Traits.PNEUMATIC)) return;
+        // the client says it jumped in mid-air: only believe it while the player really is in
+        // the air (not standing, swimming, climbing, flying or riding). No block-support test:
+        // the client allows a jump a hair above the ground (not yet onGround), and refusing it
+        // there would leave that landing's fall damage in place
+        if (sp.onGround()
+                || sp.isInWater()
+                || sp.isInLava()
+                || sp.onClimbable()
+                || sp.isPassenger()
+                || sp.isFallFlying()
+                || sp.getAbilities().flying
+                || sp.isSpectator()) return;
         long now = sp.level().getGameTime();
         if (sp.getPersistentData().getBoolean("mm_airjump_used")) return;
         if (now - sp.getPersistentData().getLong(AIR_JUMP) < 8) return;
@@ -179,7 +205,7 @@ public final class MobilityEffects {
         sp.clearFire();
         sp.getPersistentData().putLong(PHOENIX, now);
         ServerLevel sl = sp.serverLevel();
-        WorldEffects.fireRing(sl, sp.blockPosition(), sp, 2);
+        OwnedFire.fireRing(sl, sp.blockPosition(), sp, 2);
         for (net.minecraft.world.entity.LivingEntity e :
                 sl.getEntitiesOfClass(
                         net.minecraft.world.entity.LivingEntity.class,

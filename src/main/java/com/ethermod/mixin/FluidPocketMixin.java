@@ -35,6 +35,6 @@ public abstract class FluidPocketMixin {
             Fluid fluid,
             CallbackInfoReturnable<Boolean> cir) {
         if (level instanceof net.minecraft.server.level.ServerLevel sl
-                && com.ethermod.trait.WorldEffects.isAirPocket(sl, to)) cir.setReturnValue(false);
+                && com.ethermod.trait.TempBlocks.isAirPocket(sl, to)) cir.setReturnValue(false);
     }
 }

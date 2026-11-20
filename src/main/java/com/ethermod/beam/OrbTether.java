@@ -3,7 +3,6 @@ package com.ethermod.beam;
 import com.ethermod.item.OrbMode;
 import com.ethermod.manipulator.Manipulator;
 import com.ethermod.trait.Traits;
-import com.ethermod.trait.WorldEffects;
 
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -16,7 +15,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-
 
 /**
  * Tether mode: grapple hook, rope reeling, Swing, Recall, Hammer Throw and Zipline anchoring. Split
@@ -59,9 +57,79 @@ public final class OrbTether {
                 b.getZ(),
                 com.ethermod.sound.ModSounds.WORLD_CHAIN_PLACE,
                 SoundSource.PLAYERS,
-                1f,
-                b.hookPitch);
+                .6f,
+                b.hookPitch - .2f); // 1.1 on blocks (FX bench), a touch higher on creatures
+        // the End layer under the latch (FX bench)
+        sl.playSound(
+                null,
+                b.getX(),
+                b.getY(),
+                b.getZ(),
+                com.ethermod.sound.ModSounds.WORLD_END_PORTAL_FRAME_FILL,
+                SoundSource.PLAYERS,
+                .4f,
+                1.3f);
         sl.sendParticles(ParticleTypes.CRIT, b.getX(), b.getY(), b.getZ(), 6, 0.1, 0.1, 0.1, 0.1);
+        sl.sendParticles(ParticleTypes.REVERSE_PORTAL, b.getX(), b.getY(), b.getZ(), 10, 0.15, 0.15, 0.15, 0.02);
+    }
+
+    /** Reeling starts: the bobber's retrieve over a short End whoosh (the portal hum, cut at .5s). */
+    private static void reelFx(BeamBallEntity b, ServerLevel sl) {
+        sl.playSound(
+                null,
+                b.getX(),
+                b.getY(),
+                b.getZ(),
+                com.ethermod.sound.ModSounds.WORLD_FISHING_BOBBER_RETRIEVE,
+                SoundSource.PLAYERS,
+                .4f,
+                .8f);
+        if (b.getOwner() instanceof ServerPlayer sp)
+            sl.playSound(
+                    null,
+                    sp.getX(),
+                    sp.getEyeY(),
+                    sp.getZ(),
+                    com.ethermod.sound.ModSounds.WORLD_PORTAL_TRIGGER,
+                    SoundSource.PLAYERS,
+                    .08f,
+                    1.8f);
+        Vec3 at = b.position();
+        com.ethermod.trait.Scheduler.schedule(
+                sl,
+                10,
+                () -> {
+                    var stop =
+                            new net.minecraft.network.protocol.game.ClientboundStopSoundPacket(
+                                    com.ethermod.sound.ModSounds.WORLD_PORTAL_TRIGGER.getLocation(),
+                                    SoundSource.PLAYERS);
+                    for (ServerPlayer p : sl.players())
+                        if (p.position().distanceToSqr(at) < 64 * 64) p.connection.send(stop);
+                });
+    }
+
+    /** The hook lets go of what it held: the chain's clink over a faint teleport. */
+    static void unhookFx(BeamBallEntity b, ServerLevel sl) {
+        if (!b.isStuck() || b.hookAt >= 0) return;
+        sl.playSound(
+                null,
+                b.getX(),
+                b.getY(),
+                b.getZ(),
+                com.ethermod.sound.ModSounds.WORLD_CHAIN_HIT,
+                SoundSource.PLAYERS,
+                .35f,
+                1.2f);
+        sl.playSound(
+                null,
+                b.getX(),
+                b.getY(),
+                b.getZ(),
+                com.ethermod.sound.ModSounds.WORLD_ENDERMAN_TELEPORT,
+                SoundSource.PLAYERS,
+                .15f,
+                1.8f);
+        sl.sendParticles(ParticleTypes.REVERSE_PORTAL, b.getX(), b.getY(), b.getZ(), 8, 0.15, 0.15, 0.15, 0.02);
     }
 
     static boolean tetherTick(BeamBallEntity b) {
@@ -73,6 +141,12 @@ public final class OrbTether {
         }
         if (!Traits.hasLine(Manipulator.stack(sp), Traits.GRAVITIC)
                 || com.ethermod.item.OrbMode.get(Manipulator.stack(sp)) != OrbMode.TETHER) {
+            b.discard();
+            return false;
+        }
+        // putting the Manipulator away lets go of the hook (and of whatever it holds)
+        if (!b.isAnchor() && !Manipulator.isSummoned(sp)) {
+            unhookFx(b, (ServerLevel) b.level());
             b.discard();
             return false;
         }
@@ -93,6 +167,7 @@ public final class OrbTether {
                 }
                 if (!sp.onGround()) OrbTether.letGo(b, sp, sl);
             }
+            unhookFx(b, sl);
             b.discard();
             return false;
         }
@@ -111,6 +186,8 @@ public final class OrbTether {
             clamp(b, sl);
             return false;
         }
+        if (b.reeling && !b.reelWas) reelFx(b, sl);
+        b.reelWas = b.reeling;
         Vec3 hands = sp.getBoundingBox().getCenter();
 
         // A caught creature or item
@@ -130,104 +207,8 @@ public final class OrbTether {
                             && !b.hooked
                                     .getType()
                                     .is(net.neoforged.neoforge.common.Tags.EntityTypes.BOSSES);
-            // Displacement: sneak to swap places with it
-            if (mob && b.has("gravitic.displacement") && sp.isShiftKeyDown()) {
-                Vec3 me = sp.position(), it = b.hooked.position();
-                b.hooked.teleportTo(me.x, me.y, me.z);
-                sp.teleportTo(it.x, it.y, it.z);
-                sp.resetFallDistance();
-                sl.playSound(
-                        null,
-                        me.x,
-                        me.y,
-                        me.z,
-                        com.ethermod.sound.ModSounds.WORLD_ENDERMAN_TELEPORT,
-                        SoundSource.PLAYERS,
-                        0.8f,
-                        1.3f);
-                sl.sendParticles(
-                        ParticleTypes.REVERSE_PORTAL,
-                        me.x,
-                        me.y + 1,
-                        me.z,
-                        30,
-                        0.3,
-                        0.6,
-                        0.3,
-                        0.05);
-                sl.sendParticles(
-                        ParticleTypes.REVERSE_PORTAL,
-                        it.x,
-                        it.y + 1,
-                        it.z,
-                        30,
-                        0.3,
-                        0.6,
-                        0.3,
-                        0.05);
-                b.discard();
-                return false;
-            }
-            // Hammer Throw: whirl it around you
-            if (mob && b.has("gravitic.hammer_throw")) {
-                b.whirling = true;
-                double ang = b.lifeTicks++ * 0.45;
-                double r = 2.6;
-                Vec3 c = sp.position().add(0, 1.0, 0);
-                Vec3 want = c.add(Math.cos(ang) * r, 0.2, Math.sin(ang) * r);
-                b.hooked.setDeltaMovement(want.subtract(b.hooked.position()).scale(0.6));
-                b.hooked.hurtMarked = true;
-                b.hooked.resetFallDistance();
-                if (b.hooked instanceof net.minecraft.world.entity.Mob m) m.getNavigation().stop();
-                b.setPos(hookPoint(b));
-                if (b.lifeTicks % 8 == 0)
-                    sl.playSound(
-                            null,
-                            sp.getX(),
-                            sp.getY(),
-                            sp.getZ(),
-                            com.ethermod.sound.ModSounds.WORLD_BREEZE_IDLE_GROUND,
-                            SoundSource.PLAYERS,
-                            0.5f,
-                            1.6f);
-                return false;
-            }
             b.setPos(hookPoint(b));
             Vec3 d = b.position().subtract(hands);
-            boolean light =
-                    false
-                            && b.has("gravitic.recall")
-                            && (!(b.hooked instanceof LivingEntity)
-                                    || b.hooked.getBbWidth() * b.hooked.getBbHeight()
-                                            <= sp.getBbWidth() * sp.getBbHeight());
-            if (light) {
-                if (d.length() > 1.5) {
-                    b.hooked.setDeltaMovement(d.normalize().scale(-0.55).add(0, 0.08, 0));
-                    b.hooked.hurtMarked = true;
-                } else if (!(b.hooked instanceof LivingEntity)) {
-                    b.hooked.teleportTo(sp.getX(), sp.getY() + 0.5, sp.getZ());
-                    if (b.hooked instanceof ItemEntity ie) ie.setNoPickUpDelay();
-                }
-                // Recall II: everything loose near the hook comes along
-                if (b.rank("gravitic.recall") >= 2) {
-                    for (Entity e :
-                            sl.getEntities(
-                                    b,
-                                    b.getBoundingBox().inflate(2),
-                                    e ->
-                                            e != b.hooked
-                                                    && (e instanceof ItemEntity
-                                                            || e instanceof ExperienceOrb))) {
-                        e.setDeltaMovement(
-                                hands.subtract(e.position())
-                                        .normalize()
-                                        .scale(0.55)
-                                        .add(0, 0.08, 0));
-                        e.hurtMarked = true;
-                    }
-                }
-                return false;
-            }
             if (!b.reeling) return false;
             if (mob || b.hooked instanceof ItemEntity || b.hooked instanceof ExperienceOrb) {
                 // the hooked thing comes to you; a tap brings it all the way
@@ -285,35 +266,50 @@ public final class OrbTether {
         com.ethermod.trait.MobilityEffects.markSoftLanding(sp);
     }
 
+    /**
+     * Each player's current hook (entity id). {@link #fire} is the only place hooks are made, so
+     * this replaces scanning a 384-block box on every press. Checked on every lookup (a discarded
+     * hook, a Zipline anchor or another level's entity no longer counts); cleared on logout and
+     * server stop.
+     */
+    private static final java.util.Map<java.util.UUID, Integer> HOOKS = new java.util.HashMap<>();
+
     /** The player's hook, flying or caught (not a Zipline anchor); null if none. */
     public static BeamBallEntity activeHook(ServerPlayer sp) {
-        for (BeamBallEntity e :
-                sp.serverLevel()
-                        .getEntitiesOfClass(
-                                BeamBallEntity.class,
-                                sp.getBoundingBox().inflate(192),
-                                e ->
-                                        e.getOwner() == sp
-                                                && e.getMode() == OrbMode.TETHER
-                                                && !e.isAnchor()
-                                                && !e.isRemoved())) return e;
+        Integer id = HOOKS.get(sp.getUUID());
+        if (id == null) return null;
+        if (sp.serverLevel().getEntity(id) instanceof BeamBallEntity e
+                && e.getOwner() == sp
+                && e.getMode() == OrbMode.TETHER
+                && !e.isAnchor()
+                && !e.isRemoved()) return e;
+        HOOKS.remove(sp.getUUID());
         return null;
+    }
+
+    /** Logout: forget the player's hook. */
+    public static void forget(java.util.UUID player) {
+        HOOKS.remove(player);
+    }
+
+    public static void clear() {
+        HOOKS.clear();
     }
 
     /** Left click: fires a new hook (the old one lets go). */
     public static void fire(ServerPlayer sp, net.minecraft.world.item.ItemStack stack) {
         ServerLevel sl = sp.serverLevel();
-        for (var old :
-                sl.getEntitiesOfClass(
-                        BeamBallEntity.class,
-                        sp.getBoundingBox().inflate(192),
-                        e -> e.getOwner() == sp && e.getMode() == OrbMode.TETHER && !e.isAnchor()))
+        var old = activeHook(sp);
+        if (old != null) {
+            unhookFx(old, sl);
             old.discard();
+        }
         BeamBallEntity hook =
                 new BeamBallEntity(
                         sl, sp, 0, com.ethermod.item.ManipulatorStage.get(stack), OrbMode.TETHER);
         hook.configure(stack);
         sl.addFreshEntity(hook);
+        HOOKS.put(sp.getUUID(), hook.getId());
         sl.playSound(
                 null,
                 sp.getX(),
@@ -321,12 +317,22 @@ public final class OrbTether {
                 sp.getZ(),
                 com.ethermod.sound.ModSounds.WORLD_CROSSBOW_SHOOT,
                 SoundSource.PLAYERS,
-                0.7f,
-                1.4f);
+                0.6f,
+                1.3f);
+        // the End layer under the shot (FX bench)
+        sl.playSound(
+                null,
+                sp.getX(),
+                sp.getEyeY(),
+                sp.getZ(),
+                com.ethermod.sound.ModSounds.WORLD_CHORUS_FRUIT_TELEPORT,
+                SoundSource.PLAYERS,
+                0.22f,
+                1.7f);
     }
 
     /** Ticks of right click that still count as a tap, and between the taps of a double tap. */
-    static final int TAP = 5, DOUBLE_TAP = 7;
+    public static final int TAP = 5, DOUBLE_TAP = 7;
 
     /**
      * Right click pressed with a hook out. A second press soon after the first is a double tap:
@@ -368,7 +374,7 @@ public final class OrbTether {
         if (b.hooked != null) {
             var dest = b.hooked.position().subtract(sp.getLookAngle().scale(1.2));
             if (sl.noCollision(sp, sp.getBoundingBox().move(dest.subtract(sp.position()))))
-                BeamBallEntity.blinkTo(sp, dest);
+                blinkTo(sp, dest);
             b.discard();
             return;
         }
@@ -379,7 +385,7 @@ public final class OrbTether {
         for (int i = 0; i < 6; i++) {
             var at = dest.add(0, i * 0.5, 0);
             if (sl.noCollision(sp, sp.getBoundingBox().move(at.subtract(old)))) {
-                BeamBallEntity.blinkTo(sp, at);
+                blinkTo(sp, at);
                 break;
             }
         }
@@ -473,26 +479,6 @@ public final class OrbTether {
         }
     }
 
-    /**
-     * Hammer Throw: let go and the whirled mob flies where you look, hurting itself on what it
-     * hits.
-     */
-    static void hammerThrow(BeamBallEntity b, ServerPlayer sp, ServerLevel sl) {
-        Vec3 look = sp.getLookAngle();
-        b.hooked.setDeltaMovement(look.scale(1.9).add(0, 0.35, 0));
-        b.hooked.hurtMarked = true;
-        if (b.hooked instanceof LivingEntity le) WorldEffects.thrown(sl, le, sp);
-        sl.playSound(
-                null,
-                sp.getX(),
-                sp.getY(),
-                sp.getZ(),
-                com.ethermod.sound.ModSounds.WORLD_BREEZE_SHOOT,
-                SoundSource.PLAYERS,
-                1f,
-                0.7f);
-    }
-
     /** Where the hook sits on what it caught: the struck spot, turning with the body. */
     static Vec3 hookPoint(BeamBallEntity b) {
         Entity e = b.hooked;
@@ -527,18 +513,33 @@ public final class OrbTether {
         b.lifeTicks = 0;
         b.hookAt = b.level().getGameTime() + HOOK_DELAY;
         b.hookPitch = 1.5f;
-        // Weightless: a hooked mob floats helplessly
-        int weightless = b.rank("gravitic.weightless");
-        if (weightless > 0
-                && e instanceof LivingEntity le
-                && !(e instanceof net.minecraft.world.entity.player.Player)) {
-            le.addEffect(
-                    new net.minecraft.world.effect.MobEffectInstance(
-                            net.minecraft.world.effect.MobEffects.LEVITATION,
-                            weightless >= 2 ? 100 : 60,
-                            0));
-        }
-        if (b.has("gravitic.singularity"))
-            WorldEffects.gravityWell((ServerLevel) b.level(), b.position(), 60, owner);
+    }
+
+    /** Blink: teleports the player to {@code at}, with portal particles and sounds at both ends. */
+    static void blinkTo(ServerPlayer player, Vec3 at) {
+        ServerLevel sl = player.serverLevel();
+        Vec3 old = player.position();
+        sl.sendParticles(ParticleTypes.PORTAL, old.x, old.y + 1, old.z, 32, .3, .7, .3, .15);
+        player.teleportTo(
+                sl, at.x, at.y, at.z, java.util.Set.of(), player.getYRot(), player.getXRot());
+        sl.sendParticles(ParticleTypes.PORTAL, at.x, at.y + 1, at.z, 32, .3, .7, .3, .15);
+        sl.playSound(
+                null,
+                old.x,
+                old.y,
+                old.z,
+                com.ethermod.sound.ModSounds.WORLD_ENDERMAN_TELEPORT,
+                SoundSource.PLAYERS,
+                .8f,
+                1f);
+        sl.playSound(
+                null,
+                at.x,
+                at.y,
+                at.z,
+                com.ethermod.sound.ModSounds.WORLD_ENDERMAN_TELEPORT,
+                SoundSource.PLAYERS,
+                .8f,
+                1f);
     }
 }
