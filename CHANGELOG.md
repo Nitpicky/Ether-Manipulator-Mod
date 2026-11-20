@@ -45,7 +45,7 @@ next release's notes.
 - Camera mods that replace the third-person camera no longer switch off the gravity camera turn.
 - The Stasis tint on held creatures now shows properly with shader packs.
 - Resource pack reloads (F3+T) now update coloured Manipulator bodies and the K screen.
-- The mod list now shows the mod's logo and author.
+- The mod list now shows the mod's logo, author and CurseForge page.
 - Claim and protection checks no longer post extra fake block-break events while the beam rests
   on a block, while the Mass Driver lifts, or while a sweep or harvest is planned. Grief-logger,
   quest and stats mods see far fewer phantom breaks. The `respect_protection` server config
