@@ -67,15 +67,10 @@ public final class Traits {
 
     /**
      * How strong a picked choice is: 0 if not picked, otherwise 1. Ranks no longer grow with the
-     * stage (see {@link #rankOfTier}), so this is {@code has(...) ? 1 : 0}.
+     * stage, so this is {@code has(...) ? 1 : 0}.
      */
     public static int rank(ItemStack stack, String traitId) {
         return has(stack, traitId) ? 1 : 0;
-    }
-
-    /** The rank a pick in this tier has at the stack's stage: always 1 (traits no longer rank up). */
-    public static int rankOfTier(ItemStack stack, int tier) {
-        return 1;
     }
 
     // ---- Derived numbers ----------------------------------------------------------

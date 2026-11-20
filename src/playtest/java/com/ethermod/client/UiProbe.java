@@ -364,8 +364,8 @@ public final class UiProbe {
                                 check("Vacuum removed", !OrbMode.VACUUM.isUnlocked(st));
                                 check(
                                         "No Tier scaling",
-                                        Traits.rankOfTier(st, 0) == 1
-                                                && Traits.rankOfTier(st, 1) == 1);
+                                        // at the top stage a pick is still rank 1 at most
+                                        Traits.rank(st, "hydraulic.reservoir") <= 1);
                                 Manipulator.setSummoned(p, true);
                                 Manipulator.sync(p);
                             });
