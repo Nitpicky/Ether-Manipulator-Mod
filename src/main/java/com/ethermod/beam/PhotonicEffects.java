@@ -35,7 +35,7 @@ public final class PhotonicEffects {
         return e == owner
                 || e instanceof Player
                 || e instanceof Animal
-                || Targeting.ally(owner, e)
+                || Allegiance.ally(owner, e)
                 || e.getPersistentData().hasUUID("mm_summoner");
     }
 

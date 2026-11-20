@@ -85,7 +85,7 @@ final class OrbFlight {
                                     e ->
                                             !com.ethermod.beam.Mounts.own(p, e)
                                                     && e.isAlive()
-                                                    && !com.ethermod.trait.Targeting.ally(
+                                                    && !com.ethermod.trait.Allegiance.ally(
                                                             p, e)
                                                     && p.hasLineOfSight(e)
                                                     && e.getBoundingBox()

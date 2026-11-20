@@ -5,8 +5,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
 /** Who a player's effects may hit: allies (self, own summons, team, own pets) and the PvP rules. */
-public final class Targeting {
-    private Targeting() {}
+public final class Allegiance {
+    private Allegiance() {}
 
     public static boolean ally(ServerPlayer owner, LivingEntity e) {
         return e == owner

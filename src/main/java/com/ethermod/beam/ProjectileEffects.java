@@ -31,7 +31,7 @@ public final class ProjectileEffects {
                 sl.getEntitiesOfClass(
                         LivingEntity.class,
                         new AABB(at, at).inflate(radius),
-                        e -> e.isAlive() && !Targeting.ally(owner, e))) {
+                        e -> e.isAlive() && !Allegiance.ally(owner, e))) {
             Vec3 away = e.position().add(0, e.getBbHeight() * .4, 0).subtract(at);
             if (away.lengthSqr() < .1) away = owner.getLookAngle();
             Vec3 push = away.normalize().scale(force).add(0, .2, 0);
@@ -53,7 +53,7 @@ public final class ProjectileEffects {
                                 LivingEntity.class,
                                 b.getBoundingBox().inflate(2),
                                 e ->
-                                        Targeting.enemy(p, e)
+                                        Allegiance.enemy(p, e)
                                                 && (e
                                                                 instanceof
                                                                 net.minecraft.world.entity.monster

@@ -520,7 +520,7 @@ public final class MovementPhysics {
                             .getEntitiesOfClass(
                                     net.minecraft.world.entity.LivingEntity.class,
                                     p.getBoundingBox().inflate(reach),
-                                    e -> Targeting.enemy(p, e))) {
+                                    e -> Allegiance.enemy(p, e))) {
                 double near = 1 - Math.min(1, target.distanceTo(p) / (reach + 1));
                 target.hurt(p.damageSources().playerAttack(p), damage * (float) (.5 + .5 * near));
                 // the shock throws them away and up, harder the further you fell

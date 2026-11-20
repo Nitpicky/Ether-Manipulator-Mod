@@ -74,7 +74,7 @@ public final class OwnedFire {
         Fire fire = map.get(pos);
         if (fire == null) return;
         var owner = level.getServer().getPlayerList().getPlayer(fire.owner());
-        if (owner != null && Targeting.enemy(owner, living))
+        if (owner != null && Allegiance.enemy(owner, living))
             Burning.burn(living, owner, 8, -1);
     }
 

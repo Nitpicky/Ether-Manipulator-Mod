@@ -162,7 +162,7 @@ final class OrbImpact {
             case GROWTH -> {
                 if (target instanceof LivingEntity victim
                         && owner instanceof ServerPlayer sp
-                        && com.ethermod.trait.Targeting.enemy(sp, victim)
+                        && com.ethermod.trait.Allegiance.enemy(sp, victim)
                         && (victim instanceof net.minecraft.world.entity.monster.Enemy
                                 || victim instanceof net.minecraft.world.entity.Mob m
                                         && m.getTarget() == sp)) {

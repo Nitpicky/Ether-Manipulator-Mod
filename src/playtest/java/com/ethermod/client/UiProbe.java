@@ -588,7 +588,7 @@ public final class UiProbe {
                                     check(
                                             "Other players are no enemies while hurt_players is off",
                                             com.ethermod.config.ServerConfig.hurtPlayers()
-                                                    || !Targeting.enemy(p, otherPlayer));
+                                                    || !Allegiance.enemy(p, otherPlayer));
                                 }
                                 var stone = p.blockPosition().offset(0, 1, 4);
                                 sl.setBlockAndUpdate(
@@ -708,7 +708,7 @@ public final class UiProbe {
                                         "Blazeling cannot target owner or summons",
                                         !pet.validTarget(p, p)
                                                 && !pet.validTarget(p, pet)
-                                                && Targeting.ally(p, pet));
+                                                && Allegiance.ally(p, pet));
                                 var boltTarget =
                                         net.minecraft.world.entity.EntityType.ZOMBIE.create(sl);
                                 boltTarget.setNoAi(true);

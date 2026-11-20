@@ -322,7 +322,7 @@ public final class MassDriver {
             AABB box = AABB.ofSize(slot(h, q), 1, 1, 1);
             for (var mob :
                     sl.getEntitiesOfClass(
-                            LivingEntity.class, box.inflate(.1), e -> com.ethermod.trait.Targeting.enemy(p, e))) {
+                            LivingEntity.class, box.inflate(.1), e -> com.ethermod.trait.Allegiance.enemy(p, e))) {
                 if (mob.getPersistentData().getLong("mm_mass_hit") > now) continue;
                 if (speed < .08) continue;
                 mob.getPersistentData().putLong("mm_mass_hit", now + 8);

@@ -48,7 +48,7 @@ public final class Burning {
                             .getEntitiesOfClass(
                                     LivingEntity.class,
                                     target.getBoundingBox().inflate(3),
-                                    e -> e != target && Targeting.enemy(owner, e))) {
+                                    e -> e != target && Allegiance.enemy(owner, e))) {
                 track(e);
                 e.igniteForSeconds(seconds);
                 e.getPersistentData().putUUID("mm_burn_owner", owner.getUUID());
@@ -85,7 +85,7 @@ public final class Burning {
                             .getServer()
                             .getPlayerList()
                             .getPlayer(summon.getPersistentData().getUUID("mm_summoner"));
-            if (owner != null && Targeting.ally(owner, ev.getEntity())) ev.setCanceled(true);
+            if (owner != null && Allegiance.ally(owner, ev.getEntity())) ev.setCanceled(true);
         }
     }
 
@@ -135,7 +135,7 @@ public final class Burning {
                         && !(e instanceof com.ethermod.entity.SoulBlazeling)
                         && owner != null) {
                     var target = owner.getLastHurtMob();
-                    if (target != null && target.isAlive() && Targeting.enemy(owner, target))
+                    if (target != null && target.isAlive() && Allegiance.enemy(owner, target))
                         mob.setTarget(target);
                     else if (mob.getTarget() == owner) mob.setTarget(null);
                 }
@@ -167,7 +167,7 @@ public final class Burning {
                 || !com.ethermod.config.ServerConfig.blazelings()
                 || !Traits.has(Manipulator.stack(owner), "pyrotechnic.soulwake")
                 || victim == owner
-                || Targeting.ally(owner, victim)) return;
+                || Allegiance.ally(owner, victim)) return;
         if (sl.getEntitiesOfClass(
                                 Mob.class,
                                 owner.getBoundingBox().inflate(64),

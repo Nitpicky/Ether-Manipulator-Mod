@@ -2,7 +2,7 @@ package com.ethermod.beam;
 
 import com.ethermod.network.payload.LeftClickFxPayload;
 import com.ethermod.trait.Stasis;
-import com.ethermod.trait.Targeting;
+import com.ethermod.trait.Allegiance;
 import com.ethermod.trait.Traits;
 
 import net.minecraft.core.particles.ParticleTypes;
@@ -162,7 +162,7 @@ public final class GustGrenade {
                             e ->
                                     e instanceof LivingEntity le
                                             && !e.isSpectator()
-                                            && Targeting.enemyIgnoringPvp(g.owner, le)
+                                            && Allegiance.enemyIgnoringPvp(g.owner, le)
                                             && affects(g.owner, le));
             if (mob != null) {
                 g.stuck = mob.getEntity();
@@ -294,7 +294,7 @@ public final class GustGrenade {
                 e.setDeltaMovement(e.getDeltaMovement().add(push));
                 e.hurtMarked = true;
             } else if (e instanceof LivingEntity le) {
-                if (!Targeting.enemyIgnoringPvp(g.owner, le) || !affects(g.owner, le)) continue;
+                if (!Allegiance.enemyIgnoringPvp(g.owner, le) || !affects(g.owner, le)) continue;
                 float dmg = DAMAGE * (float) (0.5 + 0.5 * near);
                 if (Stasis.inStasis(le)) {
                     // the burst joins the stored push (aimed by the last hit); the hit lands while
