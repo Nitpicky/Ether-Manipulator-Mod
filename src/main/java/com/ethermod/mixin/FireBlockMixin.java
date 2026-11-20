@@ -1,6 +1,6 @@
 package com.ethermod.mixin;
 
-import com.ethermod.trait.WorldEffects;
+import com.ethermod.trait.OwnedFire;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -27,6 +27,6 @@ public abstract class FireBlockMixin {
             BlockPos pos,
             RandomSource random,
             CallbackInfo ci) {
-        if (WorldEffects.tickControlledFire(level, pos)) ci.cancel();
+        if (OwnedFire.tickControlledFire(level, pos)) ci.cancel();
     }
 }

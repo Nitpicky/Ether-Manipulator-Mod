@@ -193,7 +193,7 @@ public final class MobilityEffects {
         sp.clearFire();
         sp.getPersistentData().putLong(PHOENIX, now);
         ServerLevel sl = sp.serverLevel();
-        WorldEffects.fireRing(sl, sp.blockPosition(), sp, 2);
+        OwnedFire.fireRing(sl, sp.blockPosition(), sp, 2);
         for (net.minecraft.world.entity.LivingEntity e :
                 sl.getEntitiesOfClass(
                         net.minecraft.world.entity.LivingEntity.class,

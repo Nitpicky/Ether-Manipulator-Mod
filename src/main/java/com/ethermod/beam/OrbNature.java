@@ -1,7 +1,7 @@
 package com.ethermod.beam;
 
 import com.ethermod.trait.Traits;
-import com.ethermod.trait.WorldEffects;
+import com.ethermod.trait.OwnedFire;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -141,12 +141,12 @@ final class OrbNature {
                 // a portal frame lights through vanilla's own placement
                 if (net.minecraft.world.level.block.BaseFireBlock.getState(sl, firePos)
                         .is(Blocks.FIRE)) {
-                    WorldEffects.placeFire(sl, firePos, owner);
+                    OwnedFire.placeFire(sl, firePos, owner);
                 } else {
-                    WorldEffects.placeFire(sl, firePos, owner);
+                    OwnedFire.placeFire(sl, firePos, owner);
                 }
                 if (b.getPhase() >= 1)
-                    WorldEffects.fireRing(
+                    OwnedFire.fireRing(
                             sl, firePos, owner, b.getPhase()); // charged: ring of 1, then 2
             }
         }

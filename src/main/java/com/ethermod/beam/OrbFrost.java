@@ -1,7 +1,7 @@
 package com.ethermod.beam;
 
 import com.ethermod.item.OrbMode;
-import com.ethermod.trait.WorldEffects;
+import com.ethermod.trait.TempBlocks;
 import com.ethermod.util.FoliageHelper;
 
 import net.minecraft.core.BlockPos;
@@ -59,9 +59,9 @@ final class OrbFrost {
             if (!b.bridgeSeen.add(q.asLong()) || !b.mayBuild(q)) continue;
             if (b.getOwner() != null && b.getOwner().getBoundingBox().intersects(new AABB(q)))
                 continue;
-            if (WorldEffects.tempBlock(
+            if (TempBlocks.tempBlock(
                     sl, q, Blocks.PACKED_ICE.defaultBlockState(), OrbFrost.bridgeTicks(b), true))
-                WorldEffects.markBridge(sl, q, b.getUUID());
+                TempBlocks.markBridge(sl, q, b.getUUID());
         }
     }
 

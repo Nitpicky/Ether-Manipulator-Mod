@@ -5,7 +5,6 @@ import com.ethermod.item.OrbMode;
 import com.ethermod.manipulator.Manipulator;
 import com.ethermod.registry.ModEntities;
 import com.ethermod.trait.Traits;
-import com.ethermod.trait.WorldEffects;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

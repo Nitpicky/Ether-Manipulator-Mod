@@ -115,7 +115,7 @@ public final class ProjectileEffects {
                         && sl.hasChunkAt(q)
                         && com.ethermod.util.Protect.may(sl, p, q)
                         && sl.getBlockState(q).is(Blocks.WATER))
-                    WorldEffects.tempBlock(sl, q, Blocks.AIR.defaultBlockState(), 400);
+                    TempBlocks.tempBlock(sl, q, Blocks.AIR.defaultBlockState(), 400);
             }
         }
     }

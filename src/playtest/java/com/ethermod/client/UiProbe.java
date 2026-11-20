@@ -445,20 +445,20 @@ public final class UiProbe {
                                         pocket.east(),
                                         net.minecraft.world.level.block.Blocks.WATER
                                                 .defaultBlockState());
-                                WorldEffects.tempBlock(
+                                TempBlocks.tempBlock(
                                         sl,
                                         pocket,
                                         net.minecraft.world.level.block.Blocks.AIR
                                                 .defaultBlockState(),
                                         400);
-                                WorldEffects.schedule(
+                                Scheduler.schedule(
                                         sl,
                                         30,
                                         () ->
                                                 check(
                                                         "Diving Bell blocks water entry",
                                                         sl.getBlockState(pocket).isAir()
-                                                                && WorldEffects.isAirPocket(
+                                                                && TempBlocks.isAirPocket(
                                                                         sl, pocket)));
                                 var currentCell = p.blockPosition().offset(-9, 3, 0);
                                 sl.setBlockAndUpdate(
@@ -484,7 +484,7 @@ public final class UiProbe {
                                 check(
                                         "Rapids preserves water blocks",
                                         sl.getBlockState(currentCell).equals(originalWater));
-                                WorldEffects.schedule(
+                                Scheduler.schedule(
                                         sl,
                                         101,
                                         () ->
@@ -548,7 +548,7 @@ public final class UiProbe {
                                 waterShot.setPos(net.minecraft.world.phys.Vec3.atCenterOf(water));
                                 com.ethermod.beam.ProjectileEffects.waterImpact(
                                         waterShot, st.copy(), waterShot.position());
-                                WorldEffects.schedule(
+                                Scheduler.schedule(
                                         sl,
                                         4,
                                         () ->
@@ -638,7 +638,7 @@ public final class UiProbe {
                                                                 .AGE,
                                                         7));
                                 p.gameMode.destroyBlock(crop);
-                                WorldEffects.schedule(
+                                Scheduler.schedule(
                                         sl,
                                         3,
                                         () ->
@@ -825,7 +825,7 @@ public final class UiProbe {
                                                 .defaultBlockState());
                                 check(
                                         "Soulwake terrain fire is actual soul fire",
-                                        WorldEffects.placeFire(sl, ground, p)
+                                        OwnedFire.placeFire(sl, ground, p)
                                                 && sl.getBlockState(ground)
                                                         .is(
                                                                 net.minecraft.world.level.block
@@ -837,7 +837,7 @@ public final class UiProbe {
                                 touching.setPos(
                                         net.minecraft.world.phys.Vec3.atBottomCenterOf(ground));
                                 sl.addFreshEntity(touching);
-                                WorldEffects.burnFromOwnedFire(sl, ground, touching);
+                                OwnedFire.burnFromOwnedFire(sl, ground, touching);
                                 check(
                                         "Placed soul fire attributes burns to player",
                                         touching.isOnFire()
@@ -851,11 +851,11 @@ public final class UiProbe {
                                         lava,
                                         net.minecraft.world.level.block.Blocks.LAVA
                                                 .defaultBlockState());
-                                WorldEffects.ownLava(sl, lava, p);
+                                OwnedFire.ownLava(sl, lava, p);
                                 touching.setPos(
                                         net.minecraft.world.phys.Vec3.atBottomCenterOf(lava));
                                 touching.clearFire();
-                                WorldEffects.burnFromOwnedLava(sl, touching);
+                                OwnedFire.burnFromOwnedLava(sl, touching);
                                 check(
                                         "Player lava inflicts owned soul burn",
                                         touching.isOnFire()
@@ -985,14 +985,14 @@ public final class UiProbe {
                                 p.setPos(ownerBeforeIdle);
                                 check(
                                         "Fire expiry has no cracks but ice retains them",
-                                        !WorldEffects.showsExpiryCracks(
+                                        !TempBlocks.showsExpiryCracks(
                                                         net.minecraft.world.level.block.Blocks
                                                                 .SOUL_FIRE
                                                                 .defaultBlockState())
-                                                && !WorldEffects.showsExpiryCracks(
+                                                && !TempBlocks.showsExpiryCracks(
                                                         net.minecraft.world.level.block.Blocks.FIRE
                                                                 .defaultBlockState())
-                                                && WorldEffects.showsExpiryCracks(
+                                                && TempBlocks.showsExpiryCracks(
                                                         net.minecraft.world.level.block.Blocks.ICE
                                                                 .defaultBlockState()));
                                 var expires =
@@ -1096,7 +1096,7 @@ public final class UiProbe {
                                                 "mm_refill_ether",
                                                 com.ethermod.trait.RedesignEffects.reloadDelay(st)
                                                         - 1);
-                                WorldEffects.schedule(
+                                Scheduler.schedule(
                                         p.serverLevel(),
                                         2,
                                         () -> {
@@ -1352,7 +1352,7 @@ public final class UiProbe {
                                         p.getXRot());
                                 MovementPhysics.setGravity(p, net.minecraft.core.Direction.EAST);
                                 Manipulator.sync(p);
-                                WorldEffects.schedule(
+                                Scheduler.schedule(
                                         p.serverLevel(),
                                         5,
                                         () -> {
@@ -1381,7 +1381,7 @@ public final class UiProbe {
                                                 noCrackFire.below(),
                                                 net.minecraft.world.level.block.Blocks.STONE
                                                         .defaultBlockState());
-                                WorldEffects.tempBlock(
+                                TempBlocks.tempBlock(
                                         p.serverLevel(),
                                         noCrackFire,
                                         net.minecraft.world.level.block.Blocks.SOUL_FIRE

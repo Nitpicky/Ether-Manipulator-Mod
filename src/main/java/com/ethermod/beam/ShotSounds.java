@@ -56,6 +56,6 @@ public final class ShotSounds {
     private static void play(ServerLevel sl, Player p, int delay, SoundEvent e, float vol, float pitch) {
         Runnable r = () -> sl.playSound(null, p.getX(), p.getEyeY(), p.getZ(), e, SoundSource.PLAYERS, vol, pitch);
         if (delay <= 0) r.run();
-        else com.ethermod.trait.WorldEffects.schedule(sl, delay, r);
+        else com.ethermod.trait.Scheduler.schedule(sl, delay, r);
     }
 }
