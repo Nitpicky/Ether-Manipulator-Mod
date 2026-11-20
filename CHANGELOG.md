@@ -29,7 +29,6 @@ next release's notes.
   hook letting go each get a faint End layer, and the latch and release give off small purple
   sparks.
 - Water orb: a little slosh in flight and a lighter, cup-sized splash on impact.
-- Gust grenade: a fuller, deeper burst.
 - Growth pollen cloud: a soft pop as plants grow under it, once a second at most.
 
 ### Compatibility

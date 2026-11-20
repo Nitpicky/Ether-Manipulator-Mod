@@ -793,15 +793,6 @@
     ],
     "subtitle": "subtitles.block.bubble_column.bubble_pop"
   },
-  "world/entity.breeze.wind_burst": {
-    "sounds": [
-      {
-        "name": "minecraft:entity.breeze.wind_burst",
-        "type": "event"
-      }
-    ],
-    "subtitle": "subtitles.entity.breeze.wind_burst"
-  },
   "world/block.bubble_column.bubble_pop": {
     "sounds": [
       {
@@ -829,15 +820,6 @@
     ],
     "subtitle": "subtitles.block.end_portal_frame.fill"
   },
-  "world/item.mace.smash_air": {
-    "sounds": [
-      {
-        "name": "minecraft:item.mace.smash_air",
-        "type": "event"
-      }
-    ],
-    "subtitle": "subtitles.item.mace.smash_air"
-  },
   "world/block.portal.trigger": {
     "sounds": [
       {
@@ -855,5 +837,14 @@
       }
     ],
     "subtitle": "subtitles.block.sweet_berry_bush.pick_berries"
+  },
+  "world/entity.wind_charge.wind_burst": {
+    "sounds": [
+      {
+        "name": "minecraft:entity.wind_charge.wind_burst",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.entity.wind_charge.wind_burst"
   }
 }

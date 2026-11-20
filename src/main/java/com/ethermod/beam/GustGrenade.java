@@ -279,12 +279,10 @@ public final class GustGrenade {
                 at.x,
                 at.y,
                 at.z,
-                com.ethermod.sound.ModSounds.WORLD_BREEZE_WIND_BURST,
+                com.ethermod.sound.ModSounds.WORLD_WIND_CHARGE_BURST,
                 SoundSource.PLAYERS,
-                .6f,
-                .8f);
-        // bigger than the shot's burst: the mace's air smash under it (FX bench)
-        sl.playSound(null, at.x, at.y, at.z, com.ethermod.sound.ModSounds.WORLD_MACE_SMASH_AIR, SoundSource.PLAYERS, .35f, .8f);
+                1f,
+                0.9f);
         for (Entity e : sl.getEntities((Entity) null, new AABB(at, at).inflate(RADIUS))) {
             Vec3 centre = e.position().add(0, e.getBbHeight() * 0.5, 0);
             double d = centre.distanceTo(at);

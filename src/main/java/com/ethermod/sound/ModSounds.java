@@ -53,7 +53,6 @@ public final class ModSounds {
     public static final SoundEvent WORLD_BREEZE_INHALE = a("world/entity.breeze.inhale");
     public static final SoundEvent WORLD_BREEZE_JUMP = a("world/entity.breeze.jump");
     public static final SoundEvent WORLD_BREEZE_SHOOT = a("world/entity.breeze.shoot");
-    public static final SoundEvent WORLD_BREEZE_WIND_BURST = a("world/entity.breeze.wind_burst");
     public static final SoundEvent WORLD_BUBBLE_COLUMN_BUBBLE_POP = a("world/block.bubble_column.bubble_pop");
     public static final SoundEvent WORLD_BUCKET_EMPTY = a("world/item.bucket.empty");
     public static final SoundEvent WORLD_BUCKET_EMPTY_LAVA = a("world/item.bucket.empty_lava");
@@ -80,7 +79,6 @@ public final class ModSounds {
     public static final SoundEvent WORLD_HOE_TILL = a("world/item.hoe.till");
     public static final SoundEvent WORLD_ITEM_PICKUP = a("world/entity.item.pickup");
     public static final SoundEvent WORLD_LAVA_EXTINGUISH = a("world/block.lava.extinguish");
-    public static final SoundEvent WORLD_MACE_SMASH_AIR = a("world/item.mace.smash_air");
     public static final SoundEvent WORLD_MACE_SMASH_GROUND = a("world/item.mace.smash_ground");
     public static final SoundEvent WORLD_MACE_SMASH_GROUND_HEAVY = a("world/item.mace.smash_ground_heavy");
     public static final SoundEvent WORLD_NOTE_BLOCK_CHIME = a("world/block.note_block.chime");
@@ -98,4 +96,5 @@ public final class ModSounds {
     public static final SoundEvent WORLD_STASIS_DING = a("world/stasis.ding");
     public static final SoundEvent WORLD_SWEET_BERRY_BUSH_PICK_BERRIES = a("world/block.sweet_berry_bush.pick_berries");
     public static final SoundEvent WORLD_TOTEM_USE = a("world/item.totem.use");
+    public static final SoundEvent WORLD_WIND_CHARGE_BURST = a("world/entity.wind_charge.wind_burst");
 }
