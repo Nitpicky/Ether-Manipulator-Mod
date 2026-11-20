@@ -1,0 +1,1215 @@
+/home/runner/.gradle/caches/modules-2/files-2.1/curse.maven/geckolib-388172/8893169/196231506b89da06925c087f9b8bc5fd12ebea16/geckolib-388172-8893169.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/io.github.llamalad7/mixinextras-neoforge/0.5.5/26f2905a37afd203c3da1d6a2e164472a7531b41/mixinextras-neoforge-0.5.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.accesstransformers/at-parser/11.0.2/64aae57d6d26d69543c5275181fe6971707a4e16/at-parser-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/earlydisplay/12.0.16/efa2e56115d22853d10524874a7bbb64555c2a28/earlydisplay-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/12.0.16/edbb2ee8211a867215970bc15ae9c354fa56dc09/loader-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarMetadata/0.5.3/ff40c1cd721d07615d825c5bbf27705b2e3258ed/JarJarMetadata-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarSelector/0.5.3/6b845aab8d5c8e721b4e3cd30f97722b7f8044b1/JarJarSelector-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/accesstransformers/11.0.2/25dcb69c78b16669935f0ab91dff830ce192379d/accesstransformers-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/bus/8.0.5/5b2d33285ab5d1554e9798ad98c40d6ea3868bd5/bus-8.0.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/mergetool/2.0.7/793b18456e92c4a7f66d9b5d8bf7a9c1c7a20b20/mergetool-2.0.7-api.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar
+=== LIST /(ItemAbilit.*|.*Permission.*|BlockEvent.*|.*BreakEvent.*|.*DataPackRegistr.*|LootModifier|.*LootParams.*)$
+net/minecraft/client/gui/screens/options/HasGamemasterPermissionReaction
+net/minecraft/server/permissions/LevelBasedPermissionSet
+net/minecraft/server/permissions/Permission
+net/minecraft/server/permissions/Permission$Atom
+net/minecraft/server/permissions/Permission$HasCommandLevel
+net/minecraft/server/permissions/PermissionCheck
+net/minecraft/server/permissions/PermissionCheck$AlwaysPass
+net/minecraft/server/permissions/PermissionCheck$Require
+net/minecraft/server/permissions/PermissionCheckTypes
+net/minecraft/server/permissions/PermissionLevel
+net/minecraft/server/permissions/PermissionProviderCheck
+net/minecraft/server/permissions/PermissionSet
+net/minecraft/server/permissions/PermissionSetSupplier
+net/minecraft/server/permissions/PermissionSetUnion
+net/minecraft/server/permissions/PermissionTypes
+net/minecraft/server/permissions/Permissions
+net/minecraft/world/level/BlockEventData
+net/minecraft/world/level/storage/loot/LootParams
+net/minecraft/world/level/storage/loot/LootParams$Builder
+net/minecraft/world/level/storage/loot/LootParams$DynamicDrop
+net/neoforged/neoforge/common/ItemAbilities
+net/neoforged/neoforge/common/ItemAbility
+net/neoforged/neoforge/common/advancements/critereon/ItemAbilityPredicate
+net/neoforged/neoforge/common/loot/LootModifier
+net/neoforged/neoforge/event/entity/player/PermissionsChangedEvent
+net/neoforged/neoforge/event/level/BlockEvent
+net/neoforged/neoforge/event/level/BlockEvent$BlockToolModificationEvent
+net/neoforged/neoforge/event/level/BlockEvent$EntityMultiPlaceEvent
+net/neoforged/neoforge/event/level/BlockEvent$EntityPlaceEvent
+net/neoforged/neoforge/event/level/BlockEvent$FarmlandTrampleEvent
+net/neoforged/neoforge/event/level/BlockEvent$FluidPlaceBlockEvent
+net/neoforged/neoforge/event/level/BlockEvent$NeighborNotifyEvent
+net/neoforged/neoforge/event/level/BlockEvent$PortalSpawnEvent
+net/neoforged/neoforge/registries/DataPackRegistriesHooks
+net/neoforged/neoforge/registries/DataPackRegistriesHooks$DatapackRegistryGroup
+net/neoforged/neoforge/server/permission/PermissionAPI
+net/neoforged/neoforge/server/permission/events/PermissionGatherEvent
+net/neoforged/neoforge/server/permission/events/PermissionGatherEvent$Handler
+net/neoforged/neoforge/server/permission/events/PermissionGatherEvent$Nodes
+net/neoforged/neoforge/server/permission/exceptions/UnregisteredPermissionException
+net/neoforged/neoforge/server/permission/handler/DefaultPermissionHandler
+net/neoforged/neoforge/server/permission/handler/IPermissionHandler
+net/neoforged/neoforge/server/permission/handler/IPermissionHandlerFactory
+net/neoforged/neoforge/server/permission/nodes/PermissionDynamicContext
+net/neoforged/neoforge/server/permission/nodes/PermissionDynamicContextKey
+net/neoforged/neoforge/server/permission/nodes/PermissionNode
+net/neoforged/neoforge/server/permission/nodes/PermissionNode$PermissionResolver
+net/neoforged/neoforge/server/permission/nodes/PermissionType
+net/neoforged/neoforge/server/permission/nodes/PermissionTypes
+=== CODE net/minecraft/world/entity/LivingEntity knockback
+  public void knockback(double, double, double, net.minecraft.world.damagesource.DamageSource, float, boolean);
+    Code:
+         0: aload_0
+         1: dload_1
+         2: d2f
+         3: dload_3
+         4: dload         5
+         6: invokestatic  #3031               // Method net/neoforged/neoforge/common/CommonHooks.onLivingKnockBack:(Lnet/minecraft/world/entity/LivingEntity;FDD)Lnet/neoforged/neoforge/event/entity/living/LivingKnockBackEvent;
+         9: astore        10
+        11: aload         10
+        13: invokevirtual #3034               // Method net/neoforged/neoforge/event/entity/living/LivingKnockBackEvent.isCanceled:()Z
+        16: ifeq          20
+        19: return
+        20: aload         10
+        22: invokevirtual #3037               // Method net/neoforged/neoforge/event/entity/living/LivingKnockBackEvent.getStrength:()F
+        25: f2d
+        26: dstore_1
+        27: aload         10
+        29: invokevirtual #3040               // Method net/neoforged/neoforge/event/entity/living/LivingKnockBackEvent.getRatioX:()D
+        32: dstore_3
+        33: aload         10
+        35: invokevirtual #3043               // Method net/neoforged/neoforge/event/entity/living/LivingKnockBackEvent.getRatioZ:()D
+        38: dstore        5
+        40: dload_1
+        41: dconst_1
+        42: aload_0
+        43: getstatic     #658                // Field net/minecraft/world/entity/ai/attributes/Attributes.KNOCKBACK_RESISTANCE:Lnet/minecraft/core/Holder;
+        46: invokevirtual #1060               // Method getAttributeValue:(Lnet/minecraft/core/Holder;)D
+        49: dsub
+        50: dmul
+        51: dstore_1
+        52: dload_1
+        53: dconst_0
+        54: dcmpg
+        55: ifle          223
+        58: aload_0
+        59: iconst_1
+        60: putfield      #3046               // Field needsSync:Z
+        63: aload_0
+        64: invokevirtual #883                // Method getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;
+        67: astore        11
+        69: dload_3
+        70: dload_3
+        71: dmul
+        72: dload         5
+        74: dload         5
+        76: dmul
+        77: dadd
+        78: ldc2_w        #888                // double 9.999999747378752E-6d
+        81: dcmpg
+        82: ifge          137
+        85: aload_0
+        86: getfield      #531                // Field random:Lnet/minecraft/util/RandomSource;
+        89: invokeinterface #1174,  1         // InterfaceMethod net/minecraft/util/RandomSource.nextDouble:()D
+        94: aload_0
+        95: getfield      #531                // Field random:Lnet/minecraft/util/RandomSource;
+        98: invokeinterface #1174,  1         // InterfaceMethod net/minecraft/util/RandomSource.nextDouble:()D
+       103: dsub
+       104: ldc2_w        #3047               // double 0.01d
+       107: dmul
+       108: dstore_3
+       109: aload_0
+       110: getfield      #531                // Field random:Lnet/minecraft/util/RandomSource;
+       113: invokeinterface #1174,  1         // InterfaceMethod net/minecraft/util/RandomSource.nextDouble:()D
+       118: aload_0
+       119: getfield      #531                // Field random:Lnet/minecraft/util/RandomSource;
+       122: invokeinterface #1174,  1         // InterfaceMethod net/minecraft/util/RandomSource.nextDouble:()D
+       127: dsub
+       128: ldc2_w        #3047               // double 0.01d
+       131: dmul
+       132: dstore        5
+       134: goto          69
+       137: new           #885                // class net/minecraft/world/phys/Vec3
+       140: dup
+       141: dload_3
+       142: dconst_0
+       143: dload         5
+       145: invokespecial #2432               // Method net/minecraft/world/phys/Vec3."<init>":(DDD)V
+       148: invokevirtual #2435               // Method net/minecraft/world/phys/Vec3.normalize:()Lnet/minecraft/world/phys/Vec3;
+       151: dload_1
+       152: invokevirtual #3051               // Method net/minecraft/world/phys/Vec3.scale:(D)Lnet/minecraft/world/phys/Vec3;
+       155: astore        12
+       157: aload_0
+       158: aload         11
+       160: getfield      #2427               // Field net/minecraft/world/phys/Vec3.x:D
+       163: ldc2_w        #3052               // double 2.0d
+       166: ddiv
+       167: aload         12
+       169: getfield      #2427               // Field net/minecraft/world/phys/Vec3.x:D
+       172: dsub
+       173: aload_0
+       174: invokevirtual #3055               // Method onGround:()Z
+       177: ifeq          200
+       180: ldc2_w        #3056               // double 0.4d
+       183: aload         11
+       185: getfield      #2531               // Field net/minecraft/world/phys/Vec3.y:D
+       188: ldc2_w        #3052               // double 2.0d
+       191: ddiv
+       192: dload_1
+       193: dadd
+       194: invokestatic  #816                // Method java/lang/Math.min:(DD)D
+       197: goto          205
+       200: aload         11
+       202: getfield      #2531               // Field net/minecraft/world/phys/Vec3.y:D
+       205: aload         11
+       207: getfield      #2429               // Field net/minecraft/world/phys/Vec3.z:D
+       210: ldc2_w        #3052               // double 2.0d
+       213: ddiv
+       214: aload         12
+       216: getfield      #2429               // Field net/minecraft/world/phys/Vec3.z:D
+       219: dsub
+       220: invokevirtual #3060               // Method setDeltaMovement:(DDD)V
+       223: return
+  public void knockback(double, double, double, net.minecraft.world.damagesource.DamageSource, float);
+    Code:
+         0: aload_0
+         1: dload_1
+         2: dload_3
+         3: dload         5
+         5: aload         7
+         7: fload         8
+         9: iconst_0
+        10: invokevirtual #3066               // Method knockback:(DDDLnet/minecraft/world/damagesource/DamageSource;FZ)V
+        13: return
+=== CODE net/minecraft/server/level/ServerEntity sendChanges
+  public void sendChanges();
+    Code:
+         0: aload_0
+         1: getfield      #36                 // Field entity:Lnet/minecraft/world/entity/Entity;
+         4: invokevirtual #123                // Method net/minecraft/world/entity/Entity.updateDataBeforeSync:()V
+         7: aload_0
+         8: getfield      #36                 // Field entity:Lnet/minecraft/world/entity/Entity;
+        11: invokevirtual #126                // Method net/minecraft/world/entity/Entity.getPassengers:()Ljava/util/List;
+        14: astore_1
+        15: aload_1
+        16: aload_0
+        17: getfield      #24                 // Field lastPassengers:Ljava/util/List;
+        20: invokeinterface #129,  2          // InterfaceMethod java/util/List.equals:(Ljava/lang/Object;)Z
+        25: ifne          53
+        28: aload_0
+        29: getfield      #32                 // Field synchronizer:Lnet/minecraft/server/level/ServerEntity$Synchronizer;
+        32: new           #135                // class net/minecraft/network/protocol/game/ClientboundSetPassengersPacket
+        35: dup
+        36: aload_0
+        37: getfield      #36                 // Field entity:Lnet/minecraft/world/entity/Entity;
+        40: invokespecial #137                // Method net/minecraft/network/protocol/game/ClientboundSetPassengersPacket."<init>":(Lnet/minecraft/world/entity/Entity;)V
+        43: invokeinterface #140,  2          // InterfaceMethod net/minecraft/server/level/ServerEntity$Synchronizer.sendToTrackingPlayers:(Lnet/minecraft/network/protocol/Packet;)V
+        48: aload_0
+        49: aload_1
+        50: putfield      #24                 // Field lastPassengers:Ljava/util/List;
+        53: aload_0
+        54: getfield      #36                 // Field entity:Lnet/minecraft/world/entity/Entity;
+        57: astore_3
+        58: aload_3
+        59: instanceof    #146                // class net/minecraft/world/entity/decoration/ItemFrame
+        62: ifeq          190
+        65: aload_3
+        66: checkcast     #146                // class net/minecraft/world/entity/decoration/ItemFrame
+        69: astore_2
+        70: aload_0
+        71: getfield      #148                // Field tickCount:I
+        74: bipush        10
+        76: irem
+        77: ifne          190
+        80: aload_2
+        81: invokevirtual #152                // Method net/minecraft/world/entity/decoration/ItemFrame.getItem:()Lnet/minecraft/world/item/ItemStack;
+        84: astore_3
+        85: aload_3
+        86: getstatic     #163                // Field net/minecraft/core/component/DataComponents.MAP_ID:Lnet/minecraft/core/component/DataComponentType;
+        89: invokevirtual #169                // Method net/minecraft/world/item/ItemStack.get:(Lnet/minecraft/core/component/DataComponentType;)Ljava/lang/Object;
+        92: checkcast     #173                // class net/minecraft/world/level/saveddata/maps/MapId
+        95: astore        4
+        97: aload_3
+        98: aload_0
+        99: getfield      #28                 // Field level:Lnet/minecraft/server/level/ServerLevel;
+       102: invokestatic  #717                // Method net/minecraft/world/item/MapItem.getSavedData:(Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/level/saveddata/maps/MapItemSavedData;
+       105: astore        5
+       107: aload         5
+       109: ifnull        186
+       112: aload_0
+       113: getfield      #28                 // Field level:Lnet/minecraft/server/level/ServerLevel;
+       116: invokevirtual #179                // Method net/minecraft/server/level/ServerLevel.players:()Ljava/util/List;
+       119: invokeinterface #184,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+       124: astore        6
+       126: aload         6
+       128: invokeinterface #188,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+       133: ifeq          186
+       136: aload         6
+       138: invokeinterface #193,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+       143: checkcast     #197                // class net/minecraft/server/level/ServerPlayer
+       146: astore        7
+       148: aload         5
+       150: aload         7
+       152: aload_3
+       153: aload_2
+       154: invokevirtual #199                // Method net/minecraft/world/level/saveddata/maps/MapItemSavedData.tickCarriedBy:(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/decoration/ItemFrame;)V
+       157: aload         5
+       159: aload         4
+       161: aload         7
+       163: invokevirtual #205                // Method net/minecraft/world/level/saveddata/maps/MapItemSavedData.getUpdatePacket:(Lnet/minecraft/world/level/saveddata/maps/MapId;Lnet/minecraft/world/entity/player/Player;)Lnet/minecraft/network/protocol/Packet;
+       166: astore        8
+       168: aload         8
+       170: ifnull        183
+       173: aload         7
+       175: getfield      #209                // Field net/minecraft/server/level/ServerPlayer.connection:Lnet/minecraft/server/network/ServerGamePacketListenerImpl;
+       178: aload         8
+       180: invokevirtual #213                // Method net/minecraft/server/network/ServerGamePacketListenerImpl.send:(Lnet/minecraft/network/protocol/Packet;)V
+       183: goto          126
+       186: aload_0
+       187: invokevirtual #218                // Method sendDirtyEntityData:()V
+       190: aload_0
+       191: getfield      #36                 // Field entity:Lnet/minecraft/world/entity/Entity;
+       194: invokevirtual #63                 // Method net/minecraft/world/entity/Entity.trackingPosition:()Lnet/minecraft/world/phys/Vec3;
+       197: astore_2
+       198: aload_0
+       199: getfield      #60                 // Field interpolationTracker:Lnet/minecraft/world/entity/InterpolationTracker;
+       202: aload_2
+       203: invokeinterface #221,  2          // InterfaceMethod net/minecraft/world/entity/InterpolationTracker.updateTracking:(Lnet/minecraft/world/phys/Vec3;)V
+       208: aload_0
+       209: getfield      #36                 // Field entity:Lnet/minecraft/world/entity/Entity;
+       212: getfield      #226                // Field net/minecraft/world/entity/Entity.syncPosition:Z
+       215: ifeq          243
+       218: aload_0
+       219: aload_0
+       220: getfield      #40                 // Field updateInterval:Lnet/minecraft/world/entity/UpdateInterval;
+       223: aload_0
+       224: getfield      #148                // Field tickCount:I
+       227: invokeinterface #229,  2          // InterfaceMethod net/minecraft/world/entity/UpdateInterval.nextInterval:(I)I
+       232: putfield      #148                // Field tickCount:I
+       235: aload_0
+       236: getfield      #36                 // Field entity:Lnet/minecraft/world/entity/Entity;
+       239: iconst_0
+       240: putfield      #226                // Field net/minecraft/world/entity/Entity.syncPosition:Z
+       243: aload_0
+       244: getfield      #36                 // Field entity:Lnet/minecraft/world/entity/Entity;
+       247: getfield      #235                // Field net/minecraft/world/entity/Entity.needsSync:Z
+       250: ifne          282
+       253: aload_0
+       254: getfield      #40                 // Field updateInterval:Lnet/minecraft/world/entity/UpdateInterval;
+       257: aload_0
+       258: getfield      #148                // Field tickCount:I
+       261: invokeinterface #238,  2          // InterfaceMethod net/minecraft/world/entity/UpdateInterval.test:(I)Z
+       266: ifne          282
+       269: aload_0
+       270: getfield      #36                 // Field entity:Lnet/minecraft/world/entity/Entity;
+       273: invokevirtual #111                // Method net/minecraft/world/entity/Entity.getEntityData:()Lnet/minecraft/network/syncher/SynchedEntityData;
+       276: invokevirtual #242                // Method net/minecraft/network/syncher/SynchedEntityData.isDirty:()Z
+       279: ifeq          939
+       282: aload_0
+       283: getfield      #36                 // Field entity:Lnet/minecraft/world/entity/Entity;
+       286: invokevirtual #78                 // Method net/minecraft/world/entity/Entity.getYRot:()F
+       289: invokestatic  #82                 // Method net/minecraft/util/Mth.packDegrees:(F)B
+       292: istore_3
+       293: aload_0
+       294: getfield      #36                 // Field entity:Lnet/minecraft/world/entity/Entity;
+       297: invokevirtual #92                 // Method net/minecraft/world/entity/Entity.getXRot:()F
+       300: invokestatic  #82                 // Method net/minecraft/util/Mth.packDegrees:(F)B
+       303: istore        4
+       305: iload_3
+       306: aload_0
+       307: getfield      #88                 // Field lastSentYRot:B
+       310: isub
+       311: invokestatic  #245                // Method java/lang/Math.abs:(I)I
+       314: iconst_1
+       315: if_icmpge     332
+       318: iload         4
+       320: aload_0
+       321: getfield      #95                 // Field lastSentXRot:B
+       324: isub
+       325: invokestatic  #245                // Method java/lang/Math.abs:(I)I
+       328: iconst_1
+       329: if_icmplt     336
+       332: iconst_1
+       333: goto          337
+       336: iconst_0
+       337: istore        5
+       339: aload_0
+       340: getfield      #36                 // Field entity:Lnet/minecraft/world/entity/Entity;
+       343: invokevirtual #250                // Method net/minecraft/world/entity/Entity.isPassenger:()Z
+       346: ifeq          427
+       349: iload         5
+       351: ifeq          398
+       354: aload_0
+       355: getfield      #32                 // Field synchronizer:Lnet/minecraft/server/level/ServerEntity$Synchronizer;
+       358: new           #253                // class net/minecraft/network/protocol/game/ClientboundMoveEntityPacket$Rot
+       361: dup
+       362: aload_0
+       363: getfield      #36                 // Field entity:Lnet/minecraft/world/entity/Entity;
+       366: invokevirtual #255                // Method net/minecraft/world/entity/Entity.getId:()I
+       369: iload_3
+       370: iload         4
+       372: aload_0
+       373: getfield      #36                 // Field entity:Lnet/minecraft/world/entity/Entity;
+       376: invokevirtual #104                // Method net/minecraft/world/entity/Entity.onGround:()Z
+       379: invokespecial #259                // Method net/minecraft/network/protocol/game/ClientboundMoveEntityPacket$Rot."<init>":(IBBZ)V
+       382: invokeinterface #140,  2          // InterfaceMethod net/minecraft/server/level/ServerEntity$Synchronizer.sendToTrackingPlayers:(Lnet/minecraft/network/protocol/Packet;)V
+       387: aload_0
+       388: iload_3
+       389: putfield      #88                 // Field lastSentYRot:B
+       392: aload_0
+       393: iload         4
+       395: putfield      #95                 // Field lastSentXRot:B
+       398: aload_0
+       399: getfield      #60                 // Field interpolationTracker:Lnet/minecraft/world/entity/InterpolationTracker;
+       402: invokeinterface #262,  1          // InterfaceMethod net/minecraft/world/entity/InterpolationTracker.clear:()V
+       407: aload_0
+       408: getfield      #12                 // Field positionCodec:Lnet/minecraft/network/protocol/game/VecDeltaCodec;
+       411: aload_2
+       412: invokevirtual #67                 // Method net/minecraft/network/protocol/game/VecDeltaCodec.setBase:(Lnet/minecraft/world/phys/Vec3;)V
+       415: aload_0
+       416: invokevirtual #218                // Method sendDirtyEntityData:()V
+       419: aload_0
+       420: iconst_1
+       421: putfield      #265                // Field wasRiding:Z
+       424: goto          877
+       427: aload_0
+       428: getfield      #36                 // Field entity:Lnet/minecraft/world/entity/Entity;
+       431: astore        8
+       433: aload         8
+       435: instanceof    #268                // class net/minecraft/world/entity/vehicle/minecart/AbstractMinecart
+       438: ifeq          484
+       441: aload         8
+       443: checkcast     #268                // class net/minecraft/world/entity/vehicle/minecart/AbstractMinecart
+       446: astore        6
+       448: aload         6
+       450: invokevirtual #270                // Method net/minecraft/world/entity/vehicle/minecart/AbstractMinecart.getBehavior:()Lnet/minecraft/world/entity/vehicle/minecart/MinecartBehavior;
+       453: astore        8
+       455: aload         8
+       457: instanceof    #274                // class net/minecraft/world/entity/vehicle/minecart/NewMinecartBehavior
+       460: ifeq          484
+       463: aload         8
+       465: checkcast     #274                // class net/minecraft/world/entity/vehicle/minecart/NewMinecartBehavior
+       468: astore        7
+       470: aload_0
+       471: aload         7
+       473: iload_3
+       474: iload         4
+       476: iload         5
+       478: invokevirtual #276                // Method handleMinecartPosRot:(Lnet/minecraft/world/entity/vehicle/minecart/NewMinecartBehavior;BBZ)V
+       481: goto          877
+       484: aload_0
+       485: dup
+       486: getfield      #280                // Field teleportDelay:I
+       489: iconst_1
+       490: iadd
+       491: putfield      #280                // Field teleportDelay:I
+       494: aload_0
+       495: getfield      #60                 // Field interpolationTracker:Lnet/minecraft/world/entity/InterpolationTracker;
+       498: aload_2
+       499: invokeinterface #283,  2          // InterfaceMethod net/minecraft/world/entity/InterpolationTracker.getPositionPath:(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/entity/PositionPath;
+       504: astore        8
+       506: aload_0
+       507: getfield      #60                 // Field interpolationTracker:Lnet/minecraft/world/entity/InterpolationTracker;
+       510: invokeinterface #262,  1          // InterfaceMethod net/minecraft/world/entity/InterpolationTracker.clear:()V
+       515: aload_0
+       516: getfield      #36                 // Field entity:Lnet/minecraft/world/entity/Entity;
+       519: instanceof    #287                // class net/minecraft/world/entity/projectile/arrow/AbstractArrow
+       522: ifeq          541
+       525: aload_0
+       526: aload         8
+       528: iload_3
+       529: iload         4
+       531: iconst_1
+       532: iconst_1
+       533: invokevirtual #289                // Method createMovePacket:(Lnet/minecraft/world/entity/PositionPath;BBZZ)Lnet/minecraft/network/protocol/game/MovementPacket;
+       536: astore        9
+       538: goto          603
+       541: aload_0
+       542: getfield      #12                 // Field positionCodec:Lnet/minecraft/network/protocol/game/VecDeltaCodec;
+       545: aload_2
+       546: invokevirtual #293                // Method net/minecraft/network/protocol/game/VecDeltaCodec.delta:(Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/phys/Vec3;
+       549: invokevirtual #297                // Method net/minecraft/world/phys/Vec3.lengthSqr:()D
+       552: ldc2_w        #303                // double 7.62939453125E-6d
+       555: dcmpl
+       556: iflt          563
+       559: iconst_1
+       560: goto          564
+       563: iconst_0
+       564: istore        10
+       566: iload         10
+       568: ifne          581
+       571: aload_0
+       572: getfield      #148                // Field tickCount:I
+       575: bipush        60
+       577: irem
+       578: ifne          585
+       581: iconst_1
+       582: goto          586
+       585: iconst_0
+       586: istore        11
+       588: aload_0
+       589: aload         8
+       591: iload_3
+       592: iload         4
+       594: iload         11
+       596: iload         5
+       598: invokevirtual #289                // Method createMovePacket:(Lnet/minecraft/world/entity/PositionPath;BBZZ)Lnet/minecraft/network/protocol/game/MovementPacket;
+       601: astore        9
+       603: aload_0
+       604: getfield      #36                 // Field entity:Lnet/minecraft/world/entity/Entity;
+       607: getfield      #235                // Field net/minecraft/world/entity/Entity.needsSync:Z
+       610: ifne          649
+       613: aload_0
+       614: getfield      #44                 // Field trackDelta:Z
+       617: ifne          649
+       620: aload_0
+       621: getfield      #36                 // Field entity:Lnet/minecraft/world/entity/Entity;
+       624: astore        11
+       626: aload         11
+       628: instanceof    #305                // class net/minecraft/world/entity/LivingEntity
+       631: ifeq          806
+       634: aload         11
+       636: checkcast     #305                // class net/minecraft/world/entity/LivingEntity
+       639: astore        10
+       641: aload         10
+       643: invokevirtual #307                // Method net/minecraft/world/entity/LivingEntity.isFallFlying:()Z
+       646: ifeq          806
+       649: aload_0
+       650: getfield      #36                 // Field entity:Lnet/minecraft/world/entity/Entity;
+       653: invokevirtual #71                 // Method net/minecraft/world/entity/Entity.getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;
+       656: astore        11
+       658: aload         11
+       660: aload_0
+       661: getfield      #74                 // Field lastSentMovement:Lnet/minecraft/world/phys/Vec3;
+       664: invokevirtual #310                // Method net/minecraft/world/phys/Vec3.distanceToSqr:(Lnet/minecraft/world/phys/Vec3;)D
+=== CODE net/minecraft/world/entity/Entity push
+  public void push(net.minecraft.world.entity.Entity);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: invokevirtual #2705               // Method isPassengerOfSameVehicle:(Lnet/minecraft/world/entity/Entity;)Z
+         5: ifne          167
+         8: aload_1
+         9: getfield      #1351               // Field noPhysics:Z
+        12: ifne          167
+        15: aload_0
+        16: getfield      #1351               // Field noPhysics:Z
+        19: ifne          167
+        22: aload_1
+        23: invokevirtual #928                // Method getX:()D
+        26: aload_0
+        27: invokevirtual #928                // Method getX:()D
+        30: dsub
+        31: dstore_2
+        32: aload_1
+        33: invokevirtual #934                // Method getZ:()D
+        36: aload_0
+        37: invokevirtual #934                // Method getZ:()D
+        40: dsub
+        41: dstore        4
+        43: dload_2
+        44: dload         4
+        46: invokestatic  #2708               // Method net/minecraft/util/Mth.absMax:(DD)D
+        49: dstore        6
+        51: dload         6
+        53: ldc2_w        #2709               // double 0.009999999776482582d
+        56: dcmpl
+        57: iflt          167
+        60: dload         6
+        62: invokestatic  #2279               // Method java/lang/Math.sqrt:(D)D
+        65: dstore        6
+        67: dload_2
+        68: dload         6
+        70: ddiv
+        71: dstore_2
+        72: dload         4
+        74: dload         6
+        76: ddiv
+        77: dstore        4
+        79: dconst_1
+        80: dload         6
+        82: ddiv
+        83: dstore        8
+        85: dload         8
+        87: dconst_1
+        88: dcmpl
+        89: ifle          95
+        92: dconst_1
+        93: dstore        8
+        95: dload_2
+        96: dload         8
+        98: dmul
+        99: dstore_2
+       100: dload         4
+       102: dload         8
+       104: dmul
+       105: dstore        4
+       107: dload_2
+       108: ldc2_w        #2711               // double 0.05000000074505806d
+       111: dmul
+       112: dstore_2
+       113: dload         4
+       115: ldc2_w        #2711               // double 0.05000000074505806d
+       118: dmul
+       119: dstore        4
+       121: aload_0
+       122: invokevirtual #798                // Method isVehicle:()Z
+       125: ifne          145
+       128: aload_0
+       129: invokevirtual #2715               // Method isPushable:()Z
+       132: ifeq          145
+       135: aload_0
+       136: dload_2
+       137: dneg
+       138: dconst_0
+       139: dload         4
+       141: dneg
+       142: invokevirtual #2717               // Method push:(DDD)V
+       145: aload_1
+       146: invokevirtual #798                // Method isVehicle:()Z
+       149: ifne          167
+       152: aload_1
+       153: invokevirtual #2715               // Method isPushable:()Z
+       156: ifeq          167
+       159: aload_1
+       160: dload_2
+       161: dconst_0
+       162: dload         4
+       164: invokevirtual #2717               // Method push:(DDD)V
+       167: return
+  public void push(net.minecraft.world.phys.Vec3);
+    Code:
+         0: aload_1
+         1: invokevirtual #2721               // Method net/minecraft/world/phys/Vec3.isFinite:()Z
+         4: ifeq          23
+         7: aload_0
+         8: aload_1
+         9: getfield      #982                // Field net/minecraft/world/phys/Vec3.x:D
+        12: aload_1
+        13: getfield      #984                // Field net/minecraft/world/phys/Vec3.y:D
+        16: aload_1
+        17: getfield      #986                // Field net/minecraft/world/phys/Vec3.z:D
+        20: invokevirtual #2717               // Method push:(DDD)V
+        23: return
+  public void push(double, double, double);
+    Code:
+         0: dload_1
+         1: invokestatic  #2728               // Method java/lang/Double.isFinite:(D)Z
+         4: ifeq          42
+         7: dload_3
+         8: invokestatic  #2728               // Method java/lang/Double.isFinite:(D)Z
+        11: ifeq          42
+        14: dload         5
+        16: invokestatic  #2728               // Method java/lang/Double.isFinite:(D)Z
+        19: ifeq          42
+        22: aload_0
+        23: aload_0
+        24: invokevirtual #1488               // Method getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;
+        27: dload_1
+        28: dload_3
+        29: dload         5
+        31: invokevirtual #2360               // Method net/minecraft/world/phys/Vec3.add:(DDD)Lnet/minecraft/world/phys/Vec3;
+        34: invokevirtual #1380               // Method setDeltaMovement:(Lnet/minecraft/world/phys/Vec3;)V
+        37: aload_0
+        38: iconst_1
+        39: putfield      #2730               // Field needsSync:Z
+        42: return
+=== CODE net/minecraft/world/entity/projectile/Projectile getOwner
+  public net.minecraft.world.entity.Entity getOwner();
+    Code:
+         0: aload_0
+         1: getfield      #112                // Field owner:Lnet/minecraft/world/entity/EntityReference;
+         4: aload_0
+         5: invokevirtual #126                // Method level:()Lnet/minecraft/world/level/Level;
+         8: invokestatic  #130                // Method net/minecraft/world/entity/EntityReference.getEntity:(Lnet/minecraft/world/entity/EntityReference;Lnet/minecraft/world/level/Level;)Lnet/minecraft/world/entity/Entity;
+        11: areturn
+=== net/minecraft/commands/Commands
+Compiled from "Commands.java"
+public class net.minecraft.commands.Commands {
+  public static final java.lang.String COMMAND_PREFIX;
+  public static final net.minecraft.server.permissions.PermissionCheck LEVEL_ALL;
+  public static final net.minecraft.server.permissions.PermissionCheck LEVEL_MODERATORS;
+  public static final net.minecraft.server.permissions.PermissionCheck LEVEL_GAMEMASTERS;
+  public static final net.minecraft.server.permissions.PermissionCheck LEVEL_ADMINS;
+  public static final net.minecraft.server.permissions.PermissionCheck LEVEL_OWNERS;
+  public net.minecraft.commands.Commands(net.minecraft.commands.Commands$CommandSelection, net.minecraft.commands.CommandBuildContext);
+  public static <S> com.mojang.brigadier.ParseResults<S> mapSource(com.mojang.brigadier.ParseResults<S>, java.util.function.UnaryOperator<S>);
+  public void performPrefixedCommand(net.minecraft.commands.CommandSourceStack, java.lang.String);
+  public static java.lang.String trimOptionalPrefix(java.lang.String);
+  public void performCommand(com.mojang.brigadier.ParseResults<net.minecraft.commands.CommandSourceStack>, java.lang.String);
+  public static void executeCommandInContext(net.minecraft.commands.CommandSourceStack, java.util.function.Consumer<net.minecraft.commands.execution.ExecutionContext<net.minecraft.commands.CommandSourceStack>>);
+  public void sendCommands(net.minecraft.server.level.ServerPlayer);
+  public static com.mojang.brigadier.builder.LiteralArgumentBuilder<net.minecraft.commands.CommandSourceStack> literal(java.lang.String);
+  public static <T> com.mojang.brigadier.builder.RequiredArgumentBuilder<net.minecraft.commands.CommandSourceStack, T> argument(java.lang.String, com.mojang.brigadier.arguments.ArgumentType<T>);
+  public static java.util.function.Predicate<java.lang.String> createValidator(net.minecraft.commands.Commands$ParseFunction);
+  public com.mojang.brigadier.CommandDispatcher<net.minecraft.commands.CommandSourceStack> getDispatcher();
+  public static <S> void validateParseResults(com.mojang.brigadier.ParseResults<S>) throws com.mojang.brigadier.exceptions.CommandSyntaxException;
+  public static <S> com.mojang.brigadier.exceptions.CommandSyntaxException getParseException(com.mojang.brigadier.ParseResults<S>);
+  public static net.minecraft.commands.CommandBuildContext createValidationContext(net.minecraft.core.HolderLookup$Provider);
+  public static void validate();
+  public static <T extends net.minecraft.server.permissions.PermissionSetSupplier> net.minecraft.server.permissions.PermissionProviderCheck<T> hasPermission(net.minecraft.server.permissions.PermissionCheck);
+  public static net.minecraft.commands.CommandSourceStack createCompilationContext(net.minecraft.server.permissions.PermissionSet);
+}
+=== net/minecraft/server/permissions/PermissionSet
+Compiled from "PermissionSet.java"
+public interface net.minecraft.server.permissions.PermissionSet {
+  public static final net.minecraft.server.permissions.PermissionSet NO_PERMISSIONS;
+  public static final net.minecraft.server.permissions.PermissionSet ALL_PERMISSIONS;
+  public abstract boolean hasPermission(net.minecraft.server.permissions.Permission);
+  public default net.minecraft.server.permissions.PermissionSet union(net.minecraft.server.permissions.PermissionSet);
+}
+=== net/minecraft/server/permissions/Permission
+Compiled from "Permission.java"
+public interface net.minecraft.server.permissions.Permission {
+  public static final com.mojang.serialization.Codec<net.minecraft.server.permissions.Permission> FULL_CODEC;
+  public static final com.mojang.serialization.Codec<net.minecraft.server.permissions.Permission> CODEC;
+  public abstract com.mojang.serialization.MapCodec<? extends net.minecraft.server.permissions.Permission> codec();
+}
+=== net/minecraft/server/permissions/PermissionLevel
+Compiled from "PermissionLevel.java"
+public final class net.minecraft.server.permissions.PermissionLevel extends java.lang.Enum<net.minecraft.server.permissions.PermissionLevel> implements net.minecraft.util.StringRepresentable {
+  public static final net.minecraft.server.permissions.PermissionLevel ALL;
+  public static final net.minecraft.server.permissions.PermissionLevel MODERATORS;
+  public static final net.minecraft.server.permissions.PermissionLevel GAMEMASTERS;
+  public static final net.minecraft.server.permissions.PermissionLevel ADMINS;
+  public static final net.minecraft.server.permissions.PermissionLevel OWNERS;
+  public static final com.mojang.serialization.Codec<net.minecraft.server.permissions.PermissionLevel> CODEC;
+  public static final com.mojang.serialization.Codec<net.minecraft.server.permissions.PermissionLevel> INT_CODEC;
+  public static net.minecraft.server.permissions.PermissionLevel[] values();
+  public static net.minecraft.server.permissions.PermissionLevel valueOf(java.lang.String);
+  public boolean isEqualOrHigherThan(net.minecraft.server.permissions.PermissionLevel);
+  public static net.minecraft.server.permissions.PermissionLevel byId(int);
+  public int id();
+  public java.lang.String getSerializedName();
+}
+=== net/minecraft/world/entity/EntityReference
+Compiled from "EntityReference.java"
+public final class net.minecraft.world.entity.EntityReference<StoredEntityType extends net.minecraft.world.level.entity.UniquelyIdentifyable> {
+  public static <Type extends net.minecraft.world.level.entity.UniquelyIdentifyable> com.mojang.serialization.Codec<net.minecraft.world.entity.EntityReference<Type>> codec();
+  public static <Type extends net.minecraft.world.level.entity.UniquelyIdentifyable> net.minecraft.network.codec.StreamCodec<io.netty.buffer.ByteBuf, net.minecraft.world.entity.EntityReference<Type>> streamCodec();
+  public static <T extends net.minecraft.world.level.entity.UniquelyIdentifyable> net.minecraft.world.entity.EntityReference<T> of(T);
+  public static <T extends net.minecraft.world.level.entity.UniquelyIdentifyable> net.minecraft.world.entity.EntityReference<T> of(java.util.UUID);
+  public java.util.UUID getUUID();
+  public StoredEntityType getEntity(net.minecraft.world.level.entity.UUIDLookup<? extends net.minecraft.world.level.entity.UniquelyIdentifyable>, java.lang.Class<StoredEntityType>);
+  public StoredEntityType getEntity(net.minecraft.world.level.Level, java.lang.Class<StoredEntityType>);
+  public boolean matches(StoredEntityType);
+  public void store(net.minecraft.world.level.storage.ValueOutput, java.lang.String);
+  public static void store(net.minecraft.world.entity.EntityReference<?>, net.minecraft.world.level.storage.ValueOutput, java.lang.String);
+  public static <StoredEntityType extends net.minecraft.world.level.entity.UniquelyIdentifyable> StoredEntityType get(net.minecraft.world.entity.EntityReference<StoredEntityType>, net.minecraft.world.level.Level, java.lang.Class<StoredEntityType>);
+  public static net.minecraft.world.entity.Entity getEntity(net.minecraft.world.entity.EntityReference<net.minecraft.world.entity.Entity>, net.minecraft.world.level.Level);
+  public static net.minecraft.world.entity.LivingEntity getLivingEntity(net.minecraft.world.entity.EntityReference<net.minecraft.world.entity.LivingEntity>, net.minecraft.world.level.Level);
+  public static net.minecraft.world.entity.player.Player getPlayer(net.minecraft.world.entity.EntityReference<net.minecraft.world.entity.player.Player>, net.minecraft.world.level.Level);
+  public static <StoredEntityType extends net.minecraft.world.level.entity.UniquelyIdentifyable> net.minecraft.world.entity.EntityReference<StoredEntityType> read(net.minecraft.world.level.storage.ValueInput, java.lang.String);
+  public static <StoredEntityType extends net.minecraft.world.level.entity.UniquelyIdentifyable> net.minecraft.world.entity.EntityReference<StoredEntityType> readWithOldOwnerConversion(net.minecraft.world.level.storage.ValueInput, java.lang.String, net.minecraft.world.level.Level);
+  public boolean equals(java.lang.Object);
+  public int hashCode();
+}
+=== net/neoforged/neoforge/event/level/BlockEvent
+Compiled from "BlockEvent.java"
+public abstract class net.neoforged.neoforge.event.level.BlockEvent extends net.neoforged.bus.api.Event {
+  public net.neoforged.neoforge.event.level.BlockEvent(net.minecraft.world.level.LevelAccessor, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState);
+  public net.minecraft.world.level.LevelAccessor getLevel();
+  public net.minecraft.core.BlockPos getPos();
+  public net.minecraft.world.level.block.state.BlockState getState();
+}
+=== net/neoforged/neoforge/event/level/BlockEvent$BlockToolModificationEvent
+Compiled from "BlockEvent.java"
+public class net.neoforged.neoforge.event.level.BlockEvent$BlockToolModificationEvent extends net.neoforged.neoforge.event.level.BlockEvent implements net.neoforged.bus.api.ICancellableEvent {
+  public net.neoforged.neoforge.event.level.BlockEvent$BlockToolModificationEvent(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.item.context.UseOnContext, net.neoforged.neoforge.common.ItemAbility, boolean);
+  public net.minecraft.world.entity.player.Player getPlayer();
+  public net.minecraft.world.item.ItemStack getHeldItemStack();
+  public net.neoforged.neoforge.common.ItemAbility getItemAbility();
+  public boolean isSimulated();
+  public net.minecraft.world.item.context.UseOnContext getContext();
+  public void setFinalState(net.minecraft.world.level.block.state.BlockState);
+  public net.minecraft.world.level.block.state.BlockState getFinalState();
+}
+=== net/neoforged/neoforge/event/level/BlockEvent$EntityMultiPlaceEvent
+Compiled from "BlockEvent.java"
+public class net.neoforged.neoforge.event.level.BlockEvent$EntityMultiPlaceEvent extends net.neoforged.neoforge.event.level.BlockEvent$EntityPlaceEvent implements net.neoforged.bus.api.ICancellableEvent {
+  public net.neoforged.neoforge.event.level.BlockEvent$EntityMultiPlaceEvent(java.util.List<net.neoforged.neoforge.common.util.BlockSnapshot>, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.entity.Entity);
+  public java.util.List<net.neoforged.neoforge.common.util.BlockSnapshot> getReplacedBlockSnapshots();
+}
+=== net/neoforged/neoforge/event/level/BlockEvent$EntityPlaceEvent
+Compiled from "BlockEvent.java"
+public class net.neoforged.neoforge.event.level.BlockEvent$EntityPlaceEvent extends net.neoforged.neoforge.event.level.BlockEvent implements net.neoforged.bus.api.ICancellableEvent {
+  public net.neoforged.neoforge.event.level.BlockEvent$EntityPlaceEvent(net.neoforged.neoforge.common.util.BlockSnapshot, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.entity.Entity);
+  public net.minecraft.world.entity.Entity getEntity();
+  public net.neoforged.neoforge.common.util.BlockSnapshot getBlockSnapshot();
+  public net.minecraft.world.level.block.state.BlockState getPlacedBlock();
+  public net.minecraft.world.level.block.state.BlockState getPlacedAgainst();
+}
+=== net/neoforged/neoforge/event/level/BlockEvent$FarmlandTrampleEvent
+Compiled from "BlockEvent.java"
+public class net.neoforged.neoforge.event.level.BlockEvent$FarmlandTrampleEvent extends net.neoforged.neoforge.event.level.BlockEvent implements net.neoforged.bus.api.ICancellableEvent {
+  public net.neoforged.neoforge.event.level.BlockEvent$FarmlandTrampleEvent(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, double, net.minecraft.world.entity.Entity);
+  public net.minecraft.world.entity.Entity getEntity();
+  public double getFallDistance();
+}
+=== net/neoforged/neoforge/event/level/BlockEvent$FluidPlaceBlockEvent
+Compiled from "BlockEvent.java"
+public class net.neoforged.neoforge.event.level.BlockEvent$FluidPlaceBlockEvent extends net.neoforged.neoforge.event.level.BlockEvent implements net.neoforged.bus.api.ICancellableEvent {
+  public net.neoforged.neoforge.event.level.BlockEvent$FluidPlaceBlockEvent(net.minecraft.world.level.LevelAccessor, net.minecraft.core.BlockPos, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState);
+  public net.minecraft.core.BlockPos getLiquidPos();
+  public net.minecraft.world.level.block.state.BlockState getNewState();
+  public void setNewState(net.minecraft.world.level.block.state.BlockState);
+  public net.minecraft.world.level.block.state.BlockState getOriginalState();
+}
+=== net/neoforged/neoforge/event/level/BlockEvent$NeighborNotifyEvent
+Compiled from "BlockEvent.java"
+public class net.neoforged.neoforge.event.level.BlockEvent$NeighborNotifyEvent extends net.neoforged.neoforge.event.level.BlockEvent implements net.neoforged.bus.api.ICancellableEvent {
+  public net.neoforged.neoforge.event.level.BlockEvent$NeighborNotifyEvent(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, java.util.EnumSet<net.minecraft.core.Direction>, boolean);
+  public java.util.EnumSet<net.minecraft.core.Direction> getNotifiedSides();
+  public boolean getForceRedstoneUpdate();
+}
+=== net/neoforged/neoforge/event/level/BlockEvent$PortalSpawnEvent
+Compiled from "BlockEvent.java"
+public class net.neoforged.neoforge.event.level.BlockEvent$PortalSpawnEvent extends net.neoforged.neoforge.event.level.BlockEvent implements net.neoforged.bus.api.ICancellableEvent {
+  public net.neoforged.neoforge.event.level.BlockEvent$PortalSpawnEvent(net.minecraft.world.level.LevelAccessor, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.portal.PortalShape);
+  public net.minecraft.world.level.portal.PortalShape getPortalSize();
+}
+=== net/neoforged/neoforge/common/ItemAbilities
+Compiled from "ItemAbilities.java"
+public class net.neoforged.neoforge.common.ItemAbilities {
+  public static final net.neoforged.neoforge.common.ItemAbility SHEARS_DIG;
+  public static final net.neoforged.neoforge.common.ItemAbility SHOVEL_DOUSE;
+  public static final net.neoforged.neoforge.common.ItemAbility SWORD_SWEEP;
+  public static final net.neoforged.neoforge.common.ItemAbility SHEARS_HARVEST;
+  public static final net.neoforged.neoforge.common.ItemAbility SHEARS_REMOVE_ARMOR;
+  public static final net.neoforged.neoforge.common.ItemAbility SHEARS_CARVE;
+  public static final net.neoforged.neoforge.common.ItemAbility SHEARS_DISARM;
+  public static final net.neoforged.neoforge.common.ItemAbility SHEARS_TRIM;
+  public static final net.neoforged.neoforge.common.ItemAbility FISHING_ROD_CAST;
+  public static final net.neoforged.neoforge.common.ItemAbility TRIDENT_THROW;
+  public static final net.neoforged.neoforge.common.ItemAbility BRUSH_BRUSH;
+  public static final net.neoforged.neoforge.common.ItemAbility FIRESTARTER_LIGHT;
+  public static final net.neoforged.neoforge.common.ItemAbility SPYGLASS_SCOPE;
+  public static final java.util.Set<net.neoforged.neoforge.common.ItemAbility> DEFAULT_SHEARS_ACTIONS;
+  public static final java.util.Set<net.neoforged.neoforge.common.ItemAbility> DEFAULT_FISHING_ROD_ACTIONS;
+  public static final java.util.Set<net.neoforged.neoforge.common.ItemAbility> DEFAULT_TRIDENT_ACTIONS;
+  public static final java.util.Set<net.neoforged.neoforge.common.ItemAbility> DEFAULT_BRUSH_ACTIONS;
+  public static final java.util.Set<net.neoforged.neoforge.common.ItemAbility> DEFAULT_FLINT_ACTIONS;
+  public static final java.util.Set<net.neoforged.neoforge.common.ItemAbility> DEFAULT_FIRECHARGE_ACTIONS;
+  public static final java.util.Set<net.neoforged.neoforge.common.ItemAbility> DEFAULT_SPYGLASS_ACTIONS;
+  public net.neoforged.neoforge.common.ItemAbilities();
+}
+=== net/minecraft/world/level/BlockGetter
+Compiled from "BlockGetter.java"
+public interface net.minecraft.world.level.BlockGetter extends net.minecraft.world.level.LevelHeightAccessor,net.neoforged.neoforge.common.extensions.IBlockGetterExtension {
+  public abstract net.minecraft.world.level.block.entity.BlockEntity getBlockEntity(net.minecraft.core.BlockPos);
+  public default <T extends net.minecraft.world.level.block.entity.BlockEntity> java.util.Optional<T> getBlockEntity(net.minecraft.core.BlockPos, net.minecraft.world.level.block.entity.BlockEntityType<T>);
+  public abstract net.minecraft.world.level.block.state.BlockState getBlockState(net.minecraft.core.BlockPos);
+  public abstract net.minecraft.world.level.material.FluidState getFluidState(net.minecraft.core.BlockPos);
+  public default int getLightEmission(net.minecraft.core.BlockPos);
+  public default java.util.stream.Stream<net.minecraft.world.level.block.state.BlockState> getBlockStates(net.minecraft.world.phys.AABB);
+  public default net.minecraft.world.phys.BlockHitResult isBlockInLine(net.minecraft.world.level.ClipBlockStateContext);
+  public default net.minecraft.world.phys.BlockHitResult clip(net.minecraft.world.level.ClipContext);
+  public default net.minecraft.world.phys.BlockHitResult clipWithInteractionOverride(net.minecraft.world.phys.Vec3, net.minecraft.world.phys.Vec3, net.minecraft.core.BlockPos, net.minecraft.world.phys.shapes.VoxelShape, net.minecraft.world.level.block.state.BlockState);
+  public default double getBlockFloorHeight(net.minecraft.world.phys.shapes.VoxelShape, java.util.function.Supplier<net.minecraft.world.phys.shapes.VoxelShape>);
+  public default double getBlockFloorHeight(net.minecraft.core.BlockPos);
+  public static <T, C> T traverseBlocks(net.minecraft.world.phys.Vec3, net.minecraft.world.phys.Vec3, C, java.util.function.BiFunction<C, net.minecraft.core.BlockPos, T>, java.util.function.Function<C, T>);
+  public static boolean forEachBlockIntersectedBetween(net.minecraft.world.phys.Vec3, net.minecraft.world.phys.Vec3, net.minecraft.world.phys.AABB, net.minecraft.world.level.BlockGetter$BlockStepVisitor);
+}
+=== net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase
+Compiled from "BlockBehaviour.java"
+public abstract class net.minecraft.world.level.block.state.BlockBehaviour$BlockStateBase extends net.minecraft.world.level.block.state.StateHolder<net.minecraft.world.level.block.Block, net.minecraft.world.level.block.state.BlockState> implements net.minecraft.core.TypedInstance<net.minecraft.world.level.block.Block> {
+  public void initCache();
+  public net.minecraft.world.level.block.Block getBlock();
+  public net.minecraft.core.Holder<net.minecraft.world.level.block.Block> typeHolder();
+  public boolean isSolid();
+  public boolean isValidSpawn(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.entity.EntityType<?>);
+  public boolean propagatesSkylightDown();
+  public int getLightDampening();
+  public net.minecraft.world.phys.shapes.VoxelShape getFaceOcclusionShape(net.minecraft.core.Direction);
+  public net.minecraft.world.phys.shapes.VoxelShape getOcclusionShape();
+  public boolean hasLargeCollisionShape();
+  public boolean useShapeForLightOcclusion();
+  public int getLightEmission();
+  public boolean isAir();
+  public boolean ignitedByLava();
+  public boolean liquid();
+  public net.minecraft.world.level.material.MapColor getMapColor(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos);
+  public net.minecraft.world.level.block.state.BlockState rotate(net.minecraft.world.level.block.Rotation);
+  public net.minecraft.world.level.block.state.BlockState mirror(net.minecraft.world.level.block.Mirror);
+  public net.minecraft.world.level.block.RenderShape getRenderShape();
+  public boolean emissiveRendering();
+  public float getShadeBrightness(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos);
+  public boolean isRedstoneConductor(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos);
+  public boolean isSignalSource();
+  public boolean shouldRedstoneWireConnectTo(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.core.Direction);
+  public int getOwnSignal(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos);
+  public int getSignal(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.core.Direction);
+  public boolean hasAnalogOutputSignal();
+  public int getAnalogOutputSignal(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.core.Direction);
+  public float getDestroySpeed(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos);
+  public float getDestroyProgress(net.minecraft.world.entity.player.Player, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos);
+  public int getDirectSignal(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.core.Direction);
+  public net.minecraft.world.level.material.PushReaction getPistonPushReaction();
+  public boolean isSolidRender();
+  public boolean canOcclude();
+  public boolean skipRendering(net.minecraft.world.level.block.state.BlockState, net.minecraft.core.Direction);
+  public net.minecraft.world.phys.shapes.VoxelShape getShape(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos);
+  public net.minecraft.world.phys.shapes.VoxelShape getShape(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.phys.shapes.CollisionContext);
+  public net.minecraft.world.phys.shapes.VoxelShape getCollisionShape(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos);
+  public net.minecraft.world.phys.shapes.VoxelShape getCollisionShape(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.phys.shapes.CollisionContext);
+  public net.minecraft.world.phys.shapes.VoxelShape getEntityInsideCollisionShape(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.entity.Entity);
+  public net.minecraft.world.phys.shapes.VoxelShape getBlockSupportShape(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos);
+  public net.minecraft.world.phys.shapes.VoxelShape getVisualShape(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.phys.shapes.CollisionContext);
+  public net.minecraft.world.phys.shapes.VoxelShape getInteractionShape(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos);
+  public final boolean entityCanStandOn(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.entity.Entity);
+  public final boolean entityCanStandOnFace(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.entity.Entity, net.minecraft.core.Direction);
+  public net.minecraft.world.phys.Vec3 getOffset(net.minecraft.core.BlockPos);
+  public boolean hasOffsetFunction();
+  public boolean triggerEvent(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, int, int);
+  public void handleNeighborChanged(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.level.block.Block, net.minecraft.world.level.redstone.Orientation, boolean);
+  public final void updateNeighbourShapes(net.minecraft.world.level.LevelAccessor, net.minecraft.core.BlockPos, int);
+  public final void updateNeighbourShapes(net.minecraft.world.level.LevelAccessor, net.minecraft.core.BlockPos, int, int);
+  public final void updateIndirectNeighbourShapes(net.minecraft.world.level.LevelAccessor, net.minecraft.core.BlockPos, int);
+  public void updateIndirectNeighbourShapes(net.minecraft.world.level.LevelAccessor, net.minecraft.core.BlockPos, int, int);
+  public void onPlace(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, boolean);
+  public void affectNeighborsAfterRemoval(net.minecraft.server.level.ServerLevel, net.minecraft.core.BlockPos, boolean);
+  public void onExplosionHit(net.minecraft.server.level.ServerLevel, net.minecraft.core.BlockPos, net.minecraft.world.level.Explosion, java.util.function.BiConsumer<net.minecraft.world.item.ItemStack, net.minecraft.core.BlockPos>);
+  public void tick(net.minecraft.server.level.ServerLevel, net.minecraft.core.BlockPos, net.minecraft.util.RandomSource);
+  public void randomTick(net.minecraft.server.level.ServerLevel, net.minecraft.core.BlockPos, net.minecraft.util.RandomSource);
+  public void entityInside(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.entity.Entity, net.minecraft.world.entity.InsideBlockEffectApplier, boolean);
+  public void spawnAfterBreak(net.minecraft.server.level.ServerLevel, net.minecraft.core.BlockPos, net.minecraft.world.item.ItemStack, boolean);
+  public java.util.List<net.minecraft.world.item.ItemStack> getDrops(net.minecraft.world.level.storage.loot.LootParams$Builder);
+  public net.minecraft.world.InteractionResult useItemOn(net.minecraft.world.item.ItemStack, net.minecraft.world.level.Level, net.minecraft.world.entity.player.Player, net.minecraft.world.InteractionHand, net.minecraft.world.phys.BlockHitResult);
+  public net.minecraft.world.InteractionResult useWithoutItem(net.minecraft.world.level.Level, net.minecraft.world.entity.player.Player, net.minecraft.world.phys.BlockHitResult);
+  public boolean showAsInteractableInSpectatorMode(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.phys.BlockHitResult);
+  public void attack(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.entity.player.Player);
+  public boolean isSuffocating(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos);
+  public boolean isLightPermeable();
+  public boolean isViewBlocking(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.phys.AABB);
+  public net.minecraft.world.level.block.state.BlockState updateShape(net.minecraft.world.level.LevelReader, net.minecraft.world.level.ScheduledTickAccess, net.minecraft.core.BlockPos, net.minecraft.core.Direction, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, net.minecraft.util.RandomSource);
+  public boolean isPathfindable(net.minecraft.world.level.pathfinder.PathComputationType);
+  public boolean canBeReplaced(net.minecraft.world.item.context.BlockPlaceContext);
+  public boolean canBeReplaced(net.minecraft.world.level.material.Fluid);
+  public boolean canBeReplaced();
+  public boolean canSurvive(net.minecraft.world.level.LevelReader, net.minecraft.core.BlockPos);
+  public net.minecraft.core.BlockPos getPostProcessPos(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos);
+  public net.minecraft.world.MenuProvider getMenuProvider(net.minecraft.world.level.Level, net.minecraft.core.BlockPos);
+  public boolean is(net.minecraft.tags.TagKey<net.minecraft.world.level.block.Block>, java.util.function.Predicate<net.minecraft.world.level.block.state.BlockBehaviour$BlockStateBase>);
+  public boolean hasBlockEntity();
+  public boolean shouldChangedStateKeepBlockEntity(net.minecraft.world.level.block.state.BlockState);
+  public <T extends net.minecraft.world.level.block.entity.BlockEntity> net.minecraft.world.level.block.entity.BlockEntityTicker<T> getTicker(net.minecraft.world.level.Level, net.minecraft.world.level.block.entity.BlockEntityType<T>);
+  public net.minecraft.world.level.material.FluidState getFluidState();
+  public boolean isRandomlyTicking();
+  public long getSeed(net.minecraft.core.BlockPos);
+  public net.minecraft.world.level.block.SoundType getSoundType();
+  public void onProjectileHit(net.minecraft.world.level.Level, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.phys.BlockHitResult, net.minecraft.world.entity.projectile.Projectile);
+  public boolean isFaceSturdy(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.core.Direction);
+  public boolean isFaceSturdy(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.core.Direction, net.minecraft.world.level.block.SupportType);
+  public boolean isCollisionShapeFullBlock(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos);
+  public net.minecraft.world.item.ItemStack getCloneItemStack(net.minecraft.world.level.LevelReader, net.minecraft.core.BlockPos, boolean);
+  public boolean requiresCorrectToolForDrops();
+  public boolean shouldSpawnTerrainParticles();
+  public net.minecraft.world.level.block.state.BlockState withPropertiesOf(net.minecraft.world.level.block.state.BlockState);
+  public static <T extends java.lang.Comparable<T>> net.minecraft.world.level.block.state.BlockState copyProperty(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.block.state.properties.Property<T>);
+  public net.minecraft.world.level.block.state.properties.NoteBlockInstrument instrument();
+}
+=== net/minecraft/world/level/block/state/BlockBehaviour
+Compiled from "BlockBehaviour.java"
+public abstract class net.minecraft.world.level.block.state.BlockBehaviour implements net.minecraft.world.flag.FeatureElement {
+  public net.minecraft.world.level.block.state.BlockBehaviour(net.minecraft.world.level.block.state.BlockBehaviour$Properties);
+  public net.minecraft.world.level.block.state.BlockBehaviour$Properties properties();
+  public net.minecraft.world.flag.FeatureFlagSet requiredFeatures();
+  public final java.util.Optional<net.minecraft.resources.ResourceKey<net.minecraft.world.level.storage.loot.LootTable>> getLootTable();
+  public final java.lang.String getDescriptionId();
+  public abstract net.minecraft.world.item.Item asItem();
+  public net.minecraft.world.level.material.MapColor defaultMapColor();
+  public float defaultDestroyTime();
+}
+=== net/minecraft/world/entity/player/Player
+Compiled from "Player.java"
+public abstract class net.minecraft.world.entity.player.Player extends net.minecraft.world.entity.Avatar implements net.minecraft.world.entity.ContainerUser,net.neoforged.neoforge.common.extensions.IPlayerExtension {
+  public static final java.lang.String PERSISTED_NBT_TAG;
+  public static final int MAX_HEALTH;
+  public static final int SLEEP_DURATION;
+  public static final int WAKE_UP_DURATION;
+  public static final int ENDER_SLOT_OFFSET;
+  public static final int HELD_ITEM_SLOT;
+  public static final int CRAFTING_SLOT_OFFSET;
+  public static final float DEFAULT_BLOCK_INTERACTION_RANGE;
+  public static final float DEFAULT_ENTITY_INTERACTION_RANGE;
+  public static final float CREATIVE_ENTITY_INTERACTION_RANGE_MODIFIER_VALUE;
+  public final net.minecraft.world.inventory.InventoryMenu inventoryMenu;
+  public net.minecraft.world.inventory.AbstractContainerMenu containerMenu;
+  public int takeXpDelay;
+  public int experienceLevel;
+  public int totalExperience;
+  public float experienceProgress;
+  public net.minecraft.world.entity.projectile.FishingHook fishing;
+  public net.minecraft.world.entity.player.Player(net.minecraft.world.level.Level, com.mojang.authlib.GameProfile);
+  public boolean blockActionRestricted(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.level.GameType);
+  public static net.minecraft.world.entity.ai.attributes.AttributeSupplier$Builder createAttributes();
+  public void tick();
+  public boolean isSecondaryUseActive();
+  public void onAboveBubbleColumn(boolean, net.minecraft.core.BlockPos);
+  public void onInsideBubbleColumn(boolean);
+  public int getDimensionChangingDelay();
+  public void playSound(net.minecraft.sounds.SoundEvent, float, float);
+  public net.minecraft.sounds.SoundSource getSoundSource();
+  public void handleEntityEvent(byte);
+  public void closeContainer();
+  public void rideTick();
+  public void aiStep();
+  public void handleShoulderEntities();
+  public int getScore();
+  public void setScore(int);
+  public void increaseScore(int);
+  public void startAutoSpinAttack(int, float, net.minecraft.world.item.ItemStack);
+  public net.minecraft.world.item.ItemStack getWeaponItem();
+  public void die(net.minecraft.world.damagesource.DamageSource);
+  public void handleCreativeModeItemDrop(net.minecraft.world.item.ItemStack);
+  public float getDestroySpeed(net.minecraft.world.level.block.state.BlockState);
+  public float getDestroySpeed(net.minecraft.world.level.block.state.BlockState, net.minecraft.core.BlockPos);
+  public boolean hasCorrectToolForDrops(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.Level, net.minecraft.core.BlockPos);
+  public boolean hasCorrectToolForDrops(net.minecraft.world.level.block.state.BlockState);
+  public boolean isInvulnerableTo(net.minecraft.server.level.ServerLevel, net.minecraft.world.damagesource.DamageSource);
+  public boolean hurtServer(net.minecraft.server.level.ServerLevel, net.minecraft.world.damagesource.DamageSource, float);
+  public boolean canBeSeenAsEnemy();
+  public boolean canHarmPlayer(net.minecraft.world.entity.player.Player);
+  public boolean isTextFilteringEnabled();
+  public void openTextEdit(net.minecraft.world.level.block.entity.SignBlockEntity, net.minecraft.world.level.block.entity.SignTextSlot);
+  public void openMinecartCommandBlock(net.minecraft.world.entity.vehicle.minecart.MinecartCommandBlock);
+  public void openCommandBlock(net.minecraft.world.level.block.entity.CommandBlockEntity);
+  public void openStructureBlock(net.minecraft.world.level.block.entity.StructureBlockEntity);
+  public void openTestBlock(net.minecraft.world.level.block.entity.TestBlockEntity);
+  public void openTestInstanceBlock(net.minecraft.world.level.block.entity.TestInstanceBlockEntity);
+  public void openJigsawBlock(net.minecraft.world.level.block.entity.JigsawBlockEntity);
+  public void openHorseInventory(net.minecraft.world.entity.animal.equine.AbstractHorse, net.minecraft.world.Container);
+  public void openNautilusInventory(net.minecraft.world.entity.animal.nautilus.AbstractNautilus, net.minecraft.world.Container);
+  public java.util.OptionalInt openMenu(net.minecraft.world.MenuProvider);
+  public void openDialog(net.minecraft.core.Holder<net.minecraft.server.dialog.Dialog>);
+  public void sendMerchantOffers(int, net.minecraft.world.item.trading.MerchantOffers, int, int, boolean, boolean);
+  public void openItemGui(net.minecraft.world.item.ItemStack, net.minecraft.world.InteractionHand);
+  public net.minecraft.world.InteractionResult interactOn(net.minecraft.world.entity.Entity, net.minecraft.world.InteractionHand, net.minecraft.world.phys.Vec3);
+  public void removeVehicle();
+  public boolean isAffectedByFluids();
+  public void attack(net.minecraft.world.entity.Entity);
+  public void causeExtraKnockback(net.minecraft.world.entity.Entity, float, net.minecraft.world.phys.Vec3, net.minecraft.world.damagesource.DamageSource, float, boolean);
+  public float getVoicePitch();
+  public void crit(net.minecraft.world.entity.Entity);
+  public boolean stabAttack(net.minecraft.world.entity.EquipmentSlot, net.minecraft.world.entity.Entity, float, boolean, boolean, boolean);
+  public void magicCrit(net.minecraft.world.entity.Entity);
+  public void remove(net.minecraft.world.entity.Entity$RemovalReason);
+  public boolean isClientAuthoritative();
+  public boolean isLocalPlayer();
+  public net.minecraft.world.entity.MoveSimulationType getMoveSimulationType();
+  public boolean isEffectiveAi();
+  public com.mojang.authlib.GameProfile getGameProfile();
+  public net.minecraft.server.players.NameAndId nameAndId();
+  public net.minecraft.world.entity.player.Inventory getInventory();
+  public net.minecraft.world.entity.player.Abilities getAbilities();
+  public boolean hasInfiniteMaterials();
+  public boolean preventsBlockDrops();
+  public void updateTutorialInventoryAction(net.minecraft.world.item.ItemStack, net.minecraft.world.item.ItemStack, net.minecraft.world.inventory.ClickAction);
+  public boolean hasContainerOpen();
+  public boolean canDropItems();
+  public com.mojang.datafixers.util.Either<net.minecraft.world.entity.player.Player$BedSleepingProblem, net.minecraft.util.Unit> startSleepInBed(net.minecraft.world.level.block.AbstractBedBlock, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.attribute.BedRule, net.minecraft.core.BlockPos);
+  public void stopSleepInBed(boolean, boolean);
+  public void stopSleeping();
+  public boolean isSleepingLongEnough();
+  public int getSleepTimer();
+  public void sendSystemMessage(net.minecraft.network.chat.Component);
+  public void sendOverlayMessage(net.minecraft.network.chat.Component);
+  public void awardStat(net.minecraft.resources.Identifier);
+  public void awardStat(net.minecraft.resources.Identifier, int);
+  public void awardStat(net.minecraft.stats.Stat<?>);
+  public void awardStat(net.minecraft.stats.Stat<?>, int);
+  public void resetStat(net.minecraft.stats.Stat<?>);
+  public int awardRecipes(java.util.Collection<net.minecraft.world.item.crafting.RecipeHolder<?>>);
+  public void triggerRecipeCrafted(net.minecraft.world.item.crafting.RecipeHolder<?>, java.util.List<net.minecraft.world.item.ItemStack>);
+  public void travel(net.minecraft.world.phys.Vec3);
+  public void updateSwimming();
+  public float getSpeed();
+  public boolean causeFallDamage(double, float, net.minecraft.world.damagesource.DamageSource);
+  public boolean tryToStartFallFlying();
+  public void startFallFlying();
+  public net.minecraft.world.entity.LivingEntity$Fallsounds getFallSounds();
+  public boolean killedEntity(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.LivingEntity, net.minecraft.world.damagesource.DamageSource);
+  public void makeStuckInBlock(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.phys.Vec3);
+  public void giveExperiencePoints(int);
+  public int getEnchantmentSeed();
+  public void onEnchantmentPerformed(net.minecraft.world.item.ItemStack, int);
+  public void giveExperienceLevels(int);
+  public int getXpNeededForNextLevel();
+  public void causeFoodExhaustion(float);
+  public net.minecraft.world.food.FoodData getFoodData();
+  public boolean canEat(boolean);
+  public boolean isHurt();
+  public boolean mayBuild();
+  public boolean mayUseItemAt(net.minecraft.core.BlockPos, net.minecraft.core.Direction, net.minecraft.world.item.ItemStack);
+  public boolean shouldShowName();
+  public void onUpdateAbilities();
+  public net.minecraft.network.chat.Component getName();
+  public java.lang.String getPlainTextName();
+  public net.minecraft.world.inventory.PlayerEnderChestContainer getEnderChestInventory();
+  public boolean addItem(net.minecraft.world.item.ItemStack);
+  public abstract net.minecraft.world.level.GameType gameMode();
+  public boolean isSpectator();
+  public boolean isPickable();
+  public boolean isSwimming();
+  public boolean isCreative();
+  public boolean isPushedByFluid();
+  public net.minecraft.network.chat.Component getDisplayName();
+  public java.lang.String getScoreboardName();
+  public float getAbsorptionAmount();
+  public net.minecraft.world.entity.SlotAccess getSlot(int);
+  public boolean isReducedDebugInfo();
+  public void setReducedDebugInfo(boolean);
+  public void setRemainingFireTicks(int);
+  public void setShoulderParrotLeft(java.util.Optional<net.minecraft.world.entity.animal.parrot.Parrot$Variant>);
+  public java.util.Optional<net.minecraft.world.entity.animal.parrot.Parrot$Variant> getShoulderParrotLeft();
+  public void setShoulderParrotRight(java.util.Optional<net.minecraft.world.entity.animal.parrot.Parrot$Variant>);
+  public java.util.Optional<net.minecraft.world.entity.animal.parrot.Parrot$Variant> getShoulderParrotRight();
+  public float getCurrentItemAttackStrengthDelay();
+  public boolean cannotAttackWithItem(net.minecraft.world.item.ItemStack, int);
+  public float getAttackStrengthScale(float);
+  public float getItemSwapScale(float);
+  public void resetAttackStrengthTicker();
+  public void onAttack();
+  public void resetOnlyAttackStrengthTicker();
+  public net.minecraft.world.item.ItemCooldowns getCooldowns();
+  public float getLuck();
+  public boolean canUseGameMasterBlocks();
+  public net.minecraft.server.permissions.PermissionSet permissions();
+  public com.google.common.collect.ImmutableList<net.minecraft.world.entity.Pose> getDismountPoses();
+  public net.minecraft.world.item.ItemStack getProjectile(net.minecraft.world.item.ItemStack);
+  public net.minecraft.world.phys.Vec3 getRopeHoldPosition(float);
+  public boolean isAlwaysTicking();
+  public boolean isScoping();
+  public boolean shouldBeSaved();
+  public java.util.Optional<net.minecraft.core.GlobalPos> getLastDeathLocation();
+  public void setLastDeathLocation(java.util.Optional<net.minecraft.core.GlobalPos>);
+  public float getHurtDir();
+  public void animateHurt(float);
+  public boolean isMobilityRestricted();
+  public boolean canSprint();
+  public boolean hasContainerOpen(net.minecraft.world.level.block.entity.ContainerOpenersCounter, net.minecraft.core.BlockPos);
+  public double getContainerInteractionRange();
+  public double blockInteractionRange();
+  public double entityInteractionRange();
+  public boolean isWithinEntityInteractionRange(net.minecraft.world.entity.Entity, double);
+  public boolean isWithinEntityInteractionRange(net.minecraft.world.phys.AABB, double);
+  public boolean isWithinAttackRange(net.minecraft.world.item.ItemStack, net.minecraft.world.phys.AABB, double);
+  public boolean isWithinBlockInteractionRange(net.minecraft.core.BlockPos, double);
+  public boolean shouldRotateWithMinecart();
+  public boolean onClimbable();
+  public java.lang.String debugInfo();
+  public net.minecraft.world.item.component.ResolvableProfile getProfile();
+  public net.minecraft.world.damagesource.DamageSource createDamageSource();
+  public java.util.Collection<net.minecraft.network.chat.MutableComponent> getPrefixes();
+  public java.util.Collection<net.minecraft.network.chat.MutableComponent> getSuffixes();
+  public void refreshDisplayName();
+  public void setForcedPose(net.minecraft.world.entity.Pose);
+  public net.minecraft.world.entity.Pose getForcedPose();
+  public net.minecraft.world.entity.item.ItemEntity drop(net.minecraft.world.item.ItemStack, boolean, net.minecraft.util.Prediction);
+  public net.minecraft.world.entity.item.ItemEntity dropWithoutEvent(net.minecraft.world.item.ItemStack, boolean, net.minecraft.util.Prediction);
+}
+=== net/neoforged/neoforge/network/registration/PayloadRegistrar
+Compiled from "PayloadRegistrar.java"
+public class net.neoforged.neoforge.network.registration.PayloadRegistrar {
+  public net.neoforged.neoforge.network.registration.PayloadRegistrar(java.lang.String);
+  public <T extends net.minecraft.network.protocol.common.custom.CustomPacketPayload> net.neoforged.neoforge.network.registration.PayloadRegistrar playToClient(net.minecraft.network.protocol.common.custom.CustomPacketPayload$Type<T>, net.minecraft.network.codec.StreamCodec<? super net.minecraft.network.RegistryFriendlyByteBuf, T>, net.neoforged.neoforge.network.handling.IPayloadHandler<T>);
+  public <T extends net.minecraft.network.protocol.common.custom.CustomPacketPayload> net.neoforged.neoforge.network.registration.PayloadRegistrar playToClient(net.minecraft.network.protocol.common.custom.CustomPacketPayload$Type<T>, net.minecraft.network.codec.StreamCodec<? super net.minecraft.network.RegistryFriendlyByteBuf, T>);
+  public <T extends net.minecraft.network.protocol.common.custom.CustomPacketPayload> net.neoforged.neoforge.network.registration.PayloadRegistrar playToServer(net.minecraft.network.protocol.common.custom.CustomPacketPayload$Type<T>, net.minecraft.network.codec.StreamCodec<? super net.minecraft.network.RegistryFriendlyByteBuf, T>, net.neoforged.neoforge.network.handling.IPayloadHandler<T>);
+  public <T extends net.minecraft.network.protocol.common.custom.CustomPacketPayload> net.neoforged.neoforge.network.registration.PayloadRegistrar playBidirectional(net.minecraft.network.protocol.common.custom.CustomPacketPayload$Type<T>, net.minecraft.network.codec.StreamCodec<? super net.minecraft.network.RegistryFriendlyByteBuf, T>, net.neoforged.neoforge.network.handling.IPayloadHandler<T>, net.neoforged.neoforge.network.handling.IPayloadHandler<T>);
+  public <T extends net.minecraft.network.protocol.common.custom.CustomPacketPayload> net.neoforged.neoforge.network.registration.PayloadRegistrar playBidirectional(net.minecraft.network.protocol.common.custom.CustomPacketPayload$Type<T>, net.minecraft.network.codec.StreamCodec<? super net.minecraft.network.RegistryFriendlyByteBuf, T>, net.neoforged.neoforge.network.handling.IPayloadHandler<T>);
+  public <T extends net.minecraft.network.protocol.common.custom.CustomPacketPayload> net.neoforged.neoforge.network.registration.PayloadRegistrar configurationToClient(net.minecraft.network.protocol.common.custom.CustomPacketPayload$Type<T>, net.minecraft.network.codec.StreamCodec<? super net.minecraft.network.FriendlyByteBuf, T>, net.neoforged.neoforge.network.handling.IPayloadHandler<T>);
+  public <T extends net.minecraft.network.protocol.common.custom.CustomPacketPayload> net.neoforged.neoforge.network.registration.PayloadRegistrar configurationToClient(net.minecraft.network.protocol.common.custom.CustomPacketPayload$Type<T>, net.minecraft.network.codec.StreamCodec<? super net.minecraft.network.FriendlyByteBuf, T>);
+  public <T extends net.minecraft.network.protocol.common.custom.CustomPacketPayload> net.neoforged.neoforge.network.registration.PayloadRegistrar configurationToServer(net.minecraft.network.protocol.common.custom.CustomPacketPayload$Type<T>, net.minecraft.network.codec.StreamCodec<? super net.minecraft.network.FriendlyByteBuf, T>, net.neoforged.neoforge.network.handling.IPayloadHandler<T>);
+  public <T extends net.minecraft.network.protocol.common.custom.CustomPacketPayload> net.neoforged.neoforge.network.registration.PayloadRegistrar configurationBidirectional(net.minecraft.network.protocol.common.custom.CustomPacketPayload$Type<T>, net.minecraft.network.codec.StreamCodec<? super net.minecraft.network.FriendlyByteBuf, T>, net.neoforged.neoforge.network.handling.IPayloadHandler<T>, net.neoforged.neoforge.network.handling.IPayloadHandler<T>);
+  public <T extends net.minecraft.network.protocol.common.custom.CustomPacketPayload> net.neoforged.neoforge.network.registration.PayloadRegistrar configurationBidirectional(net.minecraft.network.protocol.common.custom.CustomPacketPayload$Type<T>, net.minecraft.network.codec.StreamCodec<? super net.minecraft.network.FriendlyByteBuf, T>, net.neoforged.neoforge.network.handling.IPayloadHandler<T>);
+  public <T extends net.minecraft.network.protocol.common.custom.CustomPacketPayload> net.neoforged.neoforge.network.registration.PayloadRegistrar commonToClient(net.minecraft.network.protocol.common.custom.CustomPacketPayload$Type<T>, net.minecraft.network.codec.StreamCodec<? super net.minecraft.network.FriendlyByteBuf, T>, net.neoforged.neoforge.network.handling.IPayloadHandler<T>);
+  public <T extends net.minecraft.network.protocol.common.custom.CustomPacketPayload> net.neoforged.neoforge.network.registration.PayloadRegistrar commonToClient(net.minecraft.network.protocol.common.custom.CustomPacketPayload$Type<T>, net.minecraft.network.codec.StreamCodec<? super net.minecraft.network.FriendlyByteBuf, T>);
+  public <T extends net.minecraft.network.protocol.common.custom.CustomPacketPayload> net.neoforged.neoforge.network.registration.PayloadRegistrar commonToServer(net.minecraft.network.protocol.common.custom.CustomPacketPayload$Type<T>, net.minecraft.network.codec.StreamCodec<? super net.minecraft.network.FriendlyByteBuf, T>, net.neoforged.neoforge.network.handling.IPayloadHandler<T>);
+  public <T extends net.minecraft.network.protocol.common.custom.CustomPacketPayload> net.neoforged.neoforge.network.registration.PayloadRegistrar commonBidirectional(net.minecraft.network.protocol.common.custom.CustomPacketPayload$Type<T>, net.minecraft.network.codec.StreamCodec<? super net.minecraft.network.FriendlyByteBuf, T>, net.neoforged.neoforge.network.handling.IPayloadHandler<T>, net.neoforged.neoforge.network.handling.IPayloadHandler<T>);
+  public <T extends net.minecraft.network.protocol.common.custom.CustomPacketPayload> net.neoforged.neoforge.network.registration.PayloadRegistrar commonBidirectional(net.minecraft.network.protocol.common.custom.CustomPacketPayload$Type<T>, net.minecraft.network.codec.StreamCodec<? super net.minecraft.network.FriendlyByteBuf, T>, net.neoforged.neoforge.network.handling.IPayloadHandler<T>);
+  public net.neoforged.neoforge.network.registration.PayloadRegistrar executesOn(net.neoforged.neoforge.network.registration.HandlerThread);
+  public net.neoforged.neoforge.network.registration.PayloadRegistrar versioned(java.lang.String);
+  public net.neoforged.neoforge.network.registration.PayloadRegistrar optional();
+}
+=== net/neoforged/neoforge/network/PacketDistributor
+Compiled from "PacketDistributor.java"
+public final class net.neoforged.neoforge.network.PacketDistributor {
+  public static void sendToPlayer(net.minecraft.server.level.ServerPlayer, net.minecraft.network.protocol.common.custom.CustomPacketPayload, net.minecraft.network.protocol.common.custom.CustomPacketPayload...);
+  public static void sendToPlayersInDimension(net.minecraft.server.level.ServerLevel, net.minecraft.network.protocol.common.custom.CustomPacketPayload, net.minecraft.network.protocol.common.custom.CustomPacketPayload...);
+  public static void sendToPlayersNear(net.minecraft.server.level.ServerLevel, net.minecraft.server.level.ServerPlayer, double, double, double, double, net.minecraft.network.protocol.common.custom.CustomPacketPayload, net.minecraft.network.protocol.common.custom.CustomPacketPayload...);
+  public static void sendToAllPlayers(net.minecraft.network.protocol.common.custom.CustomPacketPayload, net.minecraft.network.protocol.common.custom.CustomPacketPayload...);
+  public static void sendToPlayersTrackingEntity(net.minecraft.world.entity.Entity, net.minecraft.network.protocol.common.custom.CustomPacketPayload, net.minecraft.network.protocol.common.custom.CustomPacketPayload...);
+  public static void sendToPlayersTrackingEntityAndSelf(net.minecraft.world.entity.Entity, net.minecraft.network.protocol.common.custom.CustomPacketPayload, net.minecraft.network.protocol.common.custom.CustomPacketPayload...);
+  public static void sendToPlayersTrackingChunk(net.minecraft.server.level.ServerLevel, net.minecraft.world.level.ChunkPos, net.minecraft.network.protocol.common.custom.CustomPacketPayload, net.minecraft.network.protocol.common.custom.CustomPacketPayload...);
+}
+=== net/minecraft/world/level/storage/loot/LootContext
+Compiled from "LootContext.java"
+public class net.minecraft.world.level.storage.loot.LootContext {
+  public boolean hasParameter(net.minecraft.util.context.ContextKey<?>);
+  public <T> T getOptional(net.minecraft.util.context.ContextKey<T>);
+  public void addDynamicDrops(net.minecraft.resources.Identifier, java.util.function.Consumer<net.minecraft.world.item.ItemStack>);
+  public boolean hasVisitedElement(net.minecraft.world.level.storage.loot.LootContext$VisitedEntry<?>);
+  public boolean pushVisitedElement(net.minecraft.world.level.storage.loot.LootContext$VisitedEntry<?>);
+  public void popVisitedElement(net.minecraft.world.level.storage.loot.LootContext$VisitedEntry<?>);
+  public net.minecraft.core.HolderGetter$Provider getResolver();
+  public net.minecraft.util.RandomSource getRandom();
+  public float getLuck();
+  public net.minecraft.server.level.ServerLevel getLevel();
+  public void setQueriedLootTableId(net.minecraft.resources.Identifier);
+  public net.minecraft.resources.Identifier getQueriedLootTableId();
+  public static net.minecraft.world.level.storage.loot.LootContext$VisitedEntry<net.minecraft.world.level.storage.loot.LootTable> createVisitedEntry(net.minecraft.world.level.storage.loot.LootTable);
+  public static net.minecraft.world.level.storage.loot.LootContext$VisitedEntry<net.minecraft.world.level.storage.loot.predicates.LootItemCondition> createVisitedEntry(net.minecraft.world.level.storage.loot.predicates.LootItemCondition);
+  public static net.minecraft.world.level.storage.loot.LootContext$VisitedEntry<net.minecraft.world.level.storage.loot.functions.LootItemFunction> createVisitedEntry(net.minecraft.world.level.storage.loot.functions.LootItemFunction);
+  public static net.minecraft.world.level.storage.loot.LootContext$VisitedEntry<net.minecraft.world.item.slot.SlotSource> createVisitedEntry(net.minecraft.world.item.slot.SlotSource);
+}
+=== net/neoforged/neoforge/common/loot/LootModifier
+Compiled from "LootModifier.java"
+public abstract class net.neoforged.neoforge.common.loot.LootModifier implements net.neoforged.neoforge.common.loot.IGlobalLootModifier {
+  public final it.unimi.dsi.fastutil.objects.ObjectArrayList<net.minecraft.world.item.ItemStack> apply(it.unimi.dsi.fastutil.objects.ObjectArrayList<net.minecraft.world.item.ItemStack>, net.minecraft.world.level.storage.loot.LootContext);
+  public int priority();
+}
+=== net/neoforged/neoforge/common/loot/IGlobalLootModifier
+Compiled from "IGlobalLootModifier.java"
+public interface net.neoforged.neoforge.common.loot.IGlobalLootModifier {
+  public static final com.mojang.serialization.Codec<net.neoforged.neoforge.common.loot.IGlobalLootModifier> DIRECT_CODEC;
+  public static final com.mojang.serialization.Codec<java.util.Optional<net.neoforged.neoforge.common.conditions.WithConditions<net.neoforged.neoforge.common.loot.IGlobalLootModifier>>> CONDITIONAL_CODEC;
+  public static final int DEFAULT_PRIORITY;
+  public abstract it.unimi.dsi.fastutil.objects.ObjectArrayList<net.minecraft.world.item.ItemStack> apply(it.unimi.dsi.fastutil.objects.ObjectArrayList<net.minecraft.world.item.ItemStack>, net.minecraft.world.level.storage.loot.LootContext);
+  public abstract com.mojang.serialization.MapCodec<? extends net.neoforged.neoforge.common.loot.IGlobalLootModifier> codec();
+  public abstract int priority();
+}
+=== net/minecraft/world/level/storage/loot/LootTable
+Compiled from "LootTable.java"
+public class net.minecraft.world.level.storage.loot.LootTable implements net.minecraft.world.level.storage.loot.Validatable {
+  public static final com.mojang.serialization.Codec<net.minecraft.resources.ResourceKey<net.minecraft.world.level.storage.loot.LootTable>> KEY_CODEC;
+  public static final net.minecraft.util.context.ContextKeySet DEFAULT_PARAM_SET;
+  public static final long RANDOMIZE_SEED;
+  public static final com.mojang.serialization.Codec<net.minecraft.world.level.storage.loot.LootTable> DIRECT_CODEC;
+  public static final com.mojang.serialization.Codec<net.minecraft.core.Holder<net.minecraft.world.level.storage.loot.LootTable>> CODEC;
+  public static final com.mojang.serialization.Codec<net.minecraft.core.HolderSet<net.minecraft.world.level.storage.loot.LootTable>> LIST_CODEC;
+  public static final net.minecraft.world.level.storage.loot.LootTable EMPTY;
+  public static java.util.function.Consumer<net.minecraft.world.item.ItemStack> createStackSplitter(net.minecraft.server.level.ServerLevel, java.util.function.Consumer<net.minecraft.world.item.ItemStack>);
+  public void getRandomItemsRaw(net.minecraft.world.level.storage.loot.LootParams, java.util.function.Consumer<net.minecraft.world.item.ItemStack>);
+  public void getRandomItemsRaw(net.minecraft.world.level.storage.loot.LootContext, java.util.function.Consumer<net.minecraft.world.item.ItemStack>);
+  public void getRandomItems(net.minecraft.world.level.storage.loot.LootParams, long, java.util.function.Consumer<net.minecraft.world.item.ItemStack>);
+  public void getRandomItems(net.minecraft.world.level.storage.loot.LootParams, java.util.function.Consumer<net.minecraft.world.item.ItemStack>);
+  public void getRandomItems(net.minecraft.world.level.storage.loot.LootContext, java.util.function.Consumer<net.minecraft.world.item.ItemStack>);
+  public it.unimi.dsi.fastutil.objects.ObjectArrayList<net.minecraft.world.item.ItemStack> getRandomItems(net.minecraft.world.level.storage.loot.LootParams, net.minecraft.util.RandomSource);
+  public it.unimi.dsi.fastutil.objects.ObjectArrayList<net.minecraft.world.item.ItemStack> getRandomItems(net.minecraft.world.level.storage.loot.LootParams, long);
+  public it.unimi.dsi.fastutil.objects.ObjectArrayList<net.minecraft.world.item.ItemStack> getRandomItems(net.minecraft.world.level.storage.loot.LootParams);
+  public net.minecraft.util.context.ContextKeySet getParamSet();
+  public void validate(net.minecraft.world.level.storage.loot.ValidationContext);
+  public void fill(net.minecraft.world.Container, net.minecraft.world.level.storage.loot.LootParams, long);
+  public void freeze();
+  public boolean isFrozen();
+  public net.minecraft.world.level.storage.loot.LootTable setLootTableId(net.minecraft.resources.Identifier);
+  public net.minecraft.resources.Identifier getLootTableId();
+  public net.minecraft.world.level.storage.loot.LootPool getPool(java.lang.String);
+  public net.minecraft.world.level.storage.loot.LootPool removePool(java.lang.String);
+  public void addPool(net.minecraft.world.level.storage.loot.LootPool);
+  public static net.minecraft.world.level.storage.loot.LootTable$Builder lootTable();
+}
