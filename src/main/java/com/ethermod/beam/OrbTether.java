@@ -3,7 +3,6 @@ package com.ethermod.beam;
 import com.ethermod.item.OrbMode;
 import com.ethermod.manipulator.Manipulator;
 import com.ethermod.trait.Traits;
-import com.ethermod.trait.WorldEffects;
 
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;

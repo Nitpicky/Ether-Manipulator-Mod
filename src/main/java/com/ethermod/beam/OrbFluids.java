@@ -1,7 +1,8 @@
 package com.ethermod.beam;
 
 import com.ethermod.item.OrbMode;
-import com.ethermod.trait.WorldEffects;
+import com.ethermod.trait.OwnedFire;
+import com.ethermod.trait.Scheduler;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -128,7 +129,7 @@ final class OrbFluids {
             }
         }
         BlockPos at = pos.immutable();
-        WorldEffects.schedule(
+        Scheduler.schedule(
                 sl,
                 FADE_TICKS,
                 () -> {
@@ -143,7 +144,7 @@ final class OrbFluids {
     /** Lava from an orb: remembered as the owner's (Fire Ward). */
     static void lavaPlaced(BeamBallEntity b, BlockPos pos) {
         ServerLevel sl = (ServerLevel) b.level();
-        WorldEffects.ownLava(sl, pos, b.getOwner());
+        OwnedFire.ownLava(sl, pos, b.getOwner());
     }
 
     /** Fluid Link (built in): cauldrons and other mods' tanks take the liquid instead. */

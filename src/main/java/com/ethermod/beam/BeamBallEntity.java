@@ -5,7 +5,7 @@ import com.ethermod.item.OrbMode;
 import com.ethermod.manipulator.Manipulator;
 import com.ethermod.registry.ModEntities;
 import com.ethermod.trait.Traits;
-import com.ethermod.trait.WorldEffects;
+import com.ethermod.trait.TempBlocks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -467,7 +467,7 @@ public class BeamBallEntity extends Projectile {
         Vec3 movement = getDeltaMovement();
         // Slipstream: no range limit while flying through water
         boolean slip =
-                (isInWater() || WorldEffects.isAirPocket((ServerLevel) level(), blockPosition()))
+                (isInWater() || TempBlocks.isAirPocket((ServerLevel) level(), blockPosition()))
                         && (mode == OrbMode.WATER || mode == OrbMode.FROST)
                         && !traits.isEmpty()
                         && Traits.hasCommon(traits, Traits.HYDRAULIC, 1);

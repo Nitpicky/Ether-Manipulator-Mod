@@ -15,6 +15,6 @@ public abstract class OwnedFireMixin {
     @Inject(method = "entityInside", at = @At("HEAD"))
     private void mm$owned(BlockState state, Level level, BlockPos pos, Entity e, CallbackInfo ci) {
         if (level instanceof net.minecraft.server.level.ServerLevel sl)
-            com.ethermod.trait.WorldEffects.burnFromOwnedFire(sl, pos, e);
+            com.ethermod.trait.OwnedFire.burnFromOwnedFire(sl, pos, e);
     }
 }

@@ -1,6 +1,6 @@
 package com.ethermod.beam;
 
-import com.ethermod.trait.WorldEffects;
+import com.ethermod.trait.TempLights;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -45,12 +45,12 @@ final class OrbLight {
             for (BlockPos p : BlockPos.betweenClosed(at.offset(-1, -1, -1), at.offset(1, 1, 1))) {
                 if (sl.getBlockState(p).is(Blocks.LIGHT) && b.mayBuild(p)) {
                     sl.removeBlock(p, false);
-                    WorldEffects.forgetLight(sl, p);
+                    TempLights.forgetLight(sl, p);
                     return;
                 }
             }
         if (!sl.getBlockState(at).isAir() || !b.mayBuild(at)) return;
-        WorldEffects.tempLight(sl, at, 12 + b.getPhase(), BeamBallEntity.BOUNCE_LIGHT_TICKS);
+        TempLights.tempLight(sl, at, 12 + b.getPhase(), BeamBallEntity.BOUNCE_LIGHT_TICKS);
         sl.sendParticles(
                 ParticleTypes.END_ROD,
                 at.getX() + 0.5,

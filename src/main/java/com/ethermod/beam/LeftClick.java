@@ -3,9 +3,9 @@ package com.ethermod.beam;
 import com.ethermod.item.EtherManipulatorItem;
 import com.ethermod.item.OrbMode;
 import com.ethermod.manipulator.Manipulator;
-import com.ethermod.trait.RedesignEffects;
 import com.ethermod.trait.Traits;
-import com.ethermod.trait.WorldEffects;
+import com.ethermod.trait.TempLights;
+import com.ethermod.trait.Scheduler;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -153,7 +153,7 @@ public final class LeftClick {
             if (keep.contains(q)) continue;
             if (sl.isLoaded(q) && sl.getBlockState(q).is(net.minecraft.world.level.block.Blocks.LIGHT))
                 sl.removeBlock(q, false);
-            WorldEffects.forgetLight(sl, q);
+            TempLights.forgetLight(sl, q);
         }
     }
 
@@ -257,7 +257,7 @@ public final class LeftClick {
                     if (was.isAir()
                             || before.contains(q)
                                     && was.is(net.minecraft.world.level.block.Blocks.LIGHT)) {
-                        WorldEffects.tempLight(sl, q, level, 20);
+                        TempLights.tempLight(sl, q, level, 20);
                         lit.add(q);
                     } else if (before.contains(q)) lit.add(q);   // still ours: keep tracking it so letting go clears it
                 });
@@ -332,7 +332,7 @@ public final class LeftClick {
                             20,
                             Math.round(most - rel.dot(right))
                                     + Math.round(Math.max(0, rel.horizontalDistance() - 1.5) * .5));
-            WorldEffects.schedule(sl, 1 + delay, () -> cutCrop(p, q, right));
+            Scheduler.schedule(sl, 1 + delay, () -> cutCrop(p, q, right));
         }
         sl.playSound(
                 null,

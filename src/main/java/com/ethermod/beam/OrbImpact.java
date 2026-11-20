@@ -5,7 +5,9 @@ import com.ethermod.item.OrbMode;
 import com.ethermod.manipulator.Manipulator;
 import com.ethermod.registry.ModEntities;
 import com.ethermod.trait.Traits;
-import com.ethermod.trait.WorldEffects;
+import com.ethermod.trait.TempBlocks;
+import com.ethermod.trait.TempLights;
+import com.ethermod.trait.OwnedFire;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -87,7 +89,7 @@ final class OrbImpact {
             case IGNITE -> OrbNature.ignite(b, here.below(), Direction.UP);
             case FROST -> {
                 if (b.mayBuild(here))
-                    WorldEffects.tempBlock(
+                    TempBlocks.tempBlock(
                             sl,
                             here,
                             Blocks.PACKED_ICE.defaultBlockState(),
@@ -123,7 +125,7 @@ final class OrbImpact {
         if (owner instanceof ServerPlayer sp
                 && target instanceof LivingEntity le
                 && (b.getMode() == OrbMode.LAVA || b.getMode() == OrbMode.IGNITE))
-            com.ethermod.trait.RedesignEffects.burn(le, sp, 4 + ph * 2, ph);
+            com.ethermod.trait.Burning.burn(le, sp, 4 + ph * 2, ph);
         switch (b.getMode()) {
             case ENERGY -> {
                 target.hurt(
@@ -160,7 +162,7 @@ final class OrbImpact {
             case GROWTH -> {
                 if (target instanceof LivingEntity victim
                         && owner instanceof ServerPlayer sp
-                        && com.ethermod.trait.RedesignEffects.enemy(sp, victim)
+                        && com.ethermod.trait.Targeting.enemy(sp, victim)
                         && (victim instanceof net.minecraft.world.entity.monster.Enemy
                                 || victim instanceof net.minecraft.world.entity.Mob m
                                         && m.getTarget() == sp)) {
@@ -243,7 +245,7 @@ final class OrbImpact {
             b.bouncesLeft--;
             if (b.getMode() == OrbMode.LIGHT) b.traveledDistance = 0f;
             if (b.getMode() == OrbMode.LIGHT && b.mayBuild(front) && sl.getBlockState(front).isAir()) {
-                WorldEffects.tempLight(sl, front, 13, BeamBallEntity.BOUNCE_LIGHT_TICKS);
+                TempLights.tempLight(sl, front, 13, BeamBallEntity.BOUNCE_LIGHT_TICKS);
                 sl.sendParticles(
                         ParticleTypes.END_ROD,
                         front.getX() + 0.5,
@@ -336,20 +338,20 @@ final class OrbImpact {
                 if (OrbFluids.placeFluid(b, front, face, Fluids.LAVA)) {
                     OrbFluids.lavaPlaced(b, front);
                     // charged: fire splashes out around the pool
-                    if (ph >= 1) WorldEffects.fireRing(sl, front, b.getOwner(), ph);
+                    if (ph >= 1) OwnedFire.fireRing(sl, front, b.getOwner(), ph);
                 }
             }
             case FROST -> {
                 // Tap: freeze the water block hit, or the air in front of the face, into ice
                 if (sl.getBlockState(hitPos).is(Blocks.WATER) && b.mayBuild(hitPos)) {
-                    WorldEffects.tempBlock(
+                    TempBlocks.tempBlock(
                             sl,
                             hitPos,
                             Blocks.PACKED_ICE.defaultBlockState(),
                             OrbFrost.bridgeTicks(b),
                             true);
                 } else if (b.mayBuild(front)) {
-                    WorldEffects.tempBlock(
+                    TempBlocks.tempBlock(
                             sl,
                             front,
                             Blocks.PACKED_ICE.defaultBlockState(),
@@ -363,7 +365,7 @@ final class OrbImpact {
                     if (sl.getBlockState(p).is(Blocks.WATER)
                             && sl.getFluidState(p).isSource()
                             && b.mayBuild(p)) {
-                        WorldEffects.tempBlock(
+                        TempBlocks.tempBlock(
                                 sl,
                                 p.immutable(),
                                 Blocks.PACKED_ICE.defaultBlockState(),

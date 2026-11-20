@@ -1,9 +1,7 @@
 package com.ethermod.network;
 
 import com.ethermod.beam.RemoteBeams;
-import com.ethermod.event.ModEvents;
 import com.ethermod.item.OrbMode;
-import com.ethermod.item.TierUpgradeModule;
 import com.ethermod.manipulator.Manipulator;
 import com.ethermod.manipulator.ManipulatorData;
 import com.ethermod.network.payload.BeamActivePayload;
@@ -12,11 +10,8 @@ import com.ethermod.network.payload.ManipulatorSyncPayload;
 import com.ethermod.network.payload.OrbModePayload;
 import com.ethermod.network.payload.SummonTogglePayload;
 import com.ethermod.network.payload.TraitPayloads;
-import com.ethermod.trait.TraitRules;
 
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
@@ -33,13 +28,7 @@ public final class ModNetwork {
         reg.playToServer(
                 com.ethermod.network.payload.ModulePayloads.Motion.TYPE,
                 com.ethermod.network.payload.ModulePayloads.Motion.CODEC,
-                (p, ctx) ->
-                        ctx.enqueueWork(
-                                () -> {
-                                    if (ctx.player() instanceof ServerPlayer sp)
-                                        com.ethermod.trait.MovementPhysics.input(
-                                                sp, p.flags() & 127);
-                                }));
+                ServerPayloadHandlers::motion);
         reg.playToClient(
                 com.ethermod.network.payload.ModulePayloads.WaterCurrent.TYPE,
                 com.ethermod.network.payload.ModulePayloads.WaterCurrent.CODEC,
@@ -65,80 +54,36 @@ public final class ModNetwork {
                                         com.ethermod.client.ClientMobility.gravity(
                                                 p.entity(), p.down(), p.start())));
         reg.playToServer(
-                BeamActivePayload.TYPE, BeamActivePayload.CODEC, ModNetwork::handleBeamActive);
+                BeamActivePayload.TYPE, BeamActivePayload.CODEC, ServerPayloadHandlers::beamActive);
         reg.playToServer(
                 TraitPayloads.Equip.TYPE,
                 TraitPayloads.Equip.CODEC,
-                (p, ctx) ->
-                        ctx.enqueueWork(
-                                () -> {
-                                    if (ctx.player() instanceof ServerPlayer sp)
-                                        TraitRules.equip(sp, p.slot(), p.line().orElse(null));
-                                }));
+                ServerPayloadHandlers::equip);
         reg.playToServer(
                 TraitPayloads.Pick.TYPE,
                 TraitPayloads.Pick.CODEC,
-                (p, ctx) ->
-                        ctx.enqueueWork(
-                                () -> {
-                                    if (ctx.player() instanceof ServerPlayer sp)
-                                        TraitRules.pick(sp, p.slot(), p.tier(), p.choice());
-                                }));
+                ServerPayloadHandlers::pick);
         reg.playToServer(
                 TraitPayloads.StageUpgrade.TYPE,
                 TraitPayloads.StageUpgrade.CODEC,
-                (p, ctx) ->
-                        ctx.enqueueWork(
-                                () -> {
-                                    if (ctx.player() instanceof ServerPlayer sp)
-                                        TierUpgradeModule.installFromInventory(sp);
-                                }));
+                ServerPayloadHandlers::stageUpgrade);
         reg.playToServer(
                 TraitPayloads.Paint.TYPE,
                 TraitPayloads.Paint.CODEC,
-                (p, ctx) ->
-                        ctx.enqueueWork(
-                                () -> {
-                                    if (ctx.player() instanceof ServerPlayer sp)
-                                        paint(sp, p.body(), p.invSlot());
-                                }));
+                ServerPayloadHandlers::paint);
         reg.playToServer(
                 TraitPayloads.PickColour.TYPE,
                 TraitPayloads.PickColour.CODEC,
-                (p, ctx) ->
-                        ctx.enqueueWork(
-                                () -> {
-                                    if (!(ctx.player() instanceof ServerPlayer sp)) return;
-                                    ItemStack mm = Manipulator.stack(sp);
-                                    if (p.rgb() < -1 || p.rgb() > 0xFFFFFF) return;
-                                    if (!com.ethermod.item.ManipulatorColors.isUnlocked(
-                                                    mm, p.body(), p.rgb())
-                                            && !(p.body()
-                                                    && p.rgb() >= 0
-                                                    && com.ethermod.item.ManipulatorColors
-                                                            .customUnlocked(mm))) return;
-                                    if (p.body())
-                                        com.ethermod.item.ManipulatorColors.setBody(mm, p.rgb());
-                                    else com.ethermod.item.ManipulatorColors.setBeam(mm, p.rgb());
-                                    // The native UI plays local confirmation after synced state
-                                    // changes.
-                                    Manipulator.sync(sp);
-                                }));
+                ServerPayloadHandlers::pickColour);
         reg.playToServer(
                 TraitPayloads.Loadout.TYPE,
                 TraitPayloads.Loadout.CODEC,
-                (p, ctx) ->
-                        ctx.enqueueWork(
-                                () -> {
-                                    if (ctx.player() instanceof ServerPlayer sp)
-                                        com.ethermod.trait.Loadouts.handle(
-                                                sp, p.op(), p.index(), p.name());
-                                }));
+                ServerPayloadHandlers::loadout);
         reg.playToServer(
                 SummonTogglePayload.TYPE,
                 SummonTogglePayload.CODEC,
-                ModNetwork::handleSummonToggle);
-        reg.playToServer(OrbModePayload.TYPE, OrbModePayload.CODEC, ModNetwork::handleOrbMode);
+                ServerPayloadHandlers::summonToggle);
+        reg.playToServer(OrbModePayload.TYPE, OrbModePayload.CODEC, ServerPayloadHandlers::orbMode);
         reg.playToClient(
                 com.ethermod.network.payload.BeamPulsePayload.TYPE,
                 com.ethermod.network.payload.BeamPulsePayload.CODEC,
@@ -178,61 +123,7 @@ public final class ModNetwork {
         reg.playToServer(
                 com.ethermod.network.payload.ModulePayloads.AirJump.TYPE,
                 com.ethermod.network.payload.ModulePayloads.AirJump.CODEC,
-                (p, ctx) ->
-                        ctx.enqueueWork(
-                                () -> {
-                                    if (ctx.player() instanceof ServerPlayer sp)
-                                        com.ethermod.trait.MobilityEffects.airJump(sp);
-                                }));
-    }
-
-    private static void paint(ServerPlayer sp, boolean body, int invSlot) {
-        ItemStack manipulator = Manipulator.stack(sp);
-        if (invSlot < 0 || invSlot >= sp.getInventory().items.size()) return;
-        ItemStack src = sp.getInventory().items.get(invSlot);
-        if (body
-                ? !com.ethermod.item.ManipulatorColors.isBodySource(src)
-                : !com.ethermod.item.ManipulatorColors.isBeamSource(src)) return;
-        int rgb =
-                body
-                        ? com.ethermod.item.ManipulatorColors.bodyFrom(src)
-                        : com.ethermod.item.ManipulatorColors.beamFrom(src);
-        if (!com.ethermod.item.ManipulatorColors.unlock(manipulator, body, rgb))
-            return; // already unlocked: nothing used up
-        if (body) {
-            com.ethermod.advancement.ManipulatorTrigger.fire(sp, "dye");
-            if (com.ethermod.item.ManipulatorColors.customUnlocked(manipulator))
-                com.ethermod.advancement.ManipulatorTrigger.fire(sp, "all_dyes");
-        }
-        if (body) com.ethermod.item.ManipulatorColors.setBody(manipulator, rgb);
-        else com.ethermod.item.ManipulatorColors.setBeam(manipulator, rgb);
-        if (!sp.getAbilities().instabuild) src.shrink(1);
-        // UI feedback is local; do not broadcast the old splash sound.
-        Manipulator.sync(sp);
-    }
-
-    private static void handleSummonToggle(SummonTogglePayload payload, IPayloadContext ctx) {
-        ctx.enqueueWork(
-                () -> {
-                    if (!(ctx.player() instanceof ServerPlayer sp)) return;
-                    // Summoning is never blocked: no cooldown, no state or combat check.
-                    if (sp.isUsingItem()) sp.stopUsingItem();
-                    if (!payload.summon()) ModEvents.setBeamActive(sp, false);
-                    Manipulator.setSummoned(sp, payload.summon());
-                });
-    }
-
-    private static void handleOrbMode(OrbModePayload payload, IPayloadContext ctx) {
-        ctx.enqueueWork(
-                () -> {
-                    if (!(ctx.player() instanceof ServerPlayer sp)) return;
-                    ItemStack manipulator = Manipulator.stack(sp);
-                    OrbMode mode = OrbMode.byId(payload.mode());
-                    if (!mode.isUnlocked(manipulator) || OrbMode.get(manipulator) == mode) return;
-                    if (sp.isUsingItem()) sp.releaseUsingItem();
-                    OrbMode.set(manipulator, mode);
-                    Manipulator.sync(sp);
-                });
+                ServerPayloadHandlers::airJump);
     }
 
     public static void sendOrbMode(OrbMode mode) {
@@ -247,16 +138,6 @@ public final class ModNetwork {
                     ManipulatorData data = Manipulator.data(player);
                     data.setStack(payload.stack());
                     data.setSummoned(payload.summoned());
-                });
-    }
-
-    private static void handleBeamActive(BeamActivePayload payload, IPayloadContext ctx) {
-        ctx.enqueueWork(
-                () -> {
-                    if (ctx.player() instanceof ServerPlayer sp) {
-                        boolean canBeam = Manipulator.isSummoned(sp) && !sp.isSpectator();
-                        ModEvents.setBeamActive(sp, payload.active() && canBeam);
-                    }
                 });
     }
 

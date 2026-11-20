@@ -520,14 +520,14 @@ public final class MovementPhysics {
                             .getEntitiesOfClass(
                                     net.minecraft.world.entity.LivingEntity.class,
                                     p.getBoundingBox().inflate(reach),
-                                    e -> RedesignEffects.enemy(p, e))) {
+                                    e -> Targeting.enemy(p, e))) {
                 double near = 1 - Math.min(1, target.distanceTo(p) / (reach + 1));
                 target.hurt(p.damageSources().playerAttack(p), damage * (float) (.5 + .5 * near));
                 // the shock throws them away and up, harder the further you fell
                 Vec3 away = target.position().subtract(p.position()).multiply(1, 0, 1);
                 if (away.lengthSqr() < 1e-4) away = p.getLookAngle().multiply(1, 0, 1);
                 double force = Math.min(2.2, .2 + fell * .09) * (.4 + .6 * near);
-                RedesignEffects.impulse(
+                Stasis.impulse(
                         target, away.normalize().scale(force).add(0, Math.min(.6, .08 + fell * .03), 0));
             }
             // the gust blast (which can throw mobs into a fall) only from a real fall

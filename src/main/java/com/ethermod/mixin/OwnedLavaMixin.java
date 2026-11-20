@@ -12,6 +12,6 @@ public abstract class OwnedLavaMixin {
     private void mm$ownedLava(CallbackInfo ci) {
         var e = (Entity) (Object) this;
         if (e.level() instanceof net.minecraft.server.level.ServerLevel sl)
-            com.ethermod.trait.WorldEffects.burnFromOwnedLava(sl, e);
+            com.ethermod.trait.OwnedFire.burnFromOwnedLava(sl, e);
     }
 }

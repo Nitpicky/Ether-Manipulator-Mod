@@ -19,7 +19,7 @@ public abstract class SoulFireMixin {
             BlockPos pos,
             CallbackInfoReturnable<Boolean> cir) {
         if (level instanceof ServerLevel sl
-                && com.ethermod.trait.WorldEffects.isTempBlock(sl, pos)) cir.setReturnValue(true);
+                && com.ethermod.trait.TempBlocks.isTempBlock(sl, pos)) cir.setReturnValue(true);
         else if (net.minecraft.world.level.block.Blocks.FIRE
                 .defaultBlockState()
                 .canSurvive(level, pos)) cir.setReturnValue(true);

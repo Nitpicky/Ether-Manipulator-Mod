@@ -35,7 +35,7 @@ public final class PhotonicEffects {
         return e == owner
                 || e instanceof Player
                 || e instanceof Animal
-                || RedesignEffects.ally(owner, e)
+                || Targeting.ally(owner, e)
                 || e.getPersistentData().hasUUID("mm_summoner");
     }
 
@@ -65,9 +65,9 @@ public final class PhotonicEffects {
             for (var dir : Direction.values()) {
                 var spot = BlockPos.containing(at).relative(dir, 3);
                 if (p.serverLevel().hasChunkAt(spot) && com.ethermod.util.Protect.may(p.serverLevel(), p, spot))
-                    WorldEffects.tempLight(p.serverLevel(), spot, 15, 80);
+                    TempLights.tempLight(p.serverLevel(), spot, 15, 80);
             }
-            WorldEffects.tempLight(p.serverLevel(), BlockPos.containing(at), 15, 80);
+            TempLights.tempLight(p.serverLevel(), BlockPos.containing(at), 15, 80);
             p.serverLevel().sendParticles(ParticleTypes.FLASH, at.x, at.y, at.z, 1, 0, 0, 0, 0);
         }
     }

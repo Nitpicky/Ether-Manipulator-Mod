@@ -1,6 +1,6 @@
 package com.ethermod.entity;
 
-import com.ethermod.trait.RedesignEffects;
+import com.ethermod.trait.Targeting;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
@@ -100,7 +100,7 @@ public final class SoulBlazeling extends FlyingMob {
     public boolean validTarget(ServerPlayer owner, LivingEntity e) {
         return e != null
                 && !e.getPersistentData().hasUUID("mm_summoner")
-                && RedesignEffects.enemy(owner, e);
+                && Targeting.enemy(owner, e);
     }
 
     @Override
