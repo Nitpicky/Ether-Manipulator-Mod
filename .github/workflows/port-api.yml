@@ -1,0 +1,40 @@
+name: Port API lookup
+# Port helper (port/26.3 only): prints public signatures of 26.3 / NeoForge / GeckoLib classes
+on:
+  workflow_dispatch:
+    inputs:
+      classes:
+        description: 'space-separated class names or regexes over jar entries (e.g. net/minecraft/client/renderer/SubmitNodeCollector)'
+        required: true
+      list:
+        description: 'regex: list matching class names only'
+        required: false
+        default: ''
+jobs:
+  lookup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
+        with:
+          java-version: '25'
+          distribution: temurin
+      - uses: gradle/actions/setup-gradle@v5
+      - run: ./gradlew createMinecraftArtifacts dependencies --configuration compileClasspath -q > /dev/null || true
+      - name: Lookup
+        env:
+          CLASSES: ${{ inputs.classes }}
+          LIST: ${{ inputs.list }}
+        run: |
+          JARS=$( (find build -name '*.jar' -path '*moddev*' ; find ~/.gradle/caches -name '*.jar' \( -path '*geckolib*' -o -path '*curse.maven*' \)) | sort -u)
+          echo "$JARS"
+          CP=$(echo "$JARS" | tr '\n' ':')
+          : > all.txt
+          for j in $JARS; do unzip -Z1 "$j" 2>/dev/null | grep '\.class$' | sed 's/\.class$//' >> all.txt; done
+          sort -u all.txt -o all.txt
+          if [ -n "$LIST" ]; then echo "=== LIST $LIST"; grep -E "$LIST" all.txt | grep -v '\$[0-9]' | head -3000; fi
+          for c in $CLASSES; do
+            for m in $(grep -E "^($c)$" all.txt | head -60); do
+              echo "=== $m"; javap -cp "$CP" -public "${m//\//.}" 2>&1 | head -400
+            done
+          done
