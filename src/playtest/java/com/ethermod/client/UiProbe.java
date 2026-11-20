@@ -306,6 +306,10 @@ public final class UiProbe {
                                 for (int slot = 0; slot < 3; slot++)
                                     TraitBuild.setLine(st, slot, null);
                                 check(
+                                        "Client SideHooks installed (common code reaches client code)",
+                                        com.ethermod.SideHooks.get().getClass()
+                                                != com.ethermod.SideHooks.class);
+                                check(
                                         "Nine Module definitions (Mechatronic shelved)",
                                         TraitLines.all(p.registryAccess()).size() == 9);
                                 check(
