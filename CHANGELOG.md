@@ -5,6 +5,13 @@ next release's notes.
 
 ## 1.0.1 (in progress, not released)
 
+### Changes
+- Photonic: the light that follows you is now a smooth moving glow, like dynamic-lights mods. It
+  fades with distance from your exact position instead of jumping from block to block, other
+  players see it too, and it places no blocks (so it never touches claims). It works with Sodium
+  and Iris. Client setting `photonic_dynamic_light` turns it off. Since it is purely visual, it
+  no longer melts snow or ice.
+
 ### Fixes
 - Ziplines: riding no longer swings you from side to side. You now build up speed along the
   rope, turn around smoothly, keep the momentum you jumped on with, and stop cleanly at the ends.
@@ -28,8 +35,7 @@ next release's notes.
 - Orbs in flight are no longer saved half set up when the world closes. A block held or thrown by
   the Mass Driver is still kept.
 - Gale Step now only works while you are actually in the air.
-- Light beams and the Photonic head light no longer place light inside claims or protected areas
-  you can't build in.
+- Light beams no longer place light inside claims or protected areas you can't build in.
 - Frost bridges no longer leave leftover data behind on long-running servers.
 
 ### Sounds and effects
