@@ -63,11 +63,11 @@ public final class GemLootModifier extends LootModifier {
         if (gem instanceof com.ethermod.item.ModuleItem mi
                 && com.ethermod.config.ServerConfig.moduleDisabled(mi.module().getPath())) return loot;
         boolean give = false;
-        Vec3 origin = ctx.getParamOrNull(LootContextParams.ORIGIN);
+        Vec3 origin = ctx.getOptionalParameter(LootContextParams.ORIGIN);
         ServerLevel level = ctx.getLevel();
         // Only a real player opening the chest uses up the guarantee: loot rolled by a hopper
         // minecart, a /loot command or a fake player (machines) only gets the normal chance
-        boolean realPlayer = ctx.getParamOrNull(LootContextParams.THIS_ENTITY) instanceof net.minecraft.server.level.ServerPlayer sp
+        boolean realPlayer = ctx.getOptionalParameter(LootContextParams.THIS_ENTITY) instanceof net.minecraft.server.level.ServerPlayer sp
                 && !(sp instanceof net.neoforged.neoforge.common.util.FakePlayer);
         if (realPlayer && origin != null && !guaranteeIn.isEmpty() && com.ethermod.config.ServerConfig.gemInFirstChest()) {
             BlockPos pos = BlockPos.containing(origin);
@@ -76,7 +76,7 @@ public final class GemLootModifier extends LootModifier {
             for (Identifier id : guaranteeIn) {
                 var structure = structures.getValue(id);
                 if (structure == null) continue;
-                var start = level.structureManager().getStructureWithPieceAt(pos, structure);
+                var start = level.structureManager().getStructureWithPieceAt(pos, h -> h.value() == structure);
                 if (!start.isValid()) continue;
                 key = id + "@" + start.getChunkPos().toLong();
                 break;

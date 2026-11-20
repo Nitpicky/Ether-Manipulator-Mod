@@ -160,11 +160,11 @@ public final class PhotonicEffects {
 
             if (e instanceof Mob mob && !friend) {
                 boolean dark =
-                        e.getType().is(net.minecraft.tags.EntityTypeTags.UNDEAD)
+                        e.getType().builtInRegistryHolder().is(net.minecraft.tags.EntityTypeTags.UNDEAD)
                                 || e instanceof net.minecraft.world.entity.monster.spider.Spider;
                 if (Traits.has(st, "photonic.daybreak")
                         && dark
-                        && !e.getType().is(net.neoforged.neoforge.common.Tags.EntityTypes.BOSSES)
+                        && !e.getType().builtInRegistryHolder().is(net.neoforged.neoforge.common.Tags.EntityTypes.BOSSES)
                         && e.distanceToSqr(at) <= 36 * power * power) {
                     mob.setTarget(null);
                     var away = e.position().subtract(at).normalize();
@@ -181,13 +181,13 @@ public final class PhotonicEffects {
 
     private static final net.minecraft.core.particles.DustParticleOptions LINK =
             new net.minecraft.core.particles.DustParticleOptions(
-                    new org.joml.Vector3f(1f, .86f, .45f), .45f);
+                    0xFFDB73, .45f);
     private static final net.minecraft.core.particles.DustParticleOptions SPARK =
             new net.minecraft.core.particles.DustParticleOptions(
-                    new org.joml.Vector3f(1f, .98f, .85f), 1.1f);
+                    0xFFFAD9, 1.1f);
     private static final net.minecraft.core.particles.DustParticleOptions STAR =
             new net.minecraft.core.particles.DustParticleOptions(
-                    new org.joml.Vector3f(1f, .95f, .7f), .8f);
+                    0xFFF2B3, .8f);
 
     /**
      * A link between two bounce lights: a faint dotted thread of light, every other dot lit in

@@ -206,6 +206,7 @@ public final class OrbTether {
                             && !(b.hooked instanceof net.minecraft.world.entity.player.Player)
                             && !b.hooked
                                     .getType()
+                                    .builtInRegistryHolder()
                                     .is(net.neoforged.neoforge.common.Tags.EntityTypes.BOSSES);
             b.setPos(hookPoint(b));
             Vec3 d = b.position().subtract(hands);

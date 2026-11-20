@@ -213,15 +213,15 @@ final class UtilityBeam {
         if (state.lastUtilityPos == -target.getId() - 1L) return;
         if (target instanceof net.minecraft.world.entity.animal.sheep.Sheep sheep
                 && sheep.readyForShearing()) {
-            sheep.shear(SoundSource.PLAYERS);
+            sheep.shear(player.level(), SoundSource.PLAYERS, new ItemStack(net.minecraft.world.item.Items.SHEARS));
             state.lastUtilityPos = -target.getId() - 1L;
         } else if (target instanceof net.minecraft.world.entity.animal.golem.SnowGolem golem
                 && golem.readyForShearing()) {
-            golem.shear(SoundSource.PLAYERS);
+            golem.shear(player.level(), SoundSource.PLAYERS, new ItemStack(net.minecraft.world.item.Items.SHEARS));
             state.lastUtilityPos = -target.getId() - 1L;
         } else if (target instanceof net.minecraft.world.entity.animal.cow.MushroomCow cow
                 && cow.readyForShearing()) {
-            cow.shear(SoundSource.PLAYERS);
+            cow.shear(player.level(), SoundSource.PLAYERS, new ItemStack(net.minecraft.world.item.Items.SHEARS));
             state.lastUtilityPos = -target.getId() - 1L;
         }
     }

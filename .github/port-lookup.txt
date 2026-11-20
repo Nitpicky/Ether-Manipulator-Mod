@@ -1,4 +1,4 @@
-net/neoforged/neoforge/common/ItemAbility net/neoforged/neoforge/common/loot/LootModifier net/minecraft/world/level/block/BonemealableBlock net/minecraft/world/level/storage/TagValueInput net/neoforged/neoforge/transfer/fluid/FluidUtil net/neoforged/neoforge/transfer/ResourceHandler net/neoforged/neoforge/transfer/transaction/Transaction net/minecraft/world/item/DyeItem net/minecraft/world/attribute/EnvironmentAttributes net/minecraft/world/entity/LivingEntity net/minecraft/world/entity/Entity net/minecraft/util/ProblemReporter
-/(.*Till.*|.*Strip.*|.*Hoe.*|.*Shovel.*|.*Axe[A-Z].*|Axe|.*Flatten.*|DyeItem|.*EnvironmentAttributes|DimensionDataStorage|.*SavedData.*|TagValueInput|ProblemReporter|BonemealableBlock.*|HoneycombItem|.*ToolAction.*|.*BlockInteraction.*)$
-net/minecraft/world/level/block/BeehiveBlock#use
-# r9
+net/minecraft/world/level/block/BonemealSource net/minecraft/world/level/storage/loot/LootContext net/minecraft/world/level/block/entity/BlockEntity
+/(BonemealSource.*)$
+net/minecraft/world/item/BoneMealItem#growCrop
+# r10
