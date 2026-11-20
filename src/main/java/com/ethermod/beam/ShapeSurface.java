@@ -14,21 +14,21 @@ import java.util.List;
  * shape is built from never show their seams. A face on the block's border is also dropped when
  * the neighbouring highlighted block fills the other side, so a group reads as one shape.
  */
-final class ShapeSurface {
+public final class ShapeSurface {
 
     private ShapeSurface() {}
 
     /** Whether a world point lies inside another highlighted block's shape. */
-    interface Filled {
+    public interface Filled {
         boolean at(double x, double y, double z);
     }
 
     /** One axis-aligned face: its outward direction and the rectangle (world coordinates). */
-    interface Sink {
+    public interface Sink {
         void face(Direction d, double x0, double y0, double z0, double x1, double y1, double z1);
     }
 
-    static boolean contains(List<AABB> boxes, double x, double y, double z) {
+    public static boolean contains(List<AABB> boxes, double x, double y, double z) {
         for (AABB b : boxes)
             if (x > b.minX && x < b.maxX && y > b.minY && y < b.maxY && z > b.minZ && z < b.maxZ)
                 return true;
@@ -48,7 +48,7 @@ final class ShapeSurface {
         return out;
     }
 
-    static void faces(VoxelShape shape, BlockPos pos, Filled outside, Sink sink) {
+    public static void faces(VoxelShape shape, BlockPos pos, Filled outside, Sink sink) {
         if (shape.isEmpty()) return;
         List<AABB> boxes = shape.toAabbs();
         double[] xs = cuts(boxes, Direction.Axis.X),

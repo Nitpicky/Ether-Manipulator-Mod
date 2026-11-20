@@ -1,6 +1,6 @@
 package com.ethermod.client;
 
-import com.ethermod.beam.Muzzle;
+import com.ethermod.client.beam.Muzzle;
 import com.ethermod.item.ManipulatorColors;
 import com.ethermod.item.EtherManipulatorItem;
 import com.mojang.blaze3d.vertex.PoseStack;

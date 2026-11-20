@@ -309,7 +309,7 @@ public class UpgradeScreen extends Screen {
     public boolean keyPressed(int key, int scan, int mods) {
         if (!loadouts.isRenaming()
                 && !colour.hexBox().isFocused()
-                && com.ethermod.event.ManipulatorKeys.SKILL_TREE_KEY.matches(key, scan)) {
+                && com.ethermod.client.event.ManipulatorKeys.SKILL_TREE_KEY.matches(key, scan)) {
             onClose();
             return true;
         }

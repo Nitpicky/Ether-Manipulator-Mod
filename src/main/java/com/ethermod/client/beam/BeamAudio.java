@@ -1,4 +1,7 @@
-package com.ethermod.beam;
+package com.ethermod.client.beam;
+
+import com.ethermod.beam.LeftClickFxData;
+import com.ethermod.beam.RemoteBeams;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;

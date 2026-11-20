@@ -40,6 +40,16 @@ public final class BodyTextures {
                 }
             };
 
+    /**
+     * Resource reload (F3+T, a pack change): drops every recoloured texture, so the next draw
+     * recolours the new base art.
+     */
+    public static void clear() {
+        var textures = Minecraft.getInstance().getTextureManager();
+        for (ResourceLocation loc : CACHE.values()) if (!loc.equals(BASE)) textures.release(loc);
+        CACHE.clear();
+    }
+
     /** The texture for a body colour; the painted one for -1 (default) or if anything fails. */
     public static ResourceLocation get(int body) {
         if (body < 0) return BASE;

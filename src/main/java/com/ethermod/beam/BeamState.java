@@ -129,7 +129,7 @@ public final class BeamState {
     }
 
     /** Ticks between strikes per pressure level: 2/s, ~3/s, 4/s, 5/s. */
-    static int hitInterval(int level) {
+    public static int hitInterval(int level) {
         return switch (level) {
             case 4 -> 4;
             case 3 -> 5;

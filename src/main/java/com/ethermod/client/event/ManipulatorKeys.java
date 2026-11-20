@@ -1,4 +1,4 @@
-package com.ethermod.event;
+package com.ethermod.client.event;
 
 import com.ethermod.client.TraitScreen;
 import com.ethermod.manipulator.Manipulator;

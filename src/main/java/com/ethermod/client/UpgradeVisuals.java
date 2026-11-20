@@ -16,6 +16,19 @@ final class UpgradeVisuals {
     static final Map<String, Palette> themes = new LinkedHashMap<>();
     static final Map<String, JsonObject> modules = new HashMap<>();
 
+    /**
+     * Resource reload: reads the (possibly changed) assets again if they were loaded, so an open
+     * screen keeps working; if they can't be read now, the next use tries again.
+     */
+    static void reset() {
+        if (assets == null) return;
+        try {
+            load();
+        } catch (RuntimeException e) {
+            assets = null;
+        }
+    }
+
     static void load() {
         assets = read("screen.json");
         rules = read("tooltips.json");

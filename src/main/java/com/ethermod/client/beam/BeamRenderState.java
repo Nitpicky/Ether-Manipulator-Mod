@@ -1,4 +1,4 @@
-package com.ethermod.beam;
+package com.ethermod.client.beam;
 
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;

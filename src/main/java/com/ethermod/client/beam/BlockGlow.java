@@ -1,4 +1,8 @@
-package com.ethermod.beam;
+package com.ethermod.client.beam;
+
+import com.ethermod.beam.BeamTrace;
+import com.ethermod.beam.MiningDamageTracker;
+import com.ethermod.beam.ShapeSurface;
 
 import com.ethermod.trait.Traits;
 import com.mojang.blaze3d.vertex.VertexConsumer;

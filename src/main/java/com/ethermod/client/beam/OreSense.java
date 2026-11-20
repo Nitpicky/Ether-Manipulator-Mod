@@ -1,4 +1,4 @@
-package com.ethermod.beam;
+package com.ethermod.client.beam;
 
 import com.ethermod.trait.Traits;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;

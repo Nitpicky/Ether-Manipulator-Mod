@@ -79,9 +79,9 @@ public final class StasisFx {
             var h1 = tip.add(dir.scale(-.4)).add(side.scale(.28)).subtract(cam);
             var h2 = tip.add(dir.scale(-.4)).add(side.scale(-.28)).subtract(cam);
             for (var seg : new net.minecraft.world.phys.Vec3[][] {{a, t}, {t, h1}, {t, h2}}) {
-                com.ethermod.beam.BeamFx.prism(vc, m, seg[0], seg[1], com.ethermod.beam.BeamFx.PX * 1.4f, time * .1,
+                com.ethermod.client.beam.BeamFx.prism(vc, m, seg[0], seg[1], com.ethermod.client.beam.BeamFx.PX * 1.4f, time * .1,
                         TEAL_R, TEAL_G, TEAL_B, .3f + .1f * p);
-                com.ethermod.beam.BeamFx.prism(vc, m, seg[0], seg[1], com.ethermod.beam.BeamFx.PX * .5f, time * .1,
+                com.ethermod.client.beam.BeamFx.prism(vc, m, seg[0], seg[1], com.ethermod.client.beam.BeamFx.PX * .5f, time * .1,
                         .73f, .95f, .84f, .95f);
             }
         }
@@ -152,9 +152,23 @@ public final class StasisFx {
 
         @Override
         public void render(PoseStack pose, MultiBufferSource buf, int light, T e, float limb, float limbAmt, float pt, float age, float yaw, float pitch) {
+            if (HELD.isEmpty()) return; // nothing held: skip the lookup for every creature drawn
             float p = pulse(e, pt);
             if (p < 0) return;
-            int a = (int) (255 * (0.25f + 0.35f * p));
+            float strength = 0.25f + 0.35f * p;
+            if (ShaderCompat.shadersActive()) {
+                // Shader packs turn the emissive translucent type see-through (see GlowMaskLayer):
+                // draw the model solid and full-bright instead, its colour pulled towards the teal
+                // by the same strength the overlay's alpha has without shaders.
+                int r = (int) (255 * (1 + (0x20 / 255f - 1) * strength)),
+                        g = (int) (255 * (1 + (0xE9 / 255f - 1) * strength)),
+                        b = (int) (255 * (1 + (0xC1 / 255f - 1) * strength));
+                int solid = 0xFF000000 | r << 16 | g << 8 | b;
+                var vc = buf.getBuffer(RenderType.entityCutoutNoCull(parent.getTextureLocation(e)));
+                getParentModel().renderToBuffer(pose, vc, 0xF000F0, OverlayTexture.NO_OVERLAY, solid);
+                return;
+            }
+            int a = (int) (255 * strength);
             int color = (a << 24) | 0x20E9C1; // Pneumatic teal
             var vc = buf.getBuffer(RenderType.entityTranslucentEmissive(parent.getTextureLocation(e)));
             getParentModel().renderToBuffer(pose, vc, 0xF000F0, OverlayTexture.NO_OVERLAY, color);

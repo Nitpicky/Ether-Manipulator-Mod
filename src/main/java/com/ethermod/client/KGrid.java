@@ -16,6 +16,19 @@ final class KGrid {
     private DynamicTexture gridTexture;
     private NativeImage gridImage;
 
+    /**
+     * The lattice drifts a couple of GUI pixels a second, so it is rasterised and uploaded at most
+     * 30 times a second (and at once when the size or colours change); frames in between draw the
+     * last upload. The work arrays are kept between frames.
+     */
+    private static final double BAKE_INTERVAL = 1 / 30d;
+
+    private double bakedAt = Double.NEGATIVE_INFINITY;
+    private int bakedBg, bakedAccent;
+    private double[] vertical = new double[0], horizontal = new double[0];
+    private double[][] shade;
+    private final int[] ink = new int[256];
+
     void release(KUi ui) {
         if (gridTexture != null) {
             ui.mc.getTextureManager().release(GRID_TEXTURE);
@@ -34,8 +47,30 @@ final class KGrid {
             gridTexture = new DynamicTexture(gridImage);
             ui.mc.getTextureManager().register(GRID_TEXTURE, gridTexture);
             gridTexture.setFilter(false, false);
+            bakedAt = Double.NEGATIVE_INFINITY;
         }
-        double[] vertical = new double[tw], horizontal = new double[th];
+        int bg = p().bg(), accent = p().accent();
+        if (bg != bakedBg || accent != bakedAccent || ui.now < bakedAt || ui.now - bakedAt >= BAKE_INTERVAL) {
+            bakedAt = ui.now;
+            bakedBg = bg;
+            bakedAccent = accent;
+            bake(ui, density, tw, th, pitch, bg, accent);
+            g.flush();
+            gridTexture.upload();
+        }
+        g.enableScissor(
+                ui.left + Math.round(3 * ui.scale),
+                ui.top + Math.round(3 * ui.scale),
+                ui.left + Math.round((UpgradeScreen.W - 3) * ui.scale),
+                ui.top + Math.round((UpgradeScreen.H - 3) * ui.scale));
+        g.blit(GRID_TEXTURE, 0, 0, UpgradeScreen.W, UpgradeScreen.H, 0, 0, tw, th, tw, th);
+        g.disableScissor();
+    }
+
+    /** Rasterises the lattice for this moment into the grid image. */
+    private void bake(KUi ui, double density, int tw, int th, double pitch, int bg, int accent) {
+        if (vertical.length != tw) vertical = new double[tw];
+        if (horizontal.length != th) horizontal = new double[th];
         for (int x = 0; x < tw; x++) {
             double phase = ((x + .5) / density + ui.now * 2) % pitch,
                     dist = Math.min(phase, pitch - phase);
@@ -47,7 +82,7 @@ final class KGrid {
             horizontal[y] = Math.clamp((.5 + .5 / density - dist) * density, 0, 1);
         }
         int cw = UpgradeScreen.W / 4 + 2, ch = UpgradeScreen.H / 4 + 2;
-        double[][] shade = new double[ch][cw];
+        if (shade == null) shade = new double[ch][cw];
         for (int y = 0; y < ch; y++)
             for (int x = 0; x < cw; x++) {
                 double wx = x * 4, wy = y * 4, nx = wx - ui.now * 1.8, ny = wy - ui.now * 1.2;
@@ -61,9 +96,8 @@ final class KGrid {
                                 .16 * field,
                                 Math.max(0, .55 * (1 - Math.hypot(wx - 40, wy - 43) / 61)));
             }
-        int[] ink = new int[256];
         for (int i = 0; i < 256; i++) {
-            int c = mix(p().bg(), p().accent(), i / 255d);
+            int c = mix(bg, accent, i / 255d);
             ink[i] = abgr(c);
         }
         for (int y = 0; y < th; y++)
@@ -78,14 +112,5 @@ final class KGrid {
                 gridImage.setPixelRGBA(
                         x, y, ink[(int) Math.clamp(Math.round(amount * 255), 0, 255)]);
             }
-        g.flush();
-        gridTexture.upload();
-        g.enableScissor(
-                ui.left + Math.round(3 * ui.scale),
-                ui.top + Math.round(3 * ui.scale),
-                ui.left + Math.round((UpgradeScreen.W - 3) * ui.scale),
-                ui.top + Math.round((UpgradeScreen.H - 3) * ui.scale));
-        g.blit(GRID_TEXTURE, 0, 0, UpgradeScreen.W, UpgradeScreen.H, 0, 0, tw, th, tw, th);
-        g.disableScissor();
     }
 }

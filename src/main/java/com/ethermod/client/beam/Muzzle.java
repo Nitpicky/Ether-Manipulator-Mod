@@ -1,4 +1,4 @@
-package com.ethermod.beam;
+package com.ethermod.client.beam;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
@@ -22,6 +22,12 @@ import java.util.Map;
  * view and in view space, so a stored world position would trail the camera by a frame and drift
  * when you turn. The screen position of the nozzle does not depend on where the camera points, so
  * it stays glued to the model.
+ *
+ * <p>FOV effects (sprinting, Speed) widen only the world's projection, not the hand's. That is why
+ * the sample is kept on screen and unprojected with the world's matrices: the beam then starts
+ * where the nozzle is seen. Keeping it in view space (or unprojecting with the hand's projection)
+ * would put the start at the nozzle's 3D spot, which the wider world projection shows off the
+ * nozzle on screen.
  */
 @OnlyIn(Dist.CLIENT)
 public final class Muzzle {

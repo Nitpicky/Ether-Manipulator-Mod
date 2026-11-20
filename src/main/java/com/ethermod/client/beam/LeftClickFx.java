@@ -1,4 +1,7 @@
-package com.ethermod.beam;
+package com.ethermod.client.beam;
+
+import com.ethermod.beam.GustGrenade;
+import com.ethermod.beam.LeftClickFxData;
 
 import com.ethermod.item.OrbMode;
 import com.mojang.blaze3d.vertex.VertexConsumer;

@@ -1,6 +1,6 @@
 package com.ethermod.client;
 
-import com.ethermod.event.ClientInputHandler;
+import com.ethermod.client.event.ClientInputHandler;
 
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -38,7 +38,7 @@ public class ManipulatorClientExtensions implements IClientItemExtensions {
             return HumanoidModel.ArmPose.BOW_AND_ARROW;
         }
         // every other use (left clicks of each mode, a hook out, a carried block, a grenade...)
-        if (mc.player == entity && com.ethermod.beam.BeamRenderState.leftMode != null)
+        if (mc.player == entity && com.ethermod.client.beam.BeamRenderState.leftMode != null)
             return HumanoidModel.ArmPose.BOW_AND_ARROW;
         if (entity instanceof net.minecraft.world.entity.player.Player p
                 && ManipulatorAnimations.aiming(p)) return HumanoidModel.ArmPose.BOW_AND_ARROW;
