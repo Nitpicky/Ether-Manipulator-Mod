@@ -1,11 +1,16 @@
 modLoader="javafml"
 loaderVersion="[4,)"
 license="All Rights Reserved"
+# TODO(author): issueTrackerURL="https://..."  (where players report bugs)
 
 [[mods]]
 modId="ethermod"
 version="${mod_version}"
 displayName="Ether Manipulator"
+# Shown in the Mods list (400x400 PNG at the jar root).
+logoFile="ethermod_logo.png"
+# TODO(author): authors="..."          (fill in before release; left out until confirmed)
+# TODO(author): displayURL="https://..."  (the mod's page)
 description='''
 A Starbound-inspired multitool that replaces every tool: a continuous beam and a charged orb.
 Every player owns one from the start. Summon it with R; equip elemental Modules and progress through Prototype, Calibrated, Augmented and Overclocked Tiers.
