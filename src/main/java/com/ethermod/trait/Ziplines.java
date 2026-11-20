@@ -235,12 +235,13 @@ public final class Ziplines {
     }
 
     /**
-     * Logout: the ride ends. The half-strung first end and the rope record stay (entity ids keep
-     * while the server runs), so a quick relog can still finish the rope and a new rope still
-     * replaces the old one; both are bounded by the player count and cleared on server stop.
+     * Logout: the ride ends and the player's rope records go. The rope itself stays up until it
+     * expires (2 minutes); a half-strung first end melts away on its own (30s).
      */
     public static void forget(UUID player) {
         RIDES.remove(player);
+        PENDING.remove(player);
+        ROPES.remove(player);
     }
 
     public static void clear() {

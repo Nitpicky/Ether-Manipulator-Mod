@@ -438,6 +438,11 @@ public final class LeftClick {
     public static void stopPulls(net.neoforged.neoforge.event.server.ServerStoppingEvent ev) {
         for (Pull pl : PULLS) releasePull(pl.item());
         PULLS.clear();
+        // per-player state (the lights themselves are cleared by TempLights on stop)
+        HOLDS.clear();
+        READY.clear();
+        LIT.clear();
+        LIT_ALL.clear();
     }
 
     /**
