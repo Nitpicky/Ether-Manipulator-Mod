@@ -1,0 +1,1646 @@
+/home/runner/.gradle/caches/modules-2/files-2.1/curse.maven/geckolib-388172/8893169/196231506b89da06925c087f9b8bc5fd12ebea16/geckolib-388172-8893169.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/io.github.llamalad7/mixinextras-neoforge/0.5.5/26f2905a37afd203c3da1d6a2e164472a7531b41/mixinextras-neoforge-0.5.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.accesstransformers/at-parser/11.0.2/64aae57d6d26d69543c5275181fe6971707a4e16/at-parser-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/earlydisplay/12.0.16/efa2e56115d22853d10524874a7bbb64555c2a28/earlydisplay-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/12.0.16/edbb2ee8211a867215970bc15ae9c354fa56dc09/loader-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarMetadata/0.5.3/ff40c1cd721d07615d825c5bbf27705b2e3258ed/JarJarMetadata-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarSelector/0.5.3/6b845aab8d5c8e721b4e3cd30f97722b7f8044b1/JarJarSelector-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/accesstransformers/11.0.2/25dcb69c78b16669935f0ab91dff830ce192379d/accesstransformers-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/bus/8.0.5/5b2d33285ab5d1554e9798ad98c40d6ea3868bd5/bus-8.0.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/mergetool/2.0.7/793b18456e92c4a7f66d9b5d8bf7a9c1c7a20b20/mergetool-2.0.7-api.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar
+=== LIST (Identifier|GuiGraphics|/RenderType|RenderTypes|MultiBufferSource|SubmitNodeCollector|RawAnimation|AnimationController|GeoItemRenderer|BakedGeoModel|GeoRenderState|InteractionResult|LightTexture|LightmapTexture|BlockAndTintGetter|CriterionTrigger|BreakEvent|PlayerModel|UseAnim|ItemUseAnimation|FarmBlock|FarmlandBlock|/Util$|VertexFormat|GlStateManager|RenderStateShard|RenderPipeline|RenderPipelines|BakedModel|BlockStateModel|Tesselator|BufferUploader|PlayerSkin|DataTickets|EasingType|RenderLevelStageEvent|ValueInput|ValueOutput|^software/bernie/geckolib/|^net/neoforged/neoforge/client/event/|^net/neoforged/neoforge/event/|^net/minecraft/client/renderer/[A-Za-z]*$|^com/mojang/blaze3d/)
+com/geckolib/animatable/stateless/StatelessAnimationController
+com/geckolib/animation/AnimationController
+com/geckolib/animation/AnimationController$AnimationStateHandler
+com/geckolib/animation/AnimationController$KeyframeEventHandler
+com/geckolib/animation/RawAnimation
+com/geckolib/animation/RawAnimation$Stage
+com/geckolib/animation/object/EasingType
+com/geckolib/animation/object/EasingType$CatmullRomEasing
+com/geckolib/cache/BakedModelCache
+com/geckolib/cache/model/BakedGeoModel
+com/geckolib/constant/DataTickets
+com/geckolib/mixin/client/PlayerModelMixin
+com/geckolib/renderer/GeoItemRenderer
+com/geckolib/renderer/GeoItemRenderer$RenderData
+com/geckolib/renderer/base/GeoRenderState
+com/geckolib/renderer/base/GeoRenderState$Impl
+com/llamalad7/mixinextras/expression/impl/ast/expressions/IdentifierAssignmentExpression
+com/llamalad7/mixinextras/expression/impl/ast/expressions/IdentifierExpression
+com/llamalad7/mixinextras/expression/impl/ast/identifiers/ArrayTypeIdentifier
+com/llamalad7/mixinextras/expression/impl/ast/identifiers/DefinedMemberIdentifier
+com/llamalad7/mixinextras/expression/impl/ast/identifiers/DefinedTypeIdentifier
+com/llamalad7/mixinextras/expression/impl/ast/identifiers/MemberIdentifier
+com/llamalad7/mixinextras/expression/impl/ast/identifiers/TypeIdentifier
+com/llamalad7/mixinextras/expression/impl/ast/identifiers/WildcardIdentifier
+com/llamalad7/mixinextras/expression/impl/pool/BytecodeIdentifierPool
+com/llamalad7/mixinextras/expression/impl/pool/IdentifierPool
+com/llamalad7/mixinextras/lib/grammar/expressions/ExpressionParser$IdentifierAssignmentStatementContext
+com/llamalad7/mixinextras/lib/grammar/expressions/ExpressionParser$IdentifierExpressionContext
+com/llamalad7/mixinextras/lib/grammar/expressions/ExpressionParser$IdentifierNameContext
+com/mojang/blaze3d/Blaze3D
+com/mojang/blaze3d/ProjectionType
+com/mojang/blaze3d/ProjectionType$LayeringTransform
+com/mojang/blaze3d/TracyBootstrap
+com/mojang/blaze3d/TracyFrameCapture
+com/mojang/blaze3d/TracyFrameCapture$Status
+com/mojang/blaze3d/audio/AbstractDeviceTracker
+com/mojang/blaze3d/audio/CallbackDeviceTracker
+com/mojang/blaze3d/audio/Channel
+com/mojang/blaze3d/audio/DeviceList
+com/mojang/blaze3d/audio/DeviceTracker
+com/mojang/blaze3d/audio/Library
+com/mojang/blaze3d/audio/Library$ChannelPool
+com/mojang/blaze3d/audio/Library$CountingChannelPool
+com/mojang/blaze3d/audio/Library$Pool
+com/mojang/blaze3d/audio/Listener
+com/mojang/blaze3d/audio/ListenerTransform
+com/mojang/blaze3d/audio/OpenAlUtil
+com/mojang/blaze3d/audio/PollingDeviceTracker
+com/mojang/blaze3d/audio/SoundBuffer
+com/mojang/blaze3d/audio/package-info
+com/mojang/blaze3d/buffers/Std140Builder
+com/mojang/blaze3d/buffers/Std140SizeCalculator
+com/mojang/blaze3d/buffers/package-info
+com/mojang/blaze3d/font/GlyphBitmap
+com/mojang/blaze3d/font/GlyphInfo
+com/mojang/blaze3d/font/GlyphProvider
+com/mojang/blaze3d/font/GlyphProvider$Conditional
+com/mojang/blaze3d/font/SpaceProvider
+com/mojang/blaze3d/font/SpaceProvider$Definition
+com/mojang/blaze3d/font/TrueTypeGlyphProvider
+com/mojang/blaze3d/font/TrueTypeGlyphProvider$Glyph
+com/mojang/blaze3d/font/TrueTypeGlyphProvider$GlyphEntry
+com/mojang/blaze3d/font/UnbakedGlyph
+com/mojang/blaze3d/font/UnbakedGlyph$Stitcher
+com/mojang/blaze3d/font/package-info
+com/mojang/blaze3d/framegraph/FrameGraphBuilder
+com/mojang/blaze3d/framegraph/FrameGraphBuilder$ExternalResource
+com/mojang/blaze3d/framegraph/FrameGraphBuilder$Handle
+com/mojang/blaze3d/framegraph/FrameGraphBuilder$Inspector
+com/mojang/blaze3d/framegraph/FrameGraphBuilder$InternalVirtualResource
+com/mojang/blaze3d/framegraph/FrameGraphBuilder$Pass
+com/mojang/blaze3d/framegraph/FrameGraphBuilder$VirtualResource
+com/mojang/blaze3d/framegraph/FramePass
+com/mojang/blaze3d/framegraph/package-info
+com/mojang/blaze3d/package-info
+com/mojang/blaze3d/pipeline/MainTarget
+com/mojang/blaze3d/pipeline/MainTarget$Dimension
+com/mojang/blaze3d/pipeline/PipelineCache
+com/mojang/blaze3d/pipeline/RenderTarget
+com/mojang/blaze3d/pipeline/TextureTarget
+com/mojang/blaze3d/pipeline/package-info
+com/mojang/blaze3d/platform/ClientShutdownWatchdog
+com/mojang/blaze3d/platform/ClipboardManager
+com/mojang/blaze3d/platform/DebugMemoryUntracker
+com/mojang/blaze3d/platform/DisplayData
+com/mojang/blaze3d/platform/FramerateLimitTracker
+com/mojang/blaze3d/platform/FramerateLimitTracker$FramerateThrottleReason
+com/mojang/blaze3d/platform/IconSet
+com/mojang/blaze3d/platform/InputConstants
+com/mojang/blaze3d/platform/InputConstants$Key
+com/mojang/blaze3d/platform/InputConstants$Type
+com/mojang/blaze3d/platform/InputConstants$Value
+com/mojang/blaze3d/platform/Lighting
+com/mojang/blaze3d/platform/Lighting$Entry
+com/mojang/blaze3d/platform/MacosUtil
+com/mojang/blaze3d/platform/MacosUtil$DisabledActions
+com/mojang/blaze3d/platform/MessageBox
+com/mojang/blaze3d/platform/Monitor
+com/mojang/blaze3d/platform/MonitorManager
+com/mojang/blaze3d/platform/NativeImage
+com/mojang/blaze3d/platform/NativeImage$Format
+com/mojang/blaze3d/platform/NativeImage$WriteCallback
+com/mojang/blaze3d/platform/NativeLibrariesBootstrap
+com/mojang/blaze3d/platform/NativeLibrariesBootstrap$CapturingPrintStream
+com/mojang/blaze3d/platform/NativeLibrariesBootstrap$CapturingStream
+com/mojang/blaze3d/platform/NativeLibrariesBootstrap$LibraryLoadEntry
+com/mojang/blaze3d/platform/SDLEventHandler
+com/mojang/blaze3d/platform/SdlDebug
+com/mojang/blaze3d/platform/TextInputManager
+com/mojang/blaze3d/platform/TextureUtil
+com/mojang/blaze3d/platform/Transparency
+com/mojang/blaze3d/platform/VideoMode
+com/mojang/blaze3d/platform/Window
+com/mojang/blaze3d/platform/Window$FramebufferSize
+com/mojang/blaze3d/platform/Window$WindowInitFailed
+com/mojang/blaze3d/platform/WindowEventHandler
+com/mojang/blaze3d/platform/cursor/CursorType
+com/mojang/blaze3d/platform/cursor/CursorTypes
+com/mojang/blaze3d/platform/cursor/package-info
+com/mojang/blaze3d/platform/package-info
+com/mojang/blaze3d/resource/CrossFrameResourcePool
+com/mojang/blaze3d/resource/CrossFrameResourcePool$ResourceEntry
+com/mojang/blaze3d/resource/GraphicsResourceAllocator
+com/mojang/blaze3d/resource/RenderTargetDescriptor
+com/mojang/blaze3d/resource/RenderTargetDescriptor$TextureProperties
+com/mojang/blaze3d/resource/ResourceDescriptor
+com/mojang/blaze3d/resource/ResourceHandle
+com/mojang/blaze3d/resource/package-info
+com/mojang/blaze3d/systems/RenderSystem
+com/mojang/blaze3d/systems/RenderSystem$AutoStorageIndexBuffer
+com/mojang/blaze3d/systems/RenderSystem$AutoStorageIndexBuffer$IndexGenerator
+com/mojang/blaze3d/systems/RenderSystem$GpuAsyncTask
+com/mojang/blaze3d/systems/SamplerCache
+com/mojang/blaze3d/systems/ScissorState
+com/mojang/blaze3d/systems/TimerQuery
+com/mojang/blaze3d/systems/TimerQuery$Status
+com/mojang/blaze3d/systems/package-info
+com/mojang/blaze3d/vertex/BufferBuilder
+com/mojang/blaze3d/vertex/ByteBufferBuilder
+com/mojang/blaze3d/vertex/ByteBufferBuilder$Result
+com/mojang/blaze3d/vertex/CompactVectorArray
+com/mojang/blaze3d/vertex/DefaultVertexFormat
+com/mojang/blaze3d/vertex/MeshData
+com/mojang/blaze3d/vertex/MeshData$DrawState
+com/mojang/blaze3d/vertex/MeshData$SortState
+com/mojang/blaze3d/vertex/PoseStack
+com/mojang/blaze3d/vertex/PoseStack$Pose
+com/mojang/blaze3d/vertex/QuadInstance
+com/mojang/blaze3d/vertex/SheetedDecalTextureGenerator
+com/mojang/blaze3d/vertex/StagingBuffer
+com/mojang/blaze3d/vertex/StagingBuffer$BufferHandle
+com/mojang/blaze3d/vertex/StagingBuffer$Cpu
+com/mojang/blaze3d/vertex/StagingBuffer$PersistentlyMapped
+com/mojang/blaze3d/vertex/StagingBuffer$Uploader
+com/mojang/blaze3d/vertex/TlsfAllocator
+com/mojang/blaze3d/vertex/TlsfAllocator$Allocation
+com/mojang/blaze3d/vertex/TlsfAllocator$Block
+com/mojang/blaze3d/vertex/TlsfAllocator$Heap
+com/mojang/blaze3d/vertex/TlsfAllocator$IndexPair
+com/mojang/blaze3d/vertex/UberGpuBuffer
+com/mojang/blaze3d/vertex/UberGpuBuffer$StagedAllocationEntry
+com/mojang/blaze3d/vertex/UberGpuBuffer$UberGpuBufferHeap
+com/mojang/blaze3d/vertex/UberGpuBuffer$UploadCallback
+com/mojang/blaze3d/vertex/VertexConsumer
+com/mojang/blaze3d/vertex/VertexSorting
+com/mojang/blaze3d/vertex/VertexSorting$DistanceFunction
+com/mojang/blaze3d/vertex/package-info
+com/mojang/renderpearl/api/pipeline/CompiledRenderPipeline
+com/mojang/renderpearl/api/pipeline/CompiledRenderPipeline$Pending
+com/mojang/renderpearl/api/pipeline/RenderPipeline
+com/mojang/renderpearl/api/pipeline/RenderPipeline$Builder
+com/mojang/renderpearl/api/pipeline/RenderPipeline$Snippet
+com/mojang/renderpearl/api/vertex/VertexFormat
+com/mojang/renderpearl/api/vertex/VertexFormat$Builder
+com/mojang/renderpearl/api/vertex/VertexFormatElement
+com/mojang/renderpearl/backend/api/BackendRenderPipeline
+com/mojang/renderpearl/backend/api/BackendRenderPipeline$CreateInfo
+com/mojang/renderpearl/backend/api/BackendRenderPipeline$CreateInfo$AttribBinding
+com/mojang/renderpearl/backend/api/BackendRenderPipeline$CreateInfo$Shader
+com/mojang/renderpearl/backend/api/BackendRenderPipeline$CreateInfo$VertexBuffer
+com/mojang/renderpearl/backend/api/BackendRenderPipeline$Pending
+com/mojang/renderpearl/backend/opengl/GlRenderPipeline
+com/mojang/renderpearl/backend/opengl/GlStateManager
+com/mojang/renderpearl/backend/opengl/GlStateManager$BlendState
+com/mojang/renderpearl/backend/opengl/GlStateManager$BooleanState
+com/mojang/renderpearl/backend/opengl/GlStateManager$ColorLogicState
+com/mojang/renderpearl/backend/opengl/GlStateManager$CullState
+com/mojang/renderpearl/backend/opengl/GlStateManager$DepthState
+com/mojang/renderpearl/backend/opengl/GlStateManager$PolygonOffsetState
+com/mojang/renderpearl/backend/opengl/GlStateManager$ScissorState
+com/mojang/renderpearl/backend/opengl/GlStateManager$StencilState
+com/mojang/renderpearl/backend/opengl/GlStateManager$TextureState
+com/mojang/renderpearl/backend/vulkan/VulkanRenderPipeline
+com/mojang/renderpearl/frontend/FrontendRenderPipeline
+net/minecraft/IdentifierException
+net/minecraft/advancements/CriterionTriggerInstance
+net/minecraft/advancements/triggers/CriterionTrigger
+net/minecraft/advancements/triggers/SimpleCriterionTrigger
+net/minecraft/advancements/triggers/SimpleCriterionTrigger$SimpleInstance
+net/minecraft/client/gui/GuiGraphicsExtractor
+net/minecraft/client/gui/GuiGraphicsExtractor$HoveredTextEffects
+net/minecraft/client/gui/GuiGraphicsExtractor$RenderingTextCollector
+net/minecraft/client/gui/GuiGraphicsExtractor$ScissorStack
+net/minecraft/client/gui/components/PlayerSkinWidget
+net/minecraft/client/gui/font/GlyphRenderTypes
+net/minecraft/client/model/player/PlayerModel
+net/minecraft/client/renderer/BindGroupLayouts
+net/minecraft/client/renderer/BiomeColors
+net/minecraft/client/renderer/CloudRenderer
+net/minecraft/client/renderer/CubeMap
+net/minecraft/client/renderer/DebugCrosshairRenderer
+net/minecraft/client/renderer/DynamicGpuData
+net/minecraft/client/renderer/DynamicGpuDataStorage
+net/minecraft/client/renderer/DynamicGpuDataStorageMapped
+net/minecraft/client/renderer/DynamicGpuDataStorageNonMapped
+net/minecraft/client/renderer/EndFlashState
+net/minecraft/client/renderer/FaceInfo
+net/minecraft/client/renderer/FirstPersonHandsAndItemsRenderer
+net/minecraft/client/renderer/GameRenderer
+net/minecraft/client/renderer/GlobalSettingsUniform
+net/minecraft/client/renderer/GpuWarnlistManager
+net/minecraft/client/renderer/LevelEventHandler
+net/minecraft/client/renderer/LevelRenderer
+net/minecraft/client/renderer/LevelTargetBundle
+net/minecraft/client/renderer/Lightmap
+net/minecraft/client/renderer/LightmapRenderStateExtractor
+net/minecraft/client/renderer/MapRenderer
+net/minecraft/client/renderer/MappableRingBuffer
+net/minecraft/client/renderer/MultiblockChestResources
+net/minecraft/client/renderer/Octree
+net/minecraft/client/renderer/OrderedSubmitNodeCollector
+net/minecraft/client/renderer/Panorama
+net/minecraft/client/renderer/PlayerSkinRenderCache
+net/minecraft/client/renderer/PlayerSkinRenderCache$RenderInfo
+net/minecraft/client/renderer/PostChain
+net/minecraft/client/renderer/PostChainConfig
+net/minecraft/client/renderer/PostPass
+net/minecraft/client/renderer/Projection
+net/minecraft/client/renderer/ProjectionMatrixBuffer
+net/minecraft/client/renderer/RenderBuffers
+net/minecraft/client/renderer/RenderPipelines
+net/minecraft/client/renderer/RunningTrimmedMean
+net/minecraft/client/renderer/ScreenEffectRenderer
+net/minecraft/client/renderer/SectionBufferBuilderPack
+net/minecraft/client/renderer/SectionBufferBuilderPool
+net/minecraft/client/renderer/SectionOcclusionGraph
+net/minecraft/client/renderer/ShaderDefines
+net/minecraft/client/renderer/ShaderManager
+net/minecraft/client/renderer/Sheets
+net/minecraft/client/renderer/SkyRenderer
+net/minecraft/client/renderer/SpriteCoordinateExpander
+net/minecraft/client/renderer/SpriteMapper
+net/minecraft/client/renderer/StagedVertexBuffer
+net/minecraft/client/renderer/SubmitNodeCollection
+net/minecraft/client/renderer/SubmitNodeCollector
+net/minecraft/client/renderer/SubmitNodeCollector$CustomGeometryRenderer
+net/minecraft/client/renderer/SubmitNodeStorage
+net/minecraft/client/renderer/UiLightmap
+net/minecraft/client/renderer/UniformValue
+net/minecraft/client/renderer/ViewArea
+net/minecraft/client/renderer/WeatherEffectRenderer
+net/minecraft/client/renderer/WorldBorderRenderer
+net/minecraft/client/renderer/block/BlockAndTintGetter
+net/minecraft/client/renderer/block/BlockStateModelSet
+net/minecraft/client/renderer/block/dispatch/BlockStateModel
+net/minecraft/client/renderer/block/dispatch/BlockStateModel$SimpleCachedUnbakedRoot
+net/minecraft/client/renderer/block/dispatch/BlockStateModel$Unbaked
+net/minecraft/client/renderer/block/dispatch/BlockStateModel$UnbakedRoot
+net/minecraft/client/renderer/block/dispatch/BlockStateModelDispatcher
+net/minecraft/client/renderer/block/dispatch/BlockStateModelDispatcher$MultiPartDefinition
+net/minecraft/client/renderer/block/dispatch/BlockStateModelDispatcher$SimpleModelSelectors
+net/minecraft/client/renderer/block/dispatch/BlockStateModelPart
+net/minecraft/client/renderer/block/dispatch/BlockStateModelPart$Unbaked
+net/minecraft/client/renderer/block/model/BlockStateModelWrapper
+net/minecraft/client/renderer/block/model/BlockStateModelWrapper$Unbaked
+net/minecraft/client/renderer/feature/RenderTypeFeatureRenderer
+net/minecraft/client/renderer/feature/RenderTypeFeatureRenderer$Group
+net/minecraft/client/renderer/rendertype/RenderType
+net/minecraft/client/renderer/rendertype/RenderTypes
+net/minecraft/client/resources/DefaultPlayerSkin
+net/minecraft/client/resources/model/BlockStateModelLoader
+net/minecraft/client/resources/model/BlockStateModelLoader$LoadedBlockStateModelDispatcher
+net/minecraft/client/resources/model/BlockStateModelLoader$LoadedModels
+net/minecraft/client/searchtree/IdentifierSearchTree
+net/minecraft/commands/arguments/IdentifierArgument
+net/minecraft/resources/Identifier
+net/minecraft/util/EasingType
+net/minecraft/util/EasingType$CubicBezier
+net/minecraft/util/EasingType$CubicBezier$CubicCurve
+net/minecraft/util/EasingType$CubicBezierControls
+net/minecraft/util/IdentifierPattern
+net/minecraft/util/Util
+net/minecraft/util/datafix/fixes/EntityMinecartIdentifiersFix
+net/minecraft/util/datafix/fixes/MobSpawnerEntityIdentifiersFix
+net/minecraft/util/parsing/packrat/commands/IdentifierParseRule
+net/minecraft/world/InteractionResult
+net/minecraft/world/InteractionResult$Fail
+net/minecraft/world/InteractionResult$ItemContext
+net/minecraft/world/InteractionResult$Pass
+net/minecraft/world/InteractionResult$Success
+net/minecraft/world/InteractionResult$SwingSource
+net/minecraft/world/InteractionResult$TryEmptyHandInteraction
+net/minecraft/world/entity/player/PlayerModelPart
+net/minecraft/world/entity/player/PlayerModelType
+net/minecraft/world/entity/player/PlayerSkin
+net/minecraft/world/entity/player/PlayerSkin$Patch
+net/minecraft/world/item/ItemUseAnimation
+net/minecraft/world/level/block/FarmlandBlock
+net/minecraft/world/level/storage/TagValueInput
+net/minecraft/world/level/storage/TagValueInput$CompoundListWrapper
+net/minecraft/world/level/storage/TagValueInput$DecodeFromFieldFailedProblem
+net/minecraft/world/level/storage/TagValueInput$DecodeFromListFailedProblem
+net/minecraft/world/level/storage/TagValueInput$DecodeFromMapFailedProblem
+net/minecraft/world/level/storage/TagValueInput$ListWrapper
+net/minecraft/world/level/storage/TagValueInput$TypedListWrapper
+net/minecraft/world/level/storage/TagValueInput$UnexpectedListElementTypeProblem
+net/minecraft/world/level/storage/TagValueInput$UnexpectedNonNumberProblem
+net/minecraft/world/level/storage/TagValueInput$UnexpectedTypeProblem
+net/minecraft/world/level/storage/TagValueOutput
+net/minecraft/world/level/storage/TagValueOutput$EncodeToFieldFailedProblem
+net/minecraft/world/level/storage/TagValueOutput$EncodeToListFailedProblem
+net/minecraft/world/level/storage/TagValueOutput$EncodeToMapFailedProblem
+net/minecraft/world/level/storage/TagValueOutput$ListWrapper
+net/minecraft/world/level/storage/TagValueOutput$TypedListWrapper
+net/minecraft/world/level/storage/ValueInput
+net/minecraft/world/level/storage/ValueInput$TypedInputList
+net/minecraft/world/level/storage/ValueInput$ValueInputList
+net/minecraft/world/level/storage/ValueInputContextHelper
+net/minecraft/world/level/storage/ValueOutput
+net/minecraft/world/level/storage/ValueOutput$TypedOutputList
+net/minecraft/world/level/storage/ValueOutput$ValueOutputList
+net/neoforged/fml/earlydisplay/render/backend/ELSRenderPipeline
+net/neoforged/fml/earlydisplay/render/backend/VertexFormat
+net/neoforged/fml/earlydisplay/render/backend/VertexFormat$Element
+net/neoforged/fml/earlydisplay/render/backend/VertexFormat$Mode
+net/neoforged/jarjar/metadata/ContainedJarIdentifier
+net/neoforged/jarjar/metadata/json/ContainedJarIdentifierSerializer
+net/neoforged/neoforge/client/NeoForgeRenderPipelines
+net/neoforged/neoforge/client/NeoForgeRenderTypes
+net/neoforged/neoforge/client/NeoForgeRenderTypes$Internal
+net/neoforged/neoforge/client/event/AddClientReloadListenersEvent
+net/neoforged/neoforge/client/event/AddDebugSubscriptionFlagsEvent
+net/neoforged/neoforge/client/event/AddSectionGeometryEvent
+net/neoforged/neoforge/client/event/AddSectionGeometryEvent$AdditionalSectionRenderer
+net/neoforged/neoforge/client/event/AddSectionGeometryEvent$SectionRenderingContext
+net/neoforged/neoforge/client/event/CalculateDetachedCameraDistanceEvent
+net/neoforged/neoforge/client/event/CalculatePlayerTurnEvent
+net/neoforged/neoforge/client/event/ClientChatEvent
+net/neoforged/neoforge/client/event/ClientChatReceivedEvent
+net/neoforged/neoforge/client/event/ClientChatReceivedEvent$Player
+net/neoforged/neoforge/client/event/ClientChatReceivedEvent$System
+net/neoforged/neoforge/client/event/ClientPauseChangeEvent
+net/neoforged/neoforge/client/event/ClientPauseChangeEvent$Post
+net/neoforged/neoforge/client/event/ClientPauseChangeEvent$Pre
+net/neoforged/neoforge/client/event/ClientPlayerChangeGameTypeEvent
+net/neoforged/neoforge/client/event/ClientPlayerNetworkEvent
+net/neoforged/neoforge/client/event/ClientPlayerNetworkEvent$Clone
+net/neoforged/neoforge/client/event/ClientPlayerNetworkEvent$LoggingIn
+net/neoforged/neoforge/client/event/ClientPlayerNetworkEvent$LoggingOut
+net/neoforged/neoforge/client/event/ClientResourceLoadFinishedEvent
+net/neoforged/neoforge/client/event/ClientTickEvent
+net/neoforged/neoforge/client/event/ClientTickEvent$Post
+net/neoforged/neoforge/client/event/ClientTickEvent$Pre
+net/neoforged/neoforge/client/event/ComputeFovModifierEvent
+net/neoforged/neoforge/client/event/ConfigureMainRenderTargetEvent
+net/neoforged/neoforge/client/event/CustomizeGuiOverlayEvent
+net/neoforged/neoforge/client/event/CustomizeGuiOverlayEvent$BossEventProgress
+net/neoforged/neoforge/client/event/CustomizeGuiOverlayEvent$Chat
+net/neoforged/neoforge/client/event/EntityRenderersEvent
+net/neoforged/neoforge/client/event/EntityRenderersEvent$AddLayers
+net/neoforged/neoforge/client/event/EntityRenderersEvent$CreateSkullModels
+net/neoforged/neoforge/client/event/EntityRenderersEvent$RegisterLayerDefinitions
+net/neoforged/neoforge/client/event/EntityRenderersEvent$RegisterRenderers
+net/neoforged/neoforge/client/event/ExtractBlockOutlineRenderStateEvent
+net/neoforged/neoforge/client/event/ExtractBlockScreenEffectEvent
+net/neoforged/neoforge/client/event/ExtractBlockScreenEffectEvent$OverlayType
+net/neoforged/neoforge/client/event/ExtractLevelRenderStateEvent
+net/neoforged/neoforge/client/event/FlipFrameEvent
+net/neoforged/neoforge/client/event/FrameGraphSetupEvent
+net/neoforged/neoforge/client/event/GatherEffectScreenTooltipsEvent
+net/neoforged/neoforge/client/event/InitializeClientRegistriesEvent
+net/neoforged/neoforge/client/event/InputEvent
+net/neoforged/neoforge/client/event/InputEvent$InteractionKeyMappingTriggered
+net/neoforged/neoforge/client/event/InputEvent$Key
+net/neoforged/neoforge/client/event/InputEvent$MouseButton
+net/neoforged/neoforge/client/event/InputEvent$MouseButton$Post
+net/neoforged/neoforge/client/event/InputEvent$MouseButton$Pre
+net/neoforged/neoforge/client/event/InputEvent$MouseScrollingEvent
+net/neoforged/neoforge/client/event/ModelEvent
+net/neoforged/neoforge/client/event/ModelEvent$BakingCompleted
+net/neoforged/neoforge/client/event/ModelEvent$ModifyBakingResult
+net/neoforged/neoforge/client/event/ModelEvent$RegisterLoaders
+net/neoforged/neoforge/client/event/ModelEvent$RegisterStandalone
+net/neoforged/neoforge/client/event/MovementInputUpdateEvent
+net/neoforged/neoforge/client/event/PlayerHeartTypeEvent
+net/neoforged/neoforge/client/event/PrepareRenderBuffersEvent
+net/neoforged/neoforge/client/event/RecipesReceivedEvent
+net/neoforged/neoforge/client/event/RegisterBlockModelsEvent
+net/neoforged/neoforge/client/event/RegisterBlockStateModels
+net/neoforged/neoforge/client/event/RegisterClientCommandsEvent
+net/neoforged/neoforge/client/event/RegisterClientTooltipComponentFactoriesEvent
+net/neoforged/neoforge/client/event/RegisterColorHandlersEvent
+net/neoforged/neoforge/client/event/RegisterColorHandlersEvent$BlockTintSources
+net/neoforged/neoforge/client/event/RegisterColorHandlersEvent$ColorResolvers
+net/neoforged/neoforge/client/event/RegisterColorHandlersEvent$ItemTintSources
+net/neoforged/neoforge/client/event/RegisterConditionalItemModelPropertyEvent
+net/neoforged/neoforge/client/event/RegisterCustomEnvironmentEffectRendererEvent
+net/neoforged/neoforge/client/event/RegisterDebugEntriesEvent
+net/neoforged/neoforge/client/event/RegisterDebugRenderersEvent
+net/neoforged/neoforge/client/event/RegisterDimensionTransitionScreenEvent
+net/neoforged/neoforge/client/event/RegisterEntitySpectatorShadersEvent
+net/neoforged/neoforge/client/event/RegisterFeatureRenderersEvent
+net/neoforged/neoforge/client/event/RegisterFluidModelsEvent
+net/neoforged/neoforge/client/event/RegisterGuiLayersEvent
+net/neoforged/neoforge/client/event/RegisterGuiLayersEvent$Ordering
+net/neoforged/neoforge/client/event/RegisterItemDecorationsEvent
+net/neoforged/neoforge/client/event/RegisterItemModelsEvent
+net/neoforged/neoforge/client/event/RegisterJsonAnimationTypesEvent
+net/neoforged/neoforge/client/event/RegisterKeyMappingsEvent
+net/neoforged/neoforge/client/event/RegisterMenuScreensEvent
+net/neoforged/neoforge/client/event/RegisterParticleGroupsEvent
+net/neoforged/neoforge/client/event/RegisterParticleProvidersEvent
+net/neoforged/neoforge/client/event/RegisterPictureInPictureRenderersEvent
+net/neoforged/neoforge/client/event/RegisterPresetEditorsEvent
+net/neoforged/neoforge/client/event/RegisterRangeSelectItemModelPropertyEvent
+net/neoforged/neoforge/client/event/RegisterRecipeBookSearchCategoriesEvent
+net/neoforged/neoforge/client/event/RegisterRenderPipelinesEvent
+net/neoforged/neoforge/client/event/RegisterRenderPipelinesEvent$Registrar
+net/neoforged/neoforge/client/event/RegisterSelectItemModelPropertyEvent
+net/neoforged/neoforge/client/event/RegisterSpecialModelRendererEvent
+net/neoforged/neoforge/client/event/RegisterSpriteSourcesEvent
+net/neoforged/neoforge/client/event/RegisterTextureAtlasesEvent
+net/neoforged/neoforge/client/event/RenderArmEvent
+net/neoforged/neoforge/client/event/RenderFrameEvent
+net/neoforged/neoforge/client/event/RenderFrameEvent$Post
+net/neoforged/neoforge/client/event/RenderFrameEvent$Pre
+net/neoforged/neoforge/client/event/RenderGuiEvent
+net/neoforged/neoforge/client/event/RenderGuiEvent$Post
+net/neoforged/neoforge/client/event/RenderGuiEvent$Pre
+net/neoforged/neoforge/client/event/RenderGuiLayerEvent
+net/neoforged/neoforge/client/event/RenderGuiLayerEvent$Post
+net/neoforged/neoforge/client/event/RenderGuiLayerEvent$Pre
+net/neoforged/neoforge/client/event/RenderHandEvent
+net/neoforged/neoforge/client/event/RenderItemInFrameEvent
+net/neoforged/neoforge/client/event/RenderLevelStageEvent
+net/neoforged/neoforge/client/event/RenderLevelStageEvent$AfterLevel
+net/neoforged/neoforge/client/event/RenderLevelStageEvent$AfterOpaqueBlocks
+net/neoforged/neoforge/client/event/RenderLevelStageEvent$AfterOpaqueFeatures
+net/neoforged/neoforge/client/event/RenderLevelStageEvent$AfterSky
+net/neoforged/neoforge/client/event/RenderLevelStageEvent$AfterTranslucentBlocks
+net/neoforged/neoforge/client/event/RenderLevelStageEvent$AfterTranslucentFeatures
+net/neoforged/neoforge/client/event/RenderLevelStageEvent$AfterTranslucentParticles
+net/neoforged/neoforge/client/event/RenderLevelStageEvent$AfterWeather
+net/neoforged/neoforge/client/event/RenderLevelStageEvent$OitTranslucent
+net/neoforged/neoforge/client/event/RenderLivingEvent
+net/neoforged/neoforge/client/event/RenderLivingEvent$Post
+net/neoforged/neoforge/client/event/RenderLivingEvent$Pre
+net/neoforged/neoforge/client/event/RenderNameTagEvent
+net/neoforged/neoforge/client/event/RenderNameTagEvent$CanRender
+net/neoforged/neoforge/client/event/RenderNameTagEvent$DoRender
+net/neoforged/neoforge/client/event/RenderPlayerEvent
+net/neoforged/neoforge/client/event/RenderPlayerEvent$Post
+net/neoforged/neoforge/client/event/RenderPlayerEvent$Pre
+net/neoforged/neoforge/client/event/RenderTooltipEvent
+net/neoforged/neoforge/client/event/RenderTooltipEvent$GatherComponents
+net/neoforged/neoforge/client/event/RenderTooltipEvent$Pre
+net/neoforged/neoforge/client/event/RenderTooltipEvent$Texture
+net/neoforged/neoforge/client/event/ScreenEvent
+net/neoforged/neoforge/client/event/ScreenEvent$CharacterTyped
+net/neoforged/neoforge/client/event/ScreenEvent$CharacterTyped$Post
+net/neoforged/neoforge/client/event/ScreenEvent$CharacterTyped$Pre
+net/neoforged/neoforge/client/event/ScreenEvent$Closing
+net/neoforged/neoforge/client/event/ScreenEvent$Init
+net/neoforged/neoforge/client/event/ScreenEvent$Init$Post
+net/neoforged/neoforge/client/event/ScreenEvent$Init$Pre
+net/neoforged/neoforge/client/event/ScreenEvent$KeyInput
+net/neoforged/neoforge/client/event/ScreenEvent$KeyPressed
+net/neoforged/neoforge/client/event/ScreenEvent$KeyPressed$Post
+net/neoforged/neoforge/client/event/ScreenEvent$KeyPressed$Pre
+net/neoforged/neoforge/client/event/ScreenEvent$KeyReleased
+net/neoforged/neoforge/client/event/ScreenEvent$KeyReleased$Post
+net/neoforged/neoforge/client/event/ScreenEvent$KeyReleased$Pre
+net/neoforged/neoforge/client/event/ScreenEvent$MouseButtonPressed
+net/neoforged/neoforge/client/event/ScreenEvent$MouseButtonPressed$Post
+net/neoforged/neoforge/client/event/ScreenEvent$MouseButtonPressed$Post$Result
+net/neoforged/neoforge/client/event/ScreenEvent$MouseButtonPressed$Pre
+net/neoforged/neoforge/client/event/ScreenEvent$MouseButtonReleased
+net/neoforged/neoforge/client/event/ScreenEvent$MouseButtonReleased$Post
+net/neoforged/neoforge/client/event/ScreenEvent$MouseButtonReleased$Post$Result
+net/neoforged/neoforge/client/event/ScreenEvent$MouseButtonReleased$Pre
+net/neoforged/neoforge/client/event/ScreenEvent$MouseDragged
+net/neoforged/neoforge/client/event/ScreenEvent$MouseDragged$Post
+net/neoforged/neoforge/client/event/ScreenEvent$MouseDragged$Pre
+net/neoforged/neoforge/client/event/ScreenEvent$MouseInput
+net/neoforged/neoforge/client/event/ScreenEvent$MouseScrolled
+net/neoforged/neoforge/client/event/ScreenEvent$MouseScrolled$Post
+net/neoforged/neoforge/client/event/ScreenEvent$MouseScrolled$Pre
+net/neoforged/neoforge/client/event/ScreenEvent$Opening
+net/neoforged/neoforge/client/event/ScreenEvent$Preedit
+net/neoforged/neoforge/client/event/ScreenEvent$Preedit$Post
+net/neoforged/neoforge/client/event/ScreenEvent$Preedit$Pre
+net/neoforged/neoforge/client/event/ScreenEvent$Render
+net/neoforged/neoforge/client/event/ScreenEvent$Render$Background
+net/neoforged/neoforge/client/event/ScreenEvent$Render$Foreground
+net/neoforged/neoforge/client/event/ScreenEvent$Render$Post
+net/neoforged/neoforge/client/event/ScreenEvent$Render$Pre
+net/neoforged/neoforge/client/event/ScreenEvent$RenderInventoryMobEffects
+net/neoforged/neoforge/client/event/ScreenshotEvent
+net/neoforged/neoforge/client/event/SelectMusicEvent
+net/neoforged/neoforge/client/event/SubmitCustomGeometryEvent
+net/neoforged/neoforge/client/event/TextureAtlasStitchedEvent
+net/neoforged/neoforge/client/event/ToastAddEvent
+net/neoforged/neoforge/client/event/ViewportEvent
+net/neoforged/neoforge/client/event/ViewportEvent$ComputeCameraAngles
+net/neoforged/neoforge/client/event/ViewportEvent$ComputeFogColor
+net/neoforged/neoforge/client/event/ViewportEvent$ComputeFov
+net/neoforged/neoforge/client/event/ViewportEvent$RenderFog
+net/neoforged/neoforge/client/event/WindowResizeEvent
+net/neoforged/neoforge/client/event/lifecycle/ClientLifecycleEvent
+net/neoforged/neoforge/client/event/lifecycle/ClientStartedEvent
+net/neoforged/neoforge/client/event/lifecycle/ClientStoppedEvent
+net/neoforged/neoforge/client/event/lifecycle/ClientStoppingEvent
+net/neoforged/neoforge/client/event/lifecycle/package-info
+net/neoforged/neoforge/client/event/package-info
+net/neoforged/neoforge/client/event/sound/PlaySoundEvent
+net/neoforged/neoforge/client/event/sound/PlaySoundSourceEvent
+net/neoforged/neoforge/client/event/sound/PlayStreamingSourceEvent
+net/neoforged/neoforge/client/event/sound/SoundEngineLoadEvent
+net/neoforged/neoforge/client/event/sound/SoundEvent
+net/neoforged/neoforge/client/event/sound/SoundEvent$SoundSourceEvent
+net/neoforged/neoforge/client/event/sound/package-info
+net/neoforged/neoforge/client/extensions/BlockStateModelExtension
+net/neoforged/neoforge/client/extensions/BlockStateModelPartExtension
+net/neoforged/neoforge/client/extensions/GuiGraphicsExtractorExtension
+net/neoforged/neoforge/client/extensions/OrderedSubmitNodeCollectorExtension
+net/neoforged/neoforge/client/model/DelegateBlockStateModel
+net/neoforged/neoforge/client/model/DynamicBlockStateModel
+net/neoforged/neoforge/client/model/block/BlockStateModelHooks
+net/neoforged/neoforge/client/model/block/CustomUnbakedBlockStateModel
+net/neoforged/neoforge/client/model/generators/blockstate/CompositeBlockStateModelBuilder
+net/neoforged/neoforge/client/model/generators/blockstate/CustomBlockStateModelBuilder
+net/neoforged/neoforge/client/model/generators/blockstate/CustomBlockStateModelBuilder$Simple
+net/neoforged/neoforge/client/model/item/DynamicFluidContainerModel$ItemRenderTypes
+net/neoforged/neoforge/client/model/standalone/StandaloneModelLoader$BakedModels
+net/neoforged/neoforge/common/extensions/ValueInputExtension
+net/neoforged/neoforge/common/extensions/ValueOutputExtension
+net/neoforged/neoforge/event/AddAttributeTooltipsEvent
+net/neoforged/neoforge/event/AddPackFindersEvent
+net/neoforged/neoforge/event/AddServerReloadListenersEvent
+net/neoforged/neoforge/event/AnvilUpdateEvent
+net/neoforged/neoforge/event/AnvilUpdateEvent$VanillaResult
+net/neoforged/neoforge/event/BlockEntityTypeAddBlocksEvent
+net/neoforged/neoforge/event/BuildCreativeModeTabContentsEvent
+net/neoforged/neoforge/event/CommandEvent
+net/neoforged/neoforge/event/DefaultDataComponentsBoundEvent
+net/neoforged/neoforge/event/DefaultDataComponentsBoundEvent$UpdateCause
+net/neoforged/neoforge/event/DifficultyChangeEvent
+net/neoforged/neoforge/event/EventHooks
+net/neoforged/neoforge/event/GameShuttingDownEvent
+net/neoforged/neoforge/event/GatherSkippedAttributeTooltipsEvent
+net/neoforged/neoforge/event/GrindstoneEvent
+net/neoforged/neoforge/event/GrindstoneEvent$OnPlaceItem
+net/neoforged/neoforge/event/GrindstoneEvent$OnTakeItem
+net/neoforged/neoforge/event/ItemAttributeModifierEvent
+net/neoforged/neoforge/event/ItemAttributeModifierEvent$ItemAttributeModifiersBuilder
+net/neoforged/neoforge/event/ItemAttributeModifierEvent$ItemAttributeModifiersBuilder$Key
+net/neoforged/neoforge/event/ItemStackedOnOtherEvent
+net/neoforged/neoforge/event/LootTableLoadEvent
+net/neoforged/neoforge/event/ModMismatchEvent
+net/neoforged/neoforge/event/ModMismatchEvent$MismatchResolutionResult
+net/neoforged/neoforge/event/ModMismatchEvent$MismatchedVersionInfo
+net/neoforged/neoforge/event/ModifyDefaultComponentsEvent
+net/neoforged/neoforge/event/ModifyDefaultComponentsEvent$Initializer
+net/neoforged/neoforge/event/ModifyDefaultComponentsEvent$ItemWithComponentsPredicate
+net/neoforged/neoforge/event/OnDatapackSyncEvent
+net/neoforged/neoforge/event/PlayLevelSoundEvent
+net/neoforged/neoforge/event/PlayLevelSoundEvent$AtEntity
+net/neoforged/neoforge/event/PlayLevelSoundEvent$AtPosition
+net/neoforged/neoforge/event/RegisterCauldronInteractionEvent
+net/neoforged/neoforge/event/RegisterCauldronInteractionEvent$Dispatcher
+net/neoforged/neoforge/event/RegisterCauldronInteractionEvent$Interaction
+net/neoforged/neoforge/event/RegisterCommandsEvent
+net/neoforged/neoforge/event/RegisterGameRuleCategoryEvent
+net/neoforged/neoforge/event/RegisterGameTestsEvent
+net/neoforged/neoforge/event/RegisterLootContextParamsEvent
+net/neoforged/neoforge/event/RegisterRecipePropertiesEvent
+net/neoforged/neoforge/event/RegisterStructureConversionsEvent
+net/neoforged/neoforge/event/RegisterTooltipAppendersEvent
+net/neoforged/neoforge/event/ServerChatEvent
+net/neoforged/neoforge/event/SortedReloadListenerEvent
+net/neoforged/neoforge/event/SortedReloadListenerEvent$NameLookup
+net/neoforged/neoforge/event/StatAwardEvent
+net/neoforged/neoforge/event/TagsUpdatedEvent
+net/neoforged/neoforge/event/TagsUpdatedEvent$ClientPacketReceived
+net/neoforged/neoforge/event/TagsUpdatedEvent$ServerDataLoad
+net/neoforged/neoforge/event/VanillaGameEvent
+net/neoforged/neoforge/event/brewing/PlayerBrewedPotionEvent
+net/neoforged/neoforge/event/brewing/PotionBrewEvent
+net/neoforged/neoforge/event/brewing/PotionBrewEvent$Post
+net/neoforged/neoforge/event/brewing/PotionBrewEvent$Pre
+net/neoforged/neoforge/event/brewing/package-info
+net/neoforged/neoforge/event/enchanting/EnchantedBlockLootEvent
+net/neoforged/neoforge/event/enchanting/EnchantedEntityLootEvent
+net/neoforged/neoforge/event/enchanting/EnchantmentLevelSetEvent
+net/neoforged/neoforge/event/enchanting/GetEnchantmentLevelEvent
+net/neoforged/neoforge/event/enchanting/package-info
+net/neoforged/neoforge/event/entity/EntityAttributeCreationEvent
+net/neoforged/neoforge/event/entity/EntityAttributeModificationEvent
+net/neoforged/neoforge/event/entity/EntityEvent
+net/neoforged/neoforge/event/entity/EntityEvent$EnteringSection
+net/neoforged/neoforge/event/entity/EntityEvent$EntityConstructing
+net/neoforged/neoforge/event/entity/EntityEvent$Size
+net/neoforged/neoforge/event/entity/EntityInvulnerabilityCheckEvent
+net/neoforged/neoforge/event/entity/EntityJoinLevelEvent
+net/neoforged/neoforge/event/entity/EntityLeaveLevelEvent
+net/neoforged/neoforge/event/entity/EntityMobGriefingEvent
+net/neoforged/neoforge/event/entity/EntityMountEvent
+net/neoforged/neoforge/event/entity/EntityStruckByLightningEvent
+net/neoforged/neoforge/event/entity/EntityTeleportEvent
+net/neoforged/neoforge/event/entity/EntityTeleportEvent$EnderEntity
+net/neoforged/neoforge/event/entity/EntityTeleportEvent$EnderPearl
+net/neoforged/neoforge/event/entity/EntityTeleportEvent$ItemConsumption
+net/neoforged/neoforge/event/entity/EntityTeleportEvent$SpreadPlayersCommand
+net/neoforged/neoforge/event/entity/EntityTeleportEvent$TeleportCommand
+net/neoforged/neoforge/event/entity/EntityTravelToDimensionEvent
+net/neoforged/neoforge/event/entity/ProjectileImpactEvent
+net/neoforged/neoforge/event/entity/RegisterSpawnPlacementsEvent
+net/neoforged/neoforge/event/entity/RegisterSpawnPlacementsEvent$MergedSpawnPredicate
+net/neoforged/neoforge/event/entity/RegisterSpawnPlacementsEvent$Operation
+net/neoforged/neoforge/event/entity/item/ItemEvent
+net/neoforged/neoforge/event/entity/item/ItemExpireEvent
+net/neoforged/neoforge/event/entity/item/ItemTossEvent
+net/neoforged/neoforge/event/entity/item/package-info
+net/neoforged/neoforge/event/entity/living/AnimalTameEvent
+net/neoforged/neoforge/event/entity/living/ArmorHurtEvent
+net/neoforged/neoforge/event/entity/living/ArmorHurtEvent$ArmorEntry
+net/neoforged/neoforge/event/entity/living/BabyEntitySpawnEvent
+net/neoforged/neoforge/event/entity/living/EffectParticleModificationEvent
+net/neoforged/neoforge/event/entity/living/EndermanAngerEvent
+net/neoforged/neoforge/event/entity/living/FinalizeSpawnEvent
+net/neoforged/neoforge/event/entity/living/GetEquipmentDropChanceEvent
+net/neoforged/neoforge/event/entity/living/LivingBreatheEvent
+net/neoforged/neoforge/event/entity/living/LivingChangeTargetEvent
+net/neoforged/neoforge/event/entity/living/LivingChangeTargetEvent$ILivingTargetType
+net/neoforged/neoforge/event/entity/living/LivingChangeTargetEvent$LivingTargetType
+net/neoforged/neoforge/event/entity/living/LivingConversionEvent
+net/neoforged/neoforge/event/entity/living/LivingConversionEvent$Post
+net/neoforged/neoforge/event/entity/living/LivingConversionEvent$Pre
+net/neoforged/neoforge/event/entity/living/LivingDamageEvent
+net/neoforged/neoforge/event/entity/living/LivingDamageEvent$Post
+net/neoforged/neoforge/event/entity/living/LivingDamageEvent$Pre
+net/neoforged/neoforge/event/entity/living/LivingDeathEvent
+net/neoforged/neoforge/event/entity/living/LivingDestroyBlockEvent
+net/neoforged/neoforge/event/entity/living/LivingDropsEvent
+net/neoforged/neoforge/event/entity/living/LivingDrownEvent
+net/neoforged/neoforge/event/entity/living/LivingEntityUseItemEvent
+net/neoforged/neoforge/event/entity/living/LivingEntityUseItemEvent$Finish
+net/neoforged/neoforge/event/entity/living/LivingEntityUseItemEvent$Start
+net/neoforged/neoforge/event/entity/living/LivingEntityUseItemEvent$Stop
+net/neoforged/neoforge/event/entity/living/LivingEntityUseItemEvent$Tick
+net/neoforged/neoforge/event/entity/living/LivingEquipmentChangeEvent
+net/neoforged/neoforge/event/entity/living/LivingEvent
+net/neoforged/neoforge/event/entity/living/LivingEvent$LivingJumpEvent
+net/neoforged/neoforge/event/entity/living/LivingEvent$LivingVisibilityEvent
+net/neoforged/neoforge/event/entity/living/LivingExperienceDropEvent
+net/neoforged/neoforge/event/entity/living/LivingFallEvent
+net/neoforged/neoforge/event/entity/living/LivingGetProjectileEvent
+net/neoforged/neoforge/event/entity/living/LivingHealEvent
+net/neoforged/neoforge/event/entity/living/LivingIncomingDamageEvent
+net/neoforged/neoforge/event/entity/living/LivingKnockBackEvent
+net/neoforged/neoforge/event/entity/living/LivingShieldBlockEvent
+net/neoforged/neoforge/event/entity/living/LivingSwapItemsEvent
+net/neoforged/neoforge/event/entity/living/LivingSwapItemsEvent$Hands
+net/neoforged/neoforge/event/entity/living/LivingUseTotemEvent
+net/neoforged/neoforge/event/entity/living/MobDespawnEvent
+net/neoforged/neoforge/event/entity/living/MobDespawnEvent$Result
+net/neoforged/neoforge/event/entity/living/MobEffectEvent
+net/neoforged/neoforge/event/entity/living/MobEffectEvent$Added
+net/neoforged/neoforge/event/entity/living/MobEffectEvent$Applicable
+net/neoforged/neoforge/event/entity/living/MobEffectEvent$Applicable$Result
+net/neoforged/neoforge/event/entity/living/MobEffectEvent$Expired
+net/neoforged/neoforge/event/entity/living/MobEffectEvent$Remove
+net/neoforged/neoforge/event/entity/living/MobSpawnEvent
+net/neoforged/neoforge/event/entity/living/MobSpawnEvent$PositionCheck
+net/neoforged/neoforge/event/entity/living/MobSpawnEvent$PositionCheck$Result
+net/neoforged/neoforge/event/entity/living/MobSpawnEvent$SpawnPlacementCheck
+net/neoforged/neoforge/event/entity/living/MobSpawnEvent$SpawnPlacementCheck$Result
+net/neoforged/neoforge/event/entity/living/MobSplitEvent
+net/neoforged/neoforge/event/entity/living/SpawnClusterSizeEvent
+net/neoforged/neoforge/event/entity/living/package-info
+net/neoforged/neoforge/event/entity/package-info
+net/neoforged/neoforge/event/entity/player/AdvancementEvent
+net/neoforged/neoforge/event/entity/player/AdvancementEvent$AdvancementEarnEvent
+net/neoforged/neoforge/event/entity/player/AdvancementEvent$AdvancementProgressEvent
+net/neoforged/neoforge/event/entity/player/AdvancementEvent$AdvancementProgressEvent$ProgressType
+net/neoforged/neoforge/event/entity/player/AnvilCraftEvent
+net/neoforged/neoforge/event/entity/player/AnvilCraftEvent$Post
+net/neoforged/neoforge/event/entity/player/AnvilCraftEvent$Pre
+net/neoforged/neoforge/event/entity/player/ArrowLooseEvent
+net/neoforged/neoforge/event/entity/player/ArrowNockEvent
+net/neoforged/neoforge/event/entity/player/AttackEntityEvent
+net/neoforged/neoforge/event/entity/player/BonemealEvent
+net/neoforged/neoforge/event/entity/player/CanContinueSleepingEvent
+net/neoforged/neoforge/event/entity/player/CanPlayerSleepEvent
+net/neoforged/neoforge/event/entity/player/ClientInformationUpdatedEvent
+net/neoforged/neoforge/event/entity/player/CriticalHitEvent
+net/neoforged/neoforge/event/entity/player/CustomClickActionEvent
+net/neoforged/neoforge/event/entity/player/FluidTooltipEvent
+net/neoforged/neoforge/event/entity/player/ItemEntityPickupEvent
+net/neoforged/neoforge/event/entity/player/ItemEntityPickupEvent$Post
+net/neoforged/neoforge/event/entity/player/ItemEntityPickupEvent$Pre
+net/neoforged/neoforge/event/entity/player/ItemFishedEvent
+net/neoforged/neoforge/event/entity/player/ItemTooltipEvent
+net/neoforged/neoforge/event/entity/player/PermissionsChangedEvent
+net/neoforged/neoforge/event/entity/player/PlayerContainerEvent
+net/neoforged/neoforge/event/entity/player/PlayerContainerEvent$Close
+net/neoforged/neoforge/event/entity/player/PlayerContainerEvent$Open
+net/neoforged/neoforge/event/entity/player/PlayerDestroyItemEvent
+net/neoforged/neoforge/event/entity/player/PlayerEnchantItemEvent
+net/neoforged/neoforge/event/entity/player/PlayerEvent
+net/neoforged/neoforge/event/entity/player/PlayerEvent$BreakSpeed
+net/neoforged/neoforge/event/entity/player/PlayerEvent$Clone
+net/neoforged/neoforge/event/entity/player/PlayerEvent$HarvestCheck
+net/neoforged/neoforge/event/entity/player/PlayerEvent$ItemCraftedEvent
+net/neoforged/neoforge/event/entity/player/PlayerEvent$ItemSmeltedEvent
+net/neoforged/neoforge/event/entity/player/PlayerEvent$ItemSmithedEvent
+net/neoforged/neoforge/event/entity/player/PlayerEvent$LoadFromFile
+net/neoforged/neoforge/event/entity/player/PlayerEvent$NameFormat
+net/neoforged/neoforge/event/entity/player/PlayerEvent$PlayerChangeGameModeEvent
+net/neoforged/neoforge/event/entity/player/PlayerEvent$PlayerChangedDimensionEvent
+net/neoforged/neoforge/event/entity/player/PlayerEvent$PlayerLoggedInEvent
+net/neoforged/neoforge/event/entity/player/PlayerEvent$PlayerLoggedOutEvent
+net/neoforged/neoforge/event/entity/player/PlayerEvent$PlayerRespawnEvent
+net/neoforged/neoforge/event/entity/player/PlayerEvent$SaveToFile
+net/neoforged/neoforge/event/entity/player/PlayerEvent$StartTracking
+net/neoforged/neoforge/event/entity/player/PlayerEvent$StopTracking
+net/neoforged/neoforge/event/entity/player/PlayerEvent$TabListNameFormat
+net/neoforged/neoforge/event/entity/player/PlayerFlyableFallEvent
+net/neoforged/neoforge/event/entity/player/PlayerInteractEvent
+net/neoforged/neoforge/event/entity/player/PlayerInteractEvent$EntityInteract
+net/neoforged/neoforge/event/entity/player/PlayerInteractEvent$LeftClickBlock
+net/neoforged/neoforge/event/entity/player/PlayerInteractEvent$LeftClickBlock$Action
+net/neoforged/neoforge/event/entity/player/PlayerInteractEvent$LeftClickEmpty
+net/neoforged/neoforge/event/entity/player/PlayerInteractEvent$RightClickBlock
+net/neoforged/neoforge/event/entity/player/PlayerInteractEvent$RightClickEmpty
+net/neoforged/neoforge/event/entity/player/PlayerInteractEvent$RightClickItem
+net/neoforged/neoforge/event/entity/player/PlayerNegotiationEvent
+net/neoforged/neoforge/event/entity/player/PlayerRespawnPositionEvent
+net/neoforged/neoforge/event/entity/player/PlayerSetSpawnEvent
+net/neoforged/neoforge/event/entity/player/PlayerSpawnPhantomsEvent
+net/neoforged/neoforge/event/entity/player/PlayerSpawnPhantomsEvent$Result
+net/neoforged/neoforge/event/entity/player/PlayerSwitchHotbarSlotEvent
+net/neoforged/neoforge/event/entity/player/PlayerSwitchHotbarSlotEvent$Post
+net/neoforged/neoforge/event/entity/player/PlayerSwitchHotbarSlotEvent$Pre
+net/neoforged/neoforge/event/entity/player/PlayerWakeUpEvent
+net/neoforged/neoforge/event/entity/player/PlayerXpEvent
+net/neoforged/neoforge/event/entity/player/PlayerXpEvent$LevelChange
+net/neoforged/neoforge/event/entity/player/PlayerXpEvent$PickupXp
+net/neoforged/neoforge/event/entity/player/PlayerXpEvent$XpChange
+net/neoforged/neoforge/event/entity/player/SweepAttackEvent
+net/neoforged/neoforge/event/entity/player/TradeWithVillagerEvent
+net/neoforged/neoforge/event/entity/player/UseItemOnBlockEvent
+net/neoforged/neoforge/event/entity/player/UseItemOnBlockEvent$UsePhase
+net/neoforged/neoforge/event/entity/player/package-info
+net/neoforged/neoforge/event/furnace/package-info
+net/neoforged/neoforge/event/level/AlterGroundEvent
+net/neoforged/neoforge/event/level/AlterGroundEvent$StateProvider
+net/neoforged/neoforge/event/level/BlockDropsEvent
+net/neoforged/neoforge/event/level/BlockEvent
+net/neoforged/neoforge/event/level/BlockEvent$BlockToolModificationEvent
+net/neoforged/neoforge/event/level/BlockEvent$EntityMultiPlaceEvent
+net/neoforged/neoforge/event/level/BlockEvent$EntityPlaceEvent
+net/neoforged/neoforge/event/level/BlockEvent$FarmlandTrampleEvent
+net/neoforged/neoforge/event/level/BlockEvent$FluidPlaceBlockEvent
+net/neoforged/neoforge/event/level/BlockEvent$NeighborNotifyEvent
+net/neoforged/neoforge/event/level/BlockEvent$PortalSpawnEvent
+net/neoforged/neoforge/event/level/BlockGrowFeatureEvent
+net/neoforged/neoforge/event/level/ChunkDataEvent
+net/neoforged/neoforge/event/level/ChunkDataEvent$Load
+net/neoforged/neoforge/event/level/ChunkDataEvent$Save
+net/neoforged/neoforge/event/level/ChunkEvent
+net/neoforged/neoforge/event/level/ChunkEvent$Load
+net/neoforged/neoforge/event/level/ChunkEvent$Unload
+net/neoforged/neoforge/event/level/ChunkTicketLevelUpdatedEvent
+net/neoforged/neoforge/event/level/ChunkWatchEvent
+net/neoforged/neoforge/event/level/ChunkWatchEvent$Sent
+net/neoforged/neoforge/event/level/ChunkWatchEvent$UnWatch
+net/neoforged/neoforge/event/level/ChunkWatchEvent$Watch
+net/neoforged/neoforge/event/level/ExplosionEvent
+net/neoforged/neoforge/event/level/ExplosionEvent$Detonate
+net/neoforged/neoforge/event/level/ExplosionEvent$Start
+net/neoforged/neoforge/event/level/ExplosionKnockbackEvent
+net/neoforged/neoforge/event/level/GameRuleChangedEvent
+net/neoforged/neoforge/event/level/LevelEvent
+net/neoforged/neoforge/event/level/LevelEvent$CreateSpawnPosition
+net/neoforged/neoforge/event/level/LevelEvent$Load
+net/neoforged/neoforge/event/level/LevelEvent$PotentialSpawns
+net/neoforged/neoforge/event/level/LevelEvent$Save
+net/neoforged/neoforge/event/level/LevelEvent$Unload
+net/neoforged/neoforge/event/level/ModifyCustomSpawnersEvent
+net/neoforged/neoforge/event/level/NoteBlockEvent
+net/neoforged/neoforge/event/level/NoteBlockEvent$Change
+net/neoforged/neoforge/event/level/NoteBlockEvent$Note
+net/neoforged/neoforge/event/level/NoteBlockEvent$Octave
+net/neoforged/neoforge/event/level/NoteBlockEvent$Play
+net/neoforged/neoforge/event/level/PistonEvent
+net/neoforged/neoforge/event/level/PistonEvent$PistonMoveType
+net/neoforged/neoforge/event/level/PistonEvent$Post
+net/neoforged/neoforge/event/level/PistonEvent$Pre
+net/neoforged/neoforge/event/level/SleepFinishedTimeEvent
+net/neoforged/neoforge/event/level/block/BreakBlockEvent
+net/neoforged/neoforge/event/level/block/CreateFluidSourceEvent
+net/neoforged/neoforge/event/level/block/CropGrowEvent
+net/neoforged/neoforge/event/level/block/CropGrowEvent$Post
+net/neoforged/neoforge/event/level/block/CropGrowEvent$Pre
+net/neoforged/neoforge/event/level/block/CropGrowEvent$Pre$Result
+net/neoforged/neoforge/event/level/block/package-info
+net/neoforged/neoforge/event/level/package-info
+net/neoforged/neoforge/event/package-info
+net/neoforged/neoforge/event/server/RegisterRpcSchemaEvent
+net/neoforged/neoforge/event/server/ServerAboutToStartEvent
+net/neoforged/neoforge/event/server/ServerLifecycleEvent
+net/neoforged/neoforge/event/server/ServerStartedEvent
+net/neoforged/neoforge/event/server/ServerStartingEvent
+net/neoforged/neoforge/event/server/ServerStoppedEvent
+net/neoforged/neoforge/event/server/ServerStoppingEvent
+net/neoforged/neoforge/event/server/package-info
+net/neoforged/neoforge/event/tick/EntityTickEvent
+net/neoforged/neoforge/event/tick/EntityTickEvent$Post
+net/neoforged/neoforge/event/tick/EntityTickEvent$Pre
+net/neoforged/neoforge/event/tick/LevelTickEvent
+net/neoforged/neoforge/event/tick/LevelTickEvent$Post
+net/neoforged/neoforge/event/tick/LevelTickEvent$Pre
+net/neoforged/neoforge/event/tick/PlayerTickEvent
+net/neoforged/neoforge/event/tick/PlayerTickEvent$Post
+net/neoforged/neoforge/event/tick/PlayerTickEvent$Pre
+net/neoforged/neoforge/event/tick/ServerTickEvent
+net/neoforged/neoforge/event/tick/ServerTickEvent$Post
+net/neoforged/neoforge/event/tick/ServerTickEvent$Pre
+net/neoforged/neoforge/event/tick/package-info
+net/neoforged/neoforge/event/village/VillageSiegeEvent
+net/neoforged/neoforge/event/village/package-info
+=== net/minecraft/resources/Identifier
+Compiled from "Identifier.java"
+public final class net.minecraft.resources.Identifier implements java.lang.Comparable<net.minecraft.resources.Identifier> {
+  public static final com.mojang.serialization.Codec<net.minecraft.resources.Identifier> CODEC;
+  public static final net.minecraft.network.codec.StreamCodec<io.netty.buffer.ByteBuf, net.minecraft.resources.Identifier> STREAM_CODEC;
+  public static final com.mojang.brigadier.exceptions.SimpleCommandExceptionType ERROR_INVALID;
+  public static final char NAMESPACE_SEPARATOR;
+  public static final java.lang.String DEFAULT_NAMESPACE;
+  public static final java.lang.String REALMS_NAMESPACE;
+  public static final java.lang.String ALLOWED_NAMESPACE_CHARACTERS;
+  public static net.minecraft.resources.Identifier fromNamespaceAndPath(java.lang.String, java.lang.String);
+  public static net.minecraft.resources.Identifier parse(java.lang.String);
+  public static net.minecraft.resources.Identifier withDefaultNamespace(java.lang.String);
+  public static net.minecraft.resources.Identifier tryParse(java.lang.String);
+  public static net.minecraft.resources.Identifier tryBuild(java.lang.String, java.lang.String);
+  public static net.minecraft.resources.Identifier bySeparator(java.lang.String, char);
+  public static net.minecraft.resources.Identifier tryBySeparator(java.lang.String, char);
+  public static com.mojang.serialization.DataResult<net.minecraft.resources.Identifier> read(java.lang.String);
+  public java.lang.String getPath();
+  public java.lang.String getNamespace();
+  public net.minecraft.resources.Identifier withPath(java.lang.String);
+  public net.minecraft.resources.Identifier withPath(java.util.function.UnaryOperator<java.lang.String>);
+  public net.minecraft.resources.Identifier withPrefix(java.lang.String);
+  public net.minecraft.resources.Identifier withSuffix(java.lang.String);
+  public java.lang.String toString();
+  public boolean equals(java.lang.Object);
+  public int hashCode();
+  public int compareNamespaced(net.minecraft.resources.Identifier);
+  public int compareTo(net.minecraft.resources.Identifier);
+  public java.nio.file.Path resolveAgainst(java.nio.file.Path);
+  public java.lang.String toDebugFileName();
+  public java.lang.String toLanguageKey();
+  public java.lang.String toShortLanguageKey();
+  public java.lang.String toShortString();
+  public java.lang.String toLanguageKey(java.lang.String);
+  public java.lang.String toLanguageKey(java.lang.String, java.lang.String);
+  public static net.minecraft.resources.Identifier read(com.mojang.brigadier.StringReader) throws com.mojang.brigadier.exceptions.CommandSyntaxException;
+  public static net.minecraft.resources.Identifier readNonEmpty(com.mojang.brigadier.StringReader) throws com.mojang.brigadier.exceptions.CommandSyntaxException;
+  public static boolean isAllowedInIdentifier(char);
+  public static boolean isValidPath(java.lang.String);
+  public static boolean isValidNamespace(java.lang.String);
+  public static boolean validPathChar(char);
+  public static boolean validNamespaceChar(char);
+  public int compareTo(java.lang.Object);
+}
+=== net/minecraft/server/level/ServerPlayer
+Compiled from "ServerPlayer.java"
+public class net.minecraft.server.level.ServerPlayer extends net.minecraft.world.entity.player.Player {
+  public static final double BLOCK_INTERACTION_DISTANCE_VERIFICATION_BUFFER;
+  public static final double ENTITY_INTERACTION_DISTANCE_VERIFICATION_BUFFER;
+  public static final int ENDER_PEARL_TICKET_RADIUS;
+  public static final java.lang.String ENDER_PEARLS_TAG;
+  public static final java.lang.String ENDER_PEARL_DIMENSION_TAG;
+  public static final java.lang.String TAG_DIMENSION;
+  public net.minecraft.server.network.ServerGamePacketListenerImpl connection;
+  public final net.minecraft.server.level.ServerPlayerGameMode gameMode;
+  public boolean seenCredits;
+  public final java.lang.Object object;
+  public boolean wonGame;
+  public net.minecraft.server.level.ServerPlayer(net.minecraft.server.MinecraftServer, net.minecraft.server.level.ServerLevel, com.mojang.authlib.GameProfile, net.minecraft.server.level.ClientInformation);
+  public net.minecraft.core.BlockPos adjustSpawnLocation(net.minecraft.server.level.ServerLevel, net.minecraft.core.BlockPos);
+  public void loadAndSpawnParentVehicle(net.minecraft.world.level.storage.ValueInput);
+  public void loadAndSpawnEnderPearls(net.minecraft.world.level.storage.ValueInput);
+  public void setExperiencePoints(int);
+  public void setExperienceLevels(int);
+  public void giveExperienceLevels(int);
+  public void onEnchantmentPerformed(net.minecraft.world.item.ItemStack, int);
+  public void initInventoryMenu();
+  public void onEnterCombat();
+  public void onLeaveCombat();
+  public void onInsideBlock(net.minecraft.world.level.block.state.BlockState);
+  public void tick();
+  public void doTick();
+  public void handleShoulderEntities();
+  public boolean setEntityOnShoulder(net.minecraft.nbt.CompoundTag);
+  public void resetFallDistance();
+  public void trackStartFallingPosition();
+  public void trackEnteredOrExitedLavaOnVehicle();
+  public void die(net.minecraft.world.damagesource.DamageSource);
+  public void awardKillScore(net.minecraft.world.entity.Entity, net.minecraft.world.damagesource.DamageSource);
+  public boolean hurtServer(net.minecraft.server.level.ServerLevel, net.minecraft.world.damagesource.DamageSource, float);
+  public boolean canHarmPlayer(net.minecraft.world.entity.player.Player);
+  public net.minecraft.world.level.portal.TeleportTransition findRespawnPositionAndUseSpawnBlock(boolean, net.minecraft.world.level.portal.TeleportTransition$PostTeleportTransition);
+  public boolean isReceivingWaypoints();
+  public void sendPostEffects();
+  public boolean addPostEffect(net.minecraft.resources.Identifier);
+  public boolean clearPostEffects();
+  public java.util.List<net.minecraft.resources.Identifier> getPostEffects();
+  public boolean removePostEffect(net.minecraft.resources.Identifier);
+  public void showEndCredits();
+  public net.minecraft.server.level.ServerPlayer teleport(net.minecraft.world.level.portal.TeleportTransition);
+  public void forceSetRotation(float, boolean, float, boolean);
+  public boolean broadcastToPlayer(net.minecraft.server.level.ServerPlayer);
+  public void take(net.minecraft.world.entity.Entity, int);
+  public com.mojang.datafixers.util.Either<net.minecraft.world.entity.player.Player$BedSleepingProblem, net.minecraft.util.Unit> startSleepInBed(net.minecraft.world.level.block.AbstractBedBlock, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.attribute.BedRule, net.minecraft.core.BlockPos);
+  public boolean startSleeping(net.minecraft.core.BlockPos);
+  public void stopSleepInBed(boolean, boolean);
+  public boolean isInvulnerableTo(net.minecraft.server.level.ServerLevel, net.minecraft.world.damagesource.DamageSource);
+  public void onExplosionHit(net.minecraft.world.entity.Entity);
+  public void openTextEdit(net.minecraft.world.level.block.entity.SignBlockEntity, net.minecraft.world.level.block.entity.SignTextSlot);
+  public void openDialog(net.minecraft.core.Holder<net.minecraft.server.dialog.Dialog>);
+  public java.util.OptionalInt openMenu(net.minecraft.world.MenuProvider);
+  public java.util.OptionalInt openMenu(net.minecraft.world.MenuProvider, java.util.function.Consumer<net.minecraft.network.RegistryFriendlyByteBuf>);
+  public void sendMerchantOffers(int, net.minecraft.world.item.trading.MerchantOffers, int, int, boolean, boolean);
+  public void openHorseInventory(net.minecraft.world.entity.animal.equine.AbstractHorse, net.minecraft.world.Container);
+  public void openNautilusInventory(net.minecraft.world.entity.animal.nautilus.AbstractNautilus, net.minecraft.world.Container);
+  public void openItemGui(net.minecraft.world.item.ItemStack, net.minecraft.world.InteractionHand);
+  public void openCommandBlock(net.minecraft.world.level.block.entity.CommandBlockEntity);
+  public void closeContainer();
+  public void doCloseContainer();
+  public void rideTick();
+  public void checkMovementStatistics(double, double, double);
+  public void checkRidingStatistics(double, double, double);
+  public void awardStat(net.minecraft.stats.Stat<?>, int);
+  public void resetStat(net.minecraft.stats.Stat<?>);
+  public int awardRecipes(java.util.Collection<net.minecraft.world.item.crafting.RecipeHolder<?>>);
+  public void triggerRecipeCrafted(net.minecraft.world.item.crafting.RecipeHolder<?>, java.util.List<net.minecraft.world.item.ItemStack>);
+  public void awardRecipesByKey(java.util.List<net.minecraft.resources.ResourceKey<net.minecraft.world.item.crafting.Recipe<?>>>);
+  public int resetRecipes(java.util.Collection<net.minecraft.world.item.crafting.RecipeHolder<?>>);
+  public void jumpFromGround();
+  public void giveExperiencePoints(int);
+  public void disconnect();
+  public boolean hasDisconnected();
+  public void resetSentInfo();
+  public void lookAt(net.minecraft.commands.arguments.EntityAnchorArgument$Anchor, net.minecraft.world.phys.Vec3);
+  public void lookAt(net.minecraft.commands.arguments.EntityAnchorArgument$Anchor, net.minecraft.world.entity.Entity, net.minecraft.commands.arguments.EntityAnchorArgument$Anchor);
+  public void restoreFrom(net.minecraft.server.level.ServerPlayer, boolean);
+  public void teleportTo(double, double, double);
+  public void teleportRelative(double, double, double);
+  public boolean teleportTo(net.minecraft.server.level.ServerLevel, double, double, double, java.util.Set<net.minecraft.world.entity.Relative>, float, float, boolean);
+  public void snapTo(double, double, double);
+  public void crit(net.minecraft.world.entity.Entity);
+  public void magicCrit(net.minecraft.world.entity.Entity);
+  public void onUpdateAbilities();
+  public net.minecraft.server.level.ServerLevel level();
+  public boolean setGameMode(net.minecraft.world.level.GameType);
+  public net.minecraft.world.level.GameType gameMode();
+  public net.minecraft.commands.CommandSource commandSource();
+  public net.minecraft.commands.CommandSourceStack createCommandSourceStack();
+  public void sendSystemMessage(net.minecraft.network.chat.Component);
+  public void sendOverlayMessage(net.minecraft.network.chat.Component);
+  public void sendBuildLimitMessage(boolean, int);
+  public void sendSpawnProtectionMessage(net.minecraft.core.BlockPos);
+  public void sendSystemMessage(net.minecraft.network.chat.Component, boolean);
+  public void sendChatMessage(net.minecraft.network.chat.OutgoingChatMessage, boolean, net.minecraft.network.chat.ChatType$Bound);
+  public java.lang.String getIpAddress();
+  public void updateOptions(net.minecraft.server.level.ClientInformation);
+  public net.minecraft.server.level.ClientInformation clientInformation();
+  public boolean canChatInColor();
+  public net.minecraft.world.entity.player.ChatVisiblity getChatVisibility();
+  public int requestedViewDistance();
+  public void sendServerStatus(net.minecraft.network.protocol.status.ServerStatus);
+  public net.minecraft.server.permissions.PermissionSet permissions();
+  public void resetLastActionTime();
+  public net.minecraft.stats.ServerStatsCounter getStats();
+  public net.minecraft.stats.ServerRecipeBook getRecipeBook();
+  public net.minecraft.world.entity.Entity getCamera();
+  public void setCamera(net.minecraft.world.entity.Entity);
+  public long getLastActionTime();
+  public net.minecraft.network.chat.Component getTabListDisplayName();
+  public int getTabListOrder();
+  public boolean isChangingDimension();
+  public void hasChangedDimension();
+  public net.minecraft.server.PlayerAdvancements getAdvancements();
+  public net.minecraft.server.level.ServerPlayer$RespawnConfig getRespawnConfig();
+  public void copyRespawnPosition(net.minecraft.server.level.ServerPlayer);
+  public void setRespawnPosition(net.minecraft.server.level.ServerPlayer$RespawnConfig, boolean);
+  public net.minecraft.core.SectionPos getLastSectionPos();
+  public void setLastSectionPos(net.minecraft.core.SectionPos);
+  public net.minecraft.server.level.ChunkTrackingView getChunkTrackingView();
+  public void setChunkTrackingView(net.minecraft.server.level.ChunkTrackingView);
+  public net.minecraft.world.entity.item.ItemEntity drop(net.minecraft.world.item.ItemStack, boolean, net.minecraft.util.Prediction);
+  public net.minecraft.server.network.TextFilter getTextFilter();
+  public void setServerLevel(net.minecraft.server.level.ServerLevel);
+  public boolean isTextFilteringEnabled();
+  public boolean shouldFilterMessageTo(net.minecraft.server.level.ServerPlayer);
+  public boolean mayInteract(net.minecraft.server.level.ServerLevel, net.minecraft.core.BlockPos);
+  public void drop(boolean);
+  public void handleExtraItemsCreatedOnUse(net.minecraft.world.item.ItemStack);
+  public boolean allowsListing();
+  public net.minecraft.world.entity.monster.warden.WardenSpawnTracker getWardenSpawnTracker();
+  public void setSpawnExtraParticlesOnFall(boolean);
+  public void onItemPickup(net.minecraft.world.entity.item.ItemEntity);
+  public void setChatSession(net.minecraft.network.chat.RemoteChatSession);
+  public net.minecraft.network.chat.RemoteChatSession getChatSession();
+  public void indicateDamage(double, double);
+  public boolean startRiding(net.minecraft.world.entity.Entity, boolean, boolean);
+  public void removeVehicle();
+  public net.minecraft.network.protocol.game.CommonPlayerSpawnInfo createCommonSpawnInfo(net.minecraft.server.level.ServerLevel);
+  public void setRaidOmenPosition(net.minecraft.core.BlockPos);
+  public void clearRaidOmenPosition();
+  public net.minecraft.core.BlockPos getRaidOmenPosition();
+  public net.minecraft.world.phys.Vec3 getKnownMovement();
+  public net.minecraft.world.phys.Vec3 getKnownSpeed();
+  public void setKnownMovement(net.minecraft.world.phys.Vec3);
+  public void onEquippedItemBroken(net.minecraft.world.item.ItemStack, net.minecraft.world.entity.EquipmentSlot);
+  public net.minecraft.world.entity.player.Input getLastClientInput();
+  public void setLastClientInput(net.minecraft.world.entity.player.Input);
+  public net.minecraft.world.phys.Vec3 getLastClientMoveIntent();
+  public void registerEnderPearl(net.minecraft.world.entity.projectile.throwableitemprojectile.ThrownEnderpearl);
+  public void deregisterEnderPearl(net.minecraft.world.entity.projectile.throwableitemprojectile.ThrownEnderpearl);
+  public java.util.Set<net.minecraft.world.entity.projectile.throwableitemprojectile.ThrownEnderpearl> getEnderPearls();
+  public net.minecraft.nbt.CompoundTag getShoulderEntityLeft();
+  public net.minecraft.nbt.CompoundTag getShoulderEntityRight();
+  public long registerAndUpdateEnderPearlTicket(net.minecraft.world.entity.projectile.throwableitemprojectile.ThrownEnderpearl);
+  public static long placeEnderPearlTicket(net.minecraft.server.level.ServerLevel, net.minecraft.world.level.ChunkPos);
+  public void requestDebugSubscriptions(java.util.Set<net.minecraft.util.debug.DebugSubscription<?>>);
+  public java.util.Set<net.minecraft.util.debug.DebugSubscription<?>> debugSubscriptions();
+  public void swingAndResetAttackStrength(net.minecraft.world.InteractionHand, net.minecraft.world.item.component.SwingAnimation, boolean);
+  public java.lang.String getLanguage();
+  public net.minecraft.network.chat.Component getTabListHeader();
+  public net.minecraft.network.chat.Component getTabListFooter();
+  public void setTabListHeader(net.minecraft.network.chat.Component);
+  public void setTabListFooter(net.minecraft.network.chat.Component);
+  public void setTabListHeaderFooter(net.minecraft.network.chat.Component, net.minecraft.network.chat.Component);
+  public void refreshTabListName();
+  public net.minecraft.world.level.Level level();
+  public net.minecraft.world.entity.Entity teleport(net.minecraft.world.level.portal.TeleportTransition);
+}
+=== net/minecraft/world/entity/Entity
+Compiled from "Entity.java"
+public abstract class net.minecraft.world.entity.Entity extends net.neoforged.neoforge.attachment.AttachmentHolder implements net.minecraft.world.Nameable, net.minecraft.world.level.entity.EntityAccess, net.minecraft.world.scores.ScoreHolder, net.minecraft.network.syncher.SyncedDataHolder, net.minecraft.core.component.DataComponentGetter, net.minecraft.world.entity.ItemOwner, net.minecraft.world.entity.SlotProvider, net.minecraft.util.debug.DebugValueSource, net.minecraft.core.TypedInstance<net.minecraft.world.entity.EntityType<?>>, net.neoforged.neoforge.common.extensions.IEntityExtension {
+  public static final java.lang.String TAG_ID;
+  public static final java.lang.String TAG_UUID;
+  public static final java.lang.String TAG_PASSENGERS;
+  public static final java.lang.String TAG_DATA;
+  public static final java.lang.String TAG_POS;
+  public static final java.lang.String TAG_MOTION;
+  public static final java.lang.String TAG_ROTATION;
+  public static final java.lang.String TAG_PORTAL_COOLDOWN;
+  public static final java.lang.String TAG_NO_GRAVITY;
+  public static final java.lang.String TAG_AIR;
+  public static final java.lang.String TAG_ON_GROUND;
+  public static final java.lang.String TAG_FALL_DISTANCE;
+  public static final java.lang.String TAG_FIRE;
+  public static final java.lang.String TAG_SILENT;
+  public static final java.lang.String TAG_GLOWING;
+  public static final java.lang.String TAG_INVULNERABLE;
+  public static final java.lang.String TAG_INVULNERABLE_TIME;
+  public static final java.lang.String TAG_CUSTOM_NAME;
+  public static final int INVALID_ENTITY_ID;
+  public static final int CONTENTS_SLOT_INDEX;
+  public static final int BOARDING_COOLDOWN;
+  public static final int TOTAL_AIR_SUPPLY;
+  public static final int MAX_ENTITY_TAG_COUNT;
+  public static final double DEFAULT_NAME_TAG_DISTANCE;
+  public static final double DEFAULT_BELOW_NAME_DISTANCE;
+  public static final double MAX_NAME_TAG_DISTANCE;
+  public static final float DELTA_AFFECTED_BY_BLOCKS_BELOW_0_2;
+  public static final double DELTA_AFFECTED_BY_BLOCKS_BELOW_0_5;
+  public static final double DELTA_AFFECTED_BY_BLOCKS_BELOW_1_0;
+  public static final int BASE_TICKS_REQUIRED_TO_FREEZE;
+  public static final int FREEZE_HURT_FREQUENCY;
+  public static final int BASE_SAFE_FALL_DISTANCE;
+  public static final double WATER_FLOW_SCALE;
+  public static final double LAVA_FAST_FLOW_SCALE;
+  public static final double LAVA_SLOW_FLOW_SCALE;
+  public boolean blocksBuilding;
+  public double xo;
+  public double yo;
+  public double zo;
+  public float yRotO;
+  public float xRotO;
+  public boolean horizontalCollision;
+  public boolean verticalCollision;
+  public boolean verticalCollisionBelow;
+  public boolean minorHorizontalCollision;
+  public static final float DEFAULT_BB_WIDTH;
+  public static final float DEFAULT_BB_HEIGHT;
+  public float moveDist;
+  public float flyDist;
+  public double fallDistance;
+  public double xOld;
+  public double yOld;
+  public double zOld;
+  public boolean noPhysics;
+  public int tickCount;
+  public boolean needsSync;
+  public boolean syncPosition;
+  public boolean syncVelocity;
+  public net.minecraft.world.entity.PortalProcessor portalProcess;
+  public boolean isInPowderSnow;
+  public boolean wasInPowderSnow;
+  public java.util.Optional<net.minecraft.core.BlockPos> mainSupportingBlockPos;
+  public static final int MAX_MOVEMENTS_HANDELED_PER_TICK;
+  public net.minecraft.world.entity.Entity(net.minecraft.world.entity.EntityType<?>, net.minecraft.world.level.Level);
+  public boolean isColliding(net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState);
+  public int getTeamColor();
+  public boolean isSpectator();
+  public boolean canInteractWithLevel();
+  public final void unRide();
+  public void syncPacketPositionCodec(double, double, double);
+  public net.minecraft.network.protocol.game.VecDeltaCodec getPositionCodec();
+  public net.minecraft.world.entity.EntityType<?> getType();
+  public net.minecraft.core.Holder<net.minecraft.world.entity.EntityType<?>> typeHolder();
+  public boolean getRequiresPrecisePosition();
+  public void setRequiresPrecisePosition(boolean);
+  public int getId();
+  public void setId(int);
+  public java.util.Set<java.lang.String> entityTags();
+  public boolean addTag(java.lang.String);
+  public boolean removeTag(java.lang.String);
+  public void kill(net.minecraft.server.level.ServerLevel);
+  public final void discard();
+  public net.minecraft.network.syncher.SynchedEntityData getEntityData();
+  public boolean equals(java.lang.Object);
+  public int hashCode();
+  public void remove(net.minecraft.world.entity.Entity$RemovalReason);
+  public void onClientRemoval();
+  public void onRemoval(net.minecraft.world.entity.Entity$RemovalReason);
+  public void setPose(net.minecraft.world.entity.Pose);
+  public net.minecraft.world.entity.Pose getPose();
+  public boolean hasPose(net.minecraft.world.entity.Pose);
+  public boolean closerThan(net.minecraft.world.entity.Entity, double);
+  public boolean closerThan(net.minecraft.world.entity.Entity, double, double);
+  public final void setPos(net.minecraft.world.phys.Vec3);
+  public void setPos(double, double, double);
+  public void turn(double, double);
+  public void updateDataBeforeSync();
+  public void tick();
+  public final void commonTick();
+  public void baseTick();
+  public void setSharedFlagOnFire(boolean);
+  public void checkBelowWorld();
+  public void setPortalCooldown();
+  public void setPortalCooldown(int);
+  public int getPortalCooldown();
+  public boolean isOnPortalCooldown();
+  public void lavaIgnite();
+  public void lavaHurt();
+  public final void igniteForSeconds(float);
+  public void igniteForTicks(int);
+  public void setRemainingFireTicks(int);
+  public int getRemainingFireTicks();
+  public void clearFire();
+  public boolean isFree(double, double, double);
+  public void setOnGround(boolean);
+  public void setOnGroundWithMovement(boolean, net.minecraft.world.phys.Vec3);
+  public void setOnGroundWithMovement(boolean, boolean, net.minecraft.world.phys.Vec3);
+  public boolean isSupportedBy(net.minecraft.core.BlockPos);
+  public boolean onGround();
+  public void move(net.minecraft.world.entity.MoverType, net.minecraft.world.phys.Vec3);
+  public void recordMovement(net.minecraft.world.entity.MoverType, net.minecraft.world.phys.Vec3);
+  public void removeLatestMovementRecording();
+  public boolean hasMovedHorizontallyRecently();
+  public void applyEffectsFromBlocks(net.minecraft.world.phys.Vec3, net.minecraft.world.phys.Vec3);
+  public void extinguishFire();
+  public net.minecraft.core.BlockPos getOnPosLegacy();
+  public net.minecraft.core.BlockPos getBlockPosBelowThatAffectsMyMovement();
+  public net.minecraft.core.BlockPos getOnPos();
+  public double getAvailableSpaceBelow(double);
+  public static net.minecraft.world.phys.Vec3 collideBoundingBox(net.minecraft.world.entity.Entity, net.minecraft.world.phys.Vec3, net.minecraft.world.phys.AABB, net.minecraft.world.level.Level, java.util.List<net.minecraft.world.phys.shapes.VoxelShape>);
+  public static net.minecraft.world.phys.Vec3 collideBoundingBox(net.minecraft.world.phys.shapes.CollisionContext, net.minecraft.world.phys.Vec3, net.minecraft.world.phys.AABB, net.minecraft.world.level.Level, java.util.List<net.minecraft.world.phys.shapes.VoxelShape>);
+  public static java.util.List<net.minecraft.world.phys.shapes.VoxelShape> collectAllColliders(net.minecraft.world.entity.Entity, net.minecraft.world.level.Level, net.minecraft.world.phys.AABB);
+  public boolean collidedWithFluid(net.minecraft.world.level.material.FluidState, net.minecraft.core.BlockPos, net.minecraft.world.phys.Vec3, net.minecraft.world.phys.Vec3);
+  public boolean collidedWithShapeMovingFrom(net.minecraft.world.phys.Vec3, net.minecraft.world.phys.Vec3, java.util.List<net.minecraft.world.phys.AABB>);
+  public net.minecraft.core.BlockPos adjustSpawnLocation(net.minecraft.server.level.ServerLevel, net.minecraft.core.BlockPos);
+  public void gameEvent(net.minecraft.core.Holder<net.minecraft.world.level.gameevent.GameEvent>, net.minecraft.world.entity.Entity);
+  public void gameEvent(net.minecraft.core.Holder<net.minecraft.world.level.gameevent.GameEvent>);
+  public void playSound(net.minecraft.sounds.SoundEvent, float, float);
+  public void playSound(net.minecraft.sounds.SoundEvent);
+  public boolean isSilent();
+  public void setSilent(boolean);
+  public boolean isNoGravity();
+  public void setNoGravity(boolean);
+  public final double getGravity();
+  public boolean dampensVibrations();
+  public final void doCheckFallDamage(double, double, double, boolean);
+  public boolean fireImmune();
+  public boolean causeFallDamage(double, float, net.minecraft.world.damagesource.DamageSource);
+  public boolean isInWater();
+  public boolean isInWaterOrRain();
+  public boolean isInLiquid();
+  public boolean isInFloatableFluid();
+  public boolean isUnderWater();
+  public boolean isInShallowWater();
+  public boolean isInClouds();
+  public void updateSwimming();
+  public net.minecraft.world.level.block.state.BlockState getBlockStateOn();
+  public boolean canSpawnSprintParticle();
+  public boolean isEyeInFluid(net.minecraft.tags.TagKey<net.minecraft.world.level.material.Fluid>);
+  public boolean isEyeInFluid(net.neoforged.neoforge.fluids.FluidType);
+  public boolean isInLava();
+  public void moveRelative(float, net.minecraft.world.phys.Vec3);
+  public float getLightLevelDependentMagicValue();
+  public void absSnapTo(double, double, double, float, float);
+  public void absSnapRotationTo(float, float);
+  public void absSnapTo(double, double, double);
+  public void snapTo(net.minecraft.world.phys.Vec3);
+  public void snapTo(double, double, double);
+  public void snapTo(net.minecraft.core.BlockPos, float, float);
+  public void snapTo(net.minecraft.world.phys.Vec3, float, float);
+  public void snapTo(double, double, double, float, float);
+  public final void setOldPosAndRot();
+  public final void setOldPosAndRot(net.minecraft.world.phys.Vec3, float, float);
+  public void setOldRot();
+  public final net.minecraft.world.phys.Vec3 oldPosition();
+  public float distanceTo(net.minecraft.world.entity.Entity);
+  public double distanceToSqr(double, double, double);
+  public double distanceToSqr(net.minecraft.world.entity.Entity);
+  public double distanceToSqr(net.minecraft.world.phys.Vec3);
+  public void playerTouch(net.minecraft.world.entity.player.Player);
+  public void push(net.minecraft.world.entity.Entity);
+  public void push(net.minecraft.world.phys.Vec3);
+  public void pushFromExplosion(net.minecraft.world.phys.Vec3);
+  public void push(double, double, double);
+  public final void hurt(net.minecraft.world.damagesource.DamageSource, float);
+  public final boolean hurtOrSimulate(net.minecraft.world.damagesource.DamageSource, float);
+  public abstract boolean hurtServer(net.minecraft.server.level.ServerLevel, net.minecraft.world.damagesource.DamageSource, float);
+  public boolean hurtClient(net.minecraft.world.damagesource.DamageSource);
+  public final net.minecraft.world.phys.Vec3 getViewVector(float);
+  public net.minecraft.core.Direction getNearestViewDirection();
+  public float getViewXRot(float);
+  public float getViewYRot(float);
+  public float getXRot(float);
+  public float getYRot(float);
+  public static net.minecraft.world.phys.Vec3 calculateViewVector(float, float);
+  public static org.joml.Quaternionf calculateViewQuaternion(float, float);
+  public final net.minecraft.world.phys.Vec3 getUpVector(float);
+  public final net.minecraft.world.phys.Vec3 getEyePosition();
+  public final net.minecraft.world.phys.Vec3 getEyePosition(float);
+  public net.minecraft.world.phys.Vec3 getLightProbePosition(float);
+  public final net.minecraft.world.phys.Vec3 getPosition(float);
+  public net.minecraft.world.phys.HitResult pick(double, float, boolean);
+  public boolean canBeHitByProjectile();
+  public boolean isPickable();
+  public boolean canBePickedFromInside();
+  public boolean isPushable();
+  public void awardKillScore(net.minecraft.world.entity.Entity, net.minecraft.world.damagesource.DamageSource);
+  public boolean shouldRender(double, double, double);
+  public boolean shouldRenderAtSqrDistance(double);
+  public boolean saveAsPassenger(net.minecraft.world.level.storage.ValueOutput);
+  public boolean save(net.minecraft.world.level.storage.ValueOutput);
+  public void saveWithoutId(net.minecraft.world.level.storage.ValueOutput);
+  public void load(net.minecraft.world.level.storage.ValueInput);
+  public void postDataManipulated();
+  public final java.lang.String getEncodeId();
+  public net.minecraft.world.entity.item.ItemEntity spawnAtLocation(net.minecraft.server.level.ServerLevel, net.minecraft.world.level.ItemLike);
+  public net.minecraft.world.entity.item.ItemEntity spawnAtLocation(net.minecraft.server.level.ServerLevel, net.minecraft.world.item.ItemStack);
+  public net.minecraft.world.entity.item.ItemEntity spawnAtLocation(net.minecraft.server.level.ServerLevel, net.minecraft.world.item.ItemStack, net.minecraft.world.phys.Vec3);
+  public net.minecraft.world.entity.item.ItemEntity spawnAtLocation(net.minecraft.server.level.ServerLevel, net.minecraft.world.item.ItemStack, float);
+  public boolean isAlive();
+  public boolean isInWall();
+  public net.minecraft.world.InteractionResult interact(net.minecraft.world.entity.player.Player, net.minecraft.world.InteractionHand, net.minecraft.world.phys.Vec3);
+  public boolean shearOffAllLeashConnections(net.minecraft.world.entity.player.Player);
+  public boolean dropAllLeashConnections(net.minecraft.world.entity.player.Player);
+  public boolean canCollideWith(net.minecraft.world.entity.Entity);
+  public boolean canBeCollidedWith(net.minecraft.world.entity.Entity);
+  public void rideTick();
+  public final void positionRider(net.minecraft.world.entity.Entity);
+  public void onPassengerTurned(net.minecraft.world.entity.Entity);
+  public net.minecraft.world.phys.Vec3 getVehicleAttachmentPoint(net.minecraft.world.entity.Entity);
+  public net.minecraft.world.phys.Vec3 getPassengerRidingPosition(net.minecraft.world.entity.Entity);
+  public final boolean startRiding(net.minecraft.world.entity.Entity);
+  public boolean showVehicleHealth();
+  public boolean startRiding(net.minecraft.world.entity.Entity, boolean, boolean);
+  public void ejectPassengers();
+  public final boolean doTeamsAllowDamage(net.minecraft.world.entity.Entity);
+  public void removeVehicle();
+  public void stopRiding();
+  public final boolean isInterpolating();
+  public final void moveOrInterpolateTo(net.minecraft.world.entity.PositionPath, float, float);
+  public final void moveOrInterpolateTo(net.minecraft.world.phys.Vec3, float, float);
+  public final void moveOrInterpolateTo(float, float);
+  public final void moveOrInterpolateTo(net.minecraft.world.entity.PositionPath);
+  public final void moveOrInterpolateTo(net.minecraft.world.entity.PositionPath, float, float, boolean);
+  public void onInterpolationStart(net.minecraft.world.entity.InterpolationHandler);
+  public final net.minecraft.world.entity.InterpolationHandler getInterpolation();
+  public void lerpHeadTo(float, int);
+  public float getPickRadius();
+  public net.minecraft.world.phys.Vec3 getLookAngle();
+  public org.joml.Quaternionf getLookQuaternion();
+  public net.minecraft.world.phys.Vec3 getHeadLookAngle();
+  public net.minecraft.world.phys.Vec3 getHandHoldingItemAngle(net.minecraft.world.item.Item);
+  public net.minecraft.world.phys.Vec2 getRotationVector();
+  public net.minecraft.world.phys.Vec3 getForward();
+  public void setAsInsidePortal(net.minecraft.world.level.block.Portal, net.minecraft.core.BlockPos);
+  public void teleportToPortalDestination(net.minecraft.server.level.ServerLevel, net.minecraft.world.level.portal.TeleportTransition);
+  public int getDimensionChangingDelay();
+  public void lerpMotion(net.minecraft.world.phys.Vec3);
+  public void handleDamageEvent(net.minecraft.world.damagesource.DamageSource);
+  public void handleEntityEvent(byte);
+  public void animateHurt(float);
+  public boolean isOnFire();
+  public boolean isPassenger();
+  public boolean isVehicle();
+  public boolean dismountsUnderwater();
+  public boolean canControlVehicle();
+  public void setShiftKeyDown(boolean);
+  public boolean isShiftKeyDown();
+  public boolean isSteppingCarefully();
+  public boolean isSuppressingBounce();
+  public boolean isDiscrete();
+  public boolean isDescending();
+  public boolean isCrouching();
+  public boolean isSprinting();
+  public void setSprinting(boolean);
+  public boolean isSwimming();
+  public boolean isVisuallySwimming();
+  public boolean isVisuallyCrawling();
+  public void setSwimming(boolean);
+  public final boolean hasGlowingTag();
+  public final void setGlowingTag(boolean);
+  public boolean isCurrentlyGlowing();
+  public boolean isInvisible();
+  public boolean isInvisibleTo(net.minecraft.world.entity.player.Player);
+  public boolean isOnRails();
+  public void updateDynamicGameEventListener(java.util.function.BiConsumer<net.minecraft.world.level.gameevent.DynamicGameEventListener<?>, net.minecraft.server.level.ServerLevel>);
+  public net.minecraft.world.scores.PlayerTeam getTeam();
+  public final boolean isAlliedTo(net.minecraft.world.entity.Entity);
+  public boolean isAlliedTo(net.minecraft.world.scores.Team);
+  public void setInvisible(boolean);
+  public int getMaxAirSupply();
+  public int getAirSupply();
+  public void setAirSupply(int);
+  public void clearFreeze();
+  public int getTicksFrozen();
+  public void setTicksFrozen(int);
+  public float getPercentFrozen();
+  public boolean isFullyFrozen();
+  public int getTicksRequiredToFreeze();
+  public void thunderHit(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.LightningBolt);
+  public void onAboveBubbleColumn(boolean, net.minecraft.core.BlockPos);
+  public void onInsideBubbleColumn(boolean);
+  public boolean killedEntity(net.minecraft.server.level.ServerLevel, net.minecraft.world.entity.LivingEntity, net.minecraft.world.damagesource.DamageSource);
+  public boolean projectileReceivesSideEffectsOnHit(boolean);
+  public void checkFallDistanceAccumulation();
+  public void resetFallDistance();
+  public void makeStuckInBlock(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.phys.Vec3);
+  public net.minecraft.network.chat.Component getName();
+  public boolean is(net.minecraft.world.entity.Entity);
+  public float getYHeadRot();
+  public void setYHeadRot(float);
+  public void setYBodyRot(float);
+  public boolean isAttackable();
+  public boolean skipAttackInteraction(net.minecraft.world.entity.Entity);
+  public java.lang.String toString();
+  public boolean isInvulnerable();
+  public boolean isPermanentlyInvulnerable();
+  public boolean isTemporarilyInvulnerable();
+  public boolean isInvulnerableToPiercingWeapon();
+  public void setPermanentlyInvulnerable(boolean);
+  public void copyPosition(net.minecraft.world.entity.Entity);
+  public void restoreFrom(net.minecraft.world.entity.Entity);
+  public net.minecraft.world.entity.Entity teleport(net.minecraft.world.level.portal.TeleportTransition);
+  public void teleportSetPosition(net.minecraft.world.entity.PositionMoveRotation, java.util.Set<net.minecraft.world.entity.Relative>);
+  public void teleportSetPosition(net.minecraft.world.entity.PositionMoveRotation, net.minecraft.world.entity.PositionMoveRotation, java.util.Set<net.minecraft.world.entity.Relative>);
+  public void forceSetRotation(float, boolean, float, boolean);
+  public void placePortalTicket(net.minecraft.core.BlockPos);
+  public net.minecraft.world.phys.Vec3 getRelativePortalPosition(net.minecraft.core.Direction$Axis, net.minecraft.util.BlockUtil$FoundRectangle);
+  public boolean canUsePortal(boolean);
+  public boolean canTeleport(net.minecraft.world.level.Level, net.minecraft.world.level.Level);
+  public float getBlockExplosionResistance(net.minecraft.world.level.Explosion, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.material.FluidState, float);
+  public boolean shouldBlockExplode(net.minecraft.world.level.Explosion, net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, float);
+  public int getMaxFallDistance();
+  public boolean isIgnoringBlockTriggers();
+  public void fillCrashReportCategory(net.minecraft.CrashReportCategory);
+  public boolean displayFireAnimation();
+  public void setUUID(java.util.UUID);
+  public java.util.UUID getUUID();
+  public java.lang.String getStringUUID();
+  public java.lang.String getScoreboardName();
+  public boolean isPushedByFluid();
+  public static double getViewScale();
+  public static void setViewScale(double);
+  public net.minecraft.network.chat.Component getDisplayName();
+  public void setCustomName(net.minecraft.network.chat.Component);
+  public net.minecraft.network.chat.Component getCustomName();
+  public boolean hasCustomName();
+  public void setCustomNameVisible(boolean);
+  public boolean isCustomNameVisible();
+  public net.minecraft.network.chat.Component belowNameDisplay();
+  public boolean teleportTo(net.minecraft.server.level.ServerLevel, double, double, double, java.util.Set<net.minecraft.world.entity.Relative>, float, float, boolean);
+  public void dismountTo(double, double, double);
+  public void teleportTo(double, double, double);
+  public void teleportRelative(double, double, double);
+  public boolean shouldShowName();
+  public void onSyncedDataUpdated(java.util.List<net.minecraft.network.syncher.SynchedEntityData$DataValue<?>>);
+  public void onSyncedDataUpdated(net.minecraft.network.syncher.EntityDataAccessor<?>);
+  public void refreshDimensions();
+  public boolean fudgePositionAfterSizeChange(net.minecraft.world.entity.EntityDimensions);
+  public net.minecraft.core.Direction getDirection();
+  public net.minecraft.core.Direction getMotionDirection();
+  public boolean broadcastToPlayer(net.minecraft.server.level.ServerPlayer);
+  public final net.minecraft.world.phys.AABB getBoundingBox();
+  public net.minecraft.world.phys.AABB getInterpolatedBoundingBox(float);
+  public final void setBoundingBox(net.minecraft.world.phys.AABB);
+  public final float getEyeHeight(net.minecraft.world.entity.Pose);
+  public final float getEyeHeight();
+  public net.minecraft.world.entity.SlotAccess getSlot(int);
+  public boolean ignoreExplosion(net.minecraft.world.level.Explosion);
+  public void startSeenByPlayer(net.minecraft.server.level.ServerPlayer);
+  public void stopSeenByPlayer(net.minecraft.server.level.ServerPlayer);
+  public float rotate(net.minecraft.world.level.block.Rotation);
+  public float mirror(net.minecraft.world.level.block.Mirror);
+  public net.minecraft.world.entity.projectile.ProjectileDeflection deflection(net.minecraft.world.entity.projectile.Projectile);
+  public net.minecraft.world.entity.LivingEntity getControllingPassenger();
+  public final boolean hasControllingPassenger();
+  public final java.util.List<net.minecraft.world.entity.Entity> getPassengers();
+  public net.minecraft.world.entity.Entity getFirstPassenger();
+  public boolean hasPassenger(net.minecraft.world.entity.Entity);
+  public boolean hasPassenger(java.util.function.Predicate<net.minecraft.world.entity.Entity>);
+  public java.util.stream.Stream<net.minecraft.world.entity.Entity> getSelfAndPassengers();
+  public java.util.stream.Stream<net.minecraft.world.entity.Entity> getPassengersAndSelf();
+  public java.lang.Iterable<net.minecraft.world.entity.Entity> getIndirectPassengers();
+  public int countPlayerPassengers();
+  public boolean hasExactlyOnePlayerPassenger();
+  public net.minecraft.world.entity.Entity getRootVehicle();
+  public boolean isPassengerOfSameVehicle(net.minecraft.world.entity.Entity);
+  public boolean hasIndirectPassenger(net.minecraft.world.entity.Entity);
+  public final boolean isLocalInstanceAuthoritative();
+  public boolean isClientAuthoritative();
+  public net.minecraft.world.entity.MoveSimulationType getMoveSimulationType();
+  public final boolean canSimulateMovement();
+  public boolean isEffectiveAi();
+  public net.minecraft.world.phys.Vec3 getDismountLocationForPassenger(net.minecraft.world.entity.LivingEntity);
+  public net.minecraft.world.entity.Entity getVehicle();
+  public net.minecraft.world.entity.Entity getControlledVehicle();
+  public net.minecraft.world.level.material.PushReaction getPistonPushReaction();
+  public net.minecraft.sounds.SoundSource getSoundSource();
+  public net.minecraft.commands.CommandSourceStack createCommandSourceStackForNameResolution(net.minecraft.server.level.ServerLevel);
+  public void lookAt(net.minecraft.commands.arguments.EntityAnchorArgument$Anchor, net.minecraft.world.phys.Vec3);
+  public float getPreciseBodyRotation(float);
+  public boolean touchingUnloadedChunk();
+  public double getFluidHeight(net.minecraft.tags.TagKey<net.minecraft.world.level.material.Fluid>);
+  public double getFluidHeight(net.neoforged.neoforge.fluids.FluidType);
+  public double getFluidJumpThreshold();
+  public final float getBbWidth();
+  public final float getBbHeight();
+  public net.minecraft.network.protocol.Packet<net.minecraft.network.protocol.game.ClientGamePacketListener> getAddEntityPacket(net.minecraft.server.level.ServerEntity);
+  public net.minecraft.world.entity.EntityDimensions getDimensions(net.minecraft.world.entity.Pose);
+  public final net.minecraft.world.entity.EntityAttachments getAttachments();
+  public net.minecraft.world.phys.Vec3 position();
+  public net.minecraft.world.phys.Vec3 trackingPosition();
+  public net.minecraft.core.BlockPos blockPosition();
+  public net.minecraft.world.level.block.state.BlockState getInBlockState();
+  public net.minecraft.world.level.ChunkPos chunkPosition();
+  public net.minecraft.world.phys.Vec3 getDeltaMovement();
+  public void setDeltaMovement(net.minecraft.world.phys.Vec3);
+  public void addDeltaMovement(net.minecraft.world.phys.Vec3);
+  public void setDeltaMovement(double, double, double);
+  public final int getBlockX();
+  public final double getX();
+  public double getX(double);
+  public double getRandomX(double);
+  public final int getBlockY();
+  public final double getY();
+  public double getY(double);
+  public double getRandomY(double);
+  public double getRandomY();
+  public double getEyeY();
+  public final int getBlockZ();
+  public final double getZ();
+  public double getZ(double);
+  public double getRandomZ(double);
+  public final void setPosRaw(double, double, double);
+  public void checkDespawn();
+  public net.minecraft.world.phys.Vec3[] getQuadLeashHolderOffsets();
+  public boolean supportQuadLeashAsHolder();
+  public void notifyLeashHolder(net.minecraft.world.entity.Leashable);
+  public void notifyLeasheeRemoved(net.minecraft.world.entity.Leashable);
+  public net.minecraft.world.phys.Vec3 getRopeHoldPosition(float);
+  public void recreateFromPacket(net.minecraft.network.protocol.game.ClientboundAddEntityPacket);
+  public net.minecraft.world.item.ItemStack getPickResult();
+  public void setIsInPowderSnow(boolean);
+  public boolean canFreeze();
+  public boolean isFreezing();
+  public float getYRot();
+  public float getVisualRotationYInDegrees();
+  public void setYRot(float);
+  public float getXRot();
+  public void setXRot(float);
+  public net.minecraft.core.PositionAndRotation storePositionAndRotation();
+  public net.minecraft.core.PositionAndRotation getClientPositionAndRotation();
+  public net.minecraft.world.phys.Vec3 getClientPosition();
+  public boolean canSprint();
+  public float maxUpStep();
+  public void onExplosionHit(net.minecraft.world.entity.Entity);
+  public final boolean isRemoved();
+  public net.minecraft.world.entity.Entity$RemovalReason getRemovalReason();
+  public final void setRemoved(net.minecraft.world.entity.Entity$RemovalReason);
+  public void setLevelCallback(net.minecraft.world.level.entity.EntityInLevelCallback);
+  public boolean shouldBeSaved();
+  public boolean isAlwaysTicking();
+  public boolean mayInteract(net.minecraft.server.level.ServerLevel, net.minecraft.core.BlockPos);
+  public boolean isFlyingVehicle();
+  public net.minecraft.world.level.Level level();
+  public net.minecraft.world.damagesource.DamageSources damageSources();
+  public net.minecraft.core.RegistryAccess registryAccess();
+  public net.minecraft.util.RandomSource getRandom();
+  public net.minecraft.world.phys.Vec3 getKnownMovement();
+  public net.minecraft.world.phys.Vec3 getKnownSpeed();
+  public net.minecraft.world.item.ItemStack getWeaponItem();
+  public java.util.Optional<net.minecraft.resources.ResourceKey<net.minecraft.world.level.storage.loot.LootTable>> getLootTable();
+  public final void applyComponentsFromItemStack(net.minecraft.world.item.ItemStack);
+  public <T> T get(net.minecraft.core.component.DataComponentType<? extends T>);
+  public <T> void setComponent(net.minecraft.core.component.DataComponentType<T>, T);
+  public net.minecraft.util.ProblemReporter$PathElement problemPath();
+  public void registerDebugValues(net.minecraft.server.level.ServerLevel, net.minecraft.util.debug.DebugValueSource$Registration);
+  public net.minecraft.world.phys.AABB getFluidInteractionBox();
+  public void setInvulnerableTime(int);
+  public int getInvulnerableTime();
+  public net.minecraft.world.entity.EntityFluidInteraction getFluidInteraction();
+  public java.util.Collection<net.minecraft.world.entity.item.ItemEntity> captureDrops();
+  public java.util.Collection<net.minecraft.world.entity.item.ItemEntity> captureDrops(java.util.Collection<net.minecraft.world.entity.item.ItemEntity>);
+  public net.minecraft.nbt.CompoundTag getPersistentData();
+  public boolean canTrample(net.minecraft.server.level.ServerLevel, net.minecraft.world.level.block.state.BlockState, net.minecraft.core.BlockPos, double);
+  public final boolean isAddedToLevel();
+  public void onAddedToLevel();
+  public void onRemovedFromLevel();
+  public void revive();
+  public final <T> T setData(net.neoforged.neoforge.attachment.AttachmentType<T>, T);
+  public final void syncData(net.neoforged.neoforge.attachment.AttachmentType<?>);
+  public final <T, C> T getCapability(net.neoforged.neoforge.capabilities.EntityCapability<T, C>, C);
+  public final <T> T getCapability(net.neoforged.neoforge.capabilities.EntityCapability<T, java.lang.Void>);
+}
+=== net/minecraft/nbt/CompoundTag
+Compiled from "CompoundTag.java"
+public final class net.minecraft.nbt.CompoundTag implements net.minecraft.nbt.Tag {
+  public static final com.mojang.serialization.Codec<net.minecraft.nbt.CompoundTag> CODEC;
+  public static final net.minecraft.nbt.TagType<net.minecraft.nbt.CompoundTag> TYPE;
+  public net.minecraft.nbt.CompoundTag();
+  public net.minecraft.nbt.CompoundTag(int);
+  public void write(java.io.DataOutput) throws java.io.IOException;
+  public int sizeInBytes();
+  public java.util.Set<java.lang.String> keySet();
+  public java.util.Set<java.util.Map$Entry<java.lang.String, net.minecraft.nbt.Tag>> entrySet();
+  public java.util.Collection<net.minecraft.nbt.Tag> values();
+  public void forEach(java.util.function.BiConsumer<java.lang.String, net.minecraft.nbt.Tag>);
+  public byte getId();
+  public net.minecraft.nbt.TagType<net.minecraft.nbt.CompoundTag> getType();
+  public int size();
+  public net.minecraft.nbt.Tag put(java.lang.String, net.minecraft.nbt.Tag);
+  public void putByte(java.lang.String, byte);
+  public void putShort(java.lang.String, short);
+  public void putInt(java.lang.String, int);
+  public void putLong(java.lang.String, long);
+  public void putFloat(java.lang.String, float);
+  public void putDouble(java.lang.String, double);
+  public void putString(java.lang.String, java.lang.String);
+  public void putByteArray(java.lang.String, byte[]);
+  public void putIntArray(java.lang.String, int[]);
+  public void putLongArray(java.lang.String, long[]);
+  public void putBoolean(java.lang.String, boolean);
+  public net.minecraft.nbt.Tag get(java.lang.String);
+  public boolean contains(java.lang.String);
+  public java.util.Optional<java.lang.Byte> getByte(java.lang.String);
+  public byte getByteOr(java.lang.String, byte);
+  public java.util.Optional<java.lang.Short> getShort(java.lang.String);
+  public short getShortOr(java.lang.String, short);
+  public java.util.Optional<java.lang.Integer> getInt(java.lang.String);
+  public int getIntOr(java.lang.String, int);
+  public java.util.Optional<java.lang.Long> getLong(java.lang.String);
+  public long getLongOr(java.lang.String, long);
+  public java.util.Optional<java.lang.Float> getFloat(java.lang.String);
+  public float getFloatOr(java.lang.String, float);
+  public java.util.Optional<java.lang.Double> getDouble(java.lang.String);
+  public double getDoubleOr(java.lang.String, double);
+  public java.util.Optional<java.lang.String> getString(java.lang.String);
+  public java.lang.String getStringOr(java.lang.String, java.lang.String);
+  public java.util.Optional<byte[]> getByteArray(java.lang.String);
+  public java.util.Optional<int[]> getIntArray(java.lang.String);
+  public java.util.Optional<long[]> getLongArray(java.lang.String);
+  public java.util.Optional<net.minecraft.nbt.CompoundTag> getCompound(java.lang.String);
+  public net.minecraft.nbt.CompoundTag getCompoundOrEmpty(java.lang.String);
+  public java.util.Optional<net.minecraft.nbt.ListTag> getList(java.lang.String);
+  public net.minecraft.nbt.ListTag getListOrEmpty(java.lang.String);
+  public java.util.Optional<java.lang.Boolean> getBoolean(java.lang.String);
+  public boolean getBooleanOr(java.lang.String, boolean);
+  public net.minecraft.nbt.Tag remove(java.lang.String);
+  public java.lang.String toString();
+  public boolean isEmpty();
+  public net.minecraft.nbt.CompoundTag copy();
+  public java.util.Optional<net.minecraft.nbt.CompoundTag> asCompound();
+  public boolean equals(java.lang.Object);
+  public int hashCode();
+  public net.minecraft.nbt.CompoundTag merge(net.minecraft.nbt.CompoundTag);
+  public void accept(net.minecraft.nbt.TagVisitor);
+  public net.minecraft.nbt.StreamTagVisitor$ValueResult accept(net.minecraft.nbt.StreamTagVisitor);
+  public <T> void store(java.lang.String, com.mojang.serialization.Codec<T>, T);
+  public <T> void storeNullable(java.lang.String, com.mojang.serialization.Codec<T>, T);
+  public <T> void store(java.lang.String, com.mojang.serialization.Codec<T>, com.mojang.serialization.DynamicOps<net.minecraft.nbt.Tag>, T);
+  public <T> void storeNullable(java.lang.String, com.mojang.serialization.Codec<T>, com.mojang.serialization.DynamicOps<net.minecraft.nbt.Tag>, T);
+  public <T> void store(com.mojang.serialization.MapCodec<T>, T);
+  public <T> void store(com.mojang.serialization.MapCodec<T>, com.mojang.serialization.DynamicOps<net.minecraft.nbt.Tag>, T);
+  public <T> java.util.Optional<T> read(java.lang.String, com.mojang.serialization.Codec<T>);
+  public <T> java.util.Optional<T> read(java.lang.String, com.mojang.serialization.Codec<T>, com.mojang.serialization.DynamicOps<net.minecraft.nbt.Tag>);
+  public <T> java.util.Optional<T> read(com.mojang.serialization.MapCodec<T>);
+  public <T> java.util.Optional<T> read(com.mojang.serialization.MapCodec<T>, com.mojang.serialization.DynamicOps<net.minecraft.nbt.Tag>);
+  public net.minecraft.nbt.Tag copy();
+}
