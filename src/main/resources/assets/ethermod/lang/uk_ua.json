@@ -58,8 +58,6 @@
   "message.ethermod.module_known": "Модуль уже відомий.",
   "message.ethermod.module_disabled": "Цей модуль вимкнено на цьому сервері.",
   "message.ethermod.module_unlocked": "Модуль відкрито. Відкрийте K, щоб встановити його.",
-  "message.ethermod.zipline_first": "Тарзанка: тепер зачепіть інший кінець.",
-  "message.ethermod.zipline_done": "Тарзанку натягнуто: наведіться на неї й утримуйте Трос, щоб їхати.",
   "message.ethermod.phoenix": "Фенікс: повернення з полум'я. Знову готовий за 10 хвилин.",
   "tooltip.ethermod.chip_install": "ПКМ, щоб встановити",
   "tooltip.ethermod.stage_next": "%s  ›  далі: %s",

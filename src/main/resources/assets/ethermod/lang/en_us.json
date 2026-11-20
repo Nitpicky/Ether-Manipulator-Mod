@@ -58,8 +58,6 @@
   "message.ethermod.module_known": "Module already known.",
   "message.ethermod.module_disabled": "This Module is turned off on this server.",
   "message.ethermod.module_unlocked": "Module unlocked. Open K to equip it.",
-  "message.ethermod.zipline_first": "Zipline: now hook the other end.",
-  "message.ethermod.zipline_done": "Zipline strung: aim at it and hold Tether to ride.",
   "message.ethermod.phoenix": "Phoenix: back from the flames. Ready again in 10 minutes.",
   "tooltip.ethermod.chip_install": "Right-click to install",
   "tooltip.ethermod.stage_next": "%s  ›  next: %s",

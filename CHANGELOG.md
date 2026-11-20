@@ -6,6 +6,8 @@ next release's notes.
 ## 1.0.1 (in progress, not released)
 
 ### Changes
+- Ziplines: no more chat-bar text when you place the first end or finish the rope (the sounds
+  still tell you).
 - Photonic: the light that follows you (whenever the Photonic line is equipped, summoned or not)
   is now a smooth moving glow, like dynamic-lights mods. It
   fades with distance from your exact position instead of jumping from block to block, other

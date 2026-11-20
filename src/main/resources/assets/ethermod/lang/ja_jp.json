@@ -58,8 +58,6 @@
   "message.ethermod.module_known": "このモジュールはすでに解放済みです。",
   "message.ethermod.module_disabled": "このモジュールはこのサーバーで無効になっています。",
   "message.ethermod.module_unlocked": "モジュールを解放しました。Kキーで装備できます。",
-  "message.ethermod.zipline_first": "ジップライン:もう一方の端を取り付けてください。",
-  "message.ethermod.zipline_done": "ジップライン完成:狙ってテザーを長押しすると乗れます。",
   "message.ethermod.phoenix": "フェニックス:炎の中から復活。10分後に再使用可能。",
   "tooltip.ethermod.chip_install": "右クリックで取り付け",
   "tooltip.ethermod.stage_next": "%s  ›  次:%s",

@@ -58,8 +58,6 @@
   "message.ethermod.module_known": "Módulo ya conocido.",
   "message.ethermod.module_disabled": "Este módulo está desactivado en este servidor.",
   "message.ethermod.module_unlocked": "Módulo desbloqueado. Abre K para equiparlo.",
-  "message.ethermod.zipline_first": "Tirolina: ahora engancha el otro extremo.",
-  "message.ethermod.zipline_done": "Tirolina tendida: apunta a ella y mantén Amarre para deslizarte.",
   "message.ethermod.phoenix": "Fénix: de vuelta de las llamas. Listo de nuevo en 10 minutos.",
   "tooltip.ethermod.chip_install": "Clic derecho para instalar",
   "tooltip.ethermod.stage_next": "%s  ›  siguiente: %s",

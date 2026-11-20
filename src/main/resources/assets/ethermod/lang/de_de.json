@@ -58,8 +58,6 @@
   "message.ethermod.module_known": "Modul bereits bekannt.",
   "message.ethermod.module_disabled": "Dieses Modul ist auf diesem Server deaktiviert.",
   "message.ethermod.module_unlocked": "Modul freigeschaltet. Öffne K, um es auszurüsten.",
-  "message.ethermod.zipline_first": "Seilrutsche: Jetzt das andere Ende einhaken.",
-  "message.ethermod.zipline_done": "Seilrutsche gespannt: Ziele darauf und halte Halteseil, um zu fahren.",
   "message.ethermod.phoenix": "Phönix: aus den Flammen zurück. In 10 Minuten wieder bereit.",
   "tooltip.ethermod.chip_install": "Rechtsklick zum Installieren",
   "tooltip.ethermod.stage_next": "%s  ›  nächste: %s",

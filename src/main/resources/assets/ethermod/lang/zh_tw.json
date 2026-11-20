@@ -58,8 +58,6 @@
   "message.ethermod.module_known": "已擁有此模組。",
   "message.ethermod.module_disabled": "此模組在本伺服器上已關閉。",
   "message.ethermod.module_unlocked": "模組已解鎖。打開K介面進行裝備。",
-  "message.ethermod.zipline_first": "滑索:現在固定另一端。",
-  "message.ethermod.zipline_done": "滑索已拉好:瞄準它並按住系索即可滑行。",
   "message.ethermod.phoenix": "鳳凰:浴火重生。10分鐘後可再次觸發。",
   "tooltip.ethermod.chip_install": "右鍵安裝",
   "tooltip.ethermod.stage_next": "%s  ›  下一階段:%s",

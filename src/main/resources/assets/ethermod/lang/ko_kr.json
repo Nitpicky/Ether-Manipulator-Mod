@@ -58,8 +58,6 @@
   "message.ethermod.module_known": "이미 알고 있는 모듈입니다.",
   "message.ethermod.module_disabled": "이 모듈은 이 서버에서 꺼져 있습니다.",
   "message.ethermod.module_unlocked": "모듈이 해금되었습니다. K를 열어 장착하세요.",
-  "message.ethermod.zipline_first": "집라인: 이제 반대쪽 끝을 거세요.",
-  "message.ethermod.zipline_done": "집라인 완성: 조준하고 밧줄을 누르고 있으면 탈 수 있습니다.",
   "message.ethermod.phoenix": "불사조: 불길 속에서 돌아왔습니다. 10분 후 다시 준비됩니다.",
   "tooltip.ethermod.chip_install": "우클릭하여 장착",
   "tooltip.ethermod.stage_next": "%s  ›  다음: %s",

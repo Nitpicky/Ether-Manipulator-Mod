@@ -58,8 +58,6 @@
   "message.ethermod.module_known": "Modulo già conosciuto.",
   "message.ethermod.module_disabled": "Questo modulo è disattivato su questo server.",
   "message.ethermod.module_unlocked": "Modulo sbloccato. Apri K per equipaggiarlo.",
-  "message.ethermod.zipline_first": "Teleferica: ora aggancia l'altra estremità.",
-  "message.ethermod.zipline_done": "Teleferica tesa: mirala e tieni premuto Cavo per scivolare.",
   "message.ethermod.phoenix": "Fenice: di ritorno dalle fiamme. Di nuovo pronta tra 10 minuti.",
   "tooltip.ethermod.chip_install": "Clic destro per installare",
   "tooltip.ethermod.stage_next": "%s  ›  successivo: %s",

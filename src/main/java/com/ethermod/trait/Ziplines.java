@@ -3,9 +3,7 @@ package com.ethermod.trait;
 import com.ethermod.beam.BeamBallEntity;
 import com.ethermod.manipulator.Manipulator;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
@@ -63,10 +61,6 @@ public final class Ziplines {
                 SoundSource.PLAYERS,
                 1f,
                 0.8f);
-        sp.displayClientMessage(
-                Component.translatable("message.ethermod.zipline_first")
-                        .withStyle(ChatFormatting.LIGHT_PURPLE),
-                true);
     }
 
     /** A hook just stuck: if a first end is waiting, string the rope. */
@@ -103,10 +97,6 @@ public final class Ziplines {
                 SoundSource.PLAYERS,
                 1f,
                 1.2f);
-        sp.displayClientMessage(
-                Component.translatable("message.ethermod.zipline_done")
-                        .withStyle(ChatFormatting.LIGHT_PURPLE),
-                true);
     }
 
     /** Tether pressed: ride a rope you aim at, if there is one in reach. */

@@ -58,8 +58,6 @@
   "message.ethermod.module_known": "已拥有此模块。",
   "message.ethermod.module_disabled": "此模块在本服务器上已关闭。",
   "message.ethermod.module_unlocked": "模块已解锁。打开K界面进行装备。",
-  "message.ethermod.zipline_first": "滑索:现在固定另一端。",
-  "message.ethermod.zipline_done": "滑索已拉好:瞄准它并按住系索即可滑行。",
   "message.ethermod.phoenix": "凤凰:浴火重生。10分钟后可再次触发。",
   "tooltip.ethermod.chip_install": "右键安装",
   "tooltip.ethermod.stage_next": "%s  ›  下一阶段:%s",

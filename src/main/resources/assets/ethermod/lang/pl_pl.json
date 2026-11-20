@@ -58,8 +58,6 @@
   "message.ethermod.module_known": "Moduł już znany.",
   "message.ethermod.module_disabled": "Ten moduł jest wyłączony na tym serwerze.",
   "message.ethermod.module_unlocked": "Moduł odblokowany. Otwórz K, aby go założyć.",
-  "message.ethermod.zipline_first": "Tyrolka: teraz zaczep drugi koniec.",
-  "message.ethermod.zipline_done": "Tyrolka napięta: wyceluj w nią i przytrzymaj Linę, aby zjechać.",
   "message.ethermod.phoenix": "Feniks: powrót z płomieni. Znów gotowy za 10 minut.",
   "tooltip.ethermod.chip_install": "Kliknij prawym, aby zainstalować",
   "tooltip.ethermod.stage_next": "%s  ›  następny: %s",

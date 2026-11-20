@@ -58,8 +58,6 @@
   "message.ethermod.module_known": "Modül zaten biliniyor.",
   "message.ethermod.module_disabled": "Bu modül bu sunucuda kapalı.",
   "message.ethermod.module_unlocked": "Modül açıldı. Takmak için K ekranını aç.",
-  "message.ethermod.zipline_first": "Zipline: şimdi diğer ucu bağla.",
-  "message.ethermod.zipline_done": "Zipline gerildi: ona nişan al ve sürmek için Halatı basılı tut.",
   "message.ethermod.phoenix": "Anka: alevlerden geri döndün. 10 dakika sonra yeniden hazır.",
   "tooltip.ethermod.chip_install": "Takmak için sağ tıkla",
   "tooltip.ethermod.stage_next": "%s  ›  sonraki: %s",

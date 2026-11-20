@@ -58,8 +58,6 @@
   "message.ethermod.module_known": "Module al bekend.",
   "message.ethermod.module_disabled": "Deze module staat uit op deze server.",
   "message.ethermod.module_unlocked": "Module ontgrendeld. Open K om hem uit te rusten.",
-  "message.ethermod.zipline_first": "Tokkelbaan: haak nu het andere uiteinde vast.",
-  "message.ethermod.zipline_done": "Tokkelbaan gespannen: richt erop en houd Lijn ingedrukt om te glijden.",
   "message.ethermod.phoenix": "Feniks: terug uit de vlammen. Over 10 minuten weer klaar.",
   "tooltip.ethermod.chip_install": "Rechtsklik om te installeren",
   "tooltip.ethermod.stage_next": "%s  ›  volgende: %s",
