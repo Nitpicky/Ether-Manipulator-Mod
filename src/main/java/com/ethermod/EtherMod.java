@@ -32,6 +32,9 @@ public class EtherMod {
 
         // Register network payloads via mod event bus
         modEventBus.addListener(ModEvents::onRegisterPayloads);
+        // parsed config lists are rebuilt after the server config loads or changes
+        modEventBus.addListener(net.neoforged.fml.event.config.ModConfigEvent.Loading.class, com.ethermod.config.ServerConfig::onConfig);
+        modEventBus.addListener(net.neoforged.fml.event.config.ModConfigEvent.Reloading.class, com.ethermod.config.ServerConfig::onConfig);
         modEventBus.addListener(com.ethermod.trait.TraitLines::onNewRegistry);
 
         // Register server-side game events (NeoForge bus)
