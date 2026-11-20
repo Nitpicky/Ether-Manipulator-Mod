@@ -144,6 +144,12 @@ public final class OrbTether {
             b.discard();
             return false;
         }
+        // putting the Manipulator away lets go of the hook (and of whatever it holds)
+        if (!b.isAnchor() && !Manipulator.isSummoned(sp)) {
+            unhookFx(b, (ServerLevel) b.level());
+            b.discard();
+            return false;
+        }
         ServerLevel sl = (ServerLevel) b.level();
         boolean held =
                 sp.isUsingItem()

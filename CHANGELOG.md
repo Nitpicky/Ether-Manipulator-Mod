@@ -22,6 +22,7 @@ next release's notes.
   unloads or they pass through a portal mid-pull.
 - Mass Driver: lifting a container could empty it if the lifted block failed to appear.
 - A jump held while logging out no longer counts as held on the next join.
+- Tether: putting the Ether Manipulator away now lets go of the hook.
 - Frost bridges no longer leave leftover data behind on long-running servers.
 
 ### Sounds and effects
