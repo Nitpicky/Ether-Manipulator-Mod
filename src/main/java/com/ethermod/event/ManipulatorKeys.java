@@ -68,6 +68,7 @@ public class ManipulatorKeys {
     /** Runs before vanilla handles keybinds this tick. */
     @SubscribeEvent
     public static void onClientTickPre(ClientTickEvent.Pre event) {
+        com.ethermod.manipulator.ManipulatorVeil.reset();
         Minecraft mc = Minecraft.getInstance();
         LocalPlayer player = mc.player;
         if (player == null) {

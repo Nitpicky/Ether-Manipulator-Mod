@@ -33,6 +33,14 @@ public final class ManipulatorVeil {
         else VEILED.set(previous);
     }
 
+    /**
+     * Drops any veil left on this thread. A throw inside a veiled call skips its close; this runs
+     * at the start of every server tick and client tick so such a veil never outlives the tick.
+     */
+    public static void reset() {
+        VEILED.remove();
+    }
+
     /** Whether {@code player}'s main hand currently reads as empty. */
     public static boolean veiled(Player player) {
         return VEILED.get() == player;

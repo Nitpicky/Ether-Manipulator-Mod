@@ -105,6 +105,11 @@ public class ModEvents {
     }
 
     @SubscribeEvent
+    public static void resetVeil(net.neoforged.neoforge.event.tick.ServerTickEvent.Pre event) {
+        com.ethermod.manipulator.ManipulatorVeil.reset();
+    }
+
+    @SubscribeEvent
     public static void onLevelTick(net.neoforged.neoforge.event.tick.LevelTickEvent.Post event) {
         if (event.getLevel() instanceof net.minecraft.server.level.ServerLevel sl)
             MiningDamageTracker.tick(sl);

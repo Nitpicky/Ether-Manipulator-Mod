@@ -27,4 +27,17 @@ public final class VirtualHandGuard {
             event.setCanceled(true);
         }
     }
+
+    /**
+     * A Manipulator item entity is never the player's Manipulator (that lives in its own slot): a
+     * copy split off the virtual hand by some other mod, or an old drop. Like the inventory copies
+     * EtherManipulatorItem#inventoryTick deletes, it never enters a server level.
+     */
+    @SubscribeEvent
+    public static void onStrayManipulatorDrop(
+            net.neoforged.neoforge.event.entity.EntityJoinLevelEvent event) {
+        if (!event.getLevel().isClientSide()
+                && event.getEntity() instanceof net.minecraft.world.entity.item.ItemEntity drop
+                && drop.getItem().getItem() instanceof EtherManipulatorItem) event.setCanceled(true);
+    }
 }
