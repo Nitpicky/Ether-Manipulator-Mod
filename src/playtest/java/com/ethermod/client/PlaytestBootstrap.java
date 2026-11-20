@@ -159,6 +159,9 @@ public final class PlaytestBootstrap {
                             run(s, "setblock " + x + " " + y + " " + (z - 5) + " copper_ore");
                             run(s, "tp @p " + (x + 0.5) + " " + y + " " + (z + 0.5) + " 180 10");
                             orbMode(p, com.ethermod.item.OrbMode.MASS); // Tectonic in slot 0
+                            // a tier only counts once the tiers before it are picked
+                            com.ethermod.trait.TraitBuild.setPick(Manipulator.stack(p), 0, 0, "tectonic.momentum");
+                            com.ethermod.trait.TraitBuild.setPick(Manipulator.stack(p), 0, 1, "tectonic.fortune");
                             com.ethermod.trait.TraitBuild.setPick(
                                     Manipulator.stack(p), 0, 2, "tectonic.vein_miner"); // brings Ore Sense
                             Manipulator.sync(p);
