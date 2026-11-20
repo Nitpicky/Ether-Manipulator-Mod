@@ -36,6 +36,8 @@ next release's notes.
   the Mass Driver is still kept.
 - Gale Step now only works while you are actually in the air.
 - Light beams no longer place light inside claims or protected areas you can't build in.
+- Mass Driver: the glow around held blocks now turns with them instead of staying square to the
+  world.
 - Frost bridges no longer leave leftover data behind on long-running servers.
 
 ### Sounds and effects

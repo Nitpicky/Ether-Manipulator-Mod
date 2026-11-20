@@ -120,10 +120,21 @@ final class ElementFx {
                     || ball.getOwner() != player
                     || ball.getCarried().isAir()) continue;
             Vec3 p = ball.getPosition(pt).subtract(cam);
-            BeamFx.cube(vc, m, p, 0.53f, r, g, b, 0.10f + 0.08f * br);
-            BeamFx.cube(vc, m, p, 0.56f, r, g, b, 0.05f * br);
+            // the shell turns exactly like the drawn block (BeamBallRenderer: yaw, then pitch)
+            var q = new org.joml.Quaternionf()
+                    .rotateY((float) Math.toRadians(ball.getYRot()))
+                    .rotateX((float) Math.toRadians(ball.getXRot()));
+            shell(vc, m, p, q, 0.53f, r, g, b, 0.10f + 0.08f * br);
+            shell(vc, m, p, q, 0.56f, r, g, b, 0.05f * br);
             if (ball.massOffset().equals(net.minecraft.core.BlockPos.ZERO))
                 BeamFx.prism(vc, m, nozzle.subtract(cam), p, BeamFx.PX * 0.2f, 0.785, r, g, b, 0.14f + 0.08f * br);
         }
+    }
+
+    private static void shell(VertexConsumer vc, Matrix4f m, Vec3 c, org.joml.Quaternionf q, float h, float r, float g, float b, float a) {
+        var x = q.transform(new org.joml.Vector3f(h, 0, 0));
+        var y = q.transform(new org.joml.Vector3f(0, h, 0));
+        var z = q.transform(new org.joml.Vector3f(0, 0, h));
+        BeamFx.box(vc, m, c, new Vec3(x.x, x.y, x.z), new Vec3(y.x, y.y, y.z), new Vec3(z.x, z.y, z.z), r, g, b, a);
     }
 }
