@@ -152,6 +152,7 @@ public final class StasisFx {
 
         @Override
         public void render(PoseStack pose, MultiBufferSource buf, int light, T e, float limb, float limbAmt, float pt, float age, float yaw, float pitch) {
+            if (HELD.isEmpty()) return; // nothing held: skip the lookup for every creature drawn
             float p = pulse(e, pt);
             if (p < 0) return;
             int a = (int) (255 * (0.25f + 0.35f * p));

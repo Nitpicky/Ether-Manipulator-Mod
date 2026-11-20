@@ -405,18 +405,26 @@ final class KTierPanel {
         g.disableScissor();
     }
 
+    /** What the texture holds now: a panel at rest is not uploaded again every frame. */
+    private int[] uploaded;
+
     void upload(GuiGraphics g, Raster r, int x, int y) {
         if (dynamic == null) {
             image = new NativeImage(146, 40, false);
             dynamic = new DynamicTexture(image);
             ui.mc.getTextureManager().register(texture, dynamic);
+            uploaded = null;
         }
-        for (int i = 0; i < r.pixels.length; i++) {
-            int c = r.pixels[i];
-            image.setPixelRGBA(
-                    i % 146, i / 146, abgr(c));
+        if (uploaded == null || !Arrays.equals(uploaded, r.pixels)) {
+            for (int i = 0; i < r.pixels.length; i++) {
+                int c = r.pixels[i];
+                image.setPixelRGBA(
+                        i % 146, i / 146, abgr(c));
+            }
+            dynamic.upload();
+            if (uploaded == null || uploaded.length != r.pixels.length) uploaded = r.pixels.clone();
+            else System.arraycopy(r.pixels, 0, uploaded, 0, uploaded.length);
         }
-        dynamic.upload();
         g.blit(texture, x, y, 0, 0, 146, 40, 146, 40);
     }
 
