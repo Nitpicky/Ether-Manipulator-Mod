@@ -184,7 +184,7 @@ public final class PlaytestBootstrap {
                                 orbMode(p, com.ethermod.item.OrbMode.LIGHT); // Photonic in slot 0
                                 Manipulator.setSummoned(p, true);
                             });
-            case 350 -> {
+            case 400 -> { // room built and chunks rebuilt on llvmpipe: give it time
                 BlockPos eye = BlockPos.containing(mc.player.getEyePosition());
                 double glow = PhotonicGlow.level(eye.getX() + 0.5, eye.getY() + 0.5, eye.getZ() + 0.5);
                 log(
@@ -194,15 +194,15 @@ public final class PlaytestBootstrap {
                                 + PhotonicGlow.sourceCount() + " sources)");
                 shot(mc, "07e_photonic_glow");
             }
-            case 352 -> com.ethermod.config.ClientConfig.setPhotonicDynamicLight(false);
-            case 368 -> {
+            case 402 -> com.ethermod.config.ClientConfig.setPhotonicDynamicLight(false);
+            case 470 -> {
                 log(
                         (PhotonicGlow.sourceCount() == 0 ? "PASS" : "FAIL")
                                 + " Photonic glow off: no light sources");
                 shot(mc, "07f_photonic_glow_off");
                 com.ethermod.config.ClientConfig.setPhotonicDynamicLight(true);
             }
-            case 370 -> mc.stop();
+            case 472 -> mc.stop();
             default -> {}
         }
     }
