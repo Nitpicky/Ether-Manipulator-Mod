@@ -310,9 +310,9 @@ public final class LeftClick {
         while (!todo.isEmpty() && cut.size() < 256) {
             BlockPos q = todo.poll();
             var state = sl.getBlockState(q);
-            // claims answer the real break event cutCrop's destroyBlock posts; no probe per
-            // planned crop (it would post a second, synthetic break for every one of them)
-            if (!ripe(state) || !com.ethermod.util.Protect.mayInteract(sl, p, q)) continue;
+            // probed here (not left to cutCrop's real break) so Overgrowth never spreads across a
+            // claim and green_thumb only counts crops this player may cut
+            if (!ripe(state) || !com.ethermod.util.Protect.may(sl, p, q)) continue;
             cut.add(q);
             if (overgrowth)
                 for (BlockPos n : BlockPos.betweenClosed(q.offset(-1, -1, -1), q.offset(1, 1, 1))) {
