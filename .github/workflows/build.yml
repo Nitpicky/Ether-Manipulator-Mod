@@ -51,7 +51,8 @@ jobs:
           git worktree add -q /tmp/pr origin/playtest-results
           cd /tmp/pr && git checkout -q -B playtest-results
           mkdir -p "port/$SHA" && cp /tmp/build.log "port/$SHA/build.log"
-          git add -A && git commit -qm "Port build log for $SHA" && git push -q origin playtest-results || true
+          git add -A && git commit -qm "Port build log for $SHA"
+          for i in 1 2 3 4 5; do git push -q origin playtest-results && break; git pull -q --rebase origin playtest-results; sleep $((i*3)); done
 
       - name: Upload mod jar
         uses: actions/upload-artifact@v6

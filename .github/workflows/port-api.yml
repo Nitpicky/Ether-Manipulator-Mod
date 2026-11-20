@@ -40,4 +40,5 @@ jobs:
           git config user.name "playtest-bot"; git config user.email "playtest-bot@users.noreply.github.com"
           git fetch -q origin playtest-results && git worktree add -q /tmp/pr origin/playtest-results
           cd /tmp/pr && git checkout -q -B playtest-results && mkdir -p port/api && cp /tmp/api.txt port/api/$SHA.txt
-          git add -A && git commit -qm "Port API lookup $SHA" && git push -q origin playtest-results
+          git add -A && git commit -qm "Port API lookup $SHA"
+          for i in 1 2 3 4 5; do git push -q origin playtest-results && break; git pull -q --rebase origin playtest-results; sleep $((i*3)); done
