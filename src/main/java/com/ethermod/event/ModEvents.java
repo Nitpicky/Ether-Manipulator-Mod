@@ -42,6 +42,10 @@ public class ModEvents {
         NeoForge.EVENT_BUS.register(RedesignCommands.class);
         NeoForge.EVENT_BUS.register(com.ethermod.trait.TraitEffects.class);
         NeoForge.EVENT_BUS.register(com.ethermod.trait.RedesignEffects.class);
+        NeoForge.EVENT_BUS.register(com.ethermod.trait.TankReload.class);
+        NeoForge.EVENT_BUS.register(com.ethermod.trait.VirtualHand.class);
+        NeoForge.EVENT_BUS.register(com.ethermod.trait.Stasis.class);
+        NeoForge.EVENT_BUS.register(com.ethermod.trait.Burning.class);
         NeoForge.EVENT_BUS.register(com.ethermod.trait.MovementPhysics.class);
         NeoForge.EVENT_BUS.register(com.ethermod.trait.GustMotion.class);
         NeoForge.EVENT_BUS.register(com.ethermod.advancement.SecretAdvancements.class);
