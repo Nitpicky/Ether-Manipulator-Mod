@@ -212,7 +212,7 @@ public final class RedesignEffects {
                         1,
                         Math.min(
                                 4,
-                                ev.getEntity().getPersistentData().getInt("mm_combat_pressure")));
+                                com.ethermod.util.MobMemory.peek(ev.getEntity()).getInt("mm_combat_pressure")));
         if (level <= 1) return;
         var extra = new ArrayList<net.minecraft.world.entity.item.ItemEntity>();
         for (var item : ev.getDrops())

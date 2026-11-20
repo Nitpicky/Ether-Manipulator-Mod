@@ -33,8 +33,8 @@ final class OrbMass {
     static void massHitEntity(BeamBallEntity b, Entity target, Vec3 at) {
         // one hit per creature per throw
         long now = b.level().getGameTime();
-        if (target.getPersistentData().getLong("mm_mass_hit") > now) return;
-        target.getPersistentData().putLong("mm_mass_hit", now + 10);
+        if (com.ethermod.util.MobMemory.peek(target).getLong("mm_mass_hit") > now) return;
+        com.ethermod.util.MobMemory.of(target).putLong("mm_mass_hit", now + 10);
         Vec3 v = b.getDeltaMovement();
         if (b.massGentle) {
             // Steady Hand doesn't fight: the block just drops off the creature

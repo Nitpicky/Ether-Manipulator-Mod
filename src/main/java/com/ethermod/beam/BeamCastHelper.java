@@ -162,7 +162,7 @@ public final class BeamCastHelper {
         if (target != null) {
             int combatLevel = state.trackTarget(target.getId(), interval, tool, level);
             player.getPersistentData().putInt("mm_beam_level", combatLevel);
-            target.getPersistentData().putInt("mm_combat_pressure", combatLevel);
+            com.ethermod.util.MobMemory.of(target).putInt("mm_combat_pressure", combatLevel);
             if (!strike) {
                 sync(player, state, combatLevel, false, List.of());
                 return targetPoint;
@@ -308,7 +308,7 @@ public final class BeamCastHelper {
         target.invulnerableTime = 0;
         target.setDeltaMovement(incomingVelocity);
         float dealt = Math.max(0, before - target.getHealth());
-        target.getPersistentData()
+        com.ethermod.util.MobMemory.of(target)
                 .putInt(
                         "mm_combat_pressure",
                         Math.max(1, player.getPersistentData().getInt("mm_beam_level")));

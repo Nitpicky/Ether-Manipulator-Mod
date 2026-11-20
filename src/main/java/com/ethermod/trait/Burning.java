@@ -32,7 +32,7 @@ public final class Burning {
         var st = Manipulator.stack(owner);
         boolean wasBurning = target.isOnFire();
         target.igniteForSeconds(seconds);
-        var d = target.getPersistentData();
+        var d = com.ethermod.util.MobMemory.of(target);
         d.putUUID("mm_burn_owner", owner.getUUID());
         d.putBoolean("mm_soul", Traits.has(st, "pyrotechnic.soulwake"));
         net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingEntityAndSelf(
@@ -51,16 +51,16 @@ public final class Burning {
                                     e -> e != target && Allegiance.enemy(owner, e))) {
                 track(e);
                 e.igniteForSeconds(seconds);
-                e.getPersistentData().putUUID("mm_burn_owner", owner.getUUID());
-                e.getPersistentData()
-                        .putBoolean("mm_soul", Traits.has(st, "pyrotechnic.soulwake"));
+                var ed = com.ethermod.util.MobMemory.of(e);
+                ed.putUUID("mm_burn_owner", owner.getUUID());
+                ed.putBoolean("mm_soul", Traits.has(st, "pyrotechnic.soulwake"));
             }
         }
     }
 
     public static void soulBurn(LivingEntity target, ServerPlayer owner, int seconds) {
         burn(target, owner, seconds, -1);
-        target.getPersistentData().putBoolean("mm_soul", true);
+        com.ethermod.util.MobMemory.of(target).putBoolean("mm_soul", true);
         net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingEntityAndSelf(
                 target,
                 new com.ethermod.network.payload.ModulePayloads.SoulFlame(target.getId(), true));
@@ -89,11 +89,32 @@ public final class Burning {
         }
     }
 
+    /**
+     * Burning soul fire: a Soul Blazeling's own soul flame (persistent, set by the entity) or a
+     * soul burn it is under right now (in memory).
+     */
+    public static boolean soul(net.minecraft.world.entity.Entity e) {
+        return com.ethermod.util.MobMemory.peek(e).getBoolean("mm_soul")
+                || e.getPersistentData().getBoolean("mm_soul");
+    }
+
+    /** The player whose fire this entity is burning in, or null. */
+    public static java.util.UUID burnOwner(net.minecraft.world.entity.Entity e) {
+        var d = com.ethermod.util.MobMemory.peek(e);
+        return d.hasUUID("mm_burn_owner") ? d.getUUID("mm_burn_owner") : null;
+    }
+
     @SubscribeEvent
     public static void loaded(net.neoforged.neoforge.event.entity.EntityJoinLevelEvent ev) {
+        if (ev.getLevel().isClientSide()) return;
+        // older versions saved burn state on every mob they set alight: tidy it away
+        com.ethermod.util.MobMemory.tidy(ev.getEntity());
         if (ev.getEntity() instanceof LivingEntity e
-                && (e.getPersistentData().hasUUID("mm_burn_owner")
-                        || e.getPersistentData().hasUUID("mm_summoner"))) track(e);
+                && !(e instanceof com.ethermod.entity.SoulBlazeling)
+                && !e.getPersistentData().hasUUID("mm_summoner"))
+            e.getPersistentData().remove("mm_soul");
+        if (ev.getEntity() instanceof LivingEntity e
+                && e.getPersistentData().hasUUID("mm_summoner")) track(e);
     }
 
     @SubscribeEvent
@@ -115,8 +136,9 @@ public final class Burning {
                         e,
                         new com.ethermod.network.payload.ModulePayloads.SoulFlame(
                                 e.getId(), false));
-                e.getPersistentData().remove("mm_soul");
-                e.getPersistentData().remove("mm_burn_owner");
+                var mem = com.ethermod.util.MobMemory.peek(e);
+                mem.remove("mm_soul");
+                mem.remove("mm_burn_owner");
                 continue;
             }
             var d = e.getPersistentData();
@@ -124,7 +146,7 @@ public final class Burning {
                 net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingEntityAndSelf(
                         e,
                         new com.ethermod.network.payload.ModulePayloads.SoulFlame(
-                                e.getId(), d.getBoolean("mm_soul")));
+                                e.getId(), soul(e)));
             if (d.hasUUID("mm_summoner")) {
                 if (now >= d.getLong("mm_summon_expires")) {
                     e.hurt(sl.damageSources().genericKill(), Float.MAX_VALUE);
@@ -156,13 +178,13 @@ public final class Burning {
     @SubscribeEvent
     public static void death(LivingDeathEvent ev) {
         var victim = ev.getEntity();
-        var d = victim.getPersistentData();
+        var burner = burnOwner(victim);
         if (!(victim.level() instanceof ServerLevel sl)
                 || !victim.isOnFire()
-                || !d.getBoolean("mm_soul")
-                || !d.hasUUID("mm_burn_owner")
-                || d.hasUUID("mm_summoner")) return;
-        var owner = sl.getServer().getPlayerList().getPlayer(d.getUUID("mm_burn_owner"));
+                || !soul(victim)
+                || burner == null
+                || victim.getPersistentData().hasUUID("mm_summoner")) return;
+        var owner = sl.getServer().getPlayerList().getPlayer(burner);
         if (owner == null
                 || !com.ethermod.config.ServerConfig.blazelings()
                 || !Traits.has(Manipulator.stack(owner), "pyrotechnic.soulwake")

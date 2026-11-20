@@ -322,9 +322,9 @@ public final class MassDriver {
             for (var mob :
                     sl.getEntitiesOfClass(
                             LivingEntity.class, box.inflate(.1), e -> com.ethermod.trait.Allegiance.enemy(p, e))) {
-                if (mob.getPersistentData().getLong("mm_mass_hit") > now) continue;
+                if (com.ethermod.util.MobMemory.peek(mob).getLong("mm_mass_hit") > now) continue;
                 if (speed < .08) continue;
-                mob.getPersistentData().putLong("mm_mass_hit", now + 8);
+                com.ethermod.util.MobMemory.of(mob).putLong("mm_mass_hit", now + 8);
                 float hard = Math.max(1, q.entity.getCarried().getDestroySpeed(sl, q.entity.blockPosition()));
                 mob.hurt(p.damageSources().playerAttack(p), (float) Math.min(16, (2 + hard * .5) * (1 + Math.min(1.4, speed) * .5)));
                 com.ethermod.trait.Stasis.impulse(mob, v.scale(.8).add(0, .25, 0));

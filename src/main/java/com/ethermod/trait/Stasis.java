@@ -44,7 +44,7 @@ public final class Stasis {
     public static void stasis(LivingEntity e, int ticks) {
         if (!(e.level() instanceof ServerLevel sl)
                 || FROZEN.containsKey(e.getUUID())
-                || e.getPersistentData().getLong("mm_stasis_cooldown") > sl.getGameTime()) return;
+                || com.ethermod.util.MobMemory.peek(e).getLong("mm_stasis_cooldown") > sl.getGameTime()) return;
         FROZEN.put(
                 e.getUUID(),
                 new Frozen(
@@ -54,7 +54,7 @@ public final class Stasis {
                         sl.getGameTime() + ticks,
                         e.isNoGravity(),
                         e instanceof Mob m && m.isNoAi()));
-        e.getPersistentData().putDouble("mm_stasis_force", 0);
+        com.ethermod.util.MobMemory.of(e).putDouble("mm_stasis_force", 0);
         var restore = new net.minecraft.nbt.CompoundTag();
         restore.putBoolean("gravity", e.isNoGravity());
         restore.putBoolean("ai", e instanceof Mob m0 && m0.isNoAi());
@@ -73,7 +73,7 @@ public final class Stasis {
 
     /** The Stasis Grenade's burst: adds its strength to the stored push, keeping the last hit's aim. */
     public static void burstInto(LivingEntity e, Vec3 push) {
-        var d = e.getPersistentData();
+        var d = com.ethermod.util.MobMemory.of(e);
         if (!inStasis(e)) {
             impulse(e, push);
             return;
@@ -94,11 +94,11 @@ public final class Stasis {
     }
 
     private static void let(LivingEntity e, Frozen f, long now) {
-        var d = e.getPersistentData();
+        var d = com.ethermod.util.MobMemory.of(e);
         var v = launch(e, false);
         e.setNoGravity(f.noGravity());
         if (e instanceof Mob m) m.setNoAi(f.noAi());
-        d.remove(STASIS_RESTORE);
+        e.getPersistentData().remove(STASIS_RESTORE);
         e.setDeltaMovement(v);
         e.hurtMarked = true;
         d.putLong("mm_stasis_cooldown", now + 40);
@@ -126,7 +126,7 @@ public final class Stasis {
 
     private static void store(LivingEntity e, Vec3 force) {
         if (force.lengthSqr() < 1e-6) return;
-        var d = e.getPersistentData();
+        var d = com.ethermod.util.MobMemory.of(e);
         d.putDouble(
                 "mm_stasis_force",
                 Math.min(STASIS_MAX, d.getDouble("mm_stasis_force") + force.length() * STASIS_GAIN));
@@ -143,7 +143,7 @@ public final class Stasis {
      * arrow before it happens.
      */
     public static void expectBurst(LivingEntity e, Vec3 push) {
-        var d = e.getPersistentData();
+        var d = com.ethermod.util.MobMemory.of(e);
         d.putDouble("mm_stasis_ex", push.x);
         d.putDouble("mm_stasis_ey", push.y);
         d.putDouble("mm_stasis_ez", push.z);
@@ -157,7 +157,7 @@ public final class Stasis {
      * release both use this, so the preview is the launch.
      */
     private static Vec3 launch(LivingEntity e, boolean withBurst) {
-        var d = e.getPersistentData();
+        var d = com.ethermod.util.MobMemory.peek(e);
         var burst = withBurst
                 ? new Vec3(d.getDouble("mm_stasis_ex"), d.getDouble("mm_stasis_ey"), d.getDouble("mm_stasis_ez"))
                 : Vec3.ZERO;

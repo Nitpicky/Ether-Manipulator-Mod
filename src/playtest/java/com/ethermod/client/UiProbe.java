@@ -417,11 +417,11 @@ public final class UiProbe {
                                         zombie, new net.minecraft.world.phys.Vec3(0, 0, 2));
                                 check(
                                         "Stasis accumulates force",
-                                        zombie.getPersistentData().getDouble("mm_stasis_force")
+                                        com.ethermod.util.MobMemory.peek(zombie).getDouble("mm_stasis_force")
                                                 == Stasis.STASIS_MAX);
                                 check(
                                         "Stasis last impulse sets direction",
-                                        zombie.getPersistentData().getDouble("mm_stasis_z") == 1);
+                                        com.ethermod.util.MobMemory.peek(zombie).getDouble("mm_stasis_z") == 1);
                                 var decoy =
                                         com.ethermod.registry.ModEntities.LIGHT_DECOY
                                                 .get()
@@ -673,7 +673,7 @@ public final class UiProbe {
                                                 OrbMode.LIGHT);
                                 light.configure(st);
                                 light.setPos(p.position());
-                                p.getPersistentData().remove("mm_radiance_next");
+                                com.ethermod.util.MobMemory.of(p).remove("mm_radiance_next");
                                 p.setHealth(10);
                                 com.ethermod.beam.PhotonicEffects.flight(light, st);
                                 float healed = p.getHealth();
@@ -744,15 +744,11 @@ public final class UiProbe {
                                             boltTarget.getHealth() < 20
                                                     && boltTarget.getHealth() > 14
                                                     && boltTarget.isOnFire()
-                                                    && boltTarget
-                                                            .getPersistentData()
-                                                            .getBoolean("mm_soul")
+                                                    && com.ethermod.trait.Burning.soul(boltTarget)
                                                     && p.getUUID()
                                                             .equals(
-                                                                    boltTarget
-                                                                            .getPersistentData()
-                                                                            .getUUID(
-                                                                                    "mm_burn_owner")));
+                                                                    com.ethermod.trait.Burning.burnOwner(
+                                                                            boltTarget)));
                                     boltTarget.invulnerableTime = 0;
                                     boltTarget.setHealth(1);
                                     var lethal =
@@ -841,11 +837,9 @@ public final class UiProbe {
                                 check(
                                         "Placed soul fire attributes burns to player",
                                         touching.isOnFire()
-                                                && touching.getPersistentData()
-                                                        .getBoolean("mm_soul")
-                                                && touching.getPersistentData()
-                                                        .getUUID("mm_burn_owner")
-                                                        .equals(p.getUUID()));
+                                                && com.ethermod.trait.Burning.soul(touching)
+                                                && p.getUUID()
+                                                        .equals(com.ethermod.trait.Burning.burnOwner(touching)));
                                 var lava = ground.offset(3, 0, 0);
                                 sl.setBlockAndUpdate(
                                         lava,
@@ -859,8 +853,7 @@ public final class UiProbe {
                                 check(
                                         "Player lava inflicts owned soul burn",
                                         touching.isOnFire()
-                                                && touching.getPersistentData()
-                                                        .getBoolean("mm_soul"));
+                                                && com.ethermod.trait.Burning.soul(touching));
                                 touching.discard();
                                 var ember =
                                         new com.ethermod.beam.BeamBallEntity(

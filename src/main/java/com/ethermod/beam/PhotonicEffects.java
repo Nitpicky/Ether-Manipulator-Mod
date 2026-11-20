@@ -143,7 +143,7 @@ public final class PhotonicEffects {
             if (Traits.has(st, "photonic.radiance")
                     && friend
                     && e.distanceToSqr(at) <= 16 * power * power) {
-                var data = e.getPersistentData();
+                var data = com.ethermod.util.MobMemory.of(e);
                 boolean fresh = data.getLong("mm_radiance_next") <= now;
                 int prior = fresh ? 0 : data.getInt("mm_radiance_power");
                 if (power > prior) {

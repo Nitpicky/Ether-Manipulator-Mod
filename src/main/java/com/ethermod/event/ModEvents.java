@@ -266,6 +266,7 @@ public class ModEvents {
         com.ethermod.beam.DryFire.clear();
         com.ethermod.advancement.SecretAdvancements.clear();
         com.ethermod.trait.MovementPhysics.clearInputs();
+        com.ethermod.util.MobMemory.clear();
     }
 
     public static void onRegisterPayloads(RegisterPayloadHandlersEvent event) {
