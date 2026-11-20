@@ -119,7 +119,8 @@ public final class PlaytestBootstrap {
     /**
      * -PcloudTest: after the beam is on (combat on the pig), stand above the cloud layer and fire
      * down past it, so every cloud on screen is behind the beam; once with Fancy graphics, once
-     * with Fabulous. Nothing may cover the beam.
+     * with Fabulous. Nothing may cover the beam. Then Ore Sense, back on the ground before the
+     * ore wall, with more ores buried behind it.
      */
     private static void cloudStep(Minecraft mc) {
         switch (t) {
@@ -138,7 +139,36 @@ public final class PlaytestBootstrap {
                 mc.levelRenderer.allChanged();
             }
             case 290 -> shot(mc, "07c_clouds_fabulous");
-            case 292 -> mc.stop();
+            // ---- Ore Sense (Tectonic grandmaster): ores near the player glow through the
+            // stone. It draws with a lightning-style render type that shader packs may drop,
+            // so the shader run shows whether it survives
+            case 292 -> {
+                mc.options.keyAttack.setDown(false);
+                mc.options.graphicsMode().set(net.minecraft.client.GraphicsStatus.FANCY);
+                mc.levelRenderer.allChanged();
+                server(
+                        mc,
+                        (s, p) -> {
+                            int x = base.getX(), y = base.getY(), z = base.getZ();
+                            // behind the ore wall (z - 4): two more layers of stone, ores
+                            // buried in the back one where nothing shows them but Ore Sense
+                            run(s, "fill " + (x - 3) + " " + y + " " + (z - 6) + " " + (x + 3) + " " + (y + 2) + " " + (z - 5) + " stone");
+                            run(s, "setblock " + (x - 2) + " " + y + " " + (z - 6) + " diamond_ore");
+                            run(s, "setblock " + x + " " + (y + 1) + " " + (z - 6) + " gold_ore");
+                            run(s, "setblock " + (x + 2) + " " + (y + 2) + " " + (z - 6) + " redstone_ore");
+                            run(s, "setblock " + x + " " + y + " " + (z - 5) + " copper_ore");
+                            run(s, "tp @p " + (x + 0.5) + " " + y + " " + (z + 0.5) + " 180 10");
+                            orbMode(p, com.ethermod.item.OrbMode.MASS); // Tectonic in slot 0
+                            com.ethermod.trait.TraitBuild.setPick(
+                                    Manipulator.stack(p), 0, 2, "tectonic.vein_miner"); // brings Ore Sense
+                            Manipulator.sync(p);
+                            log(
+                                    (com.ethermod.trait.Traits.has(Manipulator.stack(p), "tectonic.ore_sense") ? "PASS" : "FAIL")
+                                            + " ore sense: tectonic.ore_sense active for the shot");
+                        });
+            }
+            case 330 -> shot(mc, "07d_ore_sense");
+            case 332 -> mc.stop();
             default -> {}
         }
     }
