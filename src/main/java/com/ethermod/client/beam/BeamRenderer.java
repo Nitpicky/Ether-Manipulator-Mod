@@ -132,7 +132,7 @@ public final class BeamRenderer {
             nozzle = nb[0];
             barrel = nb[1];
         } else {
-            nozzle = approximateMuzzle(player, pt);
+            nozzle = BeamCurve.approximateMuzzle(player, pt);
             barrel = player.getViewVector(pt);
         }
 
@@ -270,7 +270,7 @@ public final class BeamRenderer {
             float heldTicks = gameTime - e.getValue() + pt;
             int lvl = RemoteBeams.level(p.getId());
             Vec3[] nb = Muzzle.resolve(p.getId(), false, proj, view, camPos);
-            Vec3 fromW = nb != null ? nb[0] : approximateMuzzle(p, pt);
+            Vec3 fromW = nb != null ? nb[0] : BeamCurve.approximateMuzzle(p, pt);
             boolean hitSomething = hit.getType() != HitResult.Type.MISS;
             if (com.ethermod.item.OrbMode.get(held) == com.ethermod.item.OrbMode.LIGHT) {
                 lightBeacon(mc, mc.renderBuffers().bufferSource(), m, camPos, fromW, toW, Math.min(1f, heldTicks / 2.5f), time, color);
