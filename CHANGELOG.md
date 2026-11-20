@@ -23,6 +23,13 @@ next release's notes.
 - Mass Driver: lifting a container could empty it if the lifted block failed to appear.
 - A jump held while logging out no longer counts as held on the next join.
 - Tether: putting the Ether Manipulator away now lets go of the hook.
+- Gem guarantee: the gem promised in the first chest of each structure is now only used up when
+  a player opens the chest. Hopper minecarts, machines and commands no longer take it.
+- Orbs in flight are no longer saved half set up when the world closes. A block held or thrown by
+  the Mass Driver is still kept.
+- Gale Step now only works while you are actually in the air.
+- Light beams and the Photonic head light no longer place light inside claims or protected areas
+  you can't build in.
 - Frost bridges no longer leave leftover data behind on long-running servers.
 
 ### Sounds and effects
@@ -33,12 +40,21 @@ next release's notes.
 - Growth pollen cloud: a soft pop as plants grow under it, once a second at most.
 
 ### Compatibility
+- Mobs you fight no longer keep leftover Ether Manipulator data in their saves, and old leftover
+  data is cleaned up when they load. Mob-capture and mob-copy mods see clean mobs.
+- Camera mods that replace the third-person camera no longer switch off the gravity camera turn.
+- The Stasis tint on held creatures now shows properly with shader packs.
+- Resource pack reloads (F3+T) now update coloured Manipulator bodies and the K screen.
+- The mod list now shows the mod's logo.
 - Claim and protection checks no longer post extra fake block-break events while the beam rests
   on a block, while the Mass Driver lifts, or while a sweep or harvest is planned. Grief-logger,
   quest and stats mods see far fewer phantom breaks. The `respect_protection` server config
   comment explains this.
 
 ### Under the hood
+- Less network traffic from Stasis Grenades, less work per frame for the HUD, the K screen
+  and effects, and a hard limit on how many effects can be drawn at once.
+- Client-only code is fully separated from server code, and the largest files were split up.
 - Large parts of the code were reorganised into smaller pieces for stability and easier fixes.
   No gameplay changes.
 

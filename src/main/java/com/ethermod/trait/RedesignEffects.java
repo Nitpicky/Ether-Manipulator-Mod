@@ -95,10 +95,23 @@ public final class RedesignEffects {
                 && (p.isInLava() || touchesFire(p))) p.heal(1f);
         if (now % 10 == 0 && Traits.hasLine(st, Traits.PHOTONIC) && !p.isSpectator()) {
             var at = p.blockPosition().above();
-            if (p.serverLevel().hasChunkAt(at)
-                    && com.ethermod.util.Protect.may(p.serverLevel(), p, at))
+            if (p.serverLevel().hasChunkAt(at) && headLightAllowed(p, at))
                 TempLights.tempLight(p.serverLevel(), at, 10, 15);
         }
+    }
+
+    /**
+     * The Photonic head light asks the claim check only when the light moves to a new block, so
+     * logging and reward mods don't see a probe every 10 ticks per player standing still.
+     */
+    private static final java.util.Map<ServerPlayer, long[]> HEAD_LIGHT = new java.util.WeakHashMap<>();
+
+    private static boolean headLightAllowed(ServerPlayer p, BlockPos at) {
+        long[] seen = HEAD_LIGHT.get(p);
+        if (seen != null && seen[0] == at.asLong()) return seen[1] != 0;
+        boolean ok = com.ethermod.util.Protect.may(p.serverLevel(), p, at);
+        HEAD_LIGHT.put(p, new long[] {at.asLong(), ok ? 1 : 0});
+        return ok;
     }
 
     private static boolean touchesFire(Entity p) {
