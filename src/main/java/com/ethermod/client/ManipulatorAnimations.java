@@ -213,6 +213,11 @@ public final class ManipulatorAnimations {
 
     private static final Map<Integer, Track> TRACKS = new HashMap<>();
 
+    /** Level change: tracks are keyed by entity id, which means nothing in the next world. */
+    public static void clearCaches() {
+        TRACKS.clear();
+    }
+
     private static Track track(Player p) {
         return TRACKS.computeIfAbsent(p.getId(), id -> new Track());
     }

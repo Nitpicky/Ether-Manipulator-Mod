@@ -32,5 +32,6 @@ public final class ClientCacheReset {
         BlockGlow.clearCaches();
         BeamRenderer.clearCaches();
         Muzzle.clearCaches();
+        ManipulatorAnimations.clearCaches();
     }
 }
