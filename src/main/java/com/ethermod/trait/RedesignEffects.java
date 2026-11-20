@@ -95,7 +95,9 @@ public final class RedesignEffects {
                 && (p.isInLava() || touchesFire(p))) p.heal(1f);
         if (now % 10 == 0 && Traits.hasLine(st, Traits.PHOTONIC) && !p.isSpectator()) {
             var at = p.blockPosition().above();
-            if (p.serverLevel().hasChunkAt(at)) TempLights.tempLight(p.serverLevel(), at, 10, 15);
+            if (p.serverLevel().hasChunkAt(at)
+                    && com.ethermod.util.Protect.may(p.serverLevel(), p, at))
+                TempLights.tempLight(p.serverLevel(), at, 10, 15);
         }
     }
 

@@ -67,7 +67,9 @@ public final class PhotonicEffects {
                 if (p.serverLevel().hasChunkAt(spot) && com.ethermod.util.Protect.may(p.serverLevel(), p, spot))
                     TempLights.tempLight(p.serverLevel(), spot, 15, 80);
             }
-            TempLights.tempLight(p.serverLevel(), BlockPos.containing(at), 15, 80);
+            var centre = BlockPos.containing(at);
+            if (com.ethermod.util.Protect.may(p.serverLevel(), p, centre))
+                TempLights.tempLight(p.serverLevel(), centre, 15, 80);
             p.serverLevel().sendParticles(ParticleTypes.FLASH, at.x, at.y, at.z, 1, 0, 0, 0, 0);
         }
     }

@@ -253,8 +253,9 @@ public final class LeftClick {
         now.forEach(
                 (q, level) -> {
                     var was = sl.getBlockState(q);
-                    // only light air (or our own light): never touch someone else's light block
-                    if (was.isAir()
+                    // only light air (or our own light): never touch someone else's light block,
+                    // and never light up a spot the player may not build at (claims)
+                    if (was.isAir() && com.ethermod.util.Protect.may(sl, p, q)
                             || before.contains(q)
                                     && was.is(net.minecraft.world.level.block.Blocks.LIGHT)) {
                         TempLights.tempLight(sl, q, level, 20);
