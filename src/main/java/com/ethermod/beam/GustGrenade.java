@@ -44,7 +44,7 @@ public final class GustGrenade {
     /** The fuse once it sticks to a creature: the Stasis hold, long enough for a few hits. */
     public static final int STASIS_FUSE = 60;
 
-    /** A grenade lying still is re-sent to clients this often, in ticks (they drop it after 10). */
+    /** A grenade lying still is re-sent to clients this often, in ticks (they drop it after 20). */
     private static final int RESEND = 5;
     public static final double RADIUS = 3;
     public static final float DAMAGE = 4;

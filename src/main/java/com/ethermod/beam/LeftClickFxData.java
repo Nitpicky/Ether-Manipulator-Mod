@@ -70,7 +70,9 @@ public final class LeftClickFxData {
     /** Client tick: drop finished effects. */
     public static void tick(long gameTime) {
         clientTime = gameTime;
-        GRENADES.values().removeIf(g -> gameTime - g.seen > 10);
+        // in flight a grenade is sent every tick; lying still only every few (GustGrenade.RESEND),
+        // so it gets more slack before it counts as lost (a laggy server sends less often)
+        GRENADES.values().removeIf(g -> gameTime - g.seen > (g.fuse >= 0 ? 20 : 10));
         // a grenade lying still is only re-sent every few ticks (GustGrenade.RESEND): hold it in
         // place and count its fuse down here in between
         for (Grenade g : GRENADES.values()) {

@@ -39,13 +39,19 @@ public final class MobMemory {
         "mm_stasis_ez"
     };
 
-    /** The entity's scratch data, created on first use. Server side only. */
+    /**
+     * The entity's scratch data, created on first use. Server side only: a client entity gets a
+     * throwaway tag (in singleplayer it would otherwise match the server entity, which has the
+     * same id, and share its tag across threads).
+     */
     public static CompoundTag of(Entity e) {
+        if (e.level().isClientSide()) return new CompoundTag();
         return DATA.computeIfAbsent(e, k -> new CompoundTag());
     }
 
     /** The entity's scratch data for reading only: an empty tag when it has none. */
     public static CompoundTag peek(Entity e) {
+        if (e.level().isClientSide()) return new CompoundTag();
         CompoundTag t = DATA.get(e);
         return t != null ? t : new CompoundTag();
     }
@@ -54,8 +60,13 @@ public final class MobMemory {
         DATA.remove(e);
     }
 
-    /** Removes the transient keys older versions saved on the entity. */
+    /**
+     * Removes the transient keys older versions saved on the entity. Living entities only:
+     * getPersistentData() creates the tag, and an empty one would then be saved with every item,
+     * arrow and XP orb.
+     */
     public static void tidy(Entity e) {
+        if (!(e instanceof net.minecraft.world.entity.LivingEntity)) return;
         CompoundTag d = e.getPersistentData();
         if (d.isEmpty()) return;
         for (String k : OLD_KEYS) d.remove(k);

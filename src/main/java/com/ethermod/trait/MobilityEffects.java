@@ -61,7 +61,9 @@ public final class MobilityEffects {
     public static void airJump(ServerPlayer sp) {
         if (!Traits.hasLine(Manipulator.stack(sp), Traits.PNEUMATIC)) return;
         // the client says it jumped in mid-air: only believe it while the player really is in
-        // the air (not standing, swimming, climbing, flying or riding)
+        // the air (not standing, swimming, climbing, flying or riding). No block-support test:
+        // the client allows a jump a hair above the ground (not yet onGround), and refusing it
+        // there would leave that landing's fall damage in place
         if (sp.onGround()
                 || sp.isInWater()
                 || sp.isInLava()
@@ -69,8 +71,7 @@ public final class MobilityEffects {
                 || sp.isPassenger()
                 || sp.isFallFlying()
                 || sp.getAbilities().flying
-                || sp.isSpectator()
-                || MovementPhysics.hasRealSupport(sp)) return;
+                || sp.isSpectator()) return;
         long now = sp.level().getGameTime();
         if (sp.getPersistentData().getBoolean("mm_airjump_used")) return;
         if (now - sp.getPersistentData().getLong(AIR_JUMP) < 8) return;
