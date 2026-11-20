@@ -1030,6 +1030,58 @@ public final class PlaytestBootstrap {
                                                             : "FAIL")
                                                     + " mass driver: right click threw the"
                                                     + " carried stone"));
+            // Zipline: two sneaking hooks string a rope, right click aimed at it rides it
+            case 1215 ->
+                    server(
+                            mc,
+                            (s, p) -> {
+                                int bx = base.getX() + 90, y = base.getY(), bz = base.getZ();
+                                run(s, "fill " + (bx - 10) + " " + (y - 1) + " " + (bz - 3) + " " + (bx + 10) + " " + (y - 1) + " " + (bz + 9) + " stone");
+                                run(s, "fill " + (bx - 10) + " " + y + " " + (bz - 3) + " " + (bx + 10) + " " + (y + 9) + " " + (bz + 9) + " air");
+                                run(s, "setblock " + (bx - 7) + " " + (y + 5) + " " + (bz + 6) + " stone");
+                                run(s, "setblock " + (bx + 7) + " " + (y + 5) + " " + (bz + 6) + " stone");
+                                run(s, "tp @p " + bx + ".5 " + y + " " + bz + ".5 0 0");
+                                orbMode(p, com.ethermod.item.OrbMode.TETHER);
+                                var mm = Manipulator.stack(p);
+                                com.ethermod.trait.TraitBuild.setPick(mm, 0, 0, "gravitic.blink");
+                                com.ethermod.trait.TraitBuild.setPick(mm, 0, 1, "gravitic.zipline");
+                                Manipulator.sync(p);
+                                zipBase = new BlockPos(bx, y, bz);
+                            });
+            case 1220 -> {
+                opts.keyShift.setDown(true);
+                aimAt(mc, zipBase.getX() - 6.5, zipBase.getY() + 5.5, zipBase.getZ() + 6.5);
+            }
+            case 1222 -> opts.keyAttack.setDown(true);
+            case 1224 -> opts.keyAttack.setDown(false);
+            case 1240 -> {
+                logZip(mc, "after the first sneaking hook");
+                aimAt(mc, zipBase.getX() + 7.5, zipBase.getY() + 5.5, zipBase.getZ() + 6.5);
+            }
+            case 1242 -> opts.keyAttack.setDown(true);
+            case 1244 -> opts.keyAttack.setDown(false);
+            case 1262 -> {
+                logZip(mc, "after the second sneaking hook");
+                opts.keyShift.setDown(false);
+            }
+            case 1266 -> {
+                aimAt(mc, zipBase.getX() + 0.5, zipBase.getY() + 5.5, zipBase.getZ() + 6.5);
+                startY = mc.player.getY();
+                opts.keyUse.setDown(true);
+            }
+            case 1270 -> logZip(mc, "right click on the rope");
+            case 1286 -> logZip(mc, "while riding");
+            case 1290 -> {
+                boolean riding = zipRiding;
+                log(
+                        (riding && mc.player.getY() > startY + 1.5 ? "PASS" : "FAIL")
+                                + " zipline: right click aimed at the rope rides it (riding="
+                                + riding
+                                + ", rose "
+                                + String.format("%.1f", mc.player.getY() - startY)
+                                + " blocks)");
+                opts.keyUse.setDown(false);
+            }
             // (Mechatronic Golem checks shelved with the Module, see docs/MECHATRONIC.md)
             case 1447 -> server(mc, (s, p) -> {
                 checkGemLoot(s, p);
@@ -1278,6 +1330,46 @@ public final class PlaytestBootstrap {
     }
 
     private static double startY;
+    private static BlockPos zipBase = BlockPos.ZERO;
+    private static volatile boolean zipRiding;
+
+    private static void aimAt(Minecraft mc, double x, double y, double z) {
+        mc.player.lookAt(
+                net.minecraft.commands.arguments.EntityAnchorArgument.Anchor.EYES,
+                new net.minecraft.world.phys.Vec3(x, y, z));
+    }
+
+    /** Logs the player's Zipline anchors and hook (server side). */
+    private static void logZip(Minecraft mc, String when) {
+        server(
+                mc,
+                (s, p) -> {
+                    var list =
+                            p.serverLevel()
+                                    .getEntitiesOfClass(
+                                            com.ethermod.beam.BeamBallEntity.class,
+                                            p.getBoundingBox().inflate(40),
+                                            e -> e.getMode() == com.ethermod.item.OrbMode.TETHER);
+                    StringBuilder sb = new StringBuilder("zipline " + when + ":");
+                    for (var e : list)
+                        sb.append(" [anchor=")
+                                .append(e.isAnchor())
+                                .append(" partner=")
+                                .append(e.getPartnerId())
+                                .append(" stuck=")
+                                .append(e.isStuck())
+                                .append(" at ")
+                                .append(e.blockPosition().toShortString())
+                                .append("]");
+                    var hook = com.ethermod.beam.OrbTether.activeHook(p);
+                    zipRiding = com.ethermod.trait.Ziplines.isRiding(p);
+                    sb.append(" hook=").append(hook == null ? "none" : hook.debugTether())
+                            .append(" riding=").append(zipRiding)
+                            .append(" using=").append(p.isUsingItem())
+                            .append(" crouch=").append(p.isShiftKeyDown());
+                    log(sb.toString());
+                });
+    }
     private static int bursts;
 
     private static int harvested;
