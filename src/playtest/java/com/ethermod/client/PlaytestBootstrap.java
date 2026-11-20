@@ -120,7 +120,7 @@ public final class PlaytestBootstrap {
      * -PcloudTest: after the beam is on (combat on the pig), stand above the cloud layer and fire
      * down past it, so every cloud on screen is behind the beam; once with Fancy graphics, once
      * with Fabulous. Nothing may cover the beam. Then Ore Sense, back on the ground before the
-     * ore wall, with more ores buried behind it.
+     * ore wall, with more ores buried behind it. Then the Photonic glow in a dark room, on and off.
      */
     private static void cloudStep(Minecraft mc) {
         switch (t) {
@@ -171,7 +171,38 @@ public final class PlaytestBootstrap {
                         });
             }
             case 330 -> shot(mc, "07d_ore_sense");
-            case 332 -> mc.stop();
+            // ---- Photonic glow (client-side dynamic light): at midnight in a closed stone room,
+            // the only light is the glow around the player; then the same view with it off
+            case 332 ->
+                    server(
+                            mc,
+                            (s, p) -> {
+                                int x = base.getX() + 30, y = base.getY(), z = base.getZ();
+                                run(s, "fill " + x + " " + (y - 1) + " " + z + " " + (x + 8) + " " + (y + 5) + " " + (z + 8) + " stone hollow");
+                                run(s, "time set 18000");
+                                run(s, "tp @p " + (x + 4.5) + " " + y + " " + (z + 4.5) + " 180 25");
+                                orbMode(p, com.ethermod.item.OrbMode.LIGHT); // Photonic in slot 0
+                                Manipulator.setSummoned(p, true);
+                            });
+            case 350 -> {
+                BlockPos eye = BlockPos.containing(mc.player.getEyePosition());
+                double glow = PhotonicGlow.level(eye.getX() + 0.5, eye.getY() + 0.5, eye.getZ() + 0.5);
+                log(
+                        (glow >= 13 ? "PASS" : "FAIL")
+                                + " Photonic glow in the dark room: "
+                                + String.format("%.1f", glow) + " at the eyes ("
+                                + PhotonicGlow.sourceCount() + " sources)");
+                shot(mc, "07e_photonic_glow");
+            }
+            case 352 -> com.ethermod.config.ClientConfig.setPhotonicDynamicLight(false);
+            case 368 -> {
+                log(
+                        (PhotonicGlow.sourceCount() == 0 ? "PASS" : "FAIL")
+                                + " Photonic glow off: no light sources");
+                shot(mc, "07f_photonic_glow_off");
+                com.ethermod.config.ClientConfig.setPhotonicDynamicLight(true);
+            }
+            case 370 -> mc.stop();
             default -> {}
         }
     }

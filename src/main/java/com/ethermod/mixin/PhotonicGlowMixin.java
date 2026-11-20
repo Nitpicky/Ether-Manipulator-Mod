@@ -13,8 +13,10 @@ import org.spongepowered.asm.mixin.injection.At;
 
 /**
  * The Photonic glow on blocks: the light the terrain, block entities and particles are drawn with
- * gets its block part raised to the glow there (client.PhotonicGlow). Sodium and Embeddium read
- * their terrain light through this method too. Cosmetic: skipped if it cannot apply.
+ * gets its block part raised to the glow there (client.PhotonicGlow). Sodium 0.6 for 1.21.1
+ * reads its terrain light through this method too (LightDataAccess#compute calls
+ * LevelRenderer.getLightColor(level, state, pos) for every non-emissive block that is not a full
+ * opaque cube), so it needs no Sodium-specific mixin. Cosmetic: skipped if it cannot apply.
  */
 @Mixin(LevelRenderer.class)
 public abstract class PhotonicGlowMixin {

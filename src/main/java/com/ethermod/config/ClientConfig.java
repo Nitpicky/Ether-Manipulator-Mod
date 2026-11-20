@@ -76,6 +76,8 @@ public final class ClientConfig {
     public static boolean arcs() { return or(ARCS::get, true); }
     public static boolean minedGlow() { return or(GLOW::get, true); }
     public static boolean photonicDynamicLight() { return or(PHOTONIC_GLOW::get, true); }
+    /** Playtest: switches the Photonic glow (in memory, as the config screen would). */
+    public static void setPhotonicDynamicLight(boolean on) { if (SPEC.isLoaded()) PHOTONIC_GLOW.set(on); }
     public static boolean simpleOtherBeams() { return or(OTHER_DETAIL::get, Detail.FULL) == Detail.SIMPLE; }
     public static boolean forceSimpleShaders() { return or(SHADER::get, ShaderMode.AUTO) == ShaderMode.SIMPLE; }
     public static Counter counter() { return or(COUNTER::get, Counter.FADE_WHEN_FULL); }
