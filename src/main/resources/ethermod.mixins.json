@@ -22,16 +22,17 @@
     "defaultRequire": 1
   },
   "client": [
-    "GravityCameraMixin",
-    "ChargeMovementMixin",
-    "SoulFlameRenderMixin",
-    "FlightEquipmentMixin",
-    "GravityOverlayMixin",
     "ChargeArmTremblerMixin",
-    "NoUseDipMixin",
-    "SoundVolumeAccessor",
+    "ChargeMovementMixin",
+    "FlightEquipmentMixin",
     "GemGlintMixin",
+    "GravityCameraMixin",
+    "GravityOverlayMixin",
+    "LevelRendererInvoker",
+    "NoUseDipMixin",
+    "PhotonicGlowEntityMixin",
     "PhotonicGlowMixin",
-    "PhotonicGlowEntityMixin"
+    "SoulFlameRenderMixin",
+    "SoundVolumeAccessor"
   ]
 }

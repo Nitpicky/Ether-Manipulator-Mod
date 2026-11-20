@@ -35,8 +35,8 @@ import java.util.Map;
  * <p>LevelRenderer.getLightColor (terrain, block entities, particles; Sodium's light cache reads
  * it too) and EntityRenderer.getBlockLightLevel (entities) raise their block light to the glow
  * there (PhotonicGlowMixin). Taking the max makes it safe next to another dynamic lights mod.
- * When a source moves (more than 1/4 block, at most every 2 ticks), appears or goes, the chunk
- * sections in its reach are rebuilt.
+ * When a source moves (more than 0.1 block, checked every tick), appears or goes, the chunk
+ * sections in its reach are rebuilt at once (on the main thread, as Dynamic Lights does).
  *
  * <p>Another player's Manipulator comes from vanilla's equipment sync: while summoned, the virtual
  * hand (PlayerMixin) is that player's main-hand item, trait build included (custom data).
@@ -50,10 +50,10 @@ public final class PhotonicGlow {
     public static final double LUMINANCE = 15;
 
     private static final double RADIUS_SQ = LUMINANCE * LUMINANCE;
-    /** A source that moved less than this (squared, 0.25 block) keeps its lit sections. */
-    private static final double MOVE_SQ = 0.25 * 0.25;
-    /** Ticks between two rebuilds for one source. */
-    private static final int MIN_INTERVAL = 2;
+    /** A source that moved less than this (squared, 0.1 block) keeps its lit sections. */
+    private static final double MOVE_SQ = 0.1 * 0.1;
+    /** Ticks between two rebuilds for one source: every tick, like a held torch in Dynamic Lights. */
+    private static final int MIN_INTERVAL = 1;
 
     /** What the render threads read: the level and the sources' x, y, z. Null when none. */
     private record Snapshot(Level level, double[] xyz) {}
@@ -174,7 +174,8 @@ public final class PhotonicGlow {
                 z1 = Mth.floor(z + LUMINANCE) >> 4;
         for (int sx = x0; sx <= x1; sx++)
             for (int sy = y0; sy <= y1; sy++)
-                for (int sz = z0; sz <= z1; sz++) mc.levelRenderer.setSectionDirty(sx, sy, sz);
+                for (int sz = z0; sz <= z1; sz++)
+                    ((com.ethermod.mixin.LevelRendererInvoker) mc.levelRenderer).ethermod$setSectionDirty(sx, sy, sz, true);
     }
 
     /** Forgets every source (level change, disconnect); the next level rebuilds its own sections. */
