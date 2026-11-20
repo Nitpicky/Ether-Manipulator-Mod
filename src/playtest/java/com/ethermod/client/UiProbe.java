@@ -341,7 +341,7 @@ public final class UiProbe {
                                 setPickChecked(st, 0, 0, "hydraulic.reservoir");
                                 check(
                                         "Reload waits 15s at Prototype",
-                                        com.ethermod.trait.RedesignEffects.reloadDelay(new net.minecraft.world.item.ItemStack(com.ethermod.registry.ModItems.ETHER_MANIPULATOR.get())) == 300);
+                                        com.ethermod.trait.TankReload.reloadDelay(new net.minecraft.world.item.ItemStack(com.ethermod.registry.ModItems.ETHER_MANIPULATOR.get())) == 300);
                                 TraitRules.equip(p, 1, Traits.PYROTECHNIC);
                                 TraitRules.pick(p, 1, 0, 1);
                                 check("Crucible grows the shared tank", OrbMode.capacity(st) == 10);
@@ -410,15 +410,15 @@ public final class UiProbe {
                                         net.minecraft.world.entity.EntityType.ZOMBIE.create(sl);
                                 zombie.setPos(p.position().add(0, 0, 3));
                                 sl.addFreshEntity(zombie);
-                                RedesignEffects.stasis(zombie, 20);
-                                RedesignEffects.impulse(
+                                Stasis.stasis(zombie, 20);
+                                Stasis.impulse(
                                         zombie, new net.minecraft.world.phys.Vec3(1, 0, 0));
-                                RedesignEffects.impulse(
+                                Stasis.impulse(
                                         zombie, new net.minecraft.world.phys.Vec3(0, 0, 2));
                                 check(
                                         "Stasis accumulates force",
                                         zombie.getPersistentData().getDouble("mm_stasis_force")
-                                                == RedesignEffects.STASIS_MAX);
+                                                == Stasis.STASIS_MAX);
                                 check(
                                         "Stasis last impulse sets direction",
                                         zombie.getPersistentData().getDouble("mm_stasis_z") == 1);
@@ -570,10 +570,10 @@ public final class UiProbe {
                                     var stasisPig = net.minecraft.world.entity.EntityType.PIG.create(sl);
                                     stasisPig.setPos(p.position().add(0, 0, 6));
                                     sl.addFreshEntity(stasisPig);
-                                    RedesignEffects.stasis(stasisPig, 40);
+                                    Stasis.stasis(stasisPig, 40);
                                     boolean stasisSaved =
                                             stasisPig.getPersistentData().contains("mm_stasis_restore");
-                                    RedesignEffects.thaw(stasisPig);
+                                    Stasis.thaw(stasisPig);
                                     check(
                                             "Stasis saves and restores the creature's own flags",
                                             stasisSaved
@@ -588,7 +588,7 @@ public final class UiProbe {
                                     check(
                                             "Other players are no enemies while hurt_players is off",
                                             com.ethermod.config.ServerConfig.hurtPlayers()
-                                                    || !RedesignEffects.enemy(p, otherPlayer));
+                                                    || !Targeting.enemy(p, otherPlayer));
                                 }
                                 var stone = p.blockPosition().offset(0, 1, 4);
                                 sl.setBlockAndUpdate(
@@ -688,7 +688,7 @@ public final class UiProbe {
                                         net.minecraft.world.entity.EntityType.ZOMBIE.create(sl);
                                 victim.setPos(p.position().add(0, 0, -3));
                                 sl.addFreshEntity(victim);
-                                RedesignEffects.burn(victim, p, 5, 0);
+                                Burning.burn(victim, p, 5, 0);
                                 victim.hurt(sl.damageSources().playerAttack(p), 1000);
                                 var pets =
                                         sl.getEntitiesOfClass(
@@ -708,7 +708,7 @@ public final class UiProbe {
                                         "Blazeling cannot target owner or summons",
                                         !pet.validTarget(p, p)
                                                 && !pet.validTarget(p, pet)
-                                                && RedesignEffects.ally(p, pet));
+                                                && Targeting.ally(p, pet));
                                 var boltTarget =
                                         net.minecraft.world.entity.EntityType.ZOMBIE.create(sl);
                                 boltTarget.setNoAi(true);
@@ -807,7 +807,7 @@ public final class UiProbe {
                                             net.minecraft.world.entity.EntityType.ZOMBIE.create(sl);
                                     killed.setPos(p.position().add(0, 0, 5));
                                     sl.addFreshEntity(killed);
-                                    RedesignEffects.soulBurn(killed, p, 3);
+                                    Burning.soulBurn(killed, p, 3);
                                     killed.hurt(sl.damageSources().playerAttack(p), 1000);
                                 }
                                 check(
@@ -1094,7 +1094,7 @@ public final class UiProbe {
                                 p.getPersistentData()
                                         .putInt(
                                                 "mm_refill_ether",
-                                                com.ethermod.trait.RedesignEffects.reloadDelay(st)
+                                                com.ethermod.trait.TankReload.reloadDelay(st)
                                                         - 1);
                                 WorldEffects.schedule(
                                         p.serverLevel(),

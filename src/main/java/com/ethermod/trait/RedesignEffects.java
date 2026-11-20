@@ -227,19 +227,18 @@ public final class RedesignEffects {
         ev.getDrops().addAll(extra);
     }
 
-    // ---- moved: forwarders until the callers are updated ----
-    public static int reloadDelay(net.minecraft.world.item.ItemStack st) { return TankReload.reloadDelay(st); }
-    public static final double STASIS_GAIN = Stasis.STASIS_GAIN, STASIS_MAX = Stasis.STASIS_MAX;
-    public static void stasis(LivingEntity e, int ticks) { Stasis.stasis(e, ticks); }
-    public static boolean inStasis(LivingEntity e) { return Stasis.inStasis(e); }
-    public static void burstInto(LivingEntity e, net.minecraft.world.phys.Vec3 push) { Stasis.burstInto(e, push); }
-    public static void thaw(LivingEntity e) { Stasis.thaw(e); }
-    public static void impulse(LivingEntity e, net.minecraft.world.phys.Vec3 force) { Stasis.impulse(e, force); }
-    public static void expectBurst(LivingEntity e, net.minecraft.world.phys.Vec3 push) { Stasis.expectBurst(e, push); }
-    public static void hurtQuietly(LivingEntity e, net.minecraft.world.damagesource.DamageSource src, float amount) { Stasis.hurtQuietly(e, src, amount); }
-    public static void burn(LivingEntity target, ServerPlayer owner, int seconds, int phase) { Burning.burn(target, owner, seconds, phase); }
-    public static void soulBurn(LivingEntity target, ServerPlayer owner, int seconds) { Burning.soulBurn(target, owner, seconds); }
-    public static boolean ally(ServerPlayer owner, LivingEntity e) { return Targeting.ally(owner, e); }
-    public static boolean enemy(ServerPlayer owner, LivingEntity e) { return Targeting.enemy(owner, e); }
-    public static boolean enemyIgnoringPvp(ServerPlayer owner, LivingEntity e) { return Targeting.enemyIgnoringPvp(owner, e); }
+    // WorldEffects.burnFromOwnedFire still calls these two; WorldEffects is being split on another
+    // branch, so the call moves to Targeting.enemy / Burning.burn when the two branches merge,
+    // and these go with it.
+    /** @deprecated use {@link Targeting#enemy}. */
+    @Deprecated
+    public static boolean enemy(ServerPlayer owner, LivingEntity e) {
+        return Targeting.enemy(owner, e);
+    }
+
+    /** @deprecated use {@link Burning#burn}. */
+    @Deprecated
+    public static void burn(LivingEntity target, ServerPlayer owner, int seconds, int phase) {
+        Burning.burn(target, owner, seconds, phase);
+    }
 }

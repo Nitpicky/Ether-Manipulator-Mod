@@ -1,7 +1,8 @@
 package com.ethermod.beam;
 
 import com.ethermod.network.payload.LeftClickFxPayload;
-import com.ethermod.trait.RedesignEffects;
+import com.ethermod.trait.Stasis;
+import com.ethermod.trait.Targeting;
 import com.ethermod.trait.Traits;
 
 import net.minecraft.core.particles.ParticleTypes;
@@ -161,7 +162,7 @@ public final class GustGrenade {
                             e ->
                                     e instanceof LivingEntity le
                                             && !e.isSpectator()
-                                            && RedesignEffects.enemyIgnoringPvp(g.owner, le)
+                                            && Targeting.enemyIgnoringPvp(g.owner, le)
                                             && affects(g.owner, le));
             if (mob != null) {
                 g.stuck = mob.getEntity();
@@ -185,8 +186,8 @@ public final class GustGrenade {
                 // takes meanwhile is stored and lands together with the burst
                 if (g.stuck instanceof LivingEntity le) {
                     g.fuse = STASIS_FUSE; // time to set up hits on it
-                    RedesignEffects.stasis(le, g.fuse + 5);
-                    if (RedesignEffects.inStasis(le)) RedesignEffects.expectBurst(le, heldPush(g, le));
+                    Stasis.stasis(le, g.fuse + 5);
+                    if (Stasis.inStasis(le)) Stasis.expectBurst(le, heldPush(g, le));
                 }
             } else if (block.getType() != HitResult.Type.MISS) {
                 var n = Vec3.atLowerCornerOf(block.getDirection().getNormal());
@@ -225,9 +226,9 @@ public final class GustGrenade {
             // ticks faster as it nears the burst
             int every = g.fuse > 12 ? 6 : 3;
             // held in Stasis, the creature's own quickening tick replaces the fuse's (StasisFx)
-            boolean held = g.stuck instanceof LivingEntity le && RedesignEffects.inStasis(le);
+            boolean held = g.stuck instanceof LivingEntity le && Stasis.inStasis(le);
             if (held && g.fuse % 4 == 0) // the thrower may move: keep the arrow's burst current
-                RedesignEffects.expectBurst((LivingEntity) g.stuck, heldPush(g, (LivingEntity) g.stuck));
+                Stasis.expectBurst((LivingEntity) g.stuck, heldPush(g, (LivingEntity) g.stuck));
             if (!held && g.fuse % every == 0) {
                 sl.playSound(
                         null,
@@ -293,19 +294,19 @@ public final class GustGrenade {
                 e.setDeltaMovement(e.getDeltaMovement().add(push));
                 e.hurtMarked = true;
             } else if (e instanceof LivingEntity le) {
-                if (!RedesignEffects.enemyIgnoringPvp(g.owner, le) || !affects(g.owner, le)) continue;
+                if (!Targeting.enemyIgnoringPvp(g.owner, le) || !affects(g.owner, le)) continue;
                 float dmg = DAMAGE * (float) (0.5 + 0.5 * near);
-                if (RedesignEffects.inStasis(le)) {
+                if (Stasis.inStasis(le)) {
                     // the burst joins the stored push (aimed by the last hit); the hit lands while
                     // still held with its knockback dropped (vanilla knockback would halve the launch
                     // and cap its lift at 0.4), then the creature lets go
-                    RedesignEffects.burstInto(le, heldPush(g, le));
-                    RedesignEffects.hurtQuietly(le, sl.damageSources().playerAttack(g.owner), dmg);
-                    RedesignEffects.thaw(le);
+                    Stasis.burstInto(le, heldPush(g, le));
+                    Stasis.hurtQuietly(le, sl.damageSources().playerAttack(g.owner), dmg);
+                    Stasis.thaw(le);
                 } else {
                     // hit first, push after: the hit's own knockback must not halve the push
                     le.hurt(sl.damageSources().playerAttack(g.owner), dmg);
-                    RedesignEffects.impulse(le, push);
+                    Stasis.impulse(le, push);
                 }
             } else if (e instanceof ItemEntity) {
                 e.setDeltaMovement(e.getDeltaMovement().add(push.scale(0.6)));

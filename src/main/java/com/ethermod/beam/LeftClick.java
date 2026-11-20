@@ -3,7 +3,6 @@ package com.ethermod.beam;
 import com.ethermod.item.EtherManipulatorItem;
 import com.ethermod.item.OrbMode;
 import com.ethermod.manipulator.Manipulator;
-import com.ethermod.trait.RedesignEffects;
 import com.ethermod.trait.Traits;
 import com.ethermod.trait.WorldEffects;
 

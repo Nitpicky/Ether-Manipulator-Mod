@@ -123,7 +123,7 @@ final class OrbImpact {
         if (owner instanceof ServerPlayer sp
                 && target instanceof LivingEntity le
                 && (b.getMode() == OrbMode.LAVA || b.getMode() == OrbMode.IGNITE))
-            com.ethermod.trait.RedesignEffects.burn(le, sp, 4 + ph * 2, ph);
+            com.ethermod.trait.Burning.burn(le, sp, 4 + ph * 2, ph);
         switch (b.getMode()) {
             case ENERGY -> {
                 target.hurt(
@@ -160,7 +160,7 @@ final class OrbImpact {
             case GROWTH -> {
                 if (target instanceof LivingEntity victim
                         && owner instanceof ServerPlayer sp
-                        && com.ethermod.trait.RedesignEffects.enemy(sp, victim)
+                        && com.ethermod.trait.Targeting.enemy(sp, victim)
                         && (victim instanceof net.minecraft.world.entity.monster.Enemy
                                 || victim instanceof net.minecraft.world.entity.Mob m
                                         && m.getTarget() == sp)) {
