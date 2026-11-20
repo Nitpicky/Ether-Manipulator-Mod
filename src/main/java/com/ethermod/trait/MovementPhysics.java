@@ -168,9 +168,10 @@ public final class MovementPhysics {
                 chosen.x,
                 chosen.y,
                 chosen.z,
-                java.util.Set.of(),
+                java.util.Set.<net.minecraft.world.entity.Relative>of(),
                 p.getYRot(),
-                p.getXRot());
+                p.getXRot(),
+                false);
         net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingEntityAndSelf(
                 p,
                 new com.ethermod.network.payload.ModulePayloads.Gravity(

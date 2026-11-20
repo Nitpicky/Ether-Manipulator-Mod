@@ -84,17 +84,7 @@ public class EtherManipulatorItem extends Item implements GeoItem {
     //  - This has been verified to work reliably on NeoForge 1.21.1
     // =========================================================================
 
-    @SuppressWarnings("removal")
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-        // ManipulatorClientExtensions.INSTANCE implements:
-        //   - getCustomRenderer()        → GeckoLib ManipulatorItemRenderer
-        //   - getArmPose()               → BOW_AND_ARROW while beam/charge active
-        //   - applyForgeHandTransform()  → snapshots hand matrix for muzzle capture
-        // All three must be on the SAME registered instance.
-        consumer.accept(SideHooks.get().manipulatorExtensions());
-    }
+    // (client extensions are registered from the client side: ClientSideHooks / RegisterClientExtensionsEvent)
 
     // =========================================================================
     // RMB — charge + fire beam ball
@@ -356,18 +346,7 @@ public class EtherManipulatorItem extends Item implements GeoItem {
 
     @Override
     public boolean canPerformAction(ItemStack stack, ItemAbility ability) {
-        return ability == ItemAbilities.PICKAXE_DIG
-                || ability == ItemAbilities.AXE_DIG
-                || ability == ItemAbilities.SHOVEL_DIG
-                || ability == ItemAbilities.HOE_DIG
-                || ability == ItemAbilities.SWORD_DIG
-                // the sneak beam's jobs (UtilityBeam): NeoForge only changes a block
-                // for a tool that says it can do the action
-                || ability == ItemAbilities.HOE_TILL
-                || ability == ItemAbilities.SHOVEL_FLATTEN
-                || ability == ItemAbilities.AXE_STRIP
-                || ability == ItemAbilities.AXE_SCRAPE
-                || ability == ItemAbilities.AXE_WAX_OFF;
+        return ability == ItemAbilities.SHEARS_DIG || ability == ItemAbilities.SWORD_SWEEP;
     }
 
     @Override
@@ -455,16 +434,7 @@ public class EtherManipulatorItem extends Item implements GeoItem {
         return false;
     }
 
-    // Traits replace enchanting entirely.
-    @Override
-    public boolean isEnchantable(ItemStack stack) {
-        return false;
-    }
-
-    @Override
-    public int getEnchantmentValue() {
-        return 0;
-    }
+    // Traits replace enchanting entirely (no enchantable component).
 
     @Override
     public boolean supportsEnchantment(

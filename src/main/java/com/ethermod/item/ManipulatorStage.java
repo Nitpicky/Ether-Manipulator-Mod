@@ -135,7 +135,7 @@ public enum ManipulatorStage {
         int id =
                 stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY)
                         .copyTag()
-                        .getInt(TAG_STAGE);
+                        .getIntOr(TAG_STAGE, 0);
         for (ManipulatorStage s : values()) {
             if (s.id == id) return s;
         }

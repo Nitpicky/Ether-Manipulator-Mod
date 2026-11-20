@@ -23,7 +23,7 @@ public final class ModAttachments {
                     "manipulator",
                     () ->
                             AttachmentType.builder(() -> new ManipulatorData())
-                                    .serialize(ManipulatorData.CODEC)
+                                    .serialize(ManipulatorData.MAP_CODEC)
                                     .copyOnDeath()
                                     .build());
 

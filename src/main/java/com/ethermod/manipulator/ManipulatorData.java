@@ -14,8 +14,8 @@ import net.minecraft.world.item.ItemStack;
  */
 public final class ManipulatorData {
 
-    public static final Codec<ManipulatorData> CODEC =
-            RecordCodecBuilder.create(
+    public static final com.mojang.serialization.MapCodec<ManipulatorData> MAP_CODEC =
+            RecordCodecBuilder.mapCodec(
                     i ->
                             i.group(
                                             ItemStack.OPTIONAL_CODEC
@@ -28,6 +28,8 @@ public final class ManipulatorData {
                                             Codec.BOOL.optionalFieldOf("owned", true).forGetter(d -> d.owned),
                                             Codec.BOOL.optionalFieldOf("greeted", true).forGetter(d -> d.greeted))
                                     .apply(i, ManipulatorData::new));
+
+    public static final Codec<ManipulatorData> CODEC = MAP_CODEC.codec();
 
     private ItemStack stack;
     private boolean introduced;

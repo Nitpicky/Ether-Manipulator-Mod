@@ -30,7 +30,7 @@ public final class VirtualHand {
         if (!Manipulator.isSummoned(p)) return;
         ItemStack mm = p.getMainHandItem();
         if (!(mm.getItem() instanceof com.ethermod.item.EtherManipulatorItem)) return;
-        float selected = Math.max(1f, p.getInventory().getDestroySpeed(ev.getState()));
+        float selected = Math.max(1f, p.getInventory().getSelectedItem().getDestroySpeed(ev.getState()));
         ev.setNewSpeed(ev.getNewSpeed() / selected * mm.getDestroySpeed(ev.getState()));
     }
 }

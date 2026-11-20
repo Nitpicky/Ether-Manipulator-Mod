@@ -132,7 +132,7 @@ public final class OwnedFire {
             level.removeBlock(pos, false);
             m.remove(pos);
         } else {
-            level.scheduleTick(pos, state.getBlock(), 30 + level.random.nextInt(10));
+            level.scheduleTick(pos, state.getBlock(), 30 + level.getRandom().nextInt(10));
         }
         return true;
     }

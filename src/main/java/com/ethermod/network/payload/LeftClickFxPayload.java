@@ -41,7 +41,7 @@ public record LeftClickFxPayload(int kind, int id, int owner, Vector3f pos, int 
                     LeftClickFxPayload::id,
                     ByteBufCodecs.VAR_INT,
                     LeftClickFxPayload::owner,
-                    ByteBufCodecs.VECTOR3F,
+                    ByteBufCodecs.VECTOR3F.map(Vector3f::new, v -> v),
                     LeftClickFxPayload::pos,
                     ByteBufCodecs.VAR_INT,
                     LeftClickFxPayload::extra,
