@@ -9,7 +9,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 /**
  * While summoned, the Manipulator is the main-hand stack (PlayerMixin). Block use and
- * Player#interactOn never see it (ManipulatorBlockUseMixin, ManipulatorVeil); the one entity path
+ * Player#interactOn see an empty hand (ManipulatorBlockUseMixin, ManipulatorVeil); the one entity path
  * left is Entity#interactAt (armor stands, and any modded entity that overrides it), which vanilla
  * calls directly rather than through Player#interactOn. It is refused for the Manipulator hand on
  * both sides, for every entity: the result is PASS, so vanilla goes on to the plain interaction and

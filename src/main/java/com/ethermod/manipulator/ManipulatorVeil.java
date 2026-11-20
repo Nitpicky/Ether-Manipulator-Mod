@@ -8,8 +8,10 @@ import net.minecraft.world.entity.player.Player;
  * for an empty hand and never sees, takes or stores the Manipulator. Item frames, allays, armor
  * stands, pots and modded pedestals or display cases all fall under it without a list.
  *
- * <p>Veils are opened around BlockState#useWithoutItem (ManipulatorBlockUseMixin) and
- * Player#interactOn (PlayerMixin); BlockState#useItemOn never receives the Manipulator at all.
+ * <p>Veils are opened around BlockState#useItemOn (which also gets ItemStack.EMPTY as its stack)
+ * and BlockState#useWithoutItem (ManipulatorBlockUseMixin), and around Player#interactOn
+ * (PlayerMixin). Inside one, writes to the main hand go to the inventory, never to the hidden
+ * hotbar slot (PlayerMixin#setItemSlot).
  * Per thread, so the client and the integrated server don't see each other's veils, and keyed to
  * the player object, so no other entity is affected.
  */
@@ -22,7 +24,7 @@ public final class ManipulatorVeil {
     /** Opens a veil for {@code player}; returns what to hand back to {@link #close}. */
     public static Player open(Player player) {
         Player previous = VEILED.get();
-        if (Manipulator.isSummoned(player)) VEILED.set(player);
+        if (player != null && Manipulator.isSummoned(player)) VEILED.set(player);
         return previous;
     }
 
