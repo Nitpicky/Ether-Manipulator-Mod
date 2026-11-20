@@ -29,7 +29,13 @@ final class FoliageCut {
             var bs = sl.getBlockState(bp);
             if (!FoliageHelper.isPlant(bs)) continue;
             BlockPos at = bp.immutable();
-            if (owner != null && !com.ethermod.util.Protect.may(sl, owner, at)) continue;
+            // breakAsPlayer posts the real break event claims answer; only the burn, which
+            // removes the block itself, needs the probe first
+            if (owner != null
+                    && !(burn
+                            ? com.ethermod.util.Protect.may(sl, owner, at)
+                            : com.ethermod.util.Protect.mayInteract(sl, owner, at)))
+                continue;
             if (burn) {
                 sl.destroyBlock(at, false, owner);
                 sl.sendParticles(ParticleTypes.FLAME, at.getX() + .5, at.getY() + .5, at.getZ() + .5, 4, .25, .25, .25, .01);

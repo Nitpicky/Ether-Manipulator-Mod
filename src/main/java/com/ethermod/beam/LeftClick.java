@@ -310,7 +310,9 @@ public final class LeftClick {
         while (!todo.isEmpty() && cut.size() < 256) {
             BlockPos q = todo.poll();
             var state = sl.getBlockState(q);
-            if (!ripe(state) || !com.ethermod.util.Protect.may(sl, p, q)) continue;
+            // claims answer the real break event cutCrop's destroyBlock posts; no probe per
+            // planned crop (it would post a second, synthetic break for every one of them)
+            if (!ripe(state) || !com.ethermod.util.Protect.mayInteract(sl, p, q)) continue;
             cut.add(q);
             if (overgrowth)
                 for (BlockPos n : BlockPos.betweenClosed(q.offset(-1, -1, -1), q.offset(1, 1, 1))) {
@@ -347,8 +349,8 @@ public final class LeftClick {
     private static void cutCrop(ServerPlayer p, BlockPos q, Vec3 right) {
         if (p.isRemoved() || !(p.level() instanceof ServerLevel sl) || !sl.isLoaded(q)) return;
         var state = sl.getBlockState(q);
-        if (!ripe(state) || !com.ethermod.util.Protect.may(sl, p, q)) return;
-        if (!p.gameMode.destroyBlock(q)) return;
+        if (!ripe(state) || !com.ethermod.util.Protect.mayInteract(sl, p, q)) return;
+        if (!p.gameMode.destroyBlock(q)) return; // posts the BreakEvent claims may cancel
         harvested++;
         // vanilla sends the break particles and sound to everyone but the breaker (whose client
         // predicts its own), so the harvester gets them here

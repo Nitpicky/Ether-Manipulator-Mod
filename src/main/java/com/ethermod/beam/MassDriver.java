@@ -172,15 +172,14 @@ public final class MassDriver {
         entity.configure(st);
         entity.setCarried(bs);
         var be = level.getBlockEntity(at);
-        if (be != null) {
-            entity.carriedBe = be.saveWithFullMetadata(level.registryAccess());
-            if (be instanceof net.minecraft.world.Container box) box.clearContent(); // no spill when removed
-        }
+        if (be != null) entity.carriedBe = be.saveWithFullMetadata(level.registryAccess());
         entity.setPos(Vec3.atCenterOf(at));
         entity.setDeltaMovement(Vec3.ZERO);
         var piece = new Piece(entity, at.subtract(h.origin));
         entity.setMassHeld(true, piece.offset);
-        if (!level.addFreshEntity(entity)) return false;
+        if (!level.addFreshEntity(entity)) return false; // nothing taken: the block keeps its contents
+        // emptied only once the piece carries the copy, so removing the block spills nothing
+        if (be instanceof net.minecraft.world.Container box) box.clearContent();
         level.setBlock(at, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
         // the rip (FX bench): the block's own break, low, over gravel and deepslate, once per grab
         level.playSound(null, at, bs.getSoundType().getBreakSound(), SoundSource.BLOCKS, .4f, .8f);
@@ -387,12 +386,19 @@ public final class MassDriver {
         var sl = p.serverLevel();
         if (place && steady(p)) {
             BlockPos base = steadyBase(h);
-            for (var q : h.pieces) {
-                BlockPos at = base.offset(q.offset);
-                if (!canPlace(sl, p, q.entity.getCarried(), at)) {
-                    sl.playSound(null, p.blockPosition(), com.ethermod.sound.ModSounds.WORLD_DISPENSER_FAIL, SoundSource.PLAYERS, .6f, 1.4f);
-                    return; // the shape must fit as a whole; the ghosts show what is in the way
-                }
+            // the shape must fit as a whole; the ghosts show what is in the way. The world checks
+            // go first for every block, so claims are only asked once the whole shape fits
+            boolean fits = true;
+            for (var q : h.pieces) fits &= fitsHere(sl, q.entity.getCarried(), base.offset(q.offset));
+            if (fits)
+                for (var q : h.pieces)
+                    if (!com.ethermod.util.Protect.may(sl, p, base.offset(q.offset))) {
+                        fits = false;
+                        break;
+                    }
+            if (!fits) {
+                sl.playSound(null, p.blockPosition(), com.ethermod.sound.ModSounds.WORLD_DISPENSER_FAIL, SoundSource.PLAYERS, .6f, 1.4f);
+                return;
             }
             HOLDS.remove(p.getUUID());
             for (var q : h.pieces) {
@@ -425,10 +431,14 @@ public final class MassDriver {
 
     /** Could this block be set down here (same rules as the client's ghosts)? */
     public static boolean canPlace(Level level, Player p, BlockState bs, BlockPos at) {
+        return fitsHere(level, bs, at) && com.ethermod.util.Protect.may(level, p, at);
+    }
+
+    /** The world half of {@link #canPlace}: room and support, no protection probe. */
+    private static boolean fitsHere(Level level, BlockState bs, BlockPos at) {
         return level.hasChunkAt(at)
                 && level.getBlockState(at).canBeReplaced()
                 && bs.canSurvive(level, at)
-                && com.ethermod.util.Protect.may(level, p, at)
                 && level.isUnobstructed(bs, at, CollisionContext.empty());
     }
 
@@ -502,6 +512,8 @@ public final class MassDriver {
         if (bs.hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF) || bs.hasProperty(BlockStateProperties.BED_PART))
             return false;
         if (bs.getBlock().asItem() == net.minecraft.world.item.Items.AIR) return false;
-        return com.ethermod.util.Protect.may(level, p, pos);
+        // claims answer the BreakEvent take() posts for the lift itself; probing here as well
+        // would post two break events for one lifted block
+        return com.ethermod.util.Protect.mayInteract(level, p, pos);
     }
 }

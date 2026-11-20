@@ -251,6 +251,7 @@ public class ModEvents {
         restingBeams.clear();
         com.ethermod.trait.TraitRules.clear();
         MiningDamageTracker.clear();
+        com.ethermod.util.Protect.clear();
     }
 
     public static void onRegisterPayloads(RegisterPayloadHandlersEvent event) {

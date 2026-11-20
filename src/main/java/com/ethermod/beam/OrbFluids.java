@@ -202,12 +202,13 @@ final class OrbFluids {
     /** Forge Heart: a Lava orb fuels a furnace, smoker or blast furnace for 32 items. */
     static boolean forgeHeart(BeamBallEntity b, BlockPos pos) {
         int heart = b.getMode() == OrbMode.IGNITE ? b.rank("pyrotechnic.kiln") : 0;
-        if (heart <= 0 || !b.mayBuild(pos)) return false;
+        if (heart <= 0) return false;
         ServerLevel sl = (ServerLevel) b.level();
         if (!(sl.getBlockEntity(pos)
                 instanceof
                 net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity furnace))
             return false;
+        if (!b.mayBuild(pos)) return false; // probed only once it is a furnace to fuel
         int items = 32;
         // a furnace cooks an item in 200 ticks; smokers and blast furnaces in 100
         int perItem =

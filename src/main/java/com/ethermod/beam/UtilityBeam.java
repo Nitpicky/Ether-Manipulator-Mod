@@ -80,13 +80,16 @@ final class UtilityBeam {
     private static boolean single(
             ServerLevel level, ServerPlayer player, ItemStack tool, BlockHitResult hit) {
         BlockPos pos = hit.getBlockPos();
-        if (!com.ethermod.util.Protect.may(level, player, pos) || !player.mayUseItemAt(pos, hit.getDirection(), tool))
+        // the beam sits on a block for many ticks: the claim probe (a synthetic break event, see
+        // Protect) is only posted once there is something to change, right before changing it
+        if (!com.ethermod.util.Protect.mayInteract(level, player, pos) || !player.mayUseItemAt(pos, hit.getDirection(), tool))
             return false;
         BlockState bs = level.getBlockState(pos);
 
         if (CampfireBlock.canLight(bs)
                 || CandleBlock.canLight(bs)
                 || CandleCakeBlock.canLight(bs)) {
+            if (!com.ethermod.util.Protect.may(level, player, pos)) return false;
             level.setBlock(
                     pos, bs.setValue(BlockStateProperties.LIT, true), Block.UPDATE_ALL_IMMEDIATE);
             level.playSound(null, pos, com.ethermod.sound.ModSounds.WORLD_FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1f, 1.2f);
@@ -97,6 +100,7 @@ final class UtilityBeam {
         // The sneak beam shears foliage (leaves, grass, flowers...) like shears would: the beam
         // passes through it otherwise, so this is the way to take it
         if (com.ethermod.util.FoliageHelper.isPlant(bs)) {
+            if (!com.ethermod.util.Protect.may(level, player, pos)) return false;
             level.removeBlock(pos, false);
             Block.popResource(level, pos, new ItemStack(bs.getBlock()));
             level.playSound(null, pos, com.ethermod.sound.ModSounds.WORLD_SHEEP_SHEAR, SoundSource.BLOCKS, 0.8f, 1.2f);
@@ -106,6 +110,7 @@ final class UtilityBeam {
         // Groundskeeper: shear leaves, vines, cobwebs and grasses; take honeycomb
         if (Traits.has(tool, "botanic.groundskeeper")) {
             if (isShearable(bs)) {
+                if (!com.ethermod.util.Protect.may(level, player, pos)) return false;
                 level.removeBlock(pos, false);
                 Block.popResource(level, pos, new ItemStack(bs.getBlock()));
                 level.playSound(null, pos, com.ethermod.sound.ModSounds.WORLD_SHEEP_SHEAR, SoundSource.BLOCKS, 0.8f, 1.2f);
@@ -113,6 +118,7 @@ final class UtilityBeam {
             }
             if (bs.getBlock() instanceof BeehiveBlock hive
                     && bs.getValue(BeehiveBlock.HONEY_LEVEL) >= BeehiveBlock.MAX_HONEY_LEVELS) {
+                if (!com.ethermod.util.Protect.may(level, player, pos)) return false;
                 BeehiveBlock.dropHoneycomb(level, pos);
                 hive.releaseBeesAndResetHoneyLevel(
                         level,
@@ -142,7 +148,10 @@ final class UtilityBeam {
             boolean needsAir =
                     ability == ItemAbilities.HOE_TILL || ability == ItemAbilities.SHOVEL_FLATTEN;
             if (needsAir && !airAbove) continue;
-            BlockState next = bs.getToolModifiedState(ctx, ability, false);
+            BlockState next = bs.getToolModifiedState(ctx, ability, true);
+            if (next == null || next == bs) continue;
+            if (!com.ethermod.util.Protect.may(level, player, pos)) return false;
+            next = bs.getToolModifiedState(ctx, ability, false);
             if (next == null || next == bs) continue;
             level.setBlock(pos, next, Block.UPDATE_ALL_IMMEDIATE);
             level.playSound(null, pos, soundFor(ability), SoundSource.BLOCKS, 1f, 1f);
@@ -177,7 +186,8 @@ final class UtilityBeam {
     private static void harvest(
             ServerLevel level, ServerPlayer player, ItemStack tool, BlockPos p) {
         BlockState bs = level.getBlockState(p);
-        if (!isRipeCrop(bs) || !com.ethermod.util.Protect.may(level, player, p)) return;
+        // breakAsPlayer posts the real break event claims answer, so no probe before it
+        if (!isRipeCrop(bs) || !com.ethermod.util.Protect.mayInteract(level, player, p)) return;
         if (!MiningDamageTracker.breakAsPlayer(player, p)) return;
     }
 
