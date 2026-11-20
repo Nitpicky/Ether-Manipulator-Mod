@@ -345,7 +345,7 @@ public class EtherManipulatorItem extends Item implements GeoItem {
     // =========================================================================
 
     @Override
-    public boolean canPerformAction(ItemStack stack, ItemAbility ability) {
+    public boolean canPerformAction(net.minecraft.world.item.ItemInstance stack, ItemAbility ability) {
         return ability == ItemAbilities.SHEARS_DIG || ability == ItemAbilities.SWORD_SWEEP;
     }
 

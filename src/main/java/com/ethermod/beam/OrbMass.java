@@ -33,7 +33,7 @@ final class OrbMass {
     static void massHitEntity(BeamBallEntity b, Entity target, Vec3 at) {
         // one hit per creature per throw
         long now = b.level().getGameTime();
-        if (com.ethermod.util.MobMemory.peek(target).getLong("mm_mass_hit") > now) return;
+        if (com.ethermod.util.MobMemory.peek(target).getLongOr("mm_mass_hit", 0L) > now) return;
         com.ethermod.util.MobMemory.of(target).putLong("mm_mass_hit", now + 10);
         Vec3 v = b.getDeltaMovement();
         if (b.massGentle) {

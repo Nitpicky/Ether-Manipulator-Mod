@@ -104,7 +104,7 @@ public final class ManipulatorColors {
 
     /** Unlocked colours, defaults first (amethyst beam; original yellow trim as -1). */
     public static int[] palette(ItemStack stack, boolean body) {
-        int[] saved = tag(stack).getIntArray(body ? BODY_PALETTE : BEAM_PALETTE);
+        int[] saved = tag(stack).getIntArray(body ? BODY_PALETTE : BEAM_PALETTE).orElseGet(() -> new int[0]);
         int[] out = new int[saved.length + 1];
         out[0] = body ? -1 : DEFAULT_BEAM;
         System.arraycopy(saved, 0, out, 1, saved.length);
@@ -128,7 +128,7 @@ public final class ManipulatorColors {
     public static boolean unlock(ItemStack stack, boolean body, int rgb) {
         if (rgb != -1) rgb &= 0xFFFFFF;
         if (isUnlocked(stack, body, rgb)) return false;
-        int[] saved = tag(stack).getIntArray(body ? BODY_PALETTE : BEAM_PALETTE);
+        int[] saved = tag(stack).getIntArray(body ? BODY_PALETTE : BEAM_PALETTE).orElseGet(() -> new int[0]);
         if (saved.length >= MAX_PALETTE) return false;
         int[] next = java.util.Arrays.copyOf(saved, saved.length + 1);
         next[saved.length] = rgb;

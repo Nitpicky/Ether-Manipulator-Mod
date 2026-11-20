@@ -131,7 +131,7 @@ public final class ModNetwork {
     }
 
     public static void sendOrbMode(OrbMode mode) {
-        PacketDistributor.sendToServer(new OrbModePayload(mode.ordinal()));
+        net.neoforged.neoforge.client.network.ClientPacketDistributor.sendToServer(new OrbModePayload(mode.ordinal()));
     }
 
     /** Client side. Only touches common classes, so it is safe to register on both sides. */
@@ -147,14 +147,14 @@ public final class ModNetwork {
 
     public static void send(
             net.minecraft.network.protocol.common.custom.CustomPacketPayload payload) {
-        PacketDistributor.sendToServer(payload);
+        net.neoforged.neoforge.client.network.ClientPacketDistributor.sendToServer(payload);
     }
 
     public static void sendSummonToggle(boolean summon) {
-        PacketDistributor.sendToServer(new SummonTogglePayload(summon));
+        net.neoforged.neoforge.client.network.ClientPacketDistributor.sendToServer(new SummonTogglePayload(summon));
     }
 
     public static void sendBeamActive(boolean active) {
-        PacketDistributor.sendToServer(new BeamActivePayload(active));
+        net.neoforged.neoforge.client.network.ClientPacketDistributor.sendToServer(new BeamActivePayload(active));
     }
 }

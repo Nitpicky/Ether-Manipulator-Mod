@@ -144,7 +144,7 @@ final class OrbNature {
                     Block.UPDATE_ALL_IMMEDIATE);
         } else if (bs.getBlock() instanceof net.minecraft.world.level.block.TntBlock
                 && com.ethermod.config.ServerConfig.fireAndLava()) {
-            bs.onCaughtFire(sl, hitPos, face, owner instanceof LivingEntity le ? le : null);
+            bs.onCaughtFire(sl, hitPos, face, owner instanceof LivingEntity le ? le : null, net.minecraft.world.item.ItemStack.EMPTY);
             sl.removeBlock(hitPos, false);
         } else {
             BlockPos firePos = hitPos.relative(face);
