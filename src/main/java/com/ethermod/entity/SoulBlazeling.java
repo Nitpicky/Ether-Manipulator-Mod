@@ -106,7 +106,7 @@ public final class SoulBlazeling extends FlyingMob {
     @Override
     public void tick() {
         super.tick();
-        if (level().isClientSide) {
+        if (level().isClientSide()) {
             if (isAlive()) smokeEmitter.accept(this);
             return;
         }
@@ -192,7 +192,7 @@ public final class SoulBlazeling extends FlyingMob {
     }
 
     public void fireAt(LivingEntity target) {
-        if (level().isClientSide) return;
+        if (level().isClientSide()) return;
         var bolt = com.ethermod.registry.ModEntities.SOUL_BOLT.get().create(level());
         if (bolt == null) return;
         bolt.setOwner(this);

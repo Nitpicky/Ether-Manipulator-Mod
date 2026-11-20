@@ -38,7 +38,7 @@ public final class LightDecoy extends PathfinderMob {
     @Override
     public void tick() {
         super.tick();
-        if (!level().isClientSide) {
+        if (!level().isClientSide()) {
             if (tickCount % 5 == 0)
                 ((net.minecraft.server.level.ServerLevel) level())
                         .sendParticles(

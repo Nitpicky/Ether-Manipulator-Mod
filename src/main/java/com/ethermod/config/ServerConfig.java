@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.function.Supplier;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -42,7 +42,7 @@ public final class ServerConfig {
     private static final ModConfigSpec.ConfigValue<List<? extends String>> HARVEST_TAGS, FOLIAGE, CROPS;
 
     private static boolean idOrTag(Object o) {
-        return o instanceof String s && ResourceLocation.tryParse(s.startsWith("#") ? s.substring(1) : s) != null;
+        return o instanceof String s && Identifier.tryParse(s.startsWith("#") ? s.substring(1) : s) != null;
     }
 
     static {
@@ -181,29 +181,29 @@ public final class ServerConfig {
         int eq = str.indexOf('=');
         if (eq <= 0 || eq == str.length() - 1) return false;
         String item = str.substring(0, eq).trim();
-        return ResourceLocation.tryParse(item.startsWith("#") ? item.substring(1) : item) != null;
+        return Identifier.tryParse(item.startsWith("#") ? item.substring(1) : item) != null;
     }
 
     // ---- parsed lists, cached: built once per config value, dropped on config load/reload ----
 
     /** One gem_items entry: an item tag or an item id, and the Module it stands in for. */
-    private record GemEntry(TagKey<net.minecraft.world.item.Item> tag, ResourceLocation id, String module) {}
+    private record GemEntry(TagKey<net.minecraft.world.item.Item> tag, Identifier id, String module) {}
 
     /** Block ids and block tags parsed from one config list. */
-    private record BlockMatch(java.util.Set<ResourceLocation> ids, List<TagKey<Block>> tags) {
+    private record BlockMatch(java.util.Set<Identifier> ids, List<TagKey<Block>> tags) {
         static final BlockMatch NONE = new BlockMatch(java.util.Set.of(), List.of());
 
         static BlockMatch parse(List<? extends String> list) {
             if (list.isEmpty()) return NONE;
-            var ids = new java.util.HashSet<ResourceLocation>();
+            var ids = new java.util.HashSet<Identifier>();
             var tags = new java.util.ArrayList<TagKey<Block>>();
             for (String e : list) {
                 String t = e.trim();
                 if (t.startsWith("#")) {
-                    ResourceLocation id = ResourceLocation.tryParse(t.substring(1));
+                    Identifier id = Identifier.tryParse(t.substring(1));
                     if (id != null) tags.add(TagKey.create(Registries.BLOCK, id));
                 } else {
-                    ResourceLocation id = ResourceLocation.tryParse(t);
+                    Identifier id = Identifier.tryParse(t);
                     if (id != null) ids.add(id);
                 }
             }
@@ -250,16 +250,16 @@ public final class ServerConfig {
                 if (eq <= 0) continue;
                 String item = e.substring(0, eq).trim(), module = e.substring(eq + 1).trim().toLowerCase(java.util.Locale.ROOT);
                 if (item.startsWith("#")) {
-                    ResourceLocation id = ResourceLocation.tryParse(item.substring(1));
+                    Identifier id = Identifier.tryParse(item.substring(1));
                     if (id != null) parsed.add(new GemEntry(TagKey.create(Registries.ITEM, id), null, module));
                 } else {
-                    ResourceLocation id = ResourceLocation.tryParse(item);
+                    Identifier id = Identifier.tryParse(item);
                     if (id != null) parsed.add(new GemEntry(null, id, module));
                 }
             }
             gemCache = cache = new Parsed<>(gems, List.copyOf(parsed));
         }
-        ResourceLocation key = null;
+        Identifier key = null;
         for (GemEntry e : cache.value()) {
             if (e.tag() != null) {
                 if (stack.is(e.tag())) return e.module();

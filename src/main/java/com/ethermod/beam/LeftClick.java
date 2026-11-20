@@ -125,7 +125,7 @@ public final class LeftClick {
 
     /** Ends any held left click (the Beacon's lights go out with it). */
     private static Hold stop(ServerPlayer p) {
-        return stop(p, p.serverLevel());
+        return stop(p, p.level());
     }
 
     /**
@@ -227,7 +227,7 @@ public final class LeftClick {
      * off go out at once, and all of them when you let go.
      */
     private static void beacon(ServerPlayer p, int ticks) {
-        ServerLevel sl = p.serverLevel();
+        ServerLevel sl = p.level();
         Vec3 eye = p.getEyePosition(), look = p.getLookAngle();
         var hit =
                 sl.clip(
@@ -286,7 +286,7 @@ public final class LeftClick {
      * apply), and never touch unripe ones.
      */
     private static void harvest(ServerPlayer p, ItemStack st) {
-        ServerLevel sl = p.serverLevel();
+        ServerLevel sl = p.level();
         Vec3 eye = p.getEyePosition(), look = p.getLookAngle();
         var hit =
                 sl.clip(

@@ -37,7 +37,7 @@ public final class HoverScreenshotTour {
         if(tick==10)mc.getSingleplayerServer().execute(()->{
             var p=mc.getSingleplayerServer().getPlayerList().getPlayer(mc.player.getUUID());var st=Manipulator.stack(p);
             ManipulatorStage.set(st,ManipulatorStage.NETHERITE);
-            var ids=new net.minecraft.resources.ResourceLocation[]{Traits.PLASMIC,Traits.KINETIC,Traits.HYDRAULIC};
+            var ids=new net.minecraft.resources.Identifier[]{Traits.PLASMIC,Traits.KINETIC,Traits.HYDRAULIC};
             for(int slot=0;slot<3;slot++){
                 ModuleUnlocks.unlock(st,ids[slot]);TraitBuild.setLine(st,slot,ids[slot]);
                 var line=TraitLines.get(p.registryAccess(),ids[slot]).orElseThrow();

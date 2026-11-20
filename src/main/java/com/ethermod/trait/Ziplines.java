@@ -44,7 +44,7 @@ public final class Ziplines {
 
     /** Let go while sneaking: the hook becomes the first end. */
     public static void pin(ServerPlayer sp, BeamBallEntity hook) {
-        ServerLevel sl = sp.serverLevel();
+        ServerLevel sl = sp.level();
         Integer old = PENDING.remove(sp.getUUID());
         if (old != null
                 && sl.getEntity(old) instanceof BeamBallEntity o
@@ -67,7 +67,7 @@ public final class Ziplines {
     public static void onHookStuck(ServerPlayer sp, BeamBallEntity hook) {
         Integer pid = PENDING.get(sp.getUUID());
         if (pid == null) return;
-        ServerLevel sl = sp.serverLevel();
+        ServerLevel sl = sp.level();
         if (!(sl.getEntity(pid) instanceof BeamBallEntity a)
                 || !a.isAnchor()
                 || a.getPartnerId() >= 0
@@ -101,7 +101,7 @@ public final class Ziplines {
 
     /** Tether pressed: ride a rope you aim at, if there is one in reach. */
     public static boolean tryRide(ServerPlayer sp) {
-        ServerLevel sl = sp.serverLevel();
+        ServerLevel sl = sp.level();
         Vec3 eye = sp.getEyePosition(), far = eye.add(sp.getLookAngle().scale(10));
         BeamBallEntity bestA = null, bestB = null;
         double best = 1.6;
@@ -152,7 +152,7 @@ public final class Ziplines {
     public static void rideTick(ServerPlayer sp) {
         Ride r = RIDES.get(sp.getUUID());
         if (r == null) return;
-        ServerLevel sl = sp.serverLevel();
+        ServerLevel sl = sp.level();
         if (!(sl.getEntity(r.a()) instanceof BeamBallEntity a)
                 || !(sl.getEntity(r.b()) instanceof BeamBallEntity b)
                 || !a.isAlive()

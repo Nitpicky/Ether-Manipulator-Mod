@@ -2,7 +2,7 @@ package com.ethermod.item;
 
 
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -24,7 +24,7 @@ public final class GemColors {
     private GemColors() {}
 
     public static final TagKey<Item> C_GEMS =
-            ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "gems"));
+            ItemTags.create(Identifier.fromNamespaceAndPath("c", "gems"));
 
     private static final Map<Item, Integer> VANILLA =
             Map.of(

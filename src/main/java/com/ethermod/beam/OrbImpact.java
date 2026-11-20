@@ -111,7 +111,7 @@ final class OrbImpact {
 
     /** The orb hit a creature. */
     static void onEntity(BeamBallEntity b, EntityHitResult result) {
-        if (b.level().isClientSide) return;
+        if (b.level().isClientSide()) return;
         ServerLevel sl = (ServerLevel) b.level();
         Entity target = result.getEntity();
         Entity owner = b.getOwner();
@@ -206,7 +206,7 @@ final class OrbImpact {
 
     /** The orb hit a block (or burst in the air, see {@link #detonate}). */
     static void onBlock(BeamBallEntity b, BlockHitResult result) {
-        if (b.level().isClientSide) {
+        if (b.level().isClientSide()) {
             b.discard();
             return;
         }
@@ -415,7 +415,7 @@ final class OrbImpact {
 
     /** Detonator: burst right where it is, with its full impact effect. */
     static void detonate(BeamBallEntity b) {
-        if (b.level().isClientSide
+        if (b.level().isClientSide()
                 || b.isRemoved()
                 || b.isStuck()
                 || b.isAnchor()
@@ -449,7 +449,7 @@ final class OrbImpact {
                                 p.getBoundingBox().inflate(160),
                                 b -> b.getOwner() == p && b.firedLeft() == left && detonatable(b));
         if (live.isEmpty()) return false;
-        if (!p.level().isClientSide) for (BeamBallEntity b : live) detonate(b);
+        if (!p.level().isClientSide()) for (BeamBallEntity b : live) detonate(b);
         return true;
     }
 }

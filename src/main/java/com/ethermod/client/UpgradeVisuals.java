@@ -3,7 +3,7 @@ package com.ethermod.client;
 import com.google.gson.*;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -49,7 +49,7 @@ final class UpgradeVisuals {
                         Minecraft.getInstance()
                                 .getResourceManager()
                                 .open(
-                                        ResourceLocation.fromNamespaceAndPath(
+                                        Identifier.fromNamespaceAndPath(
                                                 "ethermod", "ui/" + name));
                 var reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
             return JsonParser.parseReader(reader).getAsJsonObject();
@@ -69,7 +69,7 @@ final class UpgradeVisuals {
         return result;
     }
 
-    static Palette module(ResourceLocation id, Palette fallback) {
+    static Palette module(Identifier id, Palette fallback) {
         var m = id == null ? null : modules.get(id.getPath());
         return m == null ? fallback : new Palette(ramp(m), true);
     }

@@ -44,7 +44,7 @@ public final class RapidsCurrents {
                         level, k -> new java.util.concurrent.ConcurrentHashMap<>());
         for (var pos : positions) {
             map.put(pos.immutable(), new Current(direction, expires));
-            if (level.isClientSide) {
+            if (level.isClientSide()) {
                 var state = level.getBlockState(pos);
                 level.sendBlockUpdated(pos, state, state, 8);
             }
@@ -116,7 +116,7 @@ public final class RapidsCurrents {
         for (var e : level.getEntitiesOfClass(net.minecraft.world.entity.Entity.class, area)) {
             if (e.isSpectator() || e.noPhysics) continue;
             boolean local = e.isControlledByLocalInstance();
-            if (level.isClientSide ? !local : local || e instanceof net.minecraft.world.entity.player.Player
+            if (level.isClientSide() ? !local : local || e instanceof net.minecraft.world.entity.player.Player
                     || e.getControllingPassenger() instanceof net.minecraft.world.entity.player.Player)
                 continue;
             if (e.isPassenger()) continue; // the vehicle carries them
@@ -136,7 +136,7 @@ public final class RapidsCurrents {
                     v.x + dir.x * push - sideways.x * .08,
                     v.y,
                     v.z + dir.z * push - sideways.z * .08);
-            if (!level.isClientSide) e.hurtMarked = true;
+            if (!level.isClientSide()) e.hurtMarked = true;
         }
     }
 
@@ -150,7 +150,7 @@ public final class RapidsCurrents {
         while (iterator.hasNext()) {
             var entry = iterator.next();
             if (entry.getValue().expires() > level.getGameTime()) continue;
-            if (level.isClientSide) {
+            if (level.isClientSide()) {
                 var state = level.getBlockState(entry.getKey());
                 level.sendBlockUpdated(entry.getKey(), state, state, 8);
             }

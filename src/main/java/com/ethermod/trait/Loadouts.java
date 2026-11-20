@@ -111,7 +111,7 @@ public final class Loadouts {
                 for (int slot = 0; slot < safe.size(); slot++) {
                     var entry = safe.getCompound(slot);
                     var id =
-                            net.minecraft.resources.ResourceLocation.tryParse(
+                            net.minecraft.resources.Identifier.tryParse(
                                     entry.getString("line"));
                     if (id != null && !ModuleUnlocks.known(stack, id)) {
                         deny(player, "set_module_unknown");

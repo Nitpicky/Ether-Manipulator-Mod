@@ -127,7 +127,7 @@ public class EtherManipulatorItem extends Item implements GeoItem {
 
         if (mode == OrbMode.MASS) {
             // Mass Driver: LMB grabs, RMB charges a throw of what you carry
-            if (level.isClientSide
+            if (level.isClientSide()
                     ? com.ethermod.beam.MassDriver.carried(stack).isAir()
                     : !(player instanceof ServerPlayer sp
                             && com.ethermod.beam.MassDriver.holding(sp)))
@@ -179,7 +179,7 @@ public class EtherManipulatorItem extends Item implements GeoItem {
     @Override
     public void inventoryTick(
             ItemStack stack, Level level, Entity entity, int slot, boolean selected) {
-        if (level.isClientSide || !(entity instanceof ServerPlayer sp)) return;
+        if (level.isClientSide() || !(entity instanceof ServerPlayer sp)) return;
         ManipulatorData data = Manipulator.data(sp);
         ItemStack own = data.stack();
         boolean ownUntouched =
@@ -206,7 +206,7 @@ public class EtherManipulatorItem extends Item implements GeoItem {
     /** Hold modes work every tick while RMB is down. No speed penalty while charging. */
     @Override
     public void onUseTick(Level level, LivingEntity entity, ItemStack stack, int remaining) {
-        if (level.isClientSide || !(entity instanceof ServerPlayer sp)) return;
+        if (level.isClientSide() || !(entity instanceof ServerPlayer sp)) return;
         OrbMode mode = OrbMode.get(stack);
         int held = getUseDuration(stack, entity) - remaining;
         var movement = sp.getPersistentData();
@@ -258,7 +258,7 @@ public class EtherManipulatorItem extends Item implements GeoItem {
      */
     @Override
     public void releaseUsing(ItemStack stack, Level level, LivingEntity entity, int timeCharged) {
-        if (level.isClientSide) return;
+        if (level.isClientSide()) return;
         if (!(entity instanceof Player player)) return;
 
         ManipulatorStage stage = ManipulatorStage.get(stack);

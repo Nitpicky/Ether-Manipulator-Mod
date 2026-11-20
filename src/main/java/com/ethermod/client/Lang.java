@@ -5,7 +5,7 @@ import com.ethermod.trait.TraitLine;
 
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.locale.Language;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Translated UI text. Trait and Module texts come from the lang files (trait.ethermod.&lt;id&gt;,
@@ -36,7 +36,7 @@ public final class Lang {
         return raw("trait.ethermod." + t.id() + ".desc", t.description());
     }
 
-    public static String moduleName(ResourceLocation id, TraitLine line) {
+    public static String moduleName(Identifier id, TraitLine line) {
         return raw("module.ethermod." + id.getPath(), line.name());
     }
 

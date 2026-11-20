@@ -7,12 +7,12 @@ import com.mojang.blaze3d.platform.NativeImage;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.texture.DynamicTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /** The animated lattice behind the K-screen, rasterised to a dynamic texture at screen density. */
 final class KGrid {
-    private static final ResourceLocation GRID_TEXTURE =
-            ResourceLocation.fromNamespaceAndPath("ethermod", "ui/grid");
+    private static final Identifier GRID_TEXTURE =
+            Identifier.fromNamespaceAndPath("ethermod", "ui/grid");
     private DynamicTexture gridTexture;
     private NativeImage gridImage;
 

@@ -48,7 +48,7 @@ public final class ProjectileEffects {
         if (b.tickCount % 10 != 0 || !(b.getOwner() instanceof ServerPlayer p)) return;
         int a = 0;
         for (var e :
-                p.serverLevel()
+                p.level()
                         .getEntitiesOfClass(
                                 LivingEntity.class,
                                 b.getBoundingBox().inflate(2),
@@ -87,7 +87,7 @@ public final class ProjectileEffects {
 
     public static void waterPath(BeamBallEntity b, ItemStack st) {
         if (!(b.getOwner() instanceof ServerPlayer p)) return;
-        var sl = p.serverLevel();
+        var sl = p.level();
         if (b.getMode() == com.ethermod.item.OrbMode.WATER
                 && Traits.has(st, "hydraulic.rapids")) {
             var water = waterNear(sl, b.position());
@@ -122,7 +122,7 @@ public final class ProjectileEffects {
 
     public static void waterImpact(BeamBallEntity b, ItemStack st, Vec3 at) {
         if (!(b.getOwner() instanceof ServerPlayer p)) return;
-        var sl = p.serverLevel();
+        var sl = p.level();
         int phase = b.getPhase();
         if (Traits.has(st, "hydraulic.rapids")) {
             var tile = waterNear(sl, at);

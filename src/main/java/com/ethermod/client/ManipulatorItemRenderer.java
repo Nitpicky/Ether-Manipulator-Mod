@@ -8,7 +8,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -28,7 +28,7 @@ public class ManipulatorItemRenderer extends GeoItemRenderer<EtherManipulatorIte
 
     /** The texture recoloured for the stack's body colour (the painted one by default). */
     @Override
-    public ResourceLocation getTextureLocation(EtherManipulatorItem animatable) {
+    public Identifier getTextureLocation(EtherManipulatorItem animatable) {
         var stack = getCurrentItemStack();
         return stack == null || stack.isEmpty()
                 ? BodyTextures.BASE

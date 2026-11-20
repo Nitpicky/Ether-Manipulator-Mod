@@ -4,7 +4,7 @@ import com.ethermod.item.ManipulatorStage;
 import com.ethermod.manipulator.Manipulator;
 import com.ethermod.trait.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import java.nio.file.*;
 import java.util.*;
 
@@ -24,7 +24,7 @@ public final class PairScreenshotTour {
             for (var entry : TraitLines.all(p.registryAccess())) ModuleUnlocks.unlock(st, entry.getKey());
             for (int slot = 0; slot < 3; slot++) TraitBuild.setLine(st, slot, null);
             for (int slot = 0; slot < modules.length && slot < TraitBuild.openSlots(st); slot++) {
-                var id = ResourceLocation.fromNamespaceAndPath("ethermod", modules[slot]);
+                var id = Identifier.fromNamespaceAndPath("ethermod", modules[slot]);
                 TraitBuild.setLine(st, slot, id);
                 var line = TraitLines.get(p.registryAccess(), id).orElseThrow();
                 for (int tier = 0; tier < TraitBuild.openTiers(st); tier++)

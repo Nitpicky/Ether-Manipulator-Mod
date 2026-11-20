@@ -21,7 +21,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -399,8 +399,8 @@ public final class Fx {
     // Shader pack: into the world as a beacon-beam glow, solid to the pack
     // =========================================================================
 
-    private static final ResourceLocation WHITE =
-            ResourceLocation.fromNamespaceAndPath(EtherMod.MODID, "textures/misc/white.png");
+    private static final Identifier WHITE =
+            Identifier.fromNamespaceAndPath(EtherMod.MODID, "textures/misc/white.png");
 
     /**
      * How the effects are drawn with a shader pack. The pack decides which of its programs runs a

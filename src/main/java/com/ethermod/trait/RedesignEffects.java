@@ -3,7 +3,7 @@ package com.ethermod.trait;
 import com.ethermod.manipulator.Manipulator;
 
 import net.minecraft.core.*;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.*;
 import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.*;
@@ -27,19 +27,19 @@ import java.util.*;
 public final class RedesignEffects {
     private RedesignEffects() {}
 
-    private static final ResourceLocation MELEE = id("melee_badge"),
+    private static final Identifier MELEE = id("melee_badge"),
             REACH = id("melee_reach"),
             BLOCK_REACH = id("block_reach"),
             SWIM = id("swim_badge");
 
-    private static ResourceLocation id(String s) {
-        return ResourceLocation.fromNamespaceAndPath("ethermod", s);
+    private static Identifier id(String s) {
+        return Identifier.fromNamespaceAndPath("ethermod", s);
     }
 
     private static void attribute(
             Player p,
             net.minecraft.core.Holder<Attribute> key,
-            ResourceLocation id,
+            Identifier id,
             double value,
             AttributeModifier.Operation op) {
         var a = p.getAttribute(key);

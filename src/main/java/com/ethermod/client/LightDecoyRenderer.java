@@ -8,7 +8,7 @@ import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.*;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public final class LightDecoyRenderer extends MobRenderer<LightDecoy, PlayerModel<LightDecoy>> {
     private final PlayerModel<LightDecoy> normal, slim;
@@ -25,7 +25,7 @@ public final class LightDecoyRenderer extends MobRenderer<LightDecoy, PlayerMode
     }
 
     @Override
-    public ResourceLocation getTextureLocation(LightDecoy e) {
+    public Identifier getTextureLocation(LightDecoy e) {
         var connection = Minecraft.getInstance().getConnection();
         var info = connection == null ? null : connection.getPlayerInfo(e.owner());
         return info != null

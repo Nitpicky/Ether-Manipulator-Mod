@@ -41,7 +41,7 @@ public final class Manipulator {
         if (summoned && !data(player).owned()) return; // not given yet (server config)
         data(player).setSummoned(summoned);
         // Give the stack its own GeckoLib animation id, so each player's prongs animate on their own
-        if (summoned) GeoItem.getOrAssignId(data(player).stack(), player.serverLevel());
+        if (summoned) GeoItem.getOrAssignId(data(player).stack(), player.level());
         if (summoned) com.ethermod.advancement.ManipulatorTrigger.fire(player, "summon");
         sync(player);
     }

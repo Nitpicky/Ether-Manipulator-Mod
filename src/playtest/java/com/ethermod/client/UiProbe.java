@@ -132,14 +132,14 @@ public final class UiProbe {
                                                         new net.minecraft.world.item.ItemStack(
                                                                 net.minecraft.world.item.Items
                                                                         .NETHERITE_SWORD));
-                                        p.serverLevel().setDayTime(18000);
-                                        p.serverLevel()
+                                        p.level().setDayTime(18000);
+                                        p.level()
                                                 .getGameRules()
                                                 .getRule(
                                                         net.minecraft.world.level.GameRules
                                                                 .RULE_DAYLIGHT)
                                                 .set(false, p.getServer());
-                                        p.serverLevel()
+                                        p.level()
                                                 .getGameRules()
                                                 .getRule(
                                                         net.minecraft.world.level.GameRules
@@ -148,16 +148,16 @@ public final class UiProbe {
                                         var pet =
                                                 com.ethermod.registry.ModEntities.SOUL_BLAZELING
                                                         .get()
-                                                        .create(p.serverLevel());
+                                                        .create(p.level());
                                         pet.configure(p);
                                         pet.setPos(p.position().add(2, 1, 0));
-                                        p.serverLevel().addFreshEntity(pet);
+                                        p.level().addFreshEntity(pet);
                                         for (int n = 0; n < 4; n++) {
                                             var mob =
                                                     net.minecraft.world.entity.EntityType.HUSK
-                                                            .create(p.serverLevel());
+                                                            .create(p.level());
                                             mob.setPos(p.position().add(n * 2 - 3, 0, 9));
-                                            p.serverLevel().addFreshEntity(mob);
+                                            p.level().addFreshEntity(mob);
                                         }
                                         Manipulator.sync(p);
                                         p.sendSystemMessage(
@@ -213,7 +213,7 @@ public final class UiProbe {
                                             t -> {
                                                 t.putInt("mm_tank", 40);
                                             });
-                                    var sl = p.serverLevel();
+                                    var sl = p.level();
                                     var origin = p.blockPosition();
                                     for (int x = -7; x <= 7; x++)
                                         for (int z = -7; z <= 7; z++)
@@ -381,7 +381,7 @@ public final class UiProbe {
                                         mc.getSingleplayerServer()
                                                 .getPlayerList()
                                                 .getPlayer(mc.player.getUUID());
-                                var sl = p.serverLevel();
+                                var sl = p.level();
                                 var st = Manipulator.stack(p);
                                 TraitBuild.setLine(st, 0, Traits.GRAVITIC);
                                 setPickChecked(st, 0, 0, "gravitic.gravity_shift");
@@ -1094,7 +1094,7 @@ public final class UiProbe {
                                                 com.ethermod.trait.TankReload.reloadDelay(st)
                                                         - 1);
                                 Scheduler.schedule(
-                                        p.serverLevel(),
+                                        p.level(),
                                         2,
                                         () -> {
                                             check(
@@ -1142,7 +1142,7 @@ public final class UiProbe {
                                     MovementPhysics.setGravity(p, dir);
                                     var hook =
                                             new com.ethermod.beam.BeamBallEntity(
-                                                    p.serverLevel(),
+                                                    p.level(),
                                                     p,
                                                     0,
                                                     ManipulatorStage.NETHERITE,
@@ -1188,7 +1188,7 @@ public final class UiProbe {
                                                                                     .Y
                                                                     ? wall.offset(a, 0, b)
                                                                     : wall.offset(a, b, 0);
-                                            p.serverLevel()
+                                            p.level()
                                                     .setBlockAndUpdate(
                                                             cell,
                                                             net.minecraft.world.level.block.Blocks
@@ -1259,7 +1259,7 @@ public final class UiProbe {
                                                     + direction,
                                             stood && maximum - minimum < .005 && p.onGround());
                                     var roof = wall.relative(face, 2);
-                                    p.serverLevel()
+                                    p.level()
                                             .setBlockAndUpdate(
                                                     roof,
                                                     net.minecraft.world.level.block.Blocks.STONE
@@ -1269,7 +1269,7 @@ public final class UiProbe {
                                             "Real low clearance still allows crawling " + direction,
                                             p.getPose()
                                                     == net.minecraft.world.entity.Pose.SWIMMING);
-                                    p.serverLevel()
+                                    p.level()
                                             .setBlockAndUpdate(
                                                     roof,
                                                     net.minecraft.world.level.block.Blocks.AIR
@@ -1298,7 +1298,7 @@ public final class UiProbe {
                                 var wall = p.blockPosition().offset(4, 0, 0);
                                 for (int y = -2; y <= 3; y++)
                                     for (int z = -2; z <= 2; z++)
-                                        p.serverLevel()
+                                        p.level()
                                                 .setBlockAndUpdate(
                                                         wall.offset(0, y, z),
                                                         net.minecraft.world.level.block.Blocks.STONE
@@ -1309,7 +1309,7 @@ public final class UiProbe {
                                 check(
                                         "Rotated collision sweep stops at terrain",
                                         swept.x < 4
-                                                && p.serverLevel()
+                                                && p.level()
                                                         .noCollision(
                                                                 p,
                                                                 p.getBoundingBox()
@@ -1322,7 +1322,7 @@ public final class UiProbe {
                                     for (int x = -1; x <= 1; x++)
                                         for (int z = -1; z <= 1; z++)
                                             if (x != 0 || z != 0 || y == 0 || y == 5)
-                                                p.serverLevel()
+                                                p.level()
                                                         .setBlockAndUpdate(
                                                                 shaft.offset(x, y, z),
                                                                 net.minecraft.world.level.block
@@ -1340,7 +1340,7 @@ public final class UiProbe {
                                 p.setPos(safe);
                                 var pos = p.position();
                                 p.teleportTo(
-                                        p.serverLevel(),
+                                        p.level(),
                                         pos.x,
                                         pos.y + 8,
                                         pos.z,
@@ -1350,7 +1350,7 @@ public final class UiProbe {
                                 MovementPhysics.setGravity(p, net.minecraft.core.Direction.EAST);
                                 Manipulator.sync(p);
                                 Scheduler.schedule(
-                                        p.serverLevel(),
+                                        p.level(),
                                         5,
                                         () -> {
                                             var orientation = MovementPhysics.viewRotation(p, 0);
@@ -1373,13 +1373,13 @@ public final class UiProbe {
                                                 .getPlayerList()
                                                 .getPlayer(mc.player.getUUID());
                                 noCrackFire = p.blockPosition().offset(4, 4, 4);
-                                p.serverLevel()
+                                p.level()
                                         .setBlockAndUpdate(
                                                 noCrackFire.below(),
                                                 net.minecraft.world.level.block.Blocks.STONE
                                                         .defaultBlockState());
                                 TempBlocks.tempBlock(
-                                        p.serverLevel(),
+                                        p.level(),
                                         noCrackFire,
                                         net.minecraft.world.level.block.Blocks.SOUL_FIRE
                                                 .defaultBlockState(),

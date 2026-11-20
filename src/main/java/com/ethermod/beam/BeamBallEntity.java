@@ -407,7 +407,7 @@ public class BeamBallEntity extends Projectile {
         OrbMode mode = getMode();
         // CLIENT: only advance position (with the mode's gravity), no game logic.
         // (maxRange = 0 on client, so a range check would instantly discard)
-        if (level().isClientSide) {
+        if (level().isClientSide()) {
             if (isStuck()) {
                 if (mode == OrbMode.TETHER && !isAnchor() && clientRopeTick != null)
                     clientRopeTick.accept(this);
@@ -426,7 +426,7 @@ public class BeamBallEntity extends Projectile {
             return;
         }
 
-        if (mode == OrbMode.MASS && !level().isClientSide && MassDriver.heldTick(this)) return;
+        if (mode == OrbMode.MASS && !level().isClientSide() && MassDriver.heldTick(this)) return;
         // SERVER: full physics
         if ((mode == OrbMode.LAVA || mode == OrbMode.IGNITE) && getOwner() instanceof ServerPlayer pyro)
             pyro.getPersistentData()

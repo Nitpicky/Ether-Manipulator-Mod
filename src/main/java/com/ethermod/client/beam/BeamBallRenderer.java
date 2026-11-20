@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -41,8 +41,8 @@ import java.util.Map;
 @OnlyIn(Dist.CLIENT)
 public class BeamBallRenderer extends EntityRenderer<BeamBallEntity> {
 
-    private static final ResourceLocation NO_TEXTURE =
-            ResourceLocation.fromNamespaceAndPath(EtherMod.MODID, "textures/entity/beam_ball.png");
+    private static final Identifier NO_TEXTURE =
+            Identifier.fromNamespaceAndPath(EtherMod.MODID, "textures/entity/beam_ball.png");
 
     /** Visual radius per charge phase. */
     private static final float[] PHASE_RADIUS = {0.14f, 0.24f, 0.38f};
@@ -427,7 +427,7 @@ public class BeamBallRenderer extends EntityRenderer<BeamBallEntity> {
     }
 
     @Override
-    public ResourceLocation getTextureLocation(BeamBallEntity entity) {
+    public Identifier getTextureLocation(BeamBallEntity entity) {
         return NO_TEXTURE;
     }
 

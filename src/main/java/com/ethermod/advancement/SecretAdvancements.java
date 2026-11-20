@@ -64,7 +64,7 @@ public final class SecretAdvancements {
     @SubscribeEvent
     public static void sleep(PlayerTickEvent.Post ev) {
         if (!(ev.getEntity() instanceof ServerPlayer sp) || !sp.isSleeping() || sp.getSleepTimer() != 20) return;
-        ServerLevel sl = sp.serverLevel();
+        ServerLevel sl = sp.level();
         BlockPos bed = sp.getSleepingPos().orElse(sp.blockPosition());
         boolean bounce = false;
         for (BlockPos q : BlockPos.betweenClosed(bed.offset(-8, -4, -8), bed.offset(8, 4, 8))) {

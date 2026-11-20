@@ -9,7 +9,7 @@ import net.minecraft.client.model.geom.builders.*;
 public final class BlazelingModel extends HierarchicalModel<SoulBlazeling> {
     public static final ModelLayerLocation LAYER =
             new ModelLayerLocation(
-                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(
+                    net.minecraft.resources.Identifier.fromNamespaceAndPath(
                             "ethermod", "soul_blazeling"),
                     "main");
     private final ModelPart root, head;

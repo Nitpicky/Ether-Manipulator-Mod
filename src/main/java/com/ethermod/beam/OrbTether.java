@@ -278,7 +278,7 @@ public final class OrbTether {
     public static BeamBallEntity activeHook(ServerPlayer sp) {
         Integer id = HOOKS.get(sp.getUUID());
         if (id == null) return null;
-        if (sp.serverLevel().getEntity(id) instanceof BeamBallEntity e
+        if (sp.level().getEntity(id) instanceof BeamBallEntity e
                 && e.getOwner() == sp
                 && e.getMode() == OrbMode.TETHER
                 && !e.isAnchor()
@@ -298,7 +298,7 @@ public final class OrbTether {
 
     /** Left click: fires a new hook (the old one lets go). */
     public static void fire(ServerPlayer sp, net.minecraft.world.item.ItemStack stack) {
-        ServerLevel sl = sp.serverLevel();
+        ServerLevel sl = sp.level();
         var old = activeHook(sp);
         if (old != null) {
             unhookFx(old, sl);
@@ -339,7 +339,7 @@ public final class OrbTether {
      * Blink or Gravity Shift, and true (nothing to hold). Otherwise it starts reeling.
      */
     public static boolean press(BeamBallEntity b, ServerPlayer sp) {
-        long now = sp.serverLevel().getGameTime();
+        long now = sp.level().getGameTime();
         boolean twice = now - b.lastPress <= DOUBLE_TAP;
         b.lastPress = now;
         b.idleTicks = 0;
@@ -370,7 +370,7 @@ public final class OrbTether {
 
     /** Blink: teleport to the hook (beside a caught creature, on the face of a caught block). */
     private static void blink(BeamBallEntity b, ServerPlayer sp) {
-        ServerLevel sl = sp.serverLevel();
+        ServerLevel sl = sp.level();
         if (b.hooked != null) {
             var dest = b.hooked.position().subtract(sp.getLookAngle().scale(1.2));
             if (sl.noCollision(sp, sp.getBoundingBox().move(dest.subtract(sp.position()))))
@@ -517,7 +517,7 @@ public final class OrbTether {
 
     /** Blink: teleports the player to {@code at}, with portal particles and sounds at both ends. */
     static void blinkTo(ServerPlayer player, Vec3 at) {
-        ServerLevel sl = player.serverLevel();
+        ServerLevel sl = player.level();
         Vec3 old = player.position();
         sl.sendParticles(ParticleTypes.PORTAL, old.x, old.y + 1, old.z, 32, .3, .7, .3, .15);
         player.teleportTo(

@@ -6,7 +6,7 @@ import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.*;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.inventory.InventoryMenu;
 
 /** Vanilla animated soul-fire sprite gives the small fireball a soul-fire skin. */
@@ -15,7 +15,7 @@ public final class SoulBoltRenderer extends EntityRenderer<SoulBolt> {
         super(context);
     }
 
-    public ResourceLocation getTextureLocation(SoulBolt entity) {
+    public Identifier getTextureLocation(SoulBolt entity) {
         return InventoryMenu.BLOCK_ATLAS;
     }
 
@@ -35,7 +35,7 @@ public final class SoulBoltRenderer extends EntityRenderer<SoulBolt> {
         var sprite =
                 Minecraft.getInstance()
                         .getTextureAtlas(InventoryMenu.BLOCK_ATLAS)
-                        .apply(ResourceLocation.withDefaultNamespace("block/soul_fire_0"));
+                        .apply(Identifier.withDefaultNamespace("block/soul_fire_0"));
         pose.pushPose();
         pose.mulPose(entityRenderDispatcher.cameraOrientation());
         pose.scale(.75f, .75f, .75f);

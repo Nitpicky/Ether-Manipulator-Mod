@@ -75,7 +75,7 @@ public class ClientEvents {
             net.neoforged.neoforge.client.event.RegisterGuiLayersEvent event) {
         event.registerAbove(
                 net.neoforged.neoforge.client.gui.VanillaGuiLayers.HOTBAR,
-                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(
+                net.minecraft.resources.Identifier.fromNamespaceAndPath(
                         EtherMod.MODID, "manipulator_hud"),
                 com.ethermod.client.ManipulatorHud::render);
     }

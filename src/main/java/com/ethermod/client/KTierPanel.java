@@ -12,7 +12,7 @@ import com.mojang.blaze3d.platform.NativeImage;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.texture.DynamicTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,10 +29,10 @@ final class KTierPanel {
     private final IntConsumer openPicker;
     private final Runnable onPick;
     final int slot;
-    final ResourceLocation texture;
+    final Identifier texture;
     DynamicTexture dynamic;
     NativeImage image;
-    ResourceLocation lastModule;
+    Identifier lastModule;
     int lastStage = -1;
     String[] lastPicks = {"", "", ""};
     int[] previous, finalPixels, oldLink, newLink;
@@ -47,7 +47,7 @@ final class KTierPanel {
         this.audio = audio;
         this.openPicker = openPicker;
         this.onPick = onPick;
-        texture = ResourceLocation.fromNamespaceAndPath("ethermod", "ui/panel_" + slot);
+        texture = Identifier.fromNamespaceAndPath("ethermod", "ui/panel_" + slot);
     }
 
     void reset() {
@@ -78,7 +78,7 @@ final class KTierPanel {
     }
 
     /** Starts the reveal or the pick cross-fade when the slot's module or choices changed. */
-    private void trackChanges(ResourceLocation id, TraitLine line, boolean unlocked, String[] picks) {
+    private void trackChanges(Identifier id, TraitLine line, boolean unlocked, String[] picks) {
         if (lastStage < 0) {
             if (unlocked) start();
         } else if (unlocked && (slot >= lastStage || !Objects.equals(id, lastModule))) {
@@ -206,7 +206,7 @@ final class KTierPanel {
 
     /** Tier {@code t}'s two choice nodes, their hover glow, hit areas and A/B letters. */
     private void drawNodes(
-            Raster r, Palette pal, ResourceLocation id, TraitLine line, int[] chosen, int t, int y) {
+            Raster r, Palette pal, Identifier id, TraitLine line, int[] chosen, int t, int y) {
         int[] nx = NODE_X;
         for (int n = 0; n < 2; n++) {
             int yy = 6 + n * 17;
@@ -272,7 +272,7 @@ final class KTierPanel {
 
     /** The common node after tier {@code t} (II, III): locked until the next stage. */
     private void drawCommon(
-            Raster r, Palette pal, ResourceLocation id, TraitLine line, int[] chosen, int t, int y) {
+            Raster r, Palette pal, Identifier id, TraitLine line, int[] chosen, int t, int y) {
         int[] cx = COMMON_X;
         boolean on = chosen[t] >= 0 && t + 1 < ui.stage();
         r.owner = 14 + t;
@@ -327,7 +327,7 @@ final class KTierPanel {
     }
 
     /** The module badge on the left: opens the module picker. */
-    private void drawBadge(Raster r, Palette pal, ResourceLocation id, TraitLine line, int y) {
+    private void drawBadge(Raster r, Palette pal, Identifier id, TraitLine line, int y) {
         r.owner = 16;
         double badgeHover =
                 ui.now - changed < .28 || ui.now - switched < 1.43

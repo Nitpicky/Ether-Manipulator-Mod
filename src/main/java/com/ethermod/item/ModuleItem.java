@@ -4,7 +4,7 @@ import com.ethermod.manipulator.Manipulator;
 import com.ethermod.trait.ModuleUnlocks;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
@@ -12,15 +12,15 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 
 public final class ModuleItem extends Item {
-    private final ResourceLocation module;
+    private final Identifier module;
 
-    public ResourceLocation module() {
+    public Identifier module() {
         return module;
     }
 
     public ModuleItem(String module) {
         super(new Properties().rarity(Rarity.UNCOMMON));
-        this.module = ResourceLocation.fromNamespaceAndPath("ethermod", module);
+        this.module = Identifier.fromNamespaceAndPath("ethermod", module);
     }
 
     @Override
@@ -31,7 +31,7 @@ public final class ModuleItem extends Item {
             if (!grant(sp, module)) return InteractionResultHolder.fail(item);
             item.consume(1, sp);
         }
-        return InteractionResultHolder.sidedSuccess(item, level.isClientSide);
+        return InteractionResultHolder.sidedSuccess(item, level.isClientSide());
     }
 
     /**
@@ -40,7 +40,7 @@ public final class ModuleItem extends Item {
      * {@code /ethermod unlock}, so modpacks can hand Modules out through quests or their own items.
      * False when the player already knew it or the server disabled it.
      */
-    public static boolean grant(ServerPlayer sp, ResourceLocation module) {
+    public static boolean grant(ServerPlayer sp, Identifier module) {
         if (com.ethermod.config.ServerConfig.moduleDisabled(module.getPath())) {
             sp.displayClientMessage(Component.translatable("message.ethermod.module_disabled"), true);
             return false;
@@ -90,7 +90,7 @@ public final class ModuleItem extends Item {
             case "photonic" -> {
                 cue =
                         net.minecraft.sounds.SoundEvent.createVariableRangeEvent(
-                                ResourceLocation.fromNamespaceAndPath("ethermod", "mode.photonic"));
+                                Identifier.fromNamespaceAndPath("ethermod", "mode.photonic"));
                 vol = 1f;
                 pitch = 1f;
             }

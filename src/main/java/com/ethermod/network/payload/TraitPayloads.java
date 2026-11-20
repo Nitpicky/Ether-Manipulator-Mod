@@ -7,7 +7,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Optional;
 
@@ -18,17 +18,17 @@ public final class TraitPayloads {
 
     private static <T extends CustomPacketPayload> CustomPacketPayload.Type<T> typeOf(String path) {
         return new CustomPacketPayload.Type<>(
-                ResourceLocation.fromNamespaceAndPath(EtherMod.MODID, path));
+                Identifier.fromNamespaceAndPath(EtherMod.MODID, path));
     }
 
     /** Equip a line in a slot; empty clears the slot. */
-    public record Equip(int slot, Optional<ResourceLocation> line) implements CustomPacketPayload {
+    public record Equip(int slot, Optional<Identifier> line) implements CustomPacketPayload {
         public static final Type<Equip> TYPE = typeOf("trait_equip");
         public static final StreamCodec<ByteBuf, Equip> CODEC =
                 StreamCodec.composite(
                         ByteBufCodecs.VAR_INT,
                         Equip::slot,
-                        ByteBufCodecs.optional(ResourceLocation.STREAM_CODEC),
+                        ByteBufCodecs.optional(Identifier.STREAM_CODEC),
                         Equip::line,
                         Equip::new);
 

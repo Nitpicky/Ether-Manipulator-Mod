@@ -2,7 +2,7 @@ package com.ethermod.trait;
 
 import com.ethermod.EtherMod;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 
 /**
@@ -13,22 +13,22 @@ public final class Traits {
 
     private Traits() {}
 
-    public static final ResourceLocation TECTONIC = id("tectonic");
-    public static final ResourceLocation PLASMIC = id("plasmic");
-    public static final ResourceLocation KINETIC = id("kinetic");
-    public static final ResourceLocation HYDRAULIC = id("hydraulic");
-    public static final ResourceLocation BOTANIC = id("botanic");
-    public static final ResourceLocation GRAVITIC = id("gravitic");
-    public static final ResourceLocation PYROTECHNIC = id("pyrotechnic");
-    public static final ResourceLocation PNEUMATIC = id("pneumatic");
-    public static final ResourceLocation PHOTONIC = id("photonic");
+    public static final Identifier TECTONIC = id("tectonic");
+    public static final Identifier PLASMIC = id("plasmic");
+    public static final Identifier KINETIC = id("kinetic");
+    public static final Identifier HYDRAULIC = id("hydraulic");
+    public static final Identifier BOTANIC = id("botanic");
+    public static final Identifier GRAVITIC = id("gravitic");
+    public static final Identifier PYROTECHNIC = id("pyrotechnic");
+    public static final Identifier PNEUMATIC = id("pneumatic");
+    public static final Identifier PHOTONIC = id("photonic");
 
-    private static ResourceLocation id(String path) {
-        return ResourceLocation.fromNamespaceAndPath(EtherMod.MODID, path);
+    private static Identifier id(String path) {
+        return Identifier.fromNamespaceAndPath(EtherMod.MODID, path);
     }
 
     /** The line is equipped in an open slot (its badge is active). */
-    public static boolean hasLine(ItemStack stack, ResourceLocation line) {
+    public static boolean hasLine(ItemStack stack, Identifier line) {
         return TraitBuild.slotOf(stack, line) >= 0;
     }
 
@@ -36,7 +36,7 @@ public final class Traits {
      * A line's common node is active: common 0 opens with Master (Diamond), common 1 with
      * Grandmaster (Netherite).
      */
-    public static boolean hasCommon(ItemStack stack, ResourceLocation line, int common) {
+    public static boolean hasCommon(ItemStack stack, Identifier line, int common) {
         // Iron: badge + Adept; Diamond: common 1 + Master; Netherite: common 2 + Grandmaster
         int slot = TraitBuild.slotOf(stack, line);
         if (slot < 0 || common < 0 || common > 1 || TraitBuild.openTiers(stack) < common + 2)

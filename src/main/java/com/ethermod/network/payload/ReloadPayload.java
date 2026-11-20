@@ -7,7 +7,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Server → the reloading player: the shared tank fills in {@code ticks} ticks. Starts the reload
@@ -16,7 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 public record ReloadPayload(int ticks) implements CustomPacketPayload {
 
     public static final Type<ReloadPayload> TYPE =
-            new Type<>(ResourceLocation.fromNamespaceAndPath(EtherMod.MODID, "reload"));
+            new Type<>(Identifier.fromNamespaceAndPath(EtherMod.MODID, "reload"));
 
     public static final StreamCodec<ByteBuf, ReloadPayload> CODEC =
             StreamCodec.composite(ByteBufCodecs.VAR_INT, ReloadPayload::ticks, ReloadPayload::new);

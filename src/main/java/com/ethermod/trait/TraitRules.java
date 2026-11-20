@@ -4,7 +4,7 @@ import com.ethermod.manipulator.Manipulator;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 
@@ -29,7 +29,7 @@ public final class TraitRules {
     private static final Map<UUID, Long> LAST_COMBAT = new HashMap<>();
 
     public static void markCombat(ServerPlayer player) {
-        LAST_COMBAT.put(player.getUUID(), player.serverLevel().getGameTime());
+        LAST_COMBAT.put(player.getUUID(), player.level().getGameTime());
     }
 
     public static void forget(UUID id) {
@@ -42,17 +42,17 @@ public final class TraitRules {
 
     public static boolean inCombat(ServerPlayer player) {
         Long t = LAST_COMBAT.get(player.getUUID());
-        return t != null && player.serverLevel().getGameTime() - t < COMBAT_TICKS;
+        return t != null && player.level().getGameTime() - t < COMBAT_TICKS;
     }
 
     /** Equip a line in a slot, or clear it (lineId null). */
-    public static void equip(ServerPlayer player, int slot, @Nullable ResourceLocation lineId) {
+    public static void equip(ServerPlayer player, int slot, @Nullable Identifier lineId) {
         ItemStack stack = Manipulator.stack(player);
         if (slot < 0 || slot >= TraitBuild.openSlots(stack)) {
             deny(player, "slot_locked");
             return;
         }
-        ResourceLocation current = TraitBuild.line(stack, slot);
+        Identifier current = TraitBuild.line(stack, slot);
         if (lineId != null && lineId.equals(current)) return;
         if (lineId != null) {
             if (TraitLines.get(player.registryAccess(), lineId).isEmpty()) return;
@@ -77,7 +77,7 @@ public final class TraitRules {
     /** Choose one of the two traits of a tier. */
     public static void pick(ServerPlayer player, int slot, int tier, int choice) {
         ItemStack stack = Manipulator.stack(player);
-        ResourceLocation lineId = TraitBuild.line(stack, slot);
+        Identifier lineId = TraitBuild.line(stack, slot);
         if (lineId == null || tier < 0 || tier >= TraitLine.TIERS || choice < 0 || choice > 1)
             return;
         if (tier >= TraitBuild.openTiers(stack)) {

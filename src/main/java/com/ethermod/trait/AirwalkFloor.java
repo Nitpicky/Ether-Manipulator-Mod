@@ -22,7 +22,7 @@ public final class AirwalkFloor {
 
     /** Shortens a collided movement so the feet stop on the floor instead of falling through. */
     public static Vec3 clamp(Entity e, Vec3 moved) {
-        if (!armed || e != owner || !(e instanceof Player p) || !p.level().isClientSide)
+        if (!armed || e != owner || !(e instanceof Player p) || !p.level().isClientSide())
             return moved;
         Vec3 up = MovementPhysics.vector(MovementPhysics.down(p).getOpposite());
         double fall = moved.dot(up);

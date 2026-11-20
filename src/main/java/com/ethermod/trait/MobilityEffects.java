@@ -6,7 +6,7 @@ import com.ethermod.manipulator.Manipulator;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
@@ -27,10 +27,10 @@ public final class MobilityEffects {
     private MobilityEffects() {}
 
     private static final String SOFT_LANDING = "ethermod_soft_landing";
-    private static final ResourceLocation STRIDE_ID =
-            ResourceLocation.fromNamespaceAndPath(EtherMod.MODID, "stride");
-    private static final ResourceLocation TAILWIND_ID =
-            ResourceLocation.fromNamespaceAndPath(EtherMod.MODID, "tailwind");
+    private static final Identifier STRIDE_ID =
+            Identifier.fromNamespaceAndPath(EtherMod.MODID, "stride");
+    private static final Identifier TAILWIND_ID =
+            Identifier.fromNamespaceAndPath(EtherMod.MODID, "tailwind");
 
     /** Soft Landing: no fall damage for a few seconds after a tether pull or Tidecaller launch. */
     public static void markSoftLanding(Player player) {
@@ -78,7 +78,7 @@ public final class MobilityEffects {
         sp.getPersistentData().putBoolean("mm_airjump_used", true);
         sp.getPersistentData().putLong(AIR_JUMP, now);
         sp.resetFallDistance();
-        ServerLevel sl = sp.serverLevel();
+        ServerLevel sl = sp.level();
         sl.sendParticles(ParticleTypes.GUST, sp.getX(), sp.getY(), sp.getZ(), 1, 0, 0, 0, 0);
         sl.sendParticles(
                 ParticleTypes.CLOUD, sp.getX(), sp.getY(), sp.getZ(), 8, 0.3, 0.05, 0.3, 0.02);
@@ -158,7 +158,7 @@ public final class MobilityEffects {
             }
         }
         if (tail)
-            sp.serverLevel()
+            sp.level()
                     .sendParticles(
                             ParticleTypes.CLOUD,
                             sp.getX(),
@@ -204,7 +204,7 @@ public final class MobilityEffects {
         sp.setHealth(8f);
         sp.clearFire();
         sp.getPersistentData().putLong(PHOENIX, now);
-        ServerLevel sl = sp.serverLevel();
+        ServerLevel sl = sp.level();
         OwnedFire.fireRing(sl, sp.blockPosition(), sp, 2);
         for (net.minecraft.world.entity.LivingEntity e :
                 sl.getEntitiesOfClass(

@@ -21,7 +21,7 @@ public final class SoulBolt extends SmallFireball {
     @Override
     public void tick() {
         super.tick();
-        if (!level().isClientSide && tickCount > 100) discard();
+        if (!level().isClientSide() && tickCount > 100) discard();
     }
 
     @Override
@@ -35,7 +35,7 @@ public final class SoulBolt extends SmallFireball {
 
     @Override
     protected void onHitEntity(EntityHitResult hit) {
-        if (level().isClientSide
+        if (level().isClientSide()
                 || !(hit.getEntity() instanceof LivingEntity target)
                 || !(getOwner() instanceof SoulBlazeling pet)) return;
         var owner = pet.summoner();
@@ -53,6 +53,6 @@ public final class SoulBolt extends SmallFireball {
 
     @Override
     protected void onHitBlock(BlockHitResult hit) {
-        if (!level().isClientSide) discard();
+        if (!level().isClientSide()) discard();
     }
 }

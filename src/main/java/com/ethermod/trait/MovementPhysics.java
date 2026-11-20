@@ -164,7 +164,7 @@ public final class MovementPhysics {
         p.resetFallDistance();
         p.setNoGravity(direction != Direction.DOWN);
         p.teleportTo(
-                p.serverLevel(),
+                p.level(),
                 chosen.x,
                 chosen.y,
                 chosen.z,
@@ -220,7 +220,7 @@ public final class MovementPhysics {
 
     /** Jump held: the client reads its own keys (ClientMobility), the server the last Motion. */
     public static boolean jump(Player p) {
-        if (p.level().isClientSide) return (p.getPersistentData().getInt("mm_motion") & 1) != 0;
+        if (p.level().isClientSide()) return (p.getPersistentData().getInt("mm_motion") & 1) != 0;
         return (MOTION.getOrDefault(p.getUUID(), 0) & 1) != 0;
     }
 
@@ -401,7 +401,7 @@ public final class MovementPhysics {
         p.horizontalCollision = sideWanted.distanceToSqr(sideMoved) > .000001;
         p.setOnGround(below);
         // the holder's own steps (others hear them from the server tick below)
-        if (below && !water && !lava && !p.isSpectator() && p.level().isClientSide)
+        if (below && !water && !lava && !p.isSpectator() && p.level().isClientSide())
             footsteps(p, sideMoved, up);
         Vec3 after =
                 new Vec3(
@@ -538,7 +538,7 @@ public final class MovementPhysics {
             double reach = Math.min(8, 2 + fell / 3);
             int phase = fell >= 10 ? 2 : fell >= 4 ? 1 : 0;
             for (var target :
-                    p.serverLevel()
+                    p.level()
                             .getEntitiesOfClass(
                                     net.minecraft.world.entity.LivingEntity.class,
                                     p.getBoundingBox().inflate(reach),
@@ -555,8 +555,8 @@ public final class MovementPhysics {
             // the gust blast (which can throw mobs into a fall) only from a real fall
             if (fell >= 4)
                 com.ethermod.beam.ProjectileEffects.gust(
-                        p.serverLevel(), p, st, p.position(), phase, false);
-            p.serverLevel()
+                        p.level(), p, st, p.position(), phase, false);
+            p.level()
                     .playSound(
                             null,
                             p.getX(),

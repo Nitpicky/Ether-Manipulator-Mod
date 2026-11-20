@@ -89,7 +89,7 @@ public final class GustGrenade {
     public static void throwFrom(ServerPlayer p, ItemStack stack) {
         var g = new Grenade(p, stack);
         g.windup = WINDUP;
-        LIVE.computeIfAbsent(p.serverLevel(), k -> new ArrayList<>()).add(g);
+        LIVE.computeIfAbsent(p.level(), k -> new ArrayList<>()).add(g);
     }
 
     /** The flick: aimed where the owner looks now, not where they looked at the click. */
@@ -98,7 +98,7 @@ public final class GustGrenade {
         Vec3 look = p.getLookAngle();
         g.pos = p.getEyePosition().add(look.scale(0.8)).add(0, -0.15, 0);
         g.vel = look.scale(1.3).add(p.getDeltaMovement().multiply(1, 0, 1));
-        p.serverLevel()
+        p.level()
                 .playSound(
                         null,
                         p.getX(),
@@ -113,13 +113,13 @@ public final class GustGrenade {
     /** Detonator: bursts this player's grenades still in the air; true if any did. */
     public static boolean detonateFor(ServerPlayer p, ItemStack stack) {
         if (!Traits.has(stack, "kinetic.detonator")) return false;
-        var list = LIVE.get(p.serverLevel());
+        var list = LIVE.get(p.level());
         if (list == null) return false;
         boolean any = false;
         for (var it = list.iterator(); it.hasNext(); ) {
             Grenade g = it.next();
             if (g.owner != p || g.windup > 0 || g.landed) continue;
-            burst(p.serverLevel(), g);
+            burst(p.level(), g);
             it.remove();
             any = true;
         }

@@ -6,7 +6,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 
@@ -42,12 +42,12 @@ public final class TraitBuild {
 
     /** The line in a slot, or null. Slots above the open count read as empty. */
     @Nullable
-    public static ResourceLocation line(ItemStack stack, int slot) {
+    public static Identifier line(ItemStack stack, int slot) {
         if (slot < 0 || slot >= openSlots(stack)) return null;
         ListTag list = slotsTag(stack);
         if (slot >= list.size()) return null;
         String s = list.getCompound(slot).getString("line");
-        return s.isEmpty() ? null : ResourceLocation.tryParse(s);
+        return s.isEmpty() ? null : Identifier.tryParse(s);
     }
 
     /** The chosen trait id for a slot and tier, or "" (also "" if the tier isn't open). */
@@ -59,7 +59,7 @@ public final class TraitBuild {
         return TraitChoices.resolve(line(stack, slot).getPath(), saved, tier);
     }
 
-    public static int slotOf(ItemStack stack, ResourceLocation lineId) {
+    public static int slotOf(ItemStack stack, Identifier lineId) {
         for (int i = 0; i < MAX_SLOTS; i++) if (lineId.equals(line(stack, i))) return i;
         return -1;
     }
@@ -71,7 +71,7 @@ public final class TraitBuild {
 
     // ---- Writes (server) -----------------------------------------------------
 
-    public static void setLine(ItemStack stack, int slot, @Nullable ResourceLocation lineId) {
+    public static void setLine(ItemStack stack, int slot, @Nullable Identifier lineId) {
         edit(
                 stack,
                 list -> {

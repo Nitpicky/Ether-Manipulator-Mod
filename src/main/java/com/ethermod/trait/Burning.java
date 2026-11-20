@@ -44,7 +44,7 @@ public final class Burning {
                 && target.tickCount - d.getInt("mm_flashover") > 20) {
             d.putInt("mm_flashover", target.tickCount);
             for (var e :
-                    owner.serverLevel()
+                    owner.level()
                             .getEntitiesOfClass(
                                     LivingEntity.class,
                                     target.getBoundingBox().inflate(3),

@@ -5,7 +5,7 @@ import com.ethermod.EtherMod;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Client → Server
@@ -18,7 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 public record BeamActivePayload(boolean active) implements CustomPacketPayload {
 
     public static final Type<BeamActivePayload> TYPE =
-            new Type<>(ResourceLocation.fromNamespaceAndPath(EtherMod.MODID, "beam_active"));
+            new Type<>(Identifier.fromNamespaceAndPath(EtherMod.MODID, "beam_active"));
 
     public static final StreamCodec<FriendlyByteBuf, BeamActivePayload> CODEC =
             StreamCodec.of(

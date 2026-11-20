@@ -3,7 +3,7 @@ package com.ethermod.client;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.*;
 import net.minecraft.util.RandomSource;
 
@@ -56,7 +56,7 @@ final class UpgradeAudio {
         for (var it = pending.iterator(); it.hasNext(); ) {
             var c = it.next();
             if (now < c.at()) continue;
-            var id = ResourceLocation.parse(c.event());
+            var id = Identifier.parse(c.event());
             var event =
                     id.getNamespace().equals("ethermod")
                             ? Optional.of(SoundEvent.createVariableRangeEvent(id))

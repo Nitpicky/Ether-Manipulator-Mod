@@ -5,7 +5,7 @@ import com.ethermod.EtherMod;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 
 import java.util.Comparator;
@@ -20,18 +20,18 @@ public final class TraitLines {
 
     public static final ResourceKey<Registry<TraitLine>> KEY =
             ResourceKey.createRegistryKey(
-                    ResourceLocation.fromNamespaceAndPath(EtherMod.MODID, "trait_line"));
+                    Identifier.fromNamespaceAndPath(EtherMod.MODID, "trait_line"));
 
     public static void onNewRegistry(DataPackRegistryEvent.NewRegistry event) {
         event.dataPackRegistry(KEY, TraitLine.CODEC, TraitLine.CODEC);
     }
 
-    public static Optional<TraitLine> get(RegistryAccess access, ResourceLocation id) {
+    public static Optional<TraitLine> get(RegistryAccess access, Identifier id) {
         return access.registry(KEY).flatMap(r -> r.getOptional(id));
     }
 
     /** All lines, in display order. */
-    public static List<Map.Entry<ResourceLocation, TraitLine>> all(RegistryAccess access) {
+    public static List<Map.Entry<Identifier, TraitLine>> all(RegistryAccess access) {
         return access.registry(KEY)
                 .map(
                         r ->
@@ -40,7 +40,7 @@ public final class TraitLines {
                                         .sorted(
                                                 Comparator.comparingInt(
                                                                 (Map.Entry<
-                                                                                        ResourceLocation,
+                                                                                        Identifier,
                                                                                         TraitLine>
                                                                                 e) ->
                                                                         displayOrder(
@@ -52,7 +52,7 @@ public final class TraitLines {
                 .orElse(List.of());
     }
 
-    private static int displayOrder(ResourceLocation id, int fallback) {
+    private static int displayOrder(Identifier id, int fallback) {
         int index =
                 List.of(
                                 "plasmic",

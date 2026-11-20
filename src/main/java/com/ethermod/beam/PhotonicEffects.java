@@ -64,13 +64,13 @@ public final class PhotonicEffects {
         if (nova) {
             for (var dir : Direction.values()) {
                 var spot = BlockPos.containing(at).relative(dir, 3);
-                if (p.serverLevel().hasChunkAt(spot) && com.ethermod.util.Protect.may(p.serverLevel(), p, spot))
-                    TempLights.tempLight(p.serverLevel(), spot, 15, 80);
+                if (p.level().hasChunkAt(spot) && com.ethermod.util.Protect.may(p.level(), p, spot))
+                    TempLights.tempLight(p.level(), spot, 15, 80);
             }
             var centre = BlockPos.containing(at);
-            if (com.ethermod.util.Protect.may(p.serverLevel(), p, centre))
-                TempLights.tempLight(p.serverLevel(), centre, 15, 80);
-            p.serverLevel().sendParticles(ParticleTypes.FLASH, at.x, at.y, at.z, 1, 0, 0, 0, 0);
+            if (com.ethermod.util.Protect.may(p.level(), p, centre))
+                TempLights.tempLight(p.level(), centre, 15, 80);
+            p.level().sendParticles(ParticleTypes.FLASH, at.x, at.y, at.z, 1, 0, 0, 0, 0);
         }
     }
 
@@ -78,7 +78,7 @@ public final class PhotonicEffects {
         while (NODES.stream()
                         .filter(
                                 n ->
-                                        n.level() == p.serverLevel()
+                                        n.level() == p.level()
                                                 && n.at().distanceToSqr(at) < 64 * 64)
                         .count()
                 >= 24) {
@@ -86,7 +86,7 @@ public final class PhotonicEffects {
                     NODES.stream()
                             .filter(
                                     n ->
-                                            n.level() == p.serverLevel()
+                                            n.level() == p.level()
                                                     && n.at().distanceToSqr(at) < 64 * 64)
                             .findFirst();
             if (first.isEmpty()) break;
@@ -94,7 +94,7 @@ public final class PhotonicEffects {
         }
         NODES.add(
                 new Node(
-                        p.serverLevel(),
+                        p.level(),
                         p.getUUID(),
                         at,
                         previous,
@@ -103,7 +103,7 @@ public final class PhotonicEffects {
     }
 
     private static void decoy(ServerPlayer p, Vec3 at, int lifetime) {
-        var sl = p.serverLevel();
+        var sl = p.level();
         if (sl.getEntitiesOfClass(
                                 LightDecoy.class,
                                 p.getBoundingBox().inflate(96),
@@ -126,7 +126,7 @@ public final class PhotonicEffects {
     }
 
     private static void apply(ServerPlayer p, Vec3 at, ItemStack st, int power, boolean impact) {
-        var sl = p.serverLevel();
+        var sl = p.level();
         long now = sl.getGameTime();
         double radius =
                 Traits.has(st, "photonic.flare")

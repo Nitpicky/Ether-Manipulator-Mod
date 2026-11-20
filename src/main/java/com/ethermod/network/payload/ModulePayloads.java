@@ -8,7 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /** Payloads of the modules' movement and marker traits. */
 public final class ModulePayloads {
@@ -17,7 +17,7 @@ public final class ModulePayloads {
 
     private static <T extends CustomPacketPayload> CustomPacketPayload.Type<T> typeOf(String path) {
         return new CustomPacketPayload.Type<>(
-                ResourceLocation.fromNamespaceAndPath(EtherMod.MODID, path));
+                Identifier.fromNamespaceAndPath(EtherMod.MODID, path));
     }
 
     public record WaterCurrent(java.util.List<BlockPos> positions, float x, float z, long expires)

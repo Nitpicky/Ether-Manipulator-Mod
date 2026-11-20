@@ -325,7 +325,7 @@ public final class PlaytestBootstrap {
                                                             new net.minecraft.world.item.ItemStack(
                                                                     net.minecraft.world.item.Items
                                                                             .COBBLESTONE))
-                                            || !p.serverLevel()
+                                            || !p.level()
                                                     .getEntitiesOfClass(
                                                             net.minecraft.world.entity.item
                                                                     .ItemEntity.class,
@@ -1005,7 +1005,7 @@ public final class PlaytestBootstrap {
                             (s, p) -> {
                                 int bx = base.getX() + 60, y = base.getY(), bz = base.getZ();
                                 boolean gone =
-                                        p.serverLevel()
+                                        p.level()
                                                 .getBlockState(new BlockPos(bx, y, bz + 3))
                                                 .isAir();
                                 log(
@@ -1099,7 +1099,7 @@ public final class PlaytestBootstrap {
             // the advancement tab's layout (gems and Module challenges on top, upgrade line, dyes last)
             case 1478 -> {
                 var adv = mc.player.connection.getAdvancements();
-                var root = adv.getTree().get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("ethermod", "manipulator/root"));
+                var root = adv.getTree().get(net.minecraft.resources.Identifier.fromNamespaceAndPath("ethermod", "manipulator/root"));
                 mc.setScreen(new net.minecraft.client.gui.screens.advancements.AdvancementsScreen(adv));
                 if (root != null) adv.setSelectedTab(root.holder(), true);
                 // the mouse off the window, so no tooltip covers the tree
@@ -1194,10 +1194,10 @@ public final class PlaytestBootstrap {
             "gone_with_the_wind", "night_light", "fish_out_of_water", "green_thumb", "let_it_go", "ping_pong"};
         int loaded = 0;
         for (String id : ids)
-            if (s.getAdvancements().get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("ethermod", "manipulator/" + id)) != null) loaded++;
+            if (s.getAdvancements().get(net.minecraft.resources.Identifier.fromNamespaceAndPath("ethermod", "manipulator/" + id)) != null) loaded++;
         log((loaded == ids.length ? "PASS" : "FAIL") + " advancements: " + loaded + "/" + ids.length + " in the Manipulator tab");
         java.util.function.Predicate<String> done = id -> {
-            var h = s.getAdvancements().get(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("ethermod", "manipulator/" + id));
+            var h = s.getAdvancements().get(net.minecraft.resources.Identifier.fromNamespaceAndPath("ethermod", "manipulator/" + id));
             return h != null && p.getAdvancements().getOrStartProgress(h).isDone();
         };
         com.ethermod.manipulator.Manipulator.setSummoned(p, true);
@@ -1209,28 +1209,28 @@ public final class PlaytestBootstrap {
         var mm = com.ethermod.manipulator.Manipulator.stack(p);
         var gem = new net.minecraft.world.item.ItemStack(com.ethermod.registry.ModItems.GEMS.get("quetzalite").get());
         p.setItemInHand(net.minecraft.world.InteractionHand.OFF_HAND, gem);
-        boolean before = com.ethermod.trait.ModuleUnlocks.known(mm, net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("ethermod", "botanic"));
-        gem.getItem().use(p.serverLevel(), p, net.minecraft.world.InteractionHand.OFF_HAND);
+        boolean before = com.ethermod.trait.ModuleUnlocks.known(mm, net.minecraft.resources.Identifier.fromNamespaceAndPath("ethermod", "botanic"));
+        gem.getItem().use(p.level(), p, net.minecraft.world.InteractionHand.OFF_HAND);
         boolean after = com.ethermod.trait.ModuleUnlocks.known(com.ethermod.manipulator.Manipulator.stack(p),
-                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("ethermod", "botanic"));
+                net.minecraft.resources.Identifier.fromNamespaceAndPath("ethermod", "botanic"));
         log((after ? "PASS" : "FAIL") + " gems: using a Quetzalite unlocks the Botanic Module (before " + before + ")");
         log((done.test("quetzalite") && !done.test("stratite") ? "PASS" : "FAIL")
                 + " advancements: unlocking the Botanic Module earns Feathered Serpent only");
         p.setItemInHand(net.minecraft.world.InteractionHand.OFF_HAND, net.minecraft.world.item.ItemStack.EMPTY);
         boolean noModules = net.minecraft.core.registries.BuiltInRegistries.ITEM.getOptional(
-                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("ethermod", "module_hydraulic")).isEmpty();
+                net.minecraft.resources.Identifier.fromNamespaceAndPath("ethermod", "module_hydraulic")).isEmpty();
         log((noModules ? "PASS" : "FAIL") + " gems: the Module items are gone");
         for (String[] r : new String[][] {{"upgrade_iron", "minecraft:iron_block", "minecraft:amethyst_shard", "minecraft:iron_ingot"}, {"upgrade_diamond", "minecraft:gold_block", "minecraft:diamond", "minecraft:gold_ingot"}}) {
-            var rec = s.getRecipeManager().byKey(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("ethermod", r[0]));
+            var rec = s.getRecipeManager().byKey(net.minecraft.resources.Identifier.fromNamespaceAndPath("ethermod", r[0]));
             boolean ok = rec.isPresent() && rec.get().value().getIngredients().size() == 9
                     && rec.get().value().getIngredients().get(3).test(new net.minecraft.world.item.ItemStack(
-                            net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse(r[1]))))
+                            net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.Identifier.parse(r[1]))))
                     && rec.get().value().getIngredients().get(2).test(new net.minecraft.world.item.ItemStack(
-                            net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse(r[3]))))
+                            net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.Identifier.parse(r[3]))))
                     && rec.get().value().getIngredients().get(6).test(new net.minecraft.world.item.ItemStack(
-                            net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse(r[3]))))
+                            net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.Identifier.parse(r[3]))))
                     && rec.get().value().getIngredients().get(4).test(new net.minecraft.world.item.ItemStack(
-                            net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.ResourceLocation.parse(r[2]))))
+                            net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.Identifier.parse(r[2]))))
                     && rec.get().value().getIngredients().get(0).isEmpty();
             log((ok ? "PASS" : "FAIL") + " recipes: " + r[0] + " is gem between two blocks, ingot fins top right and bottom left");
         }
@@ -1248,12 +1248,12 @@ public final class PlaytestBootstrap {
         for (String[] w : want) {
             var key = net.minecraft.resources.ResourceKey.create(
                     net.minecraft.core.registries.Registries.LOOT_TABLE,
-                    net.minecraft.resources.ResourceLocation.withDefaultNamespace(w[0]));
+                    net.minecraft.resources.Identifier.withDefaultNamespace(w[0]));
             var table = s.reloadableRegistries().getLootTable(key);
             var gem = com.ethermod.registry.ModItems.GEMS.get(w[1]).get();
             int hits = 0, wrong = 0;
             for (int i = 0; i < 400; i++) {
-                var params = new net.minecraft.world.level.storage.loot.LootParams.Builder(p.serverLevel())
+                var params = new net.minecraft.world.level.storage.loot.LootParams.Builder(p.level())
                         .withParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.ORIGIN, p.position())
                         .create(net.minecraft.world.level.storage.loot.parameters.LootContextParamSets.CHEST);
                 for (var st : table.getRandomItems(params)) {
@@ -1266,10 +1266,10 @@ public final class PlaytestBootstrap {
         }
         // buried treasure: always exactly one gem, any of them
         var bt = s.reloadableRegistries().getLootTable(net.minecraft.resources.ResourceKey.create(
-                net.minecraft.core.registries.Registries.LOOT_TABLE, net.minecraft.resources.ResourceLocation.withDefaultNamespace("chests/buried_treasure")));
+                net.minecraft.core.registries.Registries.LOOT_TABLE, net.minecraft.resources.Identifier.withDefaultNamespace("chests/buried_treasure")));
         int ok = 0;
         for (int i = 0; i < 100; i++) {
-            var params = new net.minecraft.world.level.storage.loot.LootParams.Builder(p.serverLevel())
+            var params = new net.minecraft.world.level.storage.loot.LootParams.Builder(p.level())
                     .withParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.ORIGIN, p.position())
                     .create(net.minecraft.world.level.storage.loot.parameters.LootContextParamSets.CHEST);
             int n = 0;
@@ -1282,7 +1282,7 @@ public final class PlaytestBootstrap {
 
     /** Places a structure next to the arena and opens all its chests: the guaranteed gem must be in one. */
     private static void checkGemGuarantee(MinecraftServer s, ServerPlayer p, String structure, String gem, boolean hidden) {
-        var level = p.serverLevel();
+        var level = p.level();
         // the desert's stand-in chests go well away from where the loot-rate rolls already claimed this area's guarantee
         var at = p.blockPosition().offset(0, 0, structure.contains("jungle") ? -40 : 140);
         if (structure.equals("desert_pyramid")) {
@@ -1319,7 +1319,7 @@ public final class PlaytestBootstrap {
     }
 
     private static net.minecraft.world.entity.monster.Husk husk(ServerPlayer p, String tag) {
-        return p.serverLevel()
+        return p.level()
                 .getEntitiesOfClass(
                         net.minecraft.world.entity.monster.Husk.class,
                         p.getBoundingBox().inflate(32),
@@ -1345,7 +1345,7 @@ public final class PlaytestBootstrap {
                 mc,
                 (s, p) -> {
                     var list =
-                            p.serverLevel()
+                            p.level()
                                     .getEntitiesOfClass(
                                             com.ethermod.beam.BeamBallEntity.class,
                                             p.getBoundingBox().inflate(40),
@@ -1378,7 +1378,7 @@ public final class PlaytestBootstrap {
     private static double tetherClosest = 99;
 
     private static List<net.minecraft.world.entity.animal.Pig> pigs(ServerPlayer p) {
-        return p.serverLevel()
+        return p.level()
                 .getEntitiesOfClass(
                         net.minecraft.world.entity.animal.Pig.class,
                         p.getBoundingBox().inflate(24));
@@ -1426,7 +1426,7 @@ public final class PlaytestBootstrap {
         ItemStack mm = Manipulator.stack(p);
         // the modes come with their trait line: equip the lines this mode needs
         com.ethermod.item.ManipulatorStage.set(mm, com.ethermod.item.ManipulatorStage.NETHERITE);
-        net.minecraft.resources.ResourceLocation own =
+        net.minecraft.resources.Identifier own =
                 switch (mode) {
                     case LIGHT -> com.ethermod.trait.Traits.PHOTONIC;
                     case TETHER -> com.ethermod.trait.Traits.GRAVITIC;
@@ -1436,11 +1436,11 @@ public final class PlaytestBootstrap {
                     case GROWTH -> com.ethermod.trait.Traits.BOTANIC;
                     default -> com.ethermod.trait.Traits.HYDRAULIC;
                 };
-        net.minecraft.resources.ResourceLocation second =
+        net.minecraft.resources.Identifier second =
                 own.equals(com.ethermod.trait.Traits.HYDRAULIC)
                         ? com.ethermod.trait.Traits.PNEUMATIC
                         : com.ethermod.trait.Traits.HYDRAULIC;
-        net.minecraft.resources.ResourceLocation third =
+        net.minecraft.resources.Identifier third =
                 own.equals(com.ethermod.trait.Traits.BOTANIC)
                                 || second.equals(com.ethermod.trait.Traits.BOTANIC)
                         ? com.ethermod.trait.Traits.PYROTECHNIC

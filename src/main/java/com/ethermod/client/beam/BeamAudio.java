@@ -6,7 +6,7 @@ import com.ethermod.beam.RemoteBeams;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -240,7 +240,7 @@ public final class BeamAudio {
 
     static SoundEvent ev(String name) {
         return SoundEvent.createVariableRangeEvent(
-                ResourceLocation.fromNamespaceAndPath("ethermod", name));
+                Identifier.fromNamespaceAndPath("ethermod", name));
     }
 
     private static void ensureLoop(Minecraft mc, Player p, IntSupplier level) {

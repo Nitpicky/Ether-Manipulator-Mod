@@ -253,7 +253,7 @@ public final class KGifTour {
         add(1, () -> vx = vy = -50, null);
     }
 
-    private static int moduleIndex(net.minecraft.resources.ResourceLocation id) {
+    private static int moduleIndex(net.minecraft.resources.Identifier id) {
         var lines = TraitLines.all(Minecraft.getInstance().level.registryAccess());
         for (int i = 0; i < lines.size(); i++) if (lines.get(i).getKey().equals(id)) return i;
         return 0;
@@ -261,7 +261,7 @@ public final class KGifTour {
 
     private static void build(ServerPlayer p, ItemStack st, boolean picks) {
         var ids =
-                new net.minecraft.resources.ResourceLocation[] {
+                new net.minecraft.resources.Identifier[] {
                     Traits.TECTONIC, Traits.HYDRAULIC, Traits.GRAVITIC
                 };
         for (int slot = 0; slot < 3; slot++) {

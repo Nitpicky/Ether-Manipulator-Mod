@@ -4,13 +4,13 @@ import com.ethermod.EtherMod;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /** Server → players near it: this creature is held in Stasis for {@code ticks} ticks (0 = released). */
 public record StasisPayload(int entity, int ticks) implements CustomPacketPayload {
 
     public static final Type<StasisPayload> TYPE =
-            new Type<>(ResourceLocation.fromNamespaceAndPath(EtherMod.MODID, "stasis"));
+            new Type<>(Identifier.fromNamespaceAndPath(EtherMod.MODID, "stasis"));
 
     public static final net.minecraft.network.codec.StreamCodec<ByteBuf, StasisPayload> CODEC =
             net.minecraft.network.codec.StreamCodec.composite(

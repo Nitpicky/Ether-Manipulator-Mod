@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 
 import software.bernie.geckolib.animatable.GeoAnimatable;
@@ -23,15 +23,15 @@ import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
  */
 public final class GlowMaskLayer<T extends Entity & GeoAnimatable> extends GeoRenderLayer<T> {
 
-    private final ResourceLocation mask;
+    private final Identifier mask;
 
     public GlowMaskLayer(GeoRenderer<T> renderer, String texture) {
         super(renderer);
-        this.mask = ResourceLocation.fromNamespaceAndPath(EtherMod.MODID, "textures/entity/" + texture);
+        this.mask = Identifier.fromNamespaceAndPath(EtherMod.MODID, "textures/entity/" + texture);
     }
 
     /** The cutout, full-bright type every glow layer of these creatures uses. */
-    static RenderType type(ResourceLocation texture) {
+    static RenderType type(Identifier texture) {
         return RenderType.entityCutoutNoCull(texture);
     }
 

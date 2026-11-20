@@ -9,7 +9,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -41,16 +41,16 @@ public final class GemLootModifier extends LootModifier {
                                             inst.group(
                                                     BuiltInRegistries.ITEM.byNameCodec().fieldOf("gem").forGetter(m -> m.gem),
                                                     Codec.FLOAT.optionalFieldOf("chance", 0f).forGetter(m -> m.chance),
-                                                    ResourceLocation.CODEC.listOf().optionalFieldOf("guarantee_in", List.of()).forGetter(m -> m.guaranteeIn),
+                                                    Identifier.CODEC.listOf().optionalFieldOf("guarantee_in", List.of()).forGetter(m -> m.guaranteeIn),
                                                     Codec.BOOL.optionalFieldOf("hidden_chest", false).forGetter(m -> m.hidden)))
                                     .apply(inst, GemLootModifier::new));
 
     private final Item gem;
     private final float chance;
-    private final List<ResourceLocation> guaranteeIn;
+    private final List<Identifier> guaranteeIn;
     private final boolean hidden;
 
-    public GemLootModifier(LootItemCondition[] conditions, Item gem, float chance, List<ResourceLocation> guaranteeIn, boolean hidden) {
+    public GemLootModifier(LootItemCondition[] conditions, Item gem, float chance, List<Identifier> guaranteeIn, boolean hidden) {
         super(conditions);
         this.gem = gem;
         this.chance = chance;
@@ -73,7 +73,7 @@ public final class GemLootModifier extends LootModifier {
             BlockPos pos = BlockPos.containing(origin);
             var structures = level.registryAccess().registryOrThrow(Registries.STRUCTURE);
             String key = null;
-            for (ResourceLocation id : guaranteeIn) {
+            for (Identifier id : guaranteeIn) {
                 var structure = structures.get(id);
                 if (structure == null) continue;
                 var start = level.structureManager().getStructureWithPieceAt(pos, structure);

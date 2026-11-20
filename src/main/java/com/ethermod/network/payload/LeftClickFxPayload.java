@@ -7,7 +7,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import org.joml.Vector3f;
 
@@ -31,7 +31,7 @@ public record LeftClickFxPayload(int kind, int id, int owner, Vector3f pos, int 
     public static final int CUT = 4;
 
     public static final Type<LeftClickFxPayload> TYPE =
-            new Type<>(ResourceLocation.fromNamespaceAndPath(EtherMod.MODID, "left_click_fx"));
+            new Type<>(Identifier.fromNamespaceAndPath(EtherMod.MODID, "left_click_fx"));
 
     public static final StreamCodec<ByteBuf, LeftClickFxPayload> CODEC =
             StreamCodec.composite(

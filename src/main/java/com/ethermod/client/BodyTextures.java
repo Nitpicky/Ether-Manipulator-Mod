@@ -6,7 +6,7 @@ import com.mojang.blaze3d.platform.NativeImage;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
@@ -24,16 +24,16 @@ public final class BodyTextures {
 
     private BodyTextures() {}
 
-    public static final ResourceLocation BASE =
-            ResourceLocation.fromNamespaceAndPath(
+    public static final Identifier BASE =
+            Identifier.fromNamespaceAndPath(
                     EtherMod.MODID, "textures/item/ether_manipulator.png");
 
     private static final int KEEP = 24;
 
-    private static final Map<Integer, ResourceLocation> CACHE =
+    private static final Map<Integer, Identifier> CACHE =
             new LinkedHashMap<>(16, 0.75f, true) {
                 @Override
-                protected boolean removeEldestEntry(Map.Entry<Integer, ResourceLocation> e) {
+                protected boolean removeEldestEntry(Map.Entry<Integer, Identifier> e) {
                     if (size() <= KEEP) return false;
                     Minecraft.getInstance().getTextureManager().release(e.getValue());
                     return true;
@@ -46,15 +46,15 @@ public final class BodyTextures {
      */
     public static void clear() {
         var textures = Minecraft.getInstance().getTextureManager();
-        for (ResourceLocation loc : CACHE.values()) if (!loc.equals(BASE)) textures.release(loc);
+        for (Identifier loc : CACHE.values()) if (!loc.equals(BASE)) textures.release(loc);
         CACHE.clear();
     }
 
     /** The texture for a body colour; the painted one for -1 (default) or if anything fails. */
-    public static ResourceLocation get(int body) {
+    public static Identifier get(int body) {
         if (body < 0) return BASE;
         // cache hit first: the ramp and name are only needed to build a new texture
-        ResourceLocation have = CACHE.get(body);
+        Identifier have = CACHE.get(body);
         if (have != null) return have;
         return build(body, BodyPalette.ramp(body), String.format("%06x", body));
     }
@@ -63,7 +63,7 @@ public final class BodyTextures {
      * The texture for a stack: its body colour, or for Default the tier's material (copper,
      * iron, diamond, netherite).
      */
-    public static ResourceLocation get(int body, com.ethermod.item.ManipulatorStage stage) {
+    public static Identifier get(int body, com.ethermod.item.ManipulatorStage stage) {
         if (body >= 0) return get(body);
         int[] material = BodyPalette.material(stage);
         if (material == null) return BASE;
@@ -71,11 +71,11 @@ public final class BodyTextures {
         return build(-2 - stage.ordinal(), material, "material_" + stage.ordinal());
     }
 
-    private static ResourceLocation build(int key, int[] tones, String name) {
-        ResourceLocation have = CACHE.get(key);
+    private static Identifier build(int key, int[] tones, String name) {
+        Identifier have = CACHE.get(key);
         if (have != null) return have;
-        ResourceLocation loc =
-                ResourceLocation.fromNamespaceAndPath(
+        Identifier loc =
+                Identifier.fromNamespaceAndPath(
                         EtherMod.MODID, "dynamic/manipulator_body_" + name);
         try (InputStream in =
                 Minecraft.getInstance().getResourceManager().getResourceOrThrow(BASE).open()) {

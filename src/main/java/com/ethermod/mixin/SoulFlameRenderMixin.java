@@ -31,7 +31,7 @@ public abstract class SoulFlameRenderMixin {
             return net.minecraft.client.Minecraft.getInstance()
                     .getTextureAtlas(net.minecraft.world.inventory.InventoryMenu.BLOCK_ATLAS)
                     .apply(
-                            net.minecraft.resources.ResourceLocation.withDefaultNamespace(
+                            net.minecraft.resources.Identifier.withDefaultNamespace(
                                     material
                                                     == net.minecraft.client.resources.model
                                                             .ModelBakery.FIRE_0

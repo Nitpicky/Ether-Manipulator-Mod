@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
@@ -101,10 +101,10 @@ public final class AirwalkTiles {
         ps.popPose();
     }
 
-    private static final ResourceLocation PANE =
-            ResourceLocation.fromNamespaceAndPath("ethermod", "textures/misc/airwalk_tile.png");
-    private static final ResourceLocation VEINS =
-            ResourceLocation.fromNamespaceAndPath("ethermod", "textures/misc/airwalk_veins.png");
+    private static final Identifier PANE =
+            Identifier.fromNamespaceAndPath("ethermod", "textures/misc/airwalk_tile.png");
+    private static final Identifier VEINS =
+            Identifier.fromNamespaceAndPath("ethermod", "textures/misc/airwalk_veins.png");
 
     private static void tile(
             VertexConsumer vc,

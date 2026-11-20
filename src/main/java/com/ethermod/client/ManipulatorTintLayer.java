@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -28,11 +28,11 @@ import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
 @OnlyIn(Dist.CLIENT)
 public class ManipulatorTintLayer extends GeoRenderLayer<EtherManipulatorItem> {
 
-    private static final ResourceLocation STAR =
-            ResourceLocation.fromNamespaceAndPath(
+    private static final Identifier STAR =
+            Identifier.fromNamespaceAndPath(
                     EtherMod.MODID, "textures/item/ether_manipulator_star.png");
-    private static final ResourceLocation CORE =
-            ResourceLocation.fromNamespaceAndPath(
+    private static final Identifier CORE =
+            Identifier.fromNamespaceAndPath(
                     EtherMod.MODID, "textures/item/ether_manipulator_star_core.png");
 
     /** One pulse, in milliseconds. */
@@ -98,7 +98,7 @@ public class ManipulatorTintLayer extends GeoRenderLayer<EtherManipulatorItem> {
     }
 
     private void draw(
-            ResourceLocation mask,
+            Identifier mask,
             int rgb,
             PoseStack poseStack,
             EtherManipulatorItem animatable,

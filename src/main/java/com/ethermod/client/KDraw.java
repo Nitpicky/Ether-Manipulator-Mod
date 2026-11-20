@@ -3,7 +3,7 @@ package com.ethermod.client;
 import static com.ethermod.client.UpgradeVisuals.*;
 
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /** Stateless pixel-art drawing primitives shared by every part of the K-screen. */
 final class KDraw {
@@ -88,7 +88,7 @@ final class KDraw {
         }
     }
 
-    static void sprite(GuiGraphics g, ResourceLocation id, int x, int y, int w, int h, int c) {
+    static void sprite(GuiGraphics g, Identifier id, int x, int y, int w, int h, int c) {
         var data = modules.get(id.getPath());
         if (data == null) return;
         var r = new Raster(w, h);

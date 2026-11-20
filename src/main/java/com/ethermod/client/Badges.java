@@ -33,7 +33,7 @@ public final class Badges {
     private static Object colorsFrom;
 
     /** Badge textures by Module. */
-    private static final java.util.Map<String, net.minecraft.resources.ResourceLocation> TEXTURES =
+    private static final java.util.Map<String, net.minecraft.resources.Identifier> TEXTURES =
             new java.util.HashMap<>();
 
     /** The Module's own colour (opaque ARGB). */
@@ -65,7 +65,7 @@ public final class Badges {
                 TEXTURES.computeIfAbsent(
                         module,
                         k ->
-                                net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(
+                                net.minecraft.resources.Identifier.fromNamespaceAndPath(
                                         "ethermod", "textures/gui/badge/" + k + ".png"));
         com.mojang.blaze3d.systems.RenderSystem.enableBlend();
         com.mojang.blaze3d.systems.RenderSystem.defaultBlendFunc();

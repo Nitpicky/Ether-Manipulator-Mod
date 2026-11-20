@@ -4,13 +4,13 @@ import com.ethermod.EtherMod;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /** Server → a player and those who see them: whether that player gives off the Photonic glow. */
 public record PhotonicGlowPayload(int entity, boolean on) implements CustomPacketPayload {
 
     public static final Type<PhotonicGlowPayload> TYPE =
-            new Type<>(ResourceLocation.fromNamespaceAndPath(EtherMod.MODID, "photonic_glow"));
+            new Type<>(Identifier.fromNamespaceAndPath(EtherMod.MODID, "photonic_glow"));
 
     public static final net.minecraft.network.codec.StreamCodec<ByteBuf, PhotonicGlowPayload> CODEC =
             net.minecraft.network.codec.StreamCodec.composite(

@@ -117,7 +117,7 @@ public final class MiningDamageTracker {
      * them itself; the beam has no client prediction, so send them to the breaker too.
      */
     public static boolean breakAsPlayer(ServerPlayer player, BlockPos pos) {
-        BlockState state = player.serverLevel().getBlockState(pos);
+        BlockState state = player.level().getBlockState(pos);
         boolean broken = player.gameMode.destroyBlock(pos);
         if (broken) {
             player.connection.send(

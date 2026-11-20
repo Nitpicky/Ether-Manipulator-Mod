@@ -1,6 +1,6 @@
 package com.ethermod.sound;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 
 /**
@@ -13,7 +13,7 @@ public final class ModSounds {
     private ModSounds() {}
 
     private static SoundEvent a(String path) {
-        return SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath("ethermod", path));
+        return SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath("ethermod", path));
     }
 
     public static final SoundEvent SHOT_AMETHYST_BLOCK_CHIME = a("shot/block.amethyst_block.chime");

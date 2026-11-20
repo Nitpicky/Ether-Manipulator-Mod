@@ -77,7 +77,7 @@ public final class BeamCastHelper {
             BEAM_DAMAGE =
                     net.minecraft.resources.ResourceKey.create(
                             net.minecraft.core.registries.Registries.DAMAGE_TYPE,
-                            net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(
+                            net.minecraft.resources.Identifier.fromNamespaceAndPath(
                                     "ethermod", "beam"));
 
     public static Vec3 tickBeam(

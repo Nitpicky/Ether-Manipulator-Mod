@@ -2,7 +2,7 @@ package com.ethermod.trait;
 
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.*;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 
@@ -14,7 +14,7 @@ public final class ModuleUnlocks {
 
     private ModuleUnlocks() {}
 
-    public static boolean known(ItemStack stack, ResourceLocation id) {
+    public static boolean known(ItemStack stack, Identifier id) {
         if (id == null) return false;
         if (id.equals(Traits.PLASMIC) || id.equals(Traits.KINETIC)) return true;
         if (com.ethermod.config.ServerConfig.moduleDisabled(id.getPath())) return false;
@@ -26,7 +26,7 @@ public final class ModuleUnlocks {
         return false;
     }
 
-    public static boolean unlock(ItemStack stack, ResourceLocation id) {
+    public static boolean unlock(ItemStack stack, Identifier id) {
         if (known(stack, id)) return false;
         var tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
         var list = tag.getList(KEY, Tag.TAG_STRING);

@@ -10,7 +10,7 @@ import com.google.gson.JsonElement;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.*;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
 
 import java.util.ArrayDeque;
@@ -50,7 +50,7 @@ final class KTooltips {
         g.pose().popPose();
     }
 
-    static List<Component> traitTip(ResourceLocation id, Trait trait, int tier) {
+    static List<Component> traitTip(Identifier id, Trait trait, int tier) {
         int c = module(id, p()).accent();
         var out = new ArrayList<Component>();
         out.add(label(Lang.traitName(trait), c));
@@ -58,7 +58,7 @@ final class KTooltips {
         return out;
     }
 
-    static List<Component> commonTip(ResourceLocation id, Trait trait, int common, int stage) {
+    static List<Component> commonTip(Identifier id, Trait trait, int common, int stage) {
         int c = module(id, p()).accent();
         var out = new ArrayList<Component>();
         out.add(label(Lang.traitName(trait), c));
@@ -73,7 +73,7 @@ final class KTooltips {
         return out;
     }
 
-    static List<Component> moduleTip(ResourceLocation id, TraitLine line) {
+    static List<Component> moduleTip(Identifier id, TraitLine line) {
         int c = module(id, p()).accent();
         var out = new ArrayList<Component>();
         out.add(label(Lang.tr("gui.ethermod.module_named", Lang.moduleName(id, line)), c));

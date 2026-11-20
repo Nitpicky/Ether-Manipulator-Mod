@@ -194,8 +194,8 @@ public final class ManipulatorHud {
         } else ammoAlpha = 0;
     }
 
-    private static final net.minecraft.resources.ResourceLocation DIGITS =
-            net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(
+    private static final net.minecraft.resources.Identifier DIGITS =
+            net.minecraft.resources.Identifier.fromNamespaceAndPath(
                     "ethermod", "textures/gui/ammo_digits.png");
     private static final long AMMO_LINGER_MS = 2500;
     private static int lastTank = -1;

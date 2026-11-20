@@ -3,7 +3,7 @@ package com.ethermod.client;
 import com.ethermod.EtherMod;
 import com.ethermod.item.EtherManipulatorItem;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -27,20 +27,20 @@ import software.bernie.geckolib.model.GeoModel;
 public class ManipulatorItemModel extends GeoModel<EtherManipulatorItem> {
 
     @Override
-    public ResourceLocation getModelResource(EtherManipulatorItem animatable) {
-        return ResourceLocation.fromNamespaceAndPath(
+    public Identifier getModelResource(EtherManipulatorItem animatable) {
+        return Identifier.fromNamespaceAndPath(
                 EtherMod.MODID, "geo/ether_manipulator.geo.json");
     }
 
     @Override
-    public ResourceLocation getTextureResource(EtherManipulatorItem animatable) {
-        return ResourceLocation.fromNamespaceAndPath(
+    public Identifier getTextureResource(EtherManipulatorItem animatable) {
+        return Identifier.fromNamespaceAndPath(
                 EtherMod.MODID, "textures/item/ether_manipulator.png");
     }
 
     @Override
-    public ResourceLocation getAnimationResource(EtherManipulatorItem animatable) {
-        return ResourceLocation.fromNamespaceAndPath(
+    public Identifier getAnimationResource(EtherManipulatorItem animatable) {
+        return Identifier.fromNamespaceAndPath(
                 EtherMod.MODID, "animations/ether_manipulator.animation.json");
     }
 

@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
 
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.HashMap;
@@ -24,11 +24,11 @@ public final class GemGlint extends RenderType {
      * A grey copy of the vanilla item glint (or a resource pack's), made at runtime from the
      * game's own texture on every resource reload, then tinted per gem. Nothing is shipped.
      */
-    private static final ResourceLocation TEXTURE =
-            ResourceLocation.fromNamespaceAndPath("ethermod", "dynamic/gem_glint");
+    private static final Identifier TEXTURE =
+            Identifier.fromNamespaceAndPath("ethermod", "dynamic/gem_glint");
 
-    private static final ResourceLocation VANILLA =
-            ResourceLocation.withDefaultNamespace("textures/misc/enchanted_glint_item.png");
+    private static final Identifier VANILLA =
+            Identifier.withDefaultNamespace("textures/misc/enchanted_glint_item.png");
 
     /** Rebuilds the grey glint from the current vanilla one (called on resource reload). */
     public static void rebuildTexture(net.minecraft.server.packs.resources.ResourceManager rm) {

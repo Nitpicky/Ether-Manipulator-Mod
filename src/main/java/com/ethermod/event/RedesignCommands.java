@@ -58,7 +58,7 @@ public final class RedesignCommands {
                                                                                         c -> {
                                                                                             var id = net.minecraft.commands.arguments.ResourceLocationArgument.getId(c, "module");
                                                                                             if (!id.getNamespace().equals("ethermod"))
-                                                                                                id = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("ethermod", id.getPath());
+                                                                                                id = net.minecraft.resources.Identifier.fromNamespaceAndPath("ethermod", id.getPath());
                                                                                             final var mod = id;
                                                                                             boolean exists =
                                                                                                     TraitLines.all(c.getSource().registryAccess()).stream()
@@ -127,7 +127,7 @@ public final class RedesignCommands {
         if (stack.getItem() instanceof ModuleItem) return;
         String module = com.ethermod.config.ServerConfig.gemModule(stack);
         if (module == null) return;
-        var id = net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("ethermod", module);
+        var id = net.minecraft.resources.Identifier.fromNamespaceAndPath("ethermod", module);
         if (id.equals(Traits.PLASMIC) || id.equals(Traits.KINETIC)) return;
         var player = ev.getEntity();
         if (!Manipulator.data(player).owned()) return;

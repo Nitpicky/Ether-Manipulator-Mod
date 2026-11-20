@@ -14,7 +14,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.List;
 import java.util.Optional;
@@ -108,7 +108,7 @@ final class KLoadoutList {
             if (renaming != i) ui.text(g, name, 241, y + (h - 9) / 2, on ? p().bright() : a().text());
             var ids = Loadouts.lineIds(list.get(i));
             for (int j = 0; j < Math.min(3, ids.size()); j++) {
-                var id = ResourceLocation.tryParse(ids.get(j));
+                var id = Identifier.tryParse(ids.get(j));
                 g.fill(287 + j * 7, y + (h - 5) / 2, 292 + j * 7, y + (h - 5) / 2 + 5, module(id, p()).accent());
             }
             final int index = i;

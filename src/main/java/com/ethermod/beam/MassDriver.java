@@ -148,7 +148,7 @@ public final class MassDriver {
 
     private static boolean take(Hold h, ItemStack st, BlockPos at) {
         var p = h.player;
-        var level = p.serverLevel();
+        var level = p.level();
         var bs = level.getBlockState(at);
         if (h.sources.contains(at)
                 || h.pieces.size() >= com.ethermod.config.ServerConfig.massMax()
@@ -262,7 +262,7 @@ public final class MassDriver {
     /** Free swinging: weight, turning with the view, bouncing off walls and creatures. */
     private static void swing(Hold h) {
         var p = h.player;
-        var sl = p.serverLevel();
+        var sl = p.level();
         Vec3 target = p.getEyePosition().add(p.getLookAngle().scale(2.2 + extent(h)));
         // heavier with every block: slower to follow, longer to settle
         double weight = 1 + .12 * (h.pieces.size() - 1);
@@ -356,7 +356,7 @@ public final class MassDriver {
 
     /** Would every settled block of the formation be out of the walls here? */
     private static boolean fits(Hold h, Vec3 center, float yaw, float pitch) {
-        var sl = h.player.serverLevel();
+        var sl = h.player.level();
         for (var q : h.pieces) {
             if (q.arriving > 0) continue;
             Vec3 at = center.add(turn(Vec3.atLowerCornerOf(q.offset).subtract(h.pivot), yaw, pitch));
@@ -370,7 +370,7 @@ public final class MassDriver {
         if (now < h.bumpUntil) return;
         h.bumpUntil = now + 5;
         var sound = bs.getSoundType();
-        h.player.serverLevel().playSound(null, at.x, at.y, at.z, sound.getHitSound(), SoundSource.PLAYERS, 1f, sound.getPitch() * .7f);
+        h.player.level().playSound(null, at.x, at.y, at.z, sound.getHitSound(), SoundSource.PLAYERS, 1f, sound.getPitch() * .7f);
     }
 
     // ---------------------------------------------------------------- letting go
@@ -383,7 +383,7 @@ public final class MassDriver {
     public static void release(ServerPlayer p, boolean place) {
         var h = HOLDS.get(p.getUUID());
         if (h == null) return;
-        var sl = p.serverLevel();
+        var sl = p.level();
         if (place && steady(p)) {
             BlockPos base = steadyBase(h);
             // the shape must fit as a whole; the ghosts show what is in the way. The world checks
@@ -462,7 +462,7 @@ public final class MassDriver {
         }
         setCarried(Manipulator.stack(p), null);
         Manipulator.sync(p);
-        p.serverLevel()
+        p.level()
                 .playSound(null, p.getX(), p.getEyeY(), p.getZ(), com.ethermod.sound.ModSounds.WORLD_BREEZE_SHOOT, SoundSource.PLAYERS, .8f, .7f - .1f * phase);
     }
 
