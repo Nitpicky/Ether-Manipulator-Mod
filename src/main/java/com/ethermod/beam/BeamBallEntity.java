@@ -590,6 +590,17 @@ public class BeamBallEntity extends Projectile {
     // NBT
     // =========================================================================
 
+    /**
+     * Only a Mass Driver orb carrying a block is saved (so a block mid-throw is not lost when its
+     * chunk unloads). Every other orb, Tether hook and Zipline anchor is short-lived and keeps
+     * runtime-only state (traits, rope partner ids), so it is dropped instead of coming back
+     * half-initialised.
+     */
+    @Override
+    public boolean shouldBeSaved() {
+        return super.shouldBeSaved() && getMode() == OrbMode.MASS && !getCarried().isAir();
+    }
+
     @Override
     protected void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
