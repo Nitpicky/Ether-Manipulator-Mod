@@ -17,12 +17,12 @@ jobs:
           java-version: '25'
           distribution: temurin
       - uses: gradle/actions/setup-gradle@v5
-      - run: ./gradlew createMinecraftArtifacts dependencies --configuration compileClasspath -q > /dev/null || true
+      - run: ./gradlew createMinecraftArtifacts printClasspath -q | grep '^CP ' | cut -c4- > cp.txt || true
       - name: Lookup
         run: |
           exec > >(tee api.txt) 2>&1
           CLASSES=$(sed -n 1p .github/port-lookup.txt); LIST=$(sed -n 2p .github/port-lookup.txt)
-          JARS=$( (find build -name '*.jar' -path '*moddev*' ; find ~/.gradle/caches -name '*.jar' \( -path '*geckolib*' -o -path '*curse.maven*' \)) | sort -u)
+          JARS=$(grep -E 'minecraft-patched|curse.maven|geckolib|neoforge' cp.txt | sort -u)
           echo "$JARS"
           CP=$(echo "$JARS" | tr '\n' ':')
           : > all.txt

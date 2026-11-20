@@ -6,7 +6,7 @@ plugins {
 // ---- 26.3 port branch (port/26.3). main stays on 1.21.1. ---------------------
 def mcVersion  = '26.3'
 def neoVersion = '26.3.0.115'
-def geckoVersion = '5.5.7'
+def geckoVersion = '5.5.6'
 
 group   = 'com.ethermod'
 version = '1.0.1+26.3'
@@ -82,7 +82,7 @@ neoForge {
 repositories {
     mavenLocal()
     maven { url = "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/" }
-    // GeckoLib 5 for 26.3 isn't on its own maven: CurseForge file 8945638 (5.5.7)
+    // GeckoLib 5 for 26.3 isn't on its own maven: CurseForge file 8893169 (NeoForge 5.5.6)
     exclusiveContent {
         forRepository { maven { url = "https://cursemaven.com" } }
         filter { includeGroup "curse.maven" }
@@ -90,7 +90,7 @@ repositories {
 }
 
 dependencies {
-    implementation "curse.maven:geckolib-388172:8945638" // GeckoLib ${geckoVersion} for ${mcVersion}
+    implementation "curse.maven:geckolib-388172:8893169" // GeckoLib ${geckoVersion} for ${mcVersion}
     playtestImplementation sourceSets.main.output
 }
 
@@ -109,4 +109,10 @@ tasks.withType(ProcessResources).configureEach {
     filesMatching(['META-INF/neoforge.mods.toml']) {
         expand replaceProperties
     }
+}
+
+// Port helper: prints the resolved compile classpath (used by the API lookup workflow)
+tasks.register('printClasspath') {
+    def cp = configurations.compileClasspath
+    doLast { cp.files.each { println "CP " + it } }
 }
