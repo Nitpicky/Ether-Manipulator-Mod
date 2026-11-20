@@ -235,12 +235,11 @@ public final class Ziplines {
     }
 
     /**
-     * Logout: forget the half-strung first end, the ride and the record of this player's rope (its
-     * anchors run out on their own timers; entity ids mean nothing after a relog).
+     * Logout: the ride ends. The half-strung first end and the rope record stay (entity ids keep
+     * while the server runs), so a quick relog can still finish the rope and a new rope still
+     * replaces the old one; both are bounded by the player count and cleared on server stop.
      */
     public static void forget(UUID player) {
-        PENDING.remove(player);
-        ROPES.remove(player);
         RIDES.remove(player);
     }
 
