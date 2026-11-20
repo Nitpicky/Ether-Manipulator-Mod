@@ -60,6 +60,17 @@ public final class MobilityEffects {
      */
     public static void airJump(ServerPlayer sp) {
         if (!Traits.hasLine(Manipulator.stack(sp), Traits.PNEUMATIC)) return;
+        // the client says it jumped in mid-air: only believe it while the player really is in
+        // the air (not standing, swimming, climbing, flying or riding)
+        if (sp.onGround()
+                || sp.isInWater()
+                || sp.isInLava()
+                || sp.onClimbable()
+                || sp.isPassenger()
+                || sp.isFallFlying()
+                || sp.getAbilities().flying
+                || sp.isSpectator()
+                || MovementPhysics.hasRealSupport(sp)) return;
         long now = sp.level().getGameTime();
         if (sp.getPersistentData().getBoolean("mm_airjump_used")) return;
         if (now - sp.getPersistentData().getLong(AIR_JUMP) < 8) return;

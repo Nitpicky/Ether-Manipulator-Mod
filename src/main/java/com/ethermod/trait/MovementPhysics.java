@@ -194,12 +194,34 @@ public final class MovementPhysics {
                         p.getId(), Direction.DOWN.get3DDataValue(), start));
     }
 
+    /** Known held-key bits of the Motion payload: jump, sneak, sprint, forward, back, left, right. */
+    public static final int MOTION_BITS = 127;
+
+    /**
+     * Server: the movement keys each player holds (Motion payload). Kept in memory only, never in
+     * the player's saved data; cleared on logout and server stop.
+     */
+    private static final Map<UUID, Integer> MOTION = new HashMap<>();
+
     public static void input(ServerPlayer p, int flags) {
-        p.getPersistentData().putInt("mm_motion", flags);
+        flags &= MOTION_BITS;
+        if (flags == 0) MOTION.remove(p.getUUID());
+        else MOTION.put(p.getUUID(), flags);
     }
 
+    /** Forgets a player's held keys (logout). */
+    public static void forgetInput(UUID player) {
+        MOTION.remove(player);
+    }
+
+    public static void clearInputs() {
+        MOTION.clear();
+    }
+
+    /** Jump held: the client reads its own keys (ClientMobility), the server the last Motion. */
     public static boolean jump(Player p) {
-        return (p.getPersistentData().getInt("mm_motion") & 1) != 0;
+        if (p.level().isClientSide) return (p.getPersistentData().getInt("mm_motion") & 1) != 0;
+        return (MOTION.getOrDefault(p.getUUID(), 0) & 1) != 0;
     }
 
     public static AABB bounds(Player p) {

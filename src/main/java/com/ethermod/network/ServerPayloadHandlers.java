@@ -28,7 +28,7 @@ final class ServerPayloadHandlers {
         ctx.enqueueWork(
                 () -> {
                     if (ctx.player() instanceof ServerPlayer sp)
-                        com.ethermod.trait.MovementPhysics.input(sp, p.flags() & 127);
+                        com.ethermod.trait.MovementPhysics.input(sp, p.flags());
                 });
     }
 

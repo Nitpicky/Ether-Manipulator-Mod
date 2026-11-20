@@ -229,8 +229,8 @@ public class ModEvents {
         com.ethermod.beam.DryFire.forget(event.getEntity().getUUID());
         com.ethermod.advancement.SecretAdvancements.forget(event.getEntity().getUUID());
         com.ethermod.trait.Ziplines.forget(event.getEntity().getUUID());
-        // held movement keys (MovementPhysics.input) live in persistent data, which is saved with
-        // the player: a jump held at logout must not still be held on the next join
+        // held movement keys live in memory only; older versions saved them with the player
+        com.ethermod.trait.MovementPhysics.forgetInput(event.getEntity().getUUID());
         event.getEntity().getPersistentData().remove("mm_motion");
     }
 
@@ -265,6 +265,7 @@ public class ModEvents {
         com.ethermod.util.Protect.clear();
         com.ethermod.beam.DryFire.clear();
         com.ethermod.advancement.SecretAdvancements.clear();
+        com.ethermod.trait.MovementPhysics.clearInputs();
     }
 
     public static void onRegisterPayloads(RegisterPayloadHandlersEvent event) {
