@@ -9,7 +9,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 
 /**
  * May the Manipulator change this block for this player? Spawn protection and world borders
@@ -18,7 +18,7 @@ import net.neoforged.neoforge.event.level.BlockEvent;
  * break listeners skip these probes ({@link #probing}).
  *
  * <p>NeoForge 21.1 has no dedicated "may this player edit here" event, so the probe is a
- * synthetic {@link BlockEvent.BreakEvent}. Grief loggers, quest and statistics mods can't tell
+ * synthetic {@link BreakBlockEvent}. Grief loggers, quest and statistics mods can't tell
  * it from a real break, so callers probe only right before they actually change the block, and
  * a repeat probe of the same block by the same player in the same tick is answered from a
  * cache instead of being posted again. Where a real break follows anyway (the player's own
@@ -61,7 +61,7 @@ public final class Protect {
         boolean allowed;
         probing = true;
         try {
-            allowed = !NeoForge.EVENT_BUS.post(new BlockEvent.BreakEvent(l, pos, state, p)).isCanceled();
+            allowed = !NeoForge.EVENT_BUS.post(new BreakBlockEvent(l, pos, state, p)).isCanceled();
         } finally {
             probing = false;
         }

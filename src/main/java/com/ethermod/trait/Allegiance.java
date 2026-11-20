@@ -14,13 +14,13 @@ public final class Allegiance {
                         && owner.getUUID().equals(e.getPersistentData().read("mm_summoner", net.minecraft.core.UUIDUtil.CODEC).orElse(null)))
                 || owner.isAlliedTo(e)
                 || (e instanceof net.minecraft.world.entity.TamableAnimal t
-                        && owner.getUUID().equals(t.getOwnerUUID()));
+                        && t.getOwnerReference() != null && owner.getUUID().equals(t.getOwnerReference().getUUID()));
     }
 
     public static boolean enemy(ServerPlayer owner, LivingEntity e) {
         // other players only when both the hurt_players setting and the server's PvP allow it
         if (e instanceof Player && e != owner
-                && !(com.ethermod.config.ServerConfig.hurtPlayers() && owner.server.isPvpAllowed()))
+                && !(com.ethermod.config.ServerConfig.hurtPlayers() && owner.level().getServer().getGameRules().get(net.minecraft.world.level.gamerules.GameRules.PVP)))
             return false;
         return enemyIgnoringPvp(owner, e);
     }

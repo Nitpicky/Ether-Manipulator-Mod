@@ -200,7 +200,7 @@ public final class Burning {
                                                         .equals(owner.getUUID()))
                         .size()
                 >= com.ethermod.config.ServerConfig.maxSummons()) return;
-        var pet = com.ethermod.registry.ModEntities.SOUL_BLAZELING.get().create(sl);
+        var pet = com.ethermod.registry.ModEntities.SOUL_BLAZELING.get().create(sl, net.minecraft.world.entity.EntitySpawnReason.MOB_SUMMONED);
         if (pet == null) return;
         pet.setPos(victim.position());
         pet.configure(owner);

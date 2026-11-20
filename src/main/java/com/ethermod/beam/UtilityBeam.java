@@ -245,7 +245,7 @@ final class UtilityBeam {
             boolean eligible = a.isBaby() || (a.getAge() == 0 && a.canFallInLove());
             if (!eligible) continue;
             ItemStack food = ItemStack.EMPTY;
-            for (var candidate : player.getInventory().items)
+            for (var candidate : player.getInventory().getNonEquipmentItems())
                 if (!candidate.isEmpty() && a.isFood(candidate)) {
                     food = candidate;
                     break;

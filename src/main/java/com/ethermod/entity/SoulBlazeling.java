@@ -76,7 +76,7 @@ public final class SoulBlazeling extends Mob {
         var nav = new FlyingPathNavigation(this, level);
         nav.setCanFloat(true);
         nav.setCanOpenDoors(false);
-        nav.setCanPassDoors(true);
+        nav.setCanOpenDoors(true);
         return nav;
     }
 
@@ -193,7 +193,7 @@ public final class SoulBlazeling extends Mob {
 
     public void fireAt(LivingEntity target) {
         if (level().isClientSide()) return;
-        var bolt = com.ethermod.registry.ModEntities.SOUL_BOLT.get().create(level());
+        var bolt = com.ethermod.registry.ModEntities.SOUL_BOLT.get().create(level(), net.minecraft.world.entity.EntitySpawnReason.MOB_SUMMONED);
         if (bolt == null) return;
         bolt.setOwner(this);
         bolt.setPos(getX(), getY() + getBbHeight() * .6, getZ());

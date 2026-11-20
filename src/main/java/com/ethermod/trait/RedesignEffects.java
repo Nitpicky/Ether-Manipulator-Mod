@@ -196,7 +196,7 @@ public final class RedesignEffects {
     public static void ranged(LivingIncomingDamageEvent ev) {
         if (ev.getSource().getEntity() instanceof ServerPlayer p
                 && ev.getSource().getDirectEntity()
-                        instanceof net.minecraft.world.entity.projectile.AbstractArrow arrow
+                        instanceof net.minecraft.world.entity.projectile.arrow.AbstractArrow arrow
                 && arrow.isCritArrow())
             ev.setAmount(ev.getAmount() + rangedBonus(p));
     }

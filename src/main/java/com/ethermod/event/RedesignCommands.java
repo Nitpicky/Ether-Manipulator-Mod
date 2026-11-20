@@ -14,7 +14,7 @@ public final class RedesignCommands {
         ev.getDispatcher()
                 .register(
                         Commands.literal("ethermod")
-                                .requires(s -> s.hasPermission(2))
+                                .requires(s -> s.permissions().hasPermission(net.minecraft.server.permissions.Permissions.COMMANDS_GAMEMASTER))
                                 .then(
                                         // hands out the Manipulator when give_on_first_join is off (quests, rewards)
                                         Commands.literal("grant")

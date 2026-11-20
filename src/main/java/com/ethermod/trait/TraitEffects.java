@@ -22,7 +22,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.level.BlockDropsEvent;
-import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -71,7 +71,7 @@ public final class TraitEffects {
     // =========================================================================
 
     @SubscribeEvent
-    public static void onBreak(BlockEvent.BreakEvent event) {
+    public static void onBreak(BreakBlockEvent event) {
         if (com.ethermod.beam.MassDriver.lifting || com.ethermod.util.Protect.probing) return;
         if (!(event.getPlayer() instanceof ServerPlayer player) || !Manipulator.isSummoned(player))
             return;

@@ -170,7 +170,8 @@ public final class GustGrenade {
                                     e instanceof LivingEntity le
                                             && !e.isSpectator()
                                             && Allegiance.enemyIgnoringPvp(g.owner, le)
-                                            && affects(g.owner, le));
+                                            && affects(g.owner, le),
+                            0.3f);
             if (mob != null) {
                 g.stuck = mob.getEntity();
                 // latch where it touched, on the creature's skin (its box), and turn with it
@@ -197,7 +198,7 @@ public final class GustGrenade {
                     if (Stasis.inStasis(le)) Stasis.expectBurst(le, heldPush(g, le));
                 }
             } else if (block.getType() != HitResult.Type.MISS) {
-                var n = Vec3.atLowerCornerOf(block.getDirection().getNormal());
+                var n = Vec3.atLowerCornerOf(block.getDirection().getUnitVec3i());
                 if (g.ricochet && g.bounces == 0) {
                     g.bounces++;
                     // reflect off the face, losing some speed
@@ -359,6 +360,6 @@ public final class GustGrenade {
     private static boolean affects(ServerPlayer owner, LivingEntity e) {
         if (!(e instanceof net.minecraft.world.entity.player.Player)) return true;
         return com.ethermod.config.ServerConfig.stasisGrenadePlayers()
-                && owner.server.isPvpAllowed();
+                && owner.level().getServer().getGameRules().get(net.minecraft.world.level.gamerules.GameRules.PVP);
     }
 }

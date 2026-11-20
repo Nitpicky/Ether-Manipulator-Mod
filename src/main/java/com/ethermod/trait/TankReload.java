@@ -39,7 +39,7 @@ public final class TankReload {
                 net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(
                         p, new com.ethermod.network.payload.ReloadPayload(lead));
             if (lead == RELOAD_LEAD - 8)
-                p.playNotifySound(
+                notify(p, 
                         com.ethermod.sound.ModSounds.UI_RESPAWN_ANCHOR_CHARGE,
                         net.minecraft.sounds.SoundSource.PLAYERS,
                         0.18f,
@@ -49,7 +49,7 @@ public final class TankReload {
                 data.putInt("mm_tank_last", cap);
                 idle = 0;
                 changed = true;
-                p.playNotifySound(
+                notify(p, 
                         com.ethermod.sound.ModSounds.UI_COPPER_BULB_TURN_OFF,
                         net.minecraft.sounds.SoundSource.PLAYERS,
                         0.1f,
@@ -66,5 +66,24 @@ public final class TankReload {
     /** Ticks without spending Ether before the tank reloads: from the server config, Prototype to Overclocked. */
     public static int reloadDelay(net.minecraft.world.item.ItemStack st) {
         return com.ethermod.config.ServerConfig.reloadTicks(com.ethermod.item.ManipulatorStage.get(st).ordinal());
+    }
+
+    /** A sound only this player hears (Player#playNotifySound is gone in 26.3). */
+    private static void notify(
+            net.minecraft.server.level.ServerPlayer p,
+            net.minecraft.sounds.SoundEvent sound,
+            net.minecraft.sounds.SoundSource source,
+            float volume,
+            float pitch) {
+        p.connection.send(
+                new net.minecraft.network.protocol.game.ClientboundSoundPacket(
+                        net.minecraft.core.registries.BuiltInRegistries.SOUND_EVENT.wrapAsHolder(sound),
+                        source,
+                        p.getX(),
+                        p.getY(),
+                        p.getZ(),
+                        volume,
+                        pitch,
+                        p.getRandom().nextLong()));
     }
 }

@@ -110,7 +110,7 @@ public final class PhotonicEffects {
                                 e -> e.owner().equals(p.getUUID()))
                         .size()
                 >= 8) return;
-        var e = ModEntities.LIGHT_DECOY.get().create(sl);
+        var e = ModEntities.LIGHT_DECOY.get().create(sl, net.minecraft.world.entity.EntitySpawnReason.MOB_SUMMONED);
         if (e == null) return;
         e.setPos(at);
         e.configure(p, lifetime);
@@ -228,7 +228,7 @@ public final class PhotonicEffects {
                 constellation(sl, n.previous(), n.at(), now);
             }
             // each star twinkles now and then
-            if (n.previous() != null && sl.random.nextInt(4) == 0)
+            if (n.previous() != null && sl.getRandom().nextInt(4) == 0)
                 sl.sendParticles(STAR, n.at().x, n.at().y, n.at().z, 2, .15, .15, .15, 0);
         }
     }

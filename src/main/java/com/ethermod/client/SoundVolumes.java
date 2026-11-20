@@ -21,9 +21,9 @@ public final class SoundVolumes {
     public static void onPlay(PlaySoundEvent ev) {
         var s = ev.getSound();
         if (s == null || !(s instanceof AbstractSoundInstance a)) return;
-        if (!"ethermod".equals(s.getLocation().getNamespace())) return;
+        if (!"ethermod".equals(s.location().getNamespace())) return;
         if (s.getClass().getName().startsWith("com.ethermod")) return; // scales itself
-        float f = factor(s.getLocation().getPath());
+        float f = factor(s.location().getPath());
         if (f >= 0.999f) return;
         var acc = (com.ethermod.mixin.SoundVolumeAccessor) a;
         acc.setVolumeField(acc.getVolumeField() * f);

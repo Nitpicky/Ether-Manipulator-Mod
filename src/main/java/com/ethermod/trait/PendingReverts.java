@@ -1,12 +1,6 @@
 package com.ethermod.trait;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.NbtUtils;
-import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.saveddata.SavedData;
@@ -26,17 +20,12 @@ import java.util.Map;
  */
 public final class PendingReverts extends SavedData {
 
-    private static final String ID = "ethermod_pending_reverts";
-
     private record Entry(BlockState placed, BlockState restore) {}
 
     private final Map<BlockPos, Entry> entries = new HashMap<>();
 
     public static PendingReverts get(ServerLevel level) {
-        return level.getDataStorage()
-                .computeIfAbsent(
-                        new SavedData.Factory<>(PendingReverts::new, PendingReverts::load, null),
-                        ID);
+        return level.getDataStorage().computeIfAbsent(TYPE);
     }
 
     /** Records that {@code placed} now stands at {@code pos} and {@code restore} must come back. */
@@ -81,33 +70,36 @@ public final class PendingReverts extends SavedData {
 
     // --- persistence ---
 
-    private static PendingReverts load(CompoundTag tag, HolderLookup.Provider registries) {
-        PendingReverts data = new PendingReverts();
-        var blocks = registries.lookupOrThrow(Registries.BLOCK);
-        ListTag list = tag.getListOrEmpty("entries");
-        for (int i = 0; i < list.size(); i++) {
-            CompoundTag e = list.getCompoundOrEmpty(i);
-            data.entries.put(
-                    BlockPos.of(e.getLongOr("pos", 0L)),
-                    new Entry(
-                            NbtUtils.readBlockState(blocks, e.getCompoundOrEmpty("placed")),
-                            NbtUtils.readBlockState(blocks, e.getCompoundOrEmpty("restore"))));
-        }
-        return data;
-    }
+    private static final com.mojang.serialization.Codec<Map.Entry<BlockPos, Entry>> ENTRY_CODEC =
+            com.mojang.serialization.codecs.RecordCodecBuilder.create(
+                    i ->
+                            i.group(
+                                            BlockPos.CODEC.fieldOf("pos").forGetter(Map.Entry::getKey),
+                                            BlockState.CODEC
+                                                    .fieldOf("placed")
+                                                    .forGetter(e -> e.getValue().placed()),
+                                            BlockState.CODEC
+                                                    .fieldOf("restore")
+                                                    .forGetter(e -> e.getValue().restore()))
+                                    .apply(i, (pos, placed, restore) -> Map.entry(pos, new Entry(placed, restore))));
 
-    @Override
-    public CompoundTag save(CompoundTag tag, HolderLookup.Provider registries) {
-        ListTag list = new ListTag();
-        entries.forEach(
-                (pos, e) -> {
-                    CompoundTag c = new CompoundTag();
-                    c.putLong("pos", pos.asLong());
-                    c.put("placed", NbtUtils.writeBlockState(e.placed()));
-                    c.put("restore", NbtUtils.writeBlockState(e.restore()));
-                    list.add(c);
-                });
-        tag.put("entries", list);
-        return tag;
-    }
+    private static final com.mojang.serialization.Codec<PendingReverts> CODEC =
+            ENTRY_CODEC
+                    .listOf()
+                    .fieldOf("entries")
+                    .codec()
+                    .xmap(
+                            list -> {
+                                PendingReverts data = new PendingReverts();
+                                list.forEach(e -> data.entries.put(e.getKey(), e.getValue()));
+                                return data;
+                            },
+                            data -> java.util.List.copyOf(data.entries.entrySet()));
+
+    private static final net.minecraft.world.level.saveddata.SavedDataType<PendingReverts> TYPE =
+            new net.minecraft.world.level.saveddata.SavedDataType<>(
+                    net.minecraft.resources.Identifier.fromNamespaceAndPath(
+                            com.ethermod.EtherMod.MODID, "pending_reverts"),
+                    PendingReverts::new,
+                    CODEC);
 }

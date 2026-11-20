@@ -101,7 +101,7 @@ public final class OrbTether {
                 () -> {
                     var stop =
                             new net.minecraft.network.protocol.game.ClientboundStopSoundPacket(
-                                    com.ethermod.sound.ModSounds.WORLD_PORTAL_TRIGGER.getLocation(),
+                                    com.ethermod.sound.ModSounds.WORLD_PORTAL_TRIGGER.location(),
                                     SoundSource.PLAYERS);
                     for (ServerPlayer p : sl.players())
                         if (p.position().distanceToSqr(at) < 64 * 64) p.connection.send(stop);
@@ -379,7 +379,7 @@ public final class OrbTether {
             return;
         }
         Direction face = b.hookFace == null ? Direction.UP : b.hookFace;
-        Vec3 dest = b.position().add(Vec3.atLowerCornerOf(face.getNormal()).scale(0.5));
+        Vec3 dest = b.position().add(Vec3.atLowerCornerOf(face.getUnitVec3i()).scale(0.5));
         if (face.getAxis() != Direction.Axis.Y) dest = dest.add(0, -0.9, 0);
         var old = sp.position();
         for (int i = 0; i < 6; i++) {
@@ -400,7 +400,7 @@ public final class OrbTether {
         Direction face = b.hookFace;
         Vec3 dest =
                 (b.stuckBlock != null ? Vec3.atCenterOf(b.stuckBlock) : b.position())
-                        .add(Vec3.atLowerCornerOf(face.getNormal()).scale(b.stuckBlock != null ? .5 : 0));
+                        .add(Vec3.atLowerCornerOf(face.getUnitVec3i()).scale(b.stuckBlock != null ? .5 : 0));
         Vec3 d = dest.subtract(sp.position());
         double dist = d.length();
         sp.resetFallDistance();
@@ -521,7 +521,7 @@ public final class OrbTether {
         Vec3 old = player.position();
         sl.sendParticles(ParticleTypes.PORTAL, old.x, old.y + 1, old.z, 32, .3, .7, .3, .15);
         player.teleportTo(
-                sl, at.x, at.y, at.z, java.util.Set.of(), player.getYRot(), player.getXRot());
+                sl, at.x, at.y, at.z, java.util.Set.<net.minecraft.world.entity.Relative>of(), player.getYRot(), player.getXRot(), false);
         sl.sendParticles(ParticleTypes.PORTAL, at.x, at.y + 1, at.z, 32, .3, .7, .3, .15);
         sl.playSound(
                 null,

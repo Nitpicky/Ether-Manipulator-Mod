@@ -45,7 +45,7 @@ public final class BeamAudio {
         }
 
         Once(SoundEvent e, float vol, float pitch) { // like forUI: not positioned
-            super(e.getLocation(), SoundSource.MASTER, vol, pitch, RandomSource.create(), false, 0, Attenuation.NONE, 0, 0, 0, true);
+            super(e.location(), SoundSource.MASTER, vol, pitch, RandomSource.create(), false, 0, Attenuation.NONE, 0, 0, 0, true);
         }
     }
 

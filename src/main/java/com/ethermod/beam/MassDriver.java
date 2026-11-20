@@ -160,7 +160,7 @@ public final class MassDriver {
         try {
             cancelled =
                     net.neoforged.neoforge.common.NeoForge.EVENT_BUS
-                            .post(new net.neoforged.neoforge.event.level.BlockEvent.BreakEvent(level, at, bs, p))
+                            .post(new net.neoforged.neoforge.event.level.block.BreakBlockEvent(level, at, bs, p))
                             .isCanceled();
         } finally {
             lifting = false;

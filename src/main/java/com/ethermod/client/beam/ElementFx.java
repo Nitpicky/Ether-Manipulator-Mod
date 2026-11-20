@@ -40,7 +40,7 @@ final class ElementFx {
             case ENERGY -> {
                 int c = 0x20C1E9; // Kinetic motes drawn into the nozzle as it charges
                 yield new Kind[] {
-                    new Kind(new DustParticleOptions(new Vector3f(((c >> 16) & 255) / 255f, ((c >> 8) & 255) / 255f, (c & 255) / 255f), 0.6f), 0.7f, 0.02f, 0f, true)
+                    new Kind(new DustParticleOptions(c & 0xFFFFFF, 0.6f), 0.7f, 0.02f, 0f, true)
                 };
             }
             case WATER -> new Kind[] {new Kind(ParticleTypes.BUBBLE_POP, 0.45f, 0.02f, 0.02f, false)};
@@ -84,7 +84,7 @@ final class ElementFx {
 
     private static float etherDebt;
     private static final DustParticleOptions ETHER =
-            new DustParticleOptions(new Vector3f(0x30 / 255f, 0xD5 / 255f, 0xC8 / 255f), 0.7f);
+            new DustParticleOptions(0x30D5C8, 0.7f);
 
     /** Reload: motes of Ether (teal, whatever the mode colour) drawn into the nozzle before the clamp. */
     private static void reloadMotes(Minecraft mc, Vec3 nozzle, Vec3 barrel, float dt) {

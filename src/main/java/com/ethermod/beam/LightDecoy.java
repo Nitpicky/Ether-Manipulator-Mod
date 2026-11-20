@@ -9,8 +9,8 @@ import net.minecraft.world.level.Level;
 import java.util.*;
 
 public final class LightDecoy extends PathfinderMob {
-    private static final EntityDataAccessor<Optional<UUID>> OWNER =
-            SynchedEntityData.defineId(LightDecoy.class, EntityDataSerializers.OPTIONAL_UUID);
+    private static final EntityDataAccessor<Optional<net.minecraft.world.entity.EntityReference<net.minecraft.world.entity.LivingEntity>>> OWNER =
+            SynchedEntityData.defineId(LightDecoy.class, EntityDataSerializers.OPTIONAL_LIVING_ENTITY_REFERENCE);
     private int lifetime = 120;
 
     public LightDecoy(EntityType<? extends LightDecoy> type, Level level) {
@@ -25,11 +25,11 @@ public final class LightDecoy extends PathfinderMob {
     }
 
     public UUID owner() {
-        return entityData.get(OWNER).orElse(new UUID(0, 0));
+        return entityData.get(OWNER).map(r -> r.getUUID()).orElse(new UUID(0, 0));
     }
 
     public void configure(net.minecraft.server.level.ServerPlayer player, int ticks) {
-        entityData.set(OWNER, Optional.of(player.getUUID()));
+        entityData.set(OWNER, Optional.of(net.minecraft.world.entity.EntityReference.of(player.getUUID())));
         lifetime = ticks;
         setYRot(player.getYRot());
         setYHeadRot(player.getYRot());
@@ -65,7 +65,7 @@ public final class LightDecoy extends PathfinderMob {
     @Override
     public void readAdditionalSaveData(net.minecraft.world.level.storage.ValueInput t) {
         super.readAdditionalSaveData(t);
-        t.read("owner", net.minecraft.core.UUIDUtil.CODEC).ifPresent(u -> entityData.set(OWNER, Optional.of(u)));
+        t.read("owner", net.minecraft.core.UUIDUtil.CODEC).ifPresent(u -> entityData.set(OWNER, Optional.of(net.minecraft.world.entity.EntityReference.of(u))));
         lifetime = t.getIntOr("life", 0);
     }
 

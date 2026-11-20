@@ -71,10 +71,10 @@ public final class GemLootModifier extends LootModifier {
                 && !(sp instanceof net.neoforged.neoforge.common.util.FakePlayer);
         if (realPlayer && origin != null && !guaranteeIn.isEmpty() && com.ethermod.config.ServerConfig.gemInFirstChest()) {
             BlockPos pos = BlockPos.containing(origin);
-            var structures = level.registryAccess().registryOrThrow(Registries.STRUCTURE);
+            var structures = level.registryAccess().lookupOrThrow(Registries.STRUCTURE);
             String key = null;
             for (Identifier id : guaranteeIn) {
-                var structure = structures.get(id);
+                var structure = structures.getValue(id);
                 if (structure == null) continue;
                 var start = level.structureManager().getStructureWithPieceAt(pos, structure);
                 if (!start.isValid()) continue;

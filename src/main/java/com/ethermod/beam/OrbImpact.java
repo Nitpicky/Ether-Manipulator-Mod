@@ -118,7 +118,7 @@ final class OrbImpact {
         if (b.getMode() == OrbMode.WATER)
             ProjectileEffects.waterImpact(b, b.traits, result.getLocation());
         if (b.getMode() == OrbMode.WATER
-                && target instanceof net.minecraft.world.entity.monster.EnderMan
+                && target instanceof net.minecraft.world.entity.monster.Enderman
                 && owner instanceof ServerPlayer rain)
             com.ethermod.advancement.ManipulatorTrigger.fire(rain, "rain_check");
         int ph = b.getPhase();

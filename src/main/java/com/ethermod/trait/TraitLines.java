@@ -6,7 +6,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.registries.DataPackRegistryEvent;
+import net.neoforged.neoforge.registries.NewDatapackRegistryEvent;
 
 import java.util.Comparator;
 import java.util.List;
@@ -22,8 +22,8 @@ public final class TraitLines {
             ResourceKey.createRegistryKey(
                     Identifier.fromNamespaceAndPath(EtherMod.MODID, "trait_line"));
 
-    public static void onNewRegistry(DataPackRegistryEvent.NewRegistry event) {
-        event.dataPackRegistry(KEY, TraitLine.CODEC, TraitLine.CODEC);
+    public static void onNewRegistry(NewDatapackRegistryEvent event) {
+        event.worldRegistry(KEY, TraitLine.CODEC, TraitLine.CODEC);
     }
 
     public static Optional<TraitLine> get(RegistryAccess access, Identifier id) {
@@ -36,7 +36,7 @@ public final class TraitLines {
                 .map(
                         r ->
                                 r.entrySet().stream()
-                                        .map(e -> Map.entry(e.getKey().location(), e.getValue()))
+                                        .map(e -> Map.entry(e.getKey().identifier(), e.getValue()))
                                         .sorted(
                                                 Comparator.comparingInt(
                                                                 (Map.Entry<

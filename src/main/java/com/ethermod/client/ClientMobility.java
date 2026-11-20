@@ -113,7 +113,7 @@ public final class ClientMobility {
             return;
         }
         if (mc.isPaused()) return;
-        String dim = mc.level.dimension().location().toString();
+        String dim = mc.level.dimension().identifier().toString();
         if (!dim.equals(dimension)) {
             TRAIL.clear();
             dimension = dim;

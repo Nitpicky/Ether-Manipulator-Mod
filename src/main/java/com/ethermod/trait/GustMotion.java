@@ -80,7 +80,7 @@ public final class GustMotion {
                         var n =
                                 target != null
                                         ? e.position().subtract(target.position()).normalize()
-                                        : Vec3.atLowerCornerOf(hit.getDirection().getNormal());
+                                        : Vec3.atLowerCornerOf(hit.getDirection().getUnitVec3i());
                         v = m.v.subtract(n.scale(2 * m.v.dot(n))).scale(.8);
                         e.setDeltaMovement(v);
                         e.needsSync = true;

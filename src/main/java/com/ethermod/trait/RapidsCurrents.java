@@ -115,7 +115,7 @@ public final class RapidsCurrents {
         var area = new net.minecraft.world.phys.AABB(minX, minY, minZ, maxX + 1, maxY + 2, maxZ + 1);
         for (var e : level.getEntitiesOfClass(net.minecraft.world.entity.Entity.class, area)) {
             if (e.isSpectator() || e.noPhysics) continue;
-            boolean local = e.isControlledByLocalInstance();
+            boolean local = e.isLocalInstanceAuthoritative();
             if (level.isClientSide() ? !local : local || e instanceof net.minecraft.world.entity.player.Player
                     || e.getControllingPassenger() instanceof net.minecraft.world.entity.player.Player)
                 continue;

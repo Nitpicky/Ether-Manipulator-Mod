@@ -3,9 +3,7 @@ package com.ethermod.event;
 import com.ethermod.item.EtherManipulatorItem;
 import com.ethermod.manipulator.Manipulator;
 
-import net.minecraft.world.InteractionHand;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 /**
  * While summoned, the Manipulator is the main-hand stack (PlayerMixin). Block use and
@@ -18,15 +16,6 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 public final class VirtualHandGuard {
 
     private VirtualHandGuard() {}
-
-    @SubscribeEvent
-    public static void onEntityInteractSpecific(PlayerInteractEvent.EntityInteractSpecific event) {
-        if (event.getHand() == InteractionHand.MAIN_HAND
-                && event.getItemStack().getItem() instanceof EtherManipulatorItem
-                && Manipulator.isSummoned(event.getEntity())) {
-            event.setCanceled(true);
-        }
-    }
 
     /**
      * A Manipulator item entity is never the player's Manipulator (that lives in its own slot): a

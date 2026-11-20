@@ -75,8 +75,8 @@ final class ServerPayloadHandlers {
 
     private static void paint(ServerPlayer sp, boolean body, int invSlot) {
         ItemStack manipulator = Manipulator.stack(sp);
-        if (invSlot < 0 || invSlot >= sp.getInventory().items.size()) return;
-        ItemStack src = sp.getInventory().items.get(invSlot);
+        if (invSlot < 0 || invSlot >= sp.getInventory().getNonEquipmentItems().size()) return;
+        ItemStack src = sp.getInventory().getNonEquipmentItems().get(invSlot);
         if (body ? !ManipulatorColors.isBodySource(src) : !ManipulatorColors.isBeamSource(src))
             return;
         int rgb = body ? ManipulatorColors.bodyFrom(src) : ManipulatorColors.beamFrom(src);

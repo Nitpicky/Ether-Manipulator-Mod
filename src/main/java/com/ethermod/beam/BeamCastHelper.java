@@ -68,8 +68,8 @@ public final class BeamCastHelper {
     static net.minecraft.world.damagesource.DamageSource beamSource(ServerLevel level, ServerPlayer player) {
         return new net.minecraft.world.damagesource.DamageSource(
                 level.registryAccess()
-                        .registryOrThrow(net.minecraft.core.registries.Registries.DAMAGE_TYPE)
-                        .getHolderOrThrow(BEAM_DAMAGE),
+                        .lookupOrThrow(net.minecraft.core.registries.Registries.DAMAGE_TYPE)
+                        .getOrThrow(BEAM_DAMAGE),
                 player);
     }
 
@@ -197,7 +197,7 @@ public final class BeamCastHelper {
                                                                         .OwnableEntity
                                                                 own
                                                         && player.getUUID()
-                                                                .equals(own.getOwnerUUID())))
+                                                                .equals(own.getOwnerReference() == null ? null : own.getOwnerReference().getUUID())))
                         .stream()
                         .sorted(Comparator.comparingDouble(e -> e.distanceToSqr(first)))
                         .limit(combatLevel - 1)
@@ -304,7 +304,7 @@ public final class BeamCastHelper {
         float before = target.getHealth();
         // A continuous beam: ignore the 10-tick invulnerability window.
         target.invulnerableTime = 0;
-        target.hurt(beamSource(level, player), dmg);
+        target.hurtServer(level, beamSource(level, player), dmg);
         target.invulnerableTime = 0;
         target.setDeltaMovement(incomingVelocity);
         float dealt = Math.max(0, before - target.getHealth());

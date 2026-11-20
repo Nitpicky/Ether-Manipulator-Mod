@@ -81,7 +81,7 @@ public final class BeamTrace {
         }
         return BlockHitResult.miss(
                 end,
-                net.minecraft.core.Direction.getNearest(dir.x, dir.y, dir.z),
+                net.minecraft.core.Direction.getApproximateNearest(dir.x, dir.y, dir.z),
                 net.minecraft.core.BlockPos.containing(end));
     }
 }
