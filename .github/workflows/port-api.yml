@@ -1,15 +1,10 @@
 name: Port API lookup
 # Port helper (port/26.3 only): prints public signatures of 26.3 / NeoForge / GeckoLib classes
+# Edit .github/port-lookup.txt (line 1: class regexes, line 2: list regex) and push.
 on:
-  workflow_dispatch:
-    inputs:
-      classes:
-        description: 'space-separated class names or regexes over jar entries (e.g. net/minecraft/client/renderer/SubmitNodeCollector)'
-        required: true
-      list:
-        description: 'regex: list matching class names only'
-        required: false
-        default: ''
+  push:
+    branches: ['port/**']
+    paths: ['.github/port-lookup.txt']
 jobs:
   lookup:
     runs-on: ubuntu-latest
@@ -22,10 +17,8 @@ jobs:
       - uses: gradle/actions/setup-gradle@v5
       - run: ./gradlew createMinecraftArtifacts dependencies --configuration compileClasspath -q > /dev/null || true
       - name: Lookup
-        env:
-          CLASSES: ${{ inputs.classes }}
-          LIST: ${{ inputs.list }}
         run: |
+          CLASSES=$(sed -n 1p .github/port-lookup.txt); LIST=$(sed -n 2p .github/port-lookup.txt)
           JARS=$( (find build -name '*.jar' -path '*moddev*' ; find ~/.gradle/caches -name '*.jar' \( -path '*geckolib*' -o -path '*curse.maven*' \)) | sort -u)
           echo "$JARS"
           CP=$(echo "$JARS" | tr '\n' ':')
