@@ -67,17 +67,31 @@ public final class Fx {
     // Recording
     // =========================================================================
 
+    /**
+     * Most vertices a layer keeps in one frame (65536 quads, far above what the effects need). If a
+     * pipeline never reaches the draw stage the layer would otherwise grow without end; past the
+     * cap further quads are dropped (a multiple of 4, so only whole quads are kept).
+     */
+    private static final int MAX_VERTICES = 4 * 65536;
+
     /** A growable list of quads: position (camera-relative) and packed colour per vertex. */
     private static final class Layer implements VertexConsumer {
         float[] pos = new float[3 * 4096];
         int[] col = new int[4096];
         int n; // vertices recorded
+        boolean dropping; // the last vertex was over the cap: its colour goes nowhere too
 
         @Override
         public VertexConsumer addVertex(float x, float y, float z) {
+            if (n >= MAX_VERTICES) {
+                dropping = true;
+                return this;
+            }
+            dropping = false;
             if (n == col.length) {
-                col = Arrays.copyOf(col, n * 2);
-                pos = Arrays.copyOf(pos, n * 6);
+                int size = Math.min(MAX_VERTICES, n * 2);
+                col = Arrays.copyOf(col, size);
+                pos = Arrays.copyOf(pos, size * 3);
             }
             pos[3 * n] = x;
             pos[3 * n + 1] = y;
@@ -89,7 +103,8 @@ public final class Fx {
 
         @Override
         public VertexConsumer setColor(int r, int g, int b, int a) {
-            if (n > 0) col[n - 1] = (a & 255) << 24 | (r & 255) << 16 | (g & 255) << 8 | (b & 255);
+            if (n > 0 && !dropping)
+                col[n - 1] = (a & 255) << 24 | (r & 255) << 16 | (g & 255) << 8 | (b & 255);
             return this;
         }
 
@@ -115,6 +130,7 @@ public final class Fx {
 
         void clear() {
             n = 0;
+            dropping = false;
         }
 
         /** Whole quads only: a half-written one at the end is dropped. */
