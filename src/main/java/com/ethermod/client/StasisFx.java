@@ -155,7 +155,20 @@ public final class StasisFx {
             if (HELD.isEmpty()) return; // nothing held: skip the lookup for every creature drawn
             float p = pulse(e, pt);
             if (p < 0) return;
-            int a = (int) (255 * (0.25f + 0.35f * p));
+            float strength = 0.25f + 0.35f * p;
+            if (ShaderCompat.shadersActive()) {
+                // Shader packs turn the emissive translucent type see-through (see GlowMaskLayer):
+                // draw the model solid and full-bright instead, its colour pulled towards the teal
+                // by the same strength the overlay's alpha has without shaders.
+                int r = (int) (255 * (1 + (0x20 / 255f - 1) * strength)),
+                        g = (int) (255 * (1 + (0xE9 / 255f - 1) * strength)),
+                        b = (int) (255 * (1 + (0xC1 / 255f - 1) * strength));
+                int solid = 0xFF000000 | r << 16 | g << 8 | b;
+                var vc = buf.getBuffer(RenderType.entityCutoutNoCull(parent.getTextureLocation(e)));
+                getParentModel().renderToBuffer(pose, vc, 0xF000F0, OverlayTexture.NO_OVERLAY, solid);
+                return;
+            }
+            int a = (int) (255 * strength);
             int color = (a << 24) | 0x20E9C1; // Pneumatic teal
             var vc = buf.getBuffer(RenderType.entityTranslucentEmissive(parent.getTextureLocation(e)));
             getParentModel().renderToBuffer(pose, vc, 0xF000F0, OverlayTexture.NO_OVERLAY, color);
