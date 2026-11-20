@@ -71,7 +71,16 @@ public final class TempBlocks {
         if (!cur.isAir() && !waterSource && !(cur.canBeReplaced() && cur.getFluidState().isEmpty()))
             return false;
         var restore = waterSource ? cur : Blocks.AIR.defaultBlockState();
-        level.setBlock(pos, state, state.isAir() ? 2 : 3);
+        // the block's own placement checks (fire's canSurvive in onPlace) run inside setBlock,
+        // before the position is recorded below: mark it as being placed for that call
+        placingLevel = level;
+        placing = pos;
+        try {
+            level.setBlock(pos, state, state.isAir() ? 2 : 3);
+        } finally {
+            placingLevel = null;
+            placing = null;
+        }
         long now = level.getGameTime();
         TEMP_BLOCKS
                 .computeIfAbsent(level, k -> new HashMap<>())
@@ -83,7 +92,14 @@ public final class TempBlocks {
         return true;
     }
 
+    /** The position {@link #tempBlock} is placing right now (server thread only), or null. */
+    private static BlockPos placing;
+
+    private static ServerLevel placingLevel;
+
+    /** Whether {@code pos} holds (or is being given, inside {@link #tempBlock}) a temporary block. */
     public static boolean isTempBlock(ServerLevel level, BlockPos pos) {
+        if (level == placingLevel && pos.equals(placing)) return true;
         Map<BlockPos, TempBlock> m = TEMP_BLOCKS.get(level);
         return m != null && m.containsKey(pos);
     }
