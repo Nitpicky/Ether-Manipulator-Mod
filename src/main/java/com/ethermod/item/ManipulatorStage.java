@@ -134,7 +134,7 @@ public enum ManipulatorStage {
         // read-only: getUnsafe avoids a deep copy of the whole stack data on every trait lookup
         int id =
                 stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY)
-                        .getUnsafe()
+                        .copyTag()
                         .getInt(TAG_STAGE);
         for (ManipulatorStage s : values()) {
             if (s.id == id) return s;

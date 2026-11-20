@@ -150,7 +150,7 @@ final class OrbImpact {
                 if (target instanceof LivingEntity le) {
                     le.addEffect(
                             new net.minecraft.world.effect.MobEffectInstance(
-                                    net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN,
+                                    net.minecraft.world.effect.MobEffects.SLOWNESS,
                                     100 + 60 * ph,
                                     1 + ph));
                     le.setTicksFrozen(
@@ -172,7 +172,7 @@ final class OrbImpact {
                                     net.minecraft.world.effect.MobEffects.POISON, 100, potency));
                     victim.addEffect(
                             new net.minecraft.world.effect.MobEffectInstance(
-                                    net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN,
+                                    net.minecraft.world.effect.MobEffects.SLOWNESS,
                                     100,
                                     potency));
                 }
@@ -384,7 +384,7 @@ final class OrbImpact {
                                 e -> e != b.getOwner())) {
                     e.addEffect(
                             new net.minecraft.world.effect.MobEffectInstance(
-                                    net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN,
+                                    net.minecraft.world.effect.MobEffects.SLOWNESS,
                                     100,
                                     1));
                 }

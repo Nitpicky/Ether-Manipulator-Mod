@@ -24,7 +24,7 @@ public final class ModEntities {
                                     .sized(0.3f, 0.3f)
                                     .clientTrackingRange(64)
                                     .updateInterval(1) // sync every tick for smooth visual
-                                    .build("beam_ball"));
+                                    .build(key("beam_ball")));
 
     public static final DeferredHolder<EntityType<?>, EntityType<com.ethermod.beam.LightDecoy>>
             LIGHT_DECOY =
@@ -36,7 +36,7 @@ public final class ModEntities {
                                                     MobCategory.MISC)
                                             .sized(.6f, 1.8f)
                                             .clientTrackingRange(64)
-                                            .build("light_decoy"));
+                                            .build(key("light_decoy")));
     public static final DeferredHolder<
                     EntityType<?>, EntityType<com.ethermod.entity.SoulBlazeling>>
             SOUL_BLAZELING =
@@ -51,7 +51,7 @@ public final class ModEntities {
                                             .fireImmune()
                                             .clientTrackingRange(8)
                                             .updateInterval(2)
-                                            .build("soul_blazeling"));
+                                            .build(key("soul_blazeling")));
     public static final DeferredHolder<EntityType<?>, EntityType<com.ethermod.entity.SoulBolt>>
             SOUL_BOLT =
                     ENTITY_TYPES.register(
@@ -64,7 +64,13 @@ public final class ModEntities {
                                             .fireImmune()
                                             .clientTrackingRange(8)
                                             .updateInterval(1)
-                                            .build("soul_bolt"));
+                                            .build(key("soul_bolt")));
+
+    private static net.minecraft.resources.ResourceKey<EntityType<?>> key(String name) {
+        return net.minecraft.resources.ResourceKey.create(
+                net.minecraft.core.registries.Registries.ENTITY_TYPE,
+                net.minecraft.resources.Identifier.fromNamespaceAndPath(EtherMod.MODID, name));
+    }
 
     public static void register(IEventBus bus) {
         bus.addListener(

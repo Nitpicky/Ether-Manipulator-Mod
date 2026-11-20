@@ -40,7 +40,7 @@ public final class Loadouts {
 
     public static List<Entry> list(ItemStack stack) {
         CompoundTag root =
-                stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).getUnsafe();
+                stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
         ListTag l = root.getListOrEmpty(TAG);
         List<Entry> out = new ArrayList<>();
         for (int i = 0; i < l.size(); i++) {

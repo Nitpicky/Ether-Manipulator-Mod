@@ -54,7 +54,7 @@ final class OrbMass {
         target.needsSync = true;
         // recoil: the block bounces back off the creature (and up), then falls and lands
         b.setDeltaMovement(v.x * -.35, Math.max(.25, -v.y * .3), v.z * -.35);
-        b.hasImpulse = true;
+        b.needsSync = true;
         if (b.massBounces > 0) b.massBounces--;
         hitSound(b, at);
     }
@@ -67,7 +67,7 @@ final class OrbMass {
         Vec3 along = v.subtract(into);
         b.setDeltaMovement(along.scale(.6).subtract(into.scale(.4)));
         b.setPos(at.add(n.scale(.5)));
-        b.hasImpulse = true;
+        b.needsSync = true;
         hitSound(b, at);
     }
 

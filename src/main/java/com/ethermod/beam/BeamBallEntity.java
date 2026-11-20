@@ -435,7 +435,7 @@ public class BeamBallEntity extends Projectile {
         if (mode == OrbMode.ENERGY && getOwner() instanceof ServerPlayer batter)
             for (var fb :
                     level().getEntitiesOfClass(
-                            net.minecraft.world.entity.projectile.LargeFireball.class,
+                            net.minecraft.world.entity.projectile.hurtingprojectile.LargeFireball.class,
                             getBoundingBox().inflate(.6),
                             f -> f.getOwner() instanceof net.minecraft.world.entity.monster.Ghast)) {
                 fb.hurt(batter.damageSources().playerAttack(batter), 1f);
@@ -602,7 +602,7 @@ public class BeamBallEntity extends Projectile {
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundTag tag) {
+    protected void addAdditionalSaveData(net.minecraft.world.level.storage.ValueOutput tag) {
         super.addAdditionalSaveData(tag);
         tag.putBoolean("mm_soul_projectile", isSoulFire());
         tag.putInt(TAG_PHASE, getPhase());
@@ -612,27 +612,22 @@ public class BeamBallEntity extends Projectile {
         tag.putFloat(TAG_DAMAGE, damage);
         tag.putFloat(TAG_RANGE, maxRange);
         tag.putFloat(TAG_TRAVEL, traveledDistance);
-        if (!getCarried().isAir())
-            tag.put("mm_carried", net.minecraft.nbt.NbtUtils.writeBlockState(getCarried()));
-        if (carriedBe != null) tag.put("mm_carried_be", carriedBe);
+        if (!getCarried().isAir()) tag.store("mm_carried", BlockState.CODEC, getCarried());
+        if (carriedBe != null) tag.store("mm_carried_be", CompoundTag.CODEC, carriedBe);
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundTag tag) {
+    protected void readAdditionalSaveData(net.minecraft.world.level.storage.ValueInput tag) {
         super.readAdditionalSaveData(tag);
-        carriedBe = tag.contains("mm_carried_be") ? tag.getCompoundOrEmpty("mm_carried_be") : null;
+        carriedBe = tag.read("mm_carried_be", CompoundTag.CODEC).orElse(null);
         entityData.set(PHASE, tag.getIntOr(TAG_PHASE, 0));
         entityData.set(MODE, tag.getIntOr("mm_mode", 0));
         entityData.set(SOULFIRE, tag.getBooleanOr("mm_soul_projectile", false));
         entityData.set(STAGE, tag.getIntOr("mm_stage", 0));
-        if (tag.contains("mm_color")) entityData.set(COLOR, tag.getIntOr("mm_color", 0));
+        tag.getInt("mm_color").ifPresent(c -> entityData.set(COLOR, c));
         damage = tag.getFloatOr(TAG_DAMAGE, 0f);
         maxRange = tag.getFloatOr(TAG_RANGE, 0f);
         traveledDistance = tag.getFloatOr(TAG_TRAVEL, 0f);
-        if (tag.contains("mm_carried"))
-            setCarried(
-                    net.minecraft.nbt.NbtUtils.readBlockState(
-                            net.minecraft.core.registries.BuiltInRegistries.BLOCK.asLookup(),
-                            tag.getCompoundOrEmpty("mm_carried")));
+        tag.read("mm_carried", BlockState.CODEC).ifPresent(this::setCarried);
     }
 }

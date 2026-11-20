@@ -160,7 +160,7 @@ public enum OrbMode {
     // ---- Stack data ---------------------------------------------------------
 
     private static CompoundTag tag(ItemStack stack) {
-        return stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).getUnsafe();
+        return stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
     }
 
     private static void edit(ItemStack stack, java.util.function.Consumer<CompoundTag> f) {

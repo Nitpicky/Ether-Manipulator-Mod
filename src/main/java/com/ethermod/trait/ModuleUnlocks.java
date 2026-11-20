@@ -19,7 +19,7 @@ public final class ModuleUnlocks {
         if (id.equals(Traits.PLASMIC) || id.equals(Traits.KINETIC)) return true;
         if (com.ethermod.config.ServerConfig.moduleDisabled(id.getPath())) return false;
         if (com.ethermod.config.ServerConfig.allModules()) return true;
-        var tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).getUnsafe();
+        var tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
         var list = tag.getListOrEmpty(KEY);
         for (int i = 0; i < list.size(); i++)
             if (list.getStringOr(i, "").equals(id.toString())) return true;

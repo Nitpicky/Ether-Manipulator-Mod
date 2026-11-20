@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 /** Temporary Soulwake companion; its summoner owns every burn it inflicts. */
-public final class SoulBlazeling extends FlyingMob {
+public final class SoulBlazeling extends Mob {
     private static final net.minecraft.network.syncher.EntityDataAccessor<Boolean> CHARGING =
             net.minecraft.network.syncher.SynchedEntityData.defineId(
                     SoulBlazeling.class,
@@ -241,15 +241,15 @@ public final class SoulBlazeling extends FlyingMob {
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag t) {
+    public void addAdditionalSaveData(net.minecraft.world.level.storage.ValueOutput t) {
         super.addAdditionalSaveData(t);
         t.putInt("shot_cooldown", shotCooldown);
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag t) {
+    public void readAdditionalSaveData(net.minecraft.world.level.storage.ValueInput t) {
         super.readAdditionalSaveData(t);
-        shotCooldown = t.contains("shot_cooldown") ? t.getIntOr("shot_cooldown", 0) : 60;
+        shotCooldown = t.getIntOr("shot_cooldown", 60);
         setNoGravity(true);
     }
 }

@@ -50,8 +50,8 @@ public class EtherManipulatorItem extends Item implements GeoItem {
 
     private final AnimatableInstanceCache animCache = GeckoLibUtil.createInstanceCache(this);
 
-    public EtherManipulatorItem() {
-        super(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC));
+    public EtherManipulatorItem(Item.Properties props) {
+        super(props.stacksTo(1).rarity(Rarity.EPIC));
 
         // Register for server-side animation syncing (required by GeoItem)
         SingletonGeoAnimatable.registerSyncedAnimatable(this);
@@ -178,8 +178,11 @@ public class EtherManipulatorItem extends Item implements GeoItem {
      */
     @Override
     public void inventoryTick(
-            ItemStack stack, Level level, Entity entity, int slot, boolean selected) {
-        if (level.isClientSide() || !(entity instanceof ServerPlayer sp)) return;
+            ItemStack stack,
+            net.minecraft.server.level.ServerLevel level,
+            Entity entity,
+            net.minecraft.world.entity.EquipmentSlot equipmentSlot) {
+        if (!(entity instanceof ServerPlayer sp)) return;
         ManipulatorData data = Manipulator.data(sp);
         ItemStack own = data.stack();
         boolean ownUntouched =
@@ -192,7 +195,9 @@ public class EtherManipulatorItem extends Item implements GeoItem {
                     Component.translatable("message.ethermod.moved_to_slot")
                             .withStyle(ChatFormatting.AQUA));
         }
-        sp.getInventory().setItem(slot, ItemStack.EMPTY);
+        var inv = sp.getInventory();
+        for (int slot = 0; slot < inv.getContainerSize(); slot++)
+            if (inv.getItem(slot) == stack) inv.setItem(slot, ItemStack.EMPTY);
         Manipulator.sync(sp);
     }
 
@@ -256,7 +261,12 @@ public class EtherManipulatorItem extends Item implements GeoItem {
      * maxChargeTicks.
      */
     @Override
-    public void releaseUsing(ItemStack stack, Level level, LivingEntity entity, int timeCharged) {
+    public boolean releaseUsing(ItemStack stack, Level level, LivingEntity entity, int timeCharged) {
+        releaseShot(stack, level, entity, timeCharged);
+        return true;
+    }
+
+    private void releaseShot(ItemStack stack, Level level, LivingEntity entity, int timeCharged) {
         if (level.isClientSide()) return;
         if (!(entity instanceof Player player)) return;
 
@@ -381,9 +391,9 @@ public class EtherManipulatorItem extends Item implements GeoItem {
 
     @Override
     public void appendHoverText(
-            ItemStack stack, TooltipContext ctx, List<Component> tooltip, TooltipFlag flag) {
+            ItemStack stack, TooltipContext ctx, net.minecraft.world.item.component.TooltipDisplay display, java.util.function.Consumer<Component> tooltip, TooltipFlag flag) {
         ManipulatorStage stage = ManipulatorStage.get(stack);
-        tooltip.add(
+        tooltip.accept(
                 stage.next() != null
                         ? Component.translatable(
                                         "tooltip.ethermod.stage_next",
@@ -393,14 +403,14 @@ public class EtherManipulatorItem extends Item implements GeoItem {
                         : Component.translatable("tooltip.ethermod.max_stage", stage.title())
                                 .withStyle(ChatFormatting.GOLD));
         OrbMode mode = OrbMode.get(stack);
-        tooltip.add(
+        tooltip.accept(
                 Component.translatable(
                                 "tooltip.ethermod.mode_ether",
                                 mode.title(),
                                 mode.tankLevel(stack),
                                 mode.tankCapacity(stack))
                         .withStyle(ChatFormatting.DARK_AQUA));
-        tooltip.add(
+        tooltip.accept(
                 Component.translatable("tooltip.ethermod.traits", TraitBuild.openSlots(stack))
                         .withStyle(ChatFormatting.GREEN));
     }

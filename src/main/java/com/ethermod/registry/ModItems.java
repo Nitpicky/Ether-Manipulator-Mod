@@ -18,28 +18,28 @@ public final class ModItems {
     // Never crafted or held in the inventory: each player owns exactly one,
     // stored in its own slot (ModAttachments.MANIPULATOR).
     public static final DeferredItem<EtherManipulatorItem> ETHER_MANIPULATOR =
-            ITEMS.register("ether_manipulator", EtherManipulatorItem::new);
+            ITEMS.registerItem("ether_manipulator", EtherManipulatorItem::new);
 
     // ---- Tier upgrade modules -----------------------------------------------
     // Each module upgrades the Manipulator from its required stage to the next.
 
     /** Upgrades STONE → IRON */
     public static final DeferredItem<TierUpgradeModule> UPGRADE_IRON =
-            ITEMS.register(
+            ITEMS.registerItem(
                     "upgrade_iron",
-                    () -> new TierUpgradeModule(ManipulatorStage.STONE));
+                    p -> new TierUpgradeModule(p, ManipulatorStage.STONE));
 
     /** Upgrades IRON → DIAMOND */
     public static final DeferredItem<TierUpgradeModule> UPGRADE_DIAMOND =
-            ITEMS.register(
+            ITEMS.registerItem(
                     "upgrade_diamond",
-                    () -> new TierUpgradeModule(ManipulatorStage.IRON));
+                    p -> new TierUpgradeModule(p, ManipulatorStage.IRON));
 
     /** Upgrades DIAMOND → NETHERITE (smithing table) */
     public static final DeferredItem<TierUpgradeModule> UPGRADE_NETHERITE =
-            ITEMS.register(
+            ITEMS.registerItem(
                     "upgrade_netherite",
-                    () -> new TierUpgradeModule(ManipulatorStage.DIAMOND));
+                    p -> new TierUpgradeModule(p, ManipulatorStage.DIAMOND));
 
     /** Module id -> its Enchanted Gemstone. Gems are found in Overworld structure chests (loot modifiers in
      *  data/ethermod/loot_modifiers); using one unlocks its Module directly. */
@@ -61,14 +61,14 @@ public final class ModItems {
     static {
         GEM_OF_MODULE.forEach(
                 (module, gem) ->
-                        GEMS.put(gem, ITEMS.register(gem, () -> new com.ethermod.item.ModuleItem(module))));
+                        GEMS.put(gem, ITEMS.registerItem(gem, p -> new com.ethermod.item.ModuleItem(p, module))));
     }
 
     /** Icon-only items for the secret Module advancements (the K screen's Badge sprites); not in any tab. */
     static {
         for (String m : new String[] {"tectonic", "hydraulic", "pyrotechnic", "pneumatic", "photonic", "gravitic",
                 "botanic", "plasmic", "kinetic"})
-            ITEMS.registerSimpleItem("module_icon_" + m, new net.minecraft.world.item.Item.Properties());
+            ITEMS.registerSimpleItem("module_icon_" + m);
     }
 
     public static void register(IEventBus bus) {

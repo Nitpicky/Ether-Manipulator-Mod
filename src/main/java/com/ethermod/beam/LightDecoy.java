@@ -56,16 +56,16 @@ public final class LightDecoy extends PathfinderMob {
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag t) {
+    public void addAdditionalSaveData(net.minecraft.world.level.storage.ValueOutput t) {
         super.addAdditionalSaveData(t);
-        t.store("owner", net.minecraft.core.UUIDUtil.CODEC, owner());
+        t.storeNullable("owner", net.minecraft.core.UUIDUtil.CODEC, owner());
         t.putInt("life", lifetime);
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag t) {
+    public void readAdditionalSaveData(net.minecraft.world.level.storage.ValueInput t) {
         super.readAdditionalSaveData(t);
-        if (t.read("owner", net.minecraft.core.UUIDUtil.CODEC).isPresent()) entityData.set(OWNER, Optional.of(t.read("owner", net.minecraft.core.UUIDUtil.CODEC).orElse(null)));
+        t.read("owner", net.minecraft.core.UUIDUtil.CODEC).ifPresent(u -> entityData.set(OWNER, Optional.of(u)));
         lifetime = t.getIntOr("life", 0);
     }
 
@@ -76,7 +76,8 @@ public final class LightDecoy extends PathfinderMob {
     }
 
     @Override
-    public boolean hurt(net.minecraft.world.damagesource.DamageSource source, float amount) {
+    public boolean hurtServer(
+            net.minecraft.server.level.ServerLevel level, net.minecraft.world.damagesource.DamageSource source, float amount) {
         return false;
     }
 

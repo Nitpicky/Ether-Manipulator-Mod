@@ -18,8 +18,8 @@ public final class ModuleItem extends Item {
         return module;
     }
 
-    public ModuleItem(String module) {
-        super(new Properties().rarity(Rarity.UNCOMMON));
+    public ModuleItem(Properties props, String module) {
+        super(props.rarity(Rarity.UNCOMMON));
         this.module = Identifier.fromNamespaceAndPath("ethermod", module);
     }
 
@@ -120,12 +120,12 @@ public final class ModuleItem extends Item {
     public void appendHoverText(
             ItemStack stack,
             Item.TooltipContext context,
-            java.util.List<Component> tooltip,
+            net.minecraft.world.item.component.TooltipDisplay display, java.util.function.Consumer<Component> tooltip,
             net.minecraft.world.item.TooltipFlag flag) {
-        tooltip.add(
+        tooltip.accept(
                 Component.translatable("item.ethermod.module_" + module.getPath())
                         .withStyle(style -> style.withColor(colour(module.getPath()))));
-        tooltip.add(
+        tooltip.accept(
                 Component.translatable("tooltip.ethermod.gem_use")
                         .withStyle(net.minecraft.ChatFormatting.DARK_GRAY));
     }

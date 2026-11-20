@@ -45,7 +45,7 @@ public final class RedesignCommands {
                                                 .then(
                                                         Commands.argument("targets", net.minecraft.commands.arguments.EntityArgument.players())
                                                                 .then(
-                                                                        Commands.argument("module", net.minecraft.commands.arguments.ResourceLocationArgument.id())
+                                                                        Commands.argument("module", net.minecraft.commands.arguments.IdentifierArgument.id())
                                                                                 .suggests(
                                                                                         (c, b) ->
                                                                                                 net.minecraft.commands.SharedSuggestionProvider.suggestResource(
@@ -55,7 +55,7 @@ public final class RedesignCommands {
                                                                                                         b))
                                                                                 .executes(
                                                                                         c -> {
-                                                                                            var id = net.minecraft.commands.arguments.ResourceLocationArgument.getId(c, "module");
+                                                                                            var id = net.minecraft.commands.arguments.IdentifierArgument.getId(c, "module");
                                                                                             if (!id.getNamespace().equals("ethermod"))
                                                                                                 id = net.minecraft.resources.Identifier.fromNamespaceAndPath("ethermod", id.getPath());
                                                                                             final var mod = id;

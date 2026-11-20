@@ -481,9 +481,9 @@ public final class MassDriver {
     // ---------------------------------------------------------------- the stack's record
 
     public static BlockState carried(ItemStack stack) {
-        CompoundTag t = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).getUnsafe();
+        CompoundTag t = stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
         if (!t.contains(TAG)) return Blocks.AIR.defaultBlockState();
-        return NbtUtils.readBlockState(BuiltInRegistries.BLOCK.asLookup(), t.getCompoundOrEmpty(TAG));
+        return NbtUtils.readBlockState(BuiltInRegistries.BLOCK, t.getCompoundOrEmpty(TAG));
     }
 
     public static void setCarried(ItemStack stack, BlockState state) {

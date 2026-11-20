@@ -20,7 +20,7 @@ public class EtherMod {
     public static final Logger LOGGER = LogManager.getLogger(MODID);
 
     public EtherMod(IEventBus modEventBus, ModContainer container) {
-        container.registerConfig(net.neoforged.fml.config.ModConfig.Type.SERVER, com.ethermod.config.ServerConfig.SPEC);
+        container.registerConfig(net.neoforged.fml.config.ModConfig.Type.SYNCED, com.ethermod.config.ServerConfig.SPEC);
         container.registerConfig(net.neoforged.fml.config.ModConfig.Type.CLIENT, com.ethermod.config.ClientConfig.SPEC);
         // Register deferred items, entities, and creative tab
         ModItems.register(modEventBus);

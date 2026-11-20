@@ -61,7 +61,7 @@ public final class ProjectileEffects {
                                                         || e instanceof Mob m
                                                                 && m.getTarget() == p))) {
             e.addEffect(new MobEffectInstance(MobEffects.POISON, 60, a));
-            e.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, a));
+            e.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 60, a));
         }
     }
 

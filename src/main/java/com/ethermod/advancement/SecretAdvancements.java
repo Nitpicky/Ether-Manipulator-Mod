@@ -73,7 +73,7 @@ public final class SecretAdvancements {
                 if (q.distSqr(bed) <= 36) bounce = true;
             } else if (s.getLightEmission(sl, q) > 0) return; // another light source: not "only"
         }
-        if (bounce && sl.getBrightness(net.minecraft.world.level.LightLayer.SKY, bed.above()) < 8 || bounce && sl.isNight())
+        if (bounce && sl.getBrightness(net.minecraft.world.level.LightLayer.SKY, bed.above()) < 8 || bounce && sl.isDarkOutside())
             ManipulatorTrigger.fire(sp, "night_light");
     }
 }

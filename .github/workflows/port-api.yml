@@ -29,6 +29,11 @@ jobs:
           for j in $JARS; do unzip -Z1 "$j" 2>/dev/null | grep '\.class$' | sed 's/\.class$//' >> all.txt; done
           sort -u all.txt -o all.txt
           if [ -n "$LIST" ]; then echo "=== LIST $LIST"; grep -E "$LIST" all.txt | grep -v '\$[0-9]' | head -3000; fi
+          for c in $(sed -n 3p .github/port-lookup.txt); do
+            # line 3: class#method -> bytecode of that method
+            cls=${c%%#*}; meth=${c#*#}
+            echo "=== CODE $cls $meth"; javap -cp "$CP" -c -p "${cls//\//.}" 2>&1 | awk -v m=" $meth(" 'index($0,m){p=1} p&&/^$/{p=0} p' | head -300
+          done
           for c in $CLASSES; do
             for m in $(grep -E "^($c)$" all.txt | head -200); do
               echo "=== $m"; javap -cp "$CP" -public "${m//\//.}" 2>&1 | head -600

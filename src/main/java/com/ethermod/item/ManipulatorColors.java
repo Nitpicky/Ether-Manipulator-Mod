@@ -154,6 +154,6 @@ public final class ManipulatorColors {
 
     private static CompoundTag tag(ItemStack stack) {
         CustomData d = stack.get(DataComponents.CUSTOM_DATA);
-        return d == null ? new CompoundTag() : d.getUnsafe();
+        return d == null ? new CompoundTag() : d.copyTag();
     }
 }

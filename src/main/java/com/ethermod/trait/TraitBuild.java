@@ -36,7 +36,7 @@ public final class TraitBuild {
 
     private static ListTag slotsTag(ItemStack stack) {
         CompoundTag root =
-                stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).getUnsafe();
+                stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
         return root.getListOrEmpty(TAG);
     }
 

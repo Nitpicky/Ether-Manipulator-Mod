@@ -27,12 +27,12 @@ public final class TraitLines {
     }
 
     public static Optional<TraitLine> get(RegistryAccess access, Identifier id) {
-        return access.registry(KEY).flatMap(r -> r.getOptional(id));
+        return access.lookup(KEY).flatMap(r -> r.getOptional(id));
     }
 
     /** All lines, in display order. */
     public static List<Map.Entry<Identifier, TraitLine>> all(RegistryAccess access) {
-        return access.registry(KEY)
+        return access.lookup(KEY)
                 .map(
                         r ->
                                 r.entrySet().stream()

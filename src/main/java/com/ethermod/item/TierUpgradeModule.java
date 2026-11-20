@@ -28,8 +28,8 @@ public class TierUpgradeModule extends Item {
 
     private final ManipulatorStage requiredStage;
 
-    public TierUpgradeModule(ManipulatorStage requiredStage) {
-        super(new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON));
+    public TierUpgradeModule(Item.Properties props, ManipulatorStage requiredStage) {
+        super(props.stacksTo(16).rarity(Rarity.UNCOMMON));
         this.requiredStage = requiredStage;
     }
 
@@ -116,11 +116,11 @@ public class TierUpgradeModule extends Item {
 
     @Override
     public void appendHoverText(
-            ItemStack stack, TooltipContext ctx, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(
+            ItemStack stack, TooltipContext ctx, net.minecraft.world.item.component.TooltipDisplay display, java.util.function.Consumer<Component> tooltip, TooltipFlag flag) {
+        tooltip.accept(
                 Component.translatable("tooltip.ethermod.chip_for", requiredStage.title())
                         .withStyle(ChatFormatting.GRAY));
-        tooltip.add(
+        tooltip.accept(
                 Component.translatable("tooltip.ethermod.chip_install")
                         .withStyle(ChatFormatting.DARK_GRAY));
     }

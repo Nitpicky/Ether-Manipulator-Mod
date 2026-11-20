@@ -2,7 +2,7 @@ package com.ethermod.entity;
 
 import net.minecraft.core.particles.*;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.projectile.SmallFireball;
+import net.minecraft.world.entity.projectile.hurtingprojectile.SmallFireball;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.*;
 

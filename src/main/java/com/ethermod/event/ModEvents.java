@@ -194,7 +194,7 @@ public class ModEvents {
     @SubscribeEvent
     public static void onChangeDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
         if (event.getEntity() instanceof ServerPlayer sp) {
-            com.ethermod.beam.LeftClick.changedLevel(sp, sp.server.getLevel(event.getFrom()));
+            com.ethermod.beam.LeftClick.changedLevel(sp, sp.level().getServer().getLevel(event.getFrom()));
             com.ethermod.beam.MassDriver.release(sp, false);
             com.ethermod.trait.MovementPhysics.setGravity(sp, net.minecraft.core.Direction.DOWN);
             Manipulator.sync(sp);

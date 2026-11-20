@@ -312,10 +312,10 @@ public final class MovementPhysics {
         double strength =
                 p.getAttributeValue(
                         net.minecraft.world.entity.ai.attributes.Attributes.JUMP_STRENGTH);
-        if (p.hasEffect(net.minecraft.world.effect.MobEffects.JUMP))
+        if (p.hasEffect(net.minecraft.world.effect.MobEffects.JUMP_BOOST))
             strength +=
                     .1
-                            * (p.getEffect(net.minecraft.world.effect.MobEffects.JUMP)
+                            * (p.getEffect(net.minecraft.world.effect.MobEffects.JUMP_BOOST)
                                             .getAmplifier()
                                     + 1);
         Vec3 v = withUp(p, p.getDeltaMovement(), strength);
@@ -329,7 +329,7 @@ public final class MovementPhysics {
                                             Math.cos(Math.toRadians(p.getYRot())) * .2),
                                     down(p)));
         p.setDeltaMovement(v);
-        p.hasImpulse = true;
+        p.needsSync = true;
         p.setOnGround(false);
     }
 
