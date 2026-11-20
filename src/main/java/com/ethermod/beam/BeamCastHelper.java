@@ -292,7 +292,9 @@ public final class BeamCastHelper {
         if (target instanceof net.minecraft.world.entity.player.Player p
                 && p.isBlocking()
                 && Traits.has(tool, "plasmic.disrupt")) {
-            p.disableShield();
+            ItemStack shield = p.getItemBlockingWith();
+            var blocks = shield == null ? null : shield.get(net.minecraft.core.component.DataComponents.BLOCKS_ATTACKS);
+            if (blocks != null) blocks.disable(level, p, 5f, shield);
         }
         if (Traits.has(tool, "plasmic.disrupt")
                 && player.getPersistentData().getIntOr("mm_beam_level", 0) >= 2) {
@@ -303,9 +305,9 @@ public final class BeamCastHelper {
         Vec3 incomingVelocity = target.getDeltaMovement();
         float before = target.getHealth();
         // A continuous beam: ignore the 10-tick invulnerability window.
-        target.invulnerableTime = 0;
+        target.setInvulnerableTime(0);
         target.hurtServer(level, beamSource(level, player), dmg);
-        target.invulnerableTime = 0;
+        target.setInvulnerableTime(0);
         target.setDeltaMovement(incomingVelocity);
         float dealt = Math.max(0, before - target.getHealth());
         com.ethermod.util.MobMemory.of(target)

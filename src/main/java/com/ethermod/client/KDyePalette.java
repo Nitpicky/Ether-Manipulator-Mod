@@ -144,7 +144,7 @@ final class KDyePalette {
     private int dyeInventory(KUi ui, DyeColor dye) {
         var items = ui.mc.player.getInventory().items;
         for (int i = 0; i < items.size(); i++)
-            if (items.get(i).getItem() instanceof DyeItem d && d.getDyeColor() == dye) return i;
+            if (items.get(i).getItem() instanceof DyeItem && items.get(i).get(net.minecraft.core.component.DataComponents.DYE) == dye) return i;
         return -1;
     }
 }

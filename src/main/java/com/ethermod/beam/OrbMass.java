@@ -117,7 +117,7 @@ final class OrbMass {
         if (b.carriedBe == null) return;
         var be = sl.getBlockEntity(at);
         if (be != null) {
-            be.loadWithComponents(b.carriedBe, sl.registryAccess());
+            be.loadWithComponents(net.minecraft.world.level.storage.TagValueInput.create(net.minecraft.util.ProblemReporter.DISCARDING, sl.registryAccess(), b.carriedBe));
             be.setChanged();
         }
         b.carriedBe = null;

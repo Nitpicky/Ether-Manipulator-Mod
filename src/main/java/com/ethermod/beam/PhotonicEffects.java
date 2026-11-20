@@ -70,7 +70,7 @@ public final class PhotonicEffects {
             var centre = BlockPos.containing(at);
             if (com.ethermod.util.Protect.may(p.level(), p, centre))
                 TempLights.tempLight(p.level(), centre, 15, 80);
-            p.level().sendParticles(ParticleTypes.FLASH, at.x, at.y, at.z, 1, 0, 0, 0, 0);
+            p.level().sendParticles(net.minecraft.core.particles.ColorParticleOption.create(ParticleTypes.FLASH, -1), at.x, at.y, at.z, 1, 0, 0, 0, 0);
         }
     }
 
@@ -161,7 +161,7 @@ public final class PhotonicEffects {
             if (e instanceof Mob mob && !friend) {
                 boolean dark =
                         e.getType().is(net.minecraft.tags.EntityTypeTags.UNDEAD)
-                                || e instanceof net.minecraft.world.entity.monster.Spider;
+                                || e instanceof net.minecraft.world.entity.monster.spider.Spider;
                 if (Traits.has(st, "photonic.daybreak")
                         && dark
                         && !e.getType().is(net.neoforged.neoforge.common.Tags.EntityTypes.BOSSES)

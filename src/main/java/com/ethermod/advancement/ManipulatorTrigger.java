@@ -5,8 +5,8 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.advancements.triggers.CriterionTrigger;
-import net.minecraft.advancements.critereon.ContextAwarePredicate;
-import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.core.Holder;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.advancements.triggers.SimpleCriterionTrigger;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerPlayer;
@@ -43,13 +43,13 @@ public final class ManipulatorTrigger extends SimpleCriterionTrigger<Manipulator
         return Instance.CODEC;
     }
 
-    public record Instance(Optional<ContextAwarePredicate> player, Optional<String> event)
+    public record Instance(Optional<Holder<LootItemCondition>> player, Optional<String> event)
             implements SimpleCriterionTrigger.SimpleInstance {
         public static final Codec<Instance> CODEC =
                 RecordCodecBuilder.create(
                         i ->
                                 i.group(
-                                                EntityPredicate.ADVANCEMENT_CODEC
+                                                LootItemCondition.CODEC
                                                         .optionalFieldOf("player")
                                                         .forGetter(Instance::player),
                                                 Codec.STRING

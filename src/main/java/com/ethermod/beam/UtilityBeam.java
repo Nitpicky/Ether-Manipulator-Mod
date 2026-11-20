@@ -1,5 +1,6 @@
 package com.ethermod.beam;
 
+import com.ethermod.util.ToolModify;
 import com.ethermod.trait.Traits;
 
 import net.minecraft.core.BlockPos;
@@ -119,7 +120,7 @@ final class UtilityBeam {
             if (bs.getBlock() instanceof BeehiveBlock hive
                     && bs.getValue(BeehiveBlock.HONEY_LEVEL) >= BeehiveBlock.MAX_HONEY_LEVELS) {
                 if (!com.ethermod.util.Protect.may(level, player, pos)) return false;
-                BeehiveBlock.dropHoneycomb(level, pos);
+                Block.popResource(level, pos, new ItemStack(net.minecraft.world.item.Items.HONEYCOMB, 3));
                 hive.releaseBeesAndResetHoneyLevel(
                         level,
                         bs,
@@ -136,27 +137,24 @@ final class UtilityBeam {
         boolean airAbove = level.getBlockState(pos.above()).isAir();
         // The top of dirt can become farmland or a path: till only where a
         // farm makes sense (water in reach, or farmland next to it), else path.
-        ItemAbility ground =
+        ToolModify.Action ground =
                 hit.getDirection() == Direction.UP && wantsFarmland(level, pos)
-                        ? ItemAbilities.HOE_TILL
-                        : ItemAbilities.SHOVEL_FLATTEN;
-        ItemAbility[] order = {
-            ground, ItemAbilities.AXE_STRIP, ItemAbilities.AXE_SCRAPE, ItemAbilities.AXE_WAX_OFF
-        };
+                        ? ToolModify.Action.TILL
+                        : ToolModify.Action.FLATTEN;
+        ToolModify.Action[] order = {ground, ToolModify.Action.STRIP, ToolModify.Action.SCRAPE, ToolModify.Action.WAX_OFF};
 
-        for (ItemAbility ability : order) {
-            boolean needsAir =
-                    ability == ItemAbilities.HOE_TILL || ability == ItemAbilities.SHOVEL_FLATTEN;
+        for (ToolModify.Action ability : order) {
+            boolean needsAir = ability == ToolModify.Action.TILL || ability == ToolModify.Action.FLATTEN;
             if (needsAir && !airAbove) continue;
-            BlockState next = bs.getToolModifiedState(ctx, ability, true);
+            BlockState next = com.ethermod.util.ToolModify.apply(bs, ctx, ability, true);
             if (next == null || next == bs) continue;
             if (!com.ethermod.util.Protect.may(level, player, pos)) return false;
-            next = bs.getToolModifiedState(ctx, ability, false);
+            next = com.ethermod.util.ToolModify.apply(bs, ctx, ability, false);
             if (next == null || next == bs) continue;
             level.setBlock(pos, next, Block.UPDATE_ALL_IMMEDIATE);
             level.playSound(null, pos, soundFor(ability), SoundSource.BLOCKS, 1f, 1f);
-            if (ability == ItemAbilities.AXE_SCRAPE) level.levelEvent(null, 3005, pos, 0);
-            if (ability == ItemAbilities.AXE_WAX_OFF) level.levelEvent(null, 3004, pos, 0);
+            if (ability == ToolModify.Action.SCRAPE) level.levelEvent(null, 3005, pos, 0);
+            if (ability == ToolModify.Action.WAX_OFF) level.levelEvent(null, 3004, pos, 0);
             level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
             return true;
         }
@@ -213,15 +211,15 @@ final class UtilityBeam {
             net.minecraft.world.entity.LivingEntity target,
             BeamState state) {
         if (state.lastUtilityPos == -target.getId() - 1L) return;
-        if (target instanceof net.minecraft.world.entity.animal.Sheep sheep
+        if (target instanceof net.minecraft.world.entity.animal.sheep.Sheep sheep
                 && sheep.readyForShearing()) {
             sheep.shear(SoundSource.PLAYERS);
             state.lastUtilityPos = -target.getId() - 1L;
-        } else if (target instanceof net.minecraft.world.entity.animal.SnowGolem golem
+        } else if (target instanceof net.minecraft.world.entity.animal.golem.SnowGolem golem
                 && golem.readyForShearing()) {
             golem.shear(SoundSource.PLAYERS);
             state.lastUtilityPos = -target.getId() - 1L;
-        } else if (target instanceof net.minecraft.world.entity.animal.MushroomCow cow
+        } else if (target instanceof net.minecraft.world.entity.animal.cow.MushroomCow cow
                 && cow.readyForShearing()) {
             cow.shear(SoundSource.PLAYERS);
             state.lastUtilityPos = -target.getId() - 1L;
@@ -280,11 +278,11 @@ final class UtilityBeam {
                     1.2f);
     }
 
-    private static SoundEvent soundFor(ItemAbility a) {
-        if (a == ItemAbilities.HOE_TILL) return com.ethermod.sound.ModSounds.WORLD_HOE_TILL;
-        if (a == ItemAbilities.SHOVEL_FLATTEN) return com.ethermod.sound.ModSounds.WORLD_SHOVEL_FLATTEN;
-        if (a == ItemAbilities.AXE_SCRAPE) return com.ethermod.sound.ModSounds.WORLD_AXE_SCRAPE;
-        if (a == ItemAbilities.AXE_WAX_OFF) return com.ethermod.sound.ModSounds.WORLD_AXE_WAX_OFF;
+    private static SoundEvent soundFor(ToolModify.Action a) {
+        if (a == ToolModify.Action.TILL) return com.ethermod.sound.ModSounds.WORLD_HOE_TILL;
+        if (a == ToolModify.Action.FLATTEN) return com.ethermod.sound.ModSounds.WORLD_SHOVEL_FLATTEN;
+        if (a == ToolModify.Action.SCRAPE) return com.ethermod.sound.ModSounds.WORLD_AXE_SCRAPE;
+        if (a == ToolModify.Action.WAX_OFF) return com.ethermod.sound.ModSounds.WORLD_AXE_WAX_OFF;
         return com.ethermod.sound.ModSounds.WORLD_AXE_STRIP;
     }
 }

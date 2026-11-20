@@ -50,8 +50,8 @@ public final class GemLootModifier extends LootModifier {
     private final List<Identifier> guaranteeIn;
     private final boolean hidden;
 
-    public GemLootModifier(LootItemCondition[] conditions, Item gem, float chance, List<Identifier> guaranteeIn, boolean hidden) {
-        super(conditions);
+    public GemLootModifier(java.util.Optional<net.minecraft.core.Holder<LootItemCondition>> conditions, int priority, Item gem, float chance, List<Identifier> guaranteeIn, boolean hidden) {
+        super(conditions, priority);
         this.gem = gem;
         this.chance = chance;
         this.guaranteeIn = guaranteeIn;

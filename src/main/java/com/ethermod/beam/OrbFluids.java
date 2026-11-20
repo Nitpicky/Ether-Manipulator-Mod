@@ -61,7 +61,7 @@ final class OrbFluids {
         if (fluid == Fluids.LAVA ? !com.ethermod.config.ServerConfig.fireAndLava() : !com.ethermod.config.ServerConfig.waterAndFrost())
             return false;
 
-        if (fluid == Fluids.WATER && sl.dimensionType().ultraWarm()) {
+        if (fluid == Fluids.WATER && sl.environmentAttributes().getValue(net.minecraft.world.attribute.EnvironmentAttributes.WATER_EVAPORATES, pos)) {
             sl.playSound(
                     null,
                     pos,
@@ -178,17 +178,15 @@ final class OrbFluids {
         }
         var handler =
                 sl.getCapability(
-                        net.neoforged.neoforge.capabilities.Capabilities.FluidHandler.BLOCK,
+                        net.neoforged.neoforge.capabilities.Capabilities.Fluid.BLOCK,
                         pos,
                         face);
         if (handler == null) return false;
-        var stack = new net.neoforged.neoforge.fluids.FluidStack(fluid, 1000);
-        if (handler.fill(
-                        stack,
-                        net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.SIMULATE)
-                < 1000) return false;
-        handler.fill(
-                stack, net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE);
+        var res = net.neoforged.neoforge.transfer.fluid.FluidResource.of(fluid);
+        try (var tx = net.neoforged.neoforge.transfer.transaction.Transaction.openRoot()) {
+            if (handler.insert(res, 1000, tx) < 1000) return false;
+            tx.commit();
+        }
         sl.playSound(
                 null,
                 pos,

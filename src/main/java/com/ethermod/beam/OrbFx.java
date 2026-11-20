@@ -53,7 +53,7 @@ final class OrbFx {
 
         switch (b.getMode()) {
             case ENERGY -> {
-                sl.sendParticles(ParticleTypes.FLASH, pos.x, pos.y, pos.z, 1, 0, 0, 0, 0);
+                sl.sendParticles(net.minecraft.core.particles.ColorParticleOption.create(ParticleTypes.FLASH, -1), pos.x, pos.y, pos.z, 1, 0, 0, 0, 0);
                 sl.sendParticles(
                         ParticleTypes.ELECTRIC_SPARK,
                         pos.x,
@@ -201,7 +201,7 @@ final class OrbFx {
                         1.2f);
             }
             case LIGHT -> {
-                sl.sendParticles(ParticleTypes.FLASH, pos.x, pos.y, pos.z, 1, 0, 0, 0, 0);
+                sl.sendParticles(net.minecraft.core.particles.ColorParticleOption.create(ParticleTypes.FLASH, -1), pos.x, pos.y, pos.z, 1, 0, 0, 0, 0);
                 sl.sendParticles(
                         ParticleTypes.END_ROD,
                         pos.x,

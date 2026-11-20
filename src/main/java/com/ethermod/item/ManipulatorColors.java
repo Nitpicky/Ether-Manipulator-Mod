@@ -93,7 +93,7 @@ public final class ManipulatorColors {
     }
 
     public static int bodyFrom(ItemStack dye) {
-        return ((DyeItem) dye.getItem()).getDyeColor().getTextureDiffuseColor() & 0xFFFFFF;
+        return dye.getOrDefault(net.minecraft.core.component.DataComponents.DYE, net.minecraft.world.item.DyeColor.WHITE).getTextureDiffuseColor() & 0xFFFFFF;
     }
 
     // ---- Palette: colours unlocked for good ------------------------------------
