@@ -345,6 +345,7 @@
   "ethermod.configuration.reduce_flashing": "Меньше вспышек",
   "ethermod.configuration.beam_arcs": "Дуги луча",
   "ethermod.configuration.mined_block_glow": "Свечение добытых блоков",
+  "ethermod.configuration.photonic_dynamic_light": "Плавное фотонное свечение",
   "ethermod.configuration.other_players_beams": "Лучи других игроков",
   "ethermod.configuration.shader_mode": "Режим пакета шейдеров",
   "ethermod.configuration.ether_counter": "Счётчик эфира",

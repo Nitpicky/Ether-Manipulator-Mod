@@ -872,16 +872,29 @@ public final class PlaytestBootstrap {
                         (stone ? "PASS" : "FAIL")
                                 + " mining is Beam-only: 20 ticks of left click in Light mode"
                                 + " left the stone");
+                // the Photonic glow follows the player on the client: a light source, no light block
+                boolean source = PhotonicGlow.isSource(mc.player.getId());
+                BlockPos eye = BlockPos.containing(mc.player.getEyePosition());
+                int lit = (net.minecraft.client.renderer.LevelRenderer.getLightColor(mc.level, eye) & 0xFFFF) >> 4;
+                double glow = PhotonicGlow.level(eye.getX() + 0.5, eye.getY() + 0.5, eye.getZ() + 0.5);
+                log(
+                        (source && glow >= 13 && lit >= 13 ? "PASS" : "FAIL")
+                                + " Photonic glow: the player is a moving light source ("
+                                + PhotonicGlow.sourceCount() + " sources, glow "
+                                + String.format("%.1f", glow) + ", block light at the eyes " + lit + ")");
+                server(mc, (s, p) -> {
+                    boolean block = false;
+                    for (BlockPos q : BlockPos.betweenClosed(p.blockPosition().offset(-1, 0, -1), p.blockPosition().offset(1, 2, 1)))
+                        if (p.level().getBlockState(q).is(net.minecraft.world.level.block.Blocks.LIGHT)) block = true;
+                    log((block ? "FAIL" : "PASS") + " Photonic glow places no light block over the player");
+                });
             }
             case 1100 -> opts.keyAttack.setDown(false);
             case 1113 -> {
                 // the client hears about the removed light blocks a few ticks late
                 var left = lightSpots(mc);
                 left.removeAll(lightsBefore);
-                // the Photonic badge's own glow follows the player (a level 10 light over the head): not the Beacon's
-                BlockPos head = mc.player.blockPosition();
-                left.removeIf(q -> Math.abs(q.getX() - head.getX()) <= 1 && Math.abs(q.getZ() - head.getZ()) <= 1
-                        && q.getY() - head.getY() >= 0 && q.getY() - head.getY() <= 2);
+                // the Photonic badge's own glow is client-side (PhotonicGlow), so no light block is left over the head either
                 log(
                         (left.isEmpty() ? "PASS" : "FAIL")
                                 + " light: the Beacon's light goes with it ("

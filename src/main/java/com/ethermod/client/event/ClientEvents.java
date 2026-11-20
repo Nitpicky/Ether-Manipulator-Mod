@@ -55,6 +55,7 @@ public class ClientEvents {
         }
         NeoForge.EVENT_BUS.register(com.ethermod.client.beam.BeamAudio.class);
         NeoForge.EVENT_BUS.register(com.ethermod.client.ClientCacheReset.class);
+        NeoForge.EVENT_BUS.register(com.ethermod.client.PhotonicGlow.class);
         NeoForge.EVENT_BUS.register(ManipulatorKeys.class);
         NeoForge.EVENT_BUS.register(com.ethermod.client.ModeWheel.class);
         NeoForge.EVENT_BUS.register(com.ethermod.client.ClientMobility.class);

@@ -345,6 +345,7 @@
   "ethermod.configuration.reduce_flashing": "Reducir destellos",
   "ethermod.configuration.beam_arcs": "Arcos del rayo",
   "ethermod.configuration.mined_block_glow": "Brillo de bloques minados",
+  "ethermod.configuration.photonic_dynamic_light": "Brillo fotónico fluido",
   "ethermod.configuration.other_players_beams": "Rayos de otros jugadores",
   "ethermod.configuration.shader_mode": "Modo de paquete de shaders",
   "ethermod.configuration.ether_counter": "Contador de Éter",

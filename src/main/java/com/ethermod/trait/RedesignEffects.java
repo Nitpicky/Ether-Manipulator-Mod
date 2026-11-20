@@ -21,7 +21,7 @@ import java.util.*;
 
 /**
  * The trait lines' passive perks, server side: attribute badges (Plasmic melee and reach,
- * Tectonic block reach, Hydraulic swim), Photonic cleanse and glow, Pyrotechnic fireproofing and
+ * Tectonic block reach, Hydraulic swim), Photonic cleanse, Pyrotechnic fireproofing and
  * Rekindle, Tectonic mining speed, Botanic crops, Kinetic ranged bonus, Plasmic Dissolve.
  */
 public final class RedesignEffects {
@@ -93,26 +93,10 @@ public final class RedesignEffects {
         if (now % 20 == 0
                 && Traits.has(st, "pyrotechnic.rekindle")
                 && (p.isInLava() || touchesFire(p))) p.heal(1f);
-        if (now % 10 == 0 && Traits.hasLine(st, Traits.PHOTONIC) && !p.isSpectator()) {
-            var at = p.blockPosition().above();
-            if (p.serverLevel().hasChunkAt(at) && headLightAllowed(p, at))
-                TempLights.tempLight(p.serverLevel(), at, 10, 15);
-        }
     }
 
-    /**
-     * The Photonic head light asks the claim check only when the light moves to a new block, so
-     * logging and reward mods don't see a probe every 10 ticks per player standing still.
-     */
-    private static final java.util.Map<ServerPlayer, long[]> HEAD_LIGHT = new java.util.WeakHashMap<>();
-
-    private static boolean headLightAllowed(ServerPlayer p, BlockPos at) {
-        long[] seen = HEAD_LIGHT.get(p);
-        if (seen != null && seen[0] == at.asLong()) return seen[1] != 0;
-        boolean ok = com.ethermod.util.Protect.may(p.serverLevel(), p, at);
-        HEAD_LIGHT.put(p, new long[] {at.asLong(), ok ? 1 : 0});
-        return ok;
-    }
+    // The Photonic glow that follows the player is drawn by each client (client.PhotonicGlow), a
+    // smoothly moving light: no light block is placed over the player's head.
 
     private static boolean touchesFire(Entity p) {
         for (var pos :

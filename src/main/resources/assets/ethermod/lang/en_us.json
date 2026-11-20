@@ -345,6 +345,7 @@
   "ethermod.configuration.reduce_flashing": "Reduce flashing",
   "ethermod.configuration.beam_arcs": "Beam arcs",
   "ethermod.configuration.mined_block_glow": "Mined block glow",
+  "ethermod.configuration.photonic_dynamic_light": "Photonic glow (dynamic light)",
   "ethermod.configuration.other_players_beams": "Other players' beams",
   "ethermod.configuration.shader_mode": "Shader pack mode",
   "ethermod.configuration.ether_counter": "Ether counter",

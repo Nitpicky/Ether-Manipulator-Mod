@@ -345,6 +345,7 @@
   "ethermod.configuration.reduce_flashing": "Ogranicz błyski",
   "ethermod.configuration.beam_arcs": "Łuki promienia",
   "ethermod.configuration.mined_block_glow": "Poświata wykopanych bloków",
+  "ethermod.configuration.photonic_dynamic_light": "Płynna poświata fotoniczna",
   "ethermod.configuration.other_players_beams": "Promienie innych graczy",
   "ethermod.configuration.shader_mode": "Tryb pakietu shaderów",
   "ethermod.configuration.ether_counter": "Licznik Eteru",

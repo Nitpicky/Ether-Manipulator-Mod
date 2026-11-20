@@ -345,6 +345,7 @@
   "ethermod.configuration.reduce_flashing": "Flitsen verminderen",
   "ethermod.configuration.beam_arcs": "Straalbogen",
   "ethermod.configuration.mined_block_glow": "Gloed van gedolven blokken",
+  "ethermod.configuration.photonic_dynamic_light": "Fotonische gloed volgt vloeiend",
   "ethermod.configuration.other_players_beams": "Stralen van andere spelers",
   "ethermod.configuration.shader_mode": "Shaderpakketmodus",
   "ethermod.configuration.ether_counter": "Etherteller",

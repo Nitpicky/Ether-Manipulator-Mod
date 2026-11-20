@@ -33,5 +33,6 @@ public final class ClientCacheReset {
         BeamRenderer.clearCaches();
         Muzzle.clearCaches();
         ManipulatorAnimations.clearCaches();
+        PhotonicGlow.clearCaches();
     }
 }

@@ -345,6 +345,7 @@
   "ethermod.configuration.reduce_flashing": "フラッシュを抑える",
   "ethermod.configuration.beam_arcs": "ビームのアーク",
   "ethermod.configuration.mined_block_glow": "採掘ブロックの光",
+  "ethermod.configuration.photonic_dynamic_light": "フォトニックの光がなめらかに追従",
   "ethermod.configuration.other_players_beams": "他プレイヤーのビーム",
   "ethermod.configuration.shader_mode": "シェーダーパックモード",
   "ethermod.configuration.ether_counter": "エーテルカウンター",

@@ -345,6 +345,7 @@
   "ethermod.configuration.reduce_flashing": "Менше спалахів",
   "ethermod.configuration.beam_arcs": "Дуги променя",
   "ethermod.configuration.mined_block_glow": "Світіння видобутих блоків",
+  "ethermod.configuration.photonic_dynamic_light": "Плавне фотонне світіння",
   "ethermod.configuration.other_players_beams": "Промені інших гравців",
   "ethermod.configuration.shader_mode": "Режим пакета шейдерів",
   "ethermod.configuration.ether_counter": "Лічильник ефіру",

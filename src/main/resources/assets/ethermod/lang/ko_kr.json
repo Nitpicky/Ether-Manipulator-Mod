@@ -345,6 +345,7 @@
   "ethermod.configuration.reduce_flashing": "번쩍임 줄이기",
   "ethermod.configuration.beam_arcs": "광선 아크",
   "ethermod.configuration.mined_block_glow": "채굴한 블록 빛",
+  "ethermod.configuration.photonic_dynamic_light": "광자 빛이 부드럽게 따라옴",
   "ethermod.configuration.other_players_beams": "다른 플레이어의 광선",
   "ethermod.configuration.shader_mode": "셰이더 팩 모드",
   "ethermod.configuration.ether_counter": "에테르 카운터",

@@ -17,7 +17,7 @@ public final class ClientConfig {
     public static final ModConfigSpec SPEC;
 
     private static final ModConfigSpec.DoubleValue MASTER, BEAM, SHOT, UI, OTHER;
-    private static final ModConfigSpec.BooleanValue FLASHING, ARCS, GLOW, SCROLL, SPIN;
+    private static final ModConfigSpec.BooleanValue FLASHING, ARCS, GLOW, PHOTONIC_GLOW, SCROLL, SPIN;
     private static final ModConfigSpec.EnumValue<Detail> OTHER_DETAIL;
     private static final ModConfigSpec.EnumValue<ShaderMode> SHADER;
     private static final ModConfigSpec.EnumValue<Counter> COUNTER;
@@ -38,6 +38,8 @@ public final class ClientConfig {
                 .define("reduce_flashing", false);
         ARCS = b.comment("Crackling arcs on the beam.").define("beam_arcs", true);
         GLOW = b.comment("The glow on blocks you mine.").define("mined_block_glow", true);
+        PHOTONIC_GLOW = b.comment("The Photonic glow: a light that follows Photonic players smoothly (you and others). Off: no glow.")
+                .define("photonic_dynamic_light", true);
         OTHER_DETAIL = b.comment("Other players' beams: FULL, or SIMPLE (no arcs or swell) for busy servers.")
                 .defineEnum("other_players_beams", Detail.FULL);
         SHADER = b.comment("AUTO detects shader packs. SIMPLE always draws the plain effects, if a pack breaks the glow.")
@@ -73,6 +75,7 @@ public final class ClientConfig {
     public static boolean reduceFlashing() { return or(FLASHING::get, false); }
     public static boolean arcs() { return or(ARCS::get, true); }
     public static boolean minedGlow() { return or(GLOW::get, true); }
+    public static boolean photonicDynamicLight() { return or(PHOTONIC_GLOW::get, true); }
     public static boolean simpleOtherBeams() { return or(OTHER_DETAIL::get, Detail.FULL) == Detail.SIMPLE; }
     public static boolean forceSimpleShaders() { return or(SHADER::get, ShaderMode.AUTO) == ShaderMode.SIMPLE; }
     public static Counter counter() { return or(COUNTER::get, Counter.FADE_WHEN_FULL); }

@@ -345,6 +345,7 @@
   "ethermod.configuration.reduce_flashing": "减少闪烁",
   "ethermod.configuration.beam_arcs": "光束电弧",
   "ethermod.configuration.mined_block_glow": "已挖方块发光",
+  "ethermod.configuration.photonic_dynamic_light": "光子光芒平滑跟随",
   "ethermod.configuration.other_players_beams": "其他玩家的光束",
   "ethermod.configuration.shader_mode": "光影包模式",
   "ethermod.configuration.ether_counter": "以太计数器",

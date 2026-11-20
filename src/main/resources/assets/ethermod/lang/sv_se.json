@@ -345,6 +345,7 @@
   "ethermod.configuration.reduce_flashing": "Minska blixtar",
   "ethermod.configuration.beam_arcs": "Strålbågar",
   "ethermod.configuration.mined_block_glow": "Glöd på grävda block",
+  "ethermod.configuration.photonic_dynamic_light": "Fotoniskt sken följer mjukt",
   "ethermod.configuration.other_players_beams": "Andra spelares strålar",
   "ethermod.configuration.shader_mode": "Läge för shaderpaket",
   "ethermod.configuration.ether_counter": "Eterräknare",

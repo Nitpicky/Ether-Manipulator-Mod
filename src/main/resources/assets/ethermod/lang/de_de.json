@@ -345,6 +345,7 @@
   "ethermod.configuration.reduce_flashing": "Blitze reduzieren",
   "ethermod.configuration.beam_arcs": "Strahlbögen",
   "ethermod.configuration.mined_block_glow": "Leuchten abgebauter Blöcke",
+  "ethermod.configuration.photonic_dynamic_light": "Photonisches Leuchten folgt fließend",
   "ethermod.configuration.other_players_beams": "Strahlen anderer Spieler",
   "ethermod.configuration.shader_mode": "Shaderpaket-Modus",
   "ethermod.configuration.ether_counter": "Ätherzähler",

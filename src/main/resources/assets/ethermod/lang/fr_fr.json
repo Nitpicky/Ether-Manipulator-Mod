@@ -345,6 +345,7 @@
   "ethermod.configuration.reduce_flashing": "Réduire les flashs",
   "ethermod.configuration.beam_arcs": "Arcs du rayon",
   "ethermod.configuration.mined_block_glow": "Lueur des blocs minés",
+  "ethermod.configuration.photonic_dynamic_light": "Lueur photonique fluide",
   "ethermod.configuration.other_players_beams": "Rayons des autres joueurs",
   "ethermod.configuration.shader_mode": "Mode pack de shaders",
   "ethermod.configuration.ether_counter": "Compteur d'Éther",

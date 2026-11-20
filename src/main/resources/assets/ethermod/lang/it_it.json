@@ -345,6 +345,7 @@
   "ethermod.configuration.reduce_flashing": "Riduci i lampi",
   "ethermod.configuration.beam_arcs": "Archi del raggio",
   "ethermod.configuration.mined_block_glow": "Bagliore dei blocchi scavati",
+  "ethermod.configuration.photonic_dynamic_light": "Bagliore fotonico fluido",
   "ethermod.configuration.other_players_beams": "Raggi degli altri giocatori",
   "ethermod.configuration.shader_mode": "Modalità pacchetto shader",
   "ethermod.configuration.ether_counter": "Contatore di Etere",

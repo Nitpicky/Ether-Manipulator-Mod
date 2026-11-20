@@ -30,6 +30,8 @@
     "ChargeArmTremblerMixin",
     "NoUseDipMixin",
     "SoundVolumeAccessor",
-    "GemGlintMixin"
+    "GemGlintMixin",
+    "PhotonicGlowMixin",
+    "PhotonicGlowEntityMixin"
   ]
 }

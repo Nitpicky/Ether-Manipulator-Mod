@@ -345,6 +345,7 @@
   "ethermod.configuration.reduce_flashing": "Parlamaları azalt",
   "ethermod.configuration.beam_arcs": "Işın arkları",
   "ethermod.configuration.mined_block_glow": "Kazılan blok parıltısı",
+  "ethermod.configuration.photonic_dynamic_light": "Fotonik parıltı akıcı izler",
   "ethermod.configuration.other_players_beams": "Diğer oyuncuların ışınları",
   "ethermod.configuration.shader_mode": "Gölgelendirici paketi modu",
   "ethermod.configuration.ether_counter": "Eter sayacı",
