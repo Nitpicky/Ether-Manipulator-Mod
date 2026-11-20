@@ -43,6 +43,9 @@ public final class GustGrenade {
     public static final int FUSE = 30;
     /** The fuse once it sticks to a creature: the Stasis hold, long enough for a few hits. */
     public static final int STASIS_FUSE = 60;
+
+    /** A grenade lying still is re-sent to clients this often, in ticks (they drop it after 10). */
+    private static final int RESEND = 5;
     public static final double RADIUS = 3;
     public static final float DAMAGE = 4;
 
@@ -59,6 +62,10 @@ public final class GustGrenade {
         Entity stuck;
         boolean landed;
         int age, fuse = FUSE, bounces, windup;
+        /** What the clients were last told: where, and at which age (FX packet throttling). */
+        Vec3 sentPos;
+        int sentAge;
+        boolean sentLanded;
 
         Grenade(ServerPlayer owner, ItemStack traits) {
             this.owner = owner;
@@ -241,9 +248,21 @@ public final class GustGrenade {
                         g.fuse > 12 ? 1.4f : 1.9f);
             }
         }
-        // drawn on the clients like the right-click Gust swirl (LeftClickFx)
-        LeftClickFxData.send(
-                sl, LeftClickFxPayload.GRENADE, g.id, g.owner.getId(), g.pos, g.landed ? g.fuse : -1);
+        // drawn on the clients like the right-click Gust swirl (LeftClickFx). In flight, or
+        // riding a creature that moves, every tick; lying still (on a block, or on a creature
+        // held in Stasis) only when it lands and then every few ticks: the client counts the
+        // fuse down itself in between (LeftClickFxData.tick)
+        if (!g.landed
+                || !g.sentLanded
+                || g.sentPos == null
+                || g.pos.distanceToSqr(g.sentPos) > 1e-4
+                || g.age - g.sentAge >= RESEND) {
+            LeftClickFxData.send(
+                    sl, LeftClickFxPayload.GRENADE, g.id, g.owner.getId(), g.pos, g.landed ? g.fuse : -1);
+            g.sentPos = g.pos;
+            g.sentAge = g.age;
+            g.sentLanded = g.landed;
+        }
         if (g.landed && g.fuse <= 0) {
             burst(sl, g);
             return true;

@@ -29,6 +29,8 @@ public final class LeftClickFxData {
         Vec3 prev, pos;
         int fuse;
         long seen;
+        /** A payload arrived since the last client tick. */
+        boolean fresh;
     }
 
     record Burst(Vec3 pos, long start) {}
@@ -51,6 +53,7 @@ public final class LeftClickFxData {
                 g.pos = at;
                 g.fuse = p.extra();
                 g.seen = clientTime;
+                g.fresh = true;
             }
             case LeftClickFxPayload.BURST -> {
                 GRENADES.remove(p.id());
@@ -68,6 +71,15 @@ public final class LeftClickFxData {
     public static void tick(long gameTime) {
         clientTime = gameTime;
         GRENADES.values().removeIf(g -> gameTime - g.seen > 10);
+        // a grenade lying still is only re-sent every few ticks (GustGrenade.RESEND): hold it in
+        // place and count its fuse down here in between
+        for (Grenade g : GRENADES.values()) {
+            if (g.fresh) g.fresh = false;
+            else if (g.fuse >= 0) {
+                g.prev = g.pos;
+                if (g.fuse > 0) g.fuse--;
+            }
+        }
         BURSTS.removeIf(b -> gameTime - b.start > BURST_TICKS);
         CUTS.removeIf(b -> gameTime - b.start > CUT_TICKS);
     }
