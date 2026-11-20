@@ -229,6 +229,7 @@ public class ModEvents {
         com.ethermod.beam.DryFire.forget(event.getEntity().getUUID());
         com.ethermod.advancement.SecretAdvancements.forget(event.getEntity().getUUID());
         com.ethermod.trait.Ziplines.forget(event.getEntity().getUUID());
+        com.ethermod.beam.OrbTether.forget(event.getEntity().getUUID());
         // held movement keys live in memory only; older versions saved them with the player
         com.ethermod.trait.MovementPhysics.forgetInput(event.getEntity().getUUID());
         event.getEntity().getPersistentData().remove("mm_motion");
@@ -267,6 +268,7 @@ public class ModEvents {
         com.ethermod.advancement.SecretAdvancements.clear();
         com.ethermod.trait.MovementPhysics.clearInputs();
         com.ethermod.util.MobMemory.clear();
+        com.ethermod.beam.OrbTether.clear();
     }
 
     public static void onRegisterPayloads(RegisterPayloadHandlersEvent event) {

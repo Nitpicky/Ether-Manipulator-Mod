@@ -266,29 +266,41 @@ public final class OrbTether {
         com.ethermod.trait.MobilityEffects.markSoftLanding(sp);
     }
 
+    /**
+     * Each player's current hook (entity id). {@link #fire} is the only place hooks are made, so
+     * this replaces scanning a 384-block box on every press. Checked on every lookup (a discarded
+     * hook, a Zipline anchor or another level's entity no longer counts); cleared on logout and
+     * server stop.
+     */
+    private static final java.util.Map<java.util.UUID, Integer> HOOKS = new java.util.HashMap<>();
+
     /** The player's hook, flying or caught (not a Zipline anchor); null if none. */
     public static BeamBallEntity activeHook(ServerPlayer sp) {
-        for (BeamBallEntity e :
-                sp.serverLevel()
-                        .getEntitiesOfClass(
-                                BeamBallEntity.class,
-                                sp.getBoundingBox().inflate(192),
-                                e ->
-                                        e.getOwner() == sp
-                                                && e.getMode() == OrbMode.TETHER
-                                                && !e.isAnchor()
-                                                && !e.isRemoved())) return e;
+        Integer id = HOOKS.get(sp.getUUID());
+        if (id == null) return null;
+        if (sp.serverLevel().getEntity(id) instanceof BeamBallEntity e
+                && e.getOwner() == sp
+                && e.getMode() == OrbMode.TETHER
+                && !e.isAnchor()
+                && !e.isRemoved()) return e;
+        HOOKS.remove(sp.getUUID());
         return null;
+    }
+
+    /** Logout: forget the player's hook. */
+    public static void forget(java.util.UUID player) {
+        HOOKS.remove(player);
+    }
+
+    public static void clear() {
+        HOOKS.clear();
     }
 
     /** Left click: fires a new hook (the old one lets go). */
     public static void fire(ServerPlayer sp, net.minecraft.world.item.ItemStack stack) {
         ServerLevel sl = sp.serverLevel();
-        for (var old :
-                sl.getEntitiesOfClass(
-                        BeamBallEntity.class,
-                        sp.getBoundingBox().inflate(192),
-                        e -> e.getOwner() == sp && e.getMode() == OrbMode.TETHER && !e.isAnchor())) {
+        var old = activeHook(sp);
+        if (old != null) {
             unhookFx(old, sl);
             old.discard();
         }
@@ -297,6 +309,7 @@ public final class OrbTether {
                         sl, sp, 0, com.ethermod.item.ManipulatorStage.get(stack), OrbMode.TETHER);
         hook.configure(stack);
         sl.addFreshEntity(hook);
+        HOOKS.put(sp.getUUID(), hook.getId());
         sl.playSound(
                 null,
                 sp.getX(),
