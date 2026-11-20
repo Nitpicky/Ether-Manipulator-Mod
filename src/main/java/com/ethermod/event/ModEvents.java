@@ -221,6 +221,12 @@ public class ModEvents {
         beamActivePlayers.remove(event.getEntity().getUUID());
         restingBeams.remove(event.getEntity().getUUID());
         com.ethermod.trait.TraitRules.forget(event.getEntity().getUUID());
+        com.ethermod.beam.DryFire.forget(event.getEntity().getUUID());
+        com.ethermod.advancement.SecretAdvancements.forget(event.getEntity().getUUID());
+        com.ethermod.trait.Ziplines.forget(event.getEntity().getUUID());
+        // held movement keys (MovementPhysics.input) live in persistent data, which is saved with
+        // the player: a jump held at logout must not still be held on the next join
+        event.getEntity().getPersistentData().remove("mm_motion");
     }
 
     /** A player who comes into view mid-beam should see it too. */
@@ -252,6 +258,8 @@ public class ModEvents {
         com.ethermod.trait.TraitRules.clear();
         MiningDamageTracker.clear();
         com.ethermod.util.Protect.clear();
+        com.ethermod.beam.DryFire.clear();
+        com.ethermod.advancement.SecretAdvancements.clear();
     }
 
     public static void onRegisterPayloads(RegisterPayloadHandlersEvent event) {

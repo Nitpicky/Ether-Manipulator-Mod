@@ -120,6 +120,7 @@ public final class TempBlocks {
                 if (!stillThere) {
                     level.destroyBlockProgress(t.crackId(), p, -1);
                     PendingReverts.remove(level, p);
+                    if (bridgeIds != null) bridgeIds.remove(p);
                     it.remove();
                     continue;
                 }
@@ -150,6 +151,7 @@ public final class TempBlocks {
                                 2001, p, net.minecraft.world.level.block.Block.getId(t.placed()));
                     level.setBlockAndUpdate(p, t.restore());
                     PendingReverts.remove(level, p);
+                    if (bridgeIds != null) bridgeIds.remove(p);
                     it.remove();
                 } else if (left <= 200 && now % 10 == 0 && showsExpiryCracks(t.placed())) {
                     // cracks grow over the last 10 seconds

@@ -234,6 +234,16 @@ public final class Ziplines {
         return Math.max(0, Math.min(1, v));
     }
 
+    /**
+     * Logout: forget the half-strung first end, the ride and the record of this player's rope (its
+     * anchors run out on their own timers; entity ids mean nothing after a relog).
+     */
+    public static void forget(UUID player) {
+        PENDING.remove(player);
+        ROPES.remove(player);
+        RIDES.remove(player);
+    }
+
     public static void clear() {
         PENDING.clear();
         ROPES.clear();
