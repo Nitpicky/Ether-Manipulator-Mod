@@ -22,6 +22,10 @@ public class ClientEvents {
         event.registerReloadListener(
                 (net.minecraft.server.packs.resources.ResourceManagerReloadListener)
                         com.ethermod.client.GemGlint::rebuildTexture);
+        // recoloured body textures and the upgrade screen's assets follow pack changes too
+        event.registerReloadListener(
+                (net.minecraft.server.packs.resources.ResourceManagerReloadListener)
+                        manager -> com.ethermod.client.ClientReload.onReload());
     }
 
     /** The tinted gem glints get fixed buffers so they draw after the items (GemGlint). */
