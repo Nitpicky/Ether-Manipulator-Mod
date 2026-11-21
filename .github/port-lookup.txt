@@ -1,4 +1,4 @@
-net/minecraft/client/player/LocalPlayer net/minecraft/client/model/HumanoidModel net/minecraft/util/LightCoordsUtil
-/.*/(AbstractSoundInstance)$
-net/minecraft/client/player/LocalPlayer#aiStep net/minecraft/client/Camera#update net/minecraft/util/LightCoordsUtil#getLightCoords net/minecraft/client/player/LocalPlayer#modifyInput
-net/minecraft/client/renderer/LevelRenderer#.*[Ss]ection.* net/minecraft/client/renderer/entity/EntityRenderer#.*Light.* net/minecraft/client/resources/sounds/AbstractSoundInstance#volume net/minecraft/client/player/LocalPlayer#.*(Closest|Space|moveTowards).* net/minecraft/client/Camera#.*(Zoom|setup|alignWith|setPosition|move|Detached|detached).*
+net/minecraft/client/multiplayer/ClientLevel
+/.*/(BlockAndLightGetter)$
+net/minecraft/client/player/LocalPlayer#tryToStartFallFlying net/minecraft/client/renderer/LevelRenderer#setBlocksDirty
+net/minecraft/client/Camera#(rotation|forwards|up|left|position|entity|level|setRotation).* net/minecraft/client/multiplayer/ClientLevel#.*[Dd]irty.*
