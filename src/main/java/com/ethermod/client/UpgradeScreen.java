@@ -47,9 +47,9 @@ public class UpgradeScreen extends Screen {
     private final KLoadoutList loadouts = new KLoadoutList(audio);
     private final KModulePicker modulePicker = new KModulePicker();
     private final KTierPanel[] panels = {
-        new KTierPanel(0, ui, audio, this::openPicker, loadouts::clearSelection),
-        new KTierPanel(1, ui, audio, this::openPicker, loadouts::clearSelection),
-        new KTierPanel(2, ui, audio, this::openPicker, loadouts::clearSelection)
+        new KTierPanel(0, ui, audio, this::openPicker, () -> {}),
+        new KTierPanel(1, ui, audio, this::openPicker, () -> {}),
+        new KTierPanel(2, ui, audio, this::openPicker, () -> {})
     };
 
     /** Off only for the recorded mod-page GIFs, where a tooltip would be cut by the crop. */
@@ -183,7 +183,6 @@ public class UpgradeScreen extends Screen {
                     picker,
                     () -> {
                         picker = -1;
-                        loadouts.clearSelection();
                     });
             g.pose().popPose();
         }
@@ -244,7 +243,6 @@ public class UpgradeScreen extends Screen {
                 if (button == 1 && h.key().startsWith("badge") && picker < 0 && !colour.isOpen()) {
                     int slot = Integer.parseInt(h.key().substring(5));
                     send(new TraitPayloads.Equip(slot, Optional.empty()));
-                    loadouts.clearSelection();
                     audio.press("delete");
                     return true;
                 }
