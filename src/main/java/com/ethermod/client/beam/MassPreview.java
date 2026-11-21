@@ -26,10 +26,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Mass Driver with Steady Hand (the building pick; without it there is no preview): the formation
- * already floats exactly where left click sets it down, so only the blocks that can't go there are
- * marked, in red. Charging a throw: the arc it will fly along, in pixel dots, and ghosts where it
- * lands. Same rules as the server ({@link MassDriver#release}, {@link OrbMass#massPlace}).
+ * Mass Driver previews. Charging a throw always shows the arc it will fly along, in pixel dots.
+ * With Steady Hand (the building pick) it also shows faint ghosts where it lands, and while set
+ * down the blocks that can't go where the formation floats are marked in red. Same rules as the
+ * server ({@link MassDriver#release}, {@link OrbMass#massPlace}).
  */
 @OnlyIn(Dist.CLIENT)
 final class MassPreview {
@@ -40,7 +40,9 @@ final class MassPreview {
 
     static void render(
             Minecraft mc, Player player, ItemStack st, Vec3 cam, float time, VertexConsumer vc, Matrix4f m) {
-        if (OrbMode.get(st) != OrbMode.MASS || !Traits.has(st, "tectonic.steady_hand")) return;
+        if (OrbMode.get(st) != OrbMode.MASS) return;
+        // every throw shows its arc; Steady Hand adds where it lands and what is in the way
+        boolean steady = Traits.has(st, "tectonic.steady_hand");
         List<BeamBallEntity> held = new ArrayList<>();
         for (var e : mc.level.entitiesForRendering())
             if (e instanceof BeamBallEntity b
@@ -75,22 +77,28 @@ final class MassPreview {
                 if (i % 2 == 1) dot(vc, m, next.subtract(cam), time + i, .7f * pulse);
                 pos = next;
             }
-            if (land == null) return;
+            if (land == null || !steady) return;
+            var spots = new java.util.HashSet<BlockPos>();
+            for (var b : held) {
+                Vec3 rel = b.position().subtract(anchor.position());
+                spots.add(land.offset((int) Math.round(rel.x), (int) Math.round(rel.y), (int) Math.round(rel.z)));
+            }
             for (var b : held) {
                 Vec3 rel = b.position().subtract(anchor.position());
                 BlockPos at = land.offset((int) Math.round(rel.x), (int) Math.round(rel.y), (int) Math.round(rel.z));
-                ghost(vc, m, cam, at, fits(mc, b.getCarried(), at), pulse);
+                ghost(vc, m, cam, at, fits(mc, b.getCarried(), at), pulse, spots);
             }
             return;
         }
 
         // set down: the formation floats on the grid where it goes; mark what is in the way
+        if (!steady) return;
         var hit = MassDriver.aim(player);
         if (hit == null) return;
         BlockPos base = hit.getBlockPos().relative(hit.getDirection());
         for (var b : held) {
             BlockPos at = base.offset(b.massOffset());
-            if (!fits(mc, b.getCarried(), at)) ghost(vc, m, cam, at, false, pulse);
+            if (!fits(mc, b.getCarried(), at)) ghost(vc, m, cam, at, false, pulse, java.util.Set.of());
         }
     }
 
@@ -98,17 +106,28 @@ final class MassPreview {
         return MassDriver.canPlace(mc.level, mc.player, bs, at);
     }
 
-    /** A see-through cube in the spot, a hair larger than the block. */
-    private static void ghost(VertexConsumer vc, Matrix4f m, Vec3 cam, BlockPos at, boolean ok, float pulse) {
+    /**
+     * A faint see-through cube in the spot, a hair larger than the block. Sides shared with another
+     * spot in {@code spots} are left out, so a formation reads as one shape.
+     */
+    private static void ghost(
+            VertexConsumer vc, Matrix4f m, Vec3 cam, BlockPos at, boolean ok, float pulse,
+            java.util.Set<BlockPos> spots) {
         int c = ok ? TECTONIC : BLOCKED;
-        int r = c >> 16 & 255, g = c >> 8 & 255, b = c & 255, a = (int) (255 * .22f * pulse);
+        int r = c >> 16 & 255, g = c >> 8 & 255, b = c & 255, a = (int) (255 * (ok ? .09f : .16f) * pulse);
         double x0 = at.getX(), y0 = at.getY(), z0 = at.getZ(), x1 = x0 + 1, y1 = y0 + 1, z1 = z0 + 1;
-        BlockGlow.rect(vc, m, Direction.DOWN, x0, y0, z0, x1, y0, z1, cam, .004f, r, g, b, a);
-        BlockGlow.rect(vc, m, Direction.UP, x0, y1, z0, x1, y1, z1, cam, .004f, r, g, b, a);
-        BlockGlow.rect(vc, m, Direction.NORTH, x0, y0, z0, x1, y1, z0, cam, .004f, r, g, b, a);
-        BlockGlow.rect(vc, m, Direction.SOUTH, x0, y0, z1, x1, y1, z1, cam, .004f, r, g, b, a);
-        BlockGlow.rect(vc, m, Direction.WEST, x0, y0, z0, x0, y1, z1, cam, .004f, r, g, b, a);
-        BlockGlow.rect(vc, m, Direction.EAST, x1, y0, z0, x1, y1, z1, cam, .004f, r, g, b, a);
+        if (!spots.contains(at.below()))
+            BlockGlow.rect(vc, m, Direction.DOWN, x0, y0, z0, x1, y0, z1, cam, .004f, r, g, b, a);
+        if (!spots.contains(at.above()))
+            BlockGlow.rect(vc, m, Direction.UP, x0, y1, z0, x1, y1, z1, cam, .004f, r, g, b, a);
+        if (!spots.contains(at.north()))
+            BlockGlow.rect(vc, m, Direction.NORTH, x0, y0, z0, x1, y1, z0, cam, .004f, r, g, b, a);
+        if (!spots.contains(at.south()))
+            BlockGlow.rect(vc, m, Direction.SOUTH, x0, y0, z1, x1, y1, z1, cam, .004f, r, g, b, a);
+        if (!spots.contains(at.west()))
+            BlockGlow.rect(vc, m, Direction.WEST, x0, y0, z0, x0, y1, z1, cam, .004f, r, g, b, a);
+        if (!spots.contains(at.east()))
+            BlockGlow.rect(vc, m, Direction.EAST, x1, y0, z0, x1, y1, z1, cam, .004f, r, g, b, a);
     }
 
     private static void dot(VertexConsumer vc, Matrix4f m, Vec3 at, float spin, float alpha) {
