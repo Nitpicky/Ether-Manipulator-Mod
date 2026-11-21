@@ -392,5 +392,11 @@
   "ethermod.configuration.extra_foliage": "Додаткові блоки рослинності",
   "ethermod.configuration.extra_crops": "Додаткові культури",
   "ethermod.configuration.title": "Налаштування маніпулятора ефіру",
-  "subtitles.ethermod.stasis.ding": "Стазис цокає"
+  "subtitles.ethermod.stasis.ding": "Стазис цокає",
+  "command.ethermod.set": "Маніпулятор ефіру налаштовано для гравців: %s",
+  "command.ethermod.build_code": "Збірка %s: %s",
+  "command.ethermod.bad_module": "Невідомий модуль: %s",
+  "command.ethermod.bad_choice": "Варіанти: A або B, а не %s",
+  "command.ethermod.bad_code": "Невірний код збірки: %s",
+  "command.ethermod.bad_colour": "Не hex-колір: %s"
 }

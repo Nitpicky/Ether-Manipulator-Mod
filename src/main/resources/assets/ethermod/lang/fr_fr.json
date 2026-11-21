@@ -392,5 +392,11 @@
   "ethermod.configuration.extra_foliage": "Blocs de végétation en plus",
   "ethermod.configuration.extra_crops": "Cultures en plus",
   "ethermod.configuration.title": "Paramètres du Manipulateur d'Éther",
-  "subtitles.ethermod.stasis.ding": "Stase : tic-tac"
+  "subtitles.ethermod.stasis.ding": "Stase : tic-tac",
+  "command.ethermod.set": "Manipulateur d'Éther réglé pour %s joueur(s)",
+  "command.ethermod.build_code": "Build de %s : %s",
+  "command.ethermod.bad_module": "Module inconnu : %s",
+  "command.ethermod.bad_choice": "Les choix sont A ou B, pas %s",
+  "command.ethermod.bad_code": "Code de build invalide à : %s",
+  "command.ethermod.bad_colour": "Couleur hexadécimale invalide : %s"
 }

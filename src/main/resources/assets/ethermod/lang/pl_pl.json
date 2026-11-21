@@ -392,5 +392,11 @@
   "ethermod.configuration.extra_foliage": "Dodatkowe bloki roślinności",
   "ethermod.configuration.extra_crops": "Dodatkowe uprawy",
   "ethermod.configuration.title": "Ustawienia Manipulatora Eteru",
-  "subtitles.ethermod.stasis.ding": "Staza tyka"
+  "subtitles.ethermod.stasis.ding": "Staza tyka",
+  "command.ethermod.set": "Manipulator Eteru ustawiony dla graczy: %s",
+  "command.ethermod.build_code": "Build gracza %s: %s",
+  "command.ethermod.bad_module": "Nieznany moduł: %s",
+  "command.ethermod.bad_choice": "Wybory to A lub B, nie %s",
+  "command.ethermod.bad_code": "Nieprawidłowy kod buildu przy: %s",
+  "command.ethermod.bad_colour": "To nie jest kolor hex: %s"
 }

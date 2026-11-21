@@ -392,5 +392,11 @@
   "ethermod.configuration.extra_foliage": "追加の草木ブロック",
   "ethermod.configuration.extra_crops": "追加の作物",
   "ethermod.configuration.title": "エーテルマニピュレーターの設定",
-  "subtitles.ethermod.stasis.ding": "ステイシス：チクタク"
+  "subtitles.ethermod.stasis.ding": "ステイシス：チクタク",
+  "command.ethermod.set": "%s 人のプレイヤーのエーテルマニピュレーターを設定しました",
+  "command.ethermod.build_code": "%s のビルド：%s",
+  "command.ethermod.bad_module": "不明なモジュール：%s",
+  "command.ethermod.bad_choice": "選択肢は A か B です（%s ではありません）",
+  "command.ethermod.bad_code": "無効なビルドコード：%s",
+  "command.ethermod.bad_colour": "16進数の色ではありません：%s"
 }
