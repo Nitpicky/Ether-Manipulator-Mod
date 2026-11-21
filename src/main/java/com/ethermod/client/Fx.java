@@ -41,8 +41,9 @@ import org.joml.Vector4f;
  * nothing translucent, clouds included, can ever cover them, and they never write depth, so the
  * order of recorded quads never changes the picture.
  *
- * <p>26.3: drawn with the mod's own GPU passes (ModPipelines). The shader-pack path of the 1.21
- * build is gone until a shader loader exists for 26.3 (PORT-26.3.md).
+ * <p>26.3: drawn with the mod's own GPU passes (ModPipelines). The same path works under Iris
+ * shader packs (checked with Complementary on CI), so the 1.21 build's separate shader path is gone;
+ * only the shadow pass is skipped (ShaderCompat).
  */
 @OnlyIn(Dist.CLIENT)
 public final class Fx {

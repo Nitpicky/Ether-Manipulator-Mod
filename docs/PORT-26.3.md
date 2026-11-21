@@ -33,13 +33,15 @@ The playtest, shader and K-screen workflows don't run on `port/**` by themselves
 - `Muzzle` keeps the first-person nozzle on screen (hand FOV = the FOV option) and the third-person
   one as a camera-relative world point.
 
-## Parked (not ported yet)
+## Formerly parked, now ported
 
-- Gem glint tint (GemGlint + mixin), soul flame on burning mobs, the no-use dip, the gravity overlay.
-- LMB swing suppression (the swing state is private now).
-- View bobbing under sideways gravity (walk distance is fixed, the bob is vanilla's).
-- The shader-pack (Iris) path in Fx.
-- Probe checks reported as SKIP: crack overlay, gravity overlay, third-person camera positions.
+- Gem glint tint: the item glint render type is swapped per gem sprite (`GemGlint`, `GemGlintMixin`).
+- Soul flame on burning mobs: `SoulFlameRenderMixin` swaps the flame sprites.
+- No-use dip: `NoUseDipMixin`. LMB swing: the item's `ATTACK_ANIMATION` component is `NONE`.
+- Gravity overlay: NeoForge's `ExtractBlockScreenEffectEvent` (`GravityOverlay`).
+- Bob under sideways gravity: `GravityBobMixin` feeds the local-frame distance to `updateBob`.
+- Shader packs: Fx's normal path renders fine under Iris + Complementary, so the separate 1.21 shader
+  path was dropped. The probe checks that used to SKIP (crack, overlay, camera) all pass.
 
 ## CI helpers (this branch only)
 
@@ -47,3 +49,8 @@ The playtest, shader and K-screen workflows don't run on `port/**` by themselves
   to `port/<sha>/server.log`.
 - Editing `.github/port-lookup.txt` runs `port-api.yml`, which prints 26.3 / NeoForge / GeckoLib
   signatures to `playtest-results:port/api/<sha>.txt` (format in the workflow header).
+- `shaders.yml` on this branch: Sodium (input `sodium`, default 0.9.3-beta.3, the last one that
+  accepts Iris 1.11.7) + Iris + a pack, OpenGL through EGL (`SDL_VIDEO_FORCE_EGL`), dev draw
+  validation off (`-Dneoforge.disableBlaze3DValidation=true`, Iris fails it). Shots land in
+  `port/<sha>/shaders/<pack>/`. Terrain shows as flat yellow squares there: a CI software-GL issue
+  with the pack, not the mod.
