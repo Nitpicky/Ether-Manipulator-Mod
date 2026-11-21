@@ -437,6 +437,11 @@ public final class KGifTour {
         waitT(10);
         click();
         waitT(20);
+        // the new set is picked (linked: changes save into it); unpick it before clearing the build
+        glide("set0", 12);
+        waitT(4);
+        click();
+        waitT(12);
         glide("badge0", 12);
         waitT(4);
         click(1);
