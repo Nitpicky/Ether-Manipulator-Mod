@@ -65,6 +65,9 @@ jobs:
           # llvmpipe has GL 4.5 natively; no version overrides (they changed what Iris' shaders compile to).
           # SDL's GLX path finds no matching visual on Xvfb; EGL on X11 gives a real GL context.
           SDL_VIDEO_FORCE_EGL: '1'
+          # Dev clients check every draw strictly; Iris 1.11.7 fails that check (unset InSampler in
+          # its center-depth pass). Players' clients don't run it, so turn it off here too.
+          JAVA_TOOL_OPTIONS: -Dneoforge.disableBlaze3DValidation=true
         run: |
           xvfb-run -a -s '-screen 0 1280x720x24 +extension GLX +render -ac' timeout 1500 ./gradlew runClient -Pplaytest -PmodelShots -PcloudTest ${VARIANT:+"-PfxVariant=$VARIANT"} --no-daemon || true
           grep -i -E 'iris|shader' runs/client/logs/latest.log | head -40 || true
