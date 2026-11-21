@@ -1,0 +1,78 @@
+/home/runner/.gradle/caches/modules-2/files-2.1/curse.maven/geckolib-388172/8893169/196231506b89da06925c087f9b8bc5fd12ebea16/geckolib-388172-8893169.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/io.github.llamalad7/mixinextras-neoforge/0.5.5/26f2905a37afd203c3da1d6a2e164472a7531b41/mixinextras-neoforge-0.5.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.accesstransformers/at-parser/11.0.2/64aae57d6d26d69543c5275181fe6971707a4e16/at-parser-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/earlydisplay/12.0.16/efa2e56115d22853d10524874a7bbb64555c2a28/earlydisplay-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/12.0.16/edbb2ee8211a867215970bc15ae9c354fa56dc09/loader-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarMetadata/0.5.3/ff40c1cd721d07615d825c5bbf27705b2e3258ed/JarJarMetadata-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarSelector/0.5.3/6b845aab8d5c8e721b4e3cd30f97722b7f8044b1/JarJarSelector-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/accesstransformers/11.0.2/25dcb69c78b16669935f0ab91dff830ce192379d/accesstransformers-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/bus/8.0.5/5b2d33285ab5d1554e9798ad98c40d6ea3868bd5/bus-8.0.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/mergetool/2.0.7/793b18456e92c4a7f66d9b5d8bf7a9c1c7a20b20/mergetool-2.0.7-api.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar
+=== LIST /.*client/MouseHandler$
+net/minecraft/client/MouseHandler
+=== CODE net/minecraft/client/MouseHandler getScaledXPos
+  public static double getScaledXPos(com.mojang.blaze3d.platform.Window, double);
+    Code:
+         0: dload_1
+         1: aload_0
+         2: invokevirtual #475                // Method com/mojang/blaze3d/platform/Window.getGuiScaledWidth:()I
+         5: i2d
+         6: dmul
+         7: aload_0
+         8: invokevirtual #478                // Method com/mojang/blaze3d/platform/Window.getScreenWidth:()I
+        11: i2d
+        12: ddiv
+        13: dreturn
+  public double getScaledXPos(com.mojang.blaze3d.platform.Window);
+    Code:
+         0: aload_1
+         1: aload_0
+         2: getfield      #433                // Field xpos:D
+         5: invokestatic  #454                // Method getScaledXPos:(Lcom/mojang/blaze3d/platform/Window;D)D
+         8: dreturn
+=== SIG net/minecraft/client/MouseHandler .*(pos|Pos|ignore).*
+  private double xpos;
+  private double ypos;
+  private boolean ignoreFirstMove;
+  public void fillMousePositionDetails(net.minecraft.CrashReportCategory, com.mojang.blaze3d.platform.Window);
+  public static double getScaledXPos(com.mojang.blaze3d.platform.Window, double);
+  public double getScaledXPos(com.mojang.blaze3d.platform.Window);
+  public static double getScaledYPos(com.mojang.blaze3d.platform.Window, double);
+  public double getScaledYPos(com.mojang.blaze3d.platform.Window);
+  public double xpos();
+  public double ypos();
+  public void resyncMousePosition();
+  private static java.lang.String lambda$fillMousePositionDetails$1(com.mojang.blaze3d.platform.Window) throws java.lang.Exception;
+  private java.lang.String lambda$fillMousePositionDetails$0(com.mojang.blaze3d.platform.Window) throws java.lang.Exception;
+=== net/minecraft/client/MouseHandler
+Compiled from "MouseHandler.java"
+public class net.minecraft.client.MouseHandler {
+  public static final long DOUBLE_CLICK_THRESHOLD_MS;
+  public net.minecraft.client.MouseHandler(net.minecraft.client.Minecraft);
+  public void onButton(long, net.minecraft.client.input.MouseButtonInfo, int);
+  public void fillMousePositionDetails(net.minecraft.CrashReportCategory, com.mojang.blaze3d.platform.Window);
+  public void onScroll(long, double, double);
+  public void onDrop(long, java.util.List<java.lang.String>);
+  public void onMove(long, double, double, double, double);
+  public void handleAccumulatedMovement();
+  public static double getScaledXPos(com.mojang.blaze3d.platform.Window, double);
+  public double getScaledXPos(com.mojang.blaze3d.platform.Window);
+  public static double getScaledYPos(com.mojang.blaze3d.platform.Window, double);
+  public double getScaledYPos(com.mojang.blaze3d.platform.Window);
+  public boolean isLeftPressed();
+  public boolean isMiddlePressed();
+  public boolean isRightPressed();
+  public double xpos();
+  public double ypos();
+  public double getXVelocity();
+  public double getYVelocity();
+  public void setIgnoreFirstMove();
+  public void resyncMousePosition();
+  public boolean isMouseGrabbed();
+  public void grabMouse();
+  public void releaseMouse();
+  public void cursorEntered();
+  public void drawDebugMouseInfo(net.minecraft.client.gui.Font, net.minecraft.client.gui.GuiGraphicsExtractor);
+}
