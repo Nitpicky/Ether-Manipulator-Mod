@@ -1,6 +1,7 @@
 name: Port API lookup
 # Port helper (port/26.3 only): prints public signatures of 26.3 / NeoForge / GeckoLib classes
-# Edit .github/port-lookup.txt (line 1: class regexes, line 2: list regex) and push.
+# Edit .github/port-lookup.txt (line 1: class regexes, line 2: list regex, line 3: class#method
+# bytecode, line 4: class#member signatures incl. private) and push.
 on:
   push:
     branches: ['port/**']
@@ -33,6 +34,11 @@ jobs:
             # line 3: class#method -> bytecode of that method
             cls=${c%%#*}; meth=${c#*#}
             echo "=== CODE $cls $meth"; javap -cp "$CP" -c -p "${cls//\//.}" 2>&1 | awk -v m=" $meth(" 'index($0,m){p=1} p&&/^$/{p=0} p' | head -300
+          done
+          for c in $(sed -n 4p .github/port-lookup.txt); do
+            # line 4: class#method -> every signature of that name, private ones included
+            cls=${c%%#*}; meth=${c#*#}
+            echo "=== SIG $cls $meth"; javap -cp "$CP" -p "${cls//\//.}" 2>&1 | grep -E "[ .]$meth\(|^ *[a-z].* $meth;" | head -20
           done
           for c in $CLASSES; do
             for m in $(grep -E "^($c)$" all.txt | head -200); do
