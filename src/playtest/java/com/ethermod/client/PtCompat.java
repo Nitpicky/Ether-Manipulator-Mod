@@ -23,12 +23,37 @@ final class PtCompat {
         return new net.minecraft.client.input.MouseButtonEvent(x, y, new net.minecraft.client.input.MouseButtonInfo(button, 0));
     }
 
+    /**
+     * Clicks through the game's real mouse path (MouseHandler.onButton, as a physical click would),
+     * so the screen gets exactly what a player's click gives it. Falls back to calling the screen.
+     */
     static boolean click(net.minecraft.client.gui.screens.Screen s, double x, double y, int button) {
+        if (realButton(x, y, button, 1)) return true;
         return s.mouseClicked(mouse(x, y, button), false);
     }
 
     static boolean release(net.minecraft.client.gui.screens.Screen s, double x, double y, int button) {
+        if (realButton(x, y, button, 0)) return true;
         return s.mouseReleased(mouse(x, y, button));
+    }
+
+    private static boolean realButton(double guiX, double guiY, int button, int action) {
+        try {
+            var mc = net.minecraft.client.Minecraft.getInstance();
+            var w = mc.getWindow();
+            var mh = mc.mouseHandler;
+            var fx = net.minecraft.client.MouseHandler.class.getDeclaredField("xpos");
+            var fy = net.minecraft.client.MouseHandler.class.getDeclaredField("ypos");
+            fx.setAccessible(true);
+            fy.setAccessible(true);
+            fx.setDouble(mh, guiX * w.getScreenWidth() / w.getGuiScaledWidth());
+            fy.setDouble(mh, guiY * w.getScreenHeight() / w.getGuiScaledHeight());
+            mh.onButton(w.handle(), new net.minecraft.client.input.MouseButtonInfo(button, 0), action);
+            return true;
+        } catch (Throwable e) {
+            System.out.println("[playtest] real mouse path unavailable: " + e);
+            return false;
+        }
     }
 
     static boolean drag(net.minecraft.client.gui.screens.Screen s, double x, double y, int button, double dx, double dy) {
