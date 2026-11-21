@@ -358,6 +358,7 @@
   "ethermod.configuration.ether_counter": "エーテルカウンター",
   "ethermod.configuration.sneak_scroll_cycles_modes": "スニーク+ホイールでモード切替",
   "ethermod.configuration.upgrade_screen_spin": "アップグレード画面の回転",
+  "ethermod.configuration.chat_set_code_links": "チャットのセットコードをクリック可能に",
   "ethermod.configuration.balance": "バランス",
   "ethermod.configuration.world": "ワールド",
   "ethermod.configuration.progression": "進行",

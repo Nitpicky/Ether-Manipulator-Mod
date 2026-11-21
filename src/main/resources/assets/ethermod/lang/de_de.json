@@ -358,6 +358,7 @@
   "ethermod.configuration.ether_counter": "Ätherzähler",
   "ethermod.configuration.sneak_scroll_cycles_modes": "Schleichen + Mausrad wechselt Modus",
   "ethermod.configuration.upgrade_screen_spin": "Drehteller im Upgrade-Bildschirm",
+  "ethermod.configuration.chat_set_code_links": "Anklickbare Set-Codes im Chat",
   "ethermod.configuration.balance": "Balance",
   "ethermod.configuration.world": "Welt",
   "ethermod.configuration.progression": "Fortschritt",

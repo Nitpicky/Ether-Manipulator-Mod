@@ -358,6 +358,7 @@
   "ethermod.configuration.ether_counter": "Ether counter",
   "ethermod.configuration.sneak_scroll_cycles_modes": "Sneak + scroll cycles modes",
   "ethermod.configuration.upgrade_screen_spin": "Upgrade screen turntable",
+  "ethermod.configuration.chat_set_code_links": "Clickable set codes in chat",
   "ethermod.configuration.balance": "Balance",
   "ethermod.configuration.world": "World",
   "ethermod.configuration.progression": "Progression",

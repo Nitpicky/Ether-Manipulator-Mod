@@ -358,6 +358,7 @@
   "ethermod.configuration.ether_counter": "Contador de Éter",
   "ethermod.configuration.sneak_scroll_cycles_modes": "Agachar + rolagem troca o modo",
   "ethermod.configuration.upgrade_screen_spin": "Giro na tela de aprimoramento",
+  "ethermod.configuration.chat_set_code_links": "Códigos de conjunto clicáveis no chat",
   "ethermod.configuration.balance": "Equilíbrio",
   "ethermod.configuration.world": "Mundo",
   "ethermod.configuration.progression": "Progressão",

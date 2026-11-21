@@ -358,6 +358,7 @@
   "ethermod.configuration.ether_counter": "Счётчик эфира",
   "ethermod.configuration.sneak_scroll_cycles_modes": "Красться + колесо меняет режим",
   "ethermod.configuration.upgrade_screen_spin": "Вращение на экране улучшений",
+  "ethermod.configuration.chat_set_code_links": "Кликабельные коды наборов в чате",
   "ethermod.configuration.balance": "Баланс",
   "ethermod.configuration.world": "Мир",
   "ethermod.configuration.progression": "Прогресс",

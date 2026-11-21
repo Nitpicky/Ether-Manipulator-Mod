@@ -358,6 +358,7 @@
   "ethermod.configuration.ether_counter": "Compteur d'Éther",
   "ethermod.configuration.sneak_scroll_cycles_modes": "Accroupi + molette change de mode",
   "ethermod.configuration.upgrade_screen_spin": "Rotation sur l'écran d'amélioration",
+  "ethermod.configuration.chat_set_code_links": "Codes de set cliquables dans le chat",
   "ethermod.configuration.balance": "Équilibrage",
   "ethermod.configuration.world": "Monde",
   "ethermod.configuration.progression": "Progression",

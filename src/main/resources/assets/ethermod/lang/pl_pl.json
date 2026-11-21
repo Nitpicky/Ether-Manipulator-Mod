@@ -358,6 +358,7 @@
   "ethermod.configuration.ether_counter": "Licznik Eteru",
   "ethermod.configuration.sneak_scroll_cycles_modes": "Skradanie + kółko zmienia tryb",
   "ethermod.configuration.upgrade_screen_spin": "Obrót na ekranie ulepszeń",
+  "ethermod.configuration.chat_set_code_links": "Klikalne kody zestawów na czacie",
   "ethermod.configuration.balance": "Balans",
   "ethermod.configuration.world": "Świat",
   "ethermod.configuration.progression": "Postęp",

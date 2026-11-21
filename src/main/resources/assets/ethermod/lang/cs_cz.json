@@ -358,6 +358,7 @@
   "ethermod.configuration.ether_counter": "Počítadlo éteru",
   "ethermod.configuration.sneak_scroll_cycles_modes": "Plížení + kolečko mění režim",
   "ethermod.configuration.upgrade_screen_spin": "Otáčení na obrazovce vylepšení",
+  "ethermod.configuration.chat_set_code_links": "Klikatelné kódy sad v chatu",
   "ethermod.configuration.balance": "Vyvážení",
   "ethermod.configuration.world": "Svět",
   "ethermod.configuration.progression": "Postup",

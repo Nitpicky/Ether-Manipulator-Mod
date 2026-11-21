@@ -358,6 +358,7 @@
   "ethermod.configuration.ether_counter": "Contatore di Etere",
   "ethermod.configuration.sneak_scroll_cycles_modes": "Accovacciato + rotella cambia modalità",
   "ethermod.configuration.upgrade_screen_spin": "Rotazione nella schermata potenziamenti",
+  "ethermod.configuration.chat_set_code_links": "Codici set cliccabili in chat",
   "ethermod.configuration.balance": "Bilanciamento",
   "ethermod.configuration.world": "Mondo",
   "ethermod.configuration.progression": "Progressione",

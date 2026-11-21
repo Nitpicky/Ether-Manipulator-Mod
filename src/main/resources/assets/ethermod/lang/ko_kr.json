@@ -358,6 +358,7 @@
   "ethermod.configuration.ether_counter": "에테르 카운터",
   "ethermod.configuration.sneak_scroll_cycles_modes": "웅크리기 + 휠로 모드 전환",
   "ethermod.configuration.upgrade_screen_spin": "업그레이드 화면 회전",
+  "ethermod.configuration.chat_set_code_links": "채팅의 세트 코드 클릭 가능",
   "ethermod.configuration.balance": "밸런스",
   "ethermod.configuration.world": "월드",
   "ethermod.configuration.progression": "진행",

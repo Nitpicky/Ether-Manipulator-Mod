@@ -358,6 +358,7 @@
   "ethermod.configuration.ether_counter": "以太計數器",
   "ethermod.configuration.sneak_scroll_cycles_modes": "潛行+滾輪切換模式",
   "ethermod.configuration.upgrade_screen_spin": "升級介面轉盤",
+  "ethermod.configuration.chat_set_code_links": "聊天中的套裝代碼可點擊",
   "ethermod.configuration.balance": "平衡",
   "ethermod.configuration.world": "世界",
   "ethermod.configuration.progression": "進度",

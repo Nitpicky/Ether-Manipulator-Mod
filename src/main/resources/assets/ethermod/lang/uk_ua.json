@@ -358,6 +358,7 @@
   "ethermod.configuration.ether_counter": "Лічильник ефіру",
   "ethermod.configuration.sneak_scroll_cycles_modes": "Підкрадання + коліщатко змінює режим",
   "ethermod.configuration.upgrade_screen_spin": "Обертання на екрані покращень",
+  "ethermod.configuration.chat_set_code_links": "Клікабельні коди наборів у чаті",
   "ethermod.configuration.balance": "Баланс",
   "ethermod.configuration.world": "Світ",
   "ethermod.configuration.progression": "Прогрес",

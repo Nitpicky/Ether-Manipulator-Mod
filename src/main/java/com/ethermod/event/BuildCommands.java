@@ -196,7 +196,7 @@ final class BuildCommands {
                 b.append(choice == 0 ? 'A' : 'B');
             }
         }
-        return b.toString();
+        return BuildCode.withPrefix(b.toString());
     }
 
     // ---- add_set ---------------------------------------------------------------

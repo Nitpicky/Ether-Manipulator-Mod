@@ -358,6 +358,7 @@
   "ethermod.configuration.ether_counter": "Eter sayacı",
   "ethermod.configuration.sneak_scroll_cycles_modes": "Eğilme + tekerlek mod değiştirir",
   "ethermod.configuration.upgrade_screen_spin": "Yükseltme ekranında dönme",
+  "ethermod.configuration.chat_set_code_links": "Sohbette tıklanabilir set kodları",
   "ethermod.configuration.balance": "Denge",
   "ethermod.configuration.world": "Dünya",
   "ethermod.configuration.progression": "İlerleme",

@@ -15,7 +15,7 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Short shareable build codes, e.g. {@code 1GABA2HAAA3BBBA}: for each filled slot its number
+ * Short shareable set codes, e.g. {@code S_1GABA2HAAA3BBBA}: the "S_" prefix, then for each filled slot its number
  * (1-3), the Module's letter, then the choice (A or B) of each tier in order. Choices stop at the
  * first tier left open, so {@code 1GA} is Gravitic in slot 1 with only its first choice.
  */
@@ -44,9 +44,18 @@ public final class BuildCode {
         return null;
     }
 
-    /** Parses a code; throws IllegalArgumentException with the offending part. */
+    /** Codes are written with this prefix ("S_" for Set); it is optional when reading one. */
+    public static final String PREFIX = "S_";
+
+    /** A code with its prefix, or "" for an empty build. */
+    public static String withPrefix(String body) {
+        return body.isEmpty() ? "" : PREFIX + body;
+    }
+
+    /** Parses a code (prefix optional); throws IllegalArgumentException with the offending part. */
     public static List<Slot> parse(String code) {
         String s = code.trim().toUpperCase(Locale.ROOT).replace("-", "").replace(" ", "");
+        if (s.startsWith(PREFIX)) s = s.substring(PREFIX.length());
         List<Slot> out = new ArrayList<>();
         int i = 0;
         while (i < s.length()) {
@@ -76,12 +85,12 @@ public final class BuildCode {
         return -1;
     }
 
-    /** Longest possible code: three slots of digit, letter and three choices. */
-    public static final int MAX_LENGTH = 15;
+    /** Longest possible code: the prefix, then three slots of digit, letter and three choices. */
+    public static final int MAX_LENGTH = 17;
 
     /**
      * The code of a stored build (the slot list a Set or the Manipulator keeps), stored choices
-     * included. Empty when no slot holds a known Module.
+     * included, with its prefix. Empty when no slot holds a known Module.
      */
     public static String encode(ListTag build, RegistryAccess access) {
         StringBuilder b = new StringBuilder();
@@ -103,7 +112,7 @@ public final class BuildCode {
                 b.append(choice == 0 ? 'A' : 'B');
             }
         }
-        return b.toString();
+        return withPrefix(b.toString());
     }
 
     /**

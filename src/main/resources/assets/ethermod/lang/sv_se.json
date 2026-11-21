@@ -358,6 +358,7 @@
   "ethermod.configuration.ether_counter": "Eterräknare",
   "ethermod.configuration.sneak_scroll_cycles_modes": "Smyg + scrollhjul byter läge",
   "ethermod.configuration.upgrade_screen_spin": "Skivspelare på uppgraderingsskärmen",
+  "ethermod.configuration.chat_set_code_links": "Klickbara setkoder i chatten",
   "ethermod.configuration.balance": "Balans",
   "ethermod.configuration.world": "Värld",
   "ethermod.configuration.progression": "Progression",

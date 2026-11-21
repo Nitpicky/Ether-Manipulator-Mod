@@ -358,6 +358,7 @@
   "ethermod.configuration.ether_counter": "Etherteller",
   "ethermod.configuration.sneak_scroll_cycles_modes": "Sluipen + scrollen wisselt modus",
   "ethermod.configuration.upgrade_screen_spin": "Draaischijf in upgradescherm",
+  "ethermod.configuration.chat_set_code_links": "Klikbare setcodes in de chat",
   "ethermod.configuration.balance": "Balans",
   "ethermod.configuration.world": "Wereld",
   "ethermod.configuration.progression": "Voortgang",

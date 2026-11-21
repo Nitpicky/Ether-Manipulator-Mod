@@ -361,18 +361,19 @@ public final class UiProbe {
                                                     .copyTag()
                                                     .getList("mm_traits", net.minecraft.nbt.Tag.TAG_COMPOUND);
                                     String code = com.ethermod.trait.BuildCode.encode(stored, access);
-                                    check("Set code of the build: " + code, code.equals("1HB2FB3BB"));
+                                    check("Set code of the build: " + code, code.equals("S_1HB2FB3BB"));
                                     check(
                                             "Set code round trip",
                                             com.ethermod.trait.BuildCode.encode(com.ethermod.trait.BuildCode.decode(code, access), access).equals(code));
                                     int bad = 0;
-                                    for (String c : new String[] {"", "1HC", "1XA", "1HA1FA", "1HA2HA", "4HA", "hello"})
+                                    for (String c : new String[] {"", "1HC", "1XA", "1HA1FA", "1HA2HA", "4HA", "hello", "S_"})
                                         try {
                                             com.ethermod.trait.BuildCode.decode(c, access);
                                         } catch (IllegalArgumentException ex) {
                                             bad++;
                                         }
-                                    check("Bad set codes are refused (" + bad + "/7)", bad == 7);
+                                    check("Bad set codes are refused (" + bad + "/8)", bad == 8);
+                                    check("Old codes without the prefix still read", com.ethermod.trait.BuildCode.encode(com.ethermod.trait.BuildCode.decode("1HB2FB3BB", access), access).equals(code));
                                     int before = com.ethermod.trait.Loadouts.list(st).size();
                                     com.ethermod.trait.Loadouts.importCode(p, "not a code", "Bad");
                                     check("Bad pasted code adds no set", com.ethermod.trait.Loadouts.list(st).size() == before);
