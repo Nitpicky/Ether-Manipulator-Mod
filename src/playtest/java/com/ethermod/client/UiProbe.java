@@ -764,6 +764,13 @@ public final class UiProbe {
                                             lethal,
                                             new net.minecraft.world.phys.EntityHitResult(
                                                     boltTarget));
+                                    report.add(
+                                            "INFO soulwake second kill: alive=" + boltTarget.isAlive()
+                                                    + " health=" + boltTarget.getHealth()
+                                                    + " fire=" + boltTarget.isOnFire()
+                                                    + " soul=" + com.ethermod.trait.Burning.soul(boltTarget)
+                                                    + " invul=" + boltTarget.getInvulnerableTime()
+                                                    + " removed=" + boltTarget.isRemoved());
                                     check(
                                             "Blazeling-owned soulfire can trigger Soulwake again",
                                             sl.getEntitiesOfClass(
