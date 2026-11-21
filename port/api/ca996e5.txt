@@ -1,0 +1,610 @@
+/home/runner/.gradle/caches/modules-2/files-2.1/curse.maven/geckolib-388172/8893169/196231506b89da06925c087f9b8bc5fd12ebea16/geckolib-388172-8893169.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/io.github.llamalad7/mixinextras-neoforge/0.5.5/26f2905a37afd203c3da1d6a2e164472a7531b41/mixinextras-neoforge-0.5.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.accesstransformers/at-parser/11.0.2/64aae57d6d26d69543c5275181fe6971707a4e16/at-parser-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/earlydisplay/12.0.16/efa2e56115d22853d10524874a7bbb64555c2a28/earlydisplay-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/12.0.16/edbb2ee8211a867215970bc15ae9c354fa56dc09/loader-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarMetadata/0.5.3/ff40c1cd721d07615d825c5bbf27705b2e3258ed/JarJarMetadata-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarSelector/0.5.3/6b845aab8d5c8e721b4e3cd30f97722b7f8044b1/JarJarSelector-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/accesstransformers/11.0.2/25dcb69c78b16669935f0ab91dff830ce192379d/accesstransformers-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/bus/8.0.5/5b2d33285ab5d1554e9798ad98c40d6ea3868bd5/bus-8.0.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/mergetool/2.0.7/793b18456e92c4a7f66d9b5d8bf7a9c1c7a20b20/mergetool-2.0.7-api.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar
+=== LIST /^(com/mojang/blaze3d|com/mojang/renderpearl|net/minecraft/client/renderer/rendertype|net/neoforged/neoforge/client/event|net/minecraft/client/renderer/state|net/minecraft/client/renderer/feature)/[^$]*$
+=== CODE  
+=== SIG  
+=== com/mojang/blaze3d/systems/RenderSystem
+Compiled from "RenderSystem.java"
+public class com.mojang.blaze3d.systems.RenderSystem {
+  public static final double DEFAULT_DEPTH_CLEAR_VALUE;
+  public static final int MINIMUM_ATLAS_TEXTURE_SIZE;
+  public static final int PROJECTION_MATRIX_UBO_SIZE;
+  public static boolean isRenderingLevel;
+  public com.mojang.blaze3d.systems.RenderSystem();
+  public static com.mojang.blaze3d.systems.SamplerCache getSamplerCache();
+  public static void setFallbackPipelineCache(com.mojang.blaze3d.pipeline.PipelineCache);
+  public static com.mojang.blaze3d.pipeline.PipelineCache setCurrentPipelineCache(com.mojang.blaze3d.pipeline.PipelineCache);
+  public static com.mojang.renderpearl.api.pipeline.CompiledRenderPipeline getCompiledPipelineNullable(com.mojang.renderpearl.api.pipeline.RenderPipeline);
+  public static com.mojang.renderpearl.api.pipeline.CompiledRenderPipeline getCompiledPipeline(com.mojang.renderpearl.api.pipeline.RenderPipeline);
+  public static void initRenderThread();
+  public static boolean isOnRenderThread();
+  public static void assertOnRenderThread();
+  public static void pollEvents(com.mojang.blaze3d.platform.SDLEventHandler);
+  public static boolean isFrozenAtPollEvents();
+  public static void pumpEvents(com.mojang.blaze3d.platform.SDLEventHandler);
+  public static void setShaderFog(com.mojang.renderpearl.api.buffers.GpuBufferSlice);
+  public static com.mojang.renderpearl.api.buffers.GpuBufferSlice getShaderFog();
+  public static void setShaderLights(com.mojang.renderpearl.api.buffers.GpuBufferSlice);
+  public static com.mojang.renderpearl.api.buffers.GpuBufferSlice getShaderLights();
+  public static void enableScissorForRenderTypeDraws(int, int, int, int);
+  public static void disableScissorForRenderTypeDraws();
+  public static com.mojang.blaze3d.systems.ScissorState getScissorStateForRenderTypeDraws();
+  public static java.lang.String getBackendDescription();
+  public static net.minecraft.util.TimeSource$NanoTimeSource initBackendSystem();
+  public static void initRenderer(com.mojang.renderpearl.api.device.GpuDevice);
+  public static void shutdownRenderer();
+  public static void trackBackendLibraryForShutdown(com.mojang.renderpearl.api.device.GpuBackend);
+  public static void unloadTrackedBackendLibrary();
+  public static void setupDefaultState();
+  public static void setProjectionMatrix(com.mojang.renderpearl.api.buffers.GpuBufferSlice, com.mojang.blaze3d.ProjectionType);
+  public static void backupProjectionMatrix();
+  public static void restoreProjectionMatrix();
+  public static com.mojang.renderpearl.api.buffers.GpuBufferSlice getProjectionMatrixBuffer();
+  public static org.joml.Matrix4f getModelViewMatrixCopy();
+  public static org.joml.Matrix4fStack getModelViewStack();
+  public static com.mojang.blaze3d.systems.RenderSystem$AutoStorageIndexBuffer getSequentialBuffer(com.mojang.renderpearl.api.pipeline.PrimitiveTopology);
+  public static void setGlobalSettingsUniform(com.mojang.renderpearl.api.buffers.GpuBuffer);
+  public static com.mojang.renderpearl.api.buffers.GpuBuffer getGlobalSettingsUniform();
+  public static com.mojang.blaze3d.ProjectionType getProjectionType();
+  public static void queueFencedTask(java.lang.Runnable);
+  public static void executePendingTasks();
+  public static com.mojang.renderpearl.api.device.GpuDevice getDevice();
+  public static com.mojang.renderpearl.api.device.GpuDevice tryGetDevice();
+  public static boolean isWireframeAvailable();
+  public static net.minecraft.client.renderer.DynamicGpuData getDynamicUniforms();
+  public static void bindDefaultUniforms(com.mojang.renderpearl.api.commands.RenderPass);
+  public static void resizeAllAutoStorageIndexBuffers();
+  public static void pushPipelineModifier(net.minecraft.resources.ResourceKey<net.neoforged.neoforge.client.pipeline.PipelineModifier>);
+  public static void popPipelineModifier();
+  public static void renderWithPipelineModifier(net.minecraft.resources.ResourceKey<net.neoforged.neoforge.client.pipeline.PipelineModifier>, java.lang.Runnable);
+  public static void ensurePipelineModifiersEmpty();
+}
+=== com/mojang/blaze3d/pipeline/RenderTarget
+Compiled from "RenderTarget.java"
+public abstract class com.mojang.blaze3d.pipeline.RenderTarget {
+  public int width;
+  public int height;
+  public com.mojang.blaze3d.pipeline.RenderTarget(java.lang.String, com.mojang.renderpearl.api.GpuFormat, com.mojang.renderpearl.api.GpuFormat);
+  public void resize(int, int);
+  public void destroyBuffers();
+  public void copyDepthFrom(com.mojang.blaze3d.pipeline.RenderTarget);
+  public void copyColorFrom(com.mojang.blaze3d.pipeline.RenderTarget);
+  public void createBuffers(int, int);
+  public void blitAndBlendToTexture(com.mojang.renderpearl.api.textures.GpuTextureView, com.mojang.renderpearl.api.textures.GpuTextureView);
+  public com.mojang.renderpearl.api.textures.GpuTexture getColorTexture();
+  public com.mojang.renderpearl.api.textures.GpuTextureView getColorTextureView();
+  public com.mojang.renderpearl.api.textures.GpuTexture getDepthTexture();
+  public com.mojang.renderpearl.api.textures.GpuTextureView getDepthTextureView();
+  public boolean hasDepth();
+}
+=== com/mojang/blaze3d/pipeline/TextureTarget
+Compiled from "TextureTarget.java"
+public class com.mojang.blaze3d.pipeline.TextureTarget extends com.mojang.blaze3d.pipeline.RenderTarget {
+  public com.mojang.blaze3d.pipeline.TextureTarget(java.lang.String, int, int, com.mojang.renderpearl.api.GpuFormat, com.mojang.renderpearl.api.GpuFormat);
+}
+=== com/mojang/blaze3d/vertex/BufferBuilder
+Compiled from "BufferBuilder.java"
+public class com.mojang.blaze3d.vertex.BufferBuilder implements com.mojang.blaze3d.vertex.VertexConsumer {
+  public com.mojang.blaze3d.vertex.BufferBuilder(com.mojang.blaze3d.vertex.ByteBufferBuilder, com.mojang.renderpearl.api.pipeline.PrimitiveTopology, com.mojang.renderpearl.api.vertex.VertexFormat);
+  public com.mojang.blaze3d.vertex.MeshData build();
+  public com.mojang.blaze3d.vertex.MeshData buildOrThrow();
+  public com.mojang.blaze3d.vertex.VertexConsumer addVertex(float, float, float);
+  public com.mojang.blaze3d.vertex.VertexConsumer setColor(int, int, int, int);
+  public com.mojang.blaze3d.vertex.VertexConsumer setColor(int);
+  public com.mojang.blaze3d.vertex.VertexConsumer setUv(float, float);
+  public com.mojang.blaze3d.vertex.VertexConsumer setUv1(int, int);
+  public com.mojang.blaze3d.vertex.VertexConsumer setOverlay(int);
+  public com.mojang.blaze3d.vertex.VertexConsumer setUv2(int, int);
+  public com.mojang.blaze3d.vertex.VertexConsumer setUv3(float, float);
+  public com.mojang.blaze3d.vertex.VertexConsumer setLight(int);
+  public com.mojang.blaze3d.vertex.VertexConsumer setNormal(float, float, float);
+  public com.mojang.blaze3d.vertex.VertexConsumer setLineWidth(float);
+  public void addVertex(float, float, float, int, float, float, int, int, float, float, float);
+}
+=== com/mojang/blaze3d/vertex/VertexConsumer
+Compiled from "VertexConsumer.java"
+public interface com.mojang.blaze3d.vertex.VertexConsumer extends net.neoforged.neoforge.client.extensions.IVertexConsumerExtension {
+  public abstract com.mojang.blaze3d.vertex.VertexConsumer addVertex(float, float, float);
+  public abstract com.mojang.blaze3d.vertex.VertexConsumer setColor(int, int, int, int);
+  public abstract com.mojang.blaze3d.vertex.VertexConsumer setColor(int);
+  public abstract com.mojang.blaze3d.vertex.VertexConsumer setUv(float, float);
+  public abstract com.mojang.blaze3d.vertex.VertexConsumer setUv1(int, int);
+  public abstract com.mojang.blaze3d.vertex.VertexConsumer setUv2(int, int);
+  public abstract com.mojang.blaze3d.vertex.VertexConsumer setUv3(float, float);
+  public abstract com.mojang.blaze3d.vertex.VertexConsumer setNormal(float, float, float);
+  public abstract com.mojang.blaze3d.vertex.VertexConsumer setLineWidth(float);
+  public default void addVertex(float, float, float, int, float, float, int, int, float, float, float);
+  public default com.mojang.blaze3d.vertex.VertexConsumer setColor(float, float, float, float);
+  public default com.mojang.blaze3d.vertex.VertexConsumer setLight(int);
+  public default com.mojang.blaze3d.vertex.VertexConsumer setOverlay(int);
+  public default void putBlockBakedQuad(float, float, float, net.minecraft.client.resources.model.geometry.BakedQuad, com.mojang.blaze3d.vertex.QuadInstance);
+  public default void putBakedQuad(com.mojang.blaze3d.vertex.PoseStack$Pose, net.minecraft.client.resources.model.geometry.BakedQuad, com.mojang.blaze3d.vertex.QuadInstance);
+  public default void putBakedQuadWithGlint(com.mojang.blaze3d.vertex.PoseStack$Pose, net.minecraft.client.resources.model.geometry.BakedQuad, com.mojang.blaze3d.vertex.QuadInstance, com.mojang.blaze3d.vertex.PoseStack$Pose);
+  public default com.mojang.blaze3d.vertex.VertexConsumer addVertex(org.joml.Vector3fc);
+  public default com.mojang.blaze3d.vertex.VertexConsumer addVertex(com.mojang.blaze3d.vertex.PoseStack$Pose, org.joml.Vector3fc);
+  public default com.mojang.blaze3d.vertex.VertexConsumer addVertex(com.mojang.blaze3d.vertex.PoseStack$Pose, float, float, float);
+  public default com.mojang.blaze3d.vertex.VertexConsumer addVertex(org.joml.Matrix4fc, float, float, float);
+  public default com.mojang.blaze3d.vertex.VertexConsumer addVertexWith2DPose(org.joml.Matrix3x2fc, float, float);
+  public default com.mojang.blaze3d.vertex.VertexConsumer setNormal(com.mojang.blaze3d.vertex.PoseStack$Pose, float, float, float);
+  public default com.mojang.blaze3d.vertex.VertexConsumer setNormal(com.mojang.blaze3d.vertex.PoseStack$Pose, org.joml.Vector3fc);
+}
+=== com/mojang/blaze3d/vertex/DefaultVertexFormat
+Compiled from "DefaultVertexFormat.java"
+public class com.mojang.blaze3d.vertex.DefaultVertexFormat {
+  public static final java.lang.String POSITION_SEMANTIC_NAME;
+  public static final java.lang.String COLOR_SEMANTIC_NAME;
+  public static final java.lang.String UV0_SEMANTIC_NAME;
+  public static final java.lang.String UV1_SEMANTIC_NAME;
+  public static final java.lang.String UV2_SEMANTIC_NAME;
+  public static final java.lang.String UV3_SEMANTIC_NAME;
+  public static final java.lang.String NORMAL_SEMANTIC_NAME;
+  public static final java.lang.String LINE_WIDTH_SEMANTIC_NAME;
+  public static final java.lang.String CHUNK_POSITION_SEMANTIC_NAME;
+  public static final java.lang.String CHUNK_VISIBILITY_SEMANTIC_NAME;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat BLOCK;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat CHUNK_DATA_INSTANCED;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat ENTITY;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat ENTITY_GLINT_SPECIAL;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat PARTICLE;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat POSITION;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat POSITION_COLOR;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat POSITION_COLOR_NORMAL;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat POSITION_COLOR_LIGHTMAP;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat POSITION_TEX;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat POSITION_TEX_COLOR;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat POSITION_COLOR_TEX_LIGHTMAP;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat POSITION_TEX_LIGHTMAP_COLOR;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat POSITION_TEX_COLOR_NORMAL;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat POSITION_COLOR_LINE_WIDTH;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat POSITION_COLOR_NORMAL_LINE_WIDTH;
+  public com.mojang.blaze3d.vertex.DefaultVertexFormat();
+}
+=== com/mojang/blaze3d/vertex/MeshData
+Compiled from "MeshData.java"
+public class com.mojang.blaze3d.vertex.MeshData implements java.lang.AutoCloseable {
+  public com.mojang.blaze3d.vertex.MeshData(com.mojang.blaze3d.vertex.ByteBufferBuilder$Result, com.mojang.blaze3d.vertex.MeshData$DrawState);
+  public static void decodeQuadCentroids(java.nio.ByteBuffer, int, com.mojang.renderpearl.api.vertex.VertexFormat, com.mojang.blaze3d.vertex.CompactVectorArray, int);
+  public java.nio.ByteBuffer vertexBuffer();
+  public java.nio.ByteBuffer indexBuffer();
+  public com.mojang.blaze3d.vertex.ByteBufferBuilder$Result vertexBufferSlice();
+  public com.mojang.blaze3d.vertex.MeshData$DrawState drawState();
+  public com.mojang.blaze3d.vertex.MeshData$SortState sortQuads(com.mojang.blaze3d.vertex.ByteBufferBuilder, com.mojang.blaze3d.vertex.VertexSorting);
+  public void close();
+}
+=== net/minecraft/client/renderer/RenderPipelines
+Compiled from "RenderPipelines.java"
+public class net.minecraft.client.renderer.RenderPipelines {
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet GLOBALS_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet MATRICES_FOG_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet MATRICES_FOG_LIGHT_DIR_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet OIT_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet OIT_DEPTH_BOUNDS_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet OIT_TRANSMITTANCE_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet OIT_ACCUMULATE_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet GENERIC_BLOCKS_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet LIT_BLOCKS_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet TERRAIN_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet MULTIDRAW_TERRAIN_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet BLOCK_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet WATER_MASK_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet LIGHTNING_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet DRAGON_RAYS_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet ENTITY_NO_LIGHTMAP_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet ENTITY_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet OIT_ENTITY_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet ENTITY_EMISSIVE_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet EYES_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet BEACON_BEAM_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet ITEM_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet OIT_ITEM_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet TEXT_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet WORLD_TEXT_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet END_PORTAL_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet CLOUDS_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet OIT_CLOUDS_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet LINES_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet OIT_LINES_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet DEBUG_FILLED_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet OIT_DEBUG_FILLED_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet DEBUG_POINTS_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet PARTICLE_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet OIT_PARTICLE_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet WEATHER_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet CRUMBLING_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet GUI_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet GUI_TEXTURED_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet GUI_TEXT_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet OUTLINE_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet POST_PROCESSING_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline SOLID_BLOCK;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline SOLID_TERRAIN;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline SOLID_TERRAIN_MULTIDRAW;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline WIREFRAME;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline WIREFRAME_MULTIDRAW;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline CUTOUT_BLOCK;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline CUTOUT_TERRAIN;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline CUTOUT_TERRAIN_MULTIDRAW;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline TRANSLUCENT_TERRAIN;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline TRANSLUCENT_TERRAIN_MULTIDRAW;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_TERRAIN;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_TERRAIN_MULTIDRAW;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline TRANSLUCENT_BLOCK;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_TRANSLUCENT_BLOCK;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ARMOR_CUTOUT_NO_CULL;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ARMOR_DECAL_CUTOUT_NO_CULL;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline WOLF_ARMOR_CRACKS;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ENTITY_SOLID;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ENTITY_SOLID_Z_OFFSET_FORWARD;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ENTITY_CUTOUT_CULL;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ENTITY_CUTOUT;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ENTITY_CUTOUT_Z_OFFSET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ENTITY_CUTOUT_DISSOLVE;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ENTITY_TRANSLUCENT;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_ENTITY;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ENTITY_TRANSLUCENT_EMISSIVE;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_ENTITY_EMISSIVE;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ENTITY_TRANSLUCENT_CULL;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_ENTITY_CULL;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline END_CRYSTAL_BEAM;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline BANNER_PATTERN;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline BREEZE_WIND;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_BREEZE_WIND;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet ENERGY_SWIRL_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ENERGY_SWIRL;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_ENERGY_SWIRL;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline EYES;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_EYES;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet ENTITY_SHADOW_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ENTITY_SHADOW;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_ENTITY_SHADOW;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet GLINT_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet GLINT_SPECIAL_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ARMOR_CUTOUT_NO_CULL_GLINT;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ENTITY_SOLID_GLINT;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ITEM_CUTOUT;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ITEM_CUTOUT_GLINT;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ITEM_CUTOUT_GLINT_SPECIAL;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ITEM_TRANSLUCENT;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_ITEM;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ITEM_TRANSLUCENT_GLINT;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ITEM_TRANSLUCENT_GLINT_SPECIAL;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_ITEM_GLINT;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_ITEM_GLINT_SPECIAL;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline BEACON_BEAM_OPAQUE;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline BEACON_BEAM_TRANSLUCENT;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_BEACON_BEAM;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline LEASH;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline WATER_MASK;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline OIT_WATER_MASK;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline GLINT;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline CRUMBLING;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_CRUMBLING;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline TEXT;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_TEXT;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline GUI_TEXT;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline TEXT_GRAYSCALE;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_TEXT_GRAYSCALE;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline GUI_TEXT_GRAYSCALE;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline TEXT_POLYGON_OFFSET;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_TEXT_POLYGON_OFFSET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline TEXT_GRAYSCALE_POLYGON_OFFSET;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_TEXT_GRAYSCALE_POLYGON_OFFSET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline TEXT_SEE_THROUGH;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline TEXT_GRAYSCALE_SEE_THROUGH;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline LIGHTNING;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_LIGHTNING;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline DRAGON_RAYS;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_DRAGON_RAYS;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline END_PORTAL;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline END_GATEWAY;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline FLAT_CLOUDS;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline CLOUDS;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_CLOUDS;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_FLAT_CLOUDS;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline LINES;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline LINES_TRANSLUCENT;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline LINES_TRANSLUCENT_NO_DEPTH_WRITE;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_LINES_TRANSLUCENT;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline LINES_DEPTH_BIAS;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline SECONDARY_BLOCK_OUTLINE;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline DEBUG_POINTS;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_DEBUG_POINTS;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline DEBUG_FILLED_BOX;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_DEBUG_FILLED_BOX;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline DEBUG_QUADS;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_DEBUG_QUADS;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline DEBUG_TRIANGLE_FAN;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_DEBUG_TRIANGLE_FAN;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline WORLD_BORDER;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_WORLD_BORDER;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline OPAQUE_PARTICLE;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline TRANSLUCENT_PARTICLE;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_PARTICLE;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline WEATHER;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_WEATHER;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline SKY;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline END_SKY;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline SUNRISE_SUNSET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline STARS;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline CELESTIAL;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline GUI;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline GUI_INVERT;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline GUI_TEXT_HIGHLIGHT;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline GUI_TEXTURED;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline GUI_TEXTURED_PREMULTIPLIED_ALPHA;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline BLOCK_SCREEN_EFFECT;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline FIRE_SCREEN_EFFECT;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline GUI_OPAQUE_TEXTURED_BACKGROUND;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline GUI_NAUSEA_OVERLAY;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline VIGNETTE;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline CROSSHAIR;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline MOJANG_LOGO;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ENTITY_OUTLINE_BLIT;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline TRACY_BLIT;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline PANORAMA;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline OUTLINE_CULL;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline OUTLINE_NO_CULL;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline LIGHTMAP;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet ANIMATE_SPRITE_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ANIMATE_SPRITE_BLIT;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ANIMATE_SPRITE_INTERPOLATE;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline BLIT_DEPTH_BOUNDS;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline OIT_DEPTH_BOUNDS_CULL;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline BLIT_DEPTH_DURING_DEPTH_BOUNDS;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline BLIT_DEPTH;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline OIT_COMPOSITE;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline INTEGRATE_DEPTH;
+  public net.minecraft.client.renderer.RenderPipelines();
+  public static java.util.List<com.mojang.renderpearl.api.pipeline.RenderPipeline> requiredPipelines();
+  public static java.util.List<com.mojang.renderpearl.api.pipeline.RenderPipeline> optionalPipelines();
+  public static void registerCustomPipelines();
+}
+=== net/minecraft/client/renderer/rendertype/RenderType
+Compiled from "RenderType.java"
+public class net.minecraft.client.renderer.rendertype.RenderType {
+  public static final int BIG_BUFFER_SIZE;
+  public static final int SMALL_BUFFER_SIZE;
+  public static final int TRANSIENT_BUFFER_SIZE;
+  public static net.minecraft.client.renderer.rendertype.RenderType create(java.lang.String, net.minecraft.client.renderer.rendertype.RenderSetup);
+  public java.lang.String toString();
+  public boolean hasBlending();
+  public net.minecraft.client.renderer.rendertype.PreparedRenderType prepare();
+  public com.mojang.renderpearl.api.vertex.VertexFormat format();
+  public com.mojang.renderpearl.api.pipeline.PrimitiveTopology primitiveTopology();
+  public java.util.Optional<net.minecraft.client.renderer.rendertype.RenderType> outline();
+  public boolean isOutline();
+  public com.mojang.renderpearl.api.pipeline.RenderPipeline pipeline();
+  public boolean affectsCrumbling();
+  public boolean canConsolidateConsecutiveGeometry();
+  public boolean sortOnUpload();
+  public boolean forceSolidModelPhase();
+}
+=== net/minecraft/client/renderer/rendertype/RenderTypes
+Compiled from "RenderTypes.java"
+public class net.minecraft.client.renderer.rendertype.RenderTypes {
+  public static final net.minecraft.client.renderer.rendertype.RenderType LINES;
+  public static final net.minecraft.client.renderer.rendertype.RenderType LINES_TRANSLUCENT;
+  public static final net.minecraft.client.renderer.rendertype.RenderType LINES_TRANSLUCENT_NO_DEPTH_WRITE;
+  public static final net.minecraft.client.renderer.rendertype.RenderType LINES_DEPTH_BIAS;
+  public static final net.minecraft.client.renderer.rendertype.RenderType SECONDARY_BLOCK_OUTLINE;
+  public net.minecraft.client.renderer.rendertype.RenderTypes();
+  public static net.minecraft.client.renderer.rendertype.RenderType solidMovingBlock();
+  public static net.minecraft.client.renderer.rendertype.RenderType cutoutMovingBlock();
+  public static net.minecraft.client.renderer.rendertype.RenderType translucentMovingBlock();
+  public static net.minecraft.client.renderer.rendertype.RenderType armorCutoutNoCull(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType armorCutoutNoCullGlint(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType armorTrim(net.minecraft.resources.Identifier, boolean);
+  public static net.minecraft.client.renderer.rendertype.RenderType wolfArmorCracks(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType entitySolid(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType entitySolidGlint(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType entitySolidZOffsetForward(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType entityCutoutCull(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType entityCutout(net.minecraft.resources.Identifier, boolean);
+  public static net.minecraft.client.renderer.rendertype.RenderType entityCutout(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType entityCutoutZOffset(net.minecraft.resources.Identifier, boolean);
+  public static net.minecraft.client.renderer.rendertype.RenderType entityCutoutZOffset(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType entityCutoutDissolve(net.minecraft.resources.Identifier, net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType entityTranslucentCull(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType itemCutout(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType itemCutoutGlint(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType itemCutoutGlintSpecial(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType itemTranslucent(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType itemTranslucentGlint(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType itemTranslucentGlintSpecial(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType entityTranslucent(net.minecraft.resources.Identifier, boolean);
+  public static net.minecraft.client.renderer.rendertype.RenderType entityTranslucent(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType entityTranslucentEmissive(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType endCrystalBeam(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType beaconBeam(net.minecraft.resources.Identifier, boolean);
+  public static net.minecraft.client.renderer.rendertype.RenderType bannerPattern(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType entityShadow(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType eyes(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType breezeEyes(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType breezeWind(net.minecraft.resources.Identifier, float, float);
+  public static net.minecraft.client.renderer.rendertype.RenderType energySwirl(net.minecraft.resources.Identifier, float, float);
+  public static net.minecraft.client.renderer.rendertype.RenderType leash();
+  public static net.minecraft.client.renderer.rendertype.RenderType waterMask();
+  public static net.minecraft.client.renderer.rendertype.RenderType outline(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType patternedShieldGlint();
+  public static net.minecraft.client.renderer.rendertype.RenderType trimmedArmorGlint();
+  public static net.minecraft.client.renderer.rendertype.RenderType crumbling(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType text(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType textGrayscale(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType textPolygonOffset(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType textGrayscalePolygonOffset(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType textSeeThrough(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType textGrayscaleSeeThrough(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType lightning();
+  public static net.minecraft.client.renderer.rendertype.RenderType dragonRays();
+  public static net.minecraft.client.renderer.rendertype.RenderType endPortal();
+  public static net.minecraft.client.renderer.rendertype.RenderType endGateway();
+  public static net.minecraft.client.renderer.rendertype.RenderType lines();
+  public static net.minecraft.client.renderer.rendertype.RenderType linesTranslucent();
+  public static net.minecraft.client.renderer.rendertype.RenderType linesTranslucentNoDepthWrite();
+  public static net.minecraft.client.renderer.rendertype.RenderType linesDepthBias();
+  public static net.minecraft.client.renderer.rendertype.RenderType secondaryBlockOutline();
+  public static net.minecraft.client.renderer.rendertype.RenderType debugFilledBox();
+  public static net.minecraft.client.renderer.rendertype.RenderType debugPoint();
+  public static net.minecraft.client.renderer.rendertype.RenderType debugQuads();
+  public static net.minecraft.client.renderer.rendertype.RenderType debugTriangleFan();
+  public static net.minecraft.client.renderer.rendertype.RenderType blockScreenEffect(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType fireScreenEffect(net.minecraft.resources.Identifier);
+}
+=== net/minecraft/client/renderer/rendertype/RenderSetup
+Compiled from "RenderSetup.java"
+public final class net.minecraft.client.renderer.rendertype.RenderSetup {
+  public java.lang.String toString();
+  public static net.minecraft.client.renderer.rendertype.RenderSetup$RenderSetupBuilder builder(com.mojang.renderpearl.api.pipeline.RenderPipeline);
+  public java.util.List<net.minecraft.client.renderer.rendertype.PreparedRenderType$Texture> prepareTextures(net.minecraft.client.renderer.texture.TextureManager, com.mojang.blaze3d.systems.SamplerCache, com.mojang.renderpearl.api.textures.GpuTextureView, com.mojang.renderpearl.api.textures.GpuTextureView);
+}
+=== net/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty
+Compiled from "RenderSetup.java"
+public final class net.minecraft.client.renderer.rendertype.RenderSetup$OutlineProperty extends java.lang.Enum<net.minecraft.client.renderer.rendertype.RenderSetup$OutlineProperty> {
+  public static final net.minecraft.client.renderer.rendertype.RenderSetup$OutlineProperty NONE;
+  public static final net.minecraft.client.renderer.rendertype.RenderSetup$OutlineProperty IS_OUTLINE;
+  public static final net.minecraft.client.renderer.rendertype.RenderSetup$OutlineProperty AFFECTS_OUTLINE;
+  public static net.minecraft.client.renderer.rendertype.RenderSetup$OutlineProperty[] values();
+  public static net.minecraft.client.renderer.rendertype.RenderSetup$OutlineProperty valueOf(java.lang.String);
+  public java.lang.String toString();
+}
+=== net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder
+Compiled from "RenderSetup.java"
+public class net.minecraft.client.renderer.rendertype.RenderSetup$RenderSetupBuilder {
+  public net.minecraft.client.renderer.rendertype.RenderSetup$RenderSetupBuilder withTexture(java.lang.String, net.minecraft.resources.Identifier);
+  public net.minecraft.client.renderer.rendertype.RenderSetup$RenderSetupBuilder withTexture(java.lang.String, net.minecraft.resources.Identifier, java.util.function.Supplier<com.mojang.renderpearl.api.textures.GpuSampler>);
+  public net.minecraft.client.renderer.rendertype.RenderSetup$RenderSetupBuilder useLightmap();
+  public net.minecraft.client.renderer.rendertype.RenderSetup$RenderSetupBuilder useOverlay();
+  public net.minecraft.client.renderer.rendertype.RenderSetup$RenderSetupBuilder affectsCrumbling();
+  public net.minecraft.client.renderer.rendertype.RenderSetup$RenderSetupBuilder sortOnUpload();
+  public net.minecraft.client.renderer.rendertype.RenderSetup$RenderSetupBuilder setLayeringTransform(net.minecraft.client.renderer.rendertype.LayeringTransform);
+  public net.minecraft.client.renderer.rendertype.RenderSetup$RenderSetupBuilder setTextureTransform(net.minecraft.client.renderer.rendertype.TextureTransform);
+  public net.minecraft.client.renderer.rendertype.RenderSetup$RenderSetupBuilder setOutline(net.minecraft.client.renderer.rendertype.RenderSetup$OutlineProperty);
+  public net.minecraft.client.renderer.rendertype.RenderSetup$RenderSetupBuilder setOutline(net.minecraft.client.renderer.rendertype.RenderSetup$OutlineProperty, java.lang.String);
+  public net.minecraft.client.renderer.rendertype.RenderSetup$RenderSetupBuilder setOitPipelines(net.minecraft.client.renderer.oit.OitPipelineSet);
+  public net.minecraft.client.renderer.rendertype.RenderSetup$RenderSetupBuilder withForcedSolidModelPhase();
+  public net.minecraft.client.renderer.rendertype.RenderSetup createRenderSetup();
+}
+=== net/minecraft/client/renderer/rendertype/RenderSetup$TextureBinding
+Compiled from "RenderSetup.java"
+final class net.minecraft.client.renderer.rendertype.RenderSetup$TextureBinding extends java.lang.Record {
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.resources.Identifier location();
+  public java.util.function.Supplier<com.mojang.renderpearl.api.textures.GpuSampler> sampler();
+}
+=== net/neoforged/neoforge/client/event/RenderLevelStageEvent
+Compiled from "RenderLevelStageEvent.java"
+public abstract class net.neoforged.neoforge.client.event.RenderLevelStageEvent extends net.neoforged.bus.api.Event {
+  public net.neoforged.neoforge.client.event.RenderLevelStageEvent(net.minecraft.client.renderer.LevelRenderer, net.minecraft.client.renderer.state.level.LevelRenderState, com.mojang.blaze3d.vertex.PoseStack, org.joml.Matrix4fc, java.lang.Iterable<? extends net.neoforged.neoforge.client.IRenderableSection>, com.mojang.renderpearl.api.commands.RenderPass);
+  public net.minecraft.client.renderer.LevelRenderer getLevelRenderer();
+  public net.minecraft.client.renderer.state.level.LevelRenderState getLevelRenderState();
+  public com.mojang.blaze3d.vertex.PoseStack getPoseStack();
+  public org.joml.Matrix4fc getModelViewMatrix();
+  public java.lang.Iterable<? extends net.neoforged.neoforge.client.IRenderableSection> getRenderableSections();
+}
+=== net/neoforged/neoforge/client/event/RenderLevelStageEvent$AfterLevel
+Compiled from "RenderLevelStageEvent.java"
+public class net.neoforged.neoforge.client.event.RenderLevelStageEvent$AfterLevel extends net.neoforged.neoforge.client.event.RenderLevelStageEvent {
+  public net.neoforged.neoforge.client.event.RenderLevelStageEvent$AfterLevel(net.minecraft.client.renderer.LevelRenderer, net.minecraft.client.renderer.state.level.LevelRenderState, com.mojang.blaze3d.vertex.PoseStack, org.joml.Matrix4fc, java.lang.Iterable<? extends net.neoforged.neoforge.client.IRenderableSection>);
+}
+=== net/neoforged/neoforge/client/event/RenderLevelStageEvent$AfterOpaqueBlocks
+Compiled from "RenderLevelStageEvent.java"
+public class net.neoforged.neoforge.client.event.RenderLevelStageEvent$AfterOpaqueBlocks extends net.neoforged.neoforge.client.event.RenderLevelStageEvent {
+  public net.neoforged.neoforge.client.event.RenderLevelStageEvent$AfterOpaqueBlocks(net.minecraft.client.renderer.LevelRenderer, net.minecraft.client.renderer.state.level.LevelRenderState, com.mojang.blaze3d.vertex.PoseStack, org.joml.Matrix4fc, java.lang.Iterable<? extends net.neoforged.neoforge.client.IRenderableSection>, com.mojang.renderpearl.api.commands.RenderPass);
+  public com.mojang.renderpearl.api.commands.RenderPass getRenderPass();
+}
+=== net/neoforged/neoforge/client/event/RenderLevelStageEvent$AfterOpaqueFeatures
+Compiled from "RenderLevelStageEvent.java"
+public class net.neoforged.neoforge.client.event.RenderLevelStageEvent$AfterOpaqueFeatures extends net.neoforged.neoforge.client.event.RenderLevelStageEvent {
+  public net.neoforged.neoforge.client.event.RenderLevelStageEvent$AfterOpaqueFeatures(net.minecraft.client.renderer.LevelRenderer, net.minecraft.client.renderer.state.level.LevelRenderState, com.mojang.blaze3d.vertex.PoseStack, org.joml.Matrix4fc, java.lang.Iterable<? extends net.neoforged.neoforge.client.IRenderableSection>, com.mojang.renderpearl.api.commands.RenderPass);
+  public com.mojang.renderpearl.api.commands.RenderPass getRenderPass();
+}
+=== net/neoforged/neoforge/client/event/RenderLevelStageEvent$AfterSky
+Compiled from "RenderLevelStageEvent.java"
+public class net.neoforged.neoforge.client.event.RenderLevelStageEvent$AfterSky extends net.neoforged.neoforge.client.event.RenderLevelStageEvent {
+  public net.neoforged.neoforge.client.event.RenderLevelStageEvent$AfterSky(net.minecraft.client.renderer.LevelRenderer, net.minecraft.client.renderer.state.level.LevelRenderState, com.mojang.blaze3d.vertex.PoseStack, org.joml.Matrix4fc, java.lang.Iterable<? extends net.neoforged.neoforge.client.IRenderableSection>);
+}
+=== net/neoforged/neoforge/client/event/RenderLevelStageEvent$AfterTranslucentBlocks
+Compiled from "RenderLevelStageEvent.java"
+public class net.neoforged.neoforge.client.event.RenderLevelStageEvent$AfterTranslucentBlocks extends net.neoforged.neoforge.client.event.RenderLevelStageEvent {
+  public net.neoforged.neoforge.client.event.RenderLevelStageEvent$AfterTranslucentBlocks(net.minecraft.client.renderer.LevelRenderer, net.minecraft.client.renderer.state.level.LevelRenderState, com.mojang.blaze3d.vertex.PoseStack, org.joml.Matrix4fc, java.lang.Iterable<? extends net.neoforged.neoforge.client.IRenderableSection>, com.mojang.renderpearl.api.commands.RenderPass);
+  public com.mojang.renderpearl.api.commands.RenderPass getRenderPass();
+}
+=== net/neoforged/neoforge/client/event/RenderLevelStageEvent$AfterTranslucentFeatures
+Compiled from "RenderLevelStageEvent.java"
+public class net.neoforged.neoforge.client.event.RenderLevelStageEvent$AfterTranslucentFeatures extends net.neoforged.neoforge.client.event.RenderLevelStageEvent {
+  public net.neoforged.neoforge.client.event.RenderLevelStageEvent$AfterTranslucentFeatures(net.minecraft.client.renderer.LevelRenderer, net.minecraft.client.renderer.state.level.LevelRenderState, com.mojang.blaze3d.vertex.PoseStack, org.joml.Matrix4fc, java.lang.Iterable<? extends net.neoforged.neoforge.client.IRenderableSection>, com.mojang.renderpearl.api.commands.RenderPass);
+  public com.mojang.renderpearl.api.commands.RenderPass getRenderPass();
+}
+=== net/neoforged/neoforge/client/event/RenderLevelStageEvent$AfterTranslucentParticles
+Compiled from "RenderLevelStageEvent.java"
+public class net.neoforged.neoforge.client.event.RenderLevelStageEvent$AfterTranslucentParticles extends net.neoforged.neoforge.client.event.RenderLevelStageEvent {
+  public net.neoforged.neoforge.client.event.RenderLevelStageEvent$AfterTranslucentParticles(net.minecraft.client.renderer.LevelRenderer, net.minecraft.client.renderer.state.level.LevelRenderState, com.mojang.blaze3d.vertex.PoseStack, org.joml.Matrix4fc, java.lang.Iterable<? extends net.neoforged.neoforge.client.IRenderableSection>, com.mojang.renderpearl.api.commands.RenderPass);
+  public com.mojang.renderpearl.api.commands.RenderPass getRenderPass();
+}
+=== net/neoforged/neoforge/client/event/RenderLevelStageEvent$AfterWeather
+Compiled from "RenderLevelStageEvent.java"
+public class net.neoforged.neoforge.client.event.RenderLevelStageEvent$AfterWeather extends net.neoforged.neoforge.client.event.RenderLevelStageEvent {
+  public net.neoforged.neoforge.client.event.RenderLevelStageEvent$AfterWeather(net.minecraft.client.renderer.LevelRenderer, net.minecraft.client.renderer.state.level.LevelRenderState, com.mojang.blaze3d.vertex.PoseStack, org.joml.Matrix4fc, java.lang.Iterable<? extends net.neoforged.neoforge.client.IRenderableSection>, com.mojang.renderpearl.api.commands.RenderPass);
+  public com.mojang.renderpearl.api.commands.RenderPass getRenderPass();
+}
+=== net/neoforged/neoforge/client/event/RenderLevelStageEvent$OitTranslucent
+Compiled from "RenderLevelStageEvent.java"
+public class net.neoforged.neoforge.client.event.RenderLevelStageEvent$OitTranslucent extends net.neoforged.neoforge.client.event.RenderLevelStageEvent {
+  public net.neoforged.neoforge.client.event.RenderLevelStageEvent$OitTranslucent(net.minecraft.client.renderer.LevelRenderer, net.minecraft.client.renderer.state.level.LevelRenderState, net.minecraft.client.renderer.oit.OitStage, com.mojang.blaze3d.vertex.PoseStack, org.joml.Matrix4fc, java.lang.Iterable<? extends net.neoforged.neoforge.client.IRenderableSection>, com.mojang.renderpearl.api.commands.RenderPass);
+  public net.minecraft.client.renderer.oit.OitStage getOitStage();
+  public com.mojang.renderpearl.api.commands.RenderPass getRenderPass();
+}
+=== net/minecraft/client/renderer/SubmitNodeCollector
+Compiled from "SubmitNodeCollector.java"
+public interface net.minecraft.client.renderer.SubmitNodeCollector extends net.minecraft.client.renderer.OrderedSubmitNodeCollector {
+  public abstract net.minecraft.client.renderer.OrderedSubmitNodeCollector order(int);
+}
+=== net/minecraft/client/renderer/LevelRenderer
+Compiled from "LevelRenderer.java"
+public class net.minecraft.client.renderer.LevelRenderer implements java.lang.AutoCloseable {
+  public static final int OIT_WAVELET_RANK;
+  public static final int OIT_COEFFICIENT_COUNT;
+  public static final int OIT_TRANSMITTANCE_TARGET_COUNT;
+  public net.minecraft.client.renderer.LevelRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher, net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher, net.minecraft.client.resources.model.ModelManager, net.minecraft.client.renderer.texture.TextureManager, net.minecraft.client.resources.model.sprite.AtlasManager, net.minecraft.client.renderer.ShaderManager, net.minecraft.client.renderer.GameRenderer, int, int);
+  public void render(com.mojang.blaze3d.resource.GraphicsResourceAllocator, boolean, net.minecraft.client.renderer.state.level.CameraRenderState, com.mojang.renderpearl.api.buffers.GpuBufferSlice, org.joml.Vector4f, boolean, boolean);
+  public net.minecraft.client.renderer.chunk.ChunkSectionsToRender prepareChunkRenders(org.joml.Matrix4fc, boolean);
+  public void addTransientBlock(long, net.minecraft.client.renderer.state.level.TransientBlockRenderState);
+  public void removeTransientBlocksInSection(long, long);
+  public net.minecraft.client.renderer.chunk.ChunkSectionsToRender prepareChunkRendersIndirect(org.joml.Matrix4fc, boolean);
+  public void resize(int, int);
+  public void endFrame();
+  public void close();
+  public void blitEntityOutline();
+  public void invalidateCompiledGeometry(net.minecraft.client.multiplayer.ClientLevel, net.minecraft.client.Options, net.minecraft.client.Camera, net.minecraft.client.color.block.BlockColors);
+  public void clearVisibleSections();
+  public void resetLevelRenderData();
+  public boolean hasRenderedAllSections();
+  public boolean isSectionCompiledAndVisible(net.minecraft.core.BlockPos, long);
+  public net.minecraft.client.renderer.chunk.SectionRenderDispatcher sectionRenderDispatcher();
+  public net.minecraft.client.renderer.entity.EntityRenderDispatcher entityRenderDispatcher();
+  public net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher blockEntityRenderDispatcher();
+  public net.minecraft.client.renderer.CloudRenderer cloudRenderer();
+  public net.minecraft.client.renderer.SkyRenderer skyRenderer();
+  public net.minecraft.client.renderer.WeatherEffectRenderer weatherEffectRenderer();
+  public net.minecraft.client.renderer.WorldBorderRenderer worldBorderRenderer();
+  public net.minecraft.client.renderer.ViewArea viewArea();
+  public it.unimi.dsi.fastutil.objects.ObjectArrayList<net.minecraft.client.renderer.chunk.SectionRenderDispatcher$RenderSection> visibleSections();
+  public it.unimi.dsi.fastutil.objects.ObjectArrayList<net.minecraft.client.renderer.chunk.SectionRenderDispatcher$RenderSection> nearbyVisibleSections();
+  public it.unimi.dsi.fastutil.longs.LongCollection expectedChunks();
+  public net.minecraft.client.renderer.SectionOcclusionGraph sectionOcclusionGraph();
+  public net.minecraft.gizmos.Gizmos$TemporaryCollection collectPerFrameRenderThreadGizmos();
+  public boolean isChunkRenderingUsingMultiDrawIndirect();
+  public void addMainThreadGizmos(java.util.List<net.minecraft.gizmos.SimpleGizmoCollector$GizmoInstance>);
+}
