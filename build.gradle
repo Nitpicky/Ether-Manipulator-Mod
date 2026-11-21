@@ -30,6 +30,19 @@ sourceSets {
         java.srcDir 'src/playtest/java'
     }
 }
+
+// Port milestone: -PcommonOnly leaves the client out, so the common (server) code can be
+// compiled and booted on a dedicated server while the client rendering is still being rewritten
+if (project.hasProperty('commonOnly')) {
+    sourceSets.main.java {
+        exclude 'com/ethermod/client/**'
+        ['ChargeArmTremblerMixin', 'ChargeMovementMixin', 'FlightEquipmentMixin', 'GemGlintMixin',
+         'GravityCameraMixin', 'GravityOverlayMixin', 'LevelRendererInvoker', 'NoUseDipMixin',
+         'PhotonicGlowEntityMixin', 'PhotonicGlowMixin', 'SoulFlameRenderMixin', 'SoundVolumeAccessor'].each {
+            exclude "com/ethermod/mixin/${it}.java"
+        }
+    }
+}
 configurations {
     playtestImplementation.extendsFrom implementation
 }

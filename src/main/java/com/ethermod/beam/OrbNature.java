@@ -78,7 +78,7 @@ final class OrbNature {
             // fully grown plants are skipped before the claim probe (bone meal would do nothing)
             boolean growable =
                     bs.getBlock() instanceof net.minecraft.world.level.block.BonemealableBlock meal
-                            && meal.isValidBonemealTarget(sl, bp, bs, net.minecraft.world.level.block.BonemealSource.BONEMEAL);
+                            && meal.isValidBonemealTarget(sl, bp, bs, net.minecraft.world.level.block.BonemealSource.INTERACTION);
             if (!growable && !bs.getFluidState().is(net.minecraft.tags.FluidTags.WATER)) continue;
             long key = bp.asLong();
             Long next = b.growSeen.get(key);

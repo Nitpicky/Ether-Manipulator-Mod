@@ -38,7 +38,8 @@ jobs:
       - name: Build with Gradle
         run: |
           set -o pipefail
-          ./gradlew build compilePlaytestJava --continue 2>&1 | tee build.log
+          EXTRA=""; [ -f .github/port-common-only ] && EXTRA="-PcommonOnly"
+          ./gradlew build compilePlaytestJava --continue $EXTRA 2>&1 | tee build.log
 
       - name: Publish the build log (port branch)
         if: always()
@@ -75,7 +76,8 @@ jobs:
       - name: Boot dedicated server and wait for "Done"
         run: |
           mkdir -p runs/server && echo 'eula=true' > runs/server/eula.txt
-          ./gradlew runServer --no-daemon > server.log 2>&1 &
+          EXTRA=""; [ -f .github/port-common-only ] && EXTRA="-PcommonOnly"
+          ./gradlew runServer --no-daemon $EXTRA > server.log 2>&1 &
           PID=$!
           for i in $(seq 1 120); do
             if grep -q 'Done (' server.log; then echo "Server started"; break; fi
@@ -86,6 +88,20 @@ jobs:
           sleep 5
           if ! grep -q 'Done (' server.log; then echo '--- server.log (tail) ---'; tail -n 150 server.log; exit 1; fi
           if grep -nE 'NoClassDefFoundError|RuntimeDistCleaner|attempted to load class .* for invalid dist|Exception in server tick loop' server.log; then tail -n 150 server.log; exit 1; fi
+      - name: Publish the server log (port branch)
+        if: always()
+        run: |
+          SHA=$(git rev-parse --short HEAD)
+          cp server.log /tmp/server.log 2>/dev/null || exit 0
+          git config user.name "playtest-bot"
+          git config user.email "playtest-bot@users.noreply.github.com"
+          git fetch -q origin playtest-results
+          git worktree add -q /tmp/pr origin/playtest-results
+          cd /tmp/pr && git checkout -q -B playtest-results
+          mkdir -p "port/$SHA" && cp /tmp/server.log "port/$SHA/server.log"
+          git add -A && git commit -qm "Port server log for $SHA"
+          for i in 1 2 3 4 5; do git push -q origin playtest-results && break; git pull -q --rebase origin playtest-results; sleep $((i*3)); done
+
       - name: Upload server log
         if: always()
         uses: actions/upload-artifact@v6
