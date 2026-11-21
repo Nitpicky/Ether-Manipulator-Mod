@@ -1,0 +1,680 @@
+/home/runner/.gradle/caches/modules-2/files-2.1/curse.maven/geckolib-388172/8893169/196231506b89da06925c087f9b8bc5fd12ebea16/geckolib-388172-8893169.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/io.github.llamalad7/mixinextras-neoforge/0.5.5/26f2905a37afd203c3da1d6a2e164472a7531b41/mixinextras-neoforge-0.5.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.accesstransformers/at-parser/11.0.2/64aae57d6d26d69543c5275181fe6971707a4e16/at-parser-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/earlydisplay/12.0.16/efa2e56115d22853d10524874a7bbb64555c2a28/earlydisplay-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/12.0.16/edbb2ee8211a867215970bc15ae9c354fa56dc09/loader-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarMetadata/0.5.3/ff40c1cd721d07615d825c5bbf27705b2e3258ed/JarJarMetadata-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarSelector/0.5.3/6b845aab8d5c8e721b4e3cd30f97722b7f8044b1/JarJarSelector-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/accesstransformers/11.0.2/25dcb69c78b16669935f0ab91dff830ce192379d/accesstransformers-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/bus/8.0.5/5b2d33285ab5d1554e9798ad98c40d6ea3868bd5/bus-8.0.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/mergetool/2.0.7/793b18456e92c4a7f66d9b5d8bf7a9c1c7a20b20/mergetool-2.0.7-api.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar
+=== LIST /.*(Hand|FirstPerson|HeldItem).*$
+com/geckolib/animation/AnimationController$AnimationStateHandler
+com/geckolib/animation/AnimationController$KeyframeEventHandler
+com/geckolib/animation/keyframehandler/AutoPlayingSoundKeyframeHandler
+com/geckolib/renderer/layer/builtin/ItemInHandGeoLayer
+com/llamalad7/mixinextras/sugar/impl/handlers/HandlerInfo
+com/llamalad7/mixinextras/sugar/impl/handlers/HandlerInfo$ParameterWrapper
+com/llamalad7/mixinextras/sugar/impl/handlers/HandlerTransformer
+com/llamalad7/mixinextras/sugar/impl/handlers/LocalHandlerTransformer
+com/llamalad7/mixinextras/wrapper/InjectorWrapperImpl$HandlerCallCallback
+com/mojang/blaze3d/framegraph/FrameGraphBuilder$Handle
+com/mojang/blaze3d/platform/SDLEventHandler
+com/mojang/blaze3d/platform/WindowEventHandler
+com/mojang/blaze3d/resource/ResourceHandle
+com/mojang/blaze3d/vertex/StagingBuffer$BufferHandle
+com/mojang/realmsclient/exception/RealmsDefaultUncaughtExceptionHandler
+com/mojang/renderpearl/frontend/shaders/SPIRVModule$TypeHandle
+net/minecraft/DefaultUncaughtExceptionHandler
+net/minecraft/DefaultUncaughtExceptionHandlerWithName
+net/minecraft/client/DebugQueryHandler
+net/minecraft/client/KeyboardHandler
+net/minecraft/client/MouseHandler
+net/minecraft/client/MouseHandler$LastClick
+net/minecraft/client/ScrollWheelHandler
+net/minecraft/client/gui/components/events/AbstractContainerEventHandler
+net/minecraft/client/gui/components/events/ContainerEventHandler
+net/minecraft/client/gui/screens/dialog/body/DialogBodyHandler
+net/minecraft/client/gui/screens/dialog/body/DialogBodyHandlers
+net/minecraft/client/gui/screens/dialog/body/DialogBodyHandlers$ItemHandler
+net/minecraft/client/gui/screens/dialog/body/DialogBodyHandlers$PlainMessageHandler
+net/minecraft/client/gui/screens/dialog/input/InputControlHandler
+net/minecraft/client/gui/screens/dialog/input/InputControlHandler$Output
+net/minecraft/client/gui/screens/dialog/input/InputControlHandlers
+net/minecraft/client/gui/screens/dialog/input/InputControlHandlers$BooleanHandler
+net/minecraft/client/gui/screens/dialog/input/InputControlHandlers$NumberRangeHandler
+net/minecraft/client/gui/screens/dialog/input/InputControlHandlers$NumberRangeHandler$SliderImpl
+net/minecraft/client/gui/screens/dialog/input/InputControlHandlers$SingleOptionHandler
+net/minecraft/client/gui/screens/dialog/input/InputControlHandlers$TextInputHandler
+net/minecraft/client/gui/screens/social/PresenceHandler
+net/minecraft/client/gui/screens/social/RemoteFriendListUpdateHandler
+net/minecraft/client/gui/screens/social/RemoteFriendListUpdateHandler$State
+net/minecraft/client/multiplayer/ClientHandshakePacketListenerImpl
+net/minecraft/client/multiplayer/ClientHandshakePacketListenerImpl$State
+net/minecraft/client/multiplayer/chat/report/ChatReportContextBuilder$Handler
+net/minecraft/client/multiplayer/prediction/BlockStatePredictionHandler
+net/minecraft/client/multiplayer/prediction/BlockStatePredictionHandler$ServerVerifiedState
+net/minecraft/client/multiplayer/resolver/ServerRedirectHandler
+net/minecraft/client/player/FirstPersonHandsAndItems
+net/minecraft/client/renderer/FirstPersonHandsAndItemsRenderer
+net/minecraft/client/renderer/LevelEventHandler
+net/minecraft/client/renderer/entity/layers/FoxHeldItemLayer
+net/minecraft/client/renderer/entity/layers/ItemInHandLayer
+net/minecraft/client/renderer/entity/layers/PlayerItemInHandLayer
+net/minecraft/client/renderer/item/properties/select/MainHand
+net/minecraft/client/renderer/state/level/FirstPersonHandsAndItemsRenderState
+net/minecraft/client/renderer/state/level/FirstPersonHandsAndItemsRenderState$HandRenderSelection
+net/minecraft/client/resources/palette/PalettedTextureManager$Handle
+net/minecraft/client/resources/sounds/AmbientSoundHandler
+net/minecraft/client/resources/sounds/BiomeAmbientSoundsHandler
+net/minecraft/client/resources/sounds/BiomeAmbientSoundsHandler$LoopSoundInstance
+net/minecraft/client/resources/sounds/BubbleColumnAmbientSoundHandler
+net/minecraft/client/resources/sounds/UnderwaterAmbientSoundHandler
+net/minecraft/client/sounds/ChannelAccess$ChannelHandle
+net/minecraft/client/sounds/SoundPreviewHandler
+net/minecraft/commands/execution/CustomCommandExecutor$WithErrorHandling
+net/minecraft/network/HandlerNames
+net/minecraft/network/ProtocolSwapHandler
+net/minecraft/network/UnconfiguredPipelineHandler
+net/minecraft/network/UnconfiguredPipelineHandler$Inbound
+net/minecraft/network/UnconfiguredPipelineHandler$InboundConfigurationTask
+net/minecraft/network/UnconfiguredPipelineHandler$Outbound
+net/minecraft/network/UnconfiguredPipelineHandler$OutboundConfigurationTask
+net/minecraft/network/protocol/game/ClientboundBossEventPacket$Handler
+net/minecraft/network/protocol/handshake/HandshakePacketTypes
+net/minecraft/network/protocol/handshake/HandshakeProtocols
+net/minecraft/network/protocol/handshake/ServerHandshakePacketListener
+net/minecraft/server/commands/CommandResponseTracker$ErrorHandler
+net/minecraft/server/commands/CommandResponseTracker$ErrorHandlerWithArg
+net/minecraft/server/commands/CommandResponseTracker$ErrorHandlerWithArgs
+net/minecraft/server/commands/CommandResponseTracker$MultipleHandler
+net/minecraft/server/commands/CommandResponseTracker$MultipleHandlerWithArg
+net/minecraft/server/commands/CommandResponseTracker$MultipleHandlerWithArgs
+net/minecraft/server/commands/CommandResponseTracker$SingleHandler
+net/minecraft/server/commands/CommandResponseTracker$SingleHandlerWithArg
+net/minecraft/server/commands/CommandResponseTracker$SingleHandlerWithArgs
+net/minecraft/server/jsonrpc/security/AuthenticationHandler
+net/minecraft/server/jsonrpc/security/AuthenticationHandler$SecurityCheckResult
+net/minecraft/server/network/LegacyQueryHandler
+net/minecraft/server/network/MemoryServerHandshakePacketListenerImpl
+net/minecraft/server/network/ServerHandshakePacketListenerImpl
+net/minecraft/util/datafix/fixes/EntityEquipmentToArmorAndHandFix
+net/minecraft/world/InteractionHand
+net/minecraft/world/InteractionResult$TryEmptyHandInteraction
+net/minecraft/world/entity/AbstractInterpolationHandler
+net/minecraft/world/entity/InterpolationHandler
+net/minecraft/world/entity/InterpolationHandler$NoOpInterpolationHandler
+net/minecraft/world/entity/LinearInterpolationHandler
+net/minecraft/world/entity/LinearInterpolationHandler$InterpolationData
+net/minecraft/world/entity/ReputationEventHandler
+net/minecraft/world/entity/SteppedInterpolationHandler
+net/minecraft/world/entity/SteppedInterpolationHandler$InterpolationData
+net/minecraft/world/entity/SteppedInterpolationHandler$Step
+net/neoforged/bus/ConsumerEventHandler
+net/neoforged/bus/ConsumerEventHandler$WithPredicate
+net/neoforged/bus/api/IEventExceptionHandler
+net/neoforged/fml/loading/ImmediateWindowHandler
+net/neoforged/fml/loading/JarVersionLookupHandler
+net/neoforged/fml/loading/mixin/FMLModFileContainerHandle
+net/neoforged/fml/loading/modscan/BackgroundScanHandler
+net/neoforged/fml/loading/modscan/BackgroundScanHandler$ScanStatus
+net/neoforged/jarjar/metadata/MetadataIOHandler
+net/neoforged/neoforge/attachment/AttachmentSyncHandler
+net/neoforged/neoforge/attachment/IAttachmentCopyHandler
+net/neoforged/neoforge/client/ClientCommandHandler
+net/neoforged/neoforge/client/ItemDecoratorHandler
+net/neoforged/neoforge/client/event/RegisterColorHandlersEvent
+net/neoforged/neoforge/client/event/RegisterColorHandlersEvent$BlockTintSources
+net/neoforged/neoforge/client/event/RegisterColorHandlersEvent$ColorResolvers
+net/neoforged/neoforge/client/event/RegisterColorHandlersEvent$ItemTintSources
+net/neoforged/neoforge/client/event/RenderHandEvent
+net/neoforged/neoforge/client/loading/earlydisplay/EarlyWindowHandoff
+net/neoforged/neoforge/client/model/generators/blockstate/UnbakedMutator$Handler
+net/neoforged/neoforge/client/network/ClientPayloadHandler
+net/neoforged/neoforge/client/network/event/RegisterClientPayloadHandlersEvent
+net/neoforged/neoforge/common/IMinecartCollisionHandler
+net/neoforged/neoforge/common/NeoForgeEventHandler
+net/neoforged/neoforge/common/OnlyInWarningsHandler
+net/neoforged/neoforge/common/tooltip/ItemTooltipHandler
+net/neoforged/neoforge/common/util/FakePlayer$FakePlayerNetHandler
+net/neoforged/neoforge/event/entity/living/LivingSwapItemsEvent$Hands
+net/neoforged/neoforge/internal/LogoFileWarningsHandler
+net/neoforged/neoforge/network/event/RegisterPayloadHandlersEvent
+net/neoforged/neoforge/network/filters/DynamicChannelHandler
+net/neoforged/neoforge/network/handlers/ServerPayloadHandler
+net/neoforged/neoforge/network/handling/IPayloadHandler
+net/neoforged/neoforge/network/handling/MainThreadPayloadHandler
+net/neoforged/neoforge/network/registration/HandlerThread
+net/neoforged/neoforge/server/console/TerminalHandler
+net/neoforged/neoforge/server/permission/events/PermissionGatherEvent$Handler
+net/neoforged/neoforge/server/permission/handler/DefaultPermissionHandler
+net/neoforged/neoforge/server/permission/handler/IPermissionHandler
+net/neoforged/neoforge/server/permission/handler/IPermissionHandlerFactory
+net/neoforged/neoforge/transfer/CombinedResourceHandler
+net/neoforged/neoforge/transfer/DelegatingResourceHandler
+net/neoforged/neoforge/transfer/EmptyResourceHandler
+net/neoforged/neoforge/transfer/InfiniteResourceHandler
+net/neoforged/neoforge/transfer/ItemAccessResourceHandler
+net/neoforged/neoforge/transfer/RangedResourceHandler
+net/neoforged/neoforge/transfer/ResourceHandler
+net/neoforged/neoforge/transfer/ResourceHandlerUtil
+net/neoforged/neoforge/transfer/ResourceStacksResourceHandler
+net/neoforged/neoforge/transfer/StacksResourceHandler
+net/neoforged/neoforge/transfer/StacksResourceHandler$StackJournal
+net/neoforged/neoforge/transfer/VoidingResourceHandler
+net/neoforged/neoforge/transfer/access/HandlerItemAccess
+net/neoforged/neoforge/transfer/energy/DelegatingEnergyHandler
+net/neoforged/neoforge/transfer/energy/EmptyEnergyHandler
+net/neoforged/neoforge/transfer/energy/EnergyHandler
+net/neoforged/neoforge/transfer/energy/EnergyHandlerUtil
+net/neoforged/neoforge/transfer/energy/InfiniteEnergyHandler
+net/neoforged/neoforge/transfer/energy/ItemAccessEnergyHandler
+net/neoforged/neoforge/transfer/energy/LimitingEnergyHandler
+net/neoforged/neoforge/transfer/energy/SimpleEnergyHandler
+net/neoforged/neoforge/transfer/energy/SimpleEnergyHandler$EnergyJournal
+net/neoforged/neoforge/transfer/energy/VoidingEnergyHandler
+net/neoforged/neoforge/transfer/fluid/BucketResourceHandler
+net/neoforged/neoforge/transfer/fluid/FluidStacksResourceHandler
+net/neoforged/neoforge/transfer/fluid/ItemAccessFluidHandler
+net/neoforged/neoforge/transfer/item/BundleItemHandler
+net/neoforged/neoforge/transfer/item/ContainerOrHandler
+net/neoforged/neoforge/transfer/item/ItemAccessItemHandler
+net/neoforged/neoforge/transfer/item/ItemStackResourceHandler
+net/neoforged/neoforge/transfer/item/ItemStacksResourceHandler
+net/neoforged/neoforge/transfer/item/ResourceHandlerSlot
+=== CODE net/minecraft/client/renderer/rendertype/RenderTypes lambda$static$17
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$17(net.minecraft.resources.Identifier);
+    Code:
+         0: getstatic     #466                // Field net/minecraft/client/renderer/RenderPipelines.ITEM_TRANSLUCENT:Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;
+         3: invokestatic  #7                  // Method net/minecraft/client/renderer/rendertype/RenderSetup.builder:(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+         6: getstatic     #468                // Field net/minecraft/client/renderer/RenderPipelines.OIT_ITEM:Lnet/minecraft/client/renderer/oit/OitPipelineSet;
+         9: invokevirtual #57                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.setOitPipelines:(Lnet/minecraft/client/renderer/oit/OitPipelineSet;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        12: ldc           #19                 // String Sampler0
+        14: aload_0
+        15: invokevirtual #195                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.withTexture:(Ljava/lang/String;Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        18: invokevirtual #13                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.useLightmap:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        21: invokevirtual #219                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.useOverlay:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        24: invokevirtual #35                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.affectsCrumbling:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        27: invokevirtual #48                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.sortOnUpload:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        30: getstatic     #38                 // Field net/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty.AFFECTS_OUTLINE:Lnet/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty;
+        33: invokevirtual #44                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.setOutline:(Lnet/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        36: invokevirtual #61                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.createRenderSetup:()Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+        39: astore_1
+        40: ldc_w         #471                // String item_translucent
+        43: aload_1
+        44: invokestatic  #207                // Method net/minecraft/client/renderer/rendertype/RenderType.create:(Ljava/lang/String;Lnet/minecraft/client/renderer/rendertype/RenderSetup;)Lnet/minecraft/client/renderer/rendertype/RenderType;
+        47: areturn
+=== CODE net/minecraft/client/renderer/rendertype/RenderTypes lambda$static$18
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$18(net.minecraft.resources.Identifier);
+    Code:
+         0: getstatic     #459                // Field net/minecraft/client/renderer/RenderPipelines.ITEM_TRANSLUCENT_GLINT:Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;
+         3: invokestatic  #7                  // Method net/minecraft/client/renderer/rendertype/RenderSetup.builder:(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+         6: getstatic     #461                // Field net/minecraft/client/renderer/RenderPipelines.OIT_ITEM_GLINT:Lnet/minecraft/client/renderer/oit/OitPipelineSet;
+         9: invokevirtual #57                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.setOitPipelines:(Lnet/minecraft/client/renderer/oit/OitPipelineSet;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        12: ldc           #19                 // String Sampler0
+        14: aload_0
+        15: invokevirtual #195                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.withTexture:(Ljava/lang/String;Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        18: ldc_w         #444                // String GlintSampler
+        21: getstatic     #446                // Field net/minecraft/client/renderer/feature/ItemFeatureRenderer.ENCHANTED_GLINT_ITEM:Lnet/minecraft/resources/Identifier;
+        24: invokevirtual #195                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.withTexture:(Ljava/lang/String;Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        27: getstatic     #451                // Field net/minecraft/client/renderer/rendertype/TextureTransform.GLINT_TEXTURING:Lnet/minecraft/client/renderer/rendertype/TextureTransform;
+        30: invokevirtual #203                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.setTextureTransform:(Lnet/minecraft/client/renderer/rendertype/TextureTransform;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        33: invokevirtual #13                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.useLightmap:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        36: invokevirtual #219                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.useOverlay:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        39: invokevirtual #35                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.affectsCrumbling:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        42: invokevirtual #48                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.sortOnUpload:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        45: getstatic     #38                 // Field net/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty.AFFECTS_OUTLINE:Lnet/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty;
+        48: invokevirtual #44                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.setOutline:(Lnet/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        51: invokevirtual #61                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.createRenderSetup:()Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+        54: astore_1
+        55: ldc_w         #464                // String item_translucent_glint
+        58: aload_1
+        59: invokestatic  #207                // Method net/minecraft/client/renderer/rendertype/RenderType.create:(Ljava/lang/String;Lnet/minecraft/client/renderer/rendertype/RenderSetup;)Lnet/minecraft/client/renderer/rendertype/RenderType;
+        62: areturn
+=== CODE net/minecraft/client/renderer/rendertype/RenderTypes lambda$static$19
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$19(net.minecraft.resources.Identifier);
+    Code:
+         0: getstatic     #439                // Field net/minecraft/client/renderer/RenderPipelines.ITEM_TRANSLUCENT_GLINT_SPECIAL:Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;
+         3: invokestatic  #7                  // Method net/minecraft/client/renderer/rendertype/RenderSetup.builder:(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+         6: getstatic     #441                // Field net/minecraft/client/renderer/RenderPipelines.OIT_ITEM_GLINT_SPECIAL:Lnet/minecraft/client/renderer/oit/OitPipelineSet;
+         9: invokevirtual #57                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.setOitPipelines:(Lnet/minecraft/client/renderer/oit/OitPipelineSet;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        12: ldc           #19                 // String Sampler0
+        14: aload_0
+        15: invokevirtual #195                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.withTexture:(Ljava/lang/String;Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        18: ldc_w         #444                // String GlintSampler
+        21: getstatic     #446                // Field net/minecraft/client/renderer/feature/ItemFeatureRenderer.ENCHANTED_GLINT_ITEM:Lnet/minecraft/resources/Identifier;
+        24: invokevirtual #195                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.withTexture:(Ljava/lang/String;Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        27: getstatic     #451                // Field net/minecraft/client/renderer/rendertype/TextureTransform.GLINT_TEXTURING:Lnet/minecraft/client/renderer/rendertype/TextureTransform;
+        30: invokevirtual #203                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.setTextureTransform:(Lnet/minecraft/client/renderer/rendertype/TextureTransform;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        33: invokevirtual #13                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.useLightmap:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        36: invokevirtual #219                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.useOverlay:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        39: invokevirtual #35                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.affectsCrumbling:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        42: invokevirtual #48                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.sortOnUpload:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        45: getstatic     #38                 // Field net/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty.AFFECTS_OUTLINE:Lnet/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty;
+        48: invokevirtual #44                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.setOutline:(Lnet/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        51: invokevirtual #61                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.createRenderSetup:()Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+        54: astore_1
+        55: ldc_w         #457                // String item_translucent_glint_special
+        58: aload_1
+        59: invokestatic  #207                // Method net/minecraft/client/renderer/rendertype/RenderType.create:(Ljava/lang/String;Lnet/minecraft/client/renderer/rendertype/RenderSetup;)Lnet/minecraft/client/renderer/rendertype/RenderType;
+        62: areturn
+=== CODE net/minecraft/client/renderer/rendertype/RenderTypes lambda$static$20
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$20(net.minecraft.resources.Identifier, java.lang.Boolean);
+    Code:
+         0: getstatic     #432                // Field net/minecraft/client/renderer/RenderPipelines.ENTITY_TRANSLUCENT:Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;
+         3: invokestatic  #7                  // Method net/minecraft/client/renderer/rendertype/RenderSetup.builder:(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+         6: getstatic     #434                // Field net/minecraft/client/renderer/RenderPipelines.OIT_ENTITY:Lnet/minecraft/client/renderer/oit/OitPipelineSet;
+         9: invokevirtual #57                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.setOitPipelines:(Lnet/minecraft/client/renderer/oit/OitPipelineSet;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        12: ldc           #19                 // String Sampler0
+        14: aload_0
+        15: invokevirtual #195                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.withTexture:(Ljava/lang/String;Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        18: invokevirtual #13                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.useLightmap:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        21: invokevirtual #219                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.useOverlay:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        24: invokevirtual #35                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.affectsCrumbling:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        27: invokevirtual #48                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.sortOnUpload:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        30: aload_1
+        31: invokevirtual #404                // Method java/lang/Boolean.booleanValue:()Z
+        34: ifeq          43
+        37: getstatic     #38                 // Field net/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty.AFFECTS_OUTLINE:Lnet/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty;
+        40: goto          46
+        43: getstatic     #420                // Field net/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty.NONE:Lnet/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty;
+        46: invokevirtual #44                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.setOutline:(Lnet/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        49: invokevirtual #61                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.createRenderSetup:()Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+        52: astore_2
+        53: ldc_w         #437                // String entity_translucent
+        56: aload_2
+        57: invokestatic  #207                // Method net/minecraft/client/renderer/rendertype/RenderType.create:(Ljava/lang/String;Lnet/minecraft/client/renderer/rendertype/RenderSetup;)Lnet/minecraft/client/renderer/rendertype/RenderType;
+        60: areturn
+=== CODE net/minecraft/client/renderer/rendertype/RenderTypes lambda$static$21
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$21(net.minecraft.resources.Identifier, java.lang.Boolean);
+    Code:
+         0: getstatic     #425                // Field net/minecraft/client/renderer/RenderPipelines.ENTITY_TRANSLUCENT_EMISSIVE:Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;
+         3: invokestatic  #7                  // Method net/minecraft/client/renderer/rendertype/RenderSetup.builder:(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+         6: getstatic     #427                // Field net/minecraft/client/renderer/RenderPipelines.OIT_ENTITY_EMISSIVE:Lnet/minecraft/client/renderer/oit/OitPipelineSet;
+         9: invokevirtual #57                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.setOitPipelines:(Lnet/minecraft/client/renderer/oit/OitPipelineSet;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        12: ldc           #19                 // String Sampler0
+        14: aload_0
+        15: invokevirtual #195                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.withTexture:(Ljava/lang/String;Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        18: invokevirtual #219                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.useOverlay:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        21: invokevirtual #35                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.affectsCrumbling:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        24: invokevirtual #48                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.sortOnUpload:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        27: aload_1
+        28: invokevirtual #404                // Method java/lang/Boolean.booleanValue:()Z
+        31: ifeq          40
+        34: getstatic     #38                 // Field net/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty.AFFECTS_OUTLINE:Lnet/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty;
+        37: goto          43
+        40: getstatic     #420                // Field net/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty.NONE:Lnet/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty;
+        43: invokevirtual #44                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.setOutline:(Lnet/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        46: invokevirtual #61                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.createRenderSetup:()Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+        49: astore_2
+        50: ldc_w         #430                // String entity_translucent_emissive
+        53: aload_2
+        54: invokestatic  #207                // Method net/minecraft/client/renderer/rendertype/RenderType.create:(Ljava/lang/String;Lnet/minecraft/client/renderer/rendertype/RenderSetup;)Lnet/minecraft/client/renderer/rendertype/RenderType;
+        57: areturn
+=== CODE net/minecraft/client/renderer/rendertype/RenderTypes lambda$static$22
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$22(net.minecraft.resources.Identifier);
+    Code:
+         0: getstatic     #418                // Field net/minecraft/client/renderer/RenderPipelines.END_CRYSTAL_BEAM:Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;
+         3: invokestatic  #7                  // Method net/minecraft/client/renderer/rendertype/RenderSetup.builder:(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+         6: ldc           #19                 // String Sampler0
+         8: aload_0
+         9: invokevirtual #195                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.withTexture:(Ljava/lang/String;Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        12: invokevirtual #13                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.useLightmap:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        15: getstatic     #420                // Field net/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty.NONE:Lnet/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty;
+        18: invokevirtual #44                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.setOutline:(Lnet/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        21: invokevirtual #61                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.createRenderSetup:()Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+        24: astore_1
+        25: ldc_w         #423                // String end_crystal_beam
+        28: aload_1
+        29: invokestatic  #207                // Method net/minecraft/client/renderer/rendertype/RenderType.create:(Ljava/lang/String;Lnet/minecraft/client/renderer/rendertype/RenderSetup;)Lnet/minecraft/client/renderer/rendertype/RenderType;
+        32: areturn
+=== CODE net/minecraft/client/renderer/rendertype/RenderTypes lambda$static$23
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$23(net.minecraft.resources.Identifier, java.lang.Boolean);
+    Code:
+         0: aload_1
+         1: invokevirtual #404                // Method java/lang/Boolean.booleanValue:()Z
+         4: ifeq          13
+         7: getstatic     #407                // Field net/minecraft/client/renderer/RenderPipelines.BEACON_BEAM_TRANSLUCENT:Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;
+        10: goto          16
+        13: getstatic     #410                // Field net/minecraft/client/renderer/RenderPipelines.BEACON_BEAM_OPAQUE:Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;
+        16: invokestatic  #7                  // Method net/minecraft/client/renderer/rendertype/RenderSetup.builder:(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        19: ldc           #19                 // String Sampler0
+        21: aload_0
+        22: invokevirtual #195                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.withTexture:(Ljava/lang/String;Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        25: invokevirtual #48                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.sortOnUpload:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        28: astore_2
+        29: aload_1
+        30: invokevirtual #404                // Method java/lang/Boolean.booleanValue:()Z
+        33: ifeq          44
+        36: aload_2
+        37: getstatic     #413                // Field net/minecraft/client/renderer/RenderPipelines.OIT_BEACON_BEAM:Lnet/minecraft/client/renderer/oit/OitPipelineSet;
+        40: invokevirtual #57                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.setOitPipelines:(Lnet/minecraft/client/renderer/oit/OitPipelineSet;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        43: pop
+        44: ldc_w         #416                // String beacon_beam
+        47: aload_2
+        48: invokevirtual #61                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.createRenderSetup:()Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+        51: invokestatic  #207                // Method net/minecraft/client/renderer/rendertype/RenderType.create:(Ljava/lang/String;Lnet/minecraft/client/renderer/rendertype/RenderSetup;)Lnet/minecraft/client/renderer/rendertype/RenderType;
+        54: areturn
+=== CODE net/minecraft/client/renderer/rendertype/RenderTypes lambda$static$24
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$24(net.minecraft.resources.Identifier);
+    Code:
+         0: getstatic     #397                // Field net/minecraft/client/renderer/RenderPipelines.BANNER_PATTERN:Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;
+         3: invokestatic  #7                  // Method net/minecraft/client/renderer/rendertype/RenderSetup.builder:(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+         6: ldc           #19                 // String Sampler0
+         8: aload_0
+         9: invokevirtual #195                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.withTexture:(Ljava/lang/String;Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        12: invokevirtual #13                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.useLightmap:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        15: invokevirtual #48                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.sortOnUpload:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        18: invokevirtual #399                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.withForcedSolidModelPhase:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        21: invokevirtual #61                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.createRenderSetup:()Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+        24: astore_1
+        25: ldc_w         #402                // String banner_pattern
+        28: aload_1
+        29: invokestatic  #207                // Method net/minecraft/client/renderer/rendertype/RenderType.create:(Ljava/lang/String;Lnet/minecraft/client/renderer/rendertype/RenderSetup;)Lnet/minecraft/client/renderer/rendertype/RenderType;
+        32: areturn
+=== CODE net/minecraft/client/renderer/rendertype/RenderTypes lambda$static$25
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$25(net.minecraft.resources.Identifier);
+    Code:
+         0: getstatic     #380                // Field net/minecraft/client/renderer/RenderPipelines.ENTITY_SHADOW:Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;
+         3: invokestatic  #7                  // Method net/minecraft/client/renderer/rendertype/RenderSetup.builder:(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+         6: getstatic     #382                // Field net/minecraft/client/renderer/RenderPipelines.OIT_ENTITY_SHADOW:Lnet/minecraft/client/renderer/oit/OitPipelineSet;
+         9: invokevirtual #57                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.setOitPipelines:(Lnet/minecraft/client/renderer/oit/OitPipelineSet;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        12: ldc           #19                 // String Sampler0
+        14: aload_0
+        15: invokevirtual #195                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.withTexture:(Ljava/lang/String;Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        18: invokevirtual #13                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.useLightmap:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        21: invokevirtual #219                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.useOverlay:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        24: getstatic     #385                // Field net/minecraft/client/renderer/rendertype/LayeringTransform.VIEW_OFFSET_Z_LAYERING:Lnet/minecraft/client/renderer/rendertype/LayeringTransform;
+        27: invokevirtual #391                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.setLayeringTransform:(Lnet/minecraft/client/renderer/rendertype/LayeringTransform;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        30: invokevirtual #61                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.createRenderSetup:()Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+        33: astore_1
+        34: ldc_w         #395                // String entity_shadow
+        37: aload_1
+        38: invokestatic  #207                // Method net/minecraft/client/renderer/rendertype/RenderType.create:(Ljava/lang/String;Lnet/minecraft/client/renderer/rendertype/RenderSetup;)Lnet/minecraft/client/renderer/rendertype/RenderType;
+        41: areturn
+=== CODE net/minecraft/client/renderer/rendertype/RenderTypes lambda$static$26
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$26(net.minecraft.resources.Identifier);
+    Code:
+         0: ldc_w         #373                // String eyes
+         3: getstatic     #375                // Field net/minecraft/client/renderer/RenderPipelines.EYES:Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;
+         6: invokestatic  #7                  // Method net/minecraft/client/renderer/rendertype/RenderSetup.builder:(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+         9: getstatic     #377                // Field net/minecraft/client/renderer/RenderPipelines.OIT_EYES:Lnet/minecraft/client/renderer/oit/OitPipelineSet;
+        12: invokevirtual #57                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.setOitPipelines:(Lnet/minecraft/client/renderer/oit/OitPipelineSet;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        15: ldc           #19                 // String Sampler0
+        17: aload_0
+        18: invokevirtual #195                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.withTexture:(Ljava/lang/String;Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        21: invokevirtual #48                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.sortOnUpload:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        24: invokevirtual #61                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.createRenderSetup:()Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+        27: invokestatic  #207                // Method net/minecraft/client/renderer/rendertype/RenderType.create:(Ljava/lang/String;Lnet/minecraft/client/renderer/rendertype/RenderSetup;)Lnet/minecraft/client/renderer/rendertype/RenderType;
+        30: areturn
+=== CODE net/minecraft/client/renderer/rendertype/RenderTypes lambda$static$27
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$27(net.minecraft.resources.Identifier);
+    Code:
+         0: ldc_w         #366                // String crumbling
+         3: getstatic     #368                // Field net/minecraft/client/renderer/RenderPipelines.CRUMBLING:Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;
+         6: invokestatic  #7                  // Method net/minecraft/client/renderer/rendertype/RenderSetup.builder:(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+         9: getstatic     #370                // Field net/minecraft/client/renderer/RenderPipelines.OIT_CRUMBLING:Lnet/minecraft/client/renderer/oit/OitPipelineSet;
+        12: invokevirtual #57                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.setOitPipelines:(Lnet/minecraft/client/renderer/oit/OitPipelineSet;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        15: ldc           #19                 // String Sampler0
+        17: aload_0
+        18: invokevirtual #195                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.withTexture:(Ljava/lang/String;Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        21: invokevirtual #48                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.sortOnUpload:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        24: invokevirtual #61                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.createRenderSetup:()Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+        27: invokestatic  #207                // Method net/minecraft/client/renderer/rendertype/RenderType.create:(Ljava/lang/String;Lnet/minecraft/client/renderer/rendertype/RenderSetup;)Lnet/minecraft/client/renderer/rendertype/RenderType;
+        30: areturn
+=== CODE net/minecraft/client/renderer/rendertype/RenderTypes lambda$static$28
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$28(net.minecraft.resources.Identifier);
+    Code:
+         0: ldc_w         #359                // String text
+         3: getstatic     #361                // Field net/minecraft/client/renderer/RenderPipelines.TEXT:Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;
+         6: invokestatic  #7                  // Method net/minecraft/client/renderer/rendertype/RenderSetup.builder:(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+         9: getstatic     #363                // Field net/minecraft/client/renderer/RenderPipelines.OIT_TEXT:Lnet/minecraft/client/renderer/oit/OitPipelineSet;
+        12: invokevirtual #57                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.setOitPipelines:(Lnet/minecraft/client/renderer/oit/OitPipelineSet;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        15: ldc           #19                 // String Sampler0
+        17: aload_0
+        18: invokevirtual #195                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.withTexture:(Ljava/lang/String;Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        21: invokevirtual #13                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.useLightmap:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        24: invokevirtual #61                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.createRenderSetup:()Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+        27: invokestatic  #207                // Method net/minecraft/client/renderer/rendertype/RenderType.create:(Ljava/lang/String;Lnet/minecraft/client/renderer/rendertype/RenderSetup;)Lnet/minecraft/client/renderer/rendertype/RenderType;
+        30: areturn
+=== CODE net/minecraft/client/renderer/rendertype/RenderTypes lambda$static$29
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$29(net.minecraft.resources.Identifier);
+    Code:
+         0: ldc_w         #352                // String text_grayscale
+         3: getstatic     #354                // Field net/minecraft/client/renderer/RenderPipelines.TEXT_GRAYSCALE:Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;
+         6: invokestatic  #7                  // Method net/minecraft/client/renderer/rendertype/RenderSetup.builder:(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+         9: getstatic     #356                // Field net/minecraft/client/renderer/RenderPipelines.OIT_TEXT_GRAYSCALE:Lnet/minecraft/client/renderer/oit/OitPipelineSet;
+        12: invokevirtual #57                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.setOitPipelines:(Lnet/minecraft/client/renderer/oit/OitPipelineSet;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        15: ldc           #19                 // String Sampler0
+        17: aload_0
+        18: invokevirtual #195                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.withTexture:(Ljava/lang/String;Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        21: invokevirtual #13                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.useLightmap:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        24: invokevirtual #61                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.createRenderSetup:()Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+        27: invokestatic  #207                // Method net/minecraft/client/renderer/rendertype/RenderType.create:(Ljava/lang/String;Lnet/minecraft/client/renderer/rendertype/RenderSetup;)Lnet/minecraft/client/renderer/rendertype/RenderType;
+        30: areturn
+=== CODE net/minecraft/client/renderer/rendertype/RenderTypes lambda$static$30
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$30(net.minecraft.resources.Identifier);
+    Code:
+         0: ldc_w         #345                // String text_polygon_offset
+         3: getstatic     #347                // Field net/minecraft/client/renderer/RenderPipelines.TEXT_POLYGON_OFFSET:Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;
+         6: invokestatic  #7                  // Method net/minecraft/client/renderer/rendertype/RenderSetup.builder:(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+         9: getstatic     #349                // Field net/minecraft/client/renderer/RenderPipelines.OIT_TEXT_POLYGON_OFFSET:Lnet/minecraft/client/renderer/oit/OitPipelineSet;
+        12: invokevirtual #57                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.setOitPipelines:(Lnet/minecraft/client/renderer/oit/OitPipelineSet;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        15: ldc           #19                 // String Sampler0
+        17: aload_0
+        18: invokevirtual #195                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.withTexture:(Ljava/lang/String;Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        21: invokevirtual #13                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.useLightmap:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        24: invokevirtual #48                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.sortOnUpload:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        27: invokevirtual #61                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.createRenderSetup:()Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+        30: invokestatic  #207                // Method net/minecraft/client/renderer/rendertype/RenderType.create:(Ljava/lang/String;Lnet/minecraft/client/renderer/rendertype/RenderSetup;)Lnet/minecraft/client/renderer/rendertype/RenderType;
+        33: areturn
+=== CODE net/minecraft/client/renderer/rendertype/RenderTypes lambda$static$31
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$31(net.minecraft.resources.Identifier);
+    Code:
+         0: ldc_w         #338                // String text_grayscale_polygon_offset
+         3: getstatic     #340                // Field net/minecraft/client/renderer/RenderPipelines.TEXT_GRAYSCALE_POLYGON_OFFSET:Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;
+         6: invokestatic  #7                  // Method net/minecraft/client/renderer/rendertype/RenderSetup.builder:(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+         9: getstatic     #342                // Field net/minecraft/client/renderer/RenderPipelines.OIT_TEXT_GRAYSCALE_POLYGON_OFFSET:Lnet/minecraft/client/renderer/oit/OitPipelineSet;
+        12: invokevirtual #57                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.setOitPipelines:(Lnet/minecraft/client/renderer/oit/OitPipelineSet;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        15: ldc           #19                 // String Sampler0
+        17: aload_0
+        18: invokevirtual #195                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.withTexture:(Ljava/lang/String;Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        21: invokevirtual #13                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.useLightmap:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        24: invokevirtual #48                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.sortOnUpload:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        27: invokevirtual #61                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.createRenderSetup:()Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+        30: invokestatic  #207                // Method net/minecraft/client/renderer/rendertype/RenderType.create:(Ljava/lang/String;Lnet/minecraft/client/renderer/rendertype/RenderSetup;)Lnet/minecraft/client/renderer/rendertype/RenderType;
+        33: areturn
+=== CODE net/minecraft/client/renderer/rendertype/RenderTypes lambda$static$32
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$32(net.minecraft.resources.Identifier);
+    Code:
+         0: ldc_w         #334                // String text_see_through
+         3: getstatic     #336                // Field net/minecraft/client/renderer/RenderPipelines.TEXT_SEE_THROUGH:Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;
+         6: invokestatic  #7                  // Method net/minecraft/client/renderer/rendertype/RenderSetup.builder:(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+         9: ldc           #19                 // String Sampler0
+        11: aload_0
+        12: invokevirtual #195                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.withTexture:(Ljava/lang/String;Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        15: invokevirtual #13                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.useLightmap:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        18: invokevirtual #61                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.createRenderSetup:()Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+        21: invokestatic  #207                // Method net/minecraft/client/renderer/rendertype/RenderType.create:(Ljava/lang/String;Lnet/minecraft/client/renderer/rendertype/RenderSetup;)Lnet/minecraft/client/renderer/rendertype/RenderType;
+        24: areturn
+=== CODE net/minecraft/client/renderer/rendertype/RenderTypes lambda$static$33
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$33(net.minecraft.resources.Identifier);
+    Code:
+         0: ldc_w         #330                // String text_grayscale_see_through
+         3: getstatic     #332                // Field net/minecraft/client/renderer/RenderPipelines.TEXT_GRAYSCALE_SEE_THROUGH:Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;
+         6: invokestatic  #7                  // Method net/minecraft/client/renderer/rendertype/RenderSetup.builder:(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+         9: ldc           #19                 // String Sampler0
+        11: aload_0
+        12: invokevirtual #195                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.withTexture:(Ljava/lang/String;Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        15: invokevirtual #13                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.useLightmap:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        18: invokevirtual #48                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.sortOnUpload:()Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        21: invokevirtual #61                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.createRenderSetup:()Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+        24: invokestatic  #207                // Method net/minecraft/client/renderer/rendertype/RenderType.create:(Ljava/lang/String;Lnet/minecraft/client/renderer/rendertype/RenderSetup;)Lnet/minecraft/client/renderer/rendertype/RenderType;
+        27: areturn
+=== CODE net/minecraft/client/renderer/rendertype/RenderTypes lambda$static$34
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$34(net.minecraft.resources.Identifier);
+    Code:
+         0: ldc_w         #326                // String block_screen_effect
+         3: getstatic     #328                // Field net/minecraft/client/renderer/RenderPipelines.BLOCK_SCREEN_EFFECT:Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;
+         6: invokestatic  #7                  // Method net/minecraft/client/renderer/rendertype/RenderSetup.builder:(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+         9: ldc           #19                 // String Sampler0
+        11: aload_0
+        12: invokevirtual #195                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.withTexture:(Ljava/lang/String;Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        15: invokevirtual #61                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.createRenderSetup:()Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+        18: invokestatic  #207                // Method net/minecraft/client/renderer/rendertype/RenderType.create:(Ljava/lang/String;Lnet/minecraft/client/renderer/rendertype/RenderSetup;)Lnet/minecraft/client/renderer/rendertype/RenderType;
+        21: areturn
+=== CODE net/minecraft/client/renderer/rendertype/RenderTypes lambda$static$35
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$35(net.minecraft.resources.Identifier);
+    Code:
+         0: ldc_w         #322                // String fire_screen_effect
+         3: getstatic     #324                // Field net/minecraft/client/renderer/RenderPipelines.FIRE_SCREEN_EFFECT:Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;
+         6: invokestatic  #7                  // Method net/minecraft/client/renderer/rendertype/RenderSetup.builder:(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+         9: ldc           #19                 // String Sampler0
+        11: aload_0
+        12: invokevirtual #195                // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.withTexture:(Ljava/lang/String;Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder;
+        15: invokevirtual #61                 // Method net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder.createRenderSetup:()Lnet/minecraft/client/renderer/rendertype/RenderSetup;
+        18: invokestatic  #207                // Method net/minecraft/client/renderer/rendertype/RenderType.create:(Ljava/lang/String;Lnet/minecraft/client/renderer/rendertype/RenderSetup;)Lnet/minecraft/client/renderer/rendertype/RenderType;
+        21: areturn
+=== SIG net/minecraft/client/renderer/RenderPipelines .*GLINT.*
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet GLINT_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet GLINT_SPECIAL_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ARMOR_CUTOUT_NO_CULL_GLINT;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ENTITY_SOLID_GLINT;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ITEM_CUTOUT_GLINT;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ITEM_CUTOUT_GLINT_SPECIAL;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ITEM_TRANSLUCENT_GLINT;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ITEM_TRANSLUCENT_GLINT_SPECIAL;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_ITEM_GLINT;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_ITEM_GLINT_SPECIAL;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline GLINT;
+=== net/minecraft/core/component/DataComponents
+Compiled from "DataComponents.java"
+public class net.minecraft.core.component.DataComponents {
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.CustomData> CUSTOM_DATA;
+  public static final net.minecraft.core.component.DataComponentType<java.lang.Integer> MAX_STACK_SIZE;
+  public static final net.minecraft.core.component.DataComponentType<java.lang.Integer> MAX_DAMAGE;
+  public static final net.minecraft.core.component.DataComponentType<java.lang.Integer> DAMAGE;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.util.Unit> UNBREAKABLE;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.UseEffects> USE_EFFECTS;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.network.chat.Component> CUSTOM_NAME;
+  public static final net.minecraft.core.component.DataComponentType<java.lang.Float> MINIMUM_ATTACK_CHARGE;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.core.Holder<net.minecraft.world.damagesource.DamageType>> DAMAGE_TYPE;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.network.chat.Component> ITEM_NAME;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.resources.Identifier> ITEM_MODEL;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.ItemLore> LORE;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.Rarity> RARITY;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.enchantment.ItemEnchantments> ENCHANTMENTS;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.AdventureModePredicate> CAN_PLACE_ON;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.AdventureModePredicate> CAN_BREAK;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.ItemAttributeModifiers> ATTRIBUTE_MODIFIERS;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.CustomModelData> CUSTOM_MODEL_DATA;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.TooltipDisplay> TOOLTIP_DISPLAY;
+  public static final net.minecraft.core.component.DataComponentType<java.lang.Integer> REPAIR_COST;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.util.Unit> CREATIVE_SLOT_LOCK;
+  public static final net.minecraft.core.component.DataComponentType<java.lang.Boolean> ENCHANTMENT_GLINT_OVERRIDE;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.util.Unit> INTANGIBLE_PROJECTILE;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.food.FoodProperties> FOOD;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.Consumable> CONSUMABLE;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.UseRemainder> USE_REMAINDER;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.UseCooldown> USE_COOLDOWN;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.DamageResistant> DAMAGE_RESISTANT;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.Tool> TOOL;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.Weapon> WEAPON;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.AttackRange> ATTACK_RANGE;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.enchantment.Enchantable> ENCHANTABLE;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.equipment.Equippable> EQUIPPABLE;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.enchantment.Repairable> REPAIRABLE;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.util.Unit> GLIDER;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.resources.Identifier> TOOLTIP_STYLE;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.DeathProtection> DEATH_PROTECTION;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.BlocksAttacks> BLOCKS_ATTACKS;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.PiercingWeapon> PIERCING_WEAPON;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.KineticWeapon> KINETIC_WEAPON;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.SwingAnimation> ATTACK_ANIMATION;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.SwingAnimation> INTERACT_ANIMATION;
+  public static final net.minecraft.core.component.DataComponentType<java.lang.Integer> ADDITIONAL_TRADE_COST;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.core.Holder<net.minecraft.core.component.BlockTransformer>> BLOCK_TRANSFORMER;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.food.VillagerFood> VILLAGER_FOOD;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.enchantment.ItemEnchantments> STORED_ENCHANTMENTS;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.DyeColor> DYE;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.DyedItemColor> DYED_COLOR;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.level.saveddata.maps.MapId> MAP_ID;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.MapDecorations> MAP_DECORATIONS;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.MapPostProcessing> MAP_POST_PROCESSING;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.ChargedProjectiles> CHARGED_PROJECTILES;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.BundleContents> BUNDLE_CONTENTS;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.alchemy.PotionContents> POTION_CONTENTS;
+  public static final net.minecraft.core.component.DataComponentType<java.lang.Float> POTION_DURATION_SCALE;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.SuspiciousStewEffects> SUSPICIOUS_STEW_EFFECTS;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.WritableBookContent> WRITABLE_BOOK_CONTENT;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.WrittenBookContent> WRITTEN_BOOK_CONTENT;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.equipment.trim.ArmorTrim> TRIM;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.DebugStickState> DEBUG_STICK_STATE;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.TypedEntityData<net.minecraft.world.entity.EntityType<?>>> ENTITY_DATA;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.CustomData> BUCKET_ENTITY_DATA;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.TypedEntityData<net.minecraft.world.level.block.entity.BlockEntityType<?>>> BLOCK_ENTITY_DATA;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.InstrumentComponent> INSTRUMENT;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.core.Holder<net.minecraft.world.item.equipment.trim.TrimMaterial>> PROVIDES_TRIM_MATERIAL;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.OminousBottleAmplifier> OMINOUS_BOTTLE_AMPLIFIER;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.JukeboxPlayable> JUKEBOX_PLAYABLE;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.core.HolderSet<net.minecraft.world.level.block.entity.BannerPattern>> PROVIDES_BANNER_PATTERNS;
+  public static final net.minecraft.core.component.DataComponentType<java.util.List<net.minecraft.resources.ResourceKey<net.minecraft.world.item.crafting.Recipe<?>>>> RECIPES;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.LodestoneTracker> LODESTONE_TRACKER;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.FireworkExplosion> FIREWORK_EXPLOSION;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.Fireworks> FIREWORKS;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.ResolvableProfile> PROFILE;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.resources.Identifier> NOTE_BLOCK_SOUND;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.level.block.entity.BannerPatternLayers> BANNER_PATTERNS;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.DyeColor> BASE_COLOR;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.level.block.entity.PotDecorations> POT_DECORATIONS;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.ItemContainerContents> CONTAINER;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.BlockItemStateProperties> BLOCK_STATE;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.Bees> BEES;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.SulfurCubeContent> SULFUR_CUBE_CONTENT;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.LockCode> LOCK;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.SeededContainerLoot> CONTAINER_LOOT;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.core.Holder<net.minecraft.sounds.SoundEvent>> BREAK_SOUND;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.Compostable> COMPOSTABLE;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.CookingFuel> COOKING_FUEL;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.BrewingFuel> BREWING_FUEL;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.component.MobVisibility> MOB_VISIBILITY;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.core.Holder<net.minecraft.world.entity.npc.villager.VillagerType>> VILLAGER_VARIANT;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.core.Holder<net.minecraft.world.entity.animal.wolf.WolfVariant>> WOLF_VARIANT;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.core.Holder<net.minecraft.world.entity.animal.wolf.WolfSoundVariant>> WOLF_SOUND_VARIANT;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.DyeColor> WOLF_COLLAR;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.entity.animal.fox.Fox$Variant> FOX_VARIANT;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.entity.animal.fish.Salmon$Variant> SALMON_SIZE;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.entity.animal.parrot.Parrot$Variant> PARROT_VARIANT;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.entity.animal.fish.TropicalFish$Pattern> TROPICAL_FISH_PATTERN;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.DyeColor> TROPICAL_FISH_BASE_COLOR;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.DyeColor> TROPICAL_FISH_PATTERN_COLOR;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.entity.animal.cow.MushroomCow$Variant> MOOSHROOM_VARIANT;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.entity.animal.rabbit.Rabbit$Variant> RABBIT_VARIANT;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.core.Holder<net.minecraft.world.entity.animal.pig.PigVariant>> PIG_VARIANT;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.core.Holder<net.minecraft.world.entity.animal.pig.PigSoundVariant>> PIG_SOUND_VARIANT;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.core.Holder<net.minecraft.world.entity.animal.cow.CowVariant>> COW_VARIANT;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.core.Holder<net.minecraft.world.entity.animal.cow.CowSoundVariant>> COW_SOUND_VARIANT;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.core.Holder<net.minecraft.world.entity.animal.chicken.ChickenVariant>> CHICKEN_VARIANT;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.core.Holder<net.minecraft.world.entity.animal.chicken.ChickenSoundVariant>> CHICKEN_SOUND_VARIANT;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.core.Holder<net.minecraft.world.entity.animal.nautilus.ZombieNautilusVariant>> ZOMBIE_NAUTILUS_VARIANT;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.core.Holder<net.minecraft.world.entity.animal.frog.FrogVariant>> FROG_VARIANT;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.entity.animal.equine.Variant> HORSE_VARIANT;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.core.Holder<net.minecraft.world.entity.decoration.painting.PaintingVariant>> PAINTING_VARIANT;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.entity.animal.equine.Llama$Variant> LLAMA_VARIANT;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.entity.animal.axolotl.Axolotl$Variant> AXOLOTL_VARIANT;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.core.Holder<net.minecraft.world.entity.animal.feline.CatVariant>> CAT_VARIANT;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.core.Holder<net.minecraft.world.entity.animal.feline.CatSoundVariant>> CAT_SOUND_VARIANT;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.DyeColor> CAT_COLLAR;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.DyeColor> SHEEP_COLOR;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.DyeColor> SHULKER_COLOR;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.core.Holder<net.minecraft.world.level.block.entity.DecoratedPotPattern>> PROVIDES_POTTERY_PATTERN;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.level.block.entity.SignText> SIGN_TEXT_FRONT;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.level.block.entity.SignText> SIGN_TEXT_BACK;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.util.Unit> WAXED;
+  public static final net.minecraft.core.component.DataComponentType<net.minecraft.world.item.DyeColor> CUSHION_COLOR;
+  public static final net.minecraft.core.component.DataComponentMap COMMON_ITEM_COMPONENTS;
+  public net.minecraft.core.component.DataComponents();
+  public static net.minecraft.core.component.DataComponentType<?> bootstrap(net.minecraft.core.Registry<net.minecraft.core.component.DataComponentType<?>>);
+}
