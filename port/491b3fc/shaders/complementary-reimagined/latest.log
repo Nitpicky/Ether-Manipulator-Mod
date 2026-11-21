@@ -1,0 +1,103 @@
+[21Nov2026 08:06:00.288] [main/INFO] [net.neoforged.fml.startup.Entrypoint/]: JVM Uptime at startup: 103ms
+[21Nov2026 08:06:00.303] [main/INFO] [net.neoforged.fml.loading.FMLLoader/]: Starting FancyModLoader version 12.0.16 (CLIENT in DEV)
+[21Nov2026 08:06:00.303] [main/INFO] [net.neoforged.fml.loading.FMLLoader/]: Game directory: /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/runs/client
+[21Nov2026 08:06:00.346] [main/INFO] [net.neoforged.fml.loading.EarlyServiceDiscovery/]: Found 3 early service jars (out of 101) in 19ms
+[21Nov2026 08:06:00.346] [main/INFO] [net.neoforged.fml.loading.FMLLoader/]: Loading FML Early Services:
+[21Nov2026 08:06:00.347] [main/INFO] [net.neoforged.fml.loading.FMLLoader/]:  - /home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/earlydisplay/12.0.16/efa2e56115d22853d10524874a7bbb64555c2a28/earlydisplay-12.0.16.jar
+[21Nov2026 08:06:00.348] [main/INFO] [net.neoforged.fml.loading.FMLLoader/]:  - /home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/12.0.16/edbb2ee8211a867215970bc15ae9c354fa56dc09/loader-12.0.16.jar
+[21Nov2026 08:06:00.349] [main/INFO] [net.neoforged.fml.loading.FMLLoader/]:  - mods/sodium-neoforge-0.9.3-beta.5+mc26.3.jar
+[21Nov2026 08:06:00.356] [main/INFO] [net.neoforged.fml.loading.ImmediateWindowHandler/]: Running graphics bootstrap plugin sodium
+[21Nov2026 08:06:00.360] [main/INFO] [Sodium-GraphicsAdapterProbe/]: Searching for graphics cards...
+[21Nov2026 08:06:00.362] [main/WARN] [Sodium-GraphicsAdapterProbe/]: Could not find any graphics adapters! Probably the device is not on a bus we can probe, or there are no devices supporting 3D acceleration.
+[21Nov2026 08:06:00.365] [main/WARN] [Sodium-Workarounds/]: Sodium has applied one or more workarounds to prevent crashes or other issues on your system: [NO_ERROR_CONTEXT_UNSUPPORTED]
+[21Nov2026 08:06:00.366] [main/WARN] [Sodium-Workarounds/]: This is not necessarily an issue, but it may result in certain features or optimizations being disabled. You can sometimes fix these issues by upgrading your graphics driver.
+[21Nov2026 08:06:00.366] [main/INFO] [net.neoforged.fml.loading.ImmediateWindowHandler/]: Loading ImmediateWindowProvider fmlearlywindow
+[21Nov2026 08:06:00.371] [main/INFO] [EARLYDISPLAY/]: Detected CI environment, disabling ELS
+[21Nov2026 08:06:00.371] [main/INFO] [net.neoforged.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider fmlearlywindow cannot run in the current environment, disabling
+[21Nov2026 08:06:00.431] [ForkJoinPool.commonPool-worker-2/INFO] [net.neoforged.fml.loading.moddiscovery.locators.GameLocator/]: Detected a joined NeoForge and Minecraft configuration. Applying filtering...
+[21Nov2026 08:06:00.547] [ForkJoinPool.commonPool-worker-2/INFO] [net.neoforged.fml.loading.moddiscovery.locators.InDevFolderLocator/CORE]: Got mod coordinates ethermod%%/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/classes/java/main:ethermod%%/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/resources/main:ethermod%%/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/classes/java/playtest:ethermod%%/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/resources/playtest from env
+[21Nov2026 08:06:00.776] [ForkJoinPool.commonPool-worker-2/INFO] [net.neoforged.fml.loading.moddiscovery.locators.JarInJarDependencyLocator/]: Found 6 dependencies adding them to mods collection
+[21Nov2026 08:06:00.779] [ForkJoinPool.commonPool-worker-2/INFO] [net.neoforged.fml.loading.moddiscovery.ModDiscoverer/]: 
+     Mod List:
+		Name Version (Mod Id)
+
+		Ether Manipulator 1.0.1+26.3 (ethermod)
+		GeckoLib 5 5.5.6 (geckolib)
+		Iris 1.11.7+mc26.3 (iris)
+		Minecraft 26.3 (minecraft)
+		NeoForge 26.3.0.115 (neoforge)
+		Sodium 0.9.3-beta.5+mc26.3 (sodium)
+[21Nov2026 08:06:00.791] [ForkJoinPool.commonPool-worker-2/ERROR] [net.neoforged.fml.loading.ModSorter/LOADING]: Incompatibilities between mods:
+	Mod 'sodium' is incompatible with 'iris', versions: '(,1.12.1)'; Version found: '1.11.7+mc26.3'
+[21Nov2026 08:06:00.830] [main/ERROR] [net.neoforged.fml.loading.FMLLoader/]: Mod sodium is incompatible with iris below 1.12.1
+Currently, iris is 1.11.7+mc26.3
+The reason is: This version of Iris is incompatible with this version of Sodium. Please update Iris.
+[21Nov2026 08:06:00.831] [main/INFO] [net.neoforged.fml.loading.FMLLoader/]: Closing FML Loader 5d908d47
+[21Nov2026 08:06:00.834] [main/ERROR] [net.neoforged.fml.loading.modscan.BackgroundScanHandler/SCAN]: An error occurred scanning file composite(filtered(jar(/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar)), filtered(jar(/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar)))
+java.util.concurrent.CancellationException
+	at java.base/java.util.concurrent.CompletableFuture.cancel(CompletableFuture.java:2552) ~[?:?]
+	at net.neoforged.fml.loading.moddiscovery.ModFile.close(ModFile.java:246) ~[loader-12.0.16.jar:12.0]
+	at net.neoforged.fml.loading.FMLLoader.close(FMLLoader.java:240) [loader-12.0.16.jar:12.0]
+	at net.neoforged.fml.loading.FMLLoader.create(FMLLoader.java:422) [loader-12.0.16.jar:12.0]
+	at net.neoforged.fml.startup.Entrypoint.startup(Entrypoint.java:65) [loader-12.0.16.jar:12.0]
+	at net.neoforged.fml.startup.Client.main(Client.java:17) [loader-12.0.16.jar:12.0]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[?:?]
+	at net.neoforged.devlaunch.Main.main(Main.java:57) [DevLaunch-1.0.2.jar:?]
+[21Nov2026 08:06:00.856] [main/ERROR] [net.neoforged.fml.loading.modscan.BackgroundScanHandler/SCAN]: An error occurred scanning file composite(filtered(jar(/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar)))
+java.util.concurrent.CancellationException
+	at java.base/java.util.concurrent.CompletableFuture.cancel(CompletableFuture.java:2552) ~[?:?]
+	at net.neoforged.fml.loading.moddiscovery.ModFile.close(ModFile.java:246) ~[loader-12.0.16.jar:12.0]
+	at net.neoforged.fml.loading.FMLLoader.close(FMLLoader.java:240) [loader-12.0.16.jar:12.0]
+	at net.neoforged.fml.loading.FMLLoader.create(FMLLoader.java:422) [loader-12.0.16.jar:12.0]
+	at net.neoforged.fml.startup.Entrypoint.startup(Entrypoint.java:65) [loader-12.0.16.jar:12.0]
+	at net.neoforged.fml.startup.Client.main(Client.java:17) [loader-12.0.16.jar:12.0]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[?:?]
+	at net.neoforged.devlaunch.Main.main(Main.java:57) [DevLaunch-1.0.2.jar:?]
+[21Nov2026 08:06:00.858] [main/ERROR] [net.neoforged.fml.loading.modscan.BackgroundScanHandler/SCAN]: An error occurred scanning file jar(mods/iris-neoforge-1.11.7+mc26.3.jar) > jar(mods/iris-neoforge-1.11.7+mc26.3.jar > antlr4-runtime-4.13.1.jar)
+java.util.concurrent.CancellationException
+	at java.base/java.util.concurrent.CompletableFuture.cancel(CompletableFuture.java:2552) ~[?:?]
+	at net.neoforged.fml.loading.moddiscovery.ModFile.close(ModFile.java:246) ~[loader-12.0.16.jar:12.0]
+	at net.neoforged.fml.loading.FMLLoader.close(FMLLoader.java:243) [loader-12.0.16.jar:12.0]
+	at net.neoforged.fml.loading.FMLLoader.create(FMLLoader.java:422) [loader-12.0.16.jar:12.0]
+	at net.neoforged.fml.startup.Entrypoint.startup(Entrypoint.java:65) [loader-12.0.16.jar:12.0]
+	at net.neoforged.fml.startup.Client.main(Client.java:17) [loader-12.0.16.jar:12.0]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[?:?]
+	at net.neoforged.devlaunch.Main.main(Main.java:57) [DevLaunch-1.0.2.jar:?]
+[21Nov2026 08:06:00.863] [main/ERROR] [net.neoforged.fml.loading.modscan.BackgroundScanHandler/SCAN]: An error occurred scanning file jar(mods/iris-neoforge-1.11.7+mc26.3.jar) > jar(mods/iris-neoforge-1.11.7+mc26.3.jar > glsl-transformer-3.0.0-pre3.jar)
+java.util.concurrent.CancellationException
+	at java.base/java.util.concurrent.CompletableFuture.cancel(CompletableFuture.java:2552) ~[?:?]
+	at net.neoforged.fml.loading.moddiscovery.ModFile.close(ModFile.java:246) ~[loader-12.0.16.jar:12.0]
+	at net.neoforged.fml.loading.FMLLoader.close(FMLLoader.java:243) [loader-12.0.16.jar:12.0]
+	at net.neoforged.fml.loading.FMLLoader.create(FMLLoader.java:422) [loader-12.0.16.jar:12.0]
+	at net.neoforged.fml.startup.Entrypoint.startup(Entrypoint.java:65) [loader-12.0.16.jar:12.0]
+	at net.neoforged.fml.startup.Client.main(Client.java:17) [loader-12.0.16.jar:12.0]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[?:?]
+	at net.neoforged.devlaunch.Main.main(Main.java:57) [DevLaunch-1.0.2.jar:?]
+[21Nov2026 08:06:00.866] [main/ERROR] [net.neoforged.fml.loading.modscan.BackgroundScanHandler/SCAN]: An error occurred scanning file composite(filtered(jar(/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar))) > jar(/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar > mixinextras-neoforge-0.5.5.jar)
+java.util.concurrent.CancellationException
+	at java.base/java.util.concurrent.CompletableFuture.cancel(CompletableFuture.java:2552) ~[?:?]
+	at net.neoforged.fml.loading.moddiscovery.ModFile.close(ModFile.java:246) ~[loader-12.0.16.jar:12.0]
+	at net.neoforged.fml.loading.FMLLoader.close(FMLLoader.java:246) [loader-12.0.16.jar:12.0]
+	at net.neoforged.fml.loading.FMLLoader.create(FMLLoader.java:422) [loader-12.0.16.jar:12.0]
+	at net.neoforged.fml.startup.Entrypoint.startup(Entrypoint.java:65) [loader-12.0.16.jar:12.0]
+	at net.neoforged.fml.startup.Client.main(Client.java:17) [loader-12.0.16.jar:12.0]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[?:?]
+	at net.neoforged.devlaunch.Main.main(Main.java:57) [DevLaunch-1.0.2.jar:?]
+[21Nov2026 08:06:00.871] [main/INFO] [net.neoforged.fml.ModLoader/]: Clearing ModLoader
+[21Nov2026 08:06:00.874] [main/ERROR] [net.neoforged.fml.startup.Entrypoint/]: Failed to start FML: net.neoforged.fml.ModLoadingException: Loading errors encountered:
+	- Mod sodium is incompatible with iris below 1.12.1
+	  Currently, iris is 1.11.7+mc26.3
+	  The reason is: This version of Iris is incompatible with this version of Sodium. Please update Iris.
+
+	at net.neoforged.fml.loading.FMLLoader.create(FMLLoader.java:363)
+	at net.neoforged.fml.startup.Entrypoint.startup(Entrypoint.java:65)
+	at net.neoforged.fml.startup.Client.main(Client.java:17)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at net.neoforged.devlaunch.Main.main(Main.java:57)
+
