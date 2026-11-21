@@ -762,6 +762,11 @@ public final class UiProbe {
                                     // a bolt in flight, as the Blazeling fires them
                                     lethal.setDeltaMovement(0.5, 0, 0);
                                     sl.addFreshEntity(lethal);
+                                    report.add(
+                                            "INFO soulwake second bolt: owner=" + lethal.getOwner()
+                                                    + " summoner=" + pet.summoner()
+                                                    + " valid=" + (pet.summoner() != null && pet.validTarget(pet.summoner(), boltTarget))
+                                                    + " canHit=" + boltTarget.isAttackable() + "/" + boltTarget.isInvulnerable());
                                     method.invoke(
                                             lethal,
                                             new net.minecraft.world.phys.EntityHitResult(
@@ -781,6 +786,11 @@ public final class UiProbe {
                                                                     p.getBoundingBox().inflate(16))
                                                             .size()
                                                     == 2);
+                                    if (boltTarget.isAlive())
+                                        report.add(
+                                                "INFO soulwake direct fireball hurt="
+                                                        + boltTarget.hurtServer(sl, sl.damageSources().fireball(lethal, p), 5)
+                                                        + " alive=" + boltTarget.isAlive());
                                     var block = p.blockPosition().offset(0, 2, 6);
                                     var prior = sl.getBlockState(block);
                                     var impact =
