@@ -93,7 +93,7 @@ public final class ClientMobility {
         var mc = Minecraft.getInstance();
         var p = mc.player;
         if (p == null || hook.getOwner() != p) return;
-        if (p.input.jumping && !jumpWas && !p.onGround() && mc.gameMode != null) {
+        if (p.input.keyPresses.jump() && !jumpWas && !p.onGround() && mc.gameMode != null) {
             if (Traits.has(Manipulator.stack(p), "gravitic.freeflight")
                     && p.distanceToSqr(hook) > 4) freeUntil = p.level().getGameTime() + 100;
             mc.gameMode.releaseUsingItem(p);
@@ -137,11 +137,11 @@ public final class ClientMobility {
         if (gravity != net.minecraft.core.Direction.DOWN) {
             var moved = p.position().subtract(p.xo, p.yo, p.zo);
             double h = MovementPhysics.local(p, moved).horizontalDistance();
-            p.walkDist = p.walkDistO + (float) h * .6f;
-            float f = p.onGround() && !p.isDeadOrDying() ? (float) Math.min(.1, h) : 0;
-            p.bob = p.oBob + (f - p.oBob) * .4f;
+            // 26.3: the walk distance lives in the avatar state; vanilla has already added the
+            // world-horizontal part this tick, so add the difference (bob keeps vanilla's: TODO port)
+            p.avatarState().addWalkDistance((float) (h - moved.horizontalDistance()) * .6f);
         }
-        boolean jump = mc.screen == null && mc.options.keyJump.isDown();
+        boolean jump = mc.gui.screen() == null && mc.options.keyJump.isDown();
         int motion =
                 (jump ? 1 : 0)
                         | (p.isShiftKeyDown() ? 2 : 0)
@@ -196,7 +196,7 @@ public final class ClientMobility {
         // Pile Driver: Sneak on real ground charges a jump (full in 1 s); jumping unleashes it, up
         // to about three times as high. A short Sneak doesn't count; the charge waits a moment
         // after Sneak is let go.
-        boolean sneaking = mc.screen == null && mc.options.keyShift.isDown();
+        boolean sneaking = mc.gui.screen() == null && mc.options.keyShift.isDown();
         if (Traits.has(st, "pneumatic.ground_slam")) {
             if (sneaking && realGround) {
                 jumpCharge = Math.min(JUMP_CHARGE_FULL, jumpCharge + 1);
@@ -332,7 +332,7 @@ public final class ClientMobility {
         // Airwalk: walking off a ledge keeps your height on an invisible floor. Jumping drops it.
         // Tap Sneak to step one block down; hold Sneak to fall until you let go, where a
         // new floor appears under you.
-        boolean sneak = mc.screen == null && mc.options.keyShift.isDown();
+        boolean sneak = mc.gui.screen() == null && mc.options.keyShift.isDown();
         if (Traits.has(st, "gravitic.airwalk")
                 && !p.getAbilities().flying
                 && !p.isFallFlying()

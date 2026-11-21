@@ -1,12 +1,9 @@
 package com.ethermod.client;
 
-import com.mojang.blaze3d.platform.Lighting;
 
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.world.item.ItemDisplayContext;
-
 import org.joml.Quaternionf;
+
 
 /** The Manipulator on its turntable: idle spin, drag-to-turn with coasting, double-click level. */
 final class KModelView {
@@ -81,23 +78,7 @@ final class KModelView {
             yaw += vy * (float) dt;
             pitch += (0 - pitch) * (1 - (float) Math.pow(.985, dt * 60));
         }
-        g.pose().pushMatrix();
-        g.pose().translate(40, 43, 130);
-        g.pose().scale(46, -46, 46);
-        g.pose().mulPose(new Quaternionf().rotateX(.25f + pitch).rotateY(yaw));
-        Lighting.setupFor3DItems();
-        ui.mc
-                .getItemRenderer()
-                .renderStatic(
-                        ui.stack,
-                        ItemDisplayContext.FIXED,
-                        0xf000f0,
-                        OverlayTexture.NO_OVERLAY,
-                        g.pose(),
-                        g.bufferSource(),
-                        ui.mc.level,
-                        0);
-        Lighting.setupFor3DItems();
-        g.pose().popMatrix();
+        // (26.3: drawn into its own texture, see KModelPip) centre 40, 43, 46 px per block
+        if (ui.stack != null && !ui.stack.isEmpty()) KModelPip.submit(g, ui.stack, 40, 43, 40, 43, 46, pitch, yaw);
     }
 }

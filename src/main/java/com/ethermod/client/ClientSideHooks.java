@@ -21,6 +21,20 @@ final class ClientSideHooks extends SideHooks {
     }
 
     @Override
+    public void manipulatorRenderer(java.util.function.Consumer<com.geckolib.animatable.client.GeoRenderProvider> consumer) {
+        consumer.accept(
+                new com.geckolib.animatable.client.GeoRenderProvider() {
+                    private ManipulatorItemRenderer renderer;
+
+                    @Override
+                    public ManipulatorItemRenderer getGeoItemRenderer() {
+                        if (renderer == null) renderer = new ManipulatorItemRenderer();
+                        return renderer;
+                    }
+                });
+    }
+
+    @Override
     public AnimationController<EtherManipulatorItem> manipulatorController(EtherManipulatorItem item) {
         return ManipulatorAnimations.controller(item);
     }

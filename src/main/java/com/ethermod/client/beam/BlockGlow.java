@@ -8,7 +8,6 @@ import com.ethermod.trait.Traits;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Player;
@@ -77,7 +76,6 @@ public final class BlockGlow {
             Vec3 camPos,
             float time,
             float pt,
-            MultiBufferSource.BufferSource buf,
             Matrix4f m) {
         long now = mc.level.getGameTime();
         if (!com.ethermod.config.ClientConfig.minedGlow()) return;

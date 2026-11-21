@@ -10,7 +10,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -87,19 +86,24 @@ public final class BeamRenderer {
      * everything recorded this frame is drawn at once.
      */
     @SubscribeEvent
-    public static void onRenderLevel(RenderLevelStageEvent event) {
+    public static void onAfterSky(RenderLevelStageEvent.AfterSky event) {
         // Shader packs fire these again for the shadow map, from the sun's view: drawing
         // there made a second beam come out of the sky (see ShaderCompat)
         if (com.ethermod.client.ShaderCompat.inShadowPass()) return;
-        RenderLevelStageEvent.Stage stage = event.getStage();
-        if (stage == RenderLevelStageEvent.Stage.AFTER_SKY) {
-            com.ethermod.client.Fx.beginFrame();
-        } else if (stage == RenderLevelStageEvent.Stage.AFTER_BLOCK_ENTITIES) {
-            com.ethermod.client.Fx.captureDepth();
-        }
-        if (stage == com.ethermod.client.Fx.drawStage()) {
-            com.ethermod.client.Fx.drawFrame(event, () -> produceWorldFx(event));
-        }
+        com.ethermod.client.Fx.beginFrame();
+    }
+
+    /** Solid blocks, entities and block entities are drawn: the effects' depth is taken here. */
+    @SubscribeEvent
+    public static void onAfterOpaqueFeatures(RenderLevelStageEvent.AfterOpaqueFeatures event) {
+        if (com.ethermod.client.ShaderCompat.inShadowPass()) return;
+        com.ethermod.client.Fx.captureDepth();
+    }
+
+    @SubscribeEvent
+    public static void onAfterLevel(RenderLevelStageEvent.AfterLevel event) {
+        if (com.ethermod.client.ShaderCompat.inShadowPass()) return;
+        com.ethermod.client.Fx.drawFrame(event.getModelViewMatrix(), () -> produceWorldFx(event));
     }
 
     /** Records the beam, glows, markers and sparks for this frame. */
@@ -113,17 +117,16 @@ public final class BeamRenderer {
         float dt = Math.min(0.1f, (now - lastNanos) / 1_000_000_000f);
         lastNanos = now;
 
-        Camera camera = mc.gameRenderer.getMainCamera();
-        Vec3 camPos = camera.getPosition();
-        Vec3 camLeft = new Vec3(camera.getLeftVector());
-        float pt = event.getPartialTick().getGameTimeDeltaPartialTick(false);
+        Camera camera = mc.gameRenderer.mainCamera();
+        Vec3 camPos = camera.position();
+        Vec3 camLeft = new Vec3(camera.leftVector());
+        float pt = mc.getDeltaTracker().getGameTimeDeltaPartialTick(false);
         float time = (float) (mc.level.getGameTime() + pt);
-        Matrix4f proj = event.getProjectionMatrix();
-        Matrix4f view = event.getModelViewMatrix();
+        Matrix4f proj = new Matrix4f(event.getLevelRenderState().cameraRenderState.projectionMatrix);
+        Matrix4f view = new Matrix4f(event.getModelViewMatrix());
 
         // Effects are recorded camera-relative, without the camera rotation
         PoseStack ps = new PoseStack();
-        MultiBufferSource.BufferSource buf = mc.renderBuffers().bufferSource();
         Matrix4f m = ps.last().pose();
 
         boolean fp = mc.options.getCameraType().isFirstPerson() && mc.getCameraEntity() == player;
@@ -138,10 +141,10 @@ public final class BeamRenderer {
 
         ItemStack held = player.getMainHandItem();
         if (held.getItem() instanceof EtherManipulatorItem) {
-            renderLocal(mc, player, held, camPos, pt, time, dt, ps, buf, m);
+            renderLocal(mc, player, held, camPos, pt, time, dt, ps, m);
             ElementFx.frame(mc, player, held, nozzle, barrel, camPos, time, dt, pt, com.ethermod.client.Fx.glow(), m);
-            BlockGlow.render(mc, player, held, camPos, time, pt, buf, m);
-            OreSense.render(mc, player, held, camPos, time, buf, m);
+            BlockGlow.render(mc, player, held, camPos, time, pt, m);
+            OreSense.render(mc, player, held, camPos, time, m);
         } else if (lastBeamState) {
             lastBeamState = false;
             BeamRenderState.clearBeam();
@@ -150,7 +153,8 @@ public final class BeamRenderer {
         VertexConsumer vc = com.ethermod.client.Fx.glow();
         renderRemote(mc, camPos, pt, time, dt, proj, view, vc, m);
 
-        ModuleMarkers.render(mc, camPos, camLeft, time, buf, m);
+        ModuleMarkers.render(mc, camPos, camLeft, time, m);
+        com.ethermod.client.AirwalkTiles.record(mc, camPos, pt);
         LeftClickFx.render(mc, camPos, pt, time, vc, m);
         com.ethermod.client.StasisFx.renderArrows(mc, camPos, pt, time, vc, m);
         if (held.getItem() instanceof EtherManipulatorItem)
@@ -172,7 +176,6 @@ public final class BeamRenderer {
             float time,
             float dt,
             PoseStack ps,
-            MultiBufferSource.BufferSource buf,
             Matrix4f m) {
         boolean beamOn = BeamRenderState.beamActive;
         float[] color = com.ethermod.item.ManipulatorColors.beamRgba(held);
@@ -182,7 +185,7 @@ public final class BeamRenderer {
             // far enough out that it doesn't clip into the model or the beam.
             Vec3 c = orbAnchor(BeamBallRenderer.previewRadius(), camPos);
             BeamBallRenderer.renderPreview(
-                    ps, buf, c.subtract(camPos), BeamRenderState.chargePhase, time, 1f, Vec3.ZERO);
+                    ps, c.subtract(camPos), BeamRenderState.chargePhase, time, 1f, Vec3.ZERO);
         }
 
         if (beamOn) {
@@ -203,7 +206,7 @@ public final class BeamRenderer {
             localTip = rawHit;
 
             if (com.ethermod.item.OrbMode.get(held) == com.ethermod.item.OrbMode.LIGHT) {
-                lightBeacon(mc, buf, m, camPos, nozzle, localTip, extend, time, color);
+                lightBeacon(mc, m, camPos, nozzle, localTip, extend, time, color);
             } else {
                 BeamCurve.drawBeam(
                         player.getId(),
@@ -273,7 +276,7 @@ public final class BeamRenderer {
             Vec3 fromW = nb != null ? nb[0] : BeamCurve.approximateMuzzle(p, pt);
             boolean hitSomething = hit.getType() != HitResult.Type.MISS;
             if (com.ethermod.item.OrbMode.get(held) == com.ethermod.item.OrbMode.LIGHT) {
-                lightBeacon(mc, mc.renderBuffers().bufferSource(), m, camPos, fromW, toW, Math.min(1f, heldTicks / 2.5f), time, color);
+                lightBeacon(mc, m, camPos, fromW, toW, Math.min(1f, heldTicks / 2.5f), time, color);
                 BeamImpact.spawnImpactFx(level, hit, toW, fromW, color, lvl, dt, hitSomething, p.getId());
                 continue;
             }
@@ -298,9 +301,9 @@ public final class BeamRenderer {
 
     /** Photonic's beacon in place of the beam (vanilla's beacon columns, FX bench), with a mote of light every 8 ticks. */
     private static void lightBeacon(
-            Minecraft mc, MultiBufferSource.BufferSource buf, Matrix4f m, Vec3 camPos, Vec3 fromW, Vec3 toW, float extend, float time, float[] color) {
+            Minecraft mc, Matrix4f m, Vec3 camPos, Vec3 fromW, Vec3 toW, float extend, float time, float[] color) {
         Vec3 to = fromW.lerp(toW, extend);
-        LightBeacon.draw(buf, m, fromW.subtract(camPos), to.subtract(camPos), time, color);
+        LightBeacon.draw(m, fromW.subtract(camPos), to.subtract(camPos), time, color);
         long tick = (long) time;
         if (tick % 8 == 0 && tick != lastBeaconMote && !mc.isPaused()) {
             lastBeaconMote = tick;

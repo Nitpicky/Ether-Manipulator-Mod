@@ -35,7 +35,7 @@ public class ClientInputHandler {
     public static void onClientTick(ClientTickEvent.Post event) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.level == null) return;
-        if (mc.screen != null) {
+        if (mc.gui.screen() != null) {
             // Opening chat, the inventory or the K screen mid-press releases the left click:
             // the server has no timeout, so it would keep mining and spending Ether until close.
             if (wasBeamActive) {
@@ -94,8 +94,8 @@ public class ClientInputHandler {
             // When holding LMB on a non-attacking item, Minecraft still runs the
             // "swing" animation on the main hand. We reset it every tick so the
             // arm stays still while the beam is firing.
-            mc.player.swinging = false;
-            mc.player.swingTime = 0;
+            // 26.3: the swing state is private now; the port keeps the arm still with the
+            // item's swing animation instead (PORT-26.3.md, open items)
 
         } else {
             if (wasBeamActive) endLeftClick(signal);

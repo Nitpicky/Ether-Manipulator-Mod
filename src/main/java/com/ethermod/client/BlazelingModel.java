@@ -1,12 +1,12 @@
 package com.ethermod.client;
 
-import com.ethermod.entity.SoulBlazeling;
 
-import net.minecraft.client.model.HierarchicalModel;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.client.model.geom.*;
 import net.minecraft.client.model.geom.builders.*;
 
-public final class BlazelingModel extends HierarchicalModel<SoulBlazeling> {
+public final class BlazelingModel extends EntityModel<LivingEntityRenderState> {
     public static final ModelLayerLocation LAYER =
             new ModelLayerLocation(
                     net.minecraft.resources.Identifier.fromNamespaceAndPath(
@@ -36,12 +36,11 @@ public final class BlazelingModel extends HierarchicalModel<SoulBlazeling> {
         return LayerDefinition.create(mesh, 32, 32);
     }
 
-    public ModelPart root() {
-        return root;
-    }
 
-    public void setupAnim(
-            SoulBlazeling e, float limb, float amount, float age, float yaw, float pitch) {
+    @Override
+    public void setupAnim(LivingEntityRenderState state) {
+        super.setupAnim(state);
+        float yaw = state.yRot, pitch = state.xRot, age = state.ageInTicks;
         head.yRot = yaw * (float) Math.PI / 180;
         head.xRot = pitch * (float) Math.PI / 180;
         // Vanilla middle-ring angular speed, one ring with 120-degree spacing; retain source rod

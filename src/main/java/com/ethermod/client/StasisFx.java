@@ -6,10 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.client.renderer.entity.RenderLayerParent;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -142,20 +142,23 @@ public final class StasisFx {
     }
 
     /** Drawn over every living creature's model: the teal tint while held. */
-    public static final class Layer<T extends LivingEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
-        private final LivingEntityRenderer<T, M> parent;
+    public static final class Layer<S extends LivingEntityRenderState, M extends EntityModel<? super S>>
+            extends RenderLayer<S, M> {
+        private final LivingEntityRenderer<?, S, M> parent;
 
-        public Layer(LivingEntityRenderer<T, M> parent) {
-            super((RenderLayerParent<T, M>) parent);
+        public Layer(LivingEntityRenderer<?, S, M> parent) {
+            super(parent);
             this.parent = parent;
         }
 
         @Override
-        public void render(PoseStack pose, MultiBufferSource buf, int light, T e, float limb, float limbAmt, float pt, float age, float yaw, float pitch) {
+        public void submit(PoseStack pose, SubmitNodeCollector collector, int light, S state, float yRot, float xRot) {
             if (HELD.isEmpty()) return; // nothing held: skip the lookup for every creature drawn
-            float p = pulse(e, pt);
+            if (!(RenderStateEntities.of(state) instanceof LivingEntity e)) return;
+            float p = pulse(e, state.partialTick);
             if (p < 0) return;
             float strength = 0.25f + 0.35f * p;
+            var texture = parent.getTextureLocation(state);
             if (ShaderCompat.shadersActive()) {
                 // Shader packs turn the emissive translucent type see-through (see GlowMaskLayer):
                 // draw the model solid and full-bright instead, its colour pulled towards the teal
@@ -164,14 +167,14 @@ public final class StasisFx {
                         g = (int) (255 * (1 + (0xE9 / 255f - 1) * strength)),
                         b = (int) (255 * (1 + (0xC1 / 255f - 1) * strength));
                 int solid = 0xFF000000 | r << 16 | g << 8 | b;
-                var vc = buf.getBuffer(RenderType.entityCutoutNoCull(parent.getTextureLocation(e)));
-                getParentModel().renderToBuffer(pose, vc, 0xF000F0, OverlayTexture.NO_OVERLAY, solid);
+                collector.submitModel(getParentModel(), state, pose, RenderTypes.entityCutout(texture),
+                        0xF000F0, OverlayTexture.NO_OVERLAY, solid, null, 0);
                 return;
             }
             int a = (int) (255 * strength);
             int color = (a << 24) | 0x20E9C1; // Pneumatic teal
-            var vc = buf.getBuffer(RenderType.entityTranslucentEmissive(parent.getTextureLocation(e)));
-            getParentModel().renderToBuffer(pose, vc, 0xF000F0, OverlayTexture.NO_OVERLAY, color);
+            collector.submitModel(getParentModel(), state, pose, RenderTypes.entityTranslucentEmissive(texture),
+                    0xF000F0, OverlayTexture.NO_OVERLAY, color, null, 0);
         }
     }
 }

@@ -1,14 +1,9 @@
 package com.ethermod.client.beam;
 
 import com.ethermod.trait.Traits;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.blaze3d.vertex.VertexFormat;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderStateShard;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -35,22 +30,6 @@ final class OreSense {
     private static final int RADIUS = 8;
     private static final int MAX_ORES = 96;
 
-    static final RenderType XRAY =
-            RenderType.create(
-                    "ethermod_ore_sense",
-                    DefaultVertexFormat.POSITION_COLOR,
-                    VertexFormat.Mode.QUADS,
-                    1536,
-                    false,
-                    true,
-                    RenderType.CompositeState.builder()
-                            .setShaderState(RenderStateShard.RENDERTYPE_LIGHTNING_SHADER)
-                            .setTransparencyState(RenderStateShard.LIGHTNING_TRANSPARENCY)
-                            .setDepthTestState(RenderStateShard.NO_DEPTH_TEST)
-                            .setCullState(RenderStateShard.NO_CULL)
-                            .setWriteMaskState(RenderStateShard.COLOR_WRITE)
-                            .createCompositeState(false));
-
     private static final List<BlockPos> ores = new ArrayList<>();
 
     /** How strongly each ore glows, 0..1 (distance and blocks in the way). */
@@ -64,7 +43,6 @@ final class OreSense {
             ItemStack held,
             Vec3 camPos,
             float time,
-            MultiBufferSource.BufferSource buf,
             Matrix4f m) {
         if (!Traits.has(held, "tectonic.ore_sense")) return;
         long now = mc.level.getGameTime();
@@ -99,7 +77,7 @@ final class OreSense {
             }
         }
         if (ores.isEmpty()) return;
-        VertexConsumer vc = buf.getBuffer(XRAY);
+        VertexConsumer vc = com.ethermod.client.WorldDraw.buffer(com.ethermod.client.ModPipelines.WORLD_XRAY);
         float pulse = (float) (0.8 + 0.2 * Math.sin(time * 0.15));
         for (int i = 0; i < ores.size(); i++) {
             BlockPos p = ores.get(i);
@@ -110,7 +88,6 @@ final class OreSense {
             float x1 = x0 + 0.8f, y1 = y0 + 0.8f, z1 = z0 + 0.8f;
             box(vc, m, x0, y0, z0, x1, y1, z1, 255, 220, 120, a);
         }
-        buf.endBatch(XRAY);
     }
 
     private static void box(

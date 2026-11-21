@@ -108,7 +108,7 @@ final class KDyePalette {
                                             label(
                                                     Lang.tr(
                                                             "gui.ethermod.requires_item",
-                                                            DyeItem.byColor(DYES[k - 1])
+                                                            net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(net.minecraft.resources.Identifier.withDefaultNamespace(DYES[k - 1].getName() + "_dye"))
                                                                     .getDescription()
                                                                     .getString()),
                                                     colour))
@@ -142,7 +142,7 @@ final class KDyePalette {
     }
 
     private int dyeInventory(KUi ui, DyeColor dye) {
-        var items = ui.mc.player.getInventory().items;
+        var items = ui.mc.player.getInventory().getNonEquipmentItems();
         for (int i = 0; i < items.size(); i++)
             if (items.get(i).getItem() instanceof DyeItem && items.get(i).get(net.minecraft.core.component.DataComponents.DYE) == dye) return i;
         return -1;

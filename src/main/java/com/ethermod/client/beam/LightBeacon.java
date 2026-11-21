@@ -1,12 +1,6 @@
 package com.ethermod.client.beam;
 
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.blaze3d.vertex.VertexFormat;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderStateShard;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.blockentity.BeaconRenderer;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -29,26 +23,11 @@ final class LightBeacon {
     private static final float PX = BeamFx.PX;
     private static final float SCALE = 0.3f, R1 = 0.2f * SCALE, R2 = 0.25f * SCALE;
 
-    /** Vanilla's beacon beam texture through the beacon program, added (lightning blend), no depth write. */
-    private static final RenderType COLUMN =
-            RenderType.create(
-                    "ethermod_light_beacon",
-                    DefaultVertexFormat.BLOCK,
-                    VertexFormat.Mode.QUADS,
-                    1536,
-                    false,
-                    true,
-                    RenderType.CompositeState.builder()
-                            .setShaderState(RenderStateShard.RENDERTYPE_BEACON_BEAM_SHADER)
-                            .setTextureState(
-                                    new RenderStateShard.TextureStateShard(
-                                            BeaconRenderer.BEAM_LOCATION, false, false))
-                            .setTransparencyState(RenderStateShard.LIGHTNING_TRANSPARENCY)
-                            .setCullState(RenderStateShard.NO_CULL)
-                            .setWriteMaskState(RenderStateShard.COLOR_WRITE)
-                            .createCompositeState(false));
+    /** Vanilla's beacon beam texture, added as light, no depth write (ModPipelines.WORLD_BEACON). */
+    private static final net.minecraft.resources.Identifier BEAM_TEXTURE =
+            net.minecraft.resources.Identifier.withDefaultNamespace("textures/entity/beacon_beam.png");
 
-    static void draw(MultiBufferSource.BufferSource buf, Matrix4f m, Vec3 from, Vec3 to, float time, float[] color) {
+    static void draw(Matrix4f m, Vec3 from, Vec3 to, float time, float[] color) {
         Vec3 d = to.subtract(from);
         double len = d.length();
         if (len < 0.02) return;
@@ -63,10 +42,9 @@ final class LightBeacon {
         float f2 = (time % 40f);
         float frac = f2 * 0.2f - (float) Math.floor(f2 * 0.1f);
         frac -= (float) Math.floor(frac);
-        VertexConsumer vc = buf.getBuffer(COLUMN);
+        VertexConsumer vc = com.ethermod.client.WorldDraw.buffer(com.ethermod.client.ModPipelines.WORLD_BEACON, BEAM_TEXTURE, true);
         column(vc, m, from, dir, u, v, len, R1, Math.toRadians(f2 * 2.25 - 45), frac, 0.2f, wr, wg, wb, 0.32f);
         column(vc, m, from, dir, u, v, len, R2, Math.toRadians(-45), frac, 0.25f, wr, wg, wb, 0.1f);
-        buf.endBatch(COLUMN);
 
         // the mod's touch
         VertexConsumer g = com.ethermod.client.Fx.glow();

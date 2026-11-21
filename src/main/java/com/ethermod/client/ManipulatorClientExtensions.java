@@ -3,7 +3,6 @@ package com.ethermod.client;
 import com.ethermod.client.event.ClientInputHandler;
 
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -12,21 +11,13 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 
 /**
- * Client item extensions for Ether Manipulator. Provides GeckoLib renderer and bow-draw arm pose
+ * Client item extensions for Ether Manipulator. Provides the bow-draw arm pose (the GeckoLib renderer comes from EtherManipulatorItem.createGeoRenderer)
  * (no applyForgeHandTransform).
  */
 @OnlyIn(Dist.CLIENT)
 public class ManipulatorClientExtensions implements IClientItemExtensions {
 
     public static final ManipulatorClientExtensions INSTANCE = new ManipulatorClientExtensions();
-    private ManipulatorItemRenderer renderer;
-
-    @Override
-    public BlockEntityWithoutLevelRenderer getCustomRenderer() {
-        if (this.renderer == null) this.renderer = new ManipulatorItemRenderer();
-        return this.renderer;
-    }
-
     @Override
     public HumanoidModel.ArmPose getArmPose(
             LivingEntity entity, InteractionHand hand, ItemStack stack) {

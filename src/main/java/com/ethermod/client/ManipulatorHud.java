@@ -53,7 +53,7 @@ public final class ManipulatorHud {
 
     public static void render(GuiGraphicsExtractor g, DeltaTracker delta) {
         Minecraft mc = Minecraft.getInstance();
-        if (mc.player == null || mc.options.hideGui || !Manipulator.isSummoned(mc.player)) {
+        if (mc.player == null || !Manipulator.isSummoned(mc.player)) {
             current = null;
             open = 0;
             return;

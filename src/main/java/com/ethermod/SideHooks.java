@@ -34,6 +34,9 @@ public class SideHooks {
         return null;
     }
 
+    /** Hands GeckoLib the item's renderer (client); nothing on a server. */
+    public void manipulatorRenderer(java.util.function.Consumer<com.geckolib.animatable.client.GeoRenderProvider> consumer) {}
+
     /** The prong animation controller (client); null on a server, which animates nothing. */
     public AnimationController<EtherManipulatorItem> manipulatorController(EtherManipulatorItem item) {
         return null;

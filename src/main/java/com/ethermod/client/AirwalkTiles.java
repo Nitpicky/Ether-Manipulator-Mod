@@ -5,14 +5,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,11 +31,9 @@ public final class AirwalkTiles {
 
     private static final float FADE_IN = .12f, FADE_OUT = .45f; // seconds
 
-    @SubscribeEvent
-    public static void render(RenderLevelStageEvent ev) {
-        if (ev.getStage() != RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS) return;
+    /** Records this frame's tiles (camera-relative) for WorldDraw; called with the world's effects. */
+    public static void record(Minecraft mc, Vec3 cam, float partialTick) {
         if (ShaderCompat.inShadowPass()) return;
-        var mc = Minecraft.getInstance();
         var p = mc.player;
         long nanos = System.nanoTime();
         float dt = Math.min(.1f, (nanos - last) / 1e9f);
@@ -74,31 +68,21 @@ public final class AirwalkTiles {
         TILES.keySet().removeIf(c -> c.down() != down);
         if (TILES.isEmpty()) return;
 
-        Vec3 cam = ev.getCamera().getPosition();
-        PoseStack ps = ev.getPoseStack();
-        ps.pushPose();
+        PoseStack ps = new PoseStack();
         var pose = ps.last();
-        var buffers = mc.renderBuffers().bufferSource();
-        float time =
-                (mc.level.getGameTime() + ev.getPartialTick().getGameTimeDeltaPartialTick(false))
-                        * .1f;
+        float time = (mc.level.getGameTime() + partialTick) * .1f;
         // the pane: pale glass with a firmer rim (writes depth, drawn once: the render type
         // shows both sides, so a second face on the same plane would fight with the first)
-        RenderType paneType = RenderType.entityTranslucent(PANE);
-        VertexConsumer pane = buffers.getBuffer(paneType);
+        VertexConsumer pane = WorldDraw.buffer(ModPipelines.WORLD_PANE, PANE, false);
         for (var e : TILES.entrySet())
             tile(pane, pose, e.getKey(), e.getValue(), up, cam, time, .002, 236, 228, 255, 230, false);
-        buffers.endBatch(paneType);
         // the veins: the rim again in Gravitic purple, additive and full bright, which shader
         // packs treat as emissive; lifted a little more so it never ties with the pane
-        RenderType veinType = RenderType.eyes(VEINS);
-        VertexConsumer veins = buffers.getBuffer(veinType);
+        VertexConsumer veins = WorldDraw.buffer(ModPipelines.WORLD_VEINS, VEINS, false);
         int col = com.ethermod.item.OrbMode.TETHER.color;
         for (var e : TILES.entrySet())
             tile(veins, pose, e.getKey(), e.getValue(), up, cam, time, .006,
                     col >> 16 & 255, col >> 8 & 255, col & 255, 255, true);
-        buffers.endBatch(veinType);
-        ps.popPose();
     }
 
     private static final Identifier PANE =
@@ -139,7 +123,7 @@ public final class AirwalkTiles {
                     .setColor(r, g, b, alpha)
                     .setUv(uv[i][0], uv[i][1])
                     .setOverlay(OverlayTexture.NO_OVERLAY)
-                    .setLight(LightTexture.FULL_BRIGHT)
+                    .setLight(0xF000F0)
                     .setNormal(pose, (float) up.x, (float) up.y, (float) up.z);
         }
     }

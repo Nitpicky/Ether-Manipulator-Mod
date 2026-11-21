@@ -5,7 +5,6 @@ import com.ethermod.network.payload.ModulePayloads;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -28,13 +27,12 @@ final class ModuleMarkers {
             Vec3 camPos,
             Vec3 camLeft,
             float time,
-            MultiBufferSource.BufferSource buf,
             Matrix4f m) {
-        renderTrail(camPos, time, buf, m);
+        renderTrail(camPos, time, m);
     }
 
     private static void renderTrail(
-            Vec3 camPos, float time, MultiBufferSource.BufferSource buf, Matrix4f m) {
+            Vec3 camPos, float time, Matrix4f m) {
         float alpha = ClientMobility.trailAlpha;
         if (alpha <= 0 || ClientMobility.TRAIL.size() < 2) return;
         VertexConsumer vc = com.ethermod.client.Fx.glow();

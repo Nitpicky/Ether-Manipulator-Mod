@@ -1,5 +1,4 @@
 {
-  "parent": "builtin/entity",
   "display": {
     "thirdperson_righthand": {
       "rotation": [
@@ -105,5 +104,8 @@
         0
       ]
     }
+  },
+  "textures": {
+    "particle": "ethermod:item/ether_manipulator"
   }
 }

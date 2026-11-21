@@ -81,7 +81,7 @@ final class KLoadoutList {
         rename.setY(setRowY(renaming - setScroll) + (setRowHeight(renaming - setScroll) - 9) / 2);
         g.pose().pushMatrix();
         g.nextStratum();
-        rename.render(g, ui.mx, ui.my, pt);
+        rename.extractRenderState(g, ui.mx, ui.my, pt);
         g.pose().popMatrix();
     }
 

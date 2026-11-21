@@ -16,22 +16,19 @@ import net.neoforged.neoforge.common.NeoForge;
 @EventBusSubscriber(modid = EtherMod.MODID, value = Dist.CLIENT)
 public class ClientEvents {
 
-    /** The gem glint's grey copy of the vanilla glint is rebuilt whenever resources reload. */
+    /** The K-screen turntable (GUI 3D is a picture in picture in 26.3). */
     @SubscribeEvent
-    public static void onReloadListeners(net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent event) {
-        event.registerReloadListener(
-                (net.minecraft.server.packs.resources.ResourceManagerReloadListener)
-                        com.ethermod.client.GemGlint::rebuildTexture);
-        // recoloured body textures and the upgrade screen's assets follow pack changes too
-        event.registerReloadListener(
-                (net.minecraft.server.packs.resources.ResourceManagerReloadListener)
-                        manager -> com.ethermod.client.ClientReload.onReload());
+    public static void onRegisterPip(net.neoforged.neoforge.client.event.RegisterPictureInPictureRenderersEvent event) {
+        event.register(com.ethermod.client.KModelPip.State.class, com.ethermod.client.KModelPip::new);
     }
 
-    /** The tinted gem glints get fixed buffers so they draw after the items (GemGlint). */
+    /** Recoloured body textures and the upgrade screen's assets follow pack changes. */
     @SubscribeEvent
-    public static void onRenderBuffers(net.neoforged.neoforge.client.event.RegisterRenderBuffersEvent event) {
-        com.ethermod.client.GemGlint.all().forEach(event::registerRenderBuffer);
+    public static void onReloadListeners(net.neoforged.neoforge.client.event.AddClientReloadListenersEvent event) {
+        event.addListener(
+                net.minecraft.resources.Identifier.fromNamespaceAndPath(EtherMod.MODID, "client_reload"),
+                (net.minecraft.server.packs.resources.ResourceManagerReloadListener)
+                        manager -> com.ethermod.client.ClientReload.onReload());
     }
 
     @SubscribeEvent
@@ -65,7 +62,6 @@ public class ClientEvents {
         NeoForge.EVENT_BUS.register(ManipulatorKeys.class);
         NeoForge.EVENT_BUS.register(com.ethermod.client.ModeWheel.class);
         NeoForge.EVENT_BUS.register(com.ethermod.client.ClientMobility.class);
-        NeoForge.EVENT_BUS.register(com.ethermod.client.AirwalkTiles.class);
         com.ethermod.trait.RapidsCurrents.clientLevel =
                 () -> net.minecraft.client.Minecraft.getInstance().level;
         NeoForge.EVENT_BUS.register(com.ethermod.client.GravityRender.class);
@@ -94,7 +90,7 @@ public class ClientEvents {
             if (event.getRenderer(type) instanceof net.minecraft.client.renderer.entity.LivingEntityRenderer r)
                 r.addLayer(new com.ethermod.client.StasisFx.Layer(r));
         for (var skin : event.getSkins())
-            if (event.getSkin(skin) instanceof net.minecraft.client.renderer.entity.LivingEntityRenderer r)
+            if (event.getPlayerRenderer(skin) instanceof net.minecraft.client.renderer.entity.LivingEntityRenderer r)
                 r.addLayer(new com.ethermod.client.StasisFx.Layer(r));
     }
 

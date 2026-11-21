@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "ethermod:item/ether_manipulator",
+    "model": {
+      "type": "geckolib:geckolib"
+    }
+  }
+}

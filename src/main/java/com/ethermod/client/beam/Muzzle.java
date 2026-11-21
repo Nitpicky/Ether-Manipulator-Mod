@@ -1,12 +1,11 @@
 package com.ethermod.client.beam;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
 import org.joml.Matrix4f;
+import org.joml.Matrix4fc;
 import org.joml.Vector4f;
 
 import java.util.HashMap;
@@ -37,8 +36,12 @@ public final class Muzzle {
     /** How far ahead of the nozzle the barrel direction is sampled, in blocks. */
     private static final float BARREL_PROBE = 0.25f;
 
-    /** One sample: the nozzle and a point further along the barrel. */
-    private record Sample(float x0, float y0, float d0, float x1, float y1, float d1, long frame) {}
+    /**
+     * One sample: the nozzle and a point further along the barrel. First person: screen x, y and
+     * view depth. Third person: camera-relative world points (26.3 draws the world un-rotated, the
+     * camera's turn lives in the view matrix).
+     */
+    private record Sample(float x0, float y0, float d0, float x1, float y1, float d1, long frame, boolean screen) {}
 
     private static Sample firstPerson;
     private static final Map<Integer, Sample> thirdPerson = new HashMap<>();
@@ -60,29 +63,31 @@ public final class Muzzle {
     }
 
     /**
-     * Records the nozzle while the model is drawn. {@code pose} is the bone's parent matrix; {@code
+     * Records the nozzle while the model is submitted. {@code pose} is the bone's matrix; {@code
      * px, py, pz} the bone pivot in blocks.
      */
-    public static void capture(
-            Matrix4f pose, float px, float py, float pz, boolean firstPersonView) {
-        Matrix4f pv =
-                new Matrix4f(RenderSystem.getProjectionMatrix())
-                        .mul(RenderSystem.getModelViewMatrix());
-        Matrix4f mv = RenderSystem.getModelViewMatrix();
-        float[] a = project(pv, mv, pose, px, py, pz);
-        float[] b = project(pv, mv, pose, px, py, pz - BARREL_PROBE);
-        if (a == null || b == null) return;
-        Sample s = new Sample(a[0], a[1], a[2], b[0], b[1], b[2], frame);
-        if (firstPersonView) firstPerson = s;
-        else if (renderingPlayer >= 0) thirdPerson.put(renderingPlayer, s);
+    public static void capture(Matrix4fc pose, float px, float py, float pz, boolean firstPersonView) {
+        Vector4f a = new Vector4f(px, py, pz, 1f).mul(pose);
+        Vector4f b = new Vector4f(px, py, pz - BARREL_PROBE, 1f).mul(pose);
+        if (firstPersonView) {
+            // the hand is drawn in view space with the plain FOV option (no sprint or Speed widening)
+            var mc = net.minecraft.client.Minecraft.getInstance();
+            var window = mc.getWindow();
+            float aspect = window.getWidth() / (float) Math.max(1, window.getHeight());
+            Matrix4f handProj =
+                    new Matrix4f()
+                            .perspective(
+                                    (float) Math.toRadians(mc.options.fov().get()), aspect, 0.05f, 1000f);
+            float[] sa = project(handProj, a), sb = project(handProj, b);
+            if (sa == null || sb == null) return;
+            firstPerson = new Sample(sa[0], sa[1], sa[2], sb[0], sb[1], sb[2], frame, true);
+        } else if (renderingPlayer >= 0)
+            thirdPerson.put(renderingPlayer, new Sample(a.x, a.y, a.z, b.x, b.y, b.z, frame, false));
     }
 
-    private static float[] project(
-            Matrix4f pv, Matrix4f mv, Matrix4f pose, float x, float y, float z) {
-        Vector4f local = new Vector4f(x, y, z, 1f).mul(pose);
-        Vector4f clip = new Vector4f(local).mul(pv);
+    private static float[] project(Matrix4f proj, Vector4f view) {
+        Vector4f clip = new Vector4f(view).mul(proj);
         if (clip.w <= 1e-4f) return null;
-        Vector4f view = new Vector4f(local).mul(mv);
         return new float[] {clip.x / clip.w, clip.y / clip.w, -view.z};
     }
 
@@ -95,10 +100,16 @@ public final class Muzzle {
         Sample s = firstPersonView ? firstPerson : thirdPerson.get(playerId);
         // first person is drawn after the world, so its sample is a frame old
         if (s == null || frame - s.frame > 3) return null;
-        Matrix4f invProj = new Matrix4f(proj).invert();
-        Matrix4f invView = new Matrix4f(modelView).invert();
-        Vec3 nozzle = unproject(invProj, invView, s.x0, s.y0, s.d0);
-        Vec3 ahead = unproject(invProj, invView, s.x1, s.y1, s.d1);
+        Vec3 nozzle, ahead;
+        if (s.screen) {
+            Matrix4f invProj = new Matrix4f(proj).invert();
+            Matrix4f invView = new Matrix4f(modelView).invert();
+            nozzle = unproject(invProj, invView, s.x0, s.y0, s.d0);
+            ahead = unproject(invProj, invView, s.x1, s.y1, s.d1);
+        } else {
+            nozzle = new Vec3(s.x0, s.y0, s.d0);
+            ahead = new Vec3(s.x1, s.y1, s.d1);
+        }
         if (nozzle == null || ahead == null) return null;
         Vec3 dir = ahead.subtract(nozzle);
         if (dir.lengthSqr() < 1e-8) return null;
@@ -108,8 +119,8 @@ public final class Muzzle {
     /** Screen point + view depth → camera-relative world point. */
     private static Vec3 unproject(
             Matrix4f invProj, Matrix4f invView, float x, float y, float depth) {
-        Vector4f near = new Vector4f(x, y, -1f, 1f).mul(invProj);
-        Vector4f far = new Vector4f(x, y, 1f, 1f).mul(invProj);
+        Vector4f near = new Vector4f(x, y, .25f, 1f).mul(invProj);
+        Vector4f far = new Vector4f(x, y, .75f, 1f).mul(invProj);
         if (Math.abs(near.w) < 1e-9f || Math.abs(far.w) < 1e-9f) return null;
         near.div(near.w);
         far.div(far.w);

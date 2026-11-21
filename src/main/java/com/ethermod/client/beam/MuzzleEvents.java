@@ -12,12 +12,12 @@ public final class MuzzleEvents {
     private MuzzleEvents() {}
 
     @SubscribeEvent
-    public static void onRenderPlayerPre(RenderPlayerEvent.Pre event) {
-        Muzzle.renderingPlayer = event.getEntity().getId();
+    public static void onRenderPlayerPre(RenderPlayerEvent.Pre<?> event) {
+        Muzzle.renderingPlayer = event.getRenderState().id;
     }
 
     @SubscribeEvent
-    public static void onRenderPlayerPost(RenderPlayerEvent.Post event) {
+    public static void onRenderPlayerPost(RenderPlayerEvent.Post<?> event) {
         Muzzle.renderingPlayer = -1;
     }
 }

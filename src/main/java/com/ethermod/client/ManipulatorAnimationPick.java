@@ -197,7 +197,7 @@ final class ManipulatorAnimationPick {
             return MINE[Math.max(0, Math.min(MINE.length - 1, level - 1))];
         }
         if (!t.beamTill && now - t.beamEndedAt < MINE_END_LEN - HANDOVER) return MINE_END;
-        if (p.swinging) return MINE[0]; // melee shares the mining motion
+        if (p.isSwinging()) return MINE[0]; // melee shares the mining motion
         return IDLE;
     }
 }

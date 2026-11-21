@@ -3,21 +3,18 @@ package com.ethermod.client;
 import com.ethermod.EtherMod;
 import com.ethermod.item.ManipulatorColors;
 import com.ethermod.item.EtherManipulatorItem;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-
-import net.minecraft.util.Util;
-import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.Util;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 
-import com.geckolib.cache.model.BakedGeoModel;
+import com.geckolib.constant.dataticket.DataTicket;
 import com.geckolib.renderer.GeoItemRenderer;
+import com.geckolib.renderer.base.GeoRenderState;
+import com.geckolib.renderer.base.RenderPassInfo;
 import com.geckolib.renderer.layer.GeoRenderLayer;
 
 /**
@@ -26,7 +23,8 @@ import com.geckolib.renderer.layer.GeoRenderLayer;
  * star and its lighter centre. (The body colour is in the texture itself: {@link BodyTextures}.)
  */
 @OnlyIn(Dist.CLIENT)
-public class ManipulatorTintLayer extends GeoRenderLayer<EtherManipulatorItem> {
+public class ManipulatorTintLayer
+        extends GeoRenderLayer<EtherManipulatorItem, GeoItemRenderer.RenderData, GeoRenderState> {
 
     private static final Identifier STAR =
             Identifier.fromNamespaceAndPath(
@@ -38,8 +36,6 @@ public class ManipulatorTintLayer extends GeoRenderLayer<EtherManipulatorItem> {
     /** One pulse, in milliseconds. */
     private static final double PERIOD = 1200;
 
-    private final GeoItemRenderer<EtherManipulatorItem> itemRenderer;
-
     /** True while the player holding this stack charges an orb with it. */
     private static boolean charging(ItemStack stack) {
         net.minecraft.world.entity.player.Player p = ManipulatorAnimations.holder(stack);
@@ -50,7 +46,6 @@ public class ManipulatorTintLayer extends GeoRenderLayer<EtherManipulatorItem> {
 
     public ManipulatorTintLayer(GeoItemRenderer<EtherManipulatorItem> renderer) {
         super(renderer);
-        this.itemRenderer = renderer;
     }
 
     private static int mix(int a, int b, double t) {
@@ -68,20 +63,14 @@ public class ManipulatorTintLayer extends GeoRenderLayer<EtherManipulatorItem> {
         return new int[] {star, core};
     }
 
-    @Override
-    public void render(
-            PoseStack poseStack,
-            EtherManipulatorItem animatable,
-            BakedGeoModel bakedModel,
-            RenderType renderType,
-            MultiBufferSource bufferSource,
-            VertexConsumer buffer,
-            float partialTick,
-            int packedLight,
-            int packedOverlay) {
-        ItemStack stack = itemRenderer.getCurrentItemStack();
-        if (stack == null || stack.isEmpty()) return;
+    /** The stack's star colours this frame, kept in the render state. */
+    private static final DataTicket<int[]> COLOURS = DataTicket.create("ethermod_star_colours", int[].class);
 
+    @Override
+    public void addRenderData(
+            EtherManipulatorItem item, GeoItemRenderer.RenderData data, GeoRenderState state, float partialTick) {
+        ItemStack stack = data == null ? ItemStack.EMPTY : data.itemStack();
+        if (stack.isEmpty()) return;
         double pulse = 0.5 - 0.5 * Math.cos(2 * Math.PI * (Util.getMillis() % (long) PERIOD) / PERIOD);
         int[] c = starColours(ManipulatorColors.crystal(stack, charging(stack)), pulse);
         // reload (FX bench): the star goes dark while the Ether is drawn in, flashes white on the clamp, then
@@ -93,30 +82,31 @@ public class ManipulatorTintLayer extends GeoRenderLayer<EtherManipulatorItem> {
             else if (rt >= 1.16f && rt < 1.22f && !com.ethermod.config.ClientConfig.reduceFlashing())
                 c = new int[] {0xFFFFFF, 0xFFFFFF};
         }
-        draw(STAR, c[0], poseStack, animatable, bakedModel, bufferSource, partialTick);
-        draw(CORE, c[1], poseStack, animatable, bakedModel, bufferSource, partialTick);
+        state.addGeckolibData(COLOURS, c);
     }
 
-    private void draw(
-            Identifier mask,
-            int rgb,
-            PoseStack poseStack,
-            EtherManipulatorItem animatable,
-            BakedGeoModel bakedModel,
-            MultiBufferSource bufferSource,
-            float partialTick) {
-        RenderType rt = RenderType.entityCutoutNoCull(mask);
-        getRenderer()
-                .reRender(
-                        bakedModel,
-                        poseStack,
-                        bufferSource,
-                        animatable,
-                        rt,
-                        bufferSource.getBuffer(rt),
-                        partialTick,
-                        LightTexture.FULL_BRIGHT,
-                        OverlayTexture.NO_OVERLAY,
-                        0xFF000000 | rgb);
+    @Override
+    public void submitRenderTask(RenderPassInfo<GeoRenderState> info, SubmitNodeCollector tasks) {
+        int[] c = info.getGeckolibData(COLOURS);
+        if (c == null || !info.willRender() || info.model().isMissingno()) return;
+        draw(info, tasks, STAR, c[0]);
+        draw(info, tasks, CORE, c[1]);
+    }
+
+    /** Redraws the posed model with a white mask, tinted and full bright. */
+    private static void draw(RenderPassInfo<GeoRenderState> info, SubmitNodeCollector tasks, Identifier mask, int rgb) {
+        int overlay = info.packedOverlay();
+        tasks.order(1)
+                .submitCustomGeometry(
+                        info.poseStack(),
+                        RenderTypes.entityCutout(mask),
+                        (pose, vertices) -> {
+                            var poseStack = info.poseStack();
+                            poseStack.pushPose();
+                            poseStack.last().set(pose);
+                            info.renderPosed(
+                                    () -> info.model().render(info, vertices, 0xF000F0, overlay, 0xFF000000 | rgb));
+                            poseStack.popPose();
+                        });
     }
 }

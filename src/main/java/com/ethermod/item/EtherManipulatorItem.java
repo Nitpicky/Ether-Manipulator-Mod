@@ -76,15 +76,13 @@ public class EtherManipulatorItem extends Item implements GeoItem {
     }
 
     // =========================================================================
-    // Client extensions — GeckoLib renderer + 3rd person bow arm pose
-    //
-    // Using initializeClient (deprecated) rather than createGeoRenderer because:
-    //  - We also need getArmPose() from IClientItemExtensions (bow draw pose)
-    //  - Both can coexist in one initializeClient call
-    //  - This has been verified to work reliably on NeoForge 1.21.1
+    // Client: the GeckoLib renderer (and, through the client extensions, the bow-draw arm pose)
     // =========================================================================
 
-    // (client extensions are registered from the client side: ClientSideHooks / RegisterClientExtensionsEvent)
+    @Override
+    public void createGeoRenderer(java.util.function.Consumer<com.geckolib.animatable.client.GeoRenderProvider> consumer) {
+        SideHooks.get().manipulatorRenderer(consumer);
+    }
 
     // =========================================================================
     // RMB — charge + fire beam ball

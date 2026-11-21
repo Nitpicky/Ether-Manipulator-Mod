@@ -36,9 +36,9 @@ sourceSets {
 if (project.hasProperty('commonOnly')) {
     sourceSets.main.java {
         exclude 'com/ethermod/client/**'
-        ['ChargeArmTremblerMixin', 'ChargeMovementMixin', 'FlightEquipmentMixin', 'GemGlintMixin',
-         'GravityCameraMixin', 'GravityOverlayMixin', 'LevelRendererInvoker', 'NoUseDipMixin',
-         'PhotonicGlowEntityMixin', 'PhotonicGlowMixin', 'SoulFlameRenderMixin', 'SoundVolumeAccessor'].each {
+        ['ChargeArmTremblerMixin', 'ChargeMovementMixin', 'FlightEquipmentMixin',
+         'GravityCameraMixin', 'LevelRendererInvoker', 'PhotonicGlowEntityMixin', 'PhotonicGlowMixin',
+         'RenderStateEntityMixin', 'SoundVolumeAccessor'].each {
             exclude "com/ethermod/mixin/${it}.java"
         }
     }

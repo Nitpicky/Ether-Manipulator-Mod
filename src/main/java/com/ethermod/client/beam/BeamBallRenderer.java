@@ -10,7 +10,9 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -39,7 +41,29 @@ import java.util.Map;
  * <p>Built only on the vanilla lightning render type, so it works under shader packs.
  */
 @OnlyIn(Dist.CLIENT)
-public class BeamBallRenderer extends EntityRenderer<BeamBallEntity> {
+public class BeamBallRenderer extends EntityRenderer<BeamBallEntity, BeamBallRenderer.State> {
+
+    /** 26.3 render state: the orb is drawn from its entity, as before. */
+    public static final class State extends EntityRenderState {
+        BeamBallEntity entity;
+    }
+
+    @Override
+    public State createRenderState() {
+        return new State();
+    }
+
+    @Override
+    public void extractRenderState(BeamBallEntity entity, State state, float partialTick) {
+        super.extractRenderState(entity, state, partialTick);
+        state.entity = entity;
+    }
+
+    @Override
+    public void submit(State state, PoseStack ps, SubmitNodeCollector collector, CameraRenderState camera) {
+        if (state.entity != null) render(state.entity, state.partialTick, ps, collector, state.lightCoords);
+    }
+
 
     private static final Identifier NO_TEXTURE =
             Identifier.fromNamespaceAndPath(EtherMod.MODID, "textures/entity/beam_ball.png");
@@ -60,22 +84,20 @@ public class BeamBallRenderer extends EntityRenderer<BeamBallEntity> {
 
     @Override
     public boolean shouldRender(
-            BeamBallEntity entity, Frustum frustum, double x, double y, double z) {
+            BeamBallEntity entity, Frustum frustum, double x, double y, double z, float partialTick) {
         return true; // the trail can be on screen when the orb isn't
     }
 
-    @Override
-    public void render(
+    private void render(
             BeamBallEntity entity,
-            float yaw,
             float partialTick,
             PoseStack ps,
-            MultiBufferSource buf,
+            SubmitNodeCollector buf,
             int light) {
         if (com.ethermod.client.ShaderCompat.inShadowPass()) return; // see ShaderCompat
         Minecraft mc = Minecraft.getInstance();
-        Camera cam = mc.gameRenderer.getMainCamera();
-        Vec3 camPos = cam.getPosition();
+        Camera cam = mc.gameRenderer.mainCamera();
+        Vec3 camPos = cam.position();
         Vec3 worldPos = entity.getPosition(partialTick);
         float age = entity.tickCount + partialTick;
 
@@ -164,8 +186,8 @@ public class BeamBallRenderer extends EntityRenderer<BeamBallEntity> {
             Vec3 blockAt = rel.subtract(entRel);
             ps.pushPose();
             ps.translate(blockAt.x, blockAt.y, blockAt.z);
-            ps.mulPose(com.mojang.math.Axis.YP.rotationDegrees(entity.getYRot()));
-            ps.mulPose(com.mojang.math.Axis.XP.rotationDegrees(entity.getXRot()));
+            ps.rotate(com.mojang.math.Axis.YP.rotationDegrees(entity.getYRot()));
+            ps.rotate(com.mojang.math.Axis.XP.rotationDegrees(entity.getXRot()));
             drawBlock(ps, buf, entity.getCarried(), Vec3.ZERO, time, 1.0f, light);
             ps.popPose();
         }
@@ -318,28 +340,33 @@ public class BeamBallRenderer extends EntityRenderer<BeamBallEntity> {
                 0.25f);
     }
 
-    /** Mass Driver: the carried block, small and tumbling, at a camera-relative position. */
+    private static final net.minecraft.client.renderer.item.ItemStackRenderState BLOCK_STATE =
+            new net.minecraft.client.renderer.item.ItemStackRenderState();
+
+    /** Mass Driver: the carried block (its item model), small and tumbling, at a camera-relative position. */
     static void drawBlock(
             PoseStack ps,
-            MultiBufferSource buf,
+            SubmitNodeCollector buf,
             net.minecraft.world.level.block.state.BlockState state,
             Vec3 rel,
             float time,
             float scale,
             int light) {
+        var mc = Minecraft.getInstance();
+        BLOCK_STATE.clear();
+        mc.getItemModelResolver()
+                .updateForTopItem(
+                        BLOCK_STATE,
+                        new net.minecraft.world.item.ItemStack(state.getBlock()),
+                        net.minecraft.world.item.ItemDisplayContext.NONE,
+                        mc.level,
+                        null,
+                        0);
         ps.pushPose();
         ps.translate(rel.x, rel.y, rel.z);
-
         ps.scale(scale, scale, scale);
-        ps.translate(-0.5, -0.5, -0.5);
-        Minecraft.getInstance()
-                .getBlockRenderer()
-                .renderSingleBlock(
-                        state,
-                        ps,
-                        buf,
-                        light,
-                        net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY);
+        BLOCK_STATE.submit(
+                ps, buf, light, net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY, 0);
         ps.popPose();
     }
 
@@ -426,11 +453,6 @@ public class BeamBallRenderer extends EntityRenderer<BeamBallEntity> {
         launches.keySet().retainAll(trails.keySet());
     }
 
-    @Override
-    public Identifier getTextureLocation(BeamBallEntity entity) {
-        return NO_TEXTURE;
-    }
-
     // =========================================================================
     // Shared drawing
     // =========================================================================
@@ -515,7 +537,6 @@ public class BeamBallRenderer extends EntityRenderer<BeamBallEntity> {
      */
     public static void renderPreview(
             PoseStack ps,
-            MultiBufferSource buf,
             Vec3 pos,
             int phase,
             float gameTime,

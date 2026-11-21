@@ -44,21 +44,21 @@ public class ManipulatorKeys {
                 new KeyMapping(
                         "key.ethermod.summon",
                         KeyConflictContext.IN_GAME,
-                        InputConstants.Type.KEYSYM,
+                        InputConstants.Type.KEYBOARD,
                         InputConstants.KEY_R,
                         CATEGORY);
         SKILL_TREE_KEY =
                 new KeyMapping(
                         "key.ethermod.skilltree",
                         KeyConflictContext.IN_GAME,
-                        InputConstants.Type.KEYSYM,
+                        InputConstants.Type.KEYBOARD,
                         InputConstants.KEY_K,
                         CATEGORY);
         ORB_MODE_KEY =
                 new KeyMapping(
                         "key.ethermod.orb_mode",
                         KeyConflictContext.IN_GAME,
-                        InputConstants.Type.KEYSYM,
+                        InputConstants.Type.KEYBOARD,
                         InputConstants.KEY_LALT,
                         CATEGORY);
         event.registerCategory(CATEGORY);
@@ -106,7 +106,7 @@ public class ManipulatorKeys {
 
         // Alt: the mode wheel, with no screen so movement and sprinting carry on
         com.ethermod.client.ModeWheel.tick(mc, ORB_MODE_KEY);
-        if (mc.screen != null) return;
+        if (mc.gui.screen() != null) return;
 
         while (SUMMON_KEY.consumeClick()) {
             if (!Manipulator.isSummoned(player)) {
@@ -119,7 +119,7 @@ public class ManipulatorKeys {
             }
         }
         if (SKILL_TREE_KEY.consumeClick()) {
-            mc.setScreen(new TraitScreen());
+            mc.gui.setScreen(new TraitScreen());
         }
     }
 
@@ -131,7 +131,7 @@ public class ManipulatorKeys {
         LocalPlayer player = mc.player;
         if (player == null
                 || !com.ethermod.config.ClientConfig.sneakScroll()
-                || mc.screen != null
+                || mc.gui.screen() != null
                 || !player.isShiftKeyDown()
                 || !Manipulator.isSummoned(player)) return;
         double d = event.getScrollDeltaY();

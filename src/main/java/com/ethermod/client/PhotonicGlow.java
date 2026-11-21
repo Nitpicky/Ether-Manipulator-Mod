@@ -168,8 +168,8 @@ public final class PhotonicGlow {
         if (mc.levelRenderer == null) return;
         int x0 = Mth.floor(x - LUMINANCE) >> 4,
                 x1 = Mth.floor(x + LUMINANCE) >> 4,
-                y0 = Math.max(Mth.floor(y - LUMINANCE) >> 4, level.getMinSection()),
-                y1 = Math.min(Mth.floor(y + LUMINANCE) >> 4, level.getMaxSection() - 1),
+                y0 = Math.max(Mth.floor(y - LUMINANCE) >> 4, level.getMinSectionY()),
+                y1 = Math.min(Mth.floor(y + LUMINANCE) >> 4, level.getMaxSectionY()),
                 z0 = Mth.floor(z - LUMINANCE) >> 4,
                 z1 = Mth.floor(z + LUMINANCE) >> 4;
         for (int sx = x0; sx <= x1; sx++)

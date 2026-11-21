@@ -69,22 +69,13 @@ public final class ManipulatorAnimations {
     }
 
     static float now(Minecraft mc) {
-        return (mc.level.getGameTime() + mc.getTimer().getGameTimeDeltaPartialTick(false)) / 20f;
+        return (mc.level.getGameTime() + mc.getDeltaTracker().getGameTimeDeltaPartialTick(false)) / 20f;
     }
 
     public static AnimationController<EtherManipulatorItem> controller(
             EtherManipulatorItem item) {
-        AnimationController<EtherManipulatorItem> c =
-                new AnimationController<>(
-                        item, "main", BLEND_TICKS, ManipulatorAnimations::predicate);
-        // Blends between animations ease out past the target and settle back (an overshoot).
-        // Only while blending: inside an animation the keyframes keep their own easing.
-        c.setOverrideEasingTypeFunction(
-                anim ->
-                        c.getAnimationState() == AnimationController.State.TRANSITIONING
-                                ? easing(BLEND.getOrDefault(c, BLEND_TICKS))
-                                : null);
-        return c;
+        // (blends ease out past the target and settle back: see predicate)
+        return new AnimationController<>("main", BLEND_TICKS, ManipulatorAnimations::predicate);
     }
 
     /** What each controller played last, and the blend chosen into it. */
@@ -94,7 +85,7 @@ public final class ManipulatorAnimations {
 
 
     private static PlayState predicate(AnimationTest<EtherManipulatorItem> state) {
-        ItemStack stack = state.getData(DataTickets.ITEMSTACK);
+        ItemStack stack = state.getDataOrDefault(ManipulatorItemRenderer.STACK, ItemStack.EMPTY);
         // only a tool in a hand follows its holder: an icon drawn meanwhile (creative tab, slot, frame) must not
         // consume the holder's restarts and ring state, or both spin erratically
         var ctx = state.getData(DataTickets.ITEM_RENDER_PERSPECTIVE);
@@ -103,17 +94,17 @@ public final class ManipulatorAnimations {
         Player holder = inHand ? holder(stack) : null;
         RawAnimation next = ManipulatorAnimationPick.pick(holder, stack);
         if (next == RELOAD && ctx != null && !ctx.firstPerson()) next = RELOAD_TP;
-        AnimationController<EtherManipulatorItem> c = state.getController();
+        AnimationController<EtherManipulatorItem> c = state.controller();
         RawAnimation last = LAST.get(c);
         ManipulatorTrack t = holder == null ? null : track(holder);
         if (next != last) {
             int ticks = blendFor(last, next);
-            c.transitionLength(ticks);
+            c.setTransitionTicks(ticks);
             BLEND.put(c, ticks);
             LAST.put(c, next);
         } else if (t != null && t.restart) {
-            c.transitionLength(1);
-            c.forceAnimationReset();
+            c.setTransitionTicks(1);
+            c.reset();
         }
         if (t != null) {
             if (next != last || t.restart) t.ringSkip = true;
@@ -123,9 +114,11 @@ public final class ManipulatorAnimations {
             t.restart = false;
         }
         // the signal ramp grinds faster as the strength climbs
-        c.setAnimationSpeed(
-1);
+        c.setAnimationSpeed(1);
         state.setAndContinue(next);
+        // Blends between animations ease out past the target and settle back (an overshoot).
+        // Only while blending: inside an animation the keyframes keep their own easing.
+        c.setOverrideEasingType(c.isTransitioning() ? easing(BLEND.getOrDefault(c, BLEND_TICKS)) : null);
         return PlayState.CONTINUE;
     }
 
@@ -169,10 +162,10 @@ public final class ManipulatorAnimations {
         }
         if (TRACKS.size() > 64) TRACKS.keySet().removeIf(id -> mc.level.getEntity(id) == null);
         // opening the upgrade screen gives the same servo turn as a mode switch
-        if (mc.player != null && mc.screen instanceof UpgradeScreen && !screenOpen) {
+        if (mc.player != null && mc.gui.screen() instanceof UpgradeScreen && !screenOpen) {
             modeTurn(track(mc.player), now);
         }
-        screenOpen = mc.screen instanceof UpgradeScreen;
+        screenOpen = mc.gui.screen() instanceof UpgradeScreen;
     }
 
     private static boolean screenOpen;

@@ -65,8 +65,8 @@ final class KStageButton {
     }
 
     private int upgradeInventory(KUi ui) {
-        for (int i = 0; i < ui.mc.player.getInventory().items.size(); i++) {
-            var it = ui.mc.player.getInventory().items.get(i);
+        for (int i = 0; i < ui.mc.player.getInventory().getNonEquipmentItems().size(); i++) {
+            var it = ui.mc.player.getInventory().getNonEquipmentItems().get(i);
             if (it.getItem() instanceof TierUpgradeModule m
                     && m.getRequiredStage() == ManipulatorStage.get(ui.stack)) return i;
         }

@@ -77,7 +77,7 @@ final class KColourPicker {
         hexBox.setY(134);
         g.pose().pushMatrix();
         g.nextStratum();
-        hexBox.render(g, ui.mx, ui.my, pt);
+        hexBox.extractRenderState(g, ui.mx, ui.my, pt);
         g.pose().popMatrix();
     }
 

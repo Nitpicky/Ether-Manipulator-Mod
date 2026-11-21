@@ -5,7 +5,8 @@ import com.ethermod.entity.SoulBlazeling;
 import net.minecraft.client.renderer.entity.*;
 import net.minecraft.resources.Identifier;
 
-public final class BlazelingRenderer extends MobRenderer<SoulBlazeling, BlazelingModel> {
+public final class BlazelingRenderer
+        extends MobRenderer<SoulBlazeling, net.minecraft.client.renderer.entity.state.LivingEntityRenderState, BlazelingModel> {
     private static final Identifier TEXTURE =
             Identifier.fromNamespaceAndPath(
                     "ethermod", "textures/entity/soul_blazeling.png");
@@ -14,8 +15,13 @@ public final class BlazelingRenderer extends MobRenderer<SoulBlazeling, Blazelin
         super(context, new BlazelingModel(context.bakeLayer(BlazelingModel.LAYER)), .25f);
     }
 
-    public Identifier getTextureLocation(SoulBlazeling entity) {
+    public Identifier getTextureLocation(net.minecraft.client.renderer.entity.state.LivingEntityRenderState state) {
         return TEXTURE;
+    }
+
+    @Override
+    public net.minecraft.client.renderer.entity.state.LivingEntityRenderState createRenderState() {
+        return new net.minecraft.client.renderer.entity.state.LivingEntityRenderState();
     }
 
     @Override

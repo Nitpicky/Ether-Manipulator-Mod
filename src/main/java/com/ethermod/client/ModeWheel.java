@@ -40,7 +40,7 @@ public final class ModeWheel {
     public static void tick(Minecraft mc, KeyMapping key) {
         while (key.consumeClick()) {} // the key is read as held, never as a click
         var p = mc.player;
-        boolean down = key.isDown() && mc.screen == null && p != null && Manipulator.isSummoned(p);
+        boolean down = key.isDown() && mc.gui.screen() == null && p != null && Manipulator.isSummoned(p);
         if (down) {
             if (held < 0) {
                 held = 0;
