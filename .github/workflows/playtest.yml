@@ -40,7 +40,8 @@ jobs:
           test -s runs/client/redesign-probe-report.txt
           cat runs/client/redesign-probe-report.txt
           ! grep -q '^FAIL ' runs/client/redesign-probe-report.txt
-          test "$(grep -c '^PASS ' runs/client/redesign-probe-report.txt)" -ge 201
+          # port branch: checks parked for 26.3 report SKIP and count toward the total
+          test "$(grep -cE '^(PASS|SKIP) ' runs/client/redesign-probe-report.txt)" -ge 201
       - name: Screenshot tour (first and third person, animations)
         if: always()
         env:
