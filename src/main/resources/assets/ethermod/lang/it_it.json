@@ -374,6 +374,7 @@
   "ethermod.configuration.beam_damage_multiplier": "Moltiplicatore danni del raggio",
   "ethermod.configuration.shot_damage_multiplier": "Moltiplicatore danni dei colpi",
   "ethermod.configuration.hurt_players": "Ferisci e afferra i giocatori (PvP)",
+  "ethermod.configuration.combat_lock": "Blocca le build dopo il combattimento",
   "ethermod.configuration.mining_speed_multiplier": "Moltiplicatore velocità di scavo",
   "ethermod.configuration.vein_miner_limit": "Limite dello scavatore di vene",
   "ethermod.configuration.charge_time_multiplier": "Moltiplicatore tempo di carica",

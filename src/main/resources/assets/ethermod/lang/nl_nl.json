@@ -374,6 +374,7 @@
   "ethermod.configuration.beam_damage_multiplier": "Straalschade-vermenigvuldiger",
   "ethermod.configuration.shot_damage_multiplier": "Schotschade-vermenigvuldiger",
   "ethermod.configuration.hurt_players": "Spelers verwonden en grijpen (PvP)",
+  "ethermod.configuration.combat_lock": "Builds vergrendelen na gevecht",
   "ethermod.configuration.mining_speed_multiplier": "Graafsnelheid-vermenigvuldiger",
   "ethermod.configuration.vein_miner_limit": "Limiet van de adermijner",
   "ethermod.configuration.charge_time_multiplier": "Laadtijd-vermenigvuldiger",

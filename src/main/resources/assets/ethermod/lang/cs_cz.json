@@ -374,6 +374,7 @@
   "ethermod.configuration.beam_damage_multiplier": "Násobič poškození paprsku",
   "ethermod.configuration.shot_damage_multiplier": "Násobič poškození výstřelů",
   "ethermod.configuration.hurt_players": "Zraňovat a chytat hráče (PvP)",
+  "ethermod.configuration.combat_lock": "Zamknout sestavy po boji",
   "ethermod.configuration.mining_speed_multiplier": "Násobič rychlosti těžby",
   "ethermod.configuration.vein_miner_limit": "Limit těžaře žil",
   "ethermod.configuration.charge_time_multiplier": "Násobič doby nabíjení",

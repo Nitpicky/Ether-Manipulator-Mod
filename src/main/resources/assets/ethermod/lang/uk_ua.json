@@ -374,6 +374,7 @@
   "ethermod.configuration.beam_damage_multiplier": "Множник шкоди променя",
   "ethermod.configuration.shot_damage_multiplier": "Множник шкоди пострілів",
   "ethermod.configuration.hurt_players": "Ранити й хапати гравців (PvP)",
+  "ethermod.configuration.combat_lock": "Блокувати збірки після бою",
   "ethermod.configuration.mining_speed_multiplier": "Множник швидкості видобутку",
   "ethermod.configuration.vein_miner_limit": "Ліміт жильного шахтаря",
   "ethermod.configuration.charge_time_multiplier": "Множник часу заряджання",

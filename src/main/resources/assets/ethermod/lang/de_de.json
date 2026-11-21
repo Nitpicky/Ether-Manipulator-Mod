@@ -374,6 +374,7 @@
   "ethermod.configuration.beam_damage_multiplier": "Strahlschaden-Multiplikator",
   "ethermod.configuration.shot_damage_multiplier": "Schussschaden-Multiplikator",
   "ethermod.configuration.hurt_players": "Spieler verletzen und greifen (PvP)",
+  "ethermod.configuration.combat_lock": "Builds nach Kampf sperren",
   "ethermod.configuration.mining_speed_multiplier": "Abbaugeschwindigkeits-Multiplikator",
   "ethermod.configuration.vein_miner_limit": "Grenze des Aderabbaus",
   "ethermod.configuration.charge_time_multiplier": "Ladezeit-Multiplikator",

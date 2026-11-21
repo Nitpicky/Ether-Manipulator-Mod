@@ -374,6 +374,7 @@
   "ethermod.configuration.beam_damage_multiplier": "Множитель урона луча",
   "ethermod.configuration.shot_damage_multiplier": "Множитель урона выстрелов",
   "ethermod.configuration.hurt_players": "Ранить и хватать игроков (PvP)",
+  "ethermod.configuration.combat_lock": "Блокировать сборки после боя",
   "ethermod.configuration.mining_speed_multiplier": "Множитель скорости добычи",
   "ethermod.configuration.vein_miner_limit": "Предел жильного шахтёра",
   "ethermod.configuration.charge_time_multiplier": "Множитель времени зарядки",

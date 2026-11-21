@@ -374,6 +374,7 @@
   "ethermod.configuration.beam_damage_multiplier": "ビームダメージ倍率",
   "ethermod.configuration.shot_damage_multiplier": "射撃ダメージ倍率",
   "ethermod.configuration.hurt_players": "プレイヤーへのダメージと捕縛(PvP)",
+  "ethermod.configuration.combat_lock": "戦闘後はビルドを固定",
   "ethermod.configuration.mining_speed_multiplier": "採掘速度倍率",
   "ethermod.configuration.vein_miner_limit": "鉱脈採掘の上限",
   "ethermod.configuration.charge_time_multiplier": "チャージ時間倍率",

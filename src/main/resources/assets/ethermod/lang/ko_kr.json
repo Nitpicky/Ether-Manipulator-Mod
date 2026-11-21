@@ -374,6 +374,7 @@
   "ethermod.configuration.beam_damage_multiplier": "광선 피해 배율",
   "ethermod.configuration.shot_damage_multiplier": "사격 피해 배율",
   "ethermod.configuration.hurt_players": "플레이어 공격 및 붙잡기(PvP)",
+  "ethermod.configuration.combat_lock": "전투 후 빌드 잠금",
   "ethermod.configuration.mining_speed_multiplier": "채굴 속도 배율",
   "ethermod.configuration.vein_miner_limit": "광맥 채굴 한도",
   "ethermod.configuration.charge_time_multiplier": "충전 시간 배율",

@@ -374,6 +374,7 @@
   "ethermod.configuration.beam_damage_multiplier": "Mnożnik obrażeń promienia",
   "ethermod.configuration.shot_damage_multiplier": "Mnożnik obrażeń strzałów",
   "ethermod.configuration.hurt_players": "Rań i chwytaj graczy (PvP)",
+  "ethermod.configuration.combat_lock": "Blokuj buildy po walce",
   "ethermod.configuration.mining_speed_multiplier": "Mnożnik szybkości kopania",
   "ethermod.configuration.vein_miner_limit": "Limit kopacza żył",
   "ethermod.configuration.charge_time_multiplier": "Mnożnik czasu ładowania",

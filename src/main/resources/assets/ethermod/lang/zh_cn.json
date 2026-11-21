@@ -374,6 +374,7 @@
   "ethermod.configuration.beam_damage_multiplier": "光束伤害倍率",
   "ethermod.configuration.shot_damage_multiplier": "射击伤害倍率",
   "ethermod.configuration.hurt_players": "伤害并抓取玩家(PvP)",
+  "ethermod.configuration.combat_lock": "战斗后锁定配置",
   "ethermod.configuration.mining_speed_multiplier": "挖掘速度倍率",
   "ethermod.configuration.vein_miner_limit": "矿脉开采上限",
   "ethermod.configuration.charge_time_multiplier": "蓄力时间倍率",

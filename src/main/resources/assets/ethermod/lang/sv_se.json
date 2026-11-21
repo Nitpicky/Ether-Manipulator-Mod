@@ -374,6 +374,7 @@
   "ethermod.configuration.beam_damage_multiplier": "Multiplikator för strålskada",
   "ethermod.configuration.shot_damage_multiplier": "Multiplikator för skottskada",
   "ethermod.configuration.hurt_players": "Skada och greppa spelare (PvP)",
+  "ethermod.configuration.combat_lock": "Lås byggen efter strid",
   "ethermod.configuration.mining_speed_multiplier": "Multiplikator för grävhastighet",
   "ethermod.configuration.vein_miner_limit": "Gräns för ådergrävaren",
   "ethermod.configuration.charge_time_multiplier": "Multiplikator för laddningstid",

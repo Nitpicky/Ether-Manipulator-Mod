@@ -15,6 +15,7 @@ next release's notes.
 - Sets: hold and drag a set to reorder the list.
 - Sets: mark favourites with the heart, then switch between them with Alt + scroll.
 - Sets: the tooltip shows the set's code and picked traits.
+- Sets and traits can now be changed in combat (server config `combat_lock` brings the lock back).
 - Commands: `/ethermod add_set` gives a player a saved Set from a code.
 - Sets: codes now start with `S_` (older codes still work) and are click-to-copy links in chat.
 

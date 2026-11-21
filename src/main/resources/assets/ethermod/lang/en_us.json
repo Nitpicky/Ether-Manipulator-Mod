@@ -374,6 +374,7 @@
   "ethermod.configuration.beam_damage_multiplier": "Beam damage multiplier",
   "ethermod.configuration.shot_damage_multiplier": "Shot damage multiplier",
   "ethermod.configuration.hurt_players": "Hurt and grab players (PvP)",
+  "ethermod.configuration.combat_lock": "Lock builds after combat",
   "ethermod.configuration.mining_speed_multiplier": "Mining speed multiplier",
   "ethermod.configuration.vein_miner_limit": "Vein miner limit",
   "ethermod.configuration.charge_time_multiplier": "Charge time multiplier",

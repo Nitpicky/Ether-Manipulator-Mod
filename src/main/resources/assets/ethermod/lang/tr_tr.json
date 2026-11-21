@@ -374,6 +374,7 @@
   "ethermod.configuration.beam_damage_multiplier": "Işın hasarı çarpanı",
   "ethermod.configuration.shot_damage_multiplier": "Atış hasarı çarpanı",
   "ethermod.configuration.hurt_players": "Oyuncuları yarala ve yakala (PvP)",
+  "ethermod.configuration.combat_lock": "Savaştan sonra yapıları kilitle",
   "ethermod.configuration.mining_speed_multiplier": "Kazma hızı çarpanı",
   "ethermod.configuration.vein_miner_limit": "Damar kazıcı sınırı",
   "ethermod.configuration.charge_time_multiplier": "Şarj süresi çarpanı",

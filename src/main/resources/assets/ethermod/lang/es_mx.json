@@ -374,6 +374,7 @@
   "ethermod.configuration.beam_damage_multiplier": "Multiplicador de daño del rayo",
   "ethermod.configuration.shot_damage_multiplier": "Multiplicador de daño de disparos",
   "ethermod.configuration.hurt_players": "Herir y agarrar jugadores (JcJ)",
+  "ethermod.configuration.combat_lock": "Bloquear builds después del combate",
   "ethermod.configuration.mining_speed_multiplier": "Multiplicador de velocidad de minado",
   "ethermod.configuration.vein_miner_limit": "Límite del minero de vetas",
   "ethermod.configuration.charge_time_multiplier": "Multiplicador de tiempo de carga",
