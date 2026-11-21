@@ -1,0 +1,130 @@
+/home/runner/.gradle/caches/modules-2/files-2.1/curse.maven/geckolib-388172/8893169/196231506b89da06925c087f9b8bc5fd12ebea16/geckolib-388172-8893169.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/io.github.llamalad7/mixinextras-neoforge/0.5.5/26f2905a37afd203c3da1d6a2e164472a7531b41/mixinextras-neoforge-0.5.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.accesstransformers/at-parser/11.0.2/64aae57d6d26d69543c5275181fe6971707a4e16/at-parser-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/earlydisplay/12.0.16/efa2e56115d22853d10524874a7bbb64555c2a28/earlydisplay-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/12.0.16/edbb2ee8211a867215970bc15ae9c354fa56dc09/loader-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarMetadata/0.5.3/ff40c1cd721d07615d825c5bbf27705b2e3258ed/JarJarMetadata-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarSelector/0.5.3/6b845aab8d5c8e721b4e3cd30f97722b7f8044b1/JarJarSelector-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/accesstransformers/11.0.2/25dcb69c78b16669935f0ab91dff830ce192379d/accesstransformers-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/bus/8.0.5/5b2d33285ab5d1554e9798ad98c40d6ea3868bd5/bus-8.0.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/mergetool/2.0.7/793b18456e92c4a7f66d9b5d8bf7a9c1c7a20b20/mergetool-2.0.7-api.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar
+=== LIST /.*/ClientAvatarState$
+net/minecraft/client/entity/ClientAvatarState
+=== CODE net/minecraft/client/player/AbstractClientPlayer updateBob
+  protected void updateBob();
+    Code:
+         0: aload_0
+         1: invokevirtual #131                // Method onGround:()Z
+         4: ifeq          38
+         7: aload_0
+         8: invokevirtual #135                // Method isDeadOrDying:()Z
+        11: ifne          38
+        14: aload_0
+        15: invokevirtual #138                // Method isSwimming:()Z
+        18: ifne          38
+        21: ldc           #141                // float 0.1f
+        23: aload_0
+        24: invokevirtual #77                 // Method getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;
+        27: invokevirtual #142                // Method net/minecraft/world/phys/Vec3.horizontalDistance:()D
+        30: d2f
+        31: invokestatic  #148                // Method java/lang/Math.min:(FF)F
+        34: fstore_1
+        35: goto          40
+        38: fconst_0
+        39: fstore_1
+        40: aload_0
+        41: invokevirtual #118                // Method avatarState:()Lnet/minecraft/client/entity/ClientAvatarState;
+        44: fload_1
+        45: invokevirtual #154                // Method net/minecraft/client/entity/ClientAvatarState.updateBob:(F)V
+        48: return
+=== CODE net/minecraft/client/entity/ClientAvatarState updateBob
+  public void updateBob(float);
+    Code:
+         0: aload_0
+         1: aload_0
+         2: getfield      #70                 // Field bob:F
+         5: putfield      #73                 // Field bobO:F
+         8: aload_0
+         9: aload_0
+        10: getfield      #70                 // Field bob:F
+        13: fload_1
+        14: aload_0
+        15: getfield      #70                 // Field bob:F
+        18: fsub
+        19: ldc           #76                 // float 0.4f
+        21: fmul
+        22: fadd
+        23: putfield      #70                 // Field bob:F
+        26: return
+=== CODE net/minecraft/client/entity/ClientAvatarState tick
+  public void tick(net.minecraft.world.phys.Vec3, net.minecraft.world.phys.Vec3);
+    Code:
+         0: aload_0
+         1: aload_0
+         2: getfield      #18                 // Field walkDist:F
+         5: putfield      #22                 // Field walkDistO:F
+         8: aload_0
+         9: aload_2
+        10: putfield      #13                 // Field deltaMovementOnPreviousTick:Lnet/minecraft/world/phys/Vec3;
+        13: aload_0
+        14: aload_1
+        15: invokevirtual #25                 // Method moveCloak:(Lnet/minecraft/world/phys/Vec3;)V
+        18: return
+=== CODE net/minecraft/client/entity/ClientAvatarState addWalkDistance
+  public void addWalkDistance(float);
+    Code:
+         0: aload_0
+         1: dup
+         2: getfield      #18                 // Field walkDist:F
+         5: fload_1
+         6: fadd
+         7: putfield      #18                 // Field walkDist:F
+        10: return
+=== CODE net/minecraft/client/player/AbstractClientPlayer tick
+  public void tick();
+    Code:
+         0: aload_0
+         1: getfield      #12                 // Field clientAvatarState:Lnet/minecraft/client/entity/ClientAvatarState;
+         4: aload_0
+         5: invokevirtual #73                 // Method position:()Lnet/minecraft/world/phys/Vec3;
+         8: aload_0
+         9: invokevirtual #77                 // Method getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;
+        12: invokevirtual #80                 // Method net/minecraft/client/entity/ClientAvatarState.tick:(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec3;)V
+        15: aload_0
+        16: invokespecial #84                 // Method net/minecraft/world/entity/player/Player.tick:()V
+        19: return
+=== SIG net/minecraft/client/player/AbstractClientPlayer .*
+  private net.minecraft.client.multiplayer.PlayerInfo playerInfo;
+  private final boolean showExtraEars;
+  private final net.minecraft.client.entity.ClientAvatarState clientAvatarState;
+  public net.minecraft.client.player.AbstractClientPlayer(net.minecraft.client.multiplayer.ClientLevel, com.mojang.authlib.GameProfile);
+  public net.minecraft.world.level.GameType gameMode();
+  protected net.minecraft.client.multiplayer.PlayerInfo getPlayerInfo();
+  public void tick();
+  protected void addWalkedDistance(float);
+  public net.minecraft.client.entity.ClientAvatarState avatarState();
+  public net.minecraft.world.entity.player.PlayerSkin getSkin();
+  public net.minecraft.world.entity.animal.parrot.Parrot$Variant getParrotVariantOnShoulder(boolean);
+  public void rideTick();
+  public void aiStep();
+  protected void updateBob();
+  public float getFieldOfViewModifier(boolean, float);
+  public boolean showExtraEars();
+=== net/minecraft/client/entity/ClientAvatarState
+Compiled from "ClientAvatarState.java"
+public class net.minecraft.client.entity.ClientAvatarState {
+  public net.minecraft.client.entity.ClientAvatarState();
+  public void tick(net.minecraft.world.phys.Vec3, net.minecraft.world.phys.Vec3);
+  public void addWalkDistance(float);
+  public net.minecraft.world.phys.Vec3 deltaMovementOnPreviousTick();
+  public double getInterpolatedCloakX(float);
+  public double getInterpolatedCloakY(float);
+  public double getInterpolatedCloakZ(float);
+  public void updateBob(float);
+  public void resetBob();
+  public float getInterpolatedBob(float);
+  public float getBackwardsInterpolatedWalkDistance(float);
+  public float getInterpolatedWalkDistance(float);
+}
