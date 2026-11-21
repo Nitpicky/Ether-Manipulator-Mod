@@ -1,4 +1,4 @@
-net/minecraft/world/item/component/SwingAnimation net/minecraft/client/renderer/item/ItemStackRenderState\$FoilType net/minecraft/client/renderer/item/ItemStackRenderState\$LayerRenderState net/minecraft/client/renderer/ScreenEffectRenderer net/minecraft/client/renderer/ItemInHandRenderer net/minecraft/client/renderer/feature/ItemFeatureRenderer net/minecraft/client/renderer/feature/FlameFeatureRenderer net/minecraft/client/renderer/rendertype/RenderTypes
-/(.*SwingAnimation.*|.*Glint.*|.*Foil.*|.*ItemFeatureRenderer.*|.*Flame.*|ScreenEffectRenderer|RenderTypes|.*ItemRenderer)$
-net/minecraft/client/renderer/ScreenEffectRenderer#renderScreenEffect net/minecraft/client/renderer/feature/ItemFeatureRenderer#render net/minecraft/client/renderer/ItemInHandRenderer#itemUsed
-net/minecraft/client/renderer/ScreenEffectRenderer#.* net/minecraft/client/renderer/ItemInHandRenderer#.*(sed|eight|quip).* net/minecraft/world/entity/LivingEntity#.*(wing).*
+net/minecraft/client/renderer/feature/FlameFeatureRenderer\$Submit net/minecraft/client/renderer/feature/ItemFeatureRenderer\$Submit net/minecraft/world/item/SwingAnimationType net/minecraft/world/entity/LivingEntity\$Swing.*
+/(.*InHand.*|.*Swing.*|.*FireOverlay.*|.*EntityRenderState|.*PlayerRenderState.*)$
+net/minecraft/client/renderer/feature/FlameFeatureRenderer#render net/minecraft/client/renderer/feature/ItemFeatureRenderer#render net/minecraft/client/renderer/rendertype/RenderTypes#itemCutoutGlint
+net/minecraft/client/renderer/feature/FlameFeatureRenderer#.* net/minecraft/client/renderer/feature/ItemFeatureRenderer#.* net/minecraft/client/renderer/rendertype/RenderTypes#.*(lint|GLINT).* net/minecraft/client/renderer/ScreenEffectRenderer#submit
