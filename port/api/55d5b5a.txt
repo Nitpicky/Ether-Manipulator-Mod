@@ -1,0 +1,440 @@
+/home/runner/.gradle/caches/modules-2/files-2.1/curse.maven/geckolib-388172/8893169/196231506b89da06925c087f9b8bc5fd12ebea16/geckolib-388172-8893169.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/io.github.llamalad7/mixinextras-neoforge/0.5.5/26f2905a37afd203c3da1d6a2e164472a7531b41/mixinextras-neoforge-0.5.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.accesstransformers/at-parser/11.0.2/64aae57d6d26d69543c5275181fe6971707a4e16/at-parser-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/earlydisplay/12.0.16/efa2e56115d22853d10524874a7bbb64555c2a28/earlydisplay-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/12.0.16/edbb2ee8211a867215970bc15ae9c354fa56dc09/loader-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarMetadata/0.5.3/ff40c1cd721d07615d825c5bbf27705b2e3258ed/JarJarMetadata-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarSelector/0.5.3/6b845aab8d5c8e721b4e3cd30f97722b7f8044b1/JarJarSelector-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/accesstransformers/11.0.2/25dcb69c78b16669935f0ab91dff830ce192379d/accesstransformers-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/bus/8.0.5/5b2d33285ab5d1554e9798ad98c40d6ea3868bd5/bus-8.0.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/mergetool/2.0.7/793b18456e92c4a7f66d9b5d8bf7a9c1c7a20b20/mergetool-2.0.7-api.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar
+=== LIST /(Prediction|.*TreeNodePosition.*|.*AdvancementTree.*)$
+net/minecraft/advancements/AdvancementTree
+net/minecraft/advancements/TreeNodePosition
+net/minecraft/util/Prediction
+=== CODE net/minecraft/world/entity/LivingEntity tick
+  public void tick();
+    Code:
+         0: aload_0
+         1: invokespecial #4211               // Method net/minecraft/world/entity/Entity.tick:()V
+         4: aload_0
+         5: invokevirtual #4214               // Method updatingUsingItem:()V
+         8: aload_0
+         9: invokevirtual #4217               // Method updateSwimAmount:()V
+        12: aload_0
+        13: invokevirtual #750                // Method level:()Lnet/minecraft/world/level/Level;
+        16: invokevirtual #1135               // Method net/minecraft/world/level/Level.isClientSide:()Z
+        19: ifne          170
+        22: aload_0
+        23: invokevirtual #4219               // Method getArrowCount:()I
+        26: istore_1
+        27: iload_1
+        28: ifle          73
+        31: aload_0
+        32: getfield      #4221               // Field removeArrowTime:I
+        35: ifgt          49
+        38: aload_0
+        39: bipush        20
+        41: bipush        30
+        43: iload_1
+        44: isub
+        45: imul
+        46: putfield      #4221               // Field removeArrowTime:I
+        49: aload_0
+        50: dup
+        51: getfield      #4221               // Field removeArrowTime:I
+        54: iconst_1
+        55: isub
+        56: putfield      #4221               // Field removeArrowTime:I
+        59: aload_0
+        60: getfield      #4221               // Field removeArrowTime:I
+        63: ifgt          73
+        66: aload_0
+        67: iload_1
+        68: iconst_1
+        69: isub
+        70: invokevirtual #4223               // Method setArrowCount:(I)V
+        73: aload_0
+        74: invokevirtual #4225               // Method getStingerCount:()I
+        77: istore_2
+        78: iload_2
+        79: ifle          124
+        82: aload_0
+        83: getfield      #4227               // Field removeStingerTime:I
+        86: ifgt          100
+        89: aload_0
+        90: bipush        20
+        92: bipush        30
+        94: iload_2
+        95: isub
+        96: imul
+        97: putfield      #4227               // Field removeStingerTime:I
+       100: aload_0
+       101: dup
+       102: getfield      #4227               // Field removeStingerTime:I
+       105: iconst_1
+       106: isub
+       107: putfield      #4227               // Field removeStingerTime:I
+       110: aload_0
+       111: getfield      #4227               // Field removeStingerTime:I
+       114: ifgt          124
+       117: aload_0
+       118: iload_2
+       119: iconst_1
+       120: isub
+       121: invokevirtual #4229               // Method setStingerCount:(I)V
+       124: aload_0
+       125: invokevirtual #4232               // Method detectEquipmentUpdates:()V
+       128: aload_0
+       129: getfield      #1033               // Field tickCount:I
+       132: bipush        20
+       134: irem
+       135: ifne          145
+       138: aload_0
+       139: invokevirtual #1330               // Method getCombatTracker:()Lnet/minecraft/world/damagesource/CombatTracker;
+       142: invokevirtual #1333               // Method net/minecraft/world/damagesource/CombatTracker.recheckStatus:()V
+       145: aload_0
+       146: invokevirtual #2164               // Method isSleeping:()Z
+       149: ifeq          170
+       152: aload_0
+       153: invokevirtual #4235               // Method canInteractWithLevel:()Z
+       156: ifeq          166
+       159: aload_0
+       160: invokevirtual #4238               // Method checkBedExists:()Z
+       163: ifne          170
+       166: aload_0
+       167: invokevirtual #2167               // Method stopSleeping:()V
+       170: aload_0
+       171: invokevirtual #1138               // Method isRemoved:()Z
+       174: ifne          181
+       177: aload_0
+       178: invokevirtual #4241               // Method aiStep:()V
+       181: aload_0
+       182: invokevirtual #784                // Method getX:()D
+       185: aload_0
+       186: getfield      #3486               // Field xo:D
+       189: dsub
+       190: dstore_1
+       191: aload_0
+       192: invokevirtual #790                // Method getZ:()D
+       195: aload_0
+       196: getfield      #3500               // Field zo:D
+       199: dsub
+       200: dstore_3
+       201: dload_1
+       202: dload_1
+       203: dmul
+       204: dload_3
+       205: dload_3
+       206: dmul
+       207: dadd
+       208: d2f
+       209: fstore        5
+       211: aload_0
+       212: getfield      #1041               // Field yBodyRot:F
+       215: fstore        6
+       217: fload         5
+       219: ldc_w         #4242               // float 0.0025000002f
+       222: fcmpl
+       223: ifle          290
+       226: dload_3
+       227: dload_1
+       228: invokestatic  #4245               // Method net/minecraft/util/Mth.atan2:(DD)D
+       231: d2f
+       232: ldc_w         #4246               // float 57.295776f
+       235: fmul
+       236: ldc_w         #4247               // float 90.0f
+       239: fsub
+       240: fstore        7
+       242: aload_0
+       243: invokevirtual #543                // Method getYRot:()F
+       246: invokestatic  #4250               // Method net/minecraft/util/Mth.wrapDegrees:(F)F
+       249: fload         7
+       251: fsub
+       252: invokestatic  #4252               // Method net/minecraft/util/Mth.abs:(F)F
+       255: fstore        8
+       257: ldc_w         #4253               // float 95.0f
+       260: fload         8
+       262: fcmpg
+       263: ifge          286
+       266: fload         8
+       268: ldc_w         #4254               // float 265.0f
+       271: fcmpg
+       272: ifge          286
+       275: fload         7
+       277: ldc_w         #4255               // float 180.0f
+       280: fsub
+       281: fstore        6
+       283: goto          290
+       286: fload         7
+       288: fstore        6
+       290: aload_0
+       291: getfield      #446                // Field swingState:Lnet/minecraft/world/entity/LivingEntity$SwingState;
+       294: getfield      #4257               // Field net/minecraft/world/entity/LivingEntity$SwingState.animation:F
+       297: fconst_0
+       298: fcmpl
+       299: ifle          308
+       302: aload_0
+       303: invokevirtual #543                // Method getYRot:()F
+       306: fstore        6
+       308: invokestatic  #932                // Method net/minecraft/util/profiling/Profiler.get:()Lnet/minecraft/util/profiling/ProfilerFiller;
+       311: astore        7
+       313: aload         7
+       315: ldc_w         #4259               // String headTurn
+       318: invokeinterface #940,  2          // InterfaceMethod net/minecraft/util/profiling/ProfilerFiller.push:(Ljava/lang/String;)V
+       323: aload_0
+       324: fload         6
+       326: invokevirtual #4262               // Method tickHeadTurn:(F)V
+       329: aload         7
+       331: invokeinterface #1046,  1         // InterfaceMethod net/minecraft/util/profiling/ProfilerFiller.pop:()V
+       336: aload         7
+       338: ldc_w         #4264               // String rangeChecks
+       341: invokeinterface #940,  2          // InterfaceMethod net/minecraft/util/profiling/ProfilerFiller.push:(Ljava/lang/String;)V
+       346: aload_0
+       347: invokevirtual #543                // Method getYRot:()F
+       350: aload_0
+       351: getfield      #4267               // Field yRotO:F
+       354: fsub
+       355: ldc_w         #4268               // float -180.0f
+       358: fcmpg
+       359: ifge          377
+       362: aload_0
+       363: dup
+       364: getfield      #4267               // Field yRotO:F
+       367: ldc_w         #4269               // float 360.0f
+       370: fsub
+       371: putfield      #4267               // Field yRotO:F
+       374: goto          346
+       377: aload_0
+       378: invokevirtual #543                // Method getYRot:()F
+       381: aload_0
+       382: getfield      #4267               // Field yRotO:F
+       385: fsub
+       386: ldc_w         #4255               // float 180.0f
+       389: fcmpl
+       390: iflt          408
+       393: aload_0
+       394: dup
+       395: getfield      #4267               // Field yRotO:F
+       398: ldc_w         #4269               // float 360.0f
+       401: fadd
+       402: putfield      #4267               // Field yRotO:F
+       405: goto          377
+       408: aload_0
+       409: getfield      #1041               // Field yBodyRot:F
+       412: aload_0
+       413: getfield      #1043               // Field yBodyRotO:F
+       416: fsub
+       417: ldc_w         #4268               // float -180.0f
+       420: fcmpg
+       421: ifge          439
+       424: aload_0
+       425: dup
+       426: getfield      #1043               // Field yBodyRotO:F
+       429: ldc_w         #4269               // float 360.0f
+       432: fsub
+       433: putfield      #1043               // Field yBodyRotO:F
+       436: goto          408
+       439: aload_0
+       440: getfield      #1041               // Field yBodyRot:F
+       443: aload_0
+       444: getfield      #1043               // Field yBodyRotO:F
+       447: fsub
+       448: ldc_w         #4255               // float 180.0f
+       451: fcmpl
+       452: iflt          470
+       455: aload_0
+       456: dup
+       457: getfield      #1043               // Field yBodyRotO:F
+       460: ldc_w         #4269               // float 360.0f
+       463: fadd
+       464: putfield      #1043               // Field yBodyRotO:F
+       467: goto          439
+       470: aload_0
+       471: invokevirtual #4076               // Method getXRot:()F
+       474: aload_0
+       475: getfield      #4272               // Field xRotO:F
+       478: fsub
+       479: ldc_w         #4268               // float -180.0f
+       482: fcmpg
+       483: ifge          501
+       486: aload_0
+       487: dup
+       488: getfield      #4272               // Field xRotO:F
+       491: ldc_w         #4269               // float 360.0f
+       494: fsub
+       495: putfield      #4272               // Field xRotO:F
+       498: goto          470
+       501: aload_0
+       502: invokevirtual #4076               // Method getXRot:()F
+       505: aload_0
+       506: getfield      #4272               // Field xRotO:F
+       509: fsub
+       510: ldc_w         #4255               // float 180.0f
+       513: fcmpl
+       514: iflt          532
+       517: aload_0
+       518: dup
+       519: getfield      #4272               // Field xRotO:F
+       522: ldc_w         #4269               // float 360.0f
+       525: fadd
+       526: putfield      #4272               // Field xRotO:F
+       529: goto          501
+       532: aload_0
+       533: getfield      #545                // Field yHeadRot:F
+       536: aload_0
+       537: getfield      #1039               // Field yHeadRotO:F
+       540: fsub
+       541: ldc_w         #4268               // float -180.0f
+       544: fcmpg
+       545: ifge          563
+       548: aload_0
+       549: dup
+       550: getfield      #1039               // Field yHeadRotO:F
+       553: ldc_w         #4269               // float 360.0f
+       556: fsub
+       557: putfield      #1039               // Field yHeadRotO:F
+       560: goto          532
+       563: aload_0
+       564: getfield      #545                // Field yHeadRot:F
+       567: aload_0
+       568: getfield      #1039               // Field yHeadRotO:F
+       571: fsub
+       572: ldc_w         #4255               // float 180.0f
+       575: fcmpl
+       576: iflt          594
+       579: aload_0
+       580: dup
+       581: getfield      #1039               // Field yHeadRotO:F
+       584: ldc_w         #4269               // float 360.0f
+       587: fadd
+       588: putfield      #1039               // Field yHeadRotO:F
+       591: goto          563
+       594: aload         7
+       596: invokeinterface #1046,  1         // InterfaceMethod net/minecraft/util/profiling/ProfilerFiller.pop:()V
+       601: aload_0
+=== CODE net/minecraft/world/entity/LivingEntity calculateEntityAnimation
+  public void calculateEntityAnimation(boolean);
+    Code:
+         0: aload_0
+         1: invokevirtual #784                // Method getX:()D
+         4: aload_0
+         5: getfield      #3486               // Field xo:D
+         8: dsub
+         9: iload_1
+        10: ifeq          25
+        13: aload_0
+        14: invokevirtual #787                // Method getY:()D
+        17: aload_0
+        18: getfield      #3494               // Field yo:D
+        21: dsub
+        22: goto          26
+        25: dconst_0
+        26: aload_0
+        27: invokevirtual #790                // Method getZ:()D
+        30: aload_0
+        31: getfield      #3500               // Field zo:D
+        34: dsub
+        35: invokestatic  #4140               // Method net/minecraft/util/Mth.length:(DDD)D
+        38: d2f
+        39: fstore_2
+        40: aload_0
+        41: invokevirtual #4143               // Method isPassenger:()Z
+        44: ifne          62
+        47: aload_0
+        48: invokevirtual #943                // Method isAlive:()Z
+        51: ifeq          62
+        54: aload_0
+        55: fload_2
+        56: invokevirtual #4146               // Method updateWalkAnimation:(F)V
+        59: goto          69
+        62: aload_0
+        63: getfield      #453                // Field walkAnimation:Lnet/minecraft/world/entity/WalkAnimationState;
+        66: invokevirtual #4149               // Method net/minecraft/world/entity/WalkAnimationState.stop:()V
+        69: return
+=== net/minecraft/util/Prediction
+Compiled from "Prediction.java"
+public final class net.minecraft.util.Prediction extends java.lang.Enum<net.minecraft.util.Prediction> {
+  public static final net.minecraft.util.Prediction PREDICTED;
+  public static final net.minecraft.util.Prediction SERVER_ONLY;
+  public static net.minecraft.util.Prediction[] values();
+  public static net.minecraft.util.Prediction valueOf(java.lang.String);
+}
+=== net/minecraft/advancements/DisplayInfo
+Compiled from "DisplayInfo.java"
+public final class net.minecraft.advancements.DisplayInfo extends java.lang.Record {
+  public static final com.mojang.serialization.Codec<net.minecraft.advancements.DisplayInfo> CODEC;
+  public static final net.minecraft.network.codec.StreamCodec<net.minecraft.network.RegistryFriendlyByteBuf, net.minecraft.advancements.DisplayInfo> STREAM_CODEC;
+  public net.minecraft.advancements.DisplayInfo(net.minecraft.world.item.ItemStackTemplate, net.minecraft.network.chat.Component, net.minecraft.network.chat.Component, java.util.Optional<net.minecraft.core.ClientAsset$ResourceTexture>, net.minecraft.advancements.AdvancementType, boolean, boolean, boolean);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.world.item.ItemStackTemplate icon();
+  public net.minecraft.network.chat.Component title();
+  public net.minecraft.network.chat.Component description();
+  public java.util.Optional<net.minecraft.core.ClientAsset$ResourceTexture> background();
+  public net.minecraft.advancements.AdvancementType type();
+  public boolean showToast();
+  public boolean announceToChat();
+  public boolean hidden();
+}
+=== net/minecraft/world/entity/WalkAnimationState
+Compiled from "WalkAnimationState.java"
+public class net.minecraft.world.entity.WalkAnimationState {
+  public net.minecraft.world.entity.WalkAnimationState();
+  public void setSpeed(float);
+  public void update(float, float, float);
+  public void stop();
+  public float speed();
+  public float speed(float);
+  public float position();
+  public float position(float);
+  public boolean isMoving();
+}
+=== net/minecraft/advancements/AdvancementNode
+Compiled from "AdvancementNode.java"
+public class net.minecraft.advancements.AdvancementNode {
+  public net.minecraft.advancements.AdvancementNode(net.minecraft.advancements.AdvancementHolder, net.minecraft.advancements.AdvancementNode);
+  public net.minecraft.advancements.Advancement advancement();
+  public net.minecraft.advancements.AdvancementHolder holder();
+  public boolean isTask();
+  public boolean isRoot();
+  public net.minecraft.advancements.AdvancementNode parent();
+  public net.minecraft.advancements.AdvancementNode root();
+  public static net.minecraft.advancements.AdvancementNode getRoot(net.minecraft.advancements.AdvancementNode);
+  public java.lang.Iterable<net.minecraft.advancements.AdvancementNode> children();
+  public void addChild(net.minecraft.advancements.AdvancementNode);
+  public void setLocation(float, float);
+  public float x();
+  public float y();
+  public boolean equals(java.lang.Object);
+  public int hashCode();
+  public java.lang.String toString();
+}
+=== net/minecraft/client/gui/screens/advancements/AdvancementTab
+Compiled from "AdvancementTab.java"
+public class net.minecraft.client.gui.screens.advancements.AdvancementTab {
+  public net.minecraft.client.gui.screens.advancements.AdvancementTab(net.minecraft.client.Minecraft, net.minecraft.client.gui.screens.advancements.AdvancementsScreen, net.minecraft.client.gui.screens.advancements.AdvancementTabType, int, net.minecraft.client.gui.screens.advancements.AdvancementWidget, net.minecraft.world.item.ItemStackTemplate, net.minecraft.network.chat.Component, net.minecraft.resources.Identifier);
+  public net.minecraft.client.gui.screens.advancements.AdvancementTab(net.minecraft.client.Minecraft, net.minecraft.client.gui.screens.advancements.AdvancementsScreen, net.minecraft.client.gui.screens.advancements.AdvancementTabType, int, int, net.minecraft.client.gui.screens.advancements.AdvancementWidget, net.minecraft.world.item.ItemStackTemplate, net.minecraft.network.chat.Component, net.minecraft.resources.Identifier);
+  public int getPage();
+  public void copyPosition(net.minecraft.client.gui.screens.advancements.AdvancementTab);
+  public net.minecraft.client.gui.screens.advancements.AdvancementTabType getType();
+  public int getIndex();
+  public net.minecraft.advancements.AdvancementHolder getRootAdvancement();
+  public net.minecraft.network.chat.Component getTitle();
+  public void tick(int, int);
+  public void extractTab(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, int, int, boolean);
+  public void extractIcon(net.minecraft.client.gui.GuiGraphicsExtractor, int, int);
+  public void extractContents(net.minecraft.client.gui.GuiGraphicsExtractor, int, int);
+  public void extractTooltips(net.minecraft.client.gui.GuiGraphicsExtractor, int, int);
+  public boolean isMouseOver(int, int, double, double);
+  public static net.minecraft.client.gui.screens.advancements.AdvancementTab create(net.minecraft.client.Minecraft, net.minecraft.client.gui.screens.advancements.AdvancementsScreen, int, net.minecraft.advancements.AdvancementNode);
+  public void scroll(double, double);
+  public boolean canScrollHorizontally();
+  public boolean canScrollVertically();
+  public void addAdvancement(net.minecraft.advancements.AdvancementNode);
+  public net.minecraft.client.gui.screens.advancements.AdvancementWidget getWidget(net.minecraft.advancements.AdvancementHolder);
+  public net.minecraft.client.gui.screens.advancements.AdvancementsScreen getScreen();
+}
