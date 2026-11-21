@@ -18,16 +18,16 @@ jobs:
         with:
           distribution: temurin
           java-version: '25'
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v5
       - name: Install virtual display
-        run: sudo apt-get update -q && sudo apt-get install -y -q xvfb libgl1-mesa-dri libglx-mesa0 pulseaudio && pip install -q pillow numpy
+        run: sudo apt-get update -q && sudo apt-get install -y -q xvfb libgl1-mesa-dri libglx-mesa0 mesa-vulkan-drivers libvulkan1 pulseaudio && pip install -q pillow numpy
       - name: Record the K screen
         env:
           ETHERMOD_AUTOTEST: '1'
           LIBGL_ALWAYS_SOFTWARE: '1'
           MESA_GL_VERSION_OVERRIDE: '4.5'
         run: |
-          xvfb-run -a -s '-screen 0 1280x720x24' timeout 1200 ./gradlew runClient -Pplaytest -PkGifs --no-daemon || true
+          xvfb-run -a -s '-screen 0 1280x720x24 +extension GLX +render -ac' timeout 1200 ./gradlew runClient -Pplaytest -PkGifs --no-daemon || true
           cat runs/client/kgif-report.txt || true
           ls runs/client/screenshots | wc -l
       - name: Make the GIFs
@@ -42,8 +42,10 @@ jobs:
           git fetch origin playtest-results
           git worktree add /tmp/pr origin/playtest-results
           cd /tmp/pr && git checkout -B playtest-results
-          rm -rf kgifs/latest && mkdir -p kgifs/latest
-          cp $GITHUB_WORKSPACE/out/* kgifs/latest/ 2>/dev/null || true
+          D=kgifs/latest
+          case "$GITHUB_REF_NAME" in port/*) D="port/$SHA/kgifs" ;; esac
+          rm -rf "$D" && mkdir -p "$D"
+          cp $GITHUB_WORKSPACE/out/* "$D"/ 2>/dev/null || true
           git add -A
           git commit -qm "K screen GIFs for $SHA" || true
           for i in 1 2 3 4; do git push -q origin playtest-results && break; git pull -q --rebase origin playtest-results; done
