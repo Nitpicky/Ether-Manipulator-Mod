@@ -1102,7 +1102,7 @@ public final class PlaytestBootstrap {
                 if (root != null) logAdvancements(root);
             }
             case 1486 -> shot(mc, "36_advancements");
-            case 1487 -> mc.gui.screen().mouseDragged(0, 0, 0, 0, -400); // scroll to the bottom rows
+            case 1487 -> PtCompat.drag(mc.gui.screen(), 0, 0, 0, 0, -400); // scroll to the bottom rows
             case 1489 -> shot(mc, "36b_advancements_bottom");
             case 1492 -> mc.gui.setScreen(null);
             case 1572 -> finish(mc);
@@ -1315,7 +1315,7 @@ public final class PlaytestBootstrap {
                 .getEntitiesOfClass(
                         net.minecraft.world.entity.monster.zombie.Husk.class,
                         p.getBoundingBox().inflate(32),
-                        h -> h.getTags().contains(tag))
+                        h -> h.entityTags().contains(tag))
                 .stream()
                 .findFirst()
                 .orElse(null);
@@ -1456,7 +1456,7 @@ public final class PlaytestBootstrap {
         mc.gui.hud.getChat().clearMessages(false);
         mc.gui.toastManager().clear();
         Consumer<net.minecraft.network.chat.Component> sink = c -> {};
-        Screenshot.grab(mc.gameDirectory, "mm_" + name + ".png", mc.gameRenderer.mainRenderTarget(), sink);
+        PtCompat.grab(mc.gameDirectory, "mm_" + name + ".png", mc.gameRenderer.mainRenderTarget(), sink);
         log("shot " + name);
     }
 

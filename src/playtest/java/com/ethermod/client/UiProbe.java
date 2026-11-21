@@ -116,7 +116,7 @@ public final class UiProbe {
                                         OrbMode.set(st, OrbMode.IGNITE);
                                         OrbMode.setTank(st, 40);
                                         Manipulator.setSummoned(p, true);
-                                        p.level().getServer().getPlayerList().op(p.getGameProfile());
+                                        p.level().getServer().getPlayerList().op(new net.minecraft.server.players.NameAndId(p.getGameProfile()));
                                         p.setGameMode(net.minecraft.world.level.GameType.CREATIVE);
                                         p.getInventory()
                                                 .add(
@@ -190,7 +190,7 @@ public final class UiProbe {
                                     setPickChecked(st, 2, 1, "photonic.daybreak");
                                     setPickChecked(st, 2, 2, "photonic.constellation");
                                     OrbMode.set(st, OrbMode.TETHER);
-                                    p.level().getServer().getPlayerList().op(p.getGameProfile());
+                                    p.level().getServer().getPlayerList().op(new net.minecraft.server.players.NameAndId(p.getGameProfile()));
                                     p.setHealth(p.getMaxHealth());
                                     p.getInventory()
                                             .add(
@@ -275,7 +275,7 @@ public final class UiProbe {
             if (tick == 60) {
                 System.out.println("PLAYTEST READY - control handed to player");
                 if (!Boolean.getBoolean("ethermod.noScreenshots"))
-                    net.minecraft.client.Screenshot.grab(
+                    PtCompat.grab(
                             mc.gameDirectory,
                             "playtest-ready.png",
                             mc.gameRenderer.mainRenderTarget(),
@@ -419,11 +419,11 @@ public final class UiProbe {
                                         zombie, new net.minecraft.world.phys.Vec3(0, 0, 2));
                                 check(
                                         "Stasis accumulates force",
-                                        com.ethermod.util.MobMemory.peek(zombie).getDouble("mm_stasis_force")
+                                        com.ethermod.util.MobMemory.peek(zombie).getDoubleOr("mm_stasis_force", 0)
                                                 == Stasis.STASIS_MAX);
                                 check(
                                         "Stasis last impulse sets direction",
-                                        com.ethermod.util.MobMemory.peek(zombie).getDouble("mm_stasis_z") == 1);
+                                        com.ethermod.util.MobMemory.peek(zombie).getDoubleOr("mm_stasis_z", 0) == 1);
                                 var decoy =
                                         com.ethermod.registry.ModEntities.LIGHT_DECOY
                                                 .get()
@@ -436,7 +436,7 @@ public final class UiProbe {
                                         decoy.owner().equals(p.getUUID()));
                                 check(
                                         "Mirage cannot be hurt",
-                                        !decoy.hurt(sl.damageSources().playerAttack(p), 100)
+                                        !decoy.hurtServer(sl, sl.damageSources().playerAttack(p), 100)
                                                 && decoy.isAlive());
                                 var pocket = p.blockPosition().offset(6, 0, 0);
                                 sl.setBlockAndUpdate(
@@ -703,7 +703,7 @@ public final class UiProbe {
                                         "Blazeling keeps owner and lifetime",
                                         pet.summoner() == p
                                                 && pet.getPersistentData()
-                                                                .getLong("mm_summon_expires")
+                                                                .getLongOr("mm_summon_expires", 0L)
                                                         == sl.getGameTime()
                                                                 + 600);
                                 check(
@@ -727,7 +727,7 @@ public final class UiProbe {
                                                 && bolts.get(0).getOwner() == pet
                                                 && bolts.get(0)
                                                         instanceof
-                                                        net.minecraft.world.entity.projectile
+                                                        net.minecraft.world.entity.projectile.hurtingprojectile
                                                                 .SmallFireball
                                                 && bolts.get(0).getDeltaMovement().length() > .09);
                                 try {
@@ -751,7 +751,7 @@ public final class UiProbe {
                                                             .equals(
                                                                     com.ethermod.trait.Burning.burnOwner(
                                                                             boltTarget)));
-                                    boltTarget.invulnerableTime = 0;
+                                    boltTarget.setInvulnerableTime(0);
                                     boltTarget.setHealth(1);
                                     var lethal =
                                             com.ethermod.registry.ModEntities.SOUL_BOLT
@@ -888,7 +888,7 @@ public final class UiProbe {
                                         charging.isOnFire()
                                                 && charging.displayFireAnimation()
                                                 && charging.getPersistentData()
-                                                        .getBoolean("mm_soul"));
+                                                        .getBooleanOr("mm_soul", false));
                                 charging.fireAt(warningTarget);
                                 check(
                                         "Blazeling clears warning after its single shot",
@@ -1017,9 +1017,9 @@ public final class UiProbe {
                                         loadedPet.summoner() == p
                                                 && loadedPet
                                                                 .getPersistentData()
-                                                                .getLong("mm_summon_expires")
+                                                                .getLongOr("mm_summon_expires", 0L)
                                                         == pet.getPersistentData()
-                                                                .getLong("mm_summon_expires"));
+                                                                .getLongOr("mm_summon_expires", 0L));
                                 TraitBuild.setLine(st, 0, Traits.KINETIC);
                                 setPickChecked(st, 0, 0, "kinetic.split");
                                 setPickChecked(st, 0, 1, "kinetic.marksman");
@@ -1061,7 +1061,7 @@ public final class UiProbe {
         if (tick == 70) mc.gui.setScreen(new TraitScreen());
         if (tick == 100)
             if (!Boolean.getBoolean("ethermod.noScreenshots"))
-                net.minecraft.client.Screenshot.grab(
+                PtCompat.grab(
                         mc.gameDirectory,
                         "redesign-trees.png",
                         mc.gameRenderer.mainRenderTarget(),
@@ -1411,11 +1411,11 @@ public final class UiProbe {
 
             var root = com.ethermod.client.BlazelingModel.layer().bakeRoot();
             var model = new com.ethermod.client.BlazelingModel(root);
-            model.setupAnim(null, 0, 0, 0, 0, 0);
-            check("Blazeling model has one head and three rods", root.getAllParts().count() == 5);
+            model.setupAnim(new net.minecraft.client.renderer.entity.state.LivingEntityRenderState());
+            check("Blazeling model has one head and three rods", root.getAllParts().size() == 5);
             var rod = root.getChild("rod_0");
             float x = rod.x, z = rod.z;
-            model.setupAnim(null, 0, 0, 10, 30, 15);
+            { var st = new net.minecraft.client.renderer.entity.state.LivingEntityRenderState(); st.ageInTicks = 10; st.yRot = 30; st.xRot = 15; model.setupAnim(st); }
             check(
                     "Blazeling rods orbit at preserved radius",
                     Math.abs(Math.hypot(rod.x, rod.z) - Math.sqrt(36.5)) < .0001
@@ -1441,10 +1441,10 @@ public final class UiProbe {
                             + " eye="
                             + player.getEyePosition()
                             + " camera="
-                            + camera.getPosition()
+                            + camera.position()
                             + " block="
                             + mc.level.getBlockState(
-                                    net.minecraft.core.BlockPos.containing(camera.getPosition()))
+                                    net.minecraft.core.BlockPos.containing(camera.position()))
                             + " clear="
                             + mc.level.noCollision(player, player.getBoundingBox())
                             + " box="
@@ -1452,7 +1452,7 @@ public final class UiProbe {
                             + " eyeY="
                             + player.getEyeY());
             if (!Boolean.getBoolean("ethermod.noScreenshots"))
-                net.minecraft.client.Screenshot.grab(
+                PtCompat.grab(
                         mc.gameDirectory, "gravity-frame.png", mc.gameRenderer.mainRenderTarget(), c -> {});
             check(
                     "Client gravity received",

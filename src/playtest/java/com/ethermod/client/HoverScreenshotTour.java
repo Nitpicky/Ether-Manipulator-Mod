@@ -23,7 +23,7 @@ public final class HoverScreenshotTour {
             int[] target=switch(phase){case 1->new int[]{152,40};case 2->new int[]{196,40};case 3->new int[]{130,31};default->new int[]{-10,-10};};
             int left=(int)field(this,UpgradeScreen.class,"left"),top=(int)field(this,UpgradeScreen.class,"top");
             float scale=(float)field(this,UpgradeScreen.class,"uiScale");
-            super.render(g,left+Math.round(target[0]*scale),top+Math.round(target[1]*scale),pt);
+            super.extractRenderState(g,left+Math.round(target[0]*scale),top+Math.round(target[1]*scale),pt);
         }
     }
     static int[] pixels(Minecraft mc) {
@@ -31,7 +31,7 @@ public final class HoverScreenshotTour {
         return (int[])field(panels[0],panels[0].getClass(),"finalPixels");
     }
     static int sample(int[] p,int x,int y){return p[y*146+x];}
-    static void screenshot(Minecraft mc,String name){net.minecraft.client.Screenshot.grab(mc.gameDirectory,name+".png",mc.gameRenderer.mainRenderTarget(),c->{});}
+    static void screenshot(Minecraft mc,String name){PtCompat.grab(mc.gameDirectory,name+".png",mc.gameRenderer.mainRenderTarget(),c->{});}
     public static void step(Minecraft mc) {
         tick++;
         if(tick==10)mc.getSingleplayerServer().execute(()->{

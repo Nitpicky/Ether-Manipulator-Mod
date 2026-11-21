@@ -47,7 +47,7 @@ public final class PairScreenshotTour {
         });
     }
     private static void capture(Minecraft mc, String name) {
-        net.minecraft.client.Screenshot.grab(mc.gameDirectory, name + ".png", mc.gameRenderer.mainRenderTarget(), c -> {});
+        PtCompat.grab(mc.gameDirectory, name + ".png", mc.gameRenderer.mainRenderTarget(), c -> {});
         System.out.println("PAIR SCREENSHOT " + name);
     }
     public static void step(Minecraft mc) {

@@ -38,7 +38,7 @@ public final class KGifTour {
     static final class Screen extends TraitScreen {
         @Override
         public void extractRenderState(GuiGraphicsExtractor g, int x, int y, float pt) {
-            super.render(g, (int) Math.round(vx), (int) Math.round(vy), pt);
+            super.extractRenderState(g, (int) Math.round(vx), (int) Math.round(vy), pt);
         }
     }
 
@@ -191,9 +191,9 @@ public final class KGifTour {
         Minecraft mc = Minecraft.getInstance();
         add(
                 3,
-                () -> mc.gui.screen().mouseClicked(vx, vy, button),
+                () -> PtCompat.click(mc.gui.screen(), vx, vy, button),
                 i -> {
-                    if (i == 1) mc.gui.screen().mouseReleased(vx, vy, button);
+                    if (i == 1) PtCompat.release(mc.gui.screen(), vx, vy, button);
                 });
     }
 
@@ -206,14 +206,14 @@ public final class KGifTour {
         Minecraft mc = Minecraft.getInstance();
         add(
                 n + 2,
-                () -> mc.gui.screen().mouseClicked(vx, vy, 0),
+                () -> PtCompat.click(mc.gui.screen(), vx, vy, 0),
                 i -> {
                     if (i < n) {
                         double sx = dx / n, sy = dy / n;
                         vx += sx;
                         vy += sy;
-                        mc.gui.screen().mouseDragged(vx, vy, 0, sx, sy);
-                    } else if (i == n) mc.gui.screen().mouseReleased(vx, vy, 0);
+                        PtCompat.drag(mc.gui.screen(), vx, vy, 0, sx, sy);
+                    } else if (i == n) PtCompat.release(mc.gui.screen(), vx, vy, 0);
                 });
     }
 
@@ -235,7 +235,7 @@ public final class KGifTour {
                     var t = local(mc, lx, ly);
                     to[0] = t[0];
                     to[1] = t[1];
-                    mc.gui.screen().mouseClicked(vx, vy, 0);
+                    PtCompat.click(mc.gui.screen(), vx, vy, 0);
                 },
                 i -> {
                     if (i < n) {
@@ -243,8 +243,8 @@ public final class KGifTour {
                         f = f * f * (3 - 2 * f);
                         vx = from[0] + (to[0] - from[0]) * f;
                         vy = from[1] + (to[1] - from[1]) * f;
-                        mc.gui.screen().mouseDragged(vx, vy, 0, vx - px, vy - py);
-                    } else if (i == n) mc.gui.screen().mouseReleased(vx, vy, 0);
+                        PtCompat.drag(mc.gui.screen(), vx, vy, 0, vx - px, vy - py);
+                    } else if (i == n) PtCompat.release(mc.gui.screen(), vx, vy, 0);
                 });
     }
 
@@ -482,7 +482,7 @@ public final class KGifTour {
                 }
             }
             String name = String.format("kgif_%s_%04d.png", scene, frame++);
-            net.minecraft.client.Screenshot.grab(mc.gameDirectory, name, mc.gameRenderer.mainRenderTarget(), c -> {});
+            PtCompat.grab(mc.gameDirectory, name, mc.gameRenderer.mainRenderTarget(), c -> {});
             frames.add(name + " " + System.nanoTime());
         }
     }
