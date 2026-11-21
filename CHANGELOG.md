@@ -22,6 +22,7 @@ next release's notes.
 - New mod icon.
 - Bank Shot: each ricochet resets the shot's range.
 - Steady Hand: held blocks turn see-through while a throw charges, and the landing preview is fainter.
+- Mass Driver: lighter glow around held blocks.
 - Mass Driver: every throw shows its arc while charging.
 - Gravity Shift: no fall damage while shifted.
 - Clearer Zipline description.
