@@ -1469,20 +1469,9 @@ public final class UiProbe {
             check(
                     "Client gravity eye offset",
                     mc.player.getEyePosition().subtract(mc.player.position()).x < -.5);
-            try {
-                var method =
-                        net.minecraft.client.renderer.ScreenEffectRenderer.class.getDeclaredMethod(
-                                "getOverlayBlock", net.minecraft.world.entity.player.Player.class);
-                method.setAccessible(true);
-                check(
-                        "Gravity overlay follows the actual eye",
-                        method.invoke(null, mc.player) == null);
-            } catch (NoSuchMethodException moved) {
-                // 26.3 reworked the screen overlays; the gravity overlay is parked (docs/PORT-26.3.md)
-                report.add("SKIP Gravity overlay follows the actual eye (26.3 port)");
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
+            check(
+                    "Gravity overlay follows the actual eye",
+                    com.ethermod.client.GravityOverlay.blockAtEye(mc.player) == null);
         }
         if (tick == 216) {
             var p = mc.player;

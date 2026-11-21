@@ -1,4 +1,4 @@
-net/neoforged/neoforge/client/event/ExtractBlockScreenEffectEvent.* net/minecraft/client/renderer/state/level/CameraRenderState
-/.*(AvatarState|ClientAvatar.*|ScreenEffect.*)$
-net/minecraft/client/renderer/GameRenderer#bobView
-net/minecraft/client/player/AbstractClientPlayer#.*vatar.* net/minecraft/world/entity/player/Player#.*(alkDist|ob).*
+net/minecraft/client/Camera net/minecraft/client/entity/ClientAvatarState net/minecraft/client/renderer/state/level/CameraEntityRenderState
+/.*(Destruction|Destroy|Crumbl).*$
+net/minecraft/client/Camera#update net/minecraft/client/entity/ClientAvatarState#tick
+net/minecraft/client/renderer/LevelRenderer#.*(estr|rack|Progress).* net/minecraft/client/Camera#.*
