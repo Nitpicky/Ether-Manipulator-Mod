@@ -1,4 +1,4 @@
-net/minecraft/client/gui/Hud net/minecraft/world/level/LevelSettings\$DifficultySettings net/minecraft/world/level/storage/TagValueInput org/lwjgl/sdl/SDLMouse
-/.*/(ChatComponent)$
-net/minecraft/client/gui/Hud#getChat
-net/minecraft/client/gui/Hud#.*[Cc]hat.*
+net/minecraft/client/Screenshot net/minecraft/client/input/MouseButtonInfo net/minecraft/server/players/NameAndId net/minecraft/client/model/geom/ModelPart
+/.*/(SmallFireball|NameAndId)$
+net/minecraft/client/Screenshot#grab
+net/minecraft/world/entity/Entity#.*[Ii]nvulnerable.* net/minecraft/nbt/CompoundTag#get(Long|Double|Int|Boolean).*
