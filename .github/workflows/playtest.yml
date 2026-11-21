@@ -22,13 +22,15 @@ jobs:
           distribution: temurin
       - uses: gradle/actions/setup-gradle@v5
       - name: Install virtual display
-        run: sudo apt-get update -q && sudo apt-get install -y -q xvfb libgl1-mesa-dri libglx-mesa0 pulseaudio
+        run: sudo apt-get update -q && sudo apt-get install -y -q xvfb libgl1-mesa-dri libglx-mesa0 mesa-vulkan-drivers libvulkan1 vulkan-tools pulseaudio
+      - name: Graphics backends available (port check)
+        run: xvfb-run -a -s '-screen 0 1280x720x24 +extension GLX +render -ac' sh -c 'vulkaninfo --summary 2>&1 | head -40; glxinfo -B 2>&1 | head -20 || true' || true
       - name: Run current client/server regression checks
         env:
           ETHERMOD_AUTOTEST: '1'
           LIBGL_ALWAYS_SOFTWARE: '1'
           MESA_GL_VERSION_OVERRIDE: '4.5'
-        run: xvfb-run -a -s '-screen 0 1280x720x24' timeout 1500 ./gradlew runClient -Pplaytest --no-daemon
+        run: xvfb-run -a -s '-screen 0 1280x720x24 +extension GLX +render -ac' timeout 1500 ./gradlew runClient -Pplaytest --no-daemon
       - name: Require a complete passing report
         if: always()
         run: |
@@ -44,7 +46,7 @@ jobs:
           MESA_GL_VERSION_OVERRIDE: '4.5'
         run: |
           rm -rf runs/client/saves/mm_autotest
-          xvfb-run -a -s '-screen 0 1280x720x24' timeout 900 ./gradlew runClient -Pplaytest -PmodelShots --no-daemon || true
+          xvfb-run -a -s '-screen 0 1280x720x24 +extension GLX +render -ac' timeout 900 ./gradlew runClient -Pplaytest -PmodelShots --no-daemon || true
           cat runs/client/ethermod-autotest.txt || true
       - name: Upload report and logs
         if: always()
