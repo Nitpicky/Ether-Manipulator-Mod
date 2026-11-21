@@ -62,8 +62,7 @@ jobs:
           VARIANT: ${{ github.event.inputs.variant }}
           ETHERMOD_AUTOTEST: '1'
           LIBGL_ALWAYS_SOFTWARE: '1'
-          MESA_GL_VERSION_OVERRIDE: '4.5'
-          MESA_GLSL_VERSION_OVERRIDE: '450'
+          # llvmpipe has GL 4.5 natively; no version overrides (they changed what Iris' shaders compile to).
           # SDL's GLX path finds no matching visual on Xvfb; EGL on X11 gives a real GL context.
           SDL_VIDEO_FORCE_EGL: '1'
         run: |
