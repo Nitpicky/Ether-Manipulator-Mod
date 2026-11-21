@@ -1,0 +1,197 @@
+/home/runner/.gradle/caches/modules-2/files-2.1/curse.maven/geckolib-388172/8893169/196231506b89da06925c087f9b8bc5fd12ebea16/geckolib-388172-8893169.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/io.github.llamalad7/mixinextras-neoforge/0.5.5/26f2905a37afd203c3da1d6a2e164472a7531b41/mixinextras-neoforge-0.5.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.accesstransformers/at-parser/11.0.2/64aae57d6d26d69543c5275181fe6971707a4e16/at-parser-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/earlydisplay/12.0.16/efa2e56115d22853d10524874a7bbb64555c2a28/earlydisplay-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/12.0.16/edbb2ee8211a867215970bc15ae9c354fa56dc09/loader-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarMetadata/0.5.3/ff40c1cd721d07615d825c5bbf27705b2e3258ed/JarJarMetadata-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarSelector/0.5.3/6b845aab8d5c8e721b4e3cd30f97722b7f8044b1/JarJarSelector-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/accesstransformers/11.0.2/25dcb69c78b16669935f0ab91dff830ce192379d/accesstransformers-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/bus/8.0.5/5b2d33285ab5d1554e9798ad98c40d6ea3868bd5/bus-8.0.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/mergetool/2.0.7/793b18456e92c4a7f66d9b5d8bf7a9c1c7a20b20/mergetool-2.0.7-api.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar
+=== LIST /(.*SwingAnimation.*|.*Glint.*|.*Foil.*|.*ItemFeatureRenderer.*|.*Flame.*|ScreenEffectRenderer|RenderTypes|.*ItemRenderer)$
+com/geckolib/renderer/GeoItemRenderer
+net/minecraft/client/gui/render/pip/OversizedItemRenderer
+net/minecraft/client/particle/FlameParticle
+net/minecraft/client/particle/FlameParticle$Provider
+net/minecraft/client/particle/FlameParticle$SmallFlameProvider
+net/minecraft/client/renderer/ScreenEffectRenderer
+net/minecraft/client/renderer/entity/ThrownItemRenderer
+net/minecraft/client/renderer/feature/FlameFeatureRenderer
+net/minecraft/client/renderer/feature/FlameFeatureRenderer$Submit
+net/minecraft/client/renderer/feature/ItemFeatureRenderer
+net/minecraft/client/renderer/feature/ItemFeatureRenderer$Submit
+net/minecraft/client/renderer/item/ItemStackRenderState$FoilType
+net/minecraft/client/renderer/rendertype/RenderTypes
+net/minecraft/commands/arguments/SwingAnimationArgument
+net/minecraft/network/protocol/game/ClientboundSwingAnimationPacket
+net/minecraft/util/datafix/fixes/SwingAnimationComponentSplitFix
+net/minecraft/world/item/SwingAnimationType
+net/minecraft/world/item/component/SwingAnimation
+net/minecraft/world/level/block/entity/trialspawner/TrialSpawner$FlameParticle
+=== CODE net/minecraft/client/renderer/ScreenEffectRenderer renderScreenEffect
+=== CODE net/minecraft/client/renderer/feature/ItemFeatureRenderer render
+=== CODE net/minecraft/client/renderer/ItemInHandRenderer itemUsed
+=== SIG net/minecraft/client/renderer/ScreenEffectRenderer .*
+  private static final net.minecraft.resources.Identifier UNDERWATER_LOCATION;
+  private final net.minecraft.client.renderer.GameRenderer gameRenderer;
+  private final net.minecraft.client.resources.model.sprite.SpriteGetter sprites;
+  public net.minecraft.client.renderer.ScreenEffectRenderer(net.minecraft.client.renderer.GameRenderer, net.minecraft.client.resources.model.sprite.SpriteGetter);
+  public void submit(float, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.PlayerRenderState, net.minecraft.client.renderer.state.level.CameraRenderState, boolean);
+  private void renderItemActivationAnimation(net.minecraft.client.renderer.state.level.PlayerRenderState, com.mojang.blaze3d.vertex.PoseStack, float, net.minecraft.client.renderer.SubmitNodeCollector);
+  private static void submitBlockSprite(net.minecraft.resources.Identifier, float, float, float, float, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int);
+  private static void submitWater(net.minecraft.client.renderer.state.level.PlayerRenderState$WaterOverlay, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector);
+  public static void submitFluid(net.minecraft.client.renderer.state.level.PlayerRenderState$WaterOverlay, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.resources.Identifier);
+  private static void submitFire(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.texture.TextureAtlasSprite);
+  private static void buildFireQuad(net.minecraft.client.renderer.texture.TextureAtlasSprite, com.mojang.blaze3d.vertex.VertexConsumer, org.joml.Matrix4f);
+  private static void buildSpriteQuad(com.mojang.blaze3d.vertex.VertexConsumer, org.joml.Matrix4f, net.minecraft.client.renderer.texture.TextureAtlasSprite, float, float, float, float, float, int);
+  private static void buildQuad(com.mojang.blaze3d.vertex.VertexConsumer, org.joml.Matrix4f, float, float, float, float, float, float, float, float, float, int);
+  private static void lambda$submitFire$0(net.minecraft.client.renderer.texture.TextureAtlasSprite, com.mojang.blaze3d.vertex.PoseStack$Pose, com.mojang.blaze3d.vertex.VertexConsumer);
+  private static void lambda$submitFluid$0(net.minecraft.client.renderer.state.level.PlayerRenderState$WaterOverlay, com.mojang.blaze3d.vertex.PoseStack$Pose, com.mojang.blaze3d.vertex.VertexConsumer);
+  private static void lambda$submitBlockSprite$0(float, float, float, float, int, com.mojang.blaze3d.vertex.PoseStack$Pose, com.mojang.blaze3d.vertex.VertexConsumer);
+  static {};
+=== SIG net/minecraft/client/renderer/ItemInHandRenderer .*(sed|eight|quip).*
+=== SIG net/minecraft/world/entity/LivingEntity .*(wing).*
+  private final net.minecraft.world.entity.LivingEntity$SwingState swingState;
+  private void updateGlowingStatus();
+  private int getModifiedSwingDuration(net.minecraft.world.item.component.SwingAnimation);
+  public void swingAndResetAttackStrength(net.minecraft.world.InteractionHand, net.minecraft.world.item.component.SwingAnimation, boolean);
+  public boolean swing(net.minecraft.world.InteractionHand, net.minecraft.world.item.component.SwingAnimation, boolean);
+  public net.minecraft.world.entity.LivingEntity$SwingDescription getCurrentSwing();
+  public float getSwingAnimation(float);
+  public boolean isSwinging();
+  public boolean isCurrentlyGlowing();
+=== net/minecraft/world/item/component/SwingAnimation
+Compiled from "SwingAnimation.java"
+public final class net.minecraft.world.item.component.SwingAnimation extends java.lang.Record {
+  public static final net.minecraft.world.item.component.SwingAnimation DEFAULT;
+  public static final com.mojang.serialization.Codec<net.minecraft.world.item.component.SwingAnimation> CODEC;
+  public static final net.minecraft.network.codec.StreamCodec<io.netty.buffer.ByteBuf, net.minecraft.world.item.component.SwingAnimation> STREAM_CODEC;
+  public net.minecraft.world.item.component.SwingAnimation(net.minecraft.world.item.SwingAnimationType, int);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.world.item.SwingAnimationType type();
+  public int duration();
+}
+=== net/minecraft/client/renderer/item/ItemStackRenderState$FoilType
+Compiled from "ItemStackRenderState.java"
+public final class net.minecraft.client.renderer.item.ItemStackRenderState$FoilType extends java.lang.Enum<net.minecraft.client.renderer.item.ItemStackRenderState$FoilType> {
+  public static final net.minecraft.client.renderer.item.ItemStackRenderState$FoilType NONE;
+  public static final net.minecraft.client.renderer.item.ItemStackRenderState$FoilType STANDARD;
+  public static final net.minecraft.client.renderer.item.ItemStackRenderState$FoilType SPECIAL;
+  public static net.minecraft.client.renderer.item.ItemStackRenderState$FoilType[] values();
+  public static net.minecraft.client.renderer.item.ItemStackRenderState$FoilType valueOf(java.lang.String);
+}
+=== net/minecraft/client/renderer/item/ItemStackRenderState$LayerRenderState
+Compiled from "ItemStackRenderState.java"
+public class net.minecraft.client.renderer.item.ItemStackRenderState$LayerRenderState {
+  public static final java.util.function.Supplier<org.joml.Vector3fc[]> NO_EXTENTS_SUPPLIER;
+  public static final int[] EMPTY_TINTS;
+  public net.minecraft.client.renderer.item.ItemStackRenderState$LayerRenderState(net.minecraft.client.renderer.item.ItemStackRenderState);
+  public void clear();
+  public void setQuads(net.minecraft.client.resources.model.geometry.ItemQuads);
+  public void setUsesBlockLight(boolean);
+  public void setExtents(java.util.function.Supplier<org.joml.Vector3fc[]>);
+  public void setParticleMaterial(net.minecraft.client.resources.model.sprite.Material$Baked);
+  public void setItemTransform(net.minecraft.client.resources.model.cuboid.ItemTransform);
+  public void setLocalTransform(org.joml.Matrix4fc);
+  public <T> void setupSpecialModel(net.minecraft.client.renderer.special.SpecialModelRenderer<T>, T);
+  public void setFoilType(net.minecraft.client.renderer.item.ItemStackRenderState$FoilType);
+  public it.unimi.dsi.fastutil.ints.IntList tintLayers();
+}
+=== net/minecraft/client/renderer/ScreenEffectRenderer
+Compiled from "ScreenEffectRenderer.java"
+public class net.minecraft.client.renderer.ScreenEffectRenderer {
+  public net.minecraft.client.renderer.ScreenEffectRenderer(net.minecraft.client.renderer.GameRenderer, net.minecraft.client.resources.model.sprite.SpriteGetter);
+  public void submit(float, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.PlayerRenderState, net.minecraft.client.renderer.state.level.CameraRenderState, boolean);
+  public static void submitFluid(net.minecraft.client.renderer.state.level.PlayerRenderState$WaterOverlay, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.resources.Identifier);
+}
+=== net/minecraft/client/renderer/feature/ItemFeatureRenderer
+Compiled from "ItemFeatureRenderer.java"
+public class net.minecraft.client.renderer.feature.ItemFeatureRenderer extends net.minecraft.client.renderer.feature.RenderTypeFeatureRenderer<net.minecraft.client.renderer.feature.ItemFeatureRenderer$Submit> {
+  public static final net.minecraft.client.renderer.feature.FeatureRendererType<net.minecraft.client.renderer.feature.ItemFeatureRenderer$Submit> TYPE;
+  public static final net.minecraft.resources.Identifier ENCHANTED_GLINT_ARMOR;
+  public static final net.minecraft.resources.Identifier ENCHANTED_GLINT_ITEM;
+  public static final float SPECIAL_FOIL_TEXTURE_SCALE;
+  public static final int NO_TINT;
+  public net.minecraft.client.renderer.feature.ItemFeatureRenderer();
+}
+=== net/minecraft/client/renderer/feature/FlameFeatureRenderer
+Compiled from "FlameFeatureRenderer.java"
+public class net.minecraft.client.renderer.feature.FlameFeatureRenderer extends net.minecraft.client.renderer.feature.RenderTypeFeatureRenderer<net.minecraft.client.renderer.feature.FlameFeatureRenderer$Submit> {
+  public static final net.minecraft.client.renderer.feature.FeatureRendererType<net.minecraft.client.renderer.feature.FlameFeatureRenderer$Submit> TYPE;
+  public net.minecraft.client.renderer.feature.FlameFeatureRenderer();
+}
+=== net/minecraft/client/renderer/rendertype/RenderTypes
+Compiled from "RenderTypes.java"
+public class net.minecraft.client.renderer.rendertype.RenderTypes {
+  public static final net.minecraft.client.renderer.rendertype.RenderType LINES;
+  public static final net.minecraft.client.renderer.rendertype.RenderType LINES_TRANSLUCENT;
+  public static final net.minecraft.client.renderer.rendertype.RenderType LINES_TRANSLUCENT_NO_DEPTH_WRITE;
+  public static final net.minecraft.client.renderer.rendertype.RenderType LINES_DEPTH_BIAS;
+  public static final net.minecraft.client.renderer.rendertype.RenderType SECONDARY_BLOCK_OUTLINE;
+  public net.minecraft.client.renderer.rendertype.RenderTypes();
+  public static net.minecraft.client.renderer.rendertype.RenderType solidMovingBlock();
+  public static net.minecraft.client.renderer.rendertype.RenderType cutoutMovingBlock();
+  public static net.minecraft.client.renderer.rendertype.RenderType translucentMovingBlock();
+  public static net.minecraft.client.renderer.rendertype.RenderType armorCutoutNoCull(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType armorCutoutNoCullGlint(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType armorTrim(net.minecraft.resources.Identifier, boolean);
+  public static net.minecraft.client.renderer.rendertype.RenderType wolfArmorCracks(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType entitySolid(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType entitySolidGlint(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType entitySolidZOffsetForward(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType entityCutoutCull(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType entityCutout(net.minecraft.resources.Identifier, boolean);
+  public static net.minecraft.client.renderer.rendertype.RenderType entityCutout(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType entityCutoutZOffset(net.minecraft.resources.Identifier, boolean);
+  public static net.minecraft.client.renderer.rendertype.RenderType entityCutoutZOffset(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType entityCutoutDissolve(net.minecraft.resources.Identifier, net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType entityTranslucentCull(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType itemCutout(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType itemCutoutGlint(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType itemCutoutGlintSpecial(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType itemTranslucent(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType itemTranslucentGlint(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType itemTranslucentGlintSpecial(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType entityTranslucent(net.minecraft.resources.Identifier, boolean);
+  public static net.minecraft.client.renderer.rendertype.RenderType entityTranslucent(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType entityTranslucentEmissive(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType endCrystalBeam(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType beaconBeam(net.minecraft.resources.Identifier, boolean);
+  public static net.minecraft.client.renderer.rendertype.RenderType bannerPattern(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType entityShadow(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType eyes(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType breezeEyes(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType breezeWind(net.minecraft.resources.Identifier, float, float);
+  public static net.minecraft.client.renderer.rendertype.RenderType energySwirl(net.minecraft.resources.Identifier, float, float);
+  public static net.minecraft.client.renderer.rendertype.RenderType leash();
+  public static net.minecraft.client.renderer.rendertype.RenderType waterMask();
+  public static net.minecraft.client.renderer.rendertype.RenderType outline(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType patternedShieldGlint();
+  public static net.minecraft.client.renderer.rendertype.RenderType trimmedArmorGlint();
+  public static net.minecraft.client.renderer.rendertype.RenderType crumbling(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType text(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType textGrayscale(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType textPolygonOffset(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType textGrayscalePolygonOffset(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType textSeeThrough(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType textGrayscaleSeeThrough(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType lightning();
+  public static net.minecraft.client.renderer.rendertype.RenderType dragonRays();
+  public static net.minecraft.client.renderer.rendertype.RenderType endPortal();
+  public static net.minecraft.client.renderer.rendertype.RenderType endGateway();
+  public static net.minecraft.client.renderer.rendertype.RenderType lines();
+  public static net.minecraft.client.renderer.rendertype.RenderType linesTranslucent();
+  public static net.minecraft.client.renderer.rendertype.RenderType linesTranslucentNoDepthWrite();
+  public static net.minecraft.client.renderer.rendertype.RenderType linesDepthBias();
+  public static net.minecraft.client.renderer.rendertype.RenderType secondaryBlockOutline();
+  public static net.minecraft.client.renderer.rendertype.RenderType debugFilledBox();
+  public static net.minecraft.client.renderer.rendertype.RenderType debugPoint();
+  public static net.minecraft.client.renderer.rendertype.RenderType debugQuads();
+  public static net.minecraft.client.renderer.rendertype.RenderType debugTriangleFan();
+  public static net.minecraft.client.renderer.rendertype.RenderType blockScreenEffect(net.minecraft.resources.Identifier);
+  public static net.minecraft.client.renderer.rendertype.RenderType fireScreenEffect(net.minecraft.resources.Identifier);
+}
