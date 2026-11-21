@@ -248,6 +248,38 @@ public final class KGifTour {
                 });
     }
 
+    /** K-window centre of set tile [index] when the grid is scrolled to the top. */
+    private static double[] set(int index) {
+        return new double[] {239 + (index % 3) * 22 + 10, 33 + (index / 3) * 24 + 11};
+    }
+
+    /** Press, keep still for [hold] ticks (the set lifts), drag to a point over n ticks, release. */
+    private static void holdDragTo(double[] to, int hold, int n) {
+        Minecraft mc = Minecraft.getInstance();
+        final double[] from = new double[2], end = new double[2];
+        add(
+                hold + n + 2,
+                () -> {
+                    from[0] = vx;
+                    from[1] = vy;
+                    var t = local(mc, to[0], to[1]);
+                    end[0] = t[0];
+                    end[1] = t[1];
+                    mc.screen.mouseClicked(vx, vy, 0);
+                },
+                i -> {
+                    if (i < hold) return;
+                    int j = i - hold;
+                    if (j < n) {
+                        double f = (j + 1) / (double) n, px = vx, py = vy;
+                        f = f * f * (3 - 2 * f);
+                        vx = from[0] + (end[0] - from[0]) * f;
+                        vy = from[1] + (end[1] - from[1]) * f;
+                        mc.screen.mouseDragged(vx, vy, 0, vx - px, vy - py);
+                    } else if (j == n) mc.screen.mouseReleased(vx, vy, 0);
+                });
+    }
+
     private static void away(int n) {
         glideLocal(330, 120, n);
         add(1, () -> vx = vy = -50, null);
@@ -434,12 +466,18 @@ public final class KGifTour {
         waitT(50);
         close();
 
-        // ---- 7. Set panel: a long list, copy a code, scroll with the bar -----------------------
+        // ---- 7. Set panel: tiles, copy a code, change an icon, favourites, drag to reorder, scroll --
         server(
                 p -> {
                     var st = Manipulator.stack(p);
-                    String[] codes = {"1TAB2HBA3GAA", "1TA2WB", "1PAB2KBA3FAB", "1BA", "1LA2GB3HA", "1KB", "1FA2PB", "1GAB"};
-                    String[] names = {"Mining", "Builder", "Fight", "Farm", "Explore", "Snipe", "Blaze", "Travel"};
+                    String[] codes = {
+                        "1TAB2HBA3GAA", "1TB2WB", "1PAB2KBA3FAB", "1BA", "1LA2GB3HA", "1KB", "1FA2PB", "1GAB",
+                        "1HA2WA", "1WB", "1TA2LA", "1PA2FA", "1KA2HA", "1GA2WB"
+                    };
+                    String[] names = {
+                        "Mining", "Builder", "Fight", "Farm", "Explore", "Snipe", "Blaze", "Travel",
+                        "Ocean", "Sky", "Caves", "Duel", "Hunt", "Glide"
+                    };
                     for (int i = 0; i < codes.length; i++)
                         com.ethermod.trait.Loadouts.add(st, names[i], com.ethermod.trait.BuildCode.decode(codes[i], p.registryAccess()));
                 });
@@ -448,12 +486,39 @@ public final class KGifTour {
         glide("copy-code", 12);
         waitT(6);
         click();
-        waitT(20);
-        glideLocal(306, 40, 10);
-        dragTo(306, 125, 24);
+        waitT(16);
+        glide("set4", 12);
+        waitT(6);
+        click(1);
+        waitT(10);
+        click(1);
+        waitT(12);
+        glide("fav2", 10);
+        waitT(6);
+        click();
+        waitT(10);
+        glide("fav5", 10);
+        waitT(6);
+        click();
+        waitT(12);
+        glide("set0", 12);
+        waitT(4);
+        holdDragTo(set(5), 10, 22);
+        waitT(24);
+        glideLocal(307, 40, 10);
+        dragTo(307, 125, 24);
         waitT(20);
         away(10);
         waitT(10);
+        close();
+
+        // ---- 8. Set tooltip: the name, code and picked traits of a set ------------------------
+        open("8_set_tooltip");
+        tips(true);
+        waitT(16);
+        glide("set2", 12);
+        waitT(40);
+        tips(false);
         close();
         add(
                 20,

@@ -391,6 +391,32 @@ public final class UiProbe {
                                     check("More than seven Sets fit", com.ethermod.trait.Loadouts.list(st).size() == start + 9);
                                     for (int n = 0; n < 9; n++) com.ethermod.trait.Loadouts.handle(p, com.ethermod.trait.Loadouts.DELETE, start, "");
                                     check("Extra Sets removed", com.ethermod.trait.Loadouts.list(st).size() == start);
+                                    // Order, icon and favourite of a set
+                                    int s0 = com.ethermod.trait.Loadouts.list(st).size();
+                                    String[] names = {"Mover A", "Mover B", "Mover C"};
+                                    String[] codes = {"1TA", "1TB", "1KA"};
+                                    for (int n = 0; n < 3; n++) com.ethermod.trait.Loadouts.add(st, names[n], com.ethermod.trait.BuildCode.decode(codes[n], access));
+                                    var made = com.ethermod.trait.Loadouts.list(st);
+                                    check(
+                                            "Set icons follow the first Module",
+                                            made.get(s0).shownIcon().equals("mining")
+                                                    && made.get(s0 + 1).shownIcon().equals("building")
+                                                    && made.get(s0 + 2).shownIcon().equals("ranged"));
+                                    com.ethermod.trait.Loadouts.handle(p, com.ethermod.trait.Loadouts.MOVE, s0, Integer.toString(s0 + 2));
+                                    made = com.ethermod.trait.Loadouts.list(st);
+                                    check(
+                                            "Moving a set reorders the list",
+                                            made.get(s0).name().equals("Mover B")
+                                                    && made.get(s0 + 1).name().equals("Mover C")
+                                                    && made.get(s0 + 2).name().equals("Mover A"));
+                                    com.ethermod.trait.Loadouts.handle(p, com.ethermod.trait.Loadouts.ICON, s0, "ocean");
+                                    com.ethermod.trait.Loadouts.handle(p, com.ethermod.trait.Loadouts.FAVORITE, s0 + 1, "");
+                                    made = com.ethermod.trait.Loadouts.list(st);
+                                    check("A chosen icon is kept", made.get(s0).shownIcon().equals("ocean") && !made.get(s0 + 2).favorite());
+                                    check("A set can be a favourite", made.get(s0 + 1).favorite());
+                                    com.ethermod.trait.Loadouts.handle(p, com.ethermod.trait.Loadouts.FAVORITE, s0 + 1, "");
+                                    check("A favourite can be unmarked", !com.ethermod.trait.Loadouts.list(st).get(s0 + 1).favorite());
+                                    for (int n = 0; n < 3; n++) com.ethermod.trait.Loadouts.handle(p, com.ethermod.trait.Loadouts.DELETE, s0, "");
                                 }
                                 check(
                                         "Frost spends water",

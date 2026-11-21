@@ -133,6 +133,22 @@ final class UpgradeAudio {
         cue(.04, "ethermod:ui.crystal_note", 1.8f, .05f, .25f);
     }
 
+    /** A set's icon stepped to the next one (right click). */
+    void iconCycled() {
+        cue(0, "ui.button.click", 1.6f, .04f, .1f);
+    }
+
+    /** A held set was picked up to be moved. */
+    void setLifted() {
+        cue(0, "item.book.page_turn", 1.7f, .05f, .2f);
+    }
+
+    /** A moved set was put down in its new place. */
+    void setDropped() {
+        cue(0, "item.book.page_turn", 1.15f, .06f, .2f);
+        cue(.03, "ui.button.click", 1.3f, .035f, .1f);
+    }
+
     /** A pasted set code was accepted. */
     void pasted() {
         setSound("save");

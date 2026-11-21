@@ -34,7 +34,7 @@ public class UpgradeScreen extends Screen {
     private final List<KHit> hits = new ArrayList<>();
     private final KUi ui = new KUi(hits);
     private KHit hovered;
-    private String hoverKey = "";
+    private String hoverKey = "", lastSetKey = "";
     private double hoverAt;
     private double lastTime, lastClick;
     private int picker = -1;
@@ -248,18 +248,31 @@ public class UpgradeScreen extends Screen {
                     audio.press("delete");
                     return true;
                 }
-                if (button != 0) return true;
-                if (h.key().startsWith("set")
-                        && ui.now - lastClick < .25
-                        && h.key().equals(hoverKey)) {
-                    loadouts.beginRename(Integer.parseInt(h.key().substring(3)), ui);
-                    var rename = loadouts.renameBox();
-                    setFocused(rename);
-                    rename.moveCursorToEnd(false);
-                    rename.setHighlightPos(0);
-                    lastClick = 0;
+                if (h.key().startsWith("set")) {
+                    // A set tile: right click changes its icon, a double click renames it, and
+                    // the left button is held (to drag it) or let go (to pick it).
+                    int index = Integer.parseInt(h.key().substring(3));
+                    if (button == 1) {
+                        loadouts.cycleIcon(index, ui);
+                        return true;
+                    }
+                    if (button != 0) return true;
+                    if (ui.now - lastClick < .25 && h.key().equals(lastSetKey)) {
+                        loadouts.beginRename(index, ui);
+                        var rename = loadouts.renameBox();
+                        setFocused(rename);
+                        rename.moveCursorToEnd(false);
+                        rename.setHighlightPos(0);
+                        lastClick = 0;
+                        return true;
+                    }
+                    lastClick = ui.now;
+                    lastSetKey = h.key();
+                    ui.pressedKey = h.key();
+                    loadouts.press(index, ui);
                     return true;
                 }
+                if (button != 0) return true;
                 lastClick = ui.now;
                 if (h.action() != null) {
                     ui.pressedKey = h.key();
@@ -287,13 +300,18 @@ public class UpgradeScreen extends Screen {
             loadouts.dragBar(ly, ui);
             return true;
         }
-        return false;
+        return loadouts.holding();
     }
 
     @Override
     public boolean mouseReleased(double x, double y, int b) {
         colour.endDrag();
         loadouts.releaseBar();
+        if (b == 0) {
+            ui.mx = (int) ((x - left) / uiScale);
+            ui.my = (int) ((y - top) / uiScale);
+            loadouts.release(ui);
+        }
         ui.pressedKey = null;
         return model.release(clock());
     }

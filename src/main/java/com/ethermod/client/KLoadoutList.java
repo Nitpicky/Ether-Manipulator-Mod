@@ -11,6 +11,8 @@ import com.ethermod.network.payload.TraitPayloads;
 import com.ethermod.trait.BuildCode;
 import com.ethermod.trait.Loadouts;
 import com.ethermod.trait.ModuleUnlocks;
+import com.ethermod.trait.SetIcons;
+import com.ethermod.trait.TraitLines;
 
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -19,45 +21,69 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.component.CustomData;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
- * The saved-sets list on the right: select / load, save, copy and paste set codes, delete, scroll
- * and inline rename.
+ * The saved sets on the right, as a grid of tiles in their main Module's Badge colours: click to
+ * pick (load), double-click to rename, right-click to change the icon, hold and drag to reorder,
+ * the heart to mark a favourite. Under the grid: new set, copy code, paste code, delete.
  */
 final class KLoadoutList {
-    // Layout (K-window units). Content is 70px wide inside the panel's 2px padding: the rows and
-    // a 4px scrollbar 2px apart, then four 16x16 buttons with 2px gaps under them. The title keeps
-    // 2px margins all round (text shadow included); seven 12px rows with 2px gaps fill 33..128,
-    // then 2px, the buttons (131..146) and the panel's 2px bottom padding.
-    static final int PANEL_X = 236, PANEL_W = 76, X = 239, ROW_W = 64, BAR_X = 305, BAR_W = 4;
+    // Layout (K-window units). Content is 70px wide inside the panel's 2px padding: three columns
+    // of 20x22 tiles 2px apart, then 2px and a 4px scrollbar. Four rows show at once (33..127),
+    // then the four 16x16 buttons with 2px gaps (131..146) and the panel's 2px bottom padding.
+    static final int PANEL_X = 236, PANEL_W = 76, X = 239, BAR_X = 305, BAR_W = 4;
     static final int LIST_Y = 33, BUTTON_Y = 131, BUTTON_W = 16, BUTTON_H = 16, GAP = 2;
-    /** Rows shown at once; the rest scroll. */
-    static final int VISIBLE = 7;
-    private static final int CHIP = 5, CHIP_GAP = 2, CHIP_STEP = CHIP + CHIP_GAP;
-    /** Chips sit CHIP_GAP inside the row's 1px border on the right, top and bottom. */
-    private static final int CHIPS_X = X + ROW_W - 1 - CHIP_GAP - (CHIP_STEP * 2 + CHIP);
-    private static final int NAME_X = X + 3, NAME_W = CHIPS_X - 2 - NAME_X;
+    static final int COLS = 3, ROWS = 4, TILE_W = 20, TILE_H = 22, STEP_X = TILE_W + GAP, STEP_Y = TILE_H + GAP;
+    static final int GRID_H = ROWS * STEP_Y - GAP;
+    /** Holding a tile this long (or moving the mouse a few pixels) picks it up. */
+    private static final double HOLD = .28;
+    /** How fast tiles glide to their place (per second, exponential). */
+    private static final double GLIDE = 16;
 
     private final UpgradeAudio audio;
-    private int selectedSet = -1, pendingSave = -1, setScroll, renaming = -1;
+
+    // The list as drawn: the server's, or what it will be once a sent change arrives.
+    private List<Loadouts.Entry> shown = List.of();
+    /** One token per shown set: the set's identity on screen while sets move around. */
+    private final List<Object> tokens = new ArrayList<>();
+    private final Map<Object, double[]> pos = new HashMap<>();
+    private final Deque<List<Loadouts.Entry>> expects = new ArrayDeque<>();
+    private List<Loadouts.Entry> base = List.of();
+    private double expectUntil, lastFrame = -1;
+
+    private Object selected;
+    private boolean selectionFound, selectNew;
+    private int setScroll, renaming = -1;
     private EditBox rename;
     /** A save or paste waits for the server's copy of the list, but never longer than this. */
     private double pendingUntil;
     private boolean draggingBar;
     private int barGrab;
 
+    // A held tile: picked up after HOLD, then it follows the mouse until released.
+    private Object held;
+    private double heldAt, heldX, heldY, grabX, grabY, edgeAt;
+    private boolean dragging;
+    private int dropAt = -1;
+
     KLoadoutList(UpgradeAudio audio) {
         this.audio = audio;
     }
 
-    /** Builds the rename box; the screen registers it as a widget. */
+    /** Builds the rename box (it opens over the panel title); the screen registers it. */
     EditBox createWidget(Font font) {
-        rename = new EditBox(font, 0, 0, NAME_W + 2, 12, Component.translatable("screen.ethermod.set_name"));
+        rename = new EditBox(font, 0, 0, BAR_X + BAR_W - X, 12, Component.translatable("screen.ethermod.set_name"));
         rename.setMaxLength(Loadouts.MAX_NAME);
         rename.setVisible(false);
         return rename;
@@ -72,13 +98,19 @@ final class KLoadoutList {
     }
 
     void clearSelection() {
-        selectedSet = -1;
+        selected = null;
     }
 
-    /** Opens the rename box on row [index] of the list (the screen then focuses it). */
+    private int selectedIndex() {
+        return selected == null ? -1 : tokens.indexOf(selected);
+    }
+
+    /** Opens the rename box for set [index] (the screen then focuses it). */
     void beginRename(int index, KUi ui) {
+        if (index < 0 || index >= shown.size()) return;
+        cancelHold();
         renaming = index;
-        rename.setValue(Loadouts.list(ui.stack).get(renaming).name());
+        rename.setValue(shown.get(index).name());
         rename.setVisible(true);
         rename.setFocused(true);
     }
@@ -96,30 +128,153 @@ final class KLoadoutList {
         rename.setVisible(false);
     }
 
+    // ---- The shown list ----------------------------------------------------------------
+
+    /** Follows the server's list, keeping each set's token (and so its place on screen). */
+    private void sync(KUi ui) {
+        var list = Loadouts.list(ui.stack);
+        if (!expects.isEmpty()) {
+            int k = 0;
+            for (var e : expects) {
+                if (e.equals(list)) break;
+                k++;
+            }
+            if (k < expects.size()) {
+                for (int i = 0; i <= k; i++) expects.removeFirst();
+                base = list;
+                if (expects.isEmpty()) shown = list;
+                return;
+            }
+            if (list.equals(base) && ui.now < expectUntil) return;
+            expects.clear();
+        }
+        reconcile(list, ui);
+    }
+
+    private void reconcile(List<Loadouts.Entry> list, KUi ui) {
+        if (!list.equals(shown) || tokens.size() != list.size()) {
+            int n = shown.size(), m = list.size();
+            if (tokens.size() != n) fresh(m);
+            else if (m == n - 1) {
+                int k = n - 1;
+                for (int i = 0; i < m; i++)
+                    if (!shown.get(i).equals(list.get(i))) {
+                        k = i;
+                        break;
+                    }
+                tokens.remove(k);
+            } else if (m == n + 1 && list.subList(0, n).equals(shown)) {
+                Object t = new Object();
+                tokens.add(t);
+                if (selectNew) selected = t;
+                selectNew = false;
+            } else if (m != n) fresh(m);
+            shown = list;
+        }
+        if (!selectionFound && !tokens.isEmpty()) {
+            // On opening, the set that matches the current build is the picked one.
+            selectionFound = true;
+            ListTag current = currentBuild(ui);
+            for (int i = 0; i < shown.size(); i++)
+                if (shown.get(i).build().equals(current)) {
+                    selected = tokens.get(i);
+                    showSet(i);
+                    break;
+                }
+        }
+    }
+
+    private void fresh(int size) {
+        tokens.clear();
+        pos.clear();
+        for (int i = 0; i < size; i++) tokens.add(new Object());
+    }
+
+    /** Shows [next] straight away while the server catches up. */
+    private void predict(List<Loadouts.Entry> next, KUi ui) {
+        if (expects.isEmpty()) base = Loadouts.list(ui.stack);
+        expects.addLast(next);
+        expectUntil = ui.now + 2;
+        shown = next;
+    }
+
+    private void replace(int index, Loadouts.Entry e, KUi ui) {
+        var next = new ArrayList<>(shown);
+        next.set(index, e);
+        predict(next, ui);
+    }
+
+    private void move(int from, int to, KUi ui) {
+        var next = new ArrayList<>(shown);
+        next.add(to, next.remove(from));
+        tokens.add(to, tokens.remove(from));
+        predict(next, ui);
+        send(new TraitPayloads.Loadout(Loadouts.MOVE, from, Integer.toString(to)));
+    }
+
+    /** Right click: the next icon in the cycle. */
+    void cycleIcon(int index, KUi ui) {
+        if (index < 0 || index >= shown.size() || dragging) return;
+        var e = shown.get(index);
+        String icon = SetIcons.next(e.shownIcon());
+        replace(index, new Loadouts.Entry(e.name(), e.build(), icon, e.favorite()), ui);
+        send(new TraitPayloads.Loadout(Loadouts.ICON, index, icon));
+        audio.iconCycled();
+    }
+
+    private void toggleFavorite(int index, KUi ui) {
+        if (index < 0 || index >= shown.size()) return;
+        var e = shown.get(index);
+        replace(index, new Loadouts.Entry(e.name(), e.build(), e.icon(), !e.favorite()), ui);
+        send(new TraitPayloads.Loadout(Loadouts.FAVORITE, index, ""));
+    }
+
+    private void delete(int index, KUi ui) {
+        var next = new ArrayList<>(shown);
+        next.remove(index);
+        tokens.remove(index);
+        predict(next, ui);
+        send(new TraitPayloads.Loadout(Loadouts.DELETE, index, ""));
+    }
+
+    private static ListTag currentBuild(KUi ui) {
+        return ui.stack
+                .getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY)
+                .getUnsafe()
+                .getList("mm_traits", Tag.TAG_COMPOUND);
+    }
+
+    // ---- Scrolling ----------------------------------------------------------------------
+
+    private static int rowsOf(int size) {
+        return (size + COLS - 1) / COLS;
+    }
+
     private static int maxScroll(int size) {
-        return Math.max(0, size - VISIBLE);
+        return Math.max(0, rowsOf(size) - ROWS);
     }
 
     /** Wheel over the list: one row per notch. */
     void scroll(double vertical, KUi ui) {
-        setScroll = Math.clamp(setScroll - (int) Math.signum(vertical), 0, maxScroll(Loadouts.list(ui.stack).size()));
+        setScroll = Math.clamp(setScroll - (int) Math.signum(vertical), 0, maxScroll(shown.size()));
         if (renaming >= 0) cancelRename();
     }
 
-    // ---- Scrollbar ---------------------------------------------------------------
-
-    private static int barTrackH() {
-        return setRowY(VISIBLE - 1) + setRowHeight(VISIBLE - 1) - LIST_Y;
+    /** Scrolls just enough to show set [index]. */
+    private void showSet(int index) {
+        int row = index / COLS;
+        if (row >= setScroll + ROWS) setScroll = row - ROWS + 1;
+        if (row < setScroll) setScroll = row;
     }
 
     private static int thumbH(int size) {
-        int track = barTrackH();
-        return size <= VISIBLE ? track : Math.max(8, track * VISIBLE / size);
+        int rows = rowsOf(size);
+        return rows <= ROWS ? GRID_H : Math.max(8, GRID_H * ROWS / rows);
     }
 
     private static int thumbY(int size, int scroll) {
         int max = maxScroll(size);
-        return LIST_Y + (max == 0 ? 0 : (barTrackH() - thumbH(size)) * scroll / max);
+        return LIST_Y + (max == 0 ? 0 : (GRID_H - thumbH(size)) * scroll / max);
     }
 
     boolean draggingBar() {
@@ -128,9 +283,9 @@ final class KLoadoutList {
 
     /** Mouse held on the scrollbar: the thumb follows it (grabbed where it was pressed). */
     void dragBar(double ly, KUi ui) {
-        int size = Loadouts.list(ui.stack).size(), max = maxScroll(size);
+        int size = shown.size(), max = maxScroll(size);
         if (max == 0) return;
-        int room = barTrackH() - thumbH(size);
+        int room = GRID_H - thumbH(size);
         double t = (ly - barGrab - LIST_Y) / Math.max(1, room);
         int to = Math.clamp(Math.round(t * max), 0, max);
         if (to != setScroll && renaming >= 0) cancelRename();
@@ -150,107 +305,289 @@ final class KLoadoutList {
     }
 
     private void drawBar(GuiGraphics g, KUi ui, int size) {
-        int track = barTrackH();
-        g.fill(BAR_X, LIST_Y, BAR_X + BAR_W, LIST_Y + track, a().insetShadow());
+        g.fill(BAR_X, LIST_Y, BAR_X + BAR_W, LIST_Y + GRID_H, a().insetShadow());
         int y = thumbY(size, setScroll), h = thumbH(size);
         boolean live = maxScroll(size) > 0;
         Palette pal = live ? p() : a();
         ui.rampControl(g, "scrollbar", BAR_X, y, BAR_W, h, pal, null, List.of());
         if (live) {
-            ui.hit("scrollbar", BAR_X, LIST_Y, BAR_W, track, () -> pressBar(ui, size), List.of(), pal.accent(), false);
+            ui.hit("scrollbar", BAR_X, LIST_Y, BAR_W, GRID_H, () -> pressBar(ui, size), List.of(), pal.accent(), false);
             ui.hover(g, "scrollbar", BAR_X, y, BAR_W, h, pal.accent(), false);
         }
     }
 
-    // ---- Rows ---------------------------------------------------------------------
+    // ---- Holding and dragging a tile ------------------------------------------------------
 
-    /** Positions and draws the rename box over its row. */
+    /** Left button down on set [index]: it is picked up if held, or clicked when let go. */
+    void press(int index, KUi ui) {
+        if (index < 0 || index >= tokens.size()) return;
+        held = tokens.get(index);
+        heldAt = ui.now;
+        heldX = ui.mx;
+        heldY = ui.my;
+        grabX = ui.mx - slotX(index);
+        grabY = ui.my - slotY(index);
+        dragging = false;
+    }
+
+    boolean holding() {
+        return held != null;
+    }
+
+    boolean draggingSet() {
+        return dragging;
+    }
+
+    private void cancelHold() {
+        held = null;
+        dragging = false;
+        dropAt = -1;
+    }
+
+    /** Left button up: drops a dragged set in its new place, or picks (loads) a clicked one. */
+    void release(KUi ui) {
+        if (held == null) return;
+        int index = tokens.indexOf(held);
+        if (dragging) {
+            if (index >= 0 && dropAt >= 0 && dropAt != index) {
+                move(index, dropAt, ui);
+                audio.setDropped();
+            }
+        } else if (index >= 0) {
+            audio.press("set" + index);
+            if (selected == held) selected = null;
+            else {
+                selected = held;
+                send(new TraitPayloads.Loadout(Loadouts.LOAD, index, ""));
+            }
+        }
+        cancelHold();
+    }
+
+    /** The place in the list the mouse points at, for the held set. */
+    private int pointedSlot(KUi ui) {
+        int col = Math.clamp((int) Math.floor((ui.mx - X + GAP / 2.0) / STEP_X), 0, COLS - 1);
+        int row = (int) Math.floor((ui.my - LIST_Y + GAP / 2.0) / STEP_Y);
+        row = Math.clamp(row, 0, ROWS - 1) + setScroll;
+        return Math.clamp(row * COLS + col, 0, Math.max(0, shown.size() - 1));
+    }
+
+    private void followHold(KUi ui) {
+        if (held == null) return;
+        if (!tokens.contains(held)) {
+            cancelHold();
+            return;
+        }
+        if (!dragging && (ui.now - heldAt >= HOLD || Math.hypot(ui.mx - heldX, ui.my - heldY) > 3)) {
+            dragging = true;
+            audio.setLifted();
+        }
+        if (!dragging) return;
+        // Near the top or bottom edge the grid scrolls, one row at a time.
+        if (ui.now >= edgeAt) {
+            if (ui.my < LIST_Y + 3 && setScroll > 0) {
+                setScroll--;
+                edgeAt = ui.now + .3;
+            } else if (ui.my > LIST_Y + GRID_H - 3 && setScroll < maxScroll(shown.size())) {
+                setScroll++;
+                edgeAt = ui.now + .3;
+            }
+        }
+        dropAt = pointedSlot(ui);
+    }
+
+    // ---- Drawing ----------------------------------------------------------------------
+
+    private int slotX(int index) {
+        return X + (index % COLS) * STEP_X;
+    }
+
+    private int slotY(int index) {
+        return LIST_Y + (index / COLS - setScroll) * STEP_Y;
+    }
+
+    /** Positions and draws the rename box over the panel title. */
     void renderRenameBox(GuiGraphics g, KUi ui, float pt) {
         if (renaming < 0) return;
-        int row = renaming - setScroll;
-        if (row < 0 || row >= VISIBLE) return;
-        rename.setX(NAME_X);
-        rename.setY(setRowY(row) + (setRowHeight(row) - 9) / 2);
+        rename.setX(X);
+        rename.setY(21);
         g.pose().pushPose();
         g.pose().translate(0, 0, 450);
         rename.render(g, ui.mx, ui.my, pt);
         g.pose().popPose();
     }
 
-    /** Every row is the same height with the panel's usual 2px gap between rows. */
-    static final int ROW_H = 12, ROW_GAP = 2;
-
-    static int setRowHeight(int row) { return ROW_H; }
-    static int setRowY(int row) { return LIST_Y + row * (ROW_H + ROW_GAP); }
-
-    /**
-     * A Module chip drawn like the Module's Badge: its bright outline (step 4) with cut corners on
-     * the Badge's dark fill (step 1). As tall as the row allows with the same 2px gap around it as
-     * between chips. An empty slot is a hollow outline in the panel's border colour.
-     */
-    private static void chip(GuiGraphics g, int x, int y, int h, ResourceLocation id) {
-        int line = a().border(), fill = 0;
-        if (id != null) {
-            Palette m = module(id, p());
-            line = m.accent();
-            fill = m.ramp()[1];
-        }
-        if (fill != 0) g.fill(x + 1, y + 1, x + CHIP - 1, y + h - 1, fill);
-        g.fill(x + 1, y, x + CHIP - 1, y + 1, line);
-        g.fill(x + 1, y + h - 1, x + CHIP - 1, y + h, line);
-        g.fill(x, y + 1, x + 1, y + h - 1, line);
-        g.fill(x + CHIP - 1, y + 1, x + CHIP, y + h - 1, line);
-    }
-
     void draw(GuiGraphics g, KUi ui) {
         inset(g, PANEL_X, 20, PANEL_W, 130, a(), a().ramp()[1]);
-        title(g, ui);
-        var list = Loadouts.list(ui.stack);
-        if (pendingSave >= 0 && (list.size() > pendingSave || ui.now > pendingUntil)) pendingSave = -1;
-        if (selectedSet >= list.size() && pendingSave < 0) selectedSet = -1;
+        sync(ui);
+        if (renaming < 0) title(g, ui);
+        var list = shown;
+        if (ui.now > pendingUntil) selectNew = false;
+        if (renaming >= list.size()) cancelRename();
         setScroll = Math.clamp(setScroll, 0, maxScroll(list.size()));
-        for (int i = setScroll; i < Math.min(list.size(), setScroll + VISIBLE); i++) {
-            int row = i - setScroll;
-            int y = setRowY(row), h = setRowHeight(row);
-            boolean on = selectedSet == i;
-            int c = on ? p().accent() : a().border();
-            g.fill(X, y, X + ROW_W, y + h, on ? mix(p().ramp()[1], p().ramp()[3], .35) : a().bg());
-            border(g, X, y, ROW_W, h, c);
-            String name = list.get(i).name();
-            while (ui.font.width(name) > NAME_W && !name.isEmpty())
-                name = name.substring(0, name.length() - 1);
-            // Glyphs are 7px tall plus a 1px shadow: centred inside the 1px border.
-            int textY = y + 1 + (h - 2 - 8 + 1) / 2;
-            if (renaming != i) ui.text(g, name, NAME_X, textY, on ? p().bright() : a().text());
-            var build = list.get(i).build();
-            for (int j = 0; j < 3; j++) {
-                String line = j < build.size() ? build.getCompound(j).getString("line") : "";
-                chip(g, CHIPS_X + j * CHIP_STEP, y + 1 + CHIP_GAP, h - 2 - 2 * CHIP_GAP, line.isEmpty() ? null : ResourceLocation.tryParse(line));
+        followHold(ui);
+        double dt = lastFrame < 0 ? 1 : Math.min(.1, ui.now - lastFrame);
+        lastFrame = ui.now;
+        double glide = 1 - Math.exp(-GLIDE * dt);
+
+        // Where each set goes: in list order, with a held set's place moved to where it would drop.
+        List<Object> order = new ArrayList<>(tokens);
+        if (dragging && dropAt >= 0) {
+            order.remove(held);
+            order.add(Math.min(dropAt, order.size()), held);
+        }
+        if (dragging && dropAt >= 0) cutFrame(g, slotX(dropAt), slotY(dropAt), a().border());
+        for (int k = 0; k < order.size(); k++) {
+            Object t = order.get(k);
+            int i = tokens.indexOf(t);
+            double tx = slotX(k), ty = slotY(k);
+            double[] at = pos.computeIfAbsent(t, o -> new double[] {tx, ty});
+            if (t == held && dragging) continue;
+            at[0] += (tx - at[0]) * glide;
+            at[1] += (ty - at[1]) * glide;
+            if (Math.abs(tx - at[0]) < .3) at[0] = tx;
+            if (Math.abs(ty - at[1]) < .3) at[1] = ty;
+            int x = (int) Math.round(at[0]), y = (int) Math.round(at[1]);
+            boolean inSlot = ty >= LIST_Y && ty < LIST_Y + GRID_H;
+            boolean over = !dragging && held == null && inSlot && ui.mx >= tx && ui.mx < tx + TILE_W && ui.my >= ty && ui.my < ty + TILE_H;
+            boolean pressed = t == held;
+            drawTile(g, list.get(i), x, y, t == selected, over || pressed, over, LIST_Y, LIST_Y + GRID_H);
+            if (inSlot && !dragging && renaming < 0) {
+                final int index = i;
+                var e = list.get(i);
+                ui.hit("set" + i, (int) tx, (int) ty, TILE_W, TILE_H, () -> {}, tip(e, ui), accent(e), false);
+                ui.hit(
+                        "fav" + i,
+                        (int) tx + 13,
+                        (int) ty + 1,
+                        6,
+                        5,
+                        () -> toggleFavorite(index, ui),
+                        List.of(label(Lang.tr(e.favorite() ? "gui.ethermod.set_unfavorite" : "gui.ethermod.set_favorite"), accent(e))),
+                        accent(e),
+                        false);
             }
-            final int index = i;
-            ui.hit(
-                    "set" + i,
-                    X,
-                    y,
-                    ROW_W,
-                    h,
-                    () -> {
-                        if (selectedSet == index) selectedSet = -1;
-                        else {
-                            selectedSet = index;
-                            send(new TraitPayloads.Loadout(Loadouts.LOAD, index, ""));
-                        }
-                    },
-                    List.of(),
-                    p().accent(),
-                    false);
-            ui.hover(g, "set" + i, X, y, ROW_W, h, p().accent(), false);
         }
         drawBar(g, ui, list.size());
+        if (dragging) {
+            // The held set rides above everything, kept inside the panel, with a 1px shadow.
+            int i = tokens.indexOf(held);
+            double[] at = pos.get(held);
+            int x = (int) Math.clamp(ui.mx - grabX, PANEL_X + 1, PANEL_X + PANEL_W - 1 - TILE_W);
+            int y = (int) Math.clamp(ui.my - grabY, 21, 149 - TILE_H);
+            if (at != null) {
+                at[0] = x;
+                at[1] = y;
+            }
+            g.pose().pushPose();
+            g.pose().translate(0, 0, 300);
+            g.fill(x + 2, y + TILE_H, x + TILE_W, y + TILE_H + 1, 0x90000000);
+            g.fill(x + TILE_W, y + 2, x + TILE_W + 1, y + TILE_H, 0x90000000);
+            drawTile(g, list.get(i), x, y, held == selected, true, false, 0, 1000);
+            g.pose().popPose();
+        }
 
-        // Bottom row: new set, copy code, paste code, delete. Each has its own fixed hue ramp,
-        // whatever the theme; a button that can't be used now turns grey.
+        drawButtons(g, ui, list);
+    }
+
+    /** The main Module (first used slot), or null. */
+    private static ResourceLocation mainModule(Loadouts.Entry e) {
+        var build = e.build();
+        for (int s = 0; s < build.size(); s++) {
+            String line = build.getCompound(s).getString("line");
+            if (!line.isEmpty()) return ResourceLocation.tryParse(line);
+        }
+        return null;
+    }
+
+    private static int accent(Loadouts.Entry e) {
+        return module(mainModule(e), a()).accent();
+    }
+
+    /**
+     * One set tile, in its main Module's ramp. Normal: dark fill (0), border 3, icon 5. Hovered:
+     * fill 1, border 4, icon 6. Picked: a negative tile, fill 4 (5 hovered), border 6, dark icon,
+     * the Module pips in a dark well. Rows outside [clipTop, clipBottom) are not drawn.
+     */
+    private static void drawTile(
+            GuiGraphics g, Loadouts.Entry e, int x, int y, boolean picked, boolean lit, boolean ghostHeart, int clipTop, int clipBottom) {
+        int[] c = module(mainModule(e), a()).ramp();
+        int fill = picked ? c[lit ? 5 : 4] : c[lit ? 1 : 0];
+        int line = picked ? c[6] : c[lit ? 4 : 3];
+        int icon = picked ? c[0] : c[lit ? 6 : 5];
+        var r = new Raster(TILE_W, TILE_H);
+        r.outline(0, 0, TILE_W, TILE_H, line, fill, 1);
+        r.sprite("set_" + e.shownIcon(), 6, 5, icon);
+        if (picked) r.box(2, 15, 16, 4, c[0]);
+        var build = e.build();
+        for (int j = 0; j < 3; j++) {
+            String id = j < build.size() ? build.getCompound(j).getString("line") : "";
+            int pip = !id.isEmpty() ? module(ResourceLocation.tryParse(id), a()).accent() : picked ? c[2] : lit ? c[0] : c[2];
+            r.box(3 + j * 5, 16, 4, 2, pip);
+        }
+        if (e.favorite()) r.sprite("heart", 14, 2, picked ? c[0] : c[6]);
+        else if (ghostHeart) r.sprite("heart", 14, 2, c[3]);
+        blit(g, r, x, y, clipTop, clipBottom);
+    }
+
+    /** Like KDraw.raster, but only the rows that land inside [top, bottom). */
+    private static void blit(GuiGraphics g, Raster r, int x, int y, int top, int bottom) {
+        for (int yy = Math.max(0, top - y); yy < Math.min(r.h, bottom - y); yy++) {
+            int start = 0;
+            while (start < r.w) {
+                int c = r.pixels[yy * r.w + start], end = start + 1;
+                while (end < r.w && r.pixels[yy * r.w + end] == c) end++;
+                if ((c >>> 24) > 0) g.fill(x + start, y + yy, x + end, y + yy + 1, c);
+                start = end;
+            }
+        }
+    }
+
+    /** The empty place a held set will drop into: a faint frame with cut corners. */
+    private static void cutFrame(GuiGraphics g, int x, int y, int c) {
+        if (y < LIST_Y || y >= LIST_Y + GRID_H) return;
+        var r = new Raster(TILE_W, TILE_H);
+        r.outline(0, 0, TILE_W, TILE_H, c, 0, 1);
+        raster(g, r, x, y);
+    }
+
+    /** Name, code, then each Module with the traits picked in it. */
+    private static List<Component> tip(Loadouts.Entry e, KUi ui) {
+        var access = ui.mc.level.registryAccess();
+        var out = new ArrayList<Component>();
+        out.add(label(e.name(), accent(e)));
+        String code = BuildCode.encode(e.build(), access);
+        if (!code.isEmpty()) out.add(label(code, a().text()));
+        var build = e.build();
+        for (int s = 0; s < build.size(); s++) {
+            String lineId = build.getCompound(s).getString("line");
+            ResourceLocation id = lineId.isEmpty() ? null : ResourceLocation.tryParse(lineId);
+            if (id == null) continue;
+            var line = TraitLines.get(access, id).orElse(null);
+            if (line == null) continue;
+            int c = module(id, a()).accent();
+            MutableComponent row = Component.literal(Lang.moduleName(id, line)).withStyle(st -> st.withColor(c & 0xffffff));
+            var picks = build.getCompound(s).getList("picks", Tag.TAG_STRING);
+            List<String> names = new ArrayList<>();
+            for (int t = 0; t < picks.size(); t++) {
+                String pick = picks.getString(t);
+                if (pick.isEmpty() || t >= com.ethermod.trait.TraitLine.TIERS) continue;
+                for (var trait : line.tier(t)) if (trait.id().equals(pick)) names.add(Lang.traitName(trait));
+            }
+            if (!names.isEmpty())
+                row.append(Component.literal(": " + String.join(", ", names)).withStyle(st -> st.withColor(0xDDDDDD)));
+            out.add(row);
+        }
+        return out;
+    }
+
+    // ---- Buttons -----------------------------------------------------------------------
+
+    private void drawButtons(GuiGraphics g, KUi ui, List<Loadouts.Entry> list) {
+        // Each has its own fixed hue ramp, whatever the theme; a button that can't be used now
+        // turns grey.
         boolean room = list.size() < Loadouts.LIMIT;
+        int sel = selectedIndex();
         Palette off = themes.getOrDefault("graphite", a());
         int x0 = X, x1 = x0 + BUTTON_W + GAP, x2 = x1 + BUTTON_W + GAP, x3 = x2 + BUTTON_W + GAP;
 
@@ -266,11 +603,10 @@ final class KLoadoutList {
                 room
                         ? () -> {
                             int n = list.size();
-                            if (n < Loadouts.LIMIT && pendingSave < 0) {
-                                pendingSave = n;
+                            if (n < Loadouts.LIMIT && !selectNew) {
+                                selectNew = true;
                                 pendingUntil = ui.now + FLASH_SECONDS;
-                                selectedSet = n;
-                                showRow(n);
+                                showSet(n);
                                 send(new TraitPayloads.Loadout(Loadouts.SAVE, 0, Lang.tr("gui.ethermod.set_default", n + 1)));
                             }
                         }
@@ -289,12 +625,7 @@ final class KLoadoutList {
                 BUTTON_H,
                 copy,
                 () -> copy(ui, list),
-                List.of(
-                        label(
-                                selectedSet >= 0 && selectedSet < list.size()
-                                        ? Lang.tr("gui.ethermod.copy_set")
-                                        : Lang.tr("gui.ethermod.copy_build"),
-                                copy.text())));
+                List.of(label(sel >= 0 ? Lang.tr("gui.ethermod.copy_set") : Lang.tr("gui.ethermod.copy_build"), copy.text())));
         icon(g, "copy", x1, copyLook);
 
         Palette paste = flashing("paste-code", ui) ? flashPalette : room ? button("paste") : off;
@@ -320,17 +651,15 @@ final class KLoadoutList {
                 BUTTON_H,
                 del,
                 () -> {
-                    if (selectedSet >= 0) {
-                        send(new TraitPayloads.Loadout(Loadouts.DELETE, selectedSet, ""));
-                        selectedSet = -1;
+                    int s = selectedIndex();
+                    if (s >= 0) {
+                        delete(s, ui);
+                        selected = null;
                     } else
                         for (int i = 0; i < ui.stage(); i++)
                             send(new TraitPayloads.Equip(i, Optional.empty()));
                 },
-                List.of(
-                        label(
-                                selectedSet < 0 ? Lang.tr("gui.ethermod.clear_build") : Lang.tr("gui.ethermod.delete_set"),
-                                del.text())));
+                List.of(label(sel < 0 ? Lang.tr("gui.ethermod.clear_build") : Lang.tr("gui.ethermod.delete_set"), del.text())));
         icon(g, "trash", x3, delLook);
     }
 
@@ -340,12 +669,6 @@ final class KLoadoutList {
         int ix = (BUTTON_W - 10) / 2, iy = (BUTTON_H - 10) / 2 + look.dy();
         r.sprite(name, ix, iy, look.icon());
         raster(g, r, x, BUTTON_Y);
-    }
-
-    /** Scrolls just enough to show row [index] (a new or pasted set lands at the end). */
-    private void showRow(int index) {
-        if (index >= setScroll + VISIBLE) setScroll = index - VISIBLE + 1;
-        if (index < setScroll) setScroll = index;
     }
 
     // ---- Set codes -------------------------------------------------------------
@@ -384,15 +707,10 @@ final class KLoadoutList {
         g.pose().popPose();
     }
 
-    /** Copies the selected set's code, or the current build's when no set is selected. */
+    /** Copies the picked set's code, or the current build's when no set is picked. */
     private void copy(KUi ui, List<Loadouts.Entry> list) {
-        ListTag build =
-                selectedSet >= 0 && selectedSet < list.size()
-                        ? list.get(selectedSet).build()
-                        : ui.stack
-                                .getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY)
-                                .getUnsafe()
-                                .getList("mm_traits", Tag.TAG_COMPOUND);
+        int sel = selectedIndex();
+        ListTag build = sel >= 0 && sel < list.size() ? list.get(sel).build() : currentBuild(ui);
         String code = BuildCode.encode(build, ui.mc.level.registryAccess());
         if (code.isEmpty()) {
             flash(ui, "copy-code", Lang.tr("gui.ethermod.code_empty"), false);
@@ -407,7 +725,7 @@ final class KLoadoutList {
     /** Checks the clipboard's code and, only when it is valid, adds it as a new set and loads it. */
     private void paste(KUi ui, List<Loadouts.Entry> list) {
         int n = list.size();
-        if (n >= Loadouts.LIMIT || pendingSave >= 0) return;
+        if (n >= Loadouts.LIMIT || selectNew) return;
         String code = ui.mc.keyboardHandler.getClipboard().strip();
         ListTag build;
         try {
@@ -423,10 +741,9 @@ final class KLoadoutList {
                 audio.refused();
                 return;
             }
-        pendingSave = n;
+        selectNew = true;
         pendingUntil = ui.now + FLASH_SECONDS;
-        selectedSet = n;
-        showRow(n);
+        showSet(n);
         send(new TraitPayloads.ImportLoadout(code, Lang.tr("gui.ethermod.set_default", n + 1)));
         flash(ui, "paste-code", Lang.tr("gui.ethermod.code_pasted"), true);
         audio.pasted();

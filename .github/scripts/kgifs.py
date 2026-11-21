@@ -15,7 +15,7 @@ for name, ns in rows:
     scenes.setdefault(name[len("kgif_"):name.rindex("_")], []).append((name, int(ns)))
 # scenes that show tooltips: a tooltip may hang past the K window's edge. The crop grows to fit every
 # tooltip (found by its fill colour), and everything outside the window and the tooltip is transparent.
-TOOLTIP_SCENES = {"3_traits"}
+TOOLTIP_SCENES = {"3_traits", "8_set_tooltip"}
 TIP_FILL = (18, 4, 21)
 
 

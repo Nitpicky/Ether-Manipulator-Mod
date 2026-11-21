@@ -35,9 +35,22 @@ public final class Loadouts {
             UP = 3,
             DOWN = 4,
             DELETE = 5,
-            OVERWRITE = 6;
+            OVERWRITE = 6,
+            MOVE = 7,
+            ICON = 8,
+            FAVORITE = 9;
 
-    public record Entry(String name, ListTag build) {}
+    /** One saved set: its name, build, chosen icon ("" = suggested, see SetIcons) and favourite mark. */
+    public record Entry(String name, ListTag build, String icon, boolean favorite) {
+        public Entry(String name, ListTag build) {
+            this(name, build, "", false);
+        }
+
+        /** The icon shown: the chosen one, else the one the build suggests. */
+        public String shownIcon() {
+            return SetIcons.of(icon, build);
+        }
+    }
 
     public static List<Entry> list(ItemStack stack) {
         CompoundTag root =
@@ -46,7 +59,12 @@ public final class Loadouts {
         List<Entry> out = new ArrayList<>();
         for (int i = 0; i < l.size(); i++) {
             CompoundTag e = l.getCompound(i);
-            out.add(new Entry(e.getString("name"), e.getList("build", Tag.TAG_COMPOUND)));
+            out.add(
+                    new Entry(
+                            e.getString("name"),
+                            e.getList("build", Tag.TAG_COMPOUND),
+                            e.getString("icon"),
+                            e.getBoolean("fav")));
         }
         return out;
     }
@@ -99,6 +117,29 @@ public final class Loadouts {
             case DELETE -> {
                 if (!valid) return;
                 l.remove(index);
+            }
+            case MOVE -> {
+                // [name] holds the place to move to, counted in the list as it is before the move
+                int to;
+                try {
+                    to = Integer.parseInt(name);
+                } catch (NumberFormatException e) {
+                    return;
+                }
+                if (!valid || to < 0 || to >= l.size() || to == index) return;
+                Tag moved = l.remove(index);
+                l.add(to, moved);
+            }
+            case ICON -> {
+                if (!valid) return;
+                if (SetIcons.valid(name)) l.getCompound(index).putString("icon", name);
+                else l.getCompound(index).remove("icon");
+            }
+            case FAVORITE -> {
+                if (!valid) return;
+                var e = l.getCompound(index);
+                if (e.getBoolean("fav")) e.remove("fav");
+                else e.putBoolean("fav", true);
             }
             case LOAD -> {
                 if (!valid) return;
