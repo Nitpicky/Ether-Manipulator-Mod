@@ -69,6 +69,11 @@ public final class KModelPip extends PictureInPictureRenderer<KModelPip.State> {
         item.submit(pose, collector, 0xF000F0, OverlayTexture.NO_OVERLAY, 0);
     }
 
+    /** The model turns about the middle of its box (the default sits it on the bottom edge). */
+    protected float getTranslateY(int height, int guiScale) {
+        return height / 2f;
+    }
+
     protected String getTextureLabel() {
         return "ethermod model view";
     }

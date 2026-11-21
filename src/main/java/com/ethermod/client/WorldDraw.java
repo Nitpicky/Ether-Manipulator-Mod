@@ -95,14 +95,10 @@ public final class WorldDraw {
         if (BATCHES.isEmpty()) return;
         var mc = Minecraft.getInstance();
         var main = mc.gameRenderer.mainRenderTarget();
-        var encoder = RenderSystem.getDevice().createCommandEncoder();
-        try (RenderPass pass =
-                encoder.createRenderPass(
-                        () -> "ethermod world overlays",
-                        main.getColorTextureView(),
-                        Optional.empty(),
-                        main.getDepthTextureView(),
-                        java.util.OptionalDouble.empty())) {
+        // everything that touches the device (uploads, first use of a texture) runs before the pass
+        record Ready(Batch batch, GpuBuffer vertices, int quads, com.mojang.renderpearl.api.textures.GpuTextureView texture) {}
+        List<Ready> ready = new ArrayList<>();
+        try {
             for (var e : BATCHES.entrySet()) {
                 MeshData mesh = e.getValue().build();
                 if (mesh == null) continue;
@@ -110,20 +106,32 @@ public final class WorldDraw {
                 GpuBuffer vertices = upload("ethermod world overlay", mesh);
                 mesh.close();
                 Batch b = e.getKey();
-                drawQuads(pass, b.pipeline(), vertices, quads, modelView, () -> {
-                    if (b.texture() == null) return;
-                    var texture = mc.getTextureManager().getTexture(b.texture());
-                    var samplers = RenderSystem.getSamplerCache();
-                    pass.setUniform(
-                            "Sampler0",
-                            texture.getTextureView(),
-                            b.repeat()
-                                    ? samplers.getRepeat(FilterMode.NEAREST)
-                                    : samplers.getClampToEdge(FilterMode.NEAREST));
-                });
+                var texture = b.texture() == null ? null : mc.getTextureManager().getTexture(b.texture()).getTextureView();
+                ready.add(new Ready(b, vertices, quads, texture));
             }
         } finally {
             BATCHES.clear();
+        }
+        if (ready.isEmpty()) return;
+        var encoder = RenderSystem.getDevice().createCommandEncoder();
+        var samplers = RenderSystem.getSamplerCache();
+        try (RenderPass pass =
+                encoder.createRenderPass(
+                        () -> "ethermod world overlays",
+                        main.getColorTextureView(),
+                        Optional.empty(),
+                        main.getDepthTextureView(),
+                        java.util.OptionalDouble.empty())) {
+            for (Ready r : ready)
+                drawQuads(pass, r.batch().pipeline(), r.vertices(), r.quads(), modelView, () -> {
+                    if (r.texture() == null) return;
+                    pass.setUniform(
+                            "Sampler0",
+                            r.texture(),
+                            r.batch().repeat()
+                                    ? samplers.getRepeat(FilterMode.NEAREST)
+                                    : samplers.getClampToEdge(FilterMode.NEAREST));
+                });
         }
     }
 

@@ -1,4 +1,4 @@
-net/minecraft/server/level/ServerPlayer
-/.*/(ServerGamePacketListenerImpl)$
-net/minecraft/server/network/ServerGamePacketListenerImpl#handlePlayerPositionChange
-net/minecraft/server/network/ServerGamePacketListenerImpl#.*[Ff]loat.*
+net/minecraft/client/gui/render/pip/PictureInPictureRenderer
+/.*/(PictureInPictureRenderer)$
+net/minecraft/client/gui/render/pip/PictureInPictureRenderer#prepare
+net/minecraft/client/gui/render/pip/PictureInPictureRenderer#.*

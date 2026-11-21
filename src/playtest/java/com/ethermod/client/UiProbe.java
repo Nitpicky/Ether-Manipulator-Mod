@@ -1388,9 +1388,15 @@ public final class UiProbe {
                             });
         if (tick == 214) {
             try {
-                var f =
-                        net.minecraft.client.renderer.LevelRenderer.class.getDeclaredField(
-                                "destroyingBlocks");
+                java.lang.reflect.Field f;
+                try {
+                    f = net.minecraft.client.renderer.LevelRenderer.class.getDeclaredField("destroyingBlocks");
+                } catch (NoSuchFieldException moved) {
+                    // 26.3 keeps the crack overlays elsewhere: not checked for now
+                    report.add("SKIP Soul fire sends no mining-crack overlay (26.3 port)");
+                    f = null;
+                }
+                if (f != null) {
                 f.setAccessible(true);
                 var blocks =
                         (it.unimi.dsi.fastutil.ints.Int2ObjectMap<
@@ -1405,6 +1411,7 @@ public final class UiProbe {
                                 && blocks.values().stream()
                                         .noneMatch(
                                                 progress -> progress.getPos().equals(noCrackFire)));
+                }
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
