@@ -1,0 +1,705 @@
+/home/runner/.gradle/caches/modules-2/files-2.1/curse.maven/geckolib-388172/8893169/196231506b89da06925c087f9b8bc5fd12ebea16/geckolib-388172-8893169.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/io.github.llamalad7/mixinextras-neoforge/0.5.5/26f2905a37afd203c3da1d6a2e164472a7531b41/mixinextras-neoforge-0.5.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.accesstransformers/at-parser/11.0.2/64aae57d6d26d69543c5275181fe6971707a4e16/at-parser-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/earlydisplay/12.0.16/efa2e56115d22853d10524874a7bbb64555c2a28/earlydisplay-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/12.0.16/edbb2ee8211a867215970bc15ae9c354fa56dc09/loader-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarMetadata/0.5.3/ff40c1cd721d07615d825c5bbf27705b2e3258ed/JarJarMetadata-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarSelector/0.5.3/6b845aab8d5c8e721b4e3cd30f97722b7f8044b1/JarJarSelector-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/accesstransformers/11.0.2/25dcb69c78b16669935f0ab91dff830ce192379d/accesstransformers-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/bus/8.0.5/5b2d33285ab5d1554e9798ad98c40d6ea3868bd5/bus-8.0.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/mergetool/2.0.7/793b18456e92c4a7f66d9b5d8bf7a9c1c7a20b20/mergetool-2.0.7-api.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar
+=== LIST /(geckolib/[a-z/]*/[A-Za-z]*|.*PlayerModel|.*HierarchicalModel|.*EntityModel)$
+com/geckolib/animatable/GeoAnimatable
+com/geckolib/animatable/GeoBlockEntity
+com/geckolib/animatable/GeoEntity
+com/geckolib/animatable/GeoItem
+com/geckolib/animatable/GeoReplacedEntity
+com/geckolib/animatable/SingletonGeoAnimatable
+com/geckolib/animatable/client/GeoRenderProvider
+com/geckolib/animatable/instance/AnimatableInstanceCache
+com/geckolib/animatable/instance/InstancedAnimatableInstanceCache
+com/geckolib/animatable/instance/SingletonAnimatableInstanceCache
+com/geckolib/animatable/manager/AnimatableManager
+com/geckolib/animatable/manager/ContextAwareAnimatableManager
+com/geckolib/animatable/stateless/StatelessAnimatable
+com/geckolib/animatable/stateless/StatelessAnimationController
+com/geckolib/animatable/stateless/StatelessGeoBlockEntity
+com/geckolib/animatable/stateless/StatelessGeoEntity
+com/geckolib/animatable/stateless/StatelessGeoObject
+com/geckolib/animatable/stateless/StatelessGeoReplacedEntity
+com/geckolib/animatable/stateless/StatelessGeoSingletonAnimatable
+com/geckolib/animation/AnimationController
+com/geckolib/animation/AnimationProcessor
+com/geckolib/animation/RawAnimation
+com/geckolib/animation/keyframehandler/AutoPlayingSoundKeyframeHandler
+com/geckolib/animation/object/EasingType
+com/geckolib/animation/object/LoopType
+com/geckolib/animation/object/PlayState
+com/geckolib/animation/state/AnimationPoint
+com/geckolib/animation/state/AnimationTest
+com/geckolib/animation/state/AnimationTimeline
+com/geckolib/animation/state/BoneSnapshot
+com/geckolib/animation/state/ControllerState
+com/geckolib/animation/state/EasingState
+com/geckolib/animation/state/KeyFrameEvent
+com/geckolib/cache/AnimatableIdCache
+com/geckolib/cache/BakedAnimationCache
+com/geckolib/cache/BakedModelCache
+com/geckolib/cache/GeckoLibResources
+com/geckolib/cache/SyncedSingletonAnimatableCache
+com/geckolib/cache/animation/Animation
+com/geckolib/cache/animation/BakedAnimations
+com/geckolib/cache/animation/BoneAnimation
+com/geckolib/cache/animation/Keyframe
+com/geckolib/cache/animation/KeyframeStack
+com/geckolib/cache/animation/keyframeevent/CustomInstructionKeyframeData
+com/geckolib/cache/animation/keyframeevent/KeyFrameData
+com/geckolib/cache/animation/keyframeevent/ParticleKeyframeData
+com/geckolib/cache/animation/keyframeevent/SoundKeyframeData
+com/geckolib/cache/model/BakedGeoModel
+com/geckolib/cache/model/GeoBone
+com/geckolib/cache/model/GeoLocator
+com/geckolib/cache/model/GeoQuad
+com/geckolib/cache/model/GeoVertex
+com/geckolib/cache/model/ModelProperties
+com/geckolib/cache/model/cuboid/CuboidGeoBone
+com/geckolib/cache/model/cuboid/GeoCube
+com/geckolib/constant/DataTickets
+com/geckolib/constant/DefaultAnimations
+com/geckolib/constant/dataticket/DataTicket
+com/geckolib/constant/dataticket/OverridingDataTicket
+com/geckolib/event/GeckoLibEventsNeoForge
+com/geckolib/event/GeoRenderEvent
+com/geckolib/event/armor/CompileArmorRenderLayersEvent
+com/geckolib/event/armor/CompileArmorRenderStateEvent
+com/geckolib/event/armor/GeoArmorPreRenderEvent
+com/geckolib/event/block/CompileBlockRenderLayersEvent
+com/geckolib/event/block/CompileBlockRenderStateEvent
+com/geckolib/event/block/GeoBlockPreRenderEvent
+com/geckolib/event/entity/CompileEntityRenderLayersEvent
+com/geckolib/event/entity/CompileEntityRenderStateEvent
+com/geckolib/event/entity/GeoEntityPreRenderEvent
+com/geckolib/event/item/CompileItemRenderLayersEvent
+com/geckolib/event/item/CompileItemRenderStateEvent
+com/geckolib/event/item/GeoItemPreRenderEvent
+com/geckolib/event/object/CompileObjectRenderLayersEvent
+com/geckolib/event/object/CompileObjectRenderStateEvent
+com/geckolib/event/object/GeoObjectPreRenderEvent
+com/geckolib/event/replacedentity/CompileReplacedEntityRenderLayersEvent
+com/geckolib/event/replacedentity/CompileReplacedEntityRenderStateEvent
+com/geckolib/event/replacedentity/GeoReplacedEntityPreRenderEvent
+com/geckolib/loading/definition/animation/ActorAnimation
+com/geckolib/loading/definition/animation/ActorAnimationParticleEffect
+com/geckolib/loading/definition/animation/ActorAnimationSoundEffect
+com/geckolib/loading/definition/animation/ActorAnimations
+com/geckolib/loading/definition/animation/ActorBoneAnimation
+com/geckolib/loading/definition/animation/ActorBoneAnimationEntry
+com/geckolib/loading/definition/animation/ActorBoneAnimationKeyframe
+com/geckolib/loading/definition/animation/ActorBoneAnimationKeyframeValues
+com/geckolib/loading/definition/animation/DoubleOrString
+com/geckolib/loading/definition/animation/object/KeyframeTriplet
+com/geckolib/loading/definition/geometry/Geometry
+com/geckolib/loading/definition/geometry/GeometryBone
+com/geckolib/loading/definition/geometry/GeometryCube
+com/geckolib/loading/definition/geometry/GeometryDefinition
+com/geckolib/loading/definition/geometry/GeometryDescription
+com/geckolib/loading/definition/geometry/GeometryLocator
+com/geckolib/loading/definition/geometry/GeometryPolyIndex
+com/geckolib/loading/definition/geometry/GeometryPolyIndices
+com/geckolib/loading/definition/geometry/GeometryPolyMesh
+com/geckolib/loading/definition/geometry/GeometryTextureMesh
+com/geckolib/loading/definition/geometry/GeometryUv
+com/geckolib/loading/definition/geometry/GeometryUvMapping
+com/geckolib/loading/definition/geometry/GeometryUvMappingDetails
+com/geckolib/loading/definition/geometry/GeometryUvPair
+com/geckolib/loading/definition/geometry/object/GeometryQuadUvs
+com/geckolib/loading/definition/geometry/object/ModelFormatVersion
+com/geckolib/loading/definition/geometry/object/UvFaceRotation
+com/geckolib/loading/definition/geometry/object/VertexSet
+com/geckolib/loading/loader/GeckoLibGsonLoader
+com/geckolib/loading/loader/GeckoLibLoader
+com/geckolib/loading/math/MathParser
+com/geckolib/loading/math/MathValue
+com/geckolib/loading/math/MolangQueries
+com/geckolib/loading/math/Operator
+com/geckolib/loading/math/function/MathFunction
+com/geckolib/loading/math/function/generic/ACosFunction
+com/geckolib/loading/math/function/generic/ASinFunction
+com/geckolib/loading/math/function/generic/ATanFunction
+com/geckolib/loading/math/function/generic/AbsFunction
+com/geckolib/loading/math/function/generic/CosFunction
+com/geckolib/loading/math/function/generic/ExpFunction
+com/geckolib/loading/math/function/generic/LogFunction
+com/geckolib/loading/math/function/generic/ModFunction
+com/geckolib/loading/math/function/generic/PowFunction
+com/geckolib/loading/math/function/generic/SinFunction
+com/geckolib/loading/math/function/generic/SqrtFunction
+com/geckolib/loading/math/function/limit/ClampFunction
+com/geckolib/loading/math/function/limit/MaxFunction
+com/geckolib/loading/math/function/limit/MinFunction
+com/geckolib/loading/math/function/misc/PiFunction
+com/geckolib/loading/math/function/misc/ToDegFunction
+com/geckolib/loading/math/function/misc/ToRadFunction
+com/geckolib/loading/math/function/random/DieRollFunction
+com/geckolib/loading/math/function/random/DieRollIntegerFunction
+com/geckolib/loading/math/function/random/RandomFunction
+com/geckolib/loading/math/function/random/RandomIntegerFunction
+com/geckolib/loading/math/function/round/CeilFunction
+com/geckolib/loading/math/function/round/FloorFunction
+com/geckolib/loading/math/function/round/HermiteBlendFunction
+com/geckolib/loading/math/function/round/LerpFunction
+com/geckolib/loading/math/function/round/LerpRotFunction
+com/geckolib/loading/math/function/round/MinAngleFunction
+com/geckolib/loading/math/function/round/RoundFunction
+com/geckolib/loading/math/function/round/TruncateFunction
+com/geckolib/loading/math/value/BooleanNegate
+com/geckolib/loading/math/value/Calculation
+com/geckolib/loading/math/value/CompoundValue
+com/geckolib/loading/math/value/Constant
+com/geckolib/loading/math/value/Group
+com/geckolib/loading/math/value/Negative
+com/geckolib/loading/math/value/Ternary
+com/geckolib/loading/math/value/Variable
+com/geckolib/loading/math/value/VariableAssignment
+com/geckolib/mixin/client/BlockEntityRenderStateMixin
+com/geckolib/mixin/client/EntityRenderStateMixin
+com/geckolib/mixin/client/EntityRendererMixin
+com/geckolib/mixin/client/HumanoidArmorLayerMixin
+com/geckolib/mixin/client/HumanoidModelMixin
+com/geckolib/mixin/client/ModelFeatureRendererMixin
+com/geckolib/mixin/client/ModelMixin
+com/geckolib/mixin/client/PlayerModelMixin
+com/geckolib/mixin/client/SpecialModelRenderersMixin
+com/geckolib/mixin/client/SpecialModelWrapperMixin
+com/geckolib/mixin/client/TextureManagerMixin
+com/geckolib/mixin/common/AbstractContainerMenuMixin
+com/geckolib/mixin/common/HashedStackMixin
+com/geckolib/mixin/common/ItemStackMixin
+com/geckolib/mixin/common/LivingEntityMixin
+com/geckolib/mixin/common/SlotMixin
+com/geckolib/mixin/common/SynchronizedRemoteSlotMixin
+com/geckolib/model/DefaultedBlockGeoModel
+com/geckolib/model/DefaultedEntityGeoModel
+com/geckolib/model/DefaultedGeoModel
+com/geckolib/model/DefaultedItemGeoModel
+com/geckolib/model/GeoModel
+com/geckolib/network/GeckoLibNetworkingNeoForge
+com/geckolib/network/packet/MultiloaderPacket
+com/geckolib/network/packet/blockentity/BlockEntityAnimTriggerPacket
+com/geckolib/network/packet/blockentity/StatelessBlockEntityPlayAnimPacket
+com/geckolib/network/packet/blockentity/StatelessBlockEntityStopAnimPacket
+com/geckolib/network/packet/blockentity/StopTriggeredBlockEntityAnimPacket
+com/geckolib/network/packet/entity/EntityAnimTriggerPacket
+com/geckolib/network/packet/entity/StatelessEntityPlayAnimPacket
+com/geckolib/network/packet/entity/StatelessEntityStopAnimPacket
+com/geckolib/network/packet/entity/StopTriggeredEntityAnimPacket
+com/geckolib/network/packet/singleton/SingletonAnimTriggerPacket
+com/geckolib/network/packet/singleton/StatelessSingletonPlayAnimPacket
+com/geckolib/network/packet/singleton/StatelessSingletonStopAnimPacket
+com/geckolib/network/packet/singleton/StopTriggeredSingletonAnimPacket
+com/geckolib/object/CompoundException
+com/geckolib/object/DeferredCache
+com/geckolib/object/VanillaModelModifier
+com/geckolib/platform/GeckoLibClientNeoForge
+com/geckolib/platform/GeckoLibNeoForge
+com/geckolib/renderer/GeoArmorRenderer
+com/geckolib/renderer/GeoBlockRenderer
+com/geckolib/renderer/GeoEntityRenderer
+com/geckolib/renderer/GeoItemRenderer
+com/geckolib/renderer/GeoObjectRenderer
+com/geckolib/renderer/GeoReplacedEntityRenderer
+com/geckolib/renderer/base/BoneSnapshots
+com/geckolib/renderer/base/GeoRenderState
+com/geckolib/renderer/base/GeoRenderer
+com/geckolib/renderer/base/GeoRendererInternals
+com/geckolib/renderer/base/PerBoneRender
+com/geckolib/renderer/base/RenderPassInfo
+com/geckolib/renderer/internal/GeckolibItemSpecialRenderer
+com/geckolib/renderer/layer/GeoRenderLayer
+com/geckolib/renderer/layer/GeoRenderLayersContainer
+com/geckolib/renderer/layer/builtin/AutoGlowingGeoLayer
+com/geckolib/renderer/layer/builtin/BlockAndItemGeoLayer
+com/geckolib/renderer/layer/builtin/CustomBoneTextureGeoLayer
+com/geckolib/renderer/layer/builtin/ItemArmorGeoLayer
+com/geckolib/renderer/layer/builtin/ItemInHandGeoLayer
+com/geckolib/renderer/layer/builtin/TextureLayerGeoLayer
+com/geckolib/renderer/specialty/DirectionalProjectileRenderer
+com/geckolib/renderer/specialty/DyeableGeoArmorRenderer
+com/geckolib/renderer/texture/GeckoLibAnimatedTexture
+com/geckolib/service/GeckoLibClient
+com/geckolib/service/GeckoLibEvents
+com/geckolib/service/GeckoLibNetworking
+com/geckolib/service/GeckoLibPlatform
+com/geckolib/util/ClientUtil
+com/geckolib/util/GeckoLibUtil
+com/geckolib/util/JsonUtil
+com/geckolib/util/MiscUtil
+com/geckolib/util/RenderStateUtil
+com/geckolib/util/RenderUtil
+net/minecraft/client/model/EntityModel
+net/minecraft/client/model/player/PlayerModel
+=== CODE  
+=== SIG  
+=== net/minecraft/client/renderer/entity/EntityRenderer
+Compiled from "EntityRenderer.java"
+public abstract class net.minecraft.client.renderer.entity.EntityRenderer<T extends net.minecraft.world.entity.Entity, S extends net.minecraft.client.renderer.entity.state.EntityRenderState> {
+  public static final float NAMETAG_SCALE;
+  public final int getPackedLightCoords(T, float);
+  public boolean shouldRender(T, net.minecraft.client.renderer.culling.Frustum, double, double, double, float);
+  public net.minecraft.world.phys.Vec3 getRenderOffset(S);
+  public void submit(S, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.CameraRenderState);
+  public net.minecraft.client.gui.Font getFont();
+  public abstract S createRenderState();
+  public final S createRenderState(T, float);
+  public void extractRenderState(T, S, float);
+}
+=== net/minecraft/client/renderer/entity/MobRenderer
+Compiled from "MobRenderer.java"
+public abstract class net.minecraft.client.renderer.entity.MobRenderer<T extends net.minecraft.world.entity.Mob, S extends net.minecraft.client.renderer.entity.state.LivingEntityRenderState, M extends net.minecraft.client.model.EntityModel<? super S>> extends net.minecraft.client.renderer.entity.LivingEntityRenderer<T, S, M> {
+  public net.minecraft.client.renderer.entity.MobRenderer(net.minecraft.client.renderer.entity.EntityRendererProvider$Context, M, float);
+}
+=== net/minecraft/client/renderer/entity/LivingEntityRenderer
+Compiled from "LivingEntityRenderer.java"
+public abstract class net.minecraft.client.renderer.entity.LivingEntityRenderer<T extends net.minecraft.world.entity.LivingEntity, S extends net.minecraft.client.renderer.entity.state.LivingEntityRenderState, M extends net.minecraft.client.model.EntityModel<? super S>> extends net.minecraft.client.renderer.entity.EntityRenderer<T, S> implements net.minecraft.client.renderer.entity.RenderLayerParent<S, M> {
+  public net.minecraft.client.renderer.entity.LivingEntityRenderer(net.minecraft.client.renderer.entity.EntityRendererProvider$Context, M, float);
+  public final boolean addLayer(net.minecraft.client.renderer.entity.layers.RenderLayer<S, M>);
+  public M getModel();
+  public void submit(S, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.CameraRenderState);
+  public abstract net.minecraft.resources.Identifier getTextureLocation(S);
+  public static int getOverlayCoords(net.minecraft.client.renderer.entity.state.LivingEntityRenderState, float);
+  public boolean isEntityUpsideDown(T);
+  public void extractRenderState(T, S, float);
+  public void extractRenderState(net.minecraft.world.entity.Entity, net.minecraft.client.renderer.entity.state.EntityRenderState, float);
+  public void submit(net.minecraft.client.renderer.entity.state.EntityRenderState, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.CameraRenderState);
+}
+=== net/minecraft/client/renderer/entity/layers/RenderLayer
+Compiled from "RenderLayer.java"
+public abstract class net.minecraft.client.renderer.entity.layers.RenderLayer<S extends net.minecraft.client.renderer.entity.state.EntityRenderState, M extends net.minecraft.client.model.EntityModel<? super S>> {
+  public net.minecraft.client.renderer.entity.layers.RenderLayer(net.minecraft.client.renderer.entity.RenderLayerParent<S, M>);
+  public M getParentModel();
+  public abstract void submit(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int, S, float, float);
+}
+=== net/minecraft/client/renderer/entity/state/EntityRenderState
+Compiled from "EntityRenderState.java"
+public class net.minecraft.client.renderer.entity.state.EntityRenderState extends net.neoforged.neoforge.client.renderstate.BaseRenderState {
+  public static final int NO_OUTLINE;
+  public net.minecraft.world.entity.EntityType<?> entityType;
+  public double x;
+  public double y;
+  public double z;
+  public float ageInTicks;
+  public float boundingBoxWidth;
+  public float boundingBoxHeight;
+  public float eyeHeight;
+  public double distanceToCameraSq;
+  public boolean isInvisible;
+  public boolean isDiscrete;
+  public boolean displayFireAnimation;
+  public int lightCoords;
+  public int outlineColor;
+  public net.minecraft.world.phys.Vec3 passengerOffset;
+  public net.minecraft.network.chat.Component nameTag;
+  public net.minecraft.network.chat.Component scoreText;
+  public net.minecraft.world.phys.Vec3 nameTagAttachment;
+  public java.util.List<net.minecraft.client.renderer.entity.state.EntityRenderState$LeashState> leashStates;
+  public float shadowRadius;
+  public final java.util.List<net.minecraft.client.renderer.entity.state.EntityRenderState$ShadowPiece> shadowPieces;
+  public float partialTick;
+  public net.minecraft.client.renderer.entity.state.EntityRenderState();
+  public boolean appearsGlowing();
+  public void fillCrashReportCategory(net.minecraft.CrashReportCategory);
+}
+=== net/minecraft/client/renderer/entity/state/LivingEntityRenderState
+Compiled from "LivingEntityRenderState.java"
+public class net.minecraft.client.renderer.entity.state.LivingEntityRenderState extends net.minecraft.client.renderer.entity.state.EntityRenderState {
+  public float bodyRot;
+  public float yRot;
+  public float xRot;
+  public float deathTime;
+  public float walkAnimationPos;
+  public float walkAnimationSpeed;
+  public float scale;
+  public float ageScale;
+  public float ticksSinceKineticHitFeedback;
+  public boolean isUpsideDown;
+  public boolean isFullyFrozen;
+  public boolean isBaby;
+  public boolean isInWater;
+  public boolean isAutoSpinAttack;
+  public boolean hasRedOverlay;
+  public boolean isInvisibleToPlayer;
+  public net.minecraft.core.Direction bedOrientation;
+  public net.minecraft.world.entity.Pose pose;
+  public final net.minecraft.client.renderer.item.ItemStackRenderState headItem;
+  public float wornHeadAnimationPos;
+  public net.minecraft.world.level.block.SkullBlock$Type wornHeadType;
+  public net.minecraft.world.item.component.ResolvableProfile wornHeadProfile;
+  public net.minecraft.client.renderer.entity.state.LivingEntityRenderState();
+  public boolean hasPose(net.minecraft.world.entity.Pose);
+}
+=== net/minecraft/client/renderer/entity/EntityRendererProvider$Context
+Compiled from "EntityRendererProvider.java"
+public class net.minecraft.client.renderer.entity.EntityRendererProvider$Context {
+  public net.minecraft.client.renderer.entity.EntityRendererProvider$Context(net.minecraft.client.renderer.entity.EntityRenderDispatcher, net.minecraft.client.renderer.block.BlockModelResolver, net.minecraft.client.renderer.item.ItemModelResolver, net.minecraft.client.renderer.MapRenderer, net.minecraft.server.packs.resources.ResourceManager, net.minecraft.client.model.geom.EntityModelSet, net.minecraft.client.resources.model.EquipmentAssetManager, net.minecraft.client.resources.model.sprite.AtlasManager, net.minecraft.client.gui.Font, net.minecraft.client.renderer.PlayerSkinRenderCache, net.minecraft.client.resources.palette.PalettedTextureManager);
+  public net.minecraft.client.renderer.entity.EntityRenderDispatcher getEntityRenderDispatcher();
+  public net.minecraft.client.renderer.block.BlockModelResolver getBlockModelResolver();
+  public net.minecraft.client.renderer.item.ItemModelResolver getItemModelResolver();
+  public net.minecraft.client.renderer.MapRenderer getMapRenderer();
+  public net.minecraft.server.packs.resources.ResourceManager getResourceManager();
+  public net.minecraft.client.model.geom.EntityModelSet getModelSet();
+  public net.minecraft.client.resources.model.EquipmentAssetManager getEquipmentAssets();
+  public net.minecraft.client.renderer.entity.layers.EquipmentLayerRenderer getEquipmentRenderer();
+  public net.minecraft.client.resources.model.sprite.SpriteGetter getSprites();
+  public net.minecraft.client.renderer.texture.TextureAtlas getAtlas(net.minecraft.resources.Identifier);
+  public net.minecraft.client.model.geom.ModelPart bakeLayer(net.minecraft.client.model.geom.ModelLayerLocation);
+  public net.minecraft.client.gui.Font getFont();
+  public net.minecraft.client.renderer.PlayerSkinRenderCache getPlayerSkinRenderCache();
+}
+=== net/minecraft/client/renderer/OrderedSubmitNodeCollector
+Compiled from "OrderedSubmitNodeCollector.java"
+public interface net.minecraft.client.renderer.OrderedSubmitNodeCollector extends net.neoforged.neoforge.client.extensions.OrderedSubmitNodeCollectorExtension {
+  public abstract void submitShadow(com.mojang.blaze3d.vertex.PoseStack, float, java.util.List<net.minecraft.client.renderer.entity.state.EntityRenderState$ShadowPiece>);
+  public abstract void submitNameTag(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.world.phys.Vec3, int, net.minecraft.network.chat.Component, boolean, int, net.minecraft.client.renderer.state.level.CameraRenderState);
+  public abstract void submitText(com.mojang.blaze3d.vertex.PoseStack, float, float, net.minecraft.util.FormattedCharSequence, boolean, net.minecraft.client.gui.Font$DisplayMode, int, int, int, int);
+  public abstract void submitTextBackground(com.mojang.blaze3d.vertex.PoseStack, float, float, float, float, int, net.minecraft.client.gui.Font$DisplayMode, int);
+  public abstract void submitFlame(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.entity.state.EntityRenderState, org.joml.Quaternionf);
+  public abstract void submitLeash(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.entity.state.EntityRenderState$LeashState);
+  public abstract <S> void submitModel(net.minecraft.client.model.Model<? super S>, S, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.rendertype.RenderType, int, int, int, net.minecraft.client.renderer.texture.UvMapping, int);
+  public default <S> void submitModel(net.minecraft.client.model.Model<? super S>, S, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.rendertype.RenderType, int, int, int);
+  public default <S> void submitModel(net.minecraft.client.model.Model<? super S>, S, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.resources.Identifier, int, int, int);
+  public default <S> void submitModel(net.minecraft.client.model.Model<S>, S, com.mojang.blaze3d.vertex.PoseStack, int, int, int, net.minecraft.client.resources.model.sprite.SpriteId, net.minecraft.client.resources.model.sprite.SpriteGetter, int);
+  public abstract <S> void submitCrumblingOverlay(net.minecraft.client.model.Model<? super S>, S, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.rendertype.RenderType, int, int, int, net.minecraft.client.renderer.feature.ModelFeatureRenderer$CrumblingOverlay);
+  public default void submitCrumblingOverlay(net.minecraft.client.model.geom.ModelPart, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.rendertype.RenderType, int, int, int, net.minecraft.client.renderer.feature.ModelFeatureRenderer$CrumblingOverlay);
+  public default void submitModelPart(net.minecraft.client.model.geom.ModelPart, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.rendertype.RenderType, int, int, net.minecraft.client.renderer.texture.UvMapping);
+  public default void submitModelPart(net.minecraft.client.model.geom.ModelPart, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.rendertype.RenderType, int, int, net.minecraft.client.renderer.texture.UvMapping, int);
+  public default void submitModelPart(net.minecraft.client.model.geom.ModelPart, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.rendertype.RenderType, int, int, net.minecraft.client.renderer.texture.UvMapping, int, int);
+  public abstract void submitMovingBlock(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.block.MovingBlockRenderState, int);
+  public abstract void submitBlockModel(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.rendertype.RenderType, java.util.List<net.minecraft.client.renderer.block.dispatch.BlockStateModelPart>, int[], int, int, int);
+  public abstract void submitBreakingBlockModel(com.mojang.blaze3d.vertex.PoseStack, java.util.List<net.minecraft.client.renderer.block.dispatch.BlockStateModelPart>, int, boolean);
+  public abstract void submitShapeOutline(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.world.phys.shapes.VoxelShape, net.minecraft.client.renderer.rendertype.RenderType, int, float, boolean);
+  public abstract void submitItem(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.world.item.ItemDisplayContext, int, int, int, int[], net.minecraft.client.resources.model.geometry.ItemQuads, net.minecraft.client.renderer.item.ItemStackRenderState$FoilType);
+  public abstract void submitCustomGeometry(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.rendertype.RenderType, net.minecraft.client.renderer.SubmitNodeCollector$CustomGeometryRenderer);
+  public abstract void submitQuadParticleGroup(net.minecraft.client.renderer.state.level.QuadParticleRenderState);
+  public abstract void submitGizmoPrimitives(net.minecraft.client.renderer.gizmos.DrawableGizmoPrimitives$Group, net.minecraft.client.renderer.state.level.CameraRenderState, boolean);
+}
+=== net/minecraft/client/renderer/SubmitNodeCollector$CustomGeometryRenderer
+Compiled from "SubmitNodeCollector.java"
+public interface net.minecraft.client.renderer.SubmitNodeCollector$CustomGeometryRenderer {
+  public abstract void render(com.mojang.blaze3d.vertex.PoseStack$Pose, com.mojang.blaze3d.vertex.VertexConsumer);
+}
+=== net/minecraft/client/renderer/state/level/CameraRenderState
+Compiled from "CameraRenderState.java"
+public class net.minecraft.client.renderer.state.level.CameraRenderState {
+  public net.minecraft.core.BlockPos blockPos;
+  public net.minecraft.world.phys.Vec3 pos;
+  public float xRot;
+  public float yRot;
+  public boolean initialized;
+  public boolean isPanoramicMode;
+  public boolean isFrustumCaptured;
+  public boolean isFirstPerson;
+  public boolean smartCull;
+  public org.joml.Quaternionf orientation;
+  public float cameraEntityPartialTicks;
+  public net.minecraft.client.renderer.culling.Frustum cullFrustum;
+  public net.minecraft.world.level.material.FogType fogType;
+  public net.minecraft.client.renderer.fog.FogData fogData;
+  public float hudFov;
+  public float depthFar;
+  public org.joml.Matrix4f projectionMatrix;
+  public org.joml.Matrix4f viewRotationMatrix;
+  public net.minecraft.client.renderer.state.level.CameraEntityRenderState entityRenderState;
+  public net.minecraft.client.renderer.state.level.CameraRenderState();
+}
+=== net/minecraft/client/model/EntityModel
+Compiled from "EntityModel.java"
+public abstract class net.minecraft.client.model.EntityModel<T extends net.minecraft.client.renderer.entity.state.EntityRenderState> extends net.minecraft.client.model.Model<T> {
+  public static final float MODEL_Y_OFFSET;
+}
+=== net/minecraft/client/model/player/PlayerModel
+Compiled from "PlayerModel.java"
+public class net.minecraft.client.model.player.PlayerModel extends net.minecraft.client.model.HumanoidModel<net.minecraft.client.renderer.entity.state.AvatarRenderState> {
+  public final net.minecraft.client.model.geom.ModelPart leftSleeve;
+  public final net.minecraft.client.model.geom.ModelPart rightSleeve;
+  public final net.minecraft.client.model.geom.ModelPart leftPants;
+  public final net.minecraft.client.model.geom.ModelPart rightPants;
+  public final net.minecraft.client.model.geom.ModelPart jacket;
+  public net.minecraft.client.model.player.PlayerModel(net.minecraft.client.model.geom.ModelPart, boolean);
+  public static net.minecraft.client.model.geom.builders.MeshDefinition createMesh(net.minecraft.client.model.geom.builders.CubeDeformation, boolean);
+  public static net.minecraft.client.renderer.entity.ArmorModelSet<net.minecraft.client.model.geom.builders.MeshDefinition> createArmorMeshSet(net.minecraft.client.model.geom.builders.CubeDeformation, net.minecraft.client.model.geom.builders.CubeDeformation);
+  public void setupAnim(net.minecraft.client.renderer.entity.state.AvatarRenderState);
+  public void translateToHand(net.minecraft.client.renderer.entity.state.AvatarRenderState, net.minecraft.world.entity.HumanoidArm, com.mojang.blaze3d.vertex.PoseStack);
+  public net.minecraft.client.model.geom.ModelPart getRandomBodyPart(net.minecraft.util.RandomSource);
+  public void setupAnim(net.minecraft.client.renderer.entity.state.HumanoidRenderState);
+  public void translateToHand(net.minecraft.client.renderer.entity.state.EntityRenderState, net.minecraft.world.entity.HumanoidArm, com.mojang.blaze3d.vertex.PoseStack);
+  public void setupAnim(java.lang.Object);
+}
+=== net/minecraft/client/renderer/entity/state/AvatarRenderState
+Compiled from "AvatarRenderState.java"
+public class net.minecraft.client.renderer.entity.state.AvatarRenderState extends net.minecraft.client.renderer.entity.state.HumanoidRenderState {
+  public net.minecraft.world.entity.player.PlayerSkin skin;
+  public float capeFlap;
+  public float capeLean;
+  public float capeLean2;
+  public int arrowCount;
+  public int stingerCount;
+  public boolean isSpectator;
+  public boolean showHat;
+  public boolean showJacket;
+  public boolean showLeftPants;
+  public boolean showRightPants;
+  public boolean showLeftSleeve;
+  public boolean showRightSleeve;
+  public boolean showCape;
+  public float fallFlyingTimeInTicks;
+  public boolean shouldApplyFlyingYRot;
+  public float flyingYRot;
+  public net.minecraft.world.entity.animal.parrot.Parrot$Variant parrotOnLeftShoulder;
+  public net.minecraft.world.entity.animal.parrot.Parrot$Variant parrotOnRightShoulder;
+  public int id;
+  public boolean showExtraEars;
+  public final net.minecraft.client.renderer.item.ItemStackRenderState heldOnHead;
+  public net.minecraft.client.renderer.entity.state.AvatarRenderState();
+  public float fallFlyingScale();
+}
+=== net/neoforged/neoforge/client/event/EntityRenderersEvent$AddLayers
+Compiled from "EntityRenderersEvent.java"
+public class net.neoforged.neoforge.client.event.EntityRenderersEvent$AddLayers extends net.neoforged.neoforge.client.event.EntityRenderersEvent {
+  public net.neoforged.neoforge.client.event.EntityRenderersEvent$AddLayers(java.util.Map<net.minecraft.world.entity.EntityType<?>, net.minecraft.client.renderer.entity.EntityRenderer<?, ?>>, java.util.Map<net.minecraft.world.entity.player.PlayerModelType, net.minecraft.client.renderer.entity.player.AvatarRenderer<net.minecraft.client.player.AbstractClientPlayer>>, java.util.Map<net.minecraft.world.entity.player.PlayerModelType, net.minecraft.client.renderer.entity.player.AvatarRenderer<net.minecraft.client.entity.ClientMannequin>>, net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+  public java.util.Set<net.minecraft.world.entity.player.PlayerModelType> getSkins();
+  public <R extends net.minecraft.client.renderer.entity.player.AvatarRenderer<net.minecraft.client.player.AbstractClientPlayer>> R getPlayerRenderer(net.minecraft.world.entity.player.PlayerModelType);
+  public <R extends net.minecraft.client.renderer.entity.player.AvatarRenderer<net.minecraft.client.entity.ClientMannequin>> R getMannequinRenderer(net.minecraft.world.entity.player.PlayerModelType);
+  public java.util.Set<net.minecraft.world.entity.EntityType<?>> getEntityTypes();
+  public <T extends net.minecraft.world.entity.Entity, R extends net.minecraft.client.renderer.entity.EntityRenderer<T, ?>> R getRenderer(net.minecraft.world.entity.EntityType<? extends T>);
+  public net.minecraft.client.model.geom.EntityModelSet getEntityModels();
+  public net.minecraft.client.renderer.entity.EntityRendererProvider$Context getContext();
+}
+=== net/neoforged/neoforge/client/event/EntityRenderersEvent$RegisterRenderers
+Compiled from "EntityRenderersEvent.java"
+public class net.neoforged.neoforge.client.event.EntityRenderersEvent$RegisterRenderers extends net.neoforged.neoforge.client.event.EntityRenderersEvent {
+  public net.neoforged.neoforge.client.event.EntityRenderersEvent$RegisterRenderers();
+  public <T extends net.minecraft.world.entity.Entity> void registerEntityRenderer(net.minecraft.world.entity.EntityType<? extends T>, net.minecraft.client.renderer.entity.EntityRendererProvider<T>);
+  public <T extends net.minecraft.world.level.block.entity.BlockEntity, S extends net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState> void registerBlockEntityRenderer(net.minecraft.world.level.block.entity.BlockEntityType<? extends T>, net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider<T, S>);
+}
+=== com/geckolib/renderer/GeoItemRenderer
+Compiled from "GeoItemRenderer.java"
+public class com.geckolib.renderer.GeoItemRenderer<T extends net.minecraft.world.item.Item & com.geckolib.animatable.GeoAnimatable> implements com.geckolib.renderer.base.GeoRenderer<T, com.geckolib.renderer.GeoItemRenderer$RenderData, com.geckolib.renderer.base.GeoRenderState> {
+  public static final com.geckolib.constant.dataticket.DataTicket<net.minecraft.world.item.Item> CURRENT_ITEM;
+  public <I extends T> com.geckolib.renderer.GeoItemRenderer(I);
+  public com.geckolib.renderer.GeoItemRenderer(com.geckolib.model.GeoModel<T>);
+  public com.geckolib.renderer.GeoItemRenderer(net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher, net.minecraft.client.model.geom.EntityModelSet, com.geckolib.model.GeoModel<T>);
+  public com.geckolib.renderer.GeoItemRenderer<T> useAlternateGuiLighting();
+  public void setupLightingForGuiRender();
+  public com.geckolib.model.GeoModel<T> getGeoModel();
+  public java.util.List<com.geckolib.renderer.layer.GeoRenderLayer<T, com.geckolib.renderer.GeoItemRenderer$RenderData, com.geckolib.renderer.base.GeoRenderState>> getRenderLayers();
+  public com.geckolib.renderer.GeoItemRenderer<T> withRenderLayer(java.util.function.Function<? super com.geckolib.renderer.GeoItemRenderer<T>, com.geckolib.renderer.layer.GeoRenderLayer<T, com.geckolib.renderer.GeoItemRenderer$RenderData, com.geckolib.renderer.base.GeoRenderState>>);
+  public com.geckolib.renderer.GeoItemRenderer<T> withRenderLayer(com.geckolib.renderer.layer.GeoRenderLayer<T, com.geckolib.renderer.GeoItemRenderer$RenderData, com.geckolib.renderer.base.GeoRenderState>);
+  public com.geckolib.renderer.GeoItemRenderer<T> withScale(float);
+  public com.geckolib.renderer.GeoItemRenderer<T> withScale(float, float);
+  public long getInstanceId(T, com.geckolib.renderer.GeoItemRenderer$RenderData);
+  public void captureDefaultRenderState(T, com.geckolib.renderer.GeoItemRenderer$RenderData, com.geckolib.renderer.base.GeoRenderState, float);
+  public void preRenderPass(com.geckolib.renderer.base.RenderPassInfo<com.geckolib.renderer.base.GeoRenderState>, net.minecraft.client.renderer.SubmitNodeCollector);
+  public void scaleModelForRender(com.geckolib.renderer.base.RenderPassInfo<com.geckolib.renderer.base.GeoRenderState>, float, float);
+  public void adjustRenderPose(com.geckolib.renderer.base.RenderPassInfo<com.geckolib.renderer.base.GeoRenderState>);
+  public void submit(com.geckolib.renderer.base.GeoRenderState, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int);
+  public com.geckolib.renderer.base.GeoRenderState createRenderState(T, com.geckolib.renderer.GeoItemRenderer$RenderData);
+  public void fireCompileRenderLayersEvent();
+  public void fireCompileRenderStateEvent(T, com.geckolib.renderer.GeoItemRenderer$RenderData, com.geckolib.renderer.base.GeoRenderState, float);
+  public boolean firePreRenderEvent(com.geckolib.renderer.base.RenderPassInfo<com.geckolib.renderer.base.GeoRenderState>, net.minecraft.client.renderer.SubmitNodeCollector);
+  public void fireCompileRenderStateEvent(com.geckolib.animatable.GeoAnimatable, java.lang.Object, com.geckolib.renderer.base.GeoRenderState, float);
+  public com.geckolib.renderer.base.GeoRenderState createRenderState(com.geckolib.animatable.GeoAnimatable, java.lang.Object);
+  public void captureDefaultRenderState(com.geckolib.animatable.GeoAnimatable, java.lang.Object, com.geckolib.renderer.base.GeoRenderState, float);
+  public long getInstanceId(com.geckolib.animatable.GeoAnimatable, java.lang.Object);
+}
+=== com/geckolib/renderer/base/GeoRenderer
+Compiled from "GeoRenderer.java"
+public interface com.geckolib.renderer.base.GeoRenderer<T extends com.geckolib.animatable.GeoAnimatable, O, R extends com.geckolib.renderer.base.GeoRenderState> extends com.geckolib.renderer.base.GeoRendererInternals<T, O, R> {
+  public default int getRenderColor(T, O, float);
+  public default int getPackedOverlay(T, O, float, float);
+  public default float getMotionAnimThreshold(T);
+  public default net.minecraft.client.renderer.rendertype.RenderType getRenderType(R, net.minecraft.resources.Identifier);
+  public default void addRenderData(T, O, R, float);
+  public default void setMolangQueryValues(T, O, R, float);
+  public default void performRenderPass(R, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.CameraRenderState);
+  public default void performRenderPass(R, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.CameraRenderState, java.util.List<com.geckolib.renderer.base.RenderPassInfo$BoneUpdater<R>>);
+  public default void preRenderPass(com.geckolib.renderer.base.RenderPassInfo<R>, net.minecraft.client.renderer.SubmitNodeCollector);
+  public default void scaleModelForRender(com.geckolib.renderer.base.RenderPassInfo<R>, float, float);
+  public default void adjustRenderPose(com.geckolib.renderer.base.RenderPassInfo<R>);
+  public default void adjustModelBonesForRender(com.geckolib.renderer.base.RenderPassInfo<R>, com.geckolib.renderer.base.BoneSnapshots);
+  public default void submitRenderTasks(com.geckolib.renderer.base.RenderPassInfo<R>, net.minecraft.client.renderer.OrderedSubmitNodeCollector, net.minecraft.client.renderer.rendertype.RenderType);
+  public default void postRenderPass(com.geckolib.renderer.base.RenderPassInfo<R>, net.minecraft.client.renderer.SubmitNodeCollector);
+}
+=== com/geckolib/renderer/layer/GeoRenderLayer
+Compiled from "GeoRenderLayer.java"
+public abstract class com.geckolib.renderer.layer.GeoRenderLayer<T extends com.geckolib.animatable.GeoAnimatable, O, R extends com.geckolib.renderer.base.GeoRenderState> {
+  public com.geckolib.renderer.layer.GeoRenderLayer(com.geckolib.renderer.base.GeoRenderer<T, O, R>);
+  public com.geckolib.model.GeoModel<T> getGeoModel();
+  public com.geckolib.cache.model.BakedGeoModel getDefaultBakedModel(com.geckolib.renderer.base.GeoRenderState);
+  public com.geckolib.renderer.base.GeoRenderer<T, O, R> getRenderer();
+  public void addRenderData(T, O, R, float);
+  public void preRender(com.geckolib.renderer.base.RenderPassInfo<R>, net.minecraft.client.renderer.SubmitNodeCollector);
+  public void submitRenderTask(com.geckolib.renderer.base.RenderPassInfo<R>, net.minecraft.client.renderer.SubmitNodeCollector);
+  public void addPerBoneRender(com.geckolib.renderer.base.RenderPassInfo<R>, java.util.function.BiConsumer<com.geckolib.cache.model.GeoBone, com.geckolib.renderer.base.PerBoneRender<R>>);
+}
+=== com/geckolib/renderer/base/GeoRenderState
+Compiled from "GeoRenderState.java"
+public interface com.geckolib.renderer.base.GeoRenderState {
+  public default <D> void addGeckolibData(com.geckolib.constant.dataticket.DataTicket<D>, D);
+  public default boolean hasGeckolibData(com.geckolib.constant.dataticket.DataTicket<?>);
+  public default <D> D getGeckolibData(com.geckolib.constant.dataticket.DataTicket<D>);
+  public default <D> D getOrDefaultGeckolibData(com.geckolib.constant.dataticket.DataTicket<D>, D);
+  public default <D> D getOrDefaultGeckolibData(com.geckolib.constant.dataticket.DataTicket<D>, java.util.function.Supplier<D>);
+  public default int getPackedLight();
+  public default float getPartialTick();
+  public default double getAnimatableAge();
+  public default java.util.Map<com.geckolib.constant.dataticket.DataTicket<?>, java.lang.Object> getDataMap();
+}
+=== com/geckolib/model/GeoModel
+Compiled from "GeoModel.java"
+public abstract class com.geckolib.model.GeoModel<T extends com.geckolib.animatable.GeoAnimatable> {
+  public com.geckolib.model.GeoModel();
+  public abstract net.minecraft.resources.Identifier getModelResource(com.geckolib.renderer.base.GeoRenderState);
+  public abstract net.minecraft.resources.Identifier getTextureResource(com.geckolib.renderer.base.GeoRenderState);
+  public abstract net.minecraft.resources.Identifier getAnimationResource(T);
+  public net.minecraft.resources.Identifier[] getAnimationResourceFallbacks(T);
+  public void addAdditionalStateData(T, java.lang.Object, com.geckolib.renderer.base.GeoRenderState);
+  public com.geckolib.cache.model.BakedGeoModel getBakedModel(net.minecraft.resources.Identifier);
+  public com.geckolib.cache.animation.Animation getBakedAnimation(T, java.lang.String) throws java.lang.RuntimeException;
+}
+=== com/geckolib/animatable/GeoItem
+Compiled from "GeoItem.java"
+public interface com.geckolib.animatable.GeoItem extends com.geckolib.animatable.SingletonGeoAnimatable {
+  public static void registerSyncedAnimatable(com.geckolib.animatable.SingletonGeoAnimatable);
+  public static long getId(net.minecraft.world.item.ItemStack);
+  public static long getOrAssignId(net.minecraft.world.item.ItemStack, net.minecraft.server.level.ServerLevel);
+  public default boolean isPerspectiveAware();
+  public default com.geckolib.animatable.instance.AnimatableInstanceCache animatableCacheOverride();
+}
+=== com/geckolib/animation/AnimationController
+Compiled from "AnimationController.java"
+public class com.geckolib.animation.AnimationController<T extends com.geckolib.animatable.GeoAnimatable> {
+  public com.geckolib.animation.AnimationController(com.geckolib.animation.AnimationController$AnimationStateHandler<T>);
+  public com.geckolib.animation.AnimationController(java.lang.String, com.geckolib.animation.AnimationController$AnimationStateHandler<T>);
+  public com.geckolib.animation.AnimationController(java.lang.String, int, com.geckolib.animation.AnimationController$AnimationStateHandler<T>);
+  public java.lang.String getName();
+  public com.geckolib.animation.object.PlayState getPlayState();
+  public int getTransitionTicks();
+  public double getAnimationSpeed();
+  public com.geckolib.animation.state.AnimationTimeline getTimeline();
+  public double getCurrentTimelineTime();
+  public double getCurrentAnimationTime();
+  public com.geckolib.animation.state.AnimationPoint getCurrentAnimationPoint();
+  public com.geckolib.animation.RawAnimation getCurrentRawAnimation();
+  public boolean isPlayingTriggeredAnimation();
+  public boolean hasAnimationFinished();
+  public boolean isAnimatingBones();
+  public boolean isTransitioning();
+  public com.geckolib.animation.AnimationController<T> setSoundKeyframeHandler(com.geckolib.animation.AnimationController$KeyframeEventHandler<T, com.geckolib.cache.animation.keyframeevent.SoundKeyframeData>);
+  public com.geckolib.animation.AnimationController<T> setParticleKeyframeHandler(com.geckolib.animation.AnimationController$KeyframeEventHandler<T, com.geckolib.cache.animation.keyframeevent.ParticleKeyframeData>);
+  public com.geckolib.animation.AnimationController<T> setCustomInstructionKeyframeHandler(com.geckolib.animation.AnimationController$KeyframeEventHandler<T, com.geckolib.cache.animation.keyframeevent.CustomInstructionKeyframeData>);
+  public com.geckolib.animation.AnimationController<T> setAnimationSpeed(double);
+  public com.geckolib.animation.AnimationController<T> setTransitionTicks(int);
+  public com.geckolib.animation.AnimationController<T> setOverrideEasingType(com.geckolib.animation.object.EasingType);
+  public com.geckolib.animation.AnimationController<T> additiveAnimations();
+  public com.geckolib.animation.AnimationController<T> receiveTriggeredAnimations();
+  public com.geckolib.animation.AnimationController<T> triggerableAnim(java.lang.String, com.geckolib.animation.RawAnimation);
+  public void setAnimation(com.geckolib.animation.RawAnimation);
+  public boolean triggerAnimation(java.lang.String);
+  public void setAnimationTime(double);
+  public void setTimelineTime(double);
+  public boolean stopTriggeredAnimation();
+  public void reset();
+  public com.geckolib.animation.state.ControllerState extractControllerState(T, com.geckolib.renderer.base.GeoRenderState, com.geckolib.animatable.manager.AnimatableManager<T>, com.geckolib.loading.math.MolangQueries$Actor<T>, com.geckolib.model.GeoModel<T>);
+  public java.util.Set<com.geckolib.loading.math.value.Variable> getUsedVariables();
+  public boolean isTriggeredAnimation(java.lang.String);
+}
+=== com/geckolib/animation/state/AnimationTest
+Compiled from "AnimationTest.java"
+public final class com.geckolib.animation.state.AnimationTest<T extends com.geckolib.animatable.GeoAnimatable> extends java.lang.Record {
+  public com.geckolib.animation.state.AnimationTest(T, com.geckolib.renderer.base.GeoRenderState, com.geckolib.animatable.manager.AnimatableManager<T>, com.geckolib.animation.AnimationController<T>);
+  public boolean isMoving();
+  public void setAnimation(com.geckolib.animation.RawAnimation);
+  public com.geckolib.animation.object.PlayState setAndContinue(com.geckolib.animation.RawAnimation);
+  public boolean isCurrentAnimation(com.geckolib.animation.RawAnimation);
+  public boolean isCurrentAnimationStage(java.lang.String);
+  public void setControllerSpeed(float);
+  public boolean hasData(com.geckolib.constant.dataticket.DataTicket<?>);
+  public <D> D getData(com.geckolib.constant.dataticket.DataTicket<D>);
+  public <D> D getDataOrDefault(com.geckolib.constant.dataticket.DataTicket<D>, D);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public T animatable();
+  public com.geckolib.renderer.base.GeoRenderState renderState();
+  public com.geckolib.animatable.manager.AnimatableManager<T> manager();
+  public com.geckolib.animation.AnimationController<T> controller();
+}
+=== com/geckolib/cache/model/GeoBone
+Compiled from "GeoBone.java"
+public abstract class com.geckolib.cache.model.GeoBone {
+  public com.geckolib.animation.state.BoneSnapshot frameSnapshot;
+  public com.geckolib.renderer.base.RenderPassInfo$BonePositionListener[] positionListeners;
+  public com.geckolib.cache.model.GeoBone parent();
+  public java.lang.String name();
+  public com.geckolib.cache.model.GeoBone[] children();
+  public com.geckolib.cache.model.GeoLocator[] locators();
+  public float pivotX();
+  public float pivotY();
+  public float pivotZ();
+  public float baseRotX();
+  public float baseRotY();
+  public float baseRotZ();
+  public abstract <R extends com.geckolib.renderer.base.GeoRenderState> void render(com.geckolib.renderer.base.RenderPassInfo<R>, com.mojang.blaze3d.vertex.PoseStack, com.mojang.blaze3d.vertex.VertexConsumer, int, int, int);
+  public void renderChildren(com.geckolib.renderer.base.RenderPassInfo<?>, com.mojang.blaze3d.vertex.PoseStack, com.mojang.blaze3d.vertex.VertexConsumer, int, int, int);
+  public <R extends com.geckolib.renderer.base.GeoRenderState> void positionAndRender(com.geckolib.renderer.base.RenderPassInfo<R>, com.mojang.blaze3d.vertex.VertexConsumer, int, int, int);
+  public void translateToPivotPoint(com.mojang.blaze3d.vertex.PoseStack);
+  public void translateAwayFromPivotPoint(com.mojang.blaze3d.vertex.PoseStack);
+  public void updateBonePositionListeners(com.mojang.blaze3d.vertex.PoseStack, com.geckolib.renderer.base.RenderPassInfo<?>);
+  public boolean equals(java.lang.Object);
+  public int hashCode();
+}
+=== com/geckolib/constant/DataTickets
+Compiled from "DataTickets.java"
+public final class com.geckolib.constant.DataTickets {
+  public static final com.geckolib.constant.dataticket.DataTicket<java.lang.Class<? extends com.geckolib.animatable.GeoAnimatable>> ANIMATABLE_CLASS;
+  public static final com.geckolib.constant.dataticket.DataTicket<java.lang.Long> ANIMATABLE_INSTANCE_ID;
+  public static final com.geckolib.constant.dataticket.DataTicket<java.lang.Float> PARTIAL_TICK;
+  public static final com.geckolib.constant.dataticket.DataTicket<java.lang.Integer> RENDER_COLOR;
+  public static final com.geckolib.constant.dataticket.DataTicket<java.lang.Integer> PACKED_OVERLAY;
+  public static final com.geckolib.constant.dataticket.DataTicket<java.lang.Integer> PACKED_LIGHT;
+  public static final com.geckolib.constant.dataticket.DataTicket<net.minecraft.world.phys.Vec3> VELOCITY;
+  public static final com.geckolib.constant.dataticket.DataTicket<java.lang.Boolean> IS_MOVING;
+  public static final com.geckolib.constant.dataticket.DataTicket<net.minecraft.world.phys.Vec3> POSITION;
+  public static final com.geckolib.constant.dataticket.DataTicket<net.minecraft.core.BlockPos> BLOCKPOS;
+  public static final com.geckolib.constant.dataticket.DataTicket<net.minecraft.world.item.ItemDisplayContext> ITEM_RENDER_PERSPECTIVE;
+  public static final com.geckolib.constant.dataticket.DataTicket<java.lang.Boolean> HAS_GLINT;
+  public static final com.geckolib.constant.dataticket.DataTicket<com.geckolib.animatable.manager.AnimatableManager<? extends com.geckolib.animatable.GeoAnimatable>> ANIMATABLE_MANAGER;
+  public static final com.geckolib.constant.dataticket.DataTicket<java.lang.Boolean> SWINGING_ARM;
+  public static final com.geckolib.constant.dataticket.DataTicket<java.lang.Boolean> SPRINTING;
+  public static final com.geckolib.constant.dataticket.DataTicket<java.lang.Boolean> IS_DEAD_OR_DYING;
+  public static final com.geckolib.constant.dataticket.DataTicket<java.lang.Boolean> IS_ENCHANTED;
+  public static final com.geckolib.constant.dataticket.DataTicket<java.lang.Boolean> IS_STACKABLE;
+  public static final com.geckolib.constant.dataticket.DataTicket<java.lang.Integer> MAX_USE_DURATION;
+  public static final com.geckolib.constant.dataticket.DataTicket<java.lang.Integer> MAX_DURABILITY;
+  public static final com.geckolib.constant.dataticket.DataTicket<java.lang.Integer> REMAINING_DURABILITY;
+  public static final com.geckolib.constant.dataticket.DataTicket<java.util.EnumMap<net.minecraft.world.entity.EquipmentSlot, net.minecraft.world.item.ItemStack>> EQUIPMENT_BY_SLOT;
+  public static final com.geckolib.constant.dataticket.DataTicket<java.lang.Boolean> IS_LEFT_HANDED;
+  public static final com.geckolib.constant.dataticket.DataTicket<java.lang.Boolean> IS_CROUCHING;
+  public static final com.geckolib.constant.dataticket.DataTicket<net.minecraft.world.phys.Vec3> ELYTRA_ROTATION;
+  public static final com.geckolib.constant.dataticket.DataTicket<java.util.Map<? extends net.minecraft.client.model.Model<?>, java.util.List<com.geckolib.object.VanillaModelModifier<?, ?>>>> VANILLA_MODEL_MODIFIERS;
+  public static final com.geckolib.constant.dataticket.OverridingDataTicket<java.lang.Double, net.minecraft.client.renderer.entity.state.EntityRenderState> TICK;
+  public static final com.geckolib.constant.dataticket.OverridingDataTicket<java.lang.Integer, net.minecraft.client.renderer.entity.state.EntityRenderState> OUTLINE_COLOR;
+  public static final com.geckolib.constant.dataticket.OverridingDataTicket<java.lang.Boolean, net.minecraft.client.renderer.entity.state.LivingEntityRenderState> INVISIBLE_TO_PLAYER;
+  public static final com.geckolib.constant.dataticket.OverridingDataTicket<java.lang.Boolean, net.minecraft.client.renderer.entity.state.LivingEntityRenderState> IS_SHAKING;
+  public static final com.geckolib.constant.dataticket.OverridingDataTicket<net.minecraft.world.entity.Pose, net.minecraft.client.renderer.entity.state.LivingEntityRenderState> ENTITY_POSE;
+  public static final com.geckolib.constant.dataticket.OverridingDataTicket<java.lang.Float, net.minecraft.client.renderer.entity.state.LivingEntityRenderState> ENTITY_PITCH;
+  public static final com.geckolib.constant.dataticket.OverridingDataTicket<java.lang.Float, net.minecraft.client.renderer.entity.state.LivingEntityRenderState> ENTITY_YAW;
+  public static final com.geckolib.constant.dataticket.OverridingDataTicket<java.lang.Float, net.minecraft.client.renderer.entity.state.LivingEntityRenderState> ENTITY_BODY_YAW;
+  public static final com.geckolib.constant.dataticket.DataTicket<java.util.EnumMap<net.minecraft.world.entity.EquipmentSlot, ? extends net.minecraft.client.renderer.entity.state.HumanoidRenderState>> PER_SLOT_RENDER_DATA;
+  public static final com.geckolib.constant.dataticket.DataTicket<com.geckolib.animation.state.ControllerState[]> ANIMATION_CONTROLLER_STATES;
+  public com.geckolib.constant.DataTickets();
+  public static <D> com.geckolib.constant.dataticket.DataTicket<D> create(java.lang.String, java.lang.Class<? extends D>);
+  public static <D> com.geckolib.constant.dataticket.DataTicket<D> create(java.lang.String, com.google.common.reflect.TypeToken<D>);
+}
