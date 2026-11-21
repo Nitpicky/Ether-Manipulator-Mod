@@ -433,6 +433,28 @@ public final class KGifTour {
         away(12);
         waitT(50);
         close();
+
+        // ---- 7. Set panel: a long list, copy a code, scroll with the bar -----------------------
+        server(
+                p -> {
+                    var st = Manipulator.stack(p);
+                    String[] codes = {"1TAB2HBA3GAA", "1TA2WB", "1PAB2KBA3FAB", "1BA", "1LA2GB3HA", "1KB", "1FA2PB", "1GAB"};
+                    String[] names = {"Mining", "Builder", "Fight", "Farm", "Explore", "Snipe", "Blaze", "Travel"};
+                    for (int i = 0; i < codes.length; i++)
+                        com.ethermod.trait.Loadouts.add(st, names[i], com.ethermod.trait.BuildCode.decode(codes[i], p.registryAccess()));
+                });
+        open("7_set_panel");
+        waitT(24);
+        glide("copy-code", 12);
+        waitT(6);
+        click();
+        waitT(20);
+        glideLocal(306, 40, 10);
+        dragTo(306, 125, 24);
+        waitT(20);
+        away(10);
+        waitT(10);
+        close();
         add(
                 20,
                 () -> {

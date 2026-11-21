@@ -100,6 +100,8 @@ final class UpgradeAudio {
             setSound(key);
             return;
         }
+        // The Set panel plays the result of a copy or paste itself (copied, pasted or refused).
+        if (key.equals("copy-code") || key.equals("paste-code") || key.equals("scrollbar")) return;
         if (key.startsWith("node") || key.startsWith("module-pick")) {
             cue(
                     0,
@@ -123,6 +125,17 @@ final class UpgradeAudio {
         cue(0, "item.book.page_turn", key.equals("delete") ? .85f : 1.35f, .07f, .23f);
         if (!key.equals("delete"))
             cue(.04, "ethermod:ui.crystal_note", key.equals("save") ? 1.5f : 1f, .055f, .3f);
+    }
+
+    /** A set code went to the clipboard. */
+    void copied() {
+        cue(0, "ui.button.click", 1.45f, .045f, .12f);
+        cue(.04, "ethermod:ui.crystal_note", 1.8f, .05f, .25f);
+    }
+
+    /** A pasted set code was accepted. */
+    void pasted() {
+        setSound("save");
     }
 
     private void note(boolean off) {

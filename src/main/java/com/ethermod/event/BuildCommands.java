@@ -36,6 +36,7 @@ import java.util.Locale;
  * <ul>
  *   <li>{@code set_module <players> <slot> <module|none> [A|B] [A|B] [A|B]}
  *   <li>{@code set_build <players> <code>} and {@code export_build [player]}, codes from {@link BuildCode}
+ *   <li>{@code add_set <players> <code> [name]}: adds a saved Set (not loaded) from a {@link BuildCode}
  *   <li>{@code set_color <players> <body hex|default> [beam hex|default]}
  * </ul>
  *
@@ -79,6 +80,15 @@ final class BuildCommands {
                 .executes(c -> export(c, c.getSource().getPlayerOrException()))
                 .then(Commands.argument("target", EntityArgument.player())
                         .executes(c -> export(c, EntityArgument.getPlayer(c, "target"))));
+    }
+
+    static ArgumentBuilder<CommandSourceStack, ?> addSet() {
+        return Commands.literal("add_set")
+                .then(Commands.argument("targets", EntityArgument.players())
+                        .then(Commands.argument("code", StringArgumentType.word())
+                                .executes(c -> addSet(c, ""))
+                                .then(Commands.argument("name", StringArgumentType.greedyString())
+                                        .executes(c -> addSet(c, StringArgumentType.getString(c, "name"))))));
     }
 
     static ArgumentBuilder<CommandSourceStack, ?> setColor() {
@@ -187,6 +197,36 @@ final class BuildCommands {
             }
         }
         return b.toString();
+    }
+
+    // ---- add_set ---------------------------------------------------------------
+
+    /** Adds the code's build as a new Set for each player (its Modules are unlocked, like set_build). */
+    private static int addSet(CommandContext<CommandSourceStack> c, String name) throws CommandSyntaxException {
+        String code = StringArgumentType.getString(c, "code");
+        net.minecraft.nbt.ListTag build;
+        try {
+            build = BuildCode.decode(code, c.getSource().registryAccess());
+        } catch (IllegalArgumentException e) {
+            throw BAD_CODE.create(code);
+        }
+        var players = EntityArgument.getPlayers(c, "targets");
+        int added = 0;
+        for (ServerPlayer p : players) {
+            ItemStack st = Manipulator.stack(p);
+            var sets = com.ethermod.trait.Loadouts.list(st);
+            String set = name.isBlank() ? "Set " + (sets.size() + 1) : name;
+            if (com.ethermod.trait.Loadouts.add(st, set, build) < 0) {
+                c.getSource().sendFailure(Component.translatable("command.ethermod.sets_full", p.getDisplayName(), com.ethermod.trait.Loadouts.LIMIT));
+                continue;
+            }
+            for (var id : BuildCode.modules(build)) ModuleUnlocks.unlock(st, id);
+            Manipulator.sync(p);
+            added++;
+        }
+        int n = added;
+        if (n > 0) c.getSource().sendSuccess(() -> Component.translatable("command.ethermod.set_added", n), true);
+        return n;
     }
 
     // ---- set_color -----------------------------------------------------------

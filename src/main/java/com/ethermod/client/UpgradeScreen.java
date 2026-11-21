@@ -44,7 +44,7 @@ public class UpgradeScreen extends Screen {
     private final KStageButton stageButton = new KStageButton();
     private final KColourPicker colour = new KColourPicker();
     private final KDyePalette dyes = new KDyePalette(() -> colour.open(ui.stack));
-    private final KLoadoutList loadouts = new KLoadoutList();
+    private final KLoadoutList loadouts = new KLoadoutList(audio);
     private final KModulePicker modulePicker = new KModulePicker();
     private final KTierPanel[] panels = {
         new KTierPanel(0, ui, audio, this::openPicker, loadouts::clearSelection),
@@ -282,18 +282,23 @@ public class UpgradeScreen extends Screen {
             model.drag(dx, dy, uiScale, clock());
             return true;
         }
+        if (loadouts.draggingBar()) {
+            loadouts.dragBar(ly, ui);
+            return true;
+        }
         return false;
     }
 
     @Override
     public boolean mouseReleased(double x, double y, int b) {
         colour.endDrag();
+        loadouts.releaseBar();
         return model.release(clock());
     }
 
     @Override
     public boolean mouseScrolled(double x, double y, double horizontal, double vertical) {
-        if ((x - left) / uiScale >= 235 && picker < 0 && !colour.isOpen()) {
+        if ((x - left) / uiScale >= KLoadoutList.PANEL_X && picker < 0 && !colour.isOpen()) {
             loadouts.scroll(vertical, ui);
             return true;
         }

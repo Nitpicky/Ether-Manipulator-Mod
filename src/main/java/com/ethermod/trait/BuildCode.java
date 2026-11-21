@@ -1,5 +1,14 @@
 package com.ethermod.trait;
 
+import com.ethermod.EtherMod;
+
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceLocation;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -65,5 +74,78 @@ public final class BuildCode {
         if (s.equalsIgnoreCase("A")) return 0;
         if (s.equalsIgnoreCase("B")) return 1;
         return -1;
+    }
+
+    /** Longest possible code: three slots of digit, letter and three choices. */
+    public static final int MAX_LENGTH = 15;
+
+    /**
+     * The code of a stored build (the slot list a Set or the Manipulator keeps), stored choices
+     * included. Empty when no slot holds a known Module.
+     */
+    public static String encode(ListTag build, RegistryAccess access) {
+        StringBuilder b = new StringBuilder();
+        for (int s = 0; s < Math.min(TraitBuild.MAX_SLOTS, build.size()); s++) {
+            CompoundTag slot = build.getCompound(s);
+            ResourceLocation id = ResourceLocation.tryParse(slot.getString("line"));
+            if (id == null || slot.getString("line").isEmpty()) continue;
+            Character letter = LETTERS.get(id.getPath());
+            TraitLine line = TraitLines.get(access, id).orElse(null);
+            if (letter == null || line == null) continue;
+            b.append(s + 1).append(letter);
+            ListTag picks = slot.getList("picks", Tag.TAG_STRING);
+            for (int t = 0; t < Math.min(TraitLine.TIERS, picks.size()); t++) {
+                String pick = picks.getString(t);
+                int choice = -1;
+                for (int k = 0; k < 2; k++)
+                    if (!pick.isEmpty() && line.tier(t).get(k).id().equals(pick)) choice = k;
+                if (choice < 0) break;
+                b.append(choice == 0 ? 'A' : 'B');
+            }
+        }
+        return b.toString();
+    }
+
+    /**
+     * A code turned into a stored build (three slots, like a saved Set). Throws
+     * IllegalArgumentException when the code is malformed, empty or names a Module this world
+     * doesn't have.
+     */
+    public static ListTag decode(String code, RegistryAccess access) {
+        if (code == null || code.length() > MAX_LENGTH * 2) throw new IllegalArgumentException("length");
+        List<Slot> slots = parse(code);
+        if (slots.isEmpty()) throw new IllegalArgumentException("empty");
+        ListTag build = new ListTag();
+        for (int s = 0; s < TraitBuild.MAX_SLOTS; s++) {
+            CompoundTag e = new CompoundTag();
+            e.putString("line", "");
+            e.put("picks", new ListTag());
+            build.add(e);
+        }
+        for (Slot slot : slots) {
+            ResourceLocation id = ResourceLocation.fromNamespaceAndPath(EtherMod.MODID, slot.module());
+            TraitLine line =
+                    TraitLines.get(access, id).orElseThrow(() -> new IllegalArgumentException(slot.module()));
+            ListTag picks = new ListTag();
+            for (int t = 0; t < TraitLine.TIERS; t++)
+                picks.add(
+                        StringTag.valueOf(
+                                t < slot.choices().length ? line.tier(t).get(slot.choices()[t]).id() : ""));
+            CompoundTag e = build.getCompound(slot.slot());
+            e.putString("line", id.toString());
+            e.put("picks", picks);
+        }
+        return build;
+    }
+
+    /** The Modules a stored build uses, for unlock checks. */
+    public static List<ResourceLocation> modules(ListTag build) {
+        List<ResourceLocation> out = new ArrayList<>();
+        for (int s = 0; s < build.size(); s++) {
+            String line = build.getCompound(s).getString("line");
+            ResourceLocation id = line.isEmpty() ? null : ResourceLocation.tryParse(line);
+            if (id != null) out.add(id);
+        }
+        return out;
     }
 }

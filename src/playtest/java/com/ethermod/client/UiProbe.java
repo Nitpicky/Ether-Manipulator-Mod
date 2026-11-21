@@ -354,6 +354,43 @@ public final class UiProbe {
                                 check(
                                         "Seedbank grows the shared tank",
                                         OrbMode.capacity(st) == 12);
+                                {
+                                    var access = p.registryAccess();
+                                    var stored =
+                                            st.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY)
+                                                    .copyTag()
+                                                    .getList("mm_traits", net.minecraft.nbt.Tag.TAG_COMPOUND);
+                                    String code = com.ethermod.trait.BuildCode.encode(stored, access);
+                                    check("Set code of the build: " + code, code.equals("1HB2FB3BB"));
+                                    check(
+                                            "Set code round trip",
+                                            com.ethermod.trait.BuildCode.encode(com.ethermod.trait.BuildCode.decode(code, access), access).equals(code));
+                                    int bad = 0;
+                                    for (String c : new String[] {"", "1HC", "1XA", "1HA1FA", "1HA2HA", "4HA", "hello"})
+                                        try {
+                                            com.ethermod.trait.BuildCode.decode(c, access);
+                                        } catch (IllegalArgumentException ex) {
+                                            bad++;
+                                        }
+                                    check("Bad set codes are refused (" + bad + "/7)", bad == 7);
+                                    int before = com.ethermod.trait.Loadouts.list(st).size();
+                                    com.ethermod.trait.Loadouts.importCode(p, "not a code", "Bad");
+                                    check("Bad pasted code adds no set", com.ethermod.trait.Loadouts.list(st).size() == before);
+                                    com.ethermod.trait.Loadouts.importCode(p, "1hb2fb3bb", "Pasted");
+                                    var sets = com.ethermod.trait.Loadouts.list(st);
+                                    check(
+                                            "Pasted code adds a set",
+                                            sets.size() == before + 1
+                                                    && sets.get(before).name().equals("Pasted")
+                                                    && com.ethermod.trait.BuildCode.encode(sets.get(before).build(), access).equals(code));
+                                    com.ethermod.trait.Loadouts.handle(p, com.ethermod.trait.Loadouts.DELETE, before, "");
+                                    check("Pasted set keeps the build", TraitBuild.line(st, 0) != null && Traits.HYDRAULIC.equals(TraitBuild.line(st, 0)) && OrbMode.capacity(st) == 12);
+                                    int start = com.ethermod.trait.Loadouts.list(st).size();
+                                    for (int n = 0; n < 9; n++) com.ethermod.trait.Loadouts.add(st, "Extra " + n, com.ethermod.trait.BuildCode.decode("1KA", access));
+                                    check("More than seven Sets fit", com.ethermod.trait.Loadouts.list(st).size() == start + 9);
+                                    for (int n = 0; n < 9; n++) com.ethermod.trait.Loadouts.handle(p, com.ethermod.trait.Loadouts.DELETE, start, "");
+                                    check("Extra Sets removed", com.ethermod.trait.Loadouts.list(st).size() == start);
+                                }
                                 check(
                                         "Frost spends water",
                                         OrbMode.FROST.shotCost(st, 2) == 1

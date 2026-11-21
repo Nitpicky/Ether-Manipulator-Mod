@@ -8,6 +8,10 @@ next release's notes.
 ### Changes
 - Mods list: new mod icon.
 - Commands: `/ethermod set_module`, `set_build`, `export_build` (shareable build codes like `1GABA2HAAA`) and `set_color`.
+- Sets: copy and paste set codes.
+- Sets: no more 7-set limit, the list now scrolls.
+- Sets: new panel buttons and Module chips.
+- Commands: `/ethermod add_set` gives a player a saved Set from a code.
 
 ## 1.0.1 (release)
 
