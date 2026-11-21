@@ -179,21 +179,22 @@ final class KLoadoutList {
     static int setRowY(int row) { return LIST_Y + row * 14 + Math.min(row, 2); }
 
     /**
-     * A Module chip: its own hue ramp, light top-left and dark bottom-right like a button, as tall
-     * as the row allows with the same 2px gap around it as between chips. An empty slot is a
-     * hollow outline.
+     * A Module chip drawn like the Module's Badge: its bright outline (step 4) with cut corners on
+     * the Badge's dark fill (step 1). As tall as the row allows with the same 2px gap around it as
+     * between chips. An empty slot is a hollow outline in the panel's border colour.
      */
     private static void chip(GuiGraphics g, int x, int y, int h, ResourceLocation id) {
-        if (id == null) {
-            border(g, x, y, CHIP, h, a().border());
-            return;
+        int line = a().border(), fill = 0;
+        if (id != null) {
+            Palette m = module(id, p());
+            line = m.accent();
+            fill = m.ramp()[1];
         }
-        Palette m = module(id, p());
-        g.fill(x, y, x + CHIP, y + h, m.accent());
-        g.fill(x, y, x + CHIP, y + 1, m.text());
-        g.fill(x, y + 1, x + 1, y + h, m.text());
-        g.fill(x + 1, y + h - 1, x + CHIP, y + h, m.border());
-        g.fill(x + CHIP - 1, y + 1, x + CHIP, y + h - 1, m.border());
+        if (fill != 0) g.fill(x + 1, y + 1, x + CHIP - 1, y + h - 1, fill);
+        g.fill(x + 1, y, x + CHIP - 1, y + 1, line);
+        g.fill(x + 1, y + h - 1, x + CHIP - 1, y + h, line);
+        g.fill(x, y + 1, x + 1, y + h - 1, line);
+        g.fill(x + CHIP - 1, y + 1, x + CHIP, y + h - 1, line);
     }
 
     void draw(GuiGraphics g, KUi ui) {
