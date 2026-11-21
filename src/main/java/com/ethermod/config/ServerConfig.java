@@ -24,7 +24,7 @@ public final class ServerConfig {
     // balance
     private static final ModConfigSpec.IntValue TANK_BASE, TANK_PER_TRAIT, VEIN_LIMIT;
     private static final ModConfigSpec.DoubleValue RELOAD_FIRST, RELOAD_LAST, BEAM_DMG, ORB_DMG, MINING, CHARGE;
-    private static final ModConfigSpec.BooleanValue PVP;
+    private static final ModConfigSpec.BooleanValue PVP, COMBAT_LOCK;
     // world
     private static final ModConfigSpec.BooleanValue PROTECTION, MASS_BE, FIRE, WATER, GUST_FOLIAGE, BEAM_LEAVES, BEAM_PLANTS;
     private static final ModConfigSpec.ConfigValue<List<? extends String>> BLACKLIST;
@@ -65,6 +65,8 @@ public final class ServerConfig {
         VEIN_LIMIT = b.comment("Most blocks Vein Miner breaks at once.").defineInRange("vein_miner_limit", 64, 1, 1024);
         CHARGE = b.comment("Multiplies the time a shot takes to charge.")
                 .defineInRange("charge_time_multiplier", 1.0, 0.1, 10.0);
+        COMBAT_LOCK = b.comment("Whether Modules, traits and Sets are locked for a few seconds after a fight.")
+                .define("combat_lock", false);
         b.pop();
 
         b.comment("What the Manipulator may do to the world.").push("world");
@@ -156,6 +158,7 @@ public final class ServerConfig {
     public static float beamDamage() { return or(() -> BEAM_DMG.get().floatValue(), 1f); }
     public static float shotDamage() { return or(() -> ORB_DMG.get().floatValue(), 1f); }
     public static boolean hurtPlayers() { return or(PVP::get, false); }
+    public static boolean combatLock() { return or(COMBAT_LOCK::get, false); }
     public static float miningSpeed() { return or(() -> MINING.get().floatValue(), 1f); }
     public static int veinLimit() { return or(VEIN_LIMIT::get, 64); }
     public static float chargeTime() { return or(() -> CHARGE.get().floatValue(), 1f); }

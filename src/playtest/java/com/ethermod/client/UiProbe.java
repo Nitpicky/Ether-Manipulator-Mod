@@ -354,6 +354,70 @@ public final class UiProbe {
                                 check(
                                         "Seedbank grows the shared tank",
                                         OrbMode.capacity(st) == 12);
+                                {
+                                    var access = p.registryAccess();
+                                    var stored =
+                                            st.getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY)
+                                                    .copyTag()
+                                                    .getList("mm_traits", net.minecraft.nbt.Tag.TAG_COMPOUND);
+                                    String code = com.ethermod.trait.BuildCode.encode(stored, access);
+                                    check("Set code of the build: " + code, code.equals("S_1HB2FB3BB"));
+                                    check(
+                                            "Set code round trip",
+                                            com.ethermod.trait.BuildCode.encode(com.ethermod.trait.BuildCode.decode(code, access), access).equals(code));
+                                    int bad = 0;
+                                    for (String c : new String[] {"", "1HC", "1XA", "1HA1FA", "1HA2HA", "4HA", "hello", "S_"})
+                                        try {
+                                            com.ethermod.trait.BuildCode.decode(c, access);
+                                        } catch (IllegalArgumentException ex) {
+                                            bad++;
+                                        }
+                                    check("Bad set codes are refused (" + bad + "/8)", bad == 8);
+                                    check("Old codes without the prefix still read", com.ethermod.trait.BuildCode.encode(com.ethermod.trait.BuildCode.decode("1HB2FB3BB", access), access).equals(code));
+                                    int before = com.ethermod.trait.Loadouts.list(st).size();
+                                    com.ethermod.trait.Loadouts.importCode(p, "not a code", "Bad");
+                                    check("Bad pasted code adds no set", com.ethermod.trait.Loadouts.list(st).size() == before);
+                                    com.ethermod.trait.Loadouts.importCode(p, "1hb2fb3bb", "Pasted");
+                                    var sets = com.ethermod.trait.Loadouts.list(st);
+                                    check(
+                                            "Pasted code adds a set",
+                                            sets.size() == before + 1
+                                                    && sets.get(before).name().equals("Pasted")
+                                                    && com.ethermod.trait.BuildCode.encode(sets.get(before).build(), access).equals(code));
+                                    com.ethermod.trait.Loadouts.handle(p, com.ethermod.trait.Loadouts.DELETE, before, "");
+                                    check("Pasted set keeps the build", TraitBuild.line(st, 0) != null && Traits.HYDRAULIC.equals(TraitBuild.line(st, 0)) && OrbMode.capacity(st) == 12);
+                                    int start = com.ethermod.trait.Loadouts.list(st).size();
+                                    for (int n = 0; n < 9; n++) com.ethermod.trait.Loadouts.add(st, "Extra " + n, com.ethermod.trait.BuildCode.decode("1KA", access));
+                                    check("More than seven Sets fit", com.ethermod.trait.Loadouts.list(st).size() == start + 9);
+                                    for (int n = 0; n < 9; n++) com.ethermod.trait.Loadouts.handle(p, com.ethermod.trait.Loadouts.DELETE, start, "");
+                                    check("Extra Sets removed", com.ethermod.trait.Loadouts.list(st).size() == start);
+                                    // Order, icon and favourite of a set
+                                    int s0 = com.ethermod.trait.Loadouts.list(st).size();
+                                    String[] names = {"Mover A", "Mover B", "Mover C"};
+                                    String[] codes = {"1TA", "1TB", "1KA"};
+                                    for (int n = 0; n < 3; n++) com.ethermod.trait.Loadouts.add(st, names[n], com.ethermod.trait.BuildCode.decode(codes[n], access));
+                                    var made = com.ethermod.trait.Loadouts.list(st);
+                                    check(
+                                            "Set icons follow the first Module",
+                                            made.get(s0).shownIcon().equals("mining")
+                                                    && made.get(s0 + 1).shownIcon().equals("building")
+                                                    && made.get(s0 + 2).shownIcon().equals("ranged"));
+                                    com.ethermod.trait.Loadouts.handle(p, com.ethermod.trait.Loadouts.MOVE, s0, Integer.toString(s0 + 2));
+                                    made = com.ethermod.trait.Loadouts.list(st);
+                                    check(
+                                            "Moving a set reorders the list",
+                                            made.get(s0).name().equals("Mover B")
+                                                    && made.get(s0 + 1).name().equals("Mover C")
+                                                    && made.get(s0 + 2).name().equals("Mover A"));
+                                    com.ethermod.trait.Loadouts.handle(p, com.ethermod.trait.Loadouts.ICON, s0, "ocean");
+                                    com.ethermod.trait.Loadouts.handle(p, com.ethermod.trait.Loadouts.FAVORITE, s0 + 1, "");
+                                    made = com.ethermod.trait.Loadouts.list(st);
+                                    check("A chosen icon is kept", made.get(s0).shownIcon().equals("ocean") && !made.get(s0 + 2).favorite());
+                                    check("A set can be a favourite", made.get(s0 + 1).favorite());
+                                    com.ethermod.trait.Loadouts.handle(p, com.ethermod.trait.Loadouts.FAVORITE, s0 + 1, "");
+                                    check("A favourite can be unmarked", !com.ethermod.trait.Loadouts.list(st).get(s0 + 1).favorite());
+                                    for (int n = 0; n < 3; n++) com.ethermod.trait.Loadouts.handle(p, com.ethermod.trait.Loadouts.DELETE, s0, "");
+                                }
                                 check(
                                         "Frost spends water",
                                         OrbMode.FROST.shotCost(st, 2) == 1

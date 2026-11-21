@@ -104,6 +104,7 @@ public final class RedesignCommands {
                                 .then(BuildCommands.setModule())
                                 .then(BuildCommands.setBuild())
                                 .then(BuildCommands.exportBuild())
+                                .then(BuildCommands.addSet())
                                 .then(BuildCommands.setColor())
                                 .then(
                                         Commands.literal("refill")

@@ -80,6 +80,10 @@ public final class ModNetwork {
                 TraitPayloads.Loadout.CODEC,
                 ServerPayloadHandlers::loadout);
         reg.playToServer(
+                TraitPayloads.ImportLoadout.TYPE,
+                TraitPayloads.ImportLoadout.CODEC,
+                ServerPayloadHandlers::importLoadout);
+        reg.playToServer(
                 SummonTogglePayload.TYPE,
                 SummonTogglePayload.CODEC,
                 ServerPayloadHandlers::summonToggle);

@@ -17,7 +17,7 @@ public final class ClientConfig {
     public static final ModConfigSpec SPEC;
 
     private static final ModConfigSpec.DoubleValue MASTER, BEAM, SHOT, UI, OTHER;
-    private static final ModConfigSpec.BooleanValue FLASHING, ARCS, GLOW, PHOTONIC_GLOW, SCROLL, SPIN;
+    private static final ModConfigSpec.BooleanValue FLASHING, ARCS, GLOW, PHOTONIC_GLOW, SCROLL, SPIN, CHAT;
     private static final ModConfigSpec.EnumValue<Detail> OTHER_DETAIL;
     private static final ModConfigSpec.EnumValue<ShaderMode> SHADER;
     private static final ModConfigSpec.EnumValue<Counter> COUNTER;
@@ -51,6 +51,7 @@ public final class ClientConfig {
                 .defineEnum("ether_counter", Counter.FADE_WHEN_FULL);
         SCROLL = b.comment("Sneak + scroll cycles modes.").define("sneak_scroll_cycles_modes", false);
         SPIN = b.comment("The Manipulator turns slowly on the upgrade screen.").define("upgrade_screen_spin", true);
+        CHAT = b.comment("Set codes in chat become click-to-copy links.").define("chat_set_code_links", true);
         b.pop();
 
         SPEC = b.build();
@@ -83,4 +84,5 @@ public final class ClientConfig {
     public static Counter counter() { return or(COUNTER::get, Counter.FADE_WHEN_FULL); }
     public static boolean sneakScroll() { return or(SCROLL::get, false); }
     public static boolean spin() { return or(SPIN::get, true); }
+    public static boolean chatSetCodes() { return or(CHAT::get, true); }
 }

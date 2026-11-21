@@ -124,4 +124,21 @@ public final class TraitPayloads {
             return TYPE;
         }
     }
+
+    /** A pasted set code (see Loadouts#importCode): the code and the new set's name. */
+    public record ImportLoadout(String code, String name) implements CustomPacketPayload {
+        public static final Type<ImportLoadout> TYPE = typeOf("import_loadout");
+        public static final StreamCodec<ByteBuf, ImportLoadout> CODEC =
+                StreamCodec.composite(
+                        ByteBufCodecs.stringUtf8(64),
+                        ImportLoadout::code,
+                        ByteBufCodecs.stringUtf8(64),
+                        ImportLoadout::name,
+                        ImportLoadout::new);
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() {
+            return TYPE;
+        }
+    }
 }

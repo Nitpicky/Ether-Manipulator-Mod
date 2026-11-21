@@ -33,6 +33,9 @@ public final class ModeWheel {
     private static int held = -1;
 
     private static double startX, startY;
+
+    /** The wheel key was used with the scroll wheel (to switch sets) during this hold. */
+    private static boolean scrolled;
     private static List<OrbMode> modes = List.of();
     private static OrbMode current;
 
@@ -51,7 +54,7 @@ public final class ModeWheel {
                 startY = mc.mouseHandler.ypos();
             }
             held++;
-            ManipulatorHud.wheelOpen = held > TAP_TICKS;
+            ManipulatorHud.wheelOpen = held > TAP_TICKS && !scrolled;
             if (!ManipulatorHud.wheelOpen) {
                 // the pointer starts where the mouse is when the ring opens
                 startX = mc.mouseHandler.xpos();
@@ -70,7 +73,22 @@ public final class ModeWheel {
         return ManipulatorHud.pointed(modes, dx, dy, w.getGuiScaledWidth(), w.getGuiScaledHeight());
     }
 
+    /** The scroll wheel turned while the key is down: this hold switches sets, not modes. */
+    public static void scrolledWhileHeld() {
+        if (held < 0) return;
+        scrolled = true;
+        ManipulatorHud.wheelOpen = false;
+        ManipulatorHud.hovered = null;
+    }
+
     private static void finish(Minecraft mc) {
+        if (scrolled) {
+            scrolled = false;
+            held = -1;
+            ManipulatorHud.wheelOpen = false;
+            ManipulatorHud.hovered = null;
+            return;
+        }
         OrbMode pick = null;
         if (held <= TAP_TICKS && !modes.isEmpty()) {
             int i = modes.indexOf(current);
