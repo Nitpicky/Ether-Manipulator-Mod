@@ -30,7 +30,10 @@ jobs:
           ETHERMOD_AUTOTEST: '1'
           LIBGL_ALWAYS_SOFTWARE: '1'
           MESA_GL_VERSION_OVERRIDE: '4.5'
-        run: xvfb-run -a -s '-screen 0 1280x720x24 +extension GLX +render -ac' timeout 1500 ./gradlew runClient -Pplaytest --no-daemon
+        run: |
+          rc=0; xvfb-run -a -s '-screen 0 1280x720x24 +extension GLX +render -ac' timeout 1500 ./gradlew runClient -Pplaytest --no-daemon || rc=$?
+          cp runs/client/logs/latest.log runs/client/probe.log 2>/dev/null || true
+          exit $rc
       - name: Require a complete passing report
         if: always()
         run: |
@@ -63,7 +66,7 @@ jobs:
           mkdir -p out
           cp runs/client/screenshots/mm_*.png out/ 2>/dev/null || true
           cp runs/client/redesign-probe-report.txt runs/client/ethermod-autotest.txt out/ 2>/dev/null || true
-          cp runs/client/logs/latest.log out/ 2>/dev/null || true
+          cp runs/client/logs/latest.log runs/client/probe.log out/ 2>/dev/null || true
           SHA=$(git rev-parse --short HEAD)
           git config user.name "playtest-bot"
           git config user.email "playtest-bot@users.noreply.github.com"

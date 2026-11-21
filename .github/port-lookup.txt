@@ -1,4 +1,4 @@
-net/minecraft/client/gui/render/pip/PictureInPictureRenderer
-/.*/(PictureInPictureRenderer)$
-net/minecraft/client/gui/render/pip/PictureInPictureRenderer#prepare
-net/minecraft/client/gui/render/pip/PictureInPictureRenderer#.*
+net/neoforged/neoforge/common/loot/IGlobalLootModifier$|net/neoforged/neoforge/common/loot/LootTableIdCondition$
+/net/neoforged/neoforge/common/loot/.*$
+net/neoforged/neoforge/common/loot/LootModifier#codecStart
+net/neoforged/neoforge/common/loot/LootModifier#.*
