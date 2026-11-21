@@ -7,7 +7,7 @@
   "key.ethermod.summon": "Manipulator oproepen / wegbergen",
   "key.ethermod.orb_mode": "Moduswiel (ingedrukt houden) / volgende modus (tikken)",
   "key.ethermod.skilltree": "Upgradescherm openen (modules)",
-  "key.categories.ethermod": "Ethermanipulator",
+  "key.category.ethermod.keys": "Ethermanipulator",
   "itemGroup.ethermod.tab": "Ethermanipulator",
   "item.ethermod.module_hydraulic": "Hydrauliekmodule",
   "item.ethermod.module_pyrotechnic": "Pyrotechniekmodule",

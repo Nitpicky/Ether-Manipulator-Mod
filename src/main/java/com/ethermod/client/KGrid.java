@@ -5,7 +5,7 @@ import static com.ethermod.client.UpgradeVisuals.*;
 
 import com.mojang.blaze3d.platform.NativeImage;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.resources.Identifier;
 
@@ -36,7 +36,7 @@ final class KGrid {
         }
     }
 
-    void draw(GuiGraphics g, KUi ui) {
+    void draw(GuiGraphicsExtractor g, KUi ui) {
         // Analytic coverage of one rigid lattice. Shading changes intensity, never line positions.
         double density = ui.scale * ui.mc.getWindow().getGuiScale();
         int tw = (int) Math.ceil(UpgradeScreen.W * density), th = (int) Math.ceil(UpgradeScreen.H * density);
@@ -44,9 +44,8 @@ final class KGrid {
         if (gridTexture == null || gridImage.getWidth() != tw || gridImage.getHeight() != th) {
             if (gridTexture != null) ui.mc.getTextureManager().release(GRID_TEXTURE);
             gridImage = new NativeImage(tw, th, false);
-            gridTexture = new DynamicTexture(gridImage);
+            gridTexture = new DynamicTexture(() -> "ethermod:ui/grid", gridImage);
             ui.mc.getTextureManager().register(GRID_TEXTURE, gridTexture);
-            gridTexture.setFilter(false, false);
             bakedAt = Double.NEGATIVE_INFINITY;
         }
         int bg = p().bg(), accent = p().accent();
@@ -55,7 +54,6 @@ final class KGrid {
             bakedBg = bg;
             bakedAccent = accent;
             bake(ui, density, tw, th, pitch, bg, accent);
-            g.flush();
             gridTexture.upload();
         }
         g.enableScissor(
@@ -63,7 +61,7 @@ final class KGrid {
                 ui.top + Math.round(3 * ui.scale),
                 ui.left + Math.round((UpgradeScreen.W - 3) * ui.scale),
                 ui.top + Math.round((UpgradeScreen.H - 3) * ui.scale));
-        g.blit(GRID_TEXTURE, 0, 0, UpgradeScreen.W, UpgradeScreen.H, 0, 0, tw, th, tw, th);
+        g.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, GRID_TEXTURE, 0, 0, 0, 0, UpgradeScreen.W, UpgradeScreen.H, tw, th, tw, th);
         g.disableScissor();
     }
 
@@ -109,7 +107,7 @@ final class KGrid {
                         lower = shade[cy + 1][cx] * (1 - fx) + shade[cy + 1][cx + 1] * fx;
                 double amount =
                         Math.max(vertical[x], horizontal[y]) * (upper * (1 - fy) + lower * fy);
-                gridImage.setPixelRGBA(
+                gridImage.setPixelABGR(
                         x, y, ink[(int) Math.clamp(Math.round(amount * 255), 0, 255)]);
             }
     }

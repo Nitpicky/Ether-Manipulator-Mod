@@ -7,7 +7,7 @@
   "key.ethermod.summon": "Evoca / riponi il Manipolatore",
   "key.ethermod.orb_mode": "Ruota delle modalità (tieni premuto) / modalità successiva (premi)",
   "key.ethermod.skilltree": "Apri la schermata dei potenziamenti (Moduli)",
-  "key.categories.ethermod": "Manipolatore d'Etere",
+  "key.category.ethermod.keys": "Manipolatore d'Etere",
   "itemGroup.ethermod.tab": "Manipolatore d'Etere",
   "item.ethermod.module_hydraulic": "Modulo Idraulico",
   "item.ethermod.module_pyrotechnic": "Modulo Pirotecnico",

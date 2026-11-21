@@ -5,8 +5,7 @@ import com.ethermod.manipulator.Manipulator;
 
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -52,7 +51,7 @@ public final class ManipulatorHud {
     /** The Badge slot's centre, from the bottom of the screen (GUI pixels). */
     static final int SLOT_FROM_BOTTOM = 49;
 
-    public static void render(GuiGraphics g, DeltaTracker delta) {
+    public static void render(GuiGraphicsExtractor g, DeltaTracker delta) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.options.hideGui || !Manipulator.isSummoned(mc.player)) {
             current = null;
@@ -156,16 +155,16 @@ public final class ManipulatorHud {
             float x = cx + (float) Math.sin(a) * r, y = cy + (float) Math.cos(a) * r;
             float scale = m == hovered && open > .5f && !spinning && !isCur ? 1.25f : 1f;
             int argb = Math.round(alpha * 255) << 24 | (Badges.color(badge) & 0xFFFFFF);
-            g.pose().pushPose();
-            g.pose().translate(x, y, 0);
-            g.pose().scale(scale, scale, 1);
+            g.pose().pushMatrix();
+            g.pose().translate(x, y);
+            g.pose().scale(scale, scale);
             Badges.draw(g, badge, -8, -8, 1, argb);
-            g.pose().popPose();
+            g.pose().popMatrix();
         }
 
         if (open > .5f && !spinning) {
             OrbMode label = hovered != null ? hovered : current;
-            g.drawCenteredString(
+            g.centeredText(
                     mc.font,
                     label.title(),
                     (int) cx,
@@ -217,43 +216,41 @@ public final class ManipulatorHud {
         return ammoString;
     }
 
-    private static void ammo(GuiGraphics g, String text, int x, int y, float alpha, float red) {
+    private static void ammo(GuiGraphicsExtractor g, String text, int x, int y, float alpha, float red) {
         int w = text.length() * 4 - 1;
         int left = x - w / 2;
-        com.mojang.blaze3d.systems.RenderSystem.enableBlend();
+        com.mojang.renderpearl.api.pipeline.RenderPipeline pipeline;
+        int tint;
         if (red >= 0) {
             // red reads on any background with plain blending; 0 = dim red, 1 = bright flash
-            com.mojang.blaze3d.systems.RenderSystem.defaultBlendFunc();
-            g.setColor(.7f + .3f * red, .1f + .22f * red, .08f + .14f * red, alpha * (.8f + .2f * red));
+            pipeline = net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED;
+            tint = argb(.7f + .3f * red, .1f + .22f * red, .08f + .14f * red, alpha * (.8f + .2f * red));
         } else {
-            com.mojang.blaze3d.systems.RenderSystem.blendFuncSeparate(
-                    com.mojang.blaze3d.platform.GlStateManager.SourceFactor.ONE_MINUS_DST_COLOR,
-                    com.mojang.blaze3d.platform.GlStateManager.DestFactor.ONE_MINUS_SRC_COLOR,
-                    com.mojang.blaze3d.platform.GlStateManager.SourceFactor.ONE,
-                    com.mojang.blaze3d.platform.GlStateManager.DestFactor.ZERO);
             // with the inverting blend a darker source inverts less, so fading is a grey ramp
-            g.setColor(alpha, alpha, alpha, 1);
+            pipeline = com.ethermod.client.ModPipelines.GUI_TEXTURED_INVERT;
+            tint = argb(alpha, alpha, alpha, 1);
         }
         for (int i = 0; i < text.length(); i++) {
             char c = text.charAt(i);
             int glyph = c == '/' ? 10 : c - '0';
             if (glyph < 0 || glyph > 10) continue;
-            g.blit(DIGITS, left + i * 4, y, glyph * 4, 0, 3, 5, 44, 5);
+            g.blit(pipeline, DIGITS, left + i * 4, y, glyph * 4, 0, 3, 5, 44, 5, tint);
         }
-        g.setColor(1, 1, 1, 1);
-        com.mojang.blaze3d.systems.RenderSystem.defaultBlendFunc();
-        com.mojang.blaze3d.systems.RenderSystem.disableBlend();
+    }
+
+    private static int argb(float r, float g, float b, float a) {
+        return net.minecraft.util.ARGB.colorFromFloat(a, r, g, b);
     }
 
     private static void drawAt(
-            GuiGraphics g, String badge, float cx, float cy, float r, float a, float alpha, float scale) {
+            GuiGraphicsExtractor g, String badge, float cx, float cy, float r, float a, float alpha, float scale) {
         if (alpha <= .01f) return;
         int argb = Math.round(alpha * 255) << 24 | (Badges.color(badge) & 0xFFFFFF);
-        g.pose().pushPose();
-        g.pose().translate(cx + (float) Math.sin(a) * r, cy + (float) Math.cos(a) * r, 0);
-        g.pose().scale(scale, scale, 1);
+        g.pose().pushMatrix();
+        g.pose().translate(cx + (float) Math.sin(a) * r, cy + (float) Math.cos(a) * r);
+        g.pose().scale(scale, scale);
         Badges.draw(g, badge, -8, -8, 1, argb);
-        g.pose().popPose();
+        g.pose().popMatrix();
     }
 
     /** The modes on the ring, in a fixed order. */
@@ -305,7 +302,7 @@ public final class ManipulatorHud {
     }
 
     /** The pointed-at triangle, very faintly, from the centre to the screen's edge. */
-    private static void tint(GuiGraphics g, int w, int h, float a, int color) {
+    private static void tint(GuiGraphicsExtractor g, int w, int h, float a, int color) {
         int sx = Math.round((float) Math.sin(a)), sy = Math.round((float) Math.cos(a));
         float[][] c =
                 sx > 0
@@ -314,13 +311,11 @@ public final class ManipulatorHud {
                                 ? new float[][] {{0, h}, {0, 0}}
                                 : sy > 0 ? new float[][] {{w, h}, {0, h}} : new float[][] {{0, 0}, {w, 0}};
         int argb = Math.round(open * 18) << 24 | (color & 0xFFFFFF);
-        var m = g.pose().last().pose();
-        var vc = g.bufferSource().getBuffer(RenderType.gui());
-        vc.addVertex(m, w / 2f, h / 2f, 0).setColor(argb);
-        vc.addVertex(m, c[0][0], c[0][1], 0).setColor(argb);
-        vc.addVertex(m, c[1][0], c[1][1], 0).setColor(argb);
-        vc.addVertex(m, w / 2f, h / 2f, 0).setColor(argb);
-        g.flush();
+        GuiQuad.submit(
+                g,
+                new float[] {w / 2f, c[0][0], c[1][0], w / 2f},
+                new float[] {h / 2f, c[0][1], c[1][1], h / 2f},
+                argb);
     }
 
     private static float wrap(float a) {

@@ -7,7 +7,7 @@
   "key.ethermod.summon": "Призвать / убрать Манипулятор",
   "key.ethermod.orb_mode": "Колесо режимов (удерживать) / следующий режим (нажать)",
   "key.ethermod.skilltree": "Открыть экран улучшений (модули)",
-  "key.categories.ethermod": "Манипулятор эфира",
+  "key.category.ethermod.keys": "Манипулятор эфира",
   "itemGroup.ethermod.tab": "Манипулятор эфира",
   "item.ethermod.module_hydraulic": "Гидравлический модуль",
   "item.ethermod.module_pyrotechnic": "Пиротехнический модуль",

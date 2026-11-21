@@ -8,7 +8,7 @@ import com.ethermod.trait.*;
 import com.google.gson.JsonElement;
 
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.*;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
@@ -21,7 +21,7 @@ import java.util.List;
 final class KTooltips {
     private KTooltips() {}
 
-    static void render(GuiGraphics g, Font font, int screenWidth, KHit hit, int mouseX, int mouseY) {
+    static void render(GuiGraphicsExtractor g, Font font, int screenWidth, KHit hit, int mouseX, int mouseY) {
         var lines = new ArrayList<FormattedCharSequence>();
         int wrap = Math.max(40, Math.min(228, screenWidth - 16));
         for (Component line : hit.tip()) lines.addAll(font.split(line, wrap));
@@ -37,17 +37,24 @@ final class KTooltips {
                     bounds[2] = w;
                     return pos;
                 };
-        g.pose().pushPose();
-        g.pose().translate(0, 0, 600);
-        g.renderTooltip(font, lines, positioner, mouseX, mouseY);
+        g.nextStratum();
+        g.tooltip(
+                font,
+                lines.stream()
+                        .map(net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent::create)
+                        .toList(),
+                mouseX,
+                mouseY,
+                positioner,
+                null,
+                false);
         var titleColour = hit.tip().getFirst().getStyle().getColor();
         int colour = titleColour != null ? 0xff000000 | titleColour.getValue() : hit.colour();
         // Keep the one-pixel accent inside the tooltip border, at its actual clamped position.
         if (bounds[2] > 0) {
-            g.pose().translate(0, 0, 500);
+            g.nextStratum();
             g.fill(bounds[0] - 2, bounds[1] - 3, bounds[0] + bounds[2] + 2, bounds[1] - 2, colour);
         }
-        g.pose().popPose();
     }
 
     static List<Component> traitTip(Identifier id, Trait trait, int tier) {

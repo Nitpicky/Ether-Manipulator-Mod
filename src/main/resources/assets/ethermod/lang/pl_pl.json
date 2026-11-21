@@ -7,7 +7,7 @@
   "key.ethermod.summon": "Przywołaj / schowaj Manipulator",
   "key.ethermod.orb_mode": "Koło trybów (przytrzymaj) / następny tryb (dotknij)",
   "key.ethermod.skilltree": "Otwórz ekran ulepszeń (moduły)",
-  "key.categories.ethermod": "Manipulator Eteru",
+  "key.category.ethermod.keys": "Manipulator Eteru",
   "itemGroup.ethermod.tab": "Manipulator Eteru",
   "item.ethermod.module_hydraulic": "Moduł Hydrauliczny",
   "item.ethermod.module_pyrotechnic": "Moduł Pirotechniczny",

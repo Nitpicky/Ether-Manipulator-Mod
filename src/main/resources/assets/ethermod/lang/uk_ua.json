@@ -7,7 +7,7 @@
   "key.ethermod.summon": "Викликати / сховати Маніпулятор",
   "key.ethermod.orb_mode": "Колесо режимів (утримувати) / наступний режим (натиснути)",
   "key.ethermod.skilltree": "Відкрити екран покращень (модулі)",
-  "key.categories.ethermod": "Маніпулятор ефіру",
+  "key.category.ethermod.keys": "Маніпулятор ефіру",
   "itemGroup.ethermod.tab": "Маніпулятор ефіру",
   "item.ethermod.module_hydraulic": "Гідравлічний модуль",
   "item.ethermod.module_pyrotechnic": "Піротехнічний модуль",

@@ -7,7 +7,7 @@
   "key.ethermod.summon": "Invocar / guardar o Manipulador",
   "key.ethermod.orb_mode": "Roda de modos (segurar) / próximo modo (tocar)",
   "key.ethermod.skilltree": "Abrir tela de aprimoramentos (Módulos)",
-  "key.categories.ethermod": "Manipulador de Éter",
+  "key.category.ethermod.keys": "Manipulador de Éter",
   "itemGroup.ethermod.tab": "Manipulador de Éter",
   "item.ethermod.module_hydraulic": "Módulo Hidráulico",
   "item.ethermod.module_pyrotechnic": "Módulo Pirotécnico",

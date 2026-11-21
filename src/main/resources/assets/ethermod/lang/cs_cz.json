@@ -7,7 +7,7 @@
   "key.ethermod.summon": "Přivolat / schovat Manipulátor",
   "key.ethermod.orb_mode": "Kolo režimů (držet) / další režim (stisknout)",
   "key.ethermod.skilltree": "Otevřít obrazovku vylepšení (moduly)",
-  "key.categories.ethermod": "Manipulátor éteru",
+  "key.category.ethermod.keys": "Manipulátor éteru",
   "itemGroup.ethermod.tab": "Manipulátor éteru",
   "item.ethermod.module_hydraulic": "Hydraulický modul",
   "item.ethermod.module_pyrotechnic": "Pyrotechnický modul",

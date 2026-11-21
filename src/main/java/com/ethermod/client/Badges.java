@@ -2,7 +2,7 @@ package com.ethermod.client;
 
 import com.ethermod.item.OrbMode;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 /**
  * Module Badges as icons: each mode is shown by the Badge of the Module it comes from (the K
@@ -60,24 +60,28 @@ public final class Badges {
      * colour, the icon's own top-left at x, y. The sprites live in textures/gui/badge/ and are
      * baked by bake_badges.py; they can be touched up by hand.
      */
-    public static void draw(GuiGraphics g, String module, int x, int y, int scale, int argb) {
+    public static void draw(GuiGraphicsExtractor g, String module, int x, int y, int scale, int argb) {
         var tex =
                 TEXTURES.computeIfAbsent(
                         module,
                         k ->
                                 net.minecraft.resources.Identifier.fromNamespaceAndPath(
                                         "ethermod", "textures/gui/badge/" + k + ".png"));
-        com.mojang.blaze3d.systems.RenderSystem.enableBlend();
-        com.mojang.blaze3d.systems.RenderSystem.defaultBlendFunc();
-        g.setColor(
-                (argb >> 16 & 255) / 255f,
-                (argb >> 8 & 255) / 255f,
-                (argb & 255) / 255f,
-                (argb >>> 24) / 255f);
         int s = 20 * scale;
-        g.blit(tex, x - 2 * scale, y - 2 * scale, s, s, 0, 0, 20, 20, 20, 20);
-        g.setColor(1, 1, 1, 1);
-        com.mojang.blaze3d.systems.RenderSystem.disableBlend();
+        g.blit(
+                net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED,
+                tex,
+                x - 2 * scale,
+                y - 2 * scale,
+                0,
+                0,
+                s,
+                s,
+                20,
+                20,
+                20,
+                20,
+                argb);
     }
 
     private static boolean on(String bits, int w, int h, int x, int y) {

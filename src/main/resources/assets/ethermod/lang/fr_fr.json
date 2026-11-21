@@ -7,7 +7,7 @@
   "key.ethermod.summon": "Invoquer / ranger le Manipulateur",
   "key.ethermod.orb_mode": "Roue des modes (maintenir) / mode suivant (appuyer)",
   "key.ethermod.skilltree": "Ouvrir l'écran d'amélioration (Modules)",
-  "key.categories.ethermod": "Manipulateur d'Éther",
+  "key.category.ethermod.keys": "Manipulateur d'Éther",
   "itemGroup.ethermod.tab": "Manipulateur d'Éther",
   "item.ethermod.module_hydraulic": "Module Hydraulique",
   "item.ethermod.module_pyrotechnic": "Module Pyrotechnique",

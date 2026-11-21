@@ -10,14 +10,14 @@ import static com.ethermod.client.UpgradeVisuals.*;
 import com.ethermod.item.*;
 import com.ethermod.network.payload.TraitPayloads;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 
 import java.util.List;
 
 /** The tier readout and "upgrade" button under the model. */
 final class KStageButton {
-    void draw(GuiGraphics g, KUi ui) {
+    void draw(GuiGraphicsExtractor g, KUi ui) {
         var st = ManipulatorStage.get(ui.stack);
         String title = st.title().getString();
         ui.text(g, title, 8 + (71 - ui.font.width(title)) / 2, 70, a().text());

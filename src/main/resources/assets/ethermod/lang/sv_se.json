@@ -7,7 +7,7 @@
   "key.ethermod.summon": "Kalla fram / lägg undan manipulatorn",
   "key.ethermod.orb_mode": "Lägeshjul (håll) / nästa läge (tryck)",
   "key.ethermod.skilltree": "Öppna uppgraderingsskärmen (moduler)",
-  "key.categories.ethermod": "Etermanipulator",
+  "key.category.ethermod.keys": "Etermanipulator",
   "itemGroup.ethermod.tab": "Etermanipulator",
   "item.ethermod.module_hydraulic": "Hydraulikmodul",
   "item.ethermod.module_pyrotechnic": "Pyroteknikmodul",

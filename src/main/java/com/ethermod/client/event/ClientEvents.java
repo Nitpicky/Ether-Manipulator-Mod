@@ -35,6 +35,12 @@ public class ClientEvents {
     }
 
     @SubscribeEvent
+    public static void onRegisterPipelines(
+            net.neoforged.neoforge.client.event.RegisterRenderPipelinesEvent event) {
+        com.ethermod.client.ModPipelines.register(event);
+    }
+
+    @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
         // the Mods list's Config button opens NeoForge's settings screen for both config files
         net.neoforged.fml.ModList.get().getModContainerById(EtherMod.MODID).ifPresent(c -> c.registerExtensionPoint(

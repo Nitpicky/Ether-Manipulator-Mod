@@ -7,7 +7,7 @@
   "key.ethermod.summon": "Manipülatörü çağır / kaldır",
   "key.ethermod.orb_mode": "Mod çarkı (basılı tut) / sonraki mod (bas)",
   "key.ethermod.skilltree": "Yükseltme ekranını aç (Modüller)",
-  "key.categories.ethermod": "Eter Manipülatörü",
+  "key.category.ethermod.keys": "Eter Manipülatörü",
   "itemGroup.ethermod.tab": "Eter Manipülatörü",
   "item.ethermod.module_hydraulic": "Hidrolik Modül",
   "item.ethermod.module_pyrotechnic": "Piroteknik Modül",

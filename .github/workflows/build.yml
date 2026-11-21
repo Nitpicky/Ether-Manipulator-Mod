@@ -41,10 +41,18 @@ jobs:
           EXTRA=""; [ -f .github/port-common-only ] && EXTRA="-PcommonOnly"
           ./gradlew build compilePlaytestJava --continue $EXTRA 2>&1 | tee build.log
 
+      - name: Full compile, client included (port branch, while the client is being ported)
+        if: always()
+        run: |
+          [ -f .github/port-common-only ] || exit 0
+          ./gradlew compileJava --continue > client.log 2>&1 || true
+          grep -c "error:" client.log || true
+
       - name: Publish the build log (port branch)
         if: always()
         run: |
           SHA=$(git rev-parse --short HEAD)
+          [ -f client.log ] && cp client.log /tmp/client.log
           cp build.log /tmp/build.log 2>/dev/null || exit 0
           git config user.name "playtest-bot"
           git config user.email "playtest-bot@users.noreply.github.com"
@@ -52,6 +60,7 @@ jobs:
           git worktree add -q /tmp/pr origin/playtest-results
           cd /tmp/pr && git checkout -q -B playtest-results
           mkdir -p "port/$SHA" && cp /tmp/build.log "port/$SHA/build.log"
+          [ -f /tmp/client.log ] && cp /tmp/client.log "port/$SHA/client.log"
           git add -A && git commit -qm "Port build log for $SHA"
           for i in 1 2 3 4 5; do git push -q origin playtest-results && break; git pull -q --rebase origin playtest-results; sleep $((i*3)); done
 

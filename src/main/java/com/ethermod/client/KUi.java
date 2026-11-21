@@ -5,7 +5,7 @@ import static com.ethermod.client.UpgradeVisuals.*;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.world.item.ItemStack;
@@ -74,7 +74,7 @@ final class KUi {
     }
 
     void control(
-            GuiGraphics g,
+            GuiGraphicsExtractor g,
             String key,
             int x,
             int y,
@@ -98,7 +98,7 @@ final class KUi {
     }
 
     void hover(
-            GuiGraphics g, String key, int x, int y, int w, int h, int c, boolean pulse) {
+            GuiGraphicsExtractor g, String key, int x, int y, int w, int h, int c, boolean pulse) {
         double level = hoverLevels.getOrDefault(key, 0d);
         if (level < .005) return;
         int alpha = (int) (level * 22);
@@ -106,11 +106,11 @@ final class KUi {
         border(g, x, y, w, h, ((int) (level * 100) << 24) | (c & 0xffffff));
     }
 
-    void text(GuiGraphics g, String s, int x, int y, int c) {
-        g.drawString(font, s, x, y, c, true);
+    void text(GuiGraphicsExtractor g, String s, int x, int y, int c) {
+        g.text(font, s, x, y, c, true);
     }
 
-    void center(GuiGraphics g, String s, int x, int y, int w, int h, int c) {
+    void center(GuiGraphicsExtractor g, String s, int x, int y, int w, int h, int c) {
         text(g, s, x + (w - font.width(s)) / 2, y + (h - 8) / 2, c);
     }
 }

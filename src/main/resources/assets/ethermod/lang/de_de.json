@@ -7,7 +7,7 @@
   "key.ethermod.summon": "Manipulator rufen / wegstecken",
   "key.ethermod.orb_mode": "Modusrad (halten) / nächster Modus (tippen)",
   "key.ethermod.skilltree": "Upgrade-Bildschirm öffnen (Module)",
-  "key.categories.ethermod": "Äthermanipulator",
+  "key.category.ethermod.keys": "Äthermanipulator",
   "itemGroup.ethermod.tab": "Äthermanipulator",
   "item.ethermod.module_hydraulic": "Hydraulik-Modul",
   "item.ethermod.module_pyrotechnic": "Pyrotechnik-Modul",

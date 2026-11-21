@@ -7,7 +7,7 @@
   "key.ethermod.summon": "マニピュレーターを召喚/収納",
   "key.ethermod.orb_mode": "モードホイール(長押し)/次のモード(タップ)",
   "key.ethermod.skilltree": "アップグレード画面を開く(モジュール)",
-  "key.categories.ethermod": "エーテルマニピュレーター",
+  "key.category.ethermod.keys": "エーテルマニピュレーター",
   "itemGroup.ethermod.tab": "エーテルマニピュレーター",
   "item.ethermod.module_hydraulic": "ハイドロリック・モジュール",
   "item.ethermod.module_pyrotechnic": "パイロテクニック・モジュール",

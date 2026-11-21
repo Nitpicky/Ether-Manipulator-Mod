@@ -11,7 +11,7 @@ import com.ethermod.network.payload.TraitPayloads;
 import com.ethermod.trait.Loadouts;
 
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -75,20 +75,20 @@ final class KLoadoutList {
     }
 
     /** Positions and draws the rename box over its row. */
-    void renderRenameBox(GuiGraphics g, KUi ui, float pt) {
+    void renderRenameBox(GuiGraphicsExtractor g, KUi ui, float pt) {
         if (renaming < 0) return;
         rename.setX(241);
         rename.setY(setRowY(renaming - setScroll) + (setRowHeight(renaming - setScroll) - 9) / 2);
-        g.pose().pushPose();
-        g.pose().translate(0, 0, 450);
+        g.pose().pushMatrix();
+        g.nextStratum();
         rename.render(g, ui.mx, ui.my, pt);
-        g.pose().popPose();
+        g.pose().popMatrix();
     }
 
     static int setRowHeight(int row) { return row < 2 ? 14 : 13; }
     static int setRowY(int row) { return 33 + row * 14 + Math.min(row, 2); }
 
-    void draw(GuiGraphics g, KUi ui) {
+    void draw(GuiGraphicsExtractor g, KUi ui) {
         inset(g, 235, 20, 77, 130, a(), a().ramp()[1]);
         ui.text(g, Lang.tr("gui.ethermod.sets"), 238, 23, a().text());
         var list = Loadouts.list(ui.stack);

@@ -10,7 +10,7 @@ import com.ethermod.network.payload.TraitPayloads;
 import com.ethermod.trait.*;
 import com.mojang.blaze3d.platform.NativeImage;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.resources.Identifier;
 
@@ -107,7 +107,7 @@ final class KTierPanel {
     /** Node and link positions in the panel: the two choices of each tier, and the commons. */
     private static final int[] NODE_X = {41, 85, 129}, COMMON_X = {63, 107};
 
-    void draw(GuiGraphics g) {
+    void draw(GuiGraphicsExtractor g) {
         int y = 20 + slot * 45;
         var id = TraitBuild.line(ui.stack, slot);
         boolean unlocked = slot < ui.stage();
@@ -359,14 +359,14 @@ final class KTierPanel {
     }
 
     /** Smooth moving scanlines are drawn last and clipped inside the panel frame. */
-    private void drawScanlines(GuiGraphics g, Palette pal, int y, double age) {
+    private void drawScanlines(GuiGraphicsExtractor g, Palette pal, int y, double age) {
         g.enableScissor(
                 ui.left + Math.round(85 * ui.scale),
                 ui.top + Math.round((y + 1) * ui.scale),
                 ui.left + Math.round(229 * ui.scale),
                 ui.top + Math.round((y + 39) * ui.scale));
-        g.pose().pushPose();
-        g.pose().translate(0, 0, 2);
+        g.pose().pushMatrix();
+        g.nextStratum();
         double edge = KPanelFx.waveEdge(age);
         if (age >= .2 && age < .88) {
             additive(g, 85, y + edge + .65, 144, .7, pal.accent());
@@ -401,31 +401,30 @@ final class KTierPanel {
                     1,
                     ((int) (24 * strength) << 24) | (pal.accent() & 0xffffff));
         }
-        g.pose().popPose();
+        g.pose().popMatrix();
         g.disableScissor();
     }
 
     /** What the texture holds now: a panel at rest is not uploaded again every frame. */
     private int[] uploaded;
 
-    void upload(GuiGraphics g, Raster r, int x, int y) {
+    void upload(GuiGraphicsExtractor g, Raster r, int x, int y) {
         if (dynamic == null) {
             image = new NativeImage(146, 40, false);
-            dynamic = new DynamicTexture(image);
+            dynamic = new DynamicTexture(texture::toString, image);
             ui.mc.getTextureManager().register(texture, dynamic);
             uploaded = null;
         }
         if (uploaded == null || !Arrays.equals(uploaded, r.pixels)) {
             for (int i = 0; i < r.pixels.length; i++) {
                 int c = r.pixels[i];
-                image.setPixelRGBA(
-                        i % 146, i / 146, abgr(c));
+                image.setPixel(i % 146, i / 146, c);
             }
             dynamic.upload();
             if (uploaded == null || uploaded.length != r.pixels.length) uploaded = r.pixels.clone();
             else System.arraycopy(r.pixels, 0, uploaded, 0, uploaded.length);
         }
-        g.blit(texture, x, y, 0, 0, 146, 40, 146, 40);
+        g.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, texture, x, y, 0, 0, 146, 40, 146, 40);
     }
 
     private static int choice(TraitLine line, String id, int tier) {

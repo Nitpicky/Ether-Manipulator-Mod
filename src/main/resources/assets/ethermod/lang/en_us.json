@@ -7,7 +7,7 @@
   "key.ethermod.summon": "Summon / Put Away Manipulator",
   "key.ethermod.orb_mode": "Orb Mode Wheel (hold) / Cycle (tap)",
   "key.ethermod.skilltree": "Open Upgrade Screen (modules)",
-  "key.categories.ethermod": "Ether Manipulator",
+  "key.category.ethermod.keys": "Ether Manipulator",
   "itemGroup.ethermod.tab": "Ether Manipulator",
   "item.ethermod.module_hydraulic": "Hydraulic Module",
   "item.ethermod.module_pyrotechnic": "Pyrotechnic Module",

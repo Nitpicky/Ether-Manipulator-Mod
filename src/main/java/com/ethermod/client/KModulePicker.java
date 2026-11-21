@@ -9,13 +9,13 @@ import static com.ethermod.client.UpgradeVisuals.*;
 import com.ethermod.network.payload.TraitPayloads;
 import com.ethermod.trait.*;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 import java.util.Optional;
 
 /** The modal grid of modules offered for an empty or occupied slot. */
 final class KModulePicker {
-    void draw(GuiGraphics g, KUi ui, int picker, Runnable onPicked) {
+    void draw(GuiGraphicsExtractor g, KUi ui, int picker, Runnable onPicked) {
         frame(g, 84, 17, 215, 145, a());
         ui.text(g, Lang.tr("gui.ethermod.choose_module"), 91, 23, a().bright());
         var lines = TraitLines.all(ui.mc.level.registryAccess());

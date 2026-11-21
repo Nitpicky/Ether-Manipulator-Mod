@@ -146,10 +146,10 @@ public final class ClientMobility {
                 (jump ? 1 : 0)
                         | (p.isShiftKeyDown() ? 2 : 0)
                         | (p.isSprinting() ? 4 : 0)
-                        | (p.input.forwardImpulse > 0 ? 8 : 0)
-                        | (p.input.forwardImpulse < 0 ? 16 : 0)
-                        | (p.input.leftImpulse > 0 ? 32 : 0)
-                        | (p.input.leftImpulse < 0 ? 64 : 0);
+                        | (p.input.getMoveVector().y > 0 ? 8 : 0)
+                        | (p.input.getMoveVector().y < 0 ? 16 : 0)
+                        | (p.input.getMoveVector().x > 0 ? 32 : 0)
+                        | (p.input.getMoveVector().x < 0 ? 64 : 0);
         p.getPersistentData().putInt("mm_motion", motion);
         if (motion != motionWas) {
             ModNetwork.send(new ModulePayloads.Motion(motion));
@@ -280,8 +280,8 @@ public final class ClientMobility {
             if (now < freeUntil && wish.lengthSqr() > 0) {
                 var steer =
                         p.getLookAngle()
-                                .scale(p.input.forwardImpulse)
-                                .add(wish.scale(Math.abs(p.input.leftImpulse)));
+                                .scale(p.input.getMoveVector().y)
+                                .add(wish.scale(Math.abs(p.input.getMoveVector().x)));
                 if (steer.lengthSqr() > 0)
                     p.setDeltaMovement(
                             v.lerp(steer.normalize().scale(v.length()), 0.3)
@@ -399,11 +399,11 @@ public final class ClientMobility {
     private static Vec3 wish(LocalPlayer p) {
         double yaw = Math.toRadians(p.getYRot());
         return new Vec3(
-                        p.input.leftImpulse * Math.cos(yaw)
-                                - p.input.forwardImpulse * Math.sin(yaw),
+                        p.input.getMoveVector().x * Math.cos(yaw)
+                                - p.input.getMoveVector().y * Math.sin(yaw),
                         0,
-                        p.input.forwardImpulse * Math.cos(yaw)
-                                + p.input.leftImpulse * Math.sin(yaw))
+                        p.input.getMoveVector().y * Math.cos(yaw)
+                                + p.input.getMoveVector().x * Math.sin(yaw))
                 .normalize();
     }
 

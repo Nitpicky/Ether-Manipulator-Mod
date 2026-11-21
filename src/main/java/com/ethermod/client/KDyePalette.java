@@ -10,7 +10,7 @@ import static com.ethermod.client.UpgradeVisuals.*;
 import com.ethermod.item.*;
 import com.ethermod.network.payload.TraitPayloads;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
 
@@ -43,7 +43,7 @@ final class KDyePalette {
         this.openColour = openColour;
     }
 
-    void draw(GuiGraphics g, KUi ui) {
+    void draw(GuiGraphicsExtractor g, KUi ui) {
         int current = ManipulatorColors.body(ui.stack), unlocked = 0;
         for (var dye : DYES)
             if (ManipulatorColors.isUnlocked(

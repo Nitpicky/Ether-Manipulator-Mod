@@ -81,7 +81,7 @@ public final class BodyTextures {
                 Minecraft.getInstance().getResourceManager().getResourceOrThrow(BASE).open()) {
             NativeImage img = NativeImage.read(in);
             recolour(img, tones);
-            Minecraft.getInstance().getTextureManager().register(loc, new DynamicTexture(img));
+            Minecraft.getInstance().getTextureManager().register(loc, new DynamicTexture(loc::toString, img));
         } catch (Exception e) {
             EtherMod.LOGGER.warn("Could not recolour the Manipulator texture", e);
             loc = BASE;
@@ -93,18 +93,12 @@ public final class BodyTextures {
     private static void recolour(NativeImage img, int[] tones) {
         for (int y = 0; y < img.getHeight(); y++) {
             for (int x = 0; x < img.getWidth(); x++) {
-                int abgr = img.getPixelRGBA(x, y); // NativeImage stores ABGR
-                int rgb = (abgr & 0xFF) << 16 | (abgr & 0xFF00) | (abgr >> 16 & 0xFF);
+                int argb = img.getPixel(x, y);
+                int rgb = argb & 0xFFFFFF;
                 for (int i = 0; i < 5; i++) {
                     if (rgb != BodyPalette.PAINTED[i]) continue;
                     int t = tones[i];
-                    img.setPixelRGBA(
-                            x,
-                            y,
-                            (abgr & 0xFF000000)
-                                    | (t & 0xFF) << 16
-                                    | (t & 0xFF00)
-                                    | (t >> 16 & 0xFF));
+                    img.setPixel(x, y, (argb & 0xFF000000) | (t & 0xFFFFFF));
                     break;
                 }
             }

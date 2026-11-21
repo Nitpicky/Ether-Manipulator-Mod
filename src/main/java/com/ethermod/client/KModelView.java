@@ -2,7 +2,7 @@ package com.ethermod.client;
 
 import com.mojang.blaze3d.platform.Lighting;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.item.ItemDisplayContext;
 
@@ -66,7 +66,7 @@ final class KModelView {
         return false;
     }
 
-    void render(GuiGraphics g, KUi ui, double dt) {
+    void render(GuiGraphicsExtractor g, KUi ui, double dt) {
         if (returnFrom != null) {
             // double click: the tilt settles back level, the spin picks up again
             float progress = (float) Math.clamp((ui.now - returnStart) / .45, 0, 1);
@@ -81,7 +81,7 @@ final class KModelView {
             yaw += vy * (float) dt;
             pitch += (0 - pitch) * (1 - (float) Math.pow(.985, dt * 60));
         }
-        g.pose().pushPose();
+        g.pose().pushMatrix();
         g.pose().translate(40, 43, 130);
         g.pose().scale(46, -46, 46);
         g.pose().mulPose(new Quaternionf().rotateX(.25f + pitch).rotateY(yaw));
@@ -97,8 +97,7 @@ final class KModelView {
                         g.bufferSource(),
                         ui.mc.level,
                         0);
-        g.flush();
         Lighting.setupFor3DItems();
-        g.pose().popPose();
+        g.pose().popMatrix();
     }
 }

@@ -38,7 +38,7 @@ public final class GemGlint extends RenderType {
             int[] lum = new int[w * h];
             for (int y = 0; y < h; y++)
                 for (int x = 0; x < w; x++) {
-                    int c = img.getPixelRGBA(x, y);
+                    int c = img.getPixel(x, y);
                     int l = ((c & 255) + ((c >> 8) & 255) + ((c >> 16) & 255)) / 3;
                     lum[y * w + x] = l;
                     max = Math.max(max, l);
@@ -46,11 +46,11 @@ public final class GemGlint extends RenderType {
             for (int y = 0; y < h; y++)
                 for (int x = 0; x < w; x++) {
                     int l = Math.min(255, lum[y * w + x] * 255 / max);
-                    img.setPixelRGBA(x, y, 0xFF000000 | l << 16 | l << 8 | l);
+                    img.setPixel(x, y, 0xFF000000 | l << 16 | l << 8 | l);
                 }
             net.minecraft.client.Minecraft.getInstance()
                     .getTextureManager()
-                    .register(TEXTURE, new net.minecraft.client.renderer.texture.DynamicTexture(img));
+                    .register(TEXTURE, new net.minecraft.client.renderer.texture.DynamicTexture(() -> "ethermod:gem_glint", img));
         } catch (Exception e) {
             com.ethermod.EtherMod.LOGGER.warn("Could not build the gem glint", e);
         }

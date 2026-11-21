@@ -10,7 +10,7 @@ import com.ethermod.item.*;
 import com.ethermod.network.payload.TraitPayloads;
 
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -72,13 +72,13 @@ final class KColourPicker {
     }
 
     /** Draws and positions the hex box above the dialog. */
-    void renderHexBox(GuiGraphics g, KUi ui, float pt) {
+    void renderHexBox(GuiGraphicsExtractor g, KUi ui, float pt) {
         hexBox.setX(151);
         hexBox.setY(134);
-        g.pose().pushPose();
-        g.pose().translate(0, 0, 450);
+        g.pose().pushMatrix();
+        g.nextStratum();
         hexBox.render(g, ui.mx, ui.my, pt);
-        g.pose().popPose();
+        g.pose().popMatrix();
     }
 
     void open(ItemStack stack) {
@@ -94,7 +94,7 @@ final class KColourPicker {
         hexBox.setFocused(false);
     }
 
-    void draw(GuiGraphics g, KUi ui) {
+    void draw(GuiGraphicsExtractor g, KUi ui) {
         frame(g, 119, 39, 152, 130, a());
         ui.text(g, Lang.tr("gui.ethermod.custom_trim"), 126, 46, a().bright());
         for (int x = 0; x < 88; x++)

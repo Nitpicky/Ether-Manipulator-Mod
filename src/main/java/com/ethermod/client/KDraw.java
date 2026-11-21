@@ -2,14 +2,14 @@ package com.ethermod.client;
 
 import static com.ethermod.client.UpgradeVisuals.*;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
 
 /** Stateless pixel-art drawing primitives shared by every part of the K-screen. */
 final class KDraw {
     private KDraw() {}
 
-    static void inset(GuiGraphics g, int x, int y, int w, int h, Palette pal, int fill) {
+    static void inset(GuiGraphicsExtractor g, int x, int y, int w, int h, Palette pal, int fill) {
         g.fill(x, y, x + w, y + h, fill);
         g.fill(x, y, x + w - 1, y + 1, pal.insetShadow());
         g.fill(x, y + 1, x + 1, y + h - 1, pal.insetShadow());
@@ -17,11 +17,11 @@ final class KDraw {
         g.fill(x + w - 1, y + 1, x + w, y + h - 1, pal.border());
     }
 
-    static void frame(GuiGraphics g, int x, int y, int w, int h, Palette pal) {
+    static void frame(GuiGraphicsExtractor g, int x, int y, int w, int h, Palette pal) {
         frame(g, x, y, w, h, pal, true);
     }
 
-    static void frame(GuiGraphics g, int x, int y, int w, int h, Palette pal, boolean fill) {
+    static void frame(GuiGraphicsExtractor g, int x, int y, int w, int h, Palette pal, boolean fill) {
         if (fill) g.fill(x + 3, y + 3, x + w - 3, y + h - 3, pal.bg());
         g.fill(x + 5, y, x + w - 5, y + 1, 0xff000000);
         g.fill(x + 5, y + 1, x + w - 5, y + 3, pal.border());
@@ -61,22 +61,22 @@ final class KDraw {
         }
     }
 
-    static void border(GuiGraphics g, int x, int y, int w, int h, int c) {
+    static void border(GuiGraphicsExtractor g, int x, int y, int w, int h, int c) {
         g.fill(x, y, x + w, y + 1, c);
         g.fill(x, y + h - 1, x + w, y + h, c);
         g.fill(x, y + 1, x + 1, y + h - 1, c);
         g.fill(x + w - 1, y + 1, x + w, y + h - 1, c);
     }
 
-    static void additive(GuiGraphics g, double x, double y, double w, double h, int c) {
-        g.pose().pushPose();
-        g.pose().translate(x, y, 0);
-        g.pose().scale((float) w, (float) h, 1);
-        g.fill(net.minecraft.client.renderer.RenderType.lightning(), 0, 0, 1, 1, c);
-        g.pose().popPose();
+    static void additive(GuiGraphicsExtractor g, double x, double y, double w, double h, int c) {
+        g.pose().pushMatrix();
+        g.pose().translate((float) x, (float) y);
+        g.pose().scale((float) w, (float) h);
+        g.fill(ModPipelines.GUI_ADDITIVE, 0, 0, 1, 1, c);
+        g.pose().popMatrix();
     }
 
-    static void raster(GuiGraphics g, Raster r, int x, int y) {
+    static void raster(GuiGraphicsExtractor g, Raster r, int x, int y) {
         for (int yy = 0; yy < r.h; yy++) {
             int start = 0;
             while (start < r.w) {
@@ -88,7 +88,7 @@ final class KDraw {
         }
     }
 
-    static void sprite(GuiGraphics g, Identifier id, int x, int y, int w, int h, int c) {
+    static void sprite(GuiGraphicsExtractor g, Identifier id, int x, int y, int w, int h, int c) {
         var data = modules.get(id.getPath());
         if (data == null) return;
         var r = new Raster(w, h);
@@ -96,7 +96,7 @@ final class KDraw {
         raster(g, r, x, y);
     }
 
-    static void rline(GuiGraphics g, int x, int y, int ex, int ey, int c) {
+    static void rline(GuiGraphicsExtractor g, int x, int y, int ex, int ey, int c) {
         Raster r = new Raster(Math.abs(ex - x) + 1, Math.abs(ey - y) + 1);
         r.line(
                 x > ex ? r.w - 1 : 0,
@@ -107,7 +107,7 @@ final class KDraw {
         raster(g, r, Math.min(x, ex), Math.min(y, ey));
     }
 
-    static void lock(GuiGraphics g, int x, int y, int c) {
+    static void lock(GuiGraphicsExtractor g, int x, int y, int c) {
         var r = new Raster(6, 8);
         smallLock(r, 0, 0, 0xff161b1a);
         raster(g, r, x + 1, y + 1);
@@ -116,7 +116,7 @@ final class KDraw {
         raster(g, r, x, y);
     }
 
-    static void bigLock(GuiGraphics g, int x, int y, int c) {
+    static void bigLock(GuiGraphicsExtractor g, int x, int y, int c) {
         String[] rows = {
             "..####..",
             ".#....#.",
@@ -154,14 +154,14 @@ final class KDraw {
                 if (rows[yy].charAt(xx) == '#') r.pixel(x + xx, y + yy, c);
     }
 
-    static void plus(GuiGraphics g, int x, int y, int size, int c) {
+    static void plus(GuiGraphicsExtractor g, int x, int y, int size, int c) {
         g.fill(x + size / 2 + 1, y + 1, x + size / 2 + 2, y + size + 1, 0xff151515);
         g.fill(x + 1, y + size / 2 + 1, x + size + 1, y + size / 2 + 2, 0xff151515);
         g.fill(x + size / 2, y, x + size / 2 + 1, y + size, c);
         g.fill(x, y + size / 2, x + size, y + size / 2 + 1, c);
     }
 
-    static void hollowPlus(GuiGraphics g, int x, int y, int c) {
+    static void hollowPlus(GuiGraphicsExtractor g, int x, int y, int c) {
         int[][] p = {
             {3, 0}, {6, 0}, {6, 3}, {9, 3}, {9, 6}, {6, 6}, {6, 9}, {3, 9}, {3, 6}, {0, 6}, {0, 3},
             {3, 3}, {3, 0}

@@ -15,7 +15,6 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.settings.KeyConflictContext;
 
-import org.lwjgl.glfw.GLFW;
 
 /**
  * Manipulator keys. R: summon / put away (never blocked) K: open the upgrade screen (works whether
@@ -28,7 +27,9 @@ import org.lwjgl.glfw.GLFW;
 @OnlyIn(Dist.CLIENT)
 public class ManipulatorKeys {
 
-    private static final String CATEGORY = "key.categories.ethermod";
+    private static final KeyMapping.Category CATEGORY =
+            new KeyMapping.Category(
+                    net.minecraft.resources.Identifier.fromNamespaceAndPath("ethermod", "keys"));
 
     public static KeyMapping SKILL_TREE_KEY;
     public static KeyMapping SUMMON_KEY;
@@ -44,22 +45,23 @@ public class ManipulatorKeys {
                         "key.ethermod.summon",
                         KeyConflictContext.IN_GAME,
                         InputConstants.Type.KEYSYM,
-                        GLFW.GLFW_KEY_R,
+                        InputConstants.KEY_R,
                         CATEGORY);
         SKILL_TREE_KEY =
                 new KeyMapping(
                         "key.ethermod.skilltree",
                         KeyConflictContext.IN_GAME,
                         InputConstants.Type.KEYSYM,
-                        GLFW.GLFW_KEY_K,
+                        InputConstants.KEY_K,
                         CATEGORY);
         ORB_MODE_KEY =
                 new KeyMapping(
                         "key.ethermod.orb_mode",
                         KeyConflictContext.IN_GAME,
                         InputConstants.Type.KEYSYM,
-                        GLFW.GLFW_KEY_LEFT_ALT,
+                        InputConstants.KEY_LALT,
                         CATEGORY);
+        event.registerCategory(CATEGORY);
         event.register(SUMMON_KEY);
         event.register(ORB_MODE_KEY);
         event.register(SKILL_TREE_KEY);
@@ -93,7 +95,7 @@ public class ManipulatorKeys {
         if (player == null) return;
 
         // Scrolling or pressing a number key brings the real hotbar item back.
-        int selected = player.getInventory().selected;
+        int selected = player.getInventory().getSelectedSlot();
         if (lastSelectedSlot != -1
                 && selected != lastSelectedSlot
                 && Manipulator.isSummoned(player)) {

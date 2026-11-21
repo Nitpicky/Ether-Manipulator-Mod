@@ -7,7 +7,7 @@
   "key.ethermod.summon": "召喚/收起操縱器",
   "key.ethermod.orb_mode": "模式輪盤(按住)/下一模式(輕按)",
   "key.ethermod.skilltree": "打開升級介面(模組)",
-  "key.categories.ethermod": "以太操縱器",
+  "key.category.ethermod.keys": "以太操縱器",
   "itemGroup.ethermod.tab": "以太操縱器",
   "item.ethermod.module_hydraulic": "液壓模組",
   "item.ethermod.module_pyrotechnic": "煙火模組",

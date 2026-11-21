@@ -8,7 +8,7 @@ import static com.ethermod.client.UiSettings.p;
 import com.ethermod.manipulator.Manipulator;
 import com.ethermod.network.payload.TraitPayloads;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -100,24 +100,23 @@ public class UpgradeScreen extends Screen {
     }
 
     @Override
-    public void renderBackground(GuiGraphics g, int x, int y, float pt) {}
+    public void extractBackground(GuiGraphicsExtractor g, int x, int y, float pt) {}
 
     @Override
-    public void render(GuiGraphics g, int mouseX, int mouseY, float pt) {
-        // GuiGraphics otherwise flushes each tiny fill separately: batch the pixel-art geometry.
-        g.drawManaged(() -> renderNative(g, mouseX, mouseY, pt));
+    public void extractRenderState(GuiGraphicsExtractor g, int mouseX, int mouseY, float pt) {
+        renderNative(g, mouseX, mouseY, pt);
     }
 
-    private void renderNative(GuiGraphics g, int mouseX, int mouseY, float pt) {
+    private void renderNative(GuiGraphicsExtractor g, int mouseX, int mouseY, float pt) {
         ui.now = clock();
         double dt = Math.min(.05, ui.now - lastTime);
         lastTime = ui.now;
         ui.mx = (int) ((mouseX - left) / uiScale);
         ui.my = (int) ((mouseY - top) / uiScale);
         g.fill(0, 0, width, height, 0x98000000);
-        g.pose().pushPose();
-        g.pose().translate(left, top, 0);
-        g.pose().scale(uiScale, uiScale, 1);
+        g.pose().pushMatrix();
+        g.pose().translate(left, top);
+        g.pose().scale(uiScale, uiScale);
         hits.clear();
         frame(g, 0, 0, W, H, p());
         grid.draw(g, ui);
@@ -175,8 +174,8 @@ public class UpgradeScreen extends Screen {
         if (picker >= 0) {
             hits.clear();
             hits.add(new KHit("dismiss", 0, 0, W, H, () -> picker = -1, List.of(), 0, false));
-            g.pose().pushPose();
-            g.pose().translate(0, 0, 400);
+            g.pose().pushMatrix();
+            g.nextStratum();
             modulePicker.draw(
                     g,
                     ui,
@@ -185,14 +184,14 @@ public class UpgradeScreen extends Screen {
                         picker = -1;
                         loadouts.clearSelection();
                     });
-            g.pose().popPose();
+            g.pose().popMatrix();
         }
         if (colour.isOpen()) {
             hits.clear();
-            g.pose().pushPose();
-            g.pose().translate(0, 0, 400);
+            g.pose().pushMatrix();
+            g.nextStratum();
             colour.draw(g, ui);
-            g.pose().popPose();
+            g.pose().popMatrix();
         }
         hovered = null;
         for (int i = hits.size() - 1; i >= 0; i--)
@@ -213,21 +212,26 @@ public class UpgradeScreen extends Screen {
         }
         loadouts.renderRenameBox(g, ui, pt);
         if (colour.isOpen()) colour.renderHexBox(g, ui, pt);
-        g.pose().popPose();
+        g.pose().popMatrix();
         if (showTooltips && hovered != null && !hovered.tip().isEmpty() && ui.now - hoverAt >= .180)
             KTooltips.render(g, font, width, hovered, mouseX, mouseY);
     }
 
     @Override
-    public boolean mouseClicked(double x, double y, int button) {
+    public boolean mouseClicked(net.minecraft.client.input.MouseButtonEvent event, boolean doubleClick) {
+        double x = event.x(), y = event.y();
+        int button = event.button();
+        var local =
+                new net.minecraft.client.input.MouseButtonEvent(
+                        (x - left) / uiScale, (y - top) / uiScale, event.buttonInfo());
         double lx = (x - left) / uiScale, ly = (y - top) / uiScale;
         ui.now = clock();
-        if (colour.isOpen() && colour.hexBox().mouseClicked(lx, ly, button)) {
+        if (colour.isOpen() && colour.hexBox().mouseClicked(local, doubleClick)) {
             setFocused(colour.hexBox());
             return true;
         }
         if (loadouts.isRenaming()) {
-            if (loadouts.renameBox().mouseClicked(lx, ly, button)) {
+            if (loadouts.renameBox().mouseClicked(local, doubleClick)) {
                 setFocused(loadouts.renameBox());
                 return true;
             }
@@ -272,7 +276,8 @@ public class UpgradeScreen extends Screen {
     }
 
     @Override
-    public boolean mouseDragged(double x, double y, int button, double dx, double dy) {
+    public boolean mouseDragged(net.minecraft.client.input.MouseButtonEvent event, double dx, double dy) {
+        double x = event.x(), y = event.y();
         double lx = (x - left) / uiScale, ly = (y - top) / uiScale;
         if (colour.isOpen() && colour.dragging()) {
             colour.drag(lx, ly);
@@ -286,7 +291,7 @@ public class UpgradeScreen extends Screen {
     }
 
     @Override
-    public boolean mouseReleased(double x, double y, int b) {
+    public boolean mouseReleased(net.minecraft.client.input.MouseButtonEvent event) {
         colour.endDrag();
         return model.release(clock());
     }
@@ -306,14 +311,15 @@ public class UpgradeScreen extends Screen {
     }
 
     @Override
-    public boolean keyPressed(int key, int scan, int mods) {
+    public boolean keyPressed(net.minecraft.client.input.KeyEvent event) {
+        int key = event.key();
         if (!loadouts.isRenaming()
                 && !colour.hexBox().isFocused()
-                && com.ethermod.client.event.ManipulatorKeys.SKILL_TREE_KEY.matches(key, scan)) {
+                && com.ethermod.client.event.ManipulatorKeys.SKILL_TREE_KEY.matches(event)) {
             onClose();
             return true;
         }
-        if (key == 256) {
+        if (key == com.mojang.blaze3d.platform.InputConstants.KEY_ESCAPE) {
             if (colour.isOpen()) {
                 colour.close();
                 return true;
@@ -327,11 +333,11 @@ public class UpgradeScreen extends Screen {
                 return true;
             }
         }
-        if (key == 257 && loadouts.isRenaming()) {
+        if (key == com.mojang.blaze3d.platform.InputConstants.KEY_RETURN && loadouts.isRenaming()) {
             finishRename();
             return true;
         }
-        return super.keyPressed(key, scan, mods);
+        return super.keyPressed(event);
     }
 
     @Override
