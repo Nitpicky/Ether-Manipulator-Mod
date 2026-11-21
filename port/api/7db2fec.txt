@@ -1,0 +1,338 @@
+/home/runner/.gradle/caches/modules-2/files-2.1/curse.maven/geckolib-388172/8893169/196231506b89da06925c087f9b8bc5fd12ebea16/geckolib-388172-8893169.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/io.github.llamalad7/mixinextras-neoforge/0.5.5/26f2905a37afd203c3da1d6a2e164472a7531b41/mixinextras-neoforge-0.5.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.accesstransformers/at-parser/11.0.2/64aae57d6d26d69543c5275181fe6971707a4e16/at-parser-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/earlydisplay/12.0.16/efa2e56115d22853d10524874a7bbb64555c2a28/earlydisplay-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/12.0.16/edbb2ee8211a867215970bc15ae9c354fa56dc09/loader-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarMetadata/0.5.3/ff40c1cd721d07615d825c5bbf27705b2e3258ed/JarJarMetadata-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarSelector/0.5.3/6b845aab8d5c8e721b4e3cd30f97722b7f8044b1/JarJarSelector-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/accesstransformers/11.0.2/25dcb69c78b16669935f0ab91dff830ce192379d/accesstransformers-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/bus/8.0.5/5b2d33285ab5d1554e9798ad98c40d6ea3868bd5/bus-8.0.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/mergetool/2.0.7/793b18456e92c4a7f66d9b5d8bf7a9c1c7a20b20/mergetool-2.0.7-api.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar
+=== LIST /.*client/MouseHandler.*$
+net/minecraft/client/MouseHandler
+net/minecraft/client/MouseHandler$LastClick
+=== CODE net/minecraft/client/MouseHandler onButton
+  public void onButton(long, net.minecraft.client.input.MouseButtonInfo, int);
+    Code:
+         0: aload_0
+         1: getfield      #37                 // Field minecraft:Lnet/minecraft/client/Minecraft;
+         4: invokevirtual #48                 // Method net/minecraft/client/Minecraft.getWindow:()Lcom/mojang/blaze3d/platform/Window;
+         7: astore        5
+         9: lload_1
+        10: lconst_0
+        11: lcmp
+        12: ifeq          633
+        15: lload_1
+        16: aload         5
+        18: invokevirtual #56                 // Method com/mojang/blaze3d/platform/Window.handle:()J
+        21: lcmp
+        22: ifne          633
+        25: aload_0
+        26: getfield      #37                 // Field minecraft:Lnet/minecraft/client/Minecraft;
+        29: invokevirtual #62                 // Method net/minecraft/client/Minecraft.getFramerateLimitTracker:()Lcom/mojang/blaze3d/platform/FramerateLimitTracker;
+        32: invokevirtual #66                 // Method com/mojang/blaze3d/platform/FramerateLimitTracker.onInputReceived:()V
+        35: aload_0
+        36: getfield      #37                 // Field minecraft:Lnet/minecraft/client/Minecraft;
+        39: getfield      #71                 // Field net/minecraft/client/Minecraft.gui:Lnet/minecraft/client/gui/Gui;
+        42: invokevirtual #75                 // Method net/minecraft/client/gui/Gui.screen:()Lnet/minecraft/client/gui/screens/Screen;
+        45: ifnull        58
+        48: aload_0
+        49: getfield      #37                 // Field minecraft:Lnet/minecraft/client/Minecraft;
+        52: getstatic     #81                 // Field net/minecraft/client/InputType.MOUSE:Lnet/minecraft/client/InputType;
+        55: invokevirtual #87                 // Method net/minecraft/client/Minecraft.setLastInputType:(Lnet/minecraft/client/InputType;)V
+        58: iload         4
+        60: iconst_1
+        61: if_icmpne     68
+        64: iconst_1
+        65: goto          69
+        68: iconst_0
+        69: istore        6
+        71: iload         6
+        73: ifeq          91
+        76: aload_0
+        77: aload_3
+        78: putfield      #9                  // Field activeButton:Lnet/minecraft/client/input/MouseButtonInfo;
+        81: aload_0
+        82: invokestatic  #93                 // Method com/mojang/blaze3d/Blaze3D.getTime:()D
+        85: putfield      #99                 // Field mousePressedTime:D
+        88: goto          103
+        91: aload_0
+        92: getfield      #9                  // Field activeButton:Lnet/minecraft/client/input/MouseButtonInfo;
+        95: ifnull        103
+        98: aload_0
+        99: aconst_null
+       100: putfield      #9                  // Field activeButton:Lnet/minecraft/client/input/MouseButtonInfo;
+       103: aload_3
+       104: iload         4
+       106: invokestatic  #797                // Method net/neoforged/neoforge/client/ClientHooks.onMouseButtonPre:(Lnet/minecraft/client/input/MouseButtonInfo;I)Z
+       109: ifeq          113
+       112: return
+       113: iconst_0
+       114: istore        7
+       116: aload_0
+       117: getfield      #37                 // Field minecraft:Lnet/minecraft/client/Minecraft;
+       120: getfield      #71                 // Field net/minecraft/client/Minecraft.gui:Lnet/minecraft/client/gui/Gui;
+       123: invokevirtual #102                // Method net/minecraft/client/gui/Gui.overlay:()Lnet/minecraft/client/gui/screens/Overlay;
+       126: ifnonnull     519
+       129: iload         6
+       131: ifeq          159
+       134: aload_0
+       135: getfield      #37                 // Field minecraft:Lnet/minecraft/client/Minecraft;
+       138: getstatic     #106                // Field com/mojang/blaze3d/platform/InputConstants$Type.MOUSE:Lcom/mojang/blaze3d/platform/InputConstants$Type;
+       141: aload_3
+       142: invokevirtual #111                // Method net/minecraft/client/input/MouseButtonInfo.button:()I
+       145: invokevirtual #117                // Method com/mojang/blaze3d/platform/InputConstants$Type.getOrCreate:(I)Lcom/mojang/blaze3d/platform/InputConstants$Key;
+       148: aload_3
+       149: invokevirtual #121                // Method net/minecraft/client/input/MouseButtonInfo.hasControlDownWithQuirk:()Z
+       152: invokevirtual #125                // Method net/minecraft/client/Minecraft.handleGlobalKeyPress:(Lcom/mojang/blaze3d/platform/InputConstants$Key;Z)Z
+       155: ifeq          159
+       158: return
+       159: aload_0
+       160: getfield      #37                 // Field minecraft:Lnet/minecraft/client/Minecraft;
+       163: getfield      #71                 // Field net/minecraft/client/Minecraft.gui:Lnet/minecraft/client/gui/Gui;
+       166: invokevirtual #75                 // Method net/minecraft/client/gui/Gui.screen:()Lnet/minecraft/client/gui/screens/Screen;
+       169: ifnonnull     191
+       172: aload_0
+       173: getfield      #129                // Field mouseGrabbed:Z
+       176: ifne          519
+       179: iload         6
+       181: ifeq          519
+       184: aload_0
+       185: invokevirtual #132                // Method grabMouse:()V
+       188: goto          519
+       191: aload_0
+       192: aload         5
+       194: invokevirtual #135                // Method getScaledXPos:(Lcom/mojang/blaze3d/platform/Window;)D
+       197: dstore        8
+       199: aload_0
+       200: aload         5
+       202: invokevirtual #139                // Method getScaledYPos:(Lcom/mojang/blaze3d/platform/Window;)D
+       205: dstore        10
+       207: aload_0
+       208: getfield      #37                 // Field minecraft:Lnet/minecraft/client/Minecraft;
+       211: getfield      #71                 // Field net/minecraft/client/Minecraft.gui:Lnet/minecraft/client/gui/Gui;
+       214: invokevirtual #75                 // Method net/minecraft/client/gui/Gui.screen:()Lnet/minecraft/client/gui/screens/Screen;
+       217: astore        12
+       219: new           #142                // class net/minecraft/client/input/MouseButtonEvent
+       222: dup
+       223: dload         8
+       225: dload         10
+       227: aload_3
+       228: invokespecial #144                // Method net/minecraft/client/input/MouseButtonEvent."<init>":(DDLnet/minecraft/client/input/MouseButtonInfo;)V
+       231: astore        13
+       233: iload         6
+       235: ifeq          428
+       238: aload         12
+       240: invokevirtual #147                // Method net/minecraft/client/gui/screens/Screen.afterMouseAction:()V
+       243: invokestatic  #152                // Method net/minecraft/util/Util.getMillis:()J
+       246: lstore        14
+       248: aload_0
+       249: getfield      #157                // Field lastClick:Lnet/minecraft/client/MouseHandler$LastClick;
+       252: ifnull        300
+       255: lload         14
+       257: aload_0
+       258: getfield      #157                // Field lastClick:Lnet/minecraft/client/MouseHandler$LastClick;
+       261: invokevirtual #161                // Method net/minecraft/client/MouseHandler$LastClick.time:()J
+       264: lsub
+       265: ldc2_w        #166                // long 250l
+       268: lcmp
+       269: ifge          300
+       272: aload_0
+       273: getfield      #157                // Field lastClick:Lnet/minecraft/client/MouseHandler$LastClick;
+       276: invokevirtual #168                // Method net/minecraft/client/MouseHandler$LastClick.screen:()Lnet/minecraft/client/gui/screens/Screen;
+       279: aload         12
+       281: if_acmpne     300
+       284: aload_0
+       285: getfield      #169                // Field lastClickButton:I
+       288: aload         13
+       290: invokevirtual #173                // Method net/minecraft/client/input/MouseButtonEvent.button:()I
+       293: if_icmpne     300
+       296: iconst_1
+       297: goto          301
+       300: iconst_0
+       301: istore        16
+       303: aload         12
+       305: aload         13
+       307: iload         16
+       309: invokestatic  #801                // Method net/neoforged/neoforge/client/ClientHooks.onScreenMouseClickedPre:(Lnet/minecraft/client/gui/screens/Screen;Lnet/minecraft/client/input/MouseButtonEvent;Z)Z
+       312: istore        7
+       314: iload         7
+       316: ifne          343
+       319: aload         12
+       321: aload         13
+       323: iload         16
+       325: invokevirtual #174                // Method net/minecraft/client/gui/screens/Screen.mouseClicked:(Lnet/minecraft/client/input/MouseButtonEvent;Z)Z
+       328: istore        7
+       330: aload         12
+       332: aload         13
+       334: iload         16
+       336: iload         7
+       338: invokestatic  #805                // Method net/neoforged/neoforge/client/ClientHooks.onScreenMouseClickedPost:(Lnet/minecraft/client/gui/screens/Screen;Lnet/minecraft/client/input/MouseButtonEvent;ZZ)Z
+       341: istore        7
+       343: iload         7
+       345: ifeq          371
+       348: aload_0
+       349: new           #162                // class net/minecraft/client/MouseHandler$LastClick
+       352: dup
+       353: lload         14
+       355: aload         12
+       357: invokespecial #178                // Method net/minecraft/client/MouseHandler$LastClick."<init>":(JLnet/minecraft/client/gui/screens/Screen;)V
+       360: putfield      #157                // Field lastClick:Lnet/minecraft/client/MouseHandler$LastClick;
+       363: aload_0
+       364: aload_3
+       365: invokevirtual #111                // Method net/minecraft/client/input/MouseButtonInfo.button:()I
+       368: putfield      #169                // Field lastClickButton:I
+       371: goto          519
+       374: astore        14
+       376: aload         14
+       378: ldc           #183                // String mouseClicked event handler
+       380: invokestatic  #185                // Method net/minecraft/CrashReport.forThrowable:(Ljava/lang/Throwable;Ljava/lang/String;)Lnet/minecraft/CrashReport;
+       383: astore        15
+       385: aload         15
+       387: ldc           #191                // String Mouse
+       389: invokevirtual #193                // Method net/minecraft/CrashReport.addCategory:(Ljava/lang/String;)Lnet/minecraft/CrashReportCategory;
+       392: astore        16
+       394: aload_0
+       395: aload         16
+       397: aload         5
+       399: invokevirtual #197                // Method fillMousePositionDetails:(Lnet/minecraft/CrashReportCategory;Lcom/mojang/blaze3d/platform/Window;)V
+       402: aload         16
+       404: ldc           #201                // String Button
+       406: aload         13
+       408: invokevirtual #173                // Method net/minecraft/client/input/MouseButtonEvent.button:()I
+       411: invokestatic  #203                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+       414: invokevirtual #209                // Method net/minecraft/CrashReportCategory.setDetail:(Ljava/lang/String;Ljava/lang/Object;)Lnet/minecraft/CrashReportCategory;
+       417: pop
+       418: new           #215                // class net/minecraft/ReportedException
+       421: dup
+       422: aload         15
+       424: invokespecial #217                // Method net/minecraft/ReportedException."<init>":(Lnet/minecraft/CrashReport;)V
+       427: athrow
+       428: aload         12
+       430: aload         13
+       432: invokestatic  #809                // Method net/neoforged/neoforge/client/ClientHooks.onScreenMouseReleasedPre:(Lnet/minecraft/client/gui/screens/Screen;Lnet/minecraft/client/input/MouseButtonEvent;)Z
+       435: istore        7
+       437: iload         7
+       439: ifne          462
+       442: aload         12
+       444: aload         13
+       446: invokevirtual #220                // Method net/minecraft/client/gui/screens/Screen.mouseReleased:(Lnet/minecraft/client/input/MouseButtonEvent;)Z
+       449: istore        7
+       451: aload         12
+       453: aload         13
+       455: iload         7
+       457: invokestatic  #812                // Method net/neoforged/neoforge/client/ClientHooks.onScreenMouseReleasedPost:(Lnet/minecraft/client/gui/screens/Screen;Lnet/minecraft/client/input/MouseButtonEvent;Z)Z
+       460: istore        7
+       462: goto          519
+       465: astore        14
+       467: aload         14
+       469: ldc           #224                // String mouseReleased event handler
+       471: invokestatic  #185                // Method net/minecraft/CrashReport.forThrowable:(Ljava/lang/Throwable;Ljava/lang/String;)Lnet/minecraft/CrashReport;
+       474: astore        15
+       476: aload         15
+       478: ldc           #191                // String Mouse
+       480: invokevirtual #193                // Method net/minecraft/CrashReport.addCategory:(Ljava/lang/String;)Lnet/minecraft/CrashReportCategory;
+       483: astore        16
+       485: aload_0
+       486: aload         16
+       488: aload         5
+       490: invokevirtual #197                // Method fillMousePositionDetails:(Lnet/minecraft/CrashReportCategory;Lcom/mojang/blaze3d/platform/Window;)V
+       493: aload         16
+       495: ldc           #201                // String Button
+       497: aload         13
+       499: invokevirtual #173                // Method net/minecraft/client/input/MouseButtonEvent.button:()I
+       502: invokestatic  #203                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+       505: invokevirtual #209                // Method net/minecraft/CrashReportCategory.setDetail:(Ljava/lang/String;Ljava/lang/Object;)Lnet/minecraft/CrashReportCategory;
+       508: pop
+       509: new           #215                // class net/minecraft/ReportedException
+       512: dup
+       513: aload         15
+       515: invokespecial #217                // Method net/minecraft/ReportedException."<init>":(Lnet/minecraft/CrashReport;)V
+       518: athrow
+       519: iload         7
+       521: ifne          627
+       524: aload_0
+       525: getfield      #37                 // Field minecraft:Lnet/minecraft/client/Minecraft;
+       528: getfield      #71                 // Field net/minecraft/client/Minecraft.gui:Lnet/minecraft/client/gui/Gui;
+       531: invokevirtual #75                 // Method net/minecraft/client/gui/Gui.screen:()Lnet/minecraft/client/gui/screens/Screen;
+       534: ifnonnull     627
+       537: aload_0
+       538: getfield      #37                 // Field minecraft:Lnet/minecraft/client/Minecraft;
+       541: getfield      #71                 // Field net/minecraft/client/Minecraft.gui:Lnet/minecraft/client/gui/Gui;
+       544: invokevirtual #102                // Method net/minecraft/client/gui/Gui.overlay:()Lnet/minecraft/client/gui/screens/Overlay;
+       547: ifnonnull     627
+       550: aload_3
+       551: invokevirtual #111                // Method net/minecraft/client/input/MouseButtonInfo.button:()I
+       554: iconst_1
+       555: if_icmpne     567
+       558: aload_0
+       559: iload         6
+       561: putfield      #226                // Field isLeftPressed:Z
+       564: goto          598
+       567: aload_3
+       568: invokevirtual #111                // Method net/minecraft/client/input/MouseButtonInfo.button:()I
+       571: iconst_2
+       572: if_icmpne     584
+       575: aload_0
+       576: iload         6
+       578: putfield      #229                // Field isMiddlePressed:Z
+       581: goto          598
+       584: aload_3
+       585: invokevirtual #111                // Method net/minecraft/client/input/MouseButtonInfo.button:()I
+       588: iconst_3
+       589: if_icmpne     598
+       592: aload_0
+       593: iload         6
+       595: putfield      #232                // Field isRightPressed:Z
+       598: getstatic     #106                // Field com/mojang/blaze3d/platform/InputConstants$Type.MOUSE:Lcom/mojang/blaze3d/platform/InputConstants$Type;
+       601: aload_3
+       602: invokevirtual #111                // Method net/minecraft/client/input/MouseButtonInfo.button:()I
+       605: invokevirtual #117                // Method com/mojang/blaze3d/platform/InputConstants$Type.getOrCreate:(I)Lcom/mojang/blaze3d/platform/InputConstants$Key;
+       608: astore        8
+       610: aload         8
+       612: iload         6
+       614: invokestatic  #235                // Method net/minecraft/client/KeyMapping.set:(Lcom/mojang/blaze3d/platform/InputConstants$Key;Z)V
+       617: iload         6
+       619: ifeq          627
+       622: aload         8
+       624: invokestatic  #241                // Method net/minecraft/client/KeyMapping.click:(Lcom/mojang/blaze3d/platform/InputConstants$Key;)V
+       627: aload_3
+       628: iload         4
+       630: invokestatic  #816                // Method net/neoforged/neoforge/client/ClientHooks.onMouseButtonPost:(Lnet/minecraft/client/input/MouseButtonInfo;I)V
+       633: return
+      Exception table:
+         from    to  target type
+           243   371   374   Class java/lang/Throwable
+           428   462   465   Class java/lang/Throwable
+=== SIG net/minecraft/client/gui/screens/Screen mouse.*
+=== SIG net/minecraft/client/gui/components/events/GuiEventListener mouse.*
+  public default void mouseMoved(double, double);
+  public default boolean mouseClicked(net.minecraft.client.input.MouseButtonEvent, boolean);
+  public default boolean mouseReleased(net.minecraft.client.input.MouseButtonEvent);
+  public default boolean mouseDragged(net.minecraft.client.input.MouseButtonEvent, double, double);
+  public default boolean mouseScrolled(double, double, double, double);
+=== net/minecraft/client/gui/components/events/ContainerEventHandler
+Compiled from "ContainerEventHandler.java"
+public interface net.minecraft.client.gui.components.events.ContainerEventHandler extends net.minecraft.client.gui.components.events.GuiEventListener {
+  public abstract java.util.List<? extends net.minecraft.client.gui.components.events.GuiEventListener> children();
+  public default java.util.Optional<net.minecraft.client.gui.components.events.GuiEventListener> getChildAt(double, double);
+  public default boolean mouseClicked(net.minecraft.client.input.MouseButtonEvent, boolean);
+  public default boolean mouseReleased(net.minecraft.client.input.MouseButtonEvent);
+  public default boolean mouseDragged(net.minecraft.client.input.MouseButtonEvent, double, double);
+  public abstract boolean isDragging();
+  public abstract void setDragging(boolean);
+  public default boolean mouseScrolled(double, double, double, double);
+  public default boolean keyPressed(net.minecraft.client.input.KeyEvent);
+  public default boolean keyReleased(net.minecraft.client.input.KeyEvent);
+  public default boolean charTyped(net.minecraft.client.input.CharacterEvent);
+  public default boolean preeditUpdated(net.minecraft.client.input.PreeditEvent);
+  public default net.minecraft.client.gui.navigation.ScreenRectangle getBorderForArrowNavigation(net.minecraft.client.gui.navigation.ScreenDirection);
+  public abstract net.minecraft.client.gui.components.events.GuiEventListener getFocused();
+  public abstract void setFocused(net.minecraft.client.gui.components.events.GuiEventListener);
+  public default void setFocused(boolean);
+  public default boolean isFocused();
+  public default net.minecraft.client.gui.ComponentPath getCurrentFocusPath();
+  public default net.minecraft.client.gui.ComponentPath nextFocusPath(net.minecraft.client.gui.navigation.FocusNavigationEvent);
+}
