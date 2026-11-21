@@ -69,6 +69,8 @@ neoForge {
             if (project.hasProperty('playtest')) {
                 sourceSet = sourceSets.playtest
                 systemProperty 'ethermod.playtest', 'true'
+                // port: log every mixin injector that found no target (with defaultRequire 0 for the audit)
+                systemProperty 'mixin.debug.countInjections', 'true'
                 // -PmodelShots runs the scripted first/third-person screenshot tour instead of the UI probe
                 def shots = project.hasProperty('modelShots')
                 systemProperty 'ethermod.uiProbe', shots ? 'false' : 'true'

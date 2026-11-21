@@ -1,4 +1,4 @@
-net/minecraft/client/multiplayer/ClientLevel
-/.*/(BlockAndLightGetter)$
-net/minecraft/client/player/LocalPlayer#tryToStartFallFlying net/minecraft/client/renderer/LevelRenderer#setBlocksDirty
-net/minecraft/client/Camera#(rotation|forwards|up|left|position|entity|level|setRotation).* net/minecraft/client/multiplayer/ClientLevel#.*[Dd]irty.*
+net/minecraft/world/entity/LivingEntity
+/.*/(LocalPlayer)$
+net/minecraft/client/player/LocalPlayer#tryToStartFallFlying
+net/minecraft/client/player/LocalPlayer#.*([Ff]ly|[Gg]lid|[Ee]lytra).* net/minecraft/world/entity/player/Player#.*([Ff]ly|[Gg]lid|[Ee]lytra).* net/minecraft/world/entity/LivingEntity#.*([Gg]lid|[Ee]lytra|FallFly).*
