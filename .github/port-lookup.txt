@@ -1,4 +1,4 @@
-net/minecraft/client/Screenshot net/minecraft/client/input/MouseButtonInfo net/minecraft/server/players/NameAndId net/minecraft/client/model/geom/ModelPart
-/.*/(SmallFireball|NameAndId)$
-net/minecraft/client/Screenshot#grab
-net/minecraft/world/entity/Entity#.*[Ii]nvulnerable.* net/minecraft/nbt/CompoundTag#get(Long|Double|Int|Boolean).*
+net/minecraft/client/player/LocalPlayer net/minecraft/client/model/HumanoidModel net/minecraft/util/LightCoordsUtil
+/.*/(AbstractSoundInstance)$
+net/minecraft/client/player/LocalPlayer#aiStep net/minecraft/client/Camera#update net/minecraft/util/LightCoordsUtil#getLightCoords net/minecraft/client/player/LocalPlayer#modifyInput
+net/minecraft/client/renderer/LevelRenderer#.*[Ss]ection.* net/minecraft/client/renderer/entity/EntityRenderer#.*Light.* net/minecraft/client/resources/sounds/AbstractSoundInstance#volume net/minecraft/client/player/LocalPlayer#.*(Closest|Space|moveTowards).* net/minecraft/client/Camera#.*(Zoom|setup|alignWith|setPosition|move|Detached|detached).*
