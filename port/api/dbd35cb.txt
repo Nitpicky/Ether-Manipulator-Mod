@@ -1,0 +1,1309 @@
+/home/runner/.gradle/caches/modules-2/files-2.1/curse.maven/geckolib-388172/8893169/196231506b89da06925c087f9b8bc5fd12ebea16/geckolib-388172-8893169.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/io.github.llamalad7/mixinextras-neoforge/0.5.5/26f2905a37afd203c3da1d6a2e164472a7531b41/mixinextras-neoforge-0.5.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.accesstransformers/at-parser/11.0.2/64aae57d6d26d69543c5275181fe6971707a4e16/at-parser-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/earlydisplay/12.0.16/efa2e56115d22853d10524874a7bbb64555c2a28/earlydisplay-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/12.0.16/edbb2ee8211a867215970bc15ae9c354fa56dc09/loader-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarMetadata/0.5.3/ff40c1cd721d07615d825c5bbf27705b2e3258ed/JarJarMetadata-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarSelector/0.5.3/6b845aab8d5c8e721b4e3cd30f97722b7f8044b1/JarJarSelector-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/accesstransformers/11.0.2/25dcb69c78b16669935f0ab91dff830ce192379d/accesstransformers-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/bus/8.0.5/5b2d33285ab5d1554e9798ad98c40d6ea3868bd5/bus-8.0.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/mergetool/2.0.7/793b18456e92c4a7f66d9b5d8bf7a9c1c7a20b20/mergetool-2.0.7-api.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar
+=== LIST /(.*/Sheets|.*/ModelBakery|.*Fire.*|.*Atlas[A-Za-z]*|.*/pip/[A-Za-z]*|.*/model/[A-Za-z]*Model|.*Item[A-Za-z]*Renderer)$
+com/geckolib/cache/model/BakedGeoModel
+com/geckolib/model/DefaultedBlockGeoModel
+com/geckolib/model/DefaultedEntityGeoModel
+com/geckolib/model/DefaultedGeoModel
+com/geckolib/model/DefaultedItemGeoModel
+com/geckolib/model/GeoModel
+com/geckolib/renderer/GeoItemRenderer
+com/geckolib/renderer/internal/GeckolibItemSpecialRenderer
+net/minecraft/client/color/item/Firework
+net/minecraft/client/data/AtlasProvider
+net/minecraft/client/data/models/model/DelegatedModel
+net/minecraft/client/data/models/model/TexturedModel
+net/minecraft/client/gui/font/AtlasGlyphProvider
+net/minecraft/client/gui/render/DynamicAtlasAllocator
+net/minecraft/client/gui/render/GuiItemAtlas
+net/minecraft/client/gui/render/pip/GuiBannerResultRenderer
+net/minecraft/client/gui/render/pip/GuiBookModelRenderer
+net/minecraft/client/gui/render/pip/GuiEntityRenderer
+net/minecraft/client/gui/render/pip/GuiProfilerChartRenderer
+net/minecraft/client/gui/render/pip/GuiSkinRenderer
+net/minecraft/client/gui/render/pip/OversizedItemRenderer
+net/minecraft/client/gui/render/pip/PictureInPictureRenderer
+net/minecraft/client/model/ArmedModel
+net/minecraft/client/model/EntityModel
+net/minecraft/client/model/HeadedModel
+net/minecraft/client/model/HumanoidModel
+net/minecraft/client/model/Model
+net/minecraft/client/model/QuadrupedModel
+net/minecraft/client/model/VillagerLikeModel
+net/minecraft/client/particle/FireflyParticle
+net/minecraft/client/particle/FireflyParticle$FireflyProvider
+net/minecraft/client/particle/FireworkParticles
+net/minecraft/client/particle/FireworkParticles$FlashProvider
+net/minecraft/client/particle/FireworkParticles$OverlayParticle
+net/minecraft/client/particle/FireworkParticles$SparkParticle
+net/minecraft/client/particle/FireworkParticles$SparkProvider
+net/minecraft/client/particle/FireworkParticles$Starter
+net/minecraft/client/renderer/FirstPersonHandsAndItemsRenderer
+net/minecraft/client/renderer/Sheets
+net/minecraft/client/renderer/block/model/BlockModel
+net/minecraft/client/renderer/block/model/CompositeBlockModel
+net/minecraft/client/renderer/block/model/ConditionalBlockModel
+net/minecraft/client/renderer/block/model/EmptyBlockModel
+net/minecraft/client/renderer/entity/DisplayRenderer$ItemDisplayRenderer
+net/minecraft/client/renderer/entity/DragonFireballRenderer
+net/minecraft/client/renderer/entity/FireworkEntityRenderer
+net/minecraft/client/renderer/entity/ItemEntityRenderer
+net/minecraft/client/renderer/entity/ItemFrameRenderer
+net/minecraft/client/renderer/entity/OminousItemSpawnerRenderer
+net/minecraft/client/renderer/entity/ThrownItemRenderer
+net/minecraft/client/renderer/entity/state/FireworkRocketRenderState
+net/minecraft/client/renderer/feature/ItemFeatureRenderer
+net/minecraft/client/renderer/item/BundleSelectedItemSpecialRenderer
+net/minecraft/client/renderer/state/gui/pip/GuiBannerResultRenderState
+net/minecraft/client/renderer/state/gui/pip/GuiBookModelRenderState
+net/minecraft/client/renderer/state/gui/pip/GuiEntityRenderState
+net/minecraft/client/renderer/state/gui/pip/GuiProfilerChartRenderState
+net/minecraft/client/renderer/state/gui/pip/GuiSkinRenderState
+net/minecraft/client/renderer/state/gui/pip/OversizedItemRenderState
+net/minecraft/client/renderer/state/gui/pip/PictureInPictureRenderState
+net/minecraft/client/renderer/texture/DynamicAtlasTree
+net/minecraft/client/renderer/texture/DynamicAtlasTreeSlot
+net/minecraft/client/renderer/texture/MissingTextureAtlasSprite
+net/minecraft/client/renderer/texture/TextureAtlas
+net/minecraft/client/renderer/texture/TextureAtlasSprite
+net/minecraft/client/resources/model/ModelBakery
+net/minecraft/client/resources/model/ResolvableModel
+net/minecraft/client/resources/model/ResolvedModel
+net/minecraft/client/resources/model/UnbakedModel
+net/minecraft/client/resources/model/sprite/AtlasManager
+net/minecraft/client/resources/model/sprite/AtlasManager$AtlasConfig
+net/minecraft/client/resources/model/sprite/AtlasManager$AtlasEntry
+net/minecraft/client/resources/palette/PalettedTextureManager$AtlasTexture
+net/minecraft/core/component/predicates/FireworkExplosionPredicate
+net/minecraft/core/component/predicates/FireworkExplosionPredicate$FireworkPredicate
+net/minecraft/core/component/predicates/FireworksPredicate
+net/minecraft/data/AtlasIds
+net/minecraft/network/chat/FontDescription$AtlasSprite
+net/minecraft/network/chat/contents/objects/AtlasSprite
+net/minecraft/util/datafix/fixes/FireResistantToDamageResistantComponentFix
+net/minecraft/world/entity/monster/Ghast$GhastShootFireballGoal
+net/minecraft/world/entity/projectile/FireworkRocketEntity
+net/minecraft/world/entity/projectile/hurtingprojectile/DragonFireball
+net/minecraft/world/entity/projectile/hurtingprojectile/Fireball
+net/minecraft/world/entity/projectile/hurtingprojectile/LargeFireball
+net/minecraft/world/entity/projectile/hurtingprojectile/SmallFireball
+net/minecraft/world/item/FireChargeItem
+net/minecraft/world/item/FireworkRocketItem
+net/minecraft/world/item/component/FireworkExplosion
+net/minecraft/world/item/component/FireworkExplosion$Shape
+net/minecraft/world/item/component/Fireworks
+net/minecraft/world/item/crafting/FireworkRocketRecipe
+net/minecraft/world/item/crafting/FireworkStarFadeRecipe
+net/minecraft/world/item/crafting/FireworkStarRecipe
+net/minecraft/world/level/block/BaseFireBlock
+net/minecraft/world/level/block/FireBlock
+net/minecraft/world/level/block/FireflyBushBlock
+net/minecraft/world/level/block/SoulFireBlock
+net/minecraft/world/level/storage/loot/functions/SetFireworkExplosionFunction
+net/minecraft/world/level/storage/loot/functions/SetFireworksFunction
+net/neoforged/neoforge/client/FireworkShapeFactoryRegistry
+net/neoforged/neoforge/client/FireworkShapeFactoryRegistry$Factory
+net/neoforged/neoforge/client/event/RegisterTextureAtlasesEvent
+net/neoforged/neoforge/client/event/TextureAtlasStitchedEvent
+net/neoforged/neoforge/client/model/AbstractUnbakedModel
+net/neoforged/neoforge/client/model/CompositeUnbakedModel
+net/neoforged/neoforge/client/model/DelegateBlockStateModel
+net/neoforged/neoforge/client/model/DelegateUnbakedModel
+net/neoforged/neoforge/client/model/DynamicBlockStateModel
+net/neoforged/neoforge/client/model/EmptyModel
+net/neoforged/neoforge/client/textures/UnitTextureAtlasSprite
+=== CODE net/minecraft/client/renderer/rendertype/PreparedRenderType drawFromBuffer
+  public void drawFromBuffer(net.minecraft.client.renderer.StagedVertexBuffer$ExecuteInfo, com.mojang.renderpearl.api.commands.RenderPass);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: aload_2
+         3: aload_0
+         4: getfield      #13                 // Field pipeline:Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;
+         7: invokevirtual #33                 // Method draw:(Lnet/minecraft/client/renderer/StagedVertexBuffer$ExecuteInfo;Lcom/mojang/renderpearl/api/commands/RenderPass;Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;)V
+        10: return
+=== CODE net/minecraft/client/renderer/feature/CustomFeatureRenderer render
+=== CODE net/minecraft/client/renderer/StagedVertexBuffer upload
+  public void upload();
+    Code:
+         0: aload_0
+         1: getfield      #52                 // Field currentVertexBuffer:Lcom/mojang/renderpearl/api/buffers/GpuBuffer;
+         4: ifnull        17
+         7: new           #56                 // class java/lang/IllegalStateException
+        10: dup
+        11: ldc           #132                // String Already uploaded
+        13: invokespecial #60                 // Method java/lang/IllegalStateException."<init>":(Ljava/lang/String;)V
+        16: athrow
+        17: aload_0
+        18: getfield      #10                 // Field draws:Ljava/util/List;
+        21: invokeinterface #134,  1          // InterfaceMethod java/util/List.isEmpty:()Z
+        26: ifne          251
+        29: aload_0
+        30: invokevirtual #109                // Method finishLastVertexBuilder:()V
+        33: iconst_0
+        34: istore_1
+        35: iconst_0
+        36: istore_2
+        37: aload_0
+        38: getfield      #10                 // Field draws:Ljava/util/List;
+        41: invokeinterface #138,  1          // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+        46: astore_3
+        47: aload_3
+        48: invokeinterface #142,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+        53: ifeq          178
+        56: aload_3
+        57: invokeinterface #147,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+        62: checkcast     #82                 // class net/minecraft/client/renderer/StagedVertexBuffer$Draw
+        65: astore        4
+        67: aload         4
+        69: invokevirtual #151                // Method net/minecraft/client/renderer/StagedVertexBuffer$Draw.isEmpty:()Z
+        72: ifne          175
+        75: aload         4
+        77: iload_1
+        78: aload         4
+        80: getfield      #117                // Field net/minecraft/client/renderer/StagedVertexBuffer$Draw.format:Lcom/mojang/renderpearl/api/vertex/VertexFormat;
+        83: invokevirtual #152                // Method com/mojang/renderpearl/api/vertex/VertexFormat.getVertexSize:()I
+        86: invokestatic  #158                // Method net/minecraft/util/Mth.roundToward:(II)I
+        89: putfield      #164                // Field net/minecraft/client/renderer/StagedVertexBuffer$Draw.vertexOffset:I
+        92: aload         4
+        94: getfield      #164                // Field net/minecraft/client/renderer/StagedVertexBuffer$Draw.vertexOffset:I
+        97: aload         4
+        99: getfield      #168                // Field net/minecraft/client/renderer/StagedVertexBuffer$Draw.vertexBufferSize:I
+       102: iadd
+       103: istore_1
+       104: aload         4
+       106: getfield      #171                // Field net/minecraft/client/renderer/StagedVertexBuffer$Draw.quadSorting:Lcom/mojang/blaze3d/vertex/VertexSorting;
+       109: ifnull        154
+       112: aload         4
+       114: invokevirtual #175                // Method net/minecraft/client/renderer/StagedVertexBuffer$Draw.indexType:()Lcom/mojang/renderpearl/api/pipeline/IndexType;
+       117: astore        5
+       119: aload         4
+       121: iload_2
+       122: aload         5
+       124: getfield      #179                // Field com/mojang/renderpearl/api/pipeline/IndexType.bytes:I
+       127: invokestatic  #158                // Method net/minecraft/util/Mth.roundToward:(II)I
+       130: putfield      #184                // Field net/minecraft/client/renderer/StagedVertexBuffer$Draw.indexOffset:I
+       133: aload         4
+       135: getfield      #184                // Field net/minecraft/client/renderer/StagedVertexBuffer$Draw.indexOffset:I
+       138: aload         4
+       140: getfield      #187                // Field net/minecraft/client/renderer/StagedVertexBuffer$Draw.indexCount:I
+       143: aload         5
+       145: getfield      #179                // Field com/mojang/renderpearl/api/pipeline/IndexType.bytes:I
+       148: imul
+       149: iadd
+       150: istore_2
+       151: goto          175
+       154: aload         4
+       156: getfield      #114                // Field net/minecraft/client/renderer/StagedVertexBuffer$Draw.primitiveTopology:Lcom/mojang/renderpearl/api/pipeline/PrimitiveTopology;
+       159: invokestatic  #190                // Method com/mojang/blaze3d/systems/RenderSystem.getSequentialBuffer:(Lcom/mojang/renderpearl/api/pipeline/PrimitiveTopology;)Lcom/mojang/blaze3d/systems/RenderSystem$AutoStorageIndexBuffer;
+       162: astore        5
+       164: aload         5
+       166: aload         4
+       168: getfield      #187                // Field net/minecraft/client/renderer/StagedVertexBuffer$Draw.indexCount:I
+       171: invokevirtual #196                // Method com/mojang/blaze3d/systems/RenderSystem$AutoStorageIndexBuffer.getBuffer:(I)Lcom/mojang/renderpearl/api/buffers/GpuBuffer;
+       174: pop
+       175: goto          47
+       178: iload_1
+       179: istore_3
+       180: iload_2
+       181: istore        4
+       183: iload_3
+       184: ifeq          251
+       187: invokestatic  #202                // Method com/mojang/blaze3d/systems/RenderSystem.getDevice:()Lcom/mojang/renderpearl/api/device/GpuDevice;
+       190: astore        5
+       192: aload_0
+       193: aload_0
+       194: getfield      #41                 // Field vertexBufferPool:Lnet/minecraft/client/renderer/StagedVertexBuffer$GpuBufferPool;
+       197: aload         5
+       199: iload_3
+       200: invokevirtual #206                // Method net/minecraft/client/renderer/StagedVertexBuffer$GpuBufferPool.acquire:(Lcom/mojang/renderpearl/api/device/GpuDevice;I)Lcom/mojang/renderpearl/api/buffers/GpuBuffer;
+       203: putfield      #52                 // Field currentVertexBuffer:Lcom/mojang/renderpearl/api/buffers/GpuBuffer;
+       206: aload_0
+       207: iload         4
+       209: ifle          226
+       212: aload_0
+       213: getfield      #45                 // Field indexBufferPool:Lnet/minecraft/client/renderer/StagedVertexBuffer$GpuBufferPool;
+       216: aload         5
+       218: iload         4
+       220: invokevirtual #206                // Method net/minecraft/client/renderer/StagedVertexBuffer$GpuBufferPool.acquire:(Lcom/mojang/renderpearl/api/device/GpuDevice;I)Lcom/mojang/renderpearl/api/buffers/GpuBuffer;
+       223: goto          227
+       226: aconst_null
+       227: putfield      #210                // Field currentIndexBuffer:Lcom/mojang/renderpearl/api/buffers/GpuBuffer;
+       230: aload_0
+       231: aload         5
+       233: aload_0
+       234: getfield      #10                 // Field draws:Ljava/util/List;
+       237: aload_0
+       238: getfield      #52                 // Field currentVertexBuffer:Lcom/mojang/renderpearl/api/buffers/GpuBuffer;
+       241: aload_0
+       242: getfield      #210                // Field currentIndexBuffer:Lcom/mojang/renderpearl/api/buffers/GpuBuffer;
+       245: iload_3
+       246: iload         4
+       248: invokevirtual #213                // Method uploadDrawsToBuffers:(Lcom/mojang/renderpearl/api/device/GpuDevice;Ljava/util/List;Lcom/mojang/renderpearl/api/buffers/GpuBuffer;Lcom/mojang/renderpearl/api/buffers/GpuBuffer;II)V
+       251: return
+=== CODE net/minecraft/client/gui/render/pip/GuiEntityRenderer renderToTexture
+  protected void renderToTexture(net.minecraft.client.renderer.state.gui.pip.GuiEntityRenderState, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector);
+    Code:
+         0: invokestatic  #15                 // Method net/minecraft/client/Minecraft.getInstance:()Lnet/minecraft/client/Minecraft;
+         3: getfield      #21                 // Field net/minecraft/client/Minecraft.gameRenderer:Lnet/minecraft/client/renderer/GameRenderer;
+         6: invokevirtual #25                 // Method net/minecraft/client/renderer/GameRenderer.lighting:()Lcom/mojang/blaze3d/platform/Lighting;
+         9: getstatic     #31                 // Field com/mojang/blaze3d/platform/Lighting$Entry.ENTITY_IN_UI:Lcom/mojang/blaze3d/platform/Lighting$Entry;
+        12: invokevirtual #37                 // Method com/mojang/blaze3d/platform/Lighting.setupFor:(Lcom/mojang/blaze3d/platform/Lighting$Entry;)V
+        15: aload_1
+        16: invokevirtual #43                 // Method net/minecraft/client/renderer/state/gui/pip/GuiEntityRenderState.translation:()Lorg/joml/Vector3fc;
+        19: astore        4
+        21: aload_2
+        22: aload         4
+        24: invokeinterface #47,  1           // InterfaceMethod org/joml/Vector3fc.x:()F
+        29: aload         4
+        31: invokeinterface #53,  1           // InterfaceMethod org/joml/Vector3fc.y:()F
+        36: aload         4
+        38: invokeinterface #56,  1           // InterfaceMethod org/joml/Vector3fc.z:()F
+        43: invokevirtual #59                 // Method com/mojang/blaze3d/vertex/PoseStack.translate:(FFF)V
+        46: aload_2
+        47: aload_1
+        48: invokevirtual #65                 // Method net/minecraft/client/renderer/state/gui/pip/GuiEntityRenderState.rotation:()Lorg/joml/Quaternionfc;
+        51: invokevirtual #69                 // Method com/mojang/blaze3d/vertex/PoseStack.rotate:(Lorg/joml/Quaternionfc;)V
+        54: aload_1
+        55: invokevirtual #73                 // Method net/minecraft/client/renderer/state/gui/pip/GuiEntityRenderState.overrideCameraAngle:()Lorg/joml/Quaternionfc;
+        58: astore        5
+        60: new           #76                 // class net/minecraft/client/renderer/state/level/CameraRenderState
+        63: dup
+        64: invokespecial #78                 // Method net/minecraft/client/renderer/state/level/CameraRenderState."<init>":()V
+        67: astore        6
+        69: aload         5
+        71: ifnull        98
+        74: aload         6
+        76: aload         5
+        78: new           #79                 // class org/joml/Quaternionf
+        81: dup
+        82: invokespecial #81                 // Method org/joml/Quaternionf."<init>":()V
+        85: invokeinterface #82,  2           // InterfaceMethod org/joml/Quaternionfc.conjugate:(Lorg/joml/Quaternionf;)Lorg/joml/Quaternionf;
+        90: ldc           #90                 // float 3.1415927f
+        92: invokevirtual #91                 // Method org/joml/Quaternionf.rotateY:(F)Lorg/joml/Quaternionf;
+        95: putfield      #95                 // Field net/minecraft/client/renderer/state/level/CameraRenderState.orientation:Lorg/joml/Quaternionf;
+        98: aload_0
+        99: getfield      #7                  // Field entityRenderDispatcher:Lnet/minecraft/client/renderer/entity/EntityRenderDispatcher;
+       102: aload_1
+       103: invokevirtual #99                 // Method net/minecraft/client/renderer/state/gui/pip/GuiEntityRenderState.renderState:()Lnet/minecraft/client/renderer/entity/state/EntityRenderState;
+       106: aload         6
+       108: dconst_0
+       109: dconst_0
+       110: dconst_0
+       111: aload_2
+       112: aload_3
+       113: invokevirtual #103                // Method net/minecraft/client/renderer/entity/EntityRenderDispatcher.submit:(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;Lnet/minecraft/client/renderer/state/level/CameraRenderState;DDDLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;)V
+       116: return
+  protected void renderToTexture(net.minecraft.client.renderer.state.gui.pip.PictureInPictureRenderState, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: checkcast     #13                 // class net/minecraft/client/renderer/state/gui/pip/GuiEntityRenderState
+         5: aload_2
+         6: aload_3
+         7: invokevirtual #111                // Method renderToTexture:(Lnet/minecraft/client/renderer/state/gui/pip/GuiEntityRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;)V
+        10: return
+}
+=== SIG net/minecraft/world/entity/Entity [a-zA-Z]*[dD]ist[a-zA-Z]*
+  public float moveDist;
+  public float flyDist;
+  public double fallDistance;
+  public float distanceTo(net.minecraft.world.entity.Entity);
+  public double distanceToSqr(double, double, double);
+  public double distanceToSqr(net.minecraft.world.entity.Entity);
+  public double distanceToSqr(net.minecraft.world.phys.Vec3);
+  public boolean shouldRenderAtSqrDistance(double);
+  public void checkFallDistanceAccumulation();
+  public void resetFallDistance();
+  public int getMaxFallDistance();
+=== SIG net/minecraft/client/player/AbstractClientPlayer .*
+  private net.minecraft.client.multiplayer.PlayerInfo playerInfo;
+  private final boolean showExtraEars;
+  private final net.minecraft.client.entity.ClientAvatarState clientAvatarState;
+  public net.minecraft.client.player.AbstractClientPlayer(net.minecraft.client.multiplayer.ClientLevel, com.mojang.authlib.GameProfile);
+  public net.minecraft.world.level.GameType gameMode();
+  protected net.minecraft.client.multiplayer.PlayerInfo getPlayerInfo();
+  public void tick();
+  protected void addWalkedDistance(float);
+  public net.minecraft.client.entity.ClientAvatarState avatarState();
+  public net.minecraft.world.entity.player.PlayerSkin getSkin();
+  public net.minecraft.world.entity.animal.parrot.Parrot$Variant getParrotVariantOnShoulder(boolean);
+  public void rideTick();
+  public void aiStep();
+  protected void updateBob();
+  public float getFieldOfViewModifier(boolean, float);
+  public boolean showExtraEars();
+=== SIG net/minecraft/world/entity/LivingEntity\$SwingState .*
+=== SIG net/minecraft/client/model/Model .*
+  protected final net.minecraft.client.model.geom.ModelPart root;
+  protected final java.util.function.Function<net.minecraft.resources.Identifier, net.minecraft.client.renderer.rendertype.RenderType> renderType;
+  private final java.util.List<net.minecraft.client.model.geom.ModelPart> allParts;
+  public net.minecraft.client.model.Model(net.minecraft.client.model.geom.ModelPart, java.util.function.Function<net.minecraft.resources.Identifier, net.minecraft.client.renderer.rendertype.RenderType>);
+  protected static net.neoforged.neoforge.client.entity.animation.json.AnimationHolder getAnimation(net.minecraft.resources.Identifier);
+  public final java.util.function.Function<net.minecraft.resources.Identifier, net.minecraft.client.renderer.rendertype.RenderType> renderType();
+  public final net.minecraft.client.renderer.rendertype.RenderType renderType(net.minecraft.resources.Identifier);
+  public final void renderToBuffer(com.mojang.blaze3d.vertex.PoseStack, com.mojang.blaze3d.vertex.VertexConsumer, int, int, int);
+  public final net.minecraft.client.model.geom.ModelPart root();
+  public final java.util.List<net.minecraft.client.model.geom.ModelPart> allParts();
+  public void setupAnim(S);
+  public final void resetPose();
+=== SIG net/minecraft/client/model/EntityModel .*
+  public static final float MODEL_Y_OFFSET;
+  protected net.minecraft.client.model.EntityModel(net.minecraft.client.model.geom.ModelPart);
+  protected net.minecraft.client.model.EntityModel(net.minecraft.client.model.geom.ModelPart, java.util.function.Function<net.minecraft.resources.Identifier, net.minecraft.client.renderer.rendertype.RenderType>);
+=== SIG net/minecraft/world/level/block/state/BlockBehaviour\$BlockStateBase isViewBlocking
+=== SIG net/minecraft/client/renderer/ScreenEffectRenderer .*
+  private static final net.minecraft.resources.Identifier UNDERWATER_LOCATION;
+  private final net.minecraft.client.renderer.GameRenderer gameRenderer;
+  private final net.minecraft.client.resources.model.sprite.SpriteGetter sprites;
+  public net.minecraft.client.renderer.ScreenEffectRenderer(net.minecraft.client.renderer.GameRenderer, net.minecraft.client.resources.model.sprite.SpriteGetter);
+  public void submit(float, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.PlayerRenderState, net.minecraft.client.renderer.state.level.CameraRenderState, boolean);
+  private void renderItemActivationAnimation(net.minecraft.client.renderer.state.level.PlayerRenderState, com.mojang.blaze3d.vertex.PoseStack, float, net.minecraft.client.renderer.SubmitNodeCollector);
+  private static void submitBlockSprite(net.minecraft.resources.Identifier, float, float, float, float, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int);
+  private static void submitWater(net.minecraft.client.renderer.state.level.PlayerRenderState$WaterOverlay, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector);
+  public static void submitFluid(net.minecraft.client.renderer.state.level.PlayerRenderState$WaterOverlay, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.resources.Identifier);
+  private static void submitFire(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.texture.TextureAtlasSprite);
+  private static void buildFireQuad(net.minecraft.client.renderer.texture.TextureAtlasSprite, com.mojang.blaze3d.vertex.VertexConsumer, org.joml.Matrix4f);
+  private static void buildSpriteQuad(com.mojang.blaze3d.vertex.VertexConsumer, org.joml.Matrix4f, net.minecraft.client.renderer.texture.TextureAtlasSprite, float, float, float, float, float, int);
+  private static void buildQuad(com.mojang.blaze3d.vertex.VertexConsumer, org.joml.Matrix4f, float, float, float, float, float, float, float, float, float, int);
+  private static void lambda$submitFire$0(net.minecraft.client.renderer.texture.TextureAtlasSprite, com.mojang.blaze3d.vertex.PoseStack$Pose, com.mojang.blaze3d.vertex.VertexConsumer);
+  private static void lambda$submitFluid$0(net.minecraft.client.renderer.state.level.PlayerRenderState$WaterOverlay, com.mojang.blaze3d.vertex.PoseStack$Pose, com.mojang.blaze3d.vertex.VertexConsumer);
+  private static void lambda$submitBlockSprite$0(float, float, float, float, int, com.mojang.blaze3d.vertex.PoseStack$Pose, com.mojang.blaze3d.vertex.VertexConsumer);
+  static {};
+=== SIG net/minecraft/client/renderer/entity/EntityRenderer .*
+  private static final float SHADOW_POWER_FALLOFF_Y;
+  private static final float MAX_SHADOW_RADIUS;
+  public static final float NAMETAG_SCALE;
+  protected final net.minecraft.client.renderer.entity.EntityRenderDispatcher entityRenderDispatcher;
+  private final net.minecraft.client.gui.Font font;
+  protected float shadowRadius;
+  protected float shadowStrength;
+  protected net.minecraft.client.renderer.entity.EntityRenderer(net.minecraft.client.renderer.entity.EntityRendererProvider$Context);
+  public final int getPackedLightCoords(T, float);
+  protected int getSkyLightLevel(T, net.minecraft.core.BlockPos);
+  protected int getBlockLightLevel(T, net.minecraft.core.BlockPos);
+  public boolean shouldRender(T, net.minecraft.client.renderer.culling.Frustum, double, double, double, float);
+  protected net.minecraft.world.phys.AABB getBoundingBoxForCulling(T, float);
+  protected boolean affectedByCulling(T);
+  public net.minecraft.world.phys.Vec3 getRenderOffset(S);
+  public void submit(S, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.CameraRenderState);
+  protected boolean shouldShowName(T, double);
+  public net.minecraft.client.gui.Font getFont();
+  protected void submitNameDisplay(S, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.CameraRenderState);
+  protected final <S extends net.minecraft.client.renderer.entity.state.EntityRenderState> void submitNameDisplay(S, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.CameraRenderState, int);
+=== SIG net/minecraft/client/renderer/entity/LivingEntityRenderer .*
+  private static final float EYE_BED_OFFSET;
+  protected M model;
+  protected final net.minecraft.client.renderer.item.ItemModelResolver itemModelResolver;
+  protected final java.util.List<net.minecraft.client.renderer.entity.layers.RenderLayer<S, M>> layers;
+  public net.minecraft.client.renderer.entity.LivingEntityRenderer(net.minecraft.client.renderer.entity.EntityRendererProvider$Context, M, float);
+  public final boolean addLayer(net.minecraft.client.renderer.entity.layers.RenderLayer<S, M>);
+  public M getModel();
+  protected net.minecraft.world.phys.AABB getBoundingBoxForCulling(T, float);
+  public void submit(S, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.CameraRenderState);
+  protected boolean shouldRenderLayers(S);
+  protected int getModelTint(S);
+  public abstract net.minecraft.resources.Identifier getTextureLocation(S);
+  protected net.minecraft.client.renderer.rendertype.RenderType getRenderType(S, boolean, boolean, boolean);
+  public static int getOverlayCoords(net.minecraft.client.renderer.entity.state.LivingEntityRenderState, float);
+  protected boolean isBodyVisible(S);
+  private static float sleepDirectionToRotation(net.minecraft.core.Direction);
+  protected boolean isShaking(S);
+  protected void setupRotations(S, com.mojang.blaze3d.vertex.PoseStack, float, float);
+  protected float getFlipDegrees();
+  protected float getWhiteOverlayProgress(S);
+=== com/mojang/renderpearl/api/vertex/VertexFormat
+Compiled from "VertexFormat.java"
+public class com.mojang.renderpearl.api.vertex.VertexFormat {
+  public static final int MAX_VERTEX_ELEMENTS;
+  public static com.mojang.renderpearl.api.vertex.VertexFormat$Builder builder(int);
+  public java.lang.String toString();
+  public int getVertexSize();
+  public int getStepRate();
+  public java.util.List<com.mojang.renderpearl.api.vertex.VertexFormatElement> getElements();
+  public com.mojang.renderpearl.api.vertex.VertexFormatElement getElement(java.lang.String);
+  public boolean contains(java.lang.String);
+  public boolean equals(java.lang.Object);
+  public int hashCode();
+}
+=== net/neoforged/fml/earlydisplay/render/backend/VertexFormat
+Compiled from "VertexFormat.java"
+public final class net.neoforged.fml.earlydisplay.render.backend.VertexFormat extends java.lang.Enum<net.neoforged.fml.earlydisplay.render.backend.VertexFormat> {
+  public static final net.neoforged.fml.earlydisplay.render.backend.VertexFormat POS_TEX_COLOR;
+  public final int stride;
+  public static net.neoforged.fml.earlydisplay.render.backend.VertexFormat[] values();
+  public static net.neoforged.fml.earlydisplay.render.backend.VertexFormat valueOf(java.lang.String);
+  public net.neoforged.fml.earlydisplay.render.backend.VertexFormat$Element element(int);
+  public int elementCount();
+  public int findElement(net.neoforged.fml.earlydisplay.render.backend.VertexFormat$Element);
+}
+=== com/mojang/renderpearl/api/buffers/GpuBuffer
+Compiled from "GpuBuffer.java"
+public interface com.mojang.renderpearl.api.buffers.GpuBuffer extends com.mojang.renderpearl.util.UncheckedAutoCloseable {
+  public static final int USAGE_MAP_READ;
+  public static final int USAGE_MAP_WRITE;
+  public static final int USAGE_HINT_CLIENT_STORAGE;
+  public static final int USAGE_COPY_DST;
+  public static final int USAGE_COPY_SRC;
+  public static final int USAGE_VERTEX;
+  public static final int USAGE_INDEX;
+  public static final int USAGE_UNIFORM;
+  public static final int USAGE_UNIFORM_TEXEL_BUFFER;
+  public static final int USAGE_INDIRECT_PARAMETERS;
+  public abstract long size();
+  public abstract int usage();
+  public abstract boolean isClosed();
+  public default com.mojang.renderpearl.api.buffers.GpuBufferSlice slice(long, long);
+  public default com.mojang.renderpearl.api.buffers.GpuBufferSlice slice();
+  public default com.mojang.renderpearl.api.buffers.GpuBufferSlice$MappedView map(boolean, boolean);
+  public abstract com.mojang.renderpearl.api.buffers.GpuBufferSlice$MappedView map(long, long, boolean, boolean);
+}
+=== com/mojang/renderpearl/api/buffers/GpuBufferSlice
+Compiled from "GpuBufferSlice.java"
+public final class com.mojang.renderpearl.api.buffers.GpuBufferSlice extends java.lang.Record {
+  public com.mojang.renderpearl.api.buffers.GpuBufferSlice(com.mojang.renderpearl.api.buffers.GpuBuffer, long, long);
+  public com.mojang.renderpearl.api.buffers.GpuBufferSlice slice(long, long);
+  public com.mojang.renderpearl.api.buffers.GpuBufferSlice$MappedView map(boolean, boolean);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public com.mojang.renderpearl.api.buffers.GpuBuffer buffer();
+  public long offset();
+  public long length();
+}
+=== com/mojang/blaze3d/systems/RenderSystem$AutoStorageIndexBuffer
+Compiled from "RenderSystem.java"
+public final class com.mojang.blaze3d.systems.RenderSystem$AutoStorageIndexBuffer implements java.lang.AutoCloseable {
+  public void close();
+  public boolean hasStorage(int);
+  public void requestIndexCount(int);
+  public void resizeToRequestedIndexCount();
+  public com.mojang.renderpearl.api.buffers.GpuBuffer getBuffer(int);
+  public com.mojang.renderpearl.api.buffers.GpuBuffer getBuffer();
+  public com.mojang.renderpearl.api.pipeline.IndexType type();
+}
+=== net/minecraft/client/renderer/StagedVertexBuffer
+Compiled from "StagedVertexBuffer.java"
+public class net.minecraft.client.renderer.StagedVertexBuffer implements java.lang.AutoCloseable {
+  public net.minecraft.client.renderer.StagedVertexBuffer(java.util.function.Supplier<java.lang.String>, int);
+  public net.minecraft.client.renderer.StagedVertexBuffer$Draw appendDraw(com.mojang.renderpearl.api.vertex.VertexFormat, com.mojang.renderpearl.api.pipeline.PrimitiveTopology);
+  public net.minecraft.client.renderer.StagedVertexBuffer$Draw appendDraw(com.mojang.renderpearl.api.vertex.VertexFormat, com.mojang.renderpearl.api.pipeline.PrimitiveTopology, com.mojang.blaze3d.vertex.VertexSorting);
+  public com.mojang.blaze3d.vertex.VertexConsumer getVertexBuilder(net.minecraft.client.renderer.StagedVertexBuffer$Draw);
+  public void upload();
+  public net.minecraft.client.renderer.StagedVertexBuffer$ExecuteInfo getExecuteInfo(net.minecraft.client.renderer.StagedVertexBuffer$Draw);
+  public void requestIndexCount(net.minecraft.client.renderer.StagedVertexBuffer$Draw);
+  public void endDraw();
+  public void endFrame();
+  public void close();
+}
+=== net/minecraft/client/renderer/StagedVertexBuffer$Draw
+Compiled from "StagedVertexBuffer.java"
+public class net.minecraft.client.renderer.StagedVertexBuffer$Draw {
+  public boolean isEmpty();
+}
+=== net/minecraft/client/renderer/StagedVertexBuffer$ExecuteInfo
+Compiled from "StagedVertexBuffer.java"
+public final class net.minecraft.client.renderer.StagedVertexBuffer$ExecuteInfo extends java.lang.Record {
+  public net.minecraft.client.renderer.StagedVertexBuffer$ExecuteInfo(com.mojang.renderpearl.api.buffers.GpuBuffer, com.mojang.renderpearl.api.buffers.GpuBuffer, com.mojang.renderpearl.api.pipeline.IndexType, int, int, int, com.mojang.renderpearl.api.pipeline.PrimitiveTopology);
+  public com.mojang.renderpearl.api.buffers.GpuBuffer indexBuffer();
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public com.mojang.renderpearl.api.buffers.GpuBuffer vertexBuffer();
+  public com.mojang.renderpearl.api.buffers.GpuBuffer customIndexBuffer();
+  public com.mojang.renderpearl.api.pipeline.IndexType indexType();
+  public int baseVertex();
+  public int firstIndex();
+  public int indexCount();
+  public com.mojang.renderpearl.api.pipeline.PrimitiveTopology topology();
+}
+=== net/minecraft/client/renderer/StagedVertexBuffer$GpuBufferPool
+Compiled from "StagedVertexBuffer.java"
+class net.minecraft.client.renderer.StagedVertexBuffer$GpuBufferPool implements java.lang.AutoCloseable {
+  public com.mojang.renderpearl.api.buffers.GpuBuffer acquire(com.mojang.renderpearl.api.device.GpuDevice, int);
+  public void endFrame(com.mojang.renderpearl.api.device.GpuDevice);
+  public void close();
+}
+=== net/minecraft/client/renderer/StagedVertexBuffer$GpuBufferPool$PendingRecycle
+Compiled from "StagedVertexBuffer.java"
+final class net.minecraft.client.renderer.StagedVertexBuffer$GpuBufferPool$PendingRecycle extends java.lang.Record implements java.lang.AutoCloseable {
+  public java.util.List<com.mojang.renderpearl.api.buffers.GpuBuffer> tryRecycle();
+  public void close();
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public java.util.List<com.mojang.renderpearl.api.buffers.GpuBuffer> buffers();
+  public com.mojang.renderpearl.api.commands.GpuFence fence();
+}
+=== net/minecraft/client/renderer/RenderBuffers
+Compiled from "RenderBuffers.java"
+public class net.minecraft.client.renderer.RenderBuffers implements java.lang.AutoCloseable {
+  public net.minecraft.client.renderer.RenderBuffers(int);
+  public net.minecraft.client.renderer.SectionBufferBuilderPack fixedBufferPack();
+  public net.minecraft.client.renderer.SectionBufferBuilderPool sectionBufferPool();
+  public net.minecraft.client.renderer.StagedVertexBuffer stagedVertexBuffer();
+  public void endFrame();
+  public void close();
+}
+=== net/neoforged/neoforge/event/SortedReloadListenerEvent
+Compiled from "SortedReloadListenerEvent.java"
+public abstract class net.neoforged.neoforge.event.SortedReloadListenerEvent extends net.neoforged.bus.api.Event {
+  public void addListener(net.minecraft.resources.Identifier, net.minecraft.server.packs.resources.PreparableReloadListener);
+  public void addDependency(net.minecraft.resources.Identifier, net.minecraft.resources.Identifier);
+  public com.google.common.graph.Graph<net.minecraft.server.packs.resources.PreparableReloadListener> getGraph();
+  public java.util.Map<net.minecraft.resources.Identifier, net.minecraft.server.packs.resources.PreparableReloadListener> getRegistry();
+  public net.neoforged.neoforge.event.SortedReloadListenerEvent$NameLookup getNameLookup();
+  public net.minecraft.server.packs.resources.PreparableReloadListener getLastVanillaListener();
+}
+=== net/minecraft/client/renderer/feature/CustomFeatureRenderer
+Compiled from "CustomFeatureRenderer.java"
+public class net.minecraft.client.renderer.feature.CustomFeatureRenderer extends net.minecraft.client.renderer.feature.RenderTypeFeatureRenderer<net.minecraft.client.renderer.feature.CustomFeatureRenderer$Submit> {
+  public static final net.minecraft.client.renderer.feature.FeatureRendererType<net.minecraft.client.renderer.feature.CustomFeatureRenderer$Submit> TYPE;
+  public net.minecraft.client.renderer.feature.CustomFeatureRenderer();
+}
+=== com/mojang/renderpearl/api/buffers/TransientMemory
+Compiled from "TransientMemory.java"
+public interface com.mojang.renderpearl.api.buffers.TransientMemory {
+  public default java.nio.ByteBuffer allocateCpu(long, long);
+  public abstract java.nio.ByteBuffer allocateCpu(long, long, long, long);
+  public default com.mojang.renderpearl.api.buffers.GpuBufferSlice$MappedView allocateStaging(long, long, int);
+  public abstract com.mojang.renderpearl.api.buffers.GpuBufferSlice$MappedView allocateStaging(long, long, int, long, long);
+  public default com.mojang.renderpearl.api.buffers.GpuBufferSlice allocateGpu(long, long, int);
+  public abstract com.mojang.renderpearl.api.buffers.GpuBufferSlice allocateGpu(long, long, int, long, long);
+  public default com.mojang.renderpearl.api.buffers.GpuBufferSlice$MappedView allocateGpuMapped(long, long, int);
+  public abstract com.mojang.renderpearl.api.buffers.GpuBufferSlice$MappedView allocateGpuMapped(long, long, int, long, long);
+  public default com.mojang.renderpearl.api.buffers.GpuBufferSlice uploadStaging(java.nio.ByteBuffer, long, int);
+  public default com.mojang.renderpearl.api.buffers.GpuBufferSlice uploadStaging(java.nio.ByteBuffer, long, int, long, long);
+  public default com.mojang.renderpearl.api.buffers.GpuBufferSlice uploadStaging(java.util.List<java.nio.ByteBuffer>, long, int);
+  public abstract com.mojang.renderpearl.api.buffers.GpuBufferSlice uploadStaging(java.util.List<java.nio.ByteBuffer>, long, int, long, long);
+  public default com.mojang.renderpearl.api.buffers.GpuBufferSlice uploadGpu(java.nio.ByteBuffer, long, int);
+  public default com.mojang.renderpearl.api.buffers.GpuBufferSlice uploadGpu(java.nio.ByteBuffer, long, int, long, long);
+  public default com.mojang.renderpearl.api.buffers.GpuBufferSlice uploadGpu(java.util.List<java.nio.ByteBuffer>, long, int);
+  public abstract com.mojang.renderpearl.api.buffers.GpuBufferSlice uploadGpu(java.util.List<java.nio.ByteBuffer>, long, int, long, long);
+  public abstract java.util.List<com.mojang.renderpearl.api.buffers.GpuBufferSlice> multiUploadStaging(java.util.List<java.nio.ByteBuffer>, long, int);
+  public abstract java.util.List<com.mojang.renderpearl.api.buffers.GpuBufferSlice> multiUploadGpu(java.util.List<java.nio.ByteBuffer>, long, int);
+}
+=== net/minecraft/client/entity/ClientAvatarState
+Compiled from "ClientAvatarState.java"
+public class net.minecraft.client.entity.ClientAvatarState {
+  public net.minecraft.client.entity.ClientAvatarState();
+  public void tick(net.minecraft.world.phys.Vec3, net.minecraft.world.phys.Vec3);
+  public void addWalkDistance(float);
+  public net.minecraft.world.phys.Vec3 deltaMovementOnPreviousTick();
+  public double getInterpolatedCloakX(float);
+  public double getInterpolatedCloakY(float);
+  public double getInterpolatedCloakZ(float);
+  public void updateBob(float);
+  public void resetBob();
+  public float getInterpolatedBob(float);
+  public float getBackwardsInterpolatedWalkDistance(float);
+  public float getInterpolatedWalkDistance(float);
+}
+=== net/minecraft/client/entity/ClientAvatarEntity
+Compiled from "ClientAvatarEntity.java"
+public interface net.minecraft.client.entity.ClientAvatarEntity {
+  public abstract net.minecraft.client.entity.ClientAvatarState avatarState();
+  public abstract net.minecraft.world.entity.player.PlayerSkin getSkin();
+  public abstract net.minecraft.world.entity.animal.parrot.Parrot$Variant getParrotVariantOnShoulder(boolean);
+  public abstract boolean showExtraEars();
+}
+=== net/minecraft/client/gui/components/EditBox
+Compiled from "EditBox.java"
+public class net.minecraft.client.gui.components.EditBox extends net.minecraft.client.gui.components.AbstractWidget {
+  public static final int BACKWARDS;
+  public static final int FORWARDS;
+  public static final int DEFAULT_TEXT_COLOR;
+  public static final net.minecraft.network.chat.Style DEFAULT_HINT_STYLE;
+  public static final net.minecraft.network.chat.Style SEARCH_HINT_STYLE;
+  public net.minecraft.client.gui.components.EditBox(net.minecraft.client.gui.Font, net.minecraft.network.chat.Component);
+  public net.minecraft.client.gui.components.EditBox(net.minecraft.client.gui.Font, int, int, net.minecraft.network.chat.Component);
+  public net.minecraft.client.gui.components.EditBox(net.minecraft.client.gui.Font, int, int, int, int, net.minecraft.network.chat.Component);
+  public net.minecraft.client.gui.components.EditBox(net.minecraft.client.gui.Font, int, int, int, int, net.minecraft.client.gui.components.EditBox, net.minecraft.network.chat.Component);
+  public void setResponder(java.util.function.Consumer<java.lang.String>);
+  public void addFormatter(net.minecraft.client.gui.components.EditBox$TextFormatter);
+  public void setValue(java.lang.String);
+  public java.lang.String getValue();
+  public java.lang.String getHighlighted();
+  public void setX(int);
+  public void setY(int);
+  public void insertText(java.lang.String);
+  public void deleteWords(int);
+  public void deleteChars(int);
+  public void deleteCharsToPos(int);
+  public int getWordPosition(int);
+  public void moveCursor(int, boolean);
+  public void moveCursorTo(int, boolean);
+  public void setCursorPosition(int);
+  public void moveCursorToStart(boolean);
+  public void moveCursorToEnd(boolean);
+  public boolean keyPressed(net.minecraft.client.input.KeyEvent);
+  public boolean canConsumeInput();
+  public boolean capturesInput();
+  public boolean charTyped(net.minecraft.client.input.CharacterEvent);
+  public boolean preeditUpdated(net.minecraft.client.input.PreeditEvent);
+  public void onClick(net.minecraft.client.input.MouseButtonEvent, boolean);
+  public void playDownSound(net.minecraft.client.sounds.SoundManager);
+  public void extractWidgetRenderState(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, float);
+  public void setMaxLength(int);
+  public int getCursorPosition();
+  public boolean isBordered();
+  public void setBordered(boolean);
+  public void setTextColor(int);
+  public void setTextColorUneditable(int);
+  public void setFocused(boolean);
+  public void setEditable(boolean);
+  public void setCentered(boolean);
+  public void setTextShadow(boolean);
+  public void setInvertHighlightedTextColor(boolean);
+  public int getInnerWidth();
+  public void setHighlightPos(int);
+  public void setCanLoseFocus(boolean);
+  public boolean isVisible();
+  public void setVisible(boolean);
+  public void setSuggestion(java.lang.String);
+  public int getScreenX(int);
+  public void updateWidgetNarration(net.minecraft.client.gui.narration.NarrationElementOutput);
+  public void setHint(net.minecraft.network.chat.Component);
+  public boolean getTextShadow();
+}
+=== net/minecraft/client/gui/Hud
+Compiled from "Hud.java"
+public class net.minecraft.client.gui.Hud {
+  public static final net.minecraft.resources.Identifier NAUSEA_LOCATION;
+  public static final net.minecraft.resources.Identifier SPYGLASS_SCOPE_LOCATION;
+  public float vignetteBrightness;
+  public int leftHeight;
+  public int rightHeight;
+  public net.minecraft.client.gui.Hud(net.minecraft.client.Minecraft);
+  public void registerReloadListeners(net.minecraft.server.packs.resources.ReloadableResourceManager);
+  public void toggle();
+  public boolean isHidden();
+  public void resetTitleTimes();
+  public void extractRenderState(net.minecraft.client.gui.GuiGraphicsExtractor, net.minecraft.client.DeltaTracker);
+  public void extractDebugOverlay(net.minecraft.client.gui.GuiGraphicsExtractor);
+  public void extractDeferredSubtitles();
+  public static net.minecraft.resources.Identifier getMobEffectSprite(net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect>);
+  public void tick(boolean);
+  public void setNowPlaying(net.minecraft.network.chat.Component);
+  public void setOverlayMessage(net.minecraft.network.chat.Component, boolean);
+  public void setTimes(int, int, int);
+  public void setSubtitle(net.minecraft.network.chat.Component);
+  public void setTitle(net.minecraft.network.chat.Component);
+  public void clearTitles();
+  public net.minecraft.client.gui.components.ChatComponent getChat();
+  public net.minecraft.client.resources.WaypointStyleManager getWaypointStyles();
+  public int getGuiTicks();
+  public net.minecraft.client.gui.Font getFont();
+  public net.minecraft.client.gui.components.spectator.SpectatorGui getSpectatorGui();
+  public net.minecraft.client.gui.components.PlayerTabOverlay getTabList();
+  public void onDisconnected();
+  public net.minecraft.client.gui.components.BossHealthOverlay getBossOverlay();
+  public net.minecraft.client.gui.components.DebugScreenOverlay getDebugOverlay();
+  public void clearCache();
+  public void extractSavingIndicator(net.minecraft.client.gui.GuiGraphicsExtractor, net.minecraft.client.DeltaTracker);
+  public void initModdedOverlays();
+}
+=== net/minecraft/client/renderer/item/ItemModelResolver
+Compiled from "ItemModelResolver.java"
+public class net.minecraft.client.renderer.item.ItemModelResolver {
+  public net.minecraft.client.renderer.item.ItemModelResolver(net.minecraft.client.resources.model.ModelManager);
+  public void updateForLiving(net.minecraft.client.renderer.item.ItemStackRenderState, net.minecraft.world.item.ItemStack, net.minecraft.world.item.ItemDisplayContext, net.minecraft.world.entity.LivingEntity);
+  public void updateForNonLiving(net.minecraft.client.renderer.item.ItemStackRenderState, net.minecraft.world.item.ItemStack, net.minecraft.world.item.ItemDisplayContext, net.minecraft.world.entity.Entity);
+  public void updateForTopItem(net.minecraft.client.renderer.item.ItemStackRenderState, net.minecraft.world.item.ItemStack, net.minecraft.world.item.ItemDisplayContext, net.minecraft.world.level.Level, net.minecraft.world.entity.ItemOwner, int);
+  public void appendItemLayers(net.minecraft.client.renderer.item.ItemStackRenderState, net.minecraft.world.item.ItemStack, net.minecraft.world.item.ItemDisplayContext, net.minecraft.world.level.Level, net.minecraft.world.entity.ItemOwner, int);
+  public boolean shouldPlaySwapAnimation(net.minecraft.world.item.ItemStack);
+  public float swapAnimationScale(net.minecraft.world.item.ItemStack);
+}
+=== net/minecraft/client/renderer/state/level/PlayerRenderState
+Compiled from "PlayerRenderState.java"
+public class net.minecraft.client.renderer.state.level.PlayerRenderState extends net.neoforged.neoforge.client.renderstate.BaseRenderState {
+  public boolean hasPlayer;
+  public net.minecraft.client.renderer.entity.state.AvatarRenderState avatarRenderState;
+  public final net.minecraft.client.renderer.state.level.FirstPersonHandsAndItemsRenderState firstPersonHandsAndItems;
+  public float portalEffectIntensity;
+  public float nauseaEffectIntensity;
+  public float spinningEffectAngle;
+  public boolean isEyeInWater;
+  public boolean isOnFire;
+  public boolean isUnderWater;
+  public double eyePositionY;
+  public net.minecraft.client.renderer.state.level.PlayerRenderState$BlockOverlay blockOverlay;
+  public net.minecraft.client.renderer.state.level.PlayerRenderState$WaterOverlay waterOverlay;
+  public net.minecraft.client.renderer.state.level.PlayerRenderState$ItemActivationRenderState itemActivation;
+  public net.neoforged.neoforge.client.CustomBlockScreenEffectRenderer customBlockOverlayRenderer;
+  public net.neoforged.neoforge.client.CustomBlockScreenEffectRenderer customFluidOverlayRenderer;
+  public net.neoforged.neoforge.client.CustomBlockScreenEffectRenderer customFireOverlayRenderer;
+  public net.minecraft.client.renderer.state.level.PlayerRenderState();
+  public void reset();
+}
+=== net/minecraft/client/renderer/FirstPersonHandsAndItemsRenderer
+Compiled from "FirstPersonHandsAndItemsRenderer.java"
+public class net.minecraft.client.renderer.FirstPersonHandsAndItemsRenderer {
+  public net.minecraft.client.renderer.FirstPersonHandsAndItemsRenderer(net.minecraft.client.Minecraft);
+  public void submitHandsWithItems(float, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.PlayerRenderState, net.minecraft.client.renderer.state.level.FirstPersonHandsAndItemsRenderState);
+}
+=== net/minecraft/client/model/geom/ModelPart
+Compiled from "ModelPart.java"
+public final class net.minecraft.client.model.geom.ModelPart {
+  public static final float DEFAULT_SCALE;
+  public float x;
+  public float y;
+  public float z;
+  public float xRot;
+  public float yRot;
+  public float zRot;
+  public float xScale;
+  public float yScale;
+  public float zScale;
+  public boolean visible;
+  public boolean skipDraw;
+  public net.minecraft.client.model.geom.ModelPart(java.util.List<net.minecraft.client.model.geom.ModelPart$Cube>, java.util.Map<java.lang.String, net.minecraft.client.model.geom.ModelPart>);
+  public net.minecraft.client.model.geom.PartPose storePose();
+  public net.minecraft.client.model.geom.PartPose getInitialPose();
+  public void setInitialPose(net.minecraft.client.model.geom.PartPose);
+  public void resetPose();
+  public void loadPose(net.minecraft.client.model.geom.PartPose);
+  public boolean hasChild(java.lang.String);
+  public net.minecraft.client.model.geom.ModelPart getChild(java.lang.String);
+  public void setPos(float, float, float);
+  public void setRotation(float, float, float);
+  public void render(com.mojang.blaze3d.vertex.PoseStack, com.mojang.blaze3d.vertex.VertexConsumer, int, int);
+  public void render(com.mojang.blaze3d.vertex.PoseStack, com.mojang.blaze3d.vertex.VertexConsumer, int, int, int);
+  public void rotateBy(org.joml.Quaternionf);
+  public void getExtentsForGui(com.mojang.blaze3d.vertex.PoseStack, java.util.function.Consumer<org.joml.Vector3fc>);
+  public void visit(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.model.geom.ModelPart$Visitor);
+  public void translateAndRotate(com.mojang.blaze3d.vertex.PoseStack);
+  public net.minecraft.client.model.geom.ModelPart$Cube getRandomCube(net.minecraft.util.RandomSource);
+  public boolean isEmpty();
+  public void offsetPos(org.joml.Vector3f);
+  public void offsetRotation(org.joml.Vector3f);
+  public void offsetScale(org.joml.Vector3f);
+  public java.util.List<net.minecraft.client.model.geom.ModelPart> getAllParts();
+  public java.util.function.Function<java.lang.String, net.minecraft.client.model.geom.ModelPart> createPartLookup();
+}
+=== com/mojang/blaze3d/platform/Lighting
+Compiled from "Lighting.java"
+public class com.mojang.blaze3d.platform.Lighting implements java.lang.AutoCloseable {
+  public static final int UBO_SIZE;
+  public com.mojang.blaze3d.platform.Lighting();
+  public void updateLevel(net.minecraft.world.level.CardinalLighting$Type);
+  public void setupFor(com.mojang.blaze3d.platform.Lighting$Entry);
+  public void close();
+}
+=== net/minecraft/client/renderer/ScreenEffectRenderer
+Compiled from "ScreenEffectRenderer.java"
+public class net.minecraft.client.renderer.ScreenEffectRenderer {
+  public net.minecraft.client.renderer.ScreenEffectRenderer(net.minecraft.client.renderer.GameRenderer, net.minecraft.client.resources.model.sprite.SpriteGetter);
+  public void submit(float, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.PlayerRenderState, net.minecraft.client.renderer.state.level.CameraRenderState, boolean);
+  public static void submitFluid(net.minecraft.client.renderer.state.level.PlayerRenderState$WaterOverlay, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.resources.Identifier);
+}
+=== com/mojang/blaze3d/vertex/DefaultVertexFormat
+Compiled from "DefaultVertexFormat.java"
+public class com.mojang.blaze3d.vertex.DefaultVertexFormat {
+  public static final java.lang.String POSITION_SEMANTIC_NAME;
+  public static final java.lang.String COLOR_SEMANTIC_NAME;
+  public static final java.lang.String UV0_SEMANTIC_NAME;
+  public static final java.lang.String UV1_SEMANTIC_NAME;
+  public static final java.lang.String UV2_SEMANTIC_NAME;
+  public static final java.lang.String UV3_SEMANTIC_NAME;
+  public static final java.lang.String NORMAL_SEMANTIC_NAME;
+  public static final java.lang.String LINE_WIDTH_SEMANTIC_NAME;
+  public static final java.lang.String CHUNK_POSITION_SEMANTIC_NAME;
+  public static final java.lang.String CHUNK_VISIBILITY_SEMANTIC_NAME;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat BLOCK;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat CHUNK_DATA_INSTANCED;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat ENTITY;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat ENTITY_GLINT_SPECIAL;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat PARTICLE;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat POSITION;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat POSITION_COLOR;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat POSITION_COLOR_NORMAL;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat POSITION_COLOR_LIGHTMAP;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat POSITION_TEX;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat POSITION_TEX_COLOR;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat POSITION_COLOR_TEX_LIGHTMAP;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat POSITION_TEX_LIGHTMAP_COLOR;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat POSITION_TEX_COLOR_NORMAL;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat POSITION_COLOR_LINE_WIDTH;
+  public static final com.mojang.renderpearl.api.vertex.VertexFormat POSITION_COLOR_NORMAL_LINE_WIDTH;
+  public com.mojang.blaze3d.vertex.DefaultVertexFormat();
+}
+=== net/minecraft/client/gui/render/pip/PictureInPictureRenderer
+Compiled from "PictureInPictureRenderer.java"
+public abstract class net.minecraft.client.gui.render.pip.PictureInPictureRenderer<T extends net.minecraft.client.renderer.state.gui.pip.PictureInPictureRenderState> implements java.lang.AutoCloseable {
+  public net.minecraft.client.gui.render.pip.PictureInPictureRenderer();
+  public void prepare(T, net.minecraft.client.renderer.state.gui.GuiRenderState, net.minecraft.client.renderer.feature.FeatureRenderDispatcher, int);
+  public void close();
+  public abstract java.lang.Class<T> getRenderStateClass();
+  public boolean canBeReusedFor(T, int, int);
+}
+=== net/minecraft/client/renderer/state/gui/pip/PictureInPictureRenderState
+Compiled from "PictureInPictureRenderState.java"
+public interface net.minecraft.client.renderer.state.gui.pip.PictureInPictureRenderState extends net.minecraft.client.renderer.state.gui.ScreenArea {
+  public static final org.joml.Matrix3x2fc IDENTITY_POSE;
+  public abstract int x0();
+  public abstract int x1();
+  public abstract int y0();
+  public abstract int y1();
+  public abstract float scale();
+  public default org.joml.Matrix3x2fc pose();
+  public abstract net.minecraft.client.gui.navigation.ScreenRectangle scissorArea();
+  public static net.minecraft.client.gui.navigation.ScreenRectangle getBounds(int, int, int, int, net.minecraft.client.gui.navigation.ScreenRectangle);
+  public static net.minecraft.client.gui.navigation.ScreenRectangle getBounds(int, int, int, int, org.joml.Matrix3x2fc, net.minecraft.client.gui.navigation.ScreenRectangle);
+}
+=== net/minecraft/client/gui/render/pip/GuiEntityRenderer
+Compiled from "GuiEntityRenderer.java"
+public class net.minecraft.client.gui.render.pip.GuiEntityRenderer extends net.minecraft.client.gui.render.pip.PictureInPictureRenderer<net.minecraft.client.renderer.state.gui.pip.GuiEntityRenderState> {
+  public net.minecraft.client.gui.render.pip.GuiEntityRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher);
+  public java.lang.Class<net.minecraft.client.renderer.state.gui.pip.GuiEntityRenderState> getRenderStateClass();
+}
+=== net/minecraft/client/renderer/state/gui/pip/GuiEntityRenderState
+Compiled from "GuiEntityRenderState.java"
+public final class net.minecraft.client.renderer.state.gui.pip.GuiEntityRenderState extends java.lang.Record implements net.minecraft.client.renderer.state.gui.pip.PictureInPictureRenderState {
+  public net.minecraft.client.renderer.state.gui.pip.GuiEntityRenderState(net.minecraft.client.renderer.entity.state.EntityRenderState, org.joml.Vector3fc, org.joml.Quaternionfc, org.joml.Quaternionfc, int, int, int, int, float, net.minecraft.client.gui.navigation.ScreenRectangle);
+  public net.minecraft.client.renderer.state.gui.pip.GuiEntityRenderState(net.minecraft.client.renderer.entity.state.EntityRenderState, org.joml.Vector3fc, org.joml.Quaternionfc, org.joml.Quaternionfc, int, int, int, int, float, net.minecraft.client.gui.navigation.ScreenRectangle, net.minecraft.client.gui.navigation.ScreenRectangle);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.client.renderer.entity.state.EntityRenderState renderState();
+  public org.joml.Vector3fc translation();
+  public org.joml.Quaternionfc rotation();
+  public org.joml.Quaternionfc overrideCameraAngle();
+  public int x0();
+  public int y0();
+  public int x1();
+  public int y1();
+  public float scale();
+  public net.minecraft.client.gui.navigation.ScreenRectangle scissorArea();
+  public net.minecraft.client.gui.navigation.ScreenRectangle bounds();
+}
+=== net/minecraft/client/renderer/entity/EntityRenderDispatcher
+Compiled from "EntityRenderDispatcher.java"
+public class net.minecraft.client.renderer.entity.EntityRenderDispatcher implements net.minecraft.server.packs.resources.ResourceManagerReloadListener {
+  public final net.minecraft.client.renderer.texture.TextureManager textureManager;
+  public net.minecraft.client.Camera camera;
+  public net.minecraft.world.entity.Entity crosshairPickEntity;
+  public final net.minecraft.client.Options options;
+  public <E extends net.minecraft.world.entity.Entity> int getPackedLightCoords(E, float);
+  public net.minecraft.client.renderer.entity.EntityRenderDispatcher(net.minecraft.client.renderer.texture.TextureManager, net.minecraft.client.renderer.block.BlockModelResolver, net.minecraft.client.renderer.item.ItemModelResolver, net.minecraft.client.renderer.MapRenderer, net.minecraft.client.resources.model.sprite.AtlasManager, net.minecraft.client.gui.Font, net.minecraft.client.Options, java.util.function.Supplier<net.minecraft.client.model.geom.EntityModelSet>, net.minecraft.client.resources.model.EquipmentAssetManager, net.minecraft.client.renderer.PlayerSkinRenderCache, net.minecraft.client.resources.palette.PalettedTextureManager);
+  public <T extends net.minecraft.world.entity.Entity> net.minecraft.client.renderer.entity.EntityRenderer<? super T, ?> getRenderer(T);
+  public net.minecraft.client.renderer.entity.player.AvatarRenderer<?> getRenderer(net.minecraft.client.renderer.entity.state.AvatarRenderState);
+  public <S extends net.minecraft.client.renderer.entity.state.EntityRenderState> net.minecraft.client.renderer.entity.EntityRenderer<?, ? super S> getRenderer(S);
+  public void prepare(net.minecraft.client.Camera, net.minecraft.world.entity.Entity);
+  public <E extends net.minecraft.world.entity.Entity> boolean shouldRender(E, net.minecraft.client.renderer.culling.Frustum, double, double, double, float);
+  public <E extends net.minecraft.world.entity.Entity> net.minecraft.client.renderer.entity.state.EntityRenderState extractEntity(E, float);
+  public <S extends net.minecraft.client.renderer.entity.state.EntityRenderState> void submit(S, net.minecraft.client.renderer.state.level.CameraRenderState, double, double, double, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector);
+  public void resetCamera();
+  public double distanceToSqr(net.minecraft.world.entity.Entity);
+  public java.util.Map<net.minecraft.world.entity.player.PlayerModelType, net.minecraft.client.renderer.entity.EntityRenderer<? extends net.minecraft.world.entity.Avatar, ?>> getPlayerRenderers();
+  public java.util.Map<net.minecraft.world.entity.player.PlayerModelType, net.minecraft.client.renderer.entity.EntityRenderer<? extends net.minecraft.world.entity.Avatar, ?>> getMannequinRenderers();
+  public void onResourceManagerReload(net.minecraft.server.packs.resources.ResourceManager);
+}
+=== net/minecraft/client/model/geom/ModelLayers
+Compiled from "ModelLayers.java"
+public class net.minecraft.client.model.geom.ModelLayers {
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ACACIA_BOAT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ACACIA_CHEST_BOAT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ALLAY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ARMADILLO;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ARMADILLO_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ARMOR_STAND;
+  public static final net.minecraft.client.renderer.entity.ArmorModelSet<net.minecraft.client.model.geom.ModelLayerLocation> ARMOR_STAND_ARMOR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ARMOR_STAND_SMALL;
+  public static final net.minecraft.client.renderer.entity.ArmorModelSet<net.minecraft.client.model.geom.ModelLayerLocation> ARMOR_STAND_SMALL_ARMOR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ARROW;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation AXOLOTL;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation AXOLOTL_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation BAMBOO_CHEST_RAFT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation BAMBOO_RAFT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation STANDING_BANNER;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation STANDING_BANNER_FLAG;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation WALL_BANNER;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation WALL_BANNER_FLAG;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation BAT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation BEE;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation BEE_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation BEE_STINGER;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation BELL;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation BIRCH_BOAT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation BIRCH_CHEST_BOAT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation BLAZE;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation BOAT_WATER_PATCH;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation BOGGED;
+  public static final net.minecraft.client.renderer.entity.ArmorModelSet<net.minecraft.client.model.geom.ModelLayerLocation> BOGGED_ARMOR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation BOGGED_OUTER_LAYER;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation BOOK;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation BREEZE;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation BREEZE_WIND;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation BREEZE_EYES;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation CAMEL;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation CAMEL_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation CAMEL_SADDLE;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation CAMEL_HUSK_SADDLE;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation CAT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation CAT_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation CAT_BABY_COLLAR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation CAT_COLLAR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation CAVE_SPIDER;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation CHERRY_BOAT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation CHERRY_CHEST_BOAT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation CHEST;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation CHEST_MINECART;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation CHICKEN;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation CHICKEN_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation COD;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation COLD_CHICKEN;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation COLD_COW;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation COLD_COW_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation COLD_PIG;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation COMMAND_BLOCK_MINECART;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation CONDUIT_CAGE;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation CONDUIT_EYE;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation CONDUIT_SHELL;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation CONDUIT_WIND;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation COPPER_GOLEM;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation COPPER_GOLEM_EYES;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation COPPER_GOLEM_RUNNING;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation COPPER_GOLEM_SITTING;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation COPPER_GOLEM_STAR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ZOMBIE_NAUTILUS_CORAL;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation COW;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation COW_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation CREAKING;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation CREAKING_EYES;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation CREEPER;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation CREEPER_ARMOR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation CREEPER_HEAD;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation CUSHION;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation DARK_OAK_BOAT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation DARK_OAK_CHEST_BOAT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation DECORATED_POT_BASE;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation DECORATED_POT_SIDES;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation DOLPHIN;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation DOLPHIN_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation DONKEY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation DONKEY_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation DONKEY_SADDLE;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation DOUBLE_CHEST_LEFT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation DOUBLE_CHEST_RIGHT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation DRAGON_SKULL;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation DROWNED;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation DROWNED_BABY;
+  public static final net.minecraft.client.renderer.entity.ArmorModelSet<net.minecraft.client.model.geom.ModelLayerLocation> DROWNED_BABY_ARMOR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation DROWNED_BABY_OUTER_LAYER;
+  public static final net.minecraft.client.renderer.entity.ArmorModelSet<net.minecraft.client.model.geom.ModelLayerLocation> DROWNED_ARMOR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation DROWNED_OUTER_LAYER;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ELDER_GUARDIAN;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ELYTRA;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ELYTRA_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ENDERMAN;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ENDERMITE;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ENDER_DRAGON;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation END_CRYSTAL;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation EVOKER;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation EVOKER_FANGS;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation FOX;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation FOX_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation FROG;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation FURNACE_MINECART;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation GHAST;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation GIANT;
+  public static final net.minecraft.client.renderer.entity.ArmorModelSet<net.minecraft.client.model.geom.ModelLayerLocation> GIANT_ARMOR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation GLOW_SQUID;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation GLOW_SQUID_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation GOAT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation GOAT_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation GUARDIAN;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation HAPPY_GHAST;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation HAPPY_GHAST_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation HAPPY_GHAST_HARNESS;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation HAPPY_GHAST_BABY_HARNESS;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation HAPPY_GHAST_ROPES;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation HAPPY_GHAST_BABY_ROPES;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation HOGLIN;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation HOGLIN_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation HOPPER_MINECART;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation HORSE;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation HORSE_ARMOR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation HORSE_SADDLE;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation HORSE_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation HUSK;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation HUSK_BABY;
+  public static final net.minecraft.client.renderer.entity.ArmorModelSet<net.minecraft.client.model.geom.ModelLayerLocation> HUSK_BABY_ARMOR;
+  public static final net.minecraft.client.renderer.entity.ArmorModelSet<net.minecraft.client.model.geom.ModelLayerLocation> HUSK_ARMOR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ILLUSIONER;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation IRON_GOLEM;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation JUNGLE_BOAT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation JUNGLE_CHEST_BOAT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation LEASH_KNOT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation LLAMA;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation LLAMA_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation LLAMA_BABY_DECOR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation LLAMA_DECOR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation LLAMA_SPIT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation MAGMA_CUBE;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation MANGROVE_BOAT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation MANGROVE_CHEST_BOAT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation MINECART;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation MOOSHROOM;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation MOOSHROOM_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation MULE;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation MULE_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation MULE_SADDLE;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation NAUTILUS;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation NAUTILUS_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation NAUTILUS_SADDLE;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation NAUTILUS_ARMOR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation OAK_BOAT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation OAK_CHEST_BOAT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation OCELOT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation OCELOT_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation PALE_OAK_BOAT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation PALE_OAK_CHEST_BOAT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation PANDA;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation PANDA_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation PARCHED;
+  public static final net.minecraft.client.renderer.entity.ArmorModelSet<net.minecraft.client.model.geom.ModelLayerLocation> PARCHED_ARMOR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation PARCHED_OUTER_LAYER;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation PARROT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation PHANTOM;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation PIG;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation PIGLIN;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation PIGLIN_BABY;
+  public static final net.minecraft.client.renderer.entity.ArmorModelSet<net.minecraft.client.model.geom.ModelLayerLocation> PIGLIN_BABY_ARMOR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation PIGLIN_BRUTE;
+  public static final net.minecraft.client.renderer.entity.ArmorModelSet<net.minecraft.client.model.geom.ModelLayerLocation> PIGLIN_BRUTE_ARMOR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation PIGLIN_HEAD;
+  public static final net.minecraft.client.renderer.entity.ArmorModelSet<net.minecraft.client.model.geom.ModelLayerLocation> PIGLIN_ARMOR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation PIG_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation PIG_SADDLE;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation PILLAGER;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation PLAYER;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation PLAYER_CAPE;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation PLAYER_EARS;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation PLAYER_HEAD;
+  public static final net.minecraft.client.renderer.entity.ArmorModelSet<net.minecraft.client.model.geom.ModelLayerLocation> PLAYER_ARMOR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation PLAYER_SLIM;
+  public static final net.minecraft.client.renderer.entity.ArmorModelSet<net.minecraft.client.model.geom.ModelLayerLocation> PLAYER_SLIM_ARMOR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation PLAYER_SPIN_ATTACK;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation POLAR_BEAR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation POLAR_BEAR_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation POPLAR_BOAT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation POPLAR_CHEST_BOAT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation PUFFERFISH_BIG;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation PUFFERFISH_MEDIUM;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation PUFFERFISH_SMALL;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation RABBIT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation RABBIT_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation RAVAGER;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SALMON;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SALMON_LARGE;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SALMON_SMALL;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SHEEP;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SHEEP_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SHEEP_BABY_WOOL;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SHEEP_WOOL;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SHEEP_WOOL_UNDERCOAT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SHIELD;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SHULKER;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SHULKER_BOX;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SHULKER_BULLET;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SILVERFISH;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SKELETON;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SKELETON_HORSE;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SKELETON_HORSE_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SKELETON_HORSE_SADDLE;
+  public static final net.minecraft.client.renderer.entity.ArmorModelSet<net.minecraft.client.model.geom.ModelLayerLocation> SKELETON_ARMOR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SKELETON_SKULL;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SLIME;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SLIME_OUTER;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SNIFFER;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SNIFFER_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SNOW_GOLEM;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SPAWNER_MINECART;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SPIDER;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SPRUCE_BOAT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SPRUCE_CHEST_BOAT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SQUID;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SQUID_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation STRAY;
+  public static final net.minecraft.client.renderer.entity.ArmorModelSet<net.minecraft.client.model.geom.ModelLayerLocation> STRAY_ARMOR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation STRAY_OUTER_LAYER;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation STRIDER;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation STRIDER_SADDLE;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation STRIDER_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SULFUR_CUBE;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SULFUR_CUBE_INNER;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SULFUR_CUBE_SMALL;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation SULFUR_CUBE_SMALL_INNER;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation TADPOLE;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation TNT_MINECART;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation TRADER_LLAMA;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation TRADER_LLAMA_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation TRIDENT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation TROPICAL_FISH_LARGE;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation TROPICAL_FISH_LARGE_PATTERN;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation TROPICAL_FISH_SMALL;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation TROPICAL_FISH_SMALL_PATTERN;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation TURTLE;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation TURTLE_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation UNDEAD_HORSE_ARMOR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation VEX;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation VILLAGER;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation VILLAGER_NO_HAT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation VILLAGER_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation VILLAGER_BABY_NO_HAT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation VINDICATOR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation WANDERING_TRADER;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation WARDEN;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation WARDEN_BIOLUMINESCENT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation WARDEN_PULSATING_SPOTS;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation WARDEN_TENDRILS;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation WARDEN_HEART;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation WARM_COW;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation WARM_COW_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation WIND_CHARGE;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation WITCH;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation WITHER;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation WITHER_ARMOR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation WITHER_SKELETON;
+  public static final net.minecraft.client.renderer.entity.ArmorModelSet<net.minecraft.client.model.geom.ModelLayerLocation> WITHER_SKELETON_ARMOR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation WITHER_SKELETON_SKULL;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation WITHER_SKULL;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation WOLF;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation WOLF_ARMOR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation WOLF_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ZOGLIN;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ZOGLIN_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ZOMBIE;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ZOMBIE_BABY;
+  public static final net.minecraft.client.renderer.entity.ArmorModelSet<net.minecraft.client.model.geom.ModelLayerLocation> ZOMBIE_BABY_ARMOR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ZOMBIE_HEAD;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ZOMBIE_HORSE;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ZOMBIE_HORSE_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ZOMBIE_HORSE_SADDLE;
+  public static final net.minecraft.client.renderer.entity.ArmorModelSet<net.minecraft.client.model.geom.ModelLayerLocation> ZOMBIE_ARMOR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ZOMBIE_VILLAGER;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ZOMBIE_VILLAGER_NO_HAT;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ZOMBIE_VILLAGER_BABY;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ZOMBIE_VILLAGER_BABY_NO_HAT;
+  public static final net.minecraft.client.renderer.entity.ArmorModelSet<net.minecraft.client.model.geom.ModelLayerLocation> ZOMBIE_VILLAGER_BABY_ARMOR;
+  public static final net.minecraft.client.renderer.entity.ArmorModelSet<net.minecraft.client.model.geom.ModelLayerLocation> ZOMBIE_VILLAGER_ARMOR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ZOMBIFIED_PIGLIN;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ZOMBIFIED_PIGLIN_BABY;
+  public static final net.minecraft.client.renderer.entity.ArmorModelSet<net.minecraft.client.model.geom.ModelLayerLocation> ZOMBIFIED_PIGLIN_BABY_ARMOR;
+  public static final net.minecraft.client.renderer.entity.ArmorModelSet<net.minecraft.client.model.geom.ModelLayerLocation> ZOMBIFIED_PIGLIN_ARMOR;
+  public static final net.minecraft.client.model.geom.ModelLayerLocation ZOMBIE_NAUTILUS;
+  public net.minecraft.client.model.geom.ModelLayers();
+  public static java.util.stream.Stream<net.minecraft.client.model.geom.ModelLayerLocation> getKnownLocations();
+}
+=== net/minecraft/client/resources/DefaultPlayerSkin
+Compiled from "DefaultPlayerSkin.java"
+public class net.minecraft.client.resources.DefaultPlayerSkin {
+  public net.minecraft.client.resources.DefaultPlayerSkin();
+  public static net.minecraft.resources.Identifier getDefaultTexture();
+  public static net.minecraft.world.entity.player.PlayerSkin getDefaultSkin();
+  public static net.minecraft.world.entity.player.PlayerSkin get(java.util.UUID);
+  public static net.minecraft.world.entity.player.PlayerSkin get(com.mojang.authlib.GameProfile);
+}
+=== net/minecraft/world/entity/player/PlayerSkin
+Compiled from "PlayerSkin.java"
+public final class net.minecraft.world.entity.player.PlayerSkin extends java.lang.Record {
+  public net.minecraft.world.entity.player.PlayerSkin(net.minecraft.core.ClientAsset$Texture, net.minecraft.core.ClientAsset$Texture, net.minecraft.core.ClientAsset$Texture, net.minecraft.world.entity.player.PlayerModelType, boolean);
+  public static net.minecraft.world.entity.player.PlayerSkin insecure(net.minecraft.core.ClientAsset$Texture, net.minecraft.core.ClientAsset$Texture, net.minecraft.core.ClientAsset$Texture, net.minecraft.world.entity.player.PlayerModelType);
+  public net.minecraft.world.entity.player.PlayerSkin with(net.minecraft.world.entity.player.PlayerSkin$Patch);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.core.ClientAsset$Texture body();
+  public net.minecraft.core.ClientAsset$Texture cape();
+  public net.minecraft.core.ClientAsset$Texture elytra();
+  public net.minecraft.world.entity.player.PlayerModelType model();
+  public boolean secure();
+}
+=== net/minecraft/client/renderer/texture/TextureAtlasSprite
+Compiled from "TextureAtlasSprite.java"
+public class net.minecraft.client.renderer.texture.TextureAtlasSprite implements net.minecraft.client.renderer.texture.UvMapping,java.lang.AutoCloseable {
+  public int getX();
+  public int getY();
+  public float getU0();
+  public float getU1();
+  public net.minecraft.client.renderer.texture.SpriteContents contents();
+  public net.minecraft.client.renderer.texture.SpriteContents$AnimationState createAnimationState(com.mojang.renderpearl.api.buffers.GpuBufferSlice, int);
+  public com.mojang.blaze3d.platform.Transparency transparency();
+  public float getU(float);
+  public float getV0();
+  public float getV1();
+  public float getV(float);
+  public net.minecraft.resources.Identifier atlasLocation();
+  public java.lang.String toString();
+  public void uploadFirstFrame(com.mojang.renderpearl.api.textures.GpuTexture, int);
+  public boolean isAnimated();
+  public void uploadSpriteUbo(java.nio.ByteBuffer, int, int, int, int, int);
+  public void close();
+  public int getPixelARGB(int, int, int);
+}
+=== net/minecraft/client/renderer/item/ItemStackRenderState$LayerRenderState
+Compiled from "ItemStackRenderState.java"
+public class net.minecraft.client.renderer.item.ItemStackRenderState$LayerRenderState {
+  public static final java.util.function.Supplier<org.joml.Vector3fc[]> NO_EXTENTS_SUPPLIER;
+  public static final int[] EMPTY_TINTS;
+  public net.minecraft.client.renderer.item.ItemStackRenderState$LayerRenderState(net.minecraft.client.renderer.item.ItemStackRenderState);
+  public void clear();
+  public void setQuads(net.minecraft.client.resources.model.geometry.ItemQuads);
+  public void setUsesBlockLight(boolean);
+  public void setExtents(java.util.function.Supplier<org.joml.Vector3fc[]>);
+  public void setParticleMaterial(net.minecraft.client.resources.model.sprite.Material$Baked);
+  public void setItemTransform(net.minecraft.client.resources.model.cuboid.ItemTransform);
+  public void setLocalTransform(org.joml.Matrix4fc);
+  public <T> void setupSpecialModel(net.minecraft.client.renderer.special.SpecialModelRenderer<T>, T);
+  public void setFoilType(net.minecraft.client.renderer.item.ItemStackRenderState$FoilType);
+  public it.unimi.dsi.fastutil.ints.IntList tintLayers();
+}
+=== net/minecraft/client/renderer/LevelRenderer
+Compiled from "LevelRenderer.java"
+public class net.minecraft.client.renderer.LevelRenderer implements java.lang.AutoCloseable {
+  public static final int OIT_WAVELET_RANK;
+  public static final int OIT_COEFFICIENT_COUNT;
+  public static final int OIT_TRANSMITTANCE_TARGET_COUNT;
+  public net.minecraft.client.renderer.LevelRenderer(net.minecraft.client.renderer.entity.EntityRenderDispatcher, net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher, net.minecraft.client.resources.model.ModelManager, net.minecraft.client.renderer.texture.TextureManager, net.minecraft.client.resources.model.sprite.AtlasManager, net.minecraft.client.renderer.ShaderManager, net.minecraft.client.renderer.GameRenderer, int, int);
+  public void render(com.mojang.blaze3d.resource.GraphicsResourceAllocator, boolean, net.minecraft.client.renderer.state.level.CameraRenderState, com.mojang.renderpearl.api.buffers.GpuBufferSlice, org.joml.Vector4f, boolean, boolean);
+  public net.minecraft.client.renderer.chunk.ChunkSectionsToRender prepareChunkRenders(org.joml.Matrix4fc, boolean);
+  public void addTransientBlock(long, net.minecraft.client.renderer.state.level.TransientBlockRenderState);
+  public void removeTransientBlocksInSection(long, long);
+  public net.minecraft.client.renderer.chunk.ChunkSectionsToRender prepareChunkRendersIndirect(org.joml.Matrix4fc, boolean);
+  public void resize(int, int);
+  public void endFrame();
+  public void close();
+  public void blitEntityOutline();
+  public void invalidateCompiledGeometry(net.minecraft.client.multiplayer.ClientLevel, net.minecraft.client.Options, net.minecraft.client.Camera, net.minecraft.client.color.block.BlockColors);
+  public void clearVisibleSections();
+  public void resetLevelRenderData();
+  public boolean hasRenderedAllSections();
+  public boolean isSectionCompiledAndVisible(net.minecraft.core.BlockPos, long);
+  public net.minecraft.client.renderer.chunk.SectionRenderDispatcher sectionRenderDispatcher();
+  public net.minecraft.client.renderer.entity.EntityRenderDispatcher entityRenderDispatcher();
+  public net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher blockEntityRenderDispatcher();
+  public net.minecraft.client.renderer.CloudRenderer cloudRenderer();
+  public net.minecraft.client.renderer.SkyRenderer skyRenderer();
+  public net.minecraft.client.renderer.WeatherEffectRenderer weatherEffectRenderer();
+  public net.minecraft.client.renderer.WorldBorderRenderer worldBorderRenderer();
+  public net.minecraft.client.renderer.ViewArea viewArea();
+  public it.unimi.dsi.fastutil.objects.ObjectArrayList<net.minecraft.client.renderer.chunk.SectionRenderDispatcher$RenderSection> visibleSections();
+  public it.unimi.dsi.fastutil.objects.ObjectArrayList<net.minecraft.client.renderer.chunk.SectionRenderDispatcher$RenderSection> nearbyVisibleSections();
+  public it.unimi.dsi.fastutil.longs.LongCollection expectedChunks();
+  public net.minecraft.client.renderer.SectionOcclusionGraph sectionOcclusionGraph();
+  public net.minecraft.gizmos.Gizmos$TemporaryCollection collectPerFrameRenderThreadGizmos();
+  public boolean isChunkRenderingUsingMultiDrawIndirect();
+  public void addMainThreadGizmos(java.util.List<net.minecraft.gizmos.SimpleGizmoCollector$GizmoInstance>);
+}
