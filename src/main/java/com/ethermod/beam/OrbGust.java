@@ -55,7 +55,7 @@ final class OrbGust {
                     ev.x * 0.5 + tangent.x + in.x,
                     Math.max(ev.y, 0.18),
                     ev.z * 0.5 + tangent.z + in.z);
-            e.needsSync = true;
+            com.ethermod.util.MotionSync.sync(e);
             e.resetFallDistance();
         }
         if (b.lifeTicks % 2 == 0) {

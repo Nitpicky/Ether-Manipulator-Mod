@@ -337,7 +337,7 @@ public final class BeamCastHelper {
             if (p.distanceToSqr(start.add(dir.scale(t))) > 2.25) continue;
             Vec3 pull = player.position().add(0, 0.6, 0).subtract(p).normalize().scale(0.35);
             e.setDeltaMovement(e.getDeltaMovement().scale(0.5).add(pull));
-            e.needsSync = true;
+            com.ethermod.util.MotionSync.sync(e);
         }
     }
 

@@ -312,7 +312,7 @@ public final class GustGrenade {
             if (e == g.owner) {
                 // your own grenade launches you but never hurts you
                 e.setDeltaMovement(e.getDeltaMovement().add(push));
-                e.needsSync = true;
+                com.ethermod.util.MotionSync.sync(e);
             } else if (e instanceof LivingEntity le) {
                 if (!Allegiance.enemyIgnoringPvp(g.owner, le) || !affects(g.owner, le)) continue;
                 float dmg = DAMAGE * (float) (0.5 + 0.5 * near);
@@ -330,7 +330,7 @@ public final class GustGrenade {
                 }
             } else if (e instanceof ItemEntity) {
                 e.setDeltaMovement(e.getDeltaMovement().add(push.scale(0.6)));
-                e.needsSync = true;
+                com.ethermod.util.MotionSync.sync(e);
             }
         }
     }

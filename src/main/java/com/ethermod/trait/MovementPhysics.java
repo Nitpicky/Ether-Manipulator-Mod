@@ -330,7 +330,7 @@ public final class MovementPhysics {
                                             Math.cos(Math.toRadians(p.getYRot())) * .2),
                                     down(p)));
         p.setDeltaMovement(v);
-        p.needsSync = true;
+        com.ethermod.util.MotionSync.sync(p);
         p.setOnGround(false);
     }
 
@@ -529,7 +529,7 @@ public final class MovementPhysics {
                 && !p.isInWater()) {
             data.putBoolean("mm_slamming", true);
             p.setDeltaMovement(p.getDeltaMovement().add(vector(down(p)).scale(.7)));
-            p.needsSync = true;
+            com.ethermod.util.MotionSync.sync(p);
         }
         if (p.onGround() && data.getBooleanOr("mm_slamming", false)) {
             data.remove("mm_slamming");

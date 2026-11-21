@@ -332,7 +332,7 @@ public class EtherManipulatorItem extends Item implements GeoItem {
             if (player.onGround() || !player.getPersistentData().getBooleanOr("mm_gust_boosted", false)) {
                 var recoil = player.getLookAngle().scale(-(0.3 + 0.3 * phase));
                 player.setDeltaMovement(player.getDeltaMovement().add(recoil));
-                player.needsSync = true;
+                com.ethermod.util.MotionSync.sync(player);
                 player.getPersistentData().putBoolean("mm_gust_boosted", true);
             }
         }

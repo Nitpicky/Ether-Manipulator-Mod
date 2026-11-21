@@ -136,7 +136,7 @@ public final class RapidsCurrents {
                     v.x + dir.x * push - sideways.x * .08,
                     v.y,
                     v.z + dir.z * push - sideways.z * .08);
-            if (!level.isClientSide()) e.needsSync = true;
+            if (!level.isClientSide()) com.ethermod.util.MotionSync.sync(e);
         }
     }
 

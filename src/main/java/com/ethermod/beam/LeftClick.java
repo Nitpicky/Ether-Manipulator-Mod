@@ -421,7 +421,7 @@ public final class LeftClick {
             e.getPersistentData().putBoolean(PULL_TAG, true);
             double speed = Math.min(.9, .12 + .05 * (age - 6));
             e.setDeltaMovement(to.scale(Math.min(speed, d) / d));
-            e.needsSync = true;
+            com.ethermod.util.MotionSync.sync(e);
         }
     }
 

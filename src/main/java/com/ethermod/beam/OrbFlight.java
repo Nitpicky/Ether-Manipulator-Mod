@@ -143,7 +143,7 @@ final class OrbFlight {
         Vec3 nv = want.scale(0.5);
         if (nv.length() > 2.2) nv = nv.normalize().scale(2.2);
         sp.setDeltaMovement(nv);
-        sp.needsSync = true;
+        com.ethermod.util.MotionSync.sync(sp);
         // the trident's riptide spin, kept going for as long as the shot carries you
         if (!sp.isAutoSpinAttack() || b.tickCount % 4 == 0) sp.startAutoSpinAttack(6, 6f, b.traits);
         sp.resetFallDistance();

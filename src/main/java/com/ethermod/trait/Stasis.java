@@ -100,7 +100,7 @@ public final class Stasis {
         if (e instanceof Mob m) m.setNoAi(f.noAi());
         e.getPersistentData().remove(STASIS_RESTORE);
         e.setDeltaMovement(v);
-        e.needsSync = true;
+        com.ethermod.util.MotionSync.sync(e);
         d.putLong("mm_stasis_cooldown", now + 40);
         d.remove("mm_stasis_ex");
         d.remove("mm_stasis_ey");
@@ -115,7 +115,7 @@ public final class Stasis {
             return;
         }
         e.setDeltaMovement(e.getDeltaMovement().add(force));
-        e.needsSync = true;
+        com.ethermod.util.MotionSync.sync(e);
     }
 
     /**

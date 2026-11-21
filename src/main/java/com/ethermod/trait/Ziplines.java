@@ -181,7 +181,7 @@ public final class Ziplines {
         Vec3 v = dir.scale(speed[0]).add(gap.scale(RIDE_PULL)).add(0, 0.08, 0);
         if (v.length() > 1.2) v = v.normalize().scale(1.2);
         sp.setDeltaMovement(v);
-        sp.needsSync = true;
+        com.ethermod.util.MotionSync.sync(sp);
         sp.resetFallDistance();
         MobilityEffects.markSoftLanding(sp);
         if (sp.tickCount % 3 == 0) {

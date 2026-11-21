@@ -138,7 +138,7 @@ final class OrbImpact {
                 Vec3 push = b.getDeltaMovement().normalize().scale(force);
                 target.setDeltaMovement(
                         target.getDeltaMovement().add(push.x, 0.15 + force * 0.1, push.z));
-                target.needsSync = true;
+                com.ethermod.util.MotionSync.sync(target);
                 OrbFluids.placeFluid(b, target.blockPosition(), null, Fluids.WATER);
             }
             case LAVA -> {
@@ -301,7 +301,7 @@ final class OrbImpact {
                         e.setDeltaMovement(
                                 e.getDeltaMovement()
                                         .add(away.x * 0.6 * ph, 0.25, away.z * 0.6 * ph));
-                        e.needsSync = true;
+                        com.ethermod.util.MotionSync.sync(e);
                         e.clearFire();
                     }
                 }
