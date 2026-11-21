@@ -249,7 +249,7 @@ final class KLoadoutList {
         int x0 = X, x1 = x0 + BUTTON_W + GAP, x2 = x1 + BUTTON_W + GAP, x3 = x2 + BUTTON_W + GAP;
 
         Palette add = room ? button("add") : off;
-        ui.rampControl(
+        var addLook = ui.rampControl(
                 g,
                 "save",
                 x0,
@@ -270,10 +270,10 @@ final class KLoadoutList {
                         }
                         : null,
                 List.of(label(Lang.tr("gui.ethermod.save_set"), add.text())));
-        hollowPlus(g, x0 + (BUTTON_W - 10) / 2, BUTTON_Y + 2, add.text());
+        hollowPlus(g, x0 + (BUTTON_W - 10) / 2, BUTTON_Y + 2 + addLook.dy(), addLook.icon());
 
         Palette copy = flashing("copy-code", ui) ? flashPalette : button("copy");
-        ui.rampControl(
+        var copyLook = ui.rampControl(
                 g,
                 "copy-code",
                 x1,
@@ -288,10 +288,10 @@ final class KLoadoutList {
                                         ? Lang.tr("gui.ethermod.copy_set")
                                         : Lang.tr("gui.ethermod.copy_build"),
                                 copy.text())));
-        icon(g, "copy", x1, copy.text());
+        icon(g, "copy", x1, copyLook);
 
         Palette paste = flashing("paste-code", ui) ? flashPalette : room ? button("paste") : off;
-        ui.rampControl(
+        var pasteLook = ui.rampControl(
                 g,
                 "paste-code",
                 x2,
@@ -301,10 +301,10 @@ final class KLoadoutList {
                 paste,
                 room ? () -> paste(ui, list) : null,
                 List.of(label(Lang.tr("gui.ethermod.paste_set"), paste.text())));
-        icon(g, "paste", x2, paste.text());
+        icon(g, "paste", x2, pasteLook);
 
         Palette del = button("delete");
-        ui.rampControl(
+        var delLook = ui.rampControl(
                 g,
                 "delete",
                 x3,
@@ -324,13 +324,13 @@ final class KLoadoutList {
                         label(
                                 selectedSet < 0 ? Lang.tr("gui.ethermod.clear_build") : Lang.tr("gui.ethermod.delete_set"),
                                 del.text())));
-        icon(g, "trash", x3, del.text());
+        icon(g, "trash", x3, delLook);
     }
 
     /** A 10x10 sprite centred in a bottom-row button. */
-    private static void icon(GuiGraphics g, String name, int x, int c) {
+    private static void icon(GuiGraphics g, String name, int x, KUi.Look look) {
         var r = new Raster(BUTTON_W, BUTTON_H);
-        r.sprite(name, (BUTTON_W - 10) / 2, (BUTTON_H - 10) / 2, c);
+        r.sprite(name, (BUTTON_W - 10) / 2, (BUTTON_H - 10) / 2 + look.dy(), look.icon());
         raster(g, r, x, BUTTON_Y);
     }
 
@@ -350,7 +350,7 @@ final class KLoadoutList {
     private void flash(KUi ui, String key, String text, boolean ok) {
         flashKey = key;
         flashText = text;
-        flashPalette = button(ok ? "add" : "delete");
+        flashPalette = button(ok ? "ok" : "bad");
         flashUntil = ui.now + FLASH_SECONDS;
     }
 

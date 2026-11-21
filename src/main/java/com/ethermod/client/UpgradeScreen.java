@@ -262,6 +262,7 @@ public class UpgradeScreen extends Screen {
                 }
                 lastClick = ui.now;
                 if (h.action() != null) {
+                    ui.pressedKey = h.key();
                     audio.press(h.key());
                     h.action().run();
                 } else if (h.key().startsWith("node")) audio.refused();
@@ -293,6 +294,7 @@ public class UpgradeScreen extends Screen {
     public boolean mouseReleased(double x, double y, int b) {
         colour.endDrag();
         loadouts.releaseBar();
+        ui.pressedKey = null;
         return model.release(clock());
     }
 
