@@ -1,0 +1,343 @@
+/home/runner/.gradle/caches/modules-2/files-2.1/curse.maven/geckolib-388172/8893169/196231506b89da06925c087f9b8bc5fd12ebea16/geckolib-388172-8893169.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/io.github.llamalad7/mixinextras-neoforge/0.5.5/26f2905a37afd203c3da1d6a2e164472a7531b41/mixinextras-neoforge-0.5.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.accesstransformers/at-parser/11.0.2/64aae57d6d26d69543c5275181fe6971707a4e16/at-parser-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/earlydisplay/12.0.16/efa2e56115d22853d10524874a7bbb64555c2a28/earlydisplay-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/12.0.16/edbb2ee8211a867215970bc15ae9c354fa56dc09/loader-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarMetadata/0.5.3/ff40c1cd721d07615d825c5bbf27705b2e3258ed/JarJarMetadata-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarSelector/0.5.3/6b845aab8d5c8e721b4e3cd30f97722b7f8044b1/JarJarSelector-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/accesstransformers/11.0.2/25dcb69c78b16669935f0ab91dff830ce192379d/accesstransformers-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/bus/8.0.5/5b2d33285ab5d1554e9798ad98c40d6ea3868bd5/bus-8.0.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/mergetool/2.0.7/793b18456e92c4a7f66d9b5d8bf7a9c1c7a20b20/mergetool-2.0.7-api.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar
+=== LIST /(renderpearl/api/[a-z/]*/[A-Za-z]*|.*PictureInPicture.*|.*Pipeline.*Event.*|BlendFactor|BlendOp.*|.*CompareOp|.*DepthTest.*)$
+com/mojang/renderpearl/api/buffers/GpuBuffer
+com/mojang/renderpearl/api/buffers/GpuBufferSlice
+com/mojang/renderpearl/api/buffers/TransientMemory
+com/mojang/renderpearl/api/commands/CommandEncoder
+com/mojang/renderpearl/api/commands/GpuFence
+com/mojang/renderpearl/api/commands/GpuQuery
+com/mojang/renderpearl/api/commands/GpuQueryPool
+com/mojang/renderpearl/api/commands/RenderPass
+com/mojang/renderpearl/api/commands/RenderPassDescriptor
+com/mojang/renderpearl/api/device/BackendCreationException
+com/mojang/renderpearl/api/device/DeviceFeatures
+com/mojang/renderpearl/api/device/DeviceInfo
+com/mojang/renderpearl/api/device/DeviceLimits
+com/mojang/renderpearl/api/device/DeviceType
+com/mojang/renderpearl/api/device/GpuBackend
+com/mojang/renderpearl/api/device/GpuDebugOptions
+com/mojang/renderpearl/api/device/GpuDevice
+com/mojang/renderpearl/api/device/GpuDeviceLossException
+com/mojang/renderpearl/api/device/GpuOutOfMemoryException
+com/mojang/renderpearl/api/device/GpuSurface
+com/mojang/renderpearl/api/device/HintsAndWorkarounds
+com/mojang/renderpearl/api/device/SurfaceException
+com/mojang/renderpearl/api/pipeline/BindGroupLayout
+com/mojang/renderpearl/api/pipeline/BlendEquation
+com/mojang/renderpearl/api/pipeline/BlendFactor
+com/mojang/renderpearl/api/pipeline/BlendFunction
+com/mojang/renderpearl/api/pipeline/BlendOp
+com/mojang/renderpearl/api/pipeline/ColorTargetState
+com/mojang/renderpearl/api/pipeline/CompareOp
+com/mojang/renderpearl/api/pipeline/CompiledRenderPipeline
+com/mojang/renderpearl/api/pipeline/DepthStencilState
+com/mojang/renderpearl/api/pipeline/IndexType
+com/mojang/renderpearl/api/pipeline/PolygonMode
+com/mojang/renderpearl/api/pipeline/PrimitiveTopology
+com/mojang/renderpearl/api/pipeline/RenderPipeline
+com/mojang/renderpearl/api/pipeline/ShaderSource
+com/mojang/renderpearl/api/pipeline/ShaderType
+com/mojang/renderpearl/api/pipeline/UniformType
+com/mojang/renderpearl/api/textures/AddressMode
+com/mojang/renderpearl/api/textures/FilterMode
+com/mojang/renderpearl/api/textures/GpuSampler
+com/mojang/renderpearl/api/textures/GpuTexture
+com/mojang/renderpearl/api/textures/GpuTextureView
+com/mojang/renderpearl/api/vertex/VertexFormat
+com/mojang/renderpearl/api/vertex/VertexFormatElement
+net/minecraft/client/gui/render/pip/PictureInPictureRenderer
+net/minecraft/client/renderer/state/gui/pip/PictureInPictureRenderState
+net/neoforged/neoforge/client/event/RegisterPictureInPictureRenderersEvent
+net/neoforged/neoforge/client/event/RegisterRenderPipelinesEvent
+net/neoforged/neoforge/client/event/RegisterRenderPipelinesEvent$Registrar
+net/neoforged/neoforge/client/gui/PictureInPictureRendererPool
+net/neoforged/neoforge/client/gui/PictureInPictureRendererRegistration
+net/neoforged/neoforge/client/pipeline/RegisterPipelineModifiersEvent
+=== CODE net/minecraft/client/renderer/RenderPipelines <clinit>
+=== SIG  
+=== com/mojang/renderpearl/api/pipeline/RenderPipeline
+Compiled from "RenderPipeline.java"
+public class com.mojang.renderpearl.api.pipeline.RenderPipeline {
+  public int getSortKey();
+  public static void updateSortKeySeed();
+  public java.lang.String toString();
+  public com.mojang.renderpearl.api.pipeline.PolygonMode getPolygonMode();
+  public boolean isCull();
+  public java.util.List<com.mojang.renderpearl.api.pipeline.ColorTargetState> getColorTargetStates();
+  public com.mojang.renderpearl.api.pipeline.DepthStencilState getDepthStencilState();
+  public net.minecraft.resources.Identifier getLocation();
+  public java.util.List<com.mojang.renderpearl.api.vertex.VertexFormat> getVertexFormatBindings();
+  public com.mojang.renderpearl.api.vertex.VertexFormat getVertexFormatBinding(int);
+  public com.mojang.renderpearl.api.pipeline.PrimitiveTopology getPrimitiveTopology();
+  public java.util.Map<com.mojang.renderpearl.api.pipeline.ShaderType, net.minecraft.resources.Identifier> getShaders();
+  public net.minecraft.client.renderer.ShaderDefines getShaderDefines();
+  public java.util.List<com.mojang.renderpearl.api.pipeline.BindGroupLayout> getBindGroupLayouts();
+  public boolean wantsDepthTexture();
+  public int pushConstantSize();
+  public com.mojang.renderpearl.api.pipeline.RenderPipeline$Builder toBuilder();
+  public static com.mojang.renderpearl.api.pipeline.RenderPipeline$Builder builder(com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet...);
+}
+=== com/mojang/renderpearl/api/pipeline/RenderPipeline$Builder
+Compiled from "RenderPipeline.java"
+public class com.mojang.renderpearl.api.pipeline.RenderPipeline$Builder {
+  public com.mojang.renderpearl.api.pipeline.RenderPipeline$Builder withLocation(java.lang.String);
+  public com.mojang.renderpearl.api.pipeline.RenderPipeline$Builder withLocation(net.minecraft.resources.Identifier);
+  public com.mojang.renderpearl.api.pipeline.RenderPipeline$Builder withFragmentShader(java.lang.String);
+  public com.mojang.renderpearl.api.pipeline.RenderPipeline$Builder withFragmentShader(net.minecraft.resources.Identifier);
+  public com.mojang.renderpearl.api.pipeline.RenderPipeline$Builder withVertexShader(java.lang.String);
+  public com.mojang.renderpearl.api.pipeline.RenderPipeline$Builder withVertexShader(net.minecraft.resources.Identifier);
+  public com.mojang.renderpearl.api.pipeline.RenderPipeline$Builder withShaderDefine(java.lang.String);
+  public com.mojang.renderpearl.api.pipeline.RenderPipeline$Builder withShaderDefine(java.lang.String, int);
+  public com.mojang.renderpearl.api.pipeline.RenderPipeline$Builder withShaderDefine(java.lang.String, float);
+  public com.mojang.renderpearl.api.pipeline.RenderPipeline$Builder withBindGroupLayout(com.mojang.renderpearl.api.pipeline.BindGroupLayout);
+  public com.mojang.renderpearl.api.pipeline.RenderPipeline$Builder withPolygonMode(com.mojang.renderpearl.api.pipeline.PolygonMode);
+  public com.mojang.renderpearl.api.pipeline.RenderPipeline$Builder withCull(boolean);
+  public com.mojang.renderpearl.api.pipeline.RenderPipeline$Builder withColorTargetState(int, com.mojang.renderpearl.api.pipeline.ColorTargetState);
+  public com.mojang.renderpearl.api.pipeline.RenderPipeline$Builder withColorTargetStates(int, int, java.util.function.Supplier<com.mojang.renderpearl.api.pipeline.ColorTargetState>);
+  public com.mojang.renderpearl.api.pipeline.RenderPipeline$Builder withUnusedColorTargetState(int);
+  public com.mojang.renderpearl.api.pipeline.RenderPipeline$Builder withColorTargetState(com.mojang.renderpearl.api.pipeline.ColorTargetState);
+  public com.mojang.renderpearl.api.pipeline.RenderPipeline$Builder withDepthStencilState(com.mojang.renderpearl.api.pipeline.DepthStencilState);
+  public com.mojang.renderpearl.api.pipeline.RenderPipeline$Builder withDepthStencilState(java.util.Optional<com.mojang.renderpearl.api.pipeline.DepthStencilState>);
+  public com.mojang.renderpearl.api.pipeline.RenderPipeline$Builder withVertexBinding(int, com.mojang.renderpearl.api.vertex.VertexFormat);
+  public com.mojang.renderpearl.api.pipeline.RenderPipeline$Builder withPrimitiveTopology(com.mojang.renderpearl.api.pipeline.PrimitiveTopology);
+  public com.mojang.renderpearl.api.pipeline.RenderPipeline$Builder withPushConstantSize(int);
+  public com.mojang.renderpearl.api.pipeline.RenderPipeline$Builder withSnippet(com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet);
+  public com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet buildSnippet();
+  public com.mojang.renderpearl.api.pipeline.RenderPipeline build();
+}
+=== com/mojang/renderpearl/api/pipeline/BlendFunction
+Compiled from "BlendFunction.java"
+public final class com.mojang.renderpearl.api.pipeline.BlendFunction extends java.lang.Record {
+  public static final com.mojang.renderpearl.api.pipeline.BlendFunction LIGHTNING;
+  public static final com.mojang.renderpearl.api.pipeline.BlendFunction GLINT;
+  public static final com.mojang.renderpearl.api.pipeline.BlendFunction OVERLAY;
+  public static final com.mojang.renderpearl.api.pipeline.BlendFunction TRANSLUCENT;
+  public static final com.mojang.renderpearl.api.pipeline.BlendFunction TRANSLUCENT_PREMULTIPLIED_ALPHA;
+  public static final com.mojang.renderpearl.api.pipeline.BlendFunction ADDITIVE;
+  public static final com.mojang.renderpearl.api.pipeline.BlendFunction ENTITY_OUTLINE_BLIT;
+  public static final com.mojang.renderpearl.api.pipeline.BlendFunction INVERT;
+  public static final com.mojang.renderpearl.api.pipeline.BlendFunction MAX;
+  public com.mojang.renderpearl.api.pipeline.BlendFunction(com.mojang.renderpearl.api.pipeline.BlendFactor, com.mojang.renderpearl.api.pipeline.BlendFactor, com.mojang.renderpearl.api.pipeline.BlendOp, com.mojang.renderpearl.api.pipeline.BlendFactor, com.mojang.renderpearl.api.pipeline.BlendFactor, com.mojang.renderpearl.api.pipeline.BlendOp);
+  public com.mojang.renderpearl.api.pipeline.BlendFunction(com.mojang.renderpearl.api.pipeline.BlendFactor, com.mojang.renderpearl.api.pipeline.BlendFactor, com.mojang.renderpearl.api.pipeline.BlendFactor, com.mojang.renderpearl.api.pipeline.BlendFactor);
+  public com.mojang.renderpearl.api.pipeline.BlendFunction(com.mojang.renderpearl.api.pipeline.BlendEquation);
+  public com.mojang.renderpearl.api.pipeline.BlendFunction(com.mojang.renderpearl.api.pipeline.BlendFactor, com.mojang.renderpearl.api.pipeline.BlendFactor, com.mojang.renderpearl.api.pipeline.BlendOp);
+  public com.mojang.renderpearl.api.pipeline.BlendFunction(com.mojang.renderpearl.api.pipeline.BlendFactor, com.mojang.renderpearl.api.pipeline.BlendFactor);
+  public com.mojang.renderpearl.api.pipeline.BlendFunction(com.mojang.renderpearl.api.pipeline.BlendEquation, com.mojang.renderpearl.api.pipeline.BlendEquation);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public com.mojang.renderpearl.api.pipeline.BlendEquation color();
+  public com.mojang.renderpearl.api.pipeline.BlendEquation alpha();
+}
+=== com/mojang/renderpearl/api/pipeline/ColorTargetState
+Compiled from "ColorTargetState.java"
+public final class com.mojang.renderpearl.api.pipeline.ColorTargetState extends java.lang.Record {
+  public static final int WRITE_RED;
+  public static final int WRITE_GREEN;
+  public static final int WRITE_BLUE;
+  public static final int WRITE_ALPHA;
+  public static final int WRITE_COLOR;
+  public static final int WRITE_ALL;
+  public static final int WRITE_NONE;
+  public static final com.mojang.renderpearl.api.pipeline.ColorTargetState DEFAULT;
+  public static final int MAX_COLOR_TARGETS;
+  public com.mojang.renderpearl.api.pipeline.ColorTargetState(com.mojang.renderpearl.api.pipeline.BlendFunction);
+  public com.mojang.renderpearl.api.pipeline.ColorTargetState(java.util.Optional<com.mojang.renderpearl.api.pipeline.BlendFunction>, com.mojang.renderpearl.api.GpuFormat, int);
+  public boolean writeRed();
+  public boolean writeGreen();
+  public boolean writeBlue();
+  public boolean writeAlpha();
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public java.util.Optional<com.mojang.renderpearl.api.pipeline.BlendFunction> blendFunction();
+  public com.mojang.renderpearl.api.GpuFormat format();
+  public int writeMask();
+}
+=== com/mojang/renderpearl/api/pipeline/DepthStencilState
+Compiled from "DepthStencilState.java"
+public final class com.mojang.renderpearl.api.pipeline.DepthStencilState extends java.lang.Record {
+  public static final com.mojang.renderpearl.api.pipeline.DepthStencilState DEFAULT;
+  public com.mojang.renderpearl.api.pipeline.DepthStencilState(com.mojang.renderpearl.api.pipeline.CompareOp, boolean, float, float);
+  public com.mojang.renderpearl.api.pipeline.DepthStencilState(com.mojang.renderpearl.api.pipeline.CompareOp, boolean);
+  public com.mojang.renderpearl.api.pipeline.DepthStencilState(com.mojang.renderpearl.api.pipeline.CompareOp, boolean, float, float, net.neoforged.neoforge.client.stencil.StencilTest);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public com.mojang.renderpearl.api.pipeline.CompareOp depthTest();
+  public boolean writeDepth();
+  public float depthBiasScaleFactor();
+  public float depthBiasConstant();
+  public net.neoforged.neoforge.client.stencil.StencilTest stencilTest();
+}
+=== com/mojang/renderpearl/api/device/GpuDevice
+Compiled from "GpuDevice.java"
+public interface com.mojang.renderpearl.api.device.GpuDevice {
+  public abstract com.mojang.renderpearl.api.device.GpuSurface createSurface(long, java.util.function.BooleanSupplier);
+  public abstract com.mojang.renderpearl.api.commands.CommandEncoder createCommandEncoder();
+  public abstract com.mojang.renderpearl.api.textures.GpuSampler createSampler(com.mojang.renderpearl.api.textures.AddressMode, com.mojang.renderpearl.api.textures.AddressMode, com.mojang.renderpearl.api.textures.FilterMode, com.mojang.renderpearl.api.textures.FilterMode, int, java.util.OptionalDouble);
+  public abstract com.mojang.renderpearl.api.textures.GpuTexture createTexture(java.util.function.Supplier<java.lang.String>, int, com.mojang.renderpearl.api.GpuFormat, int, int, int, int);
+  public abstract com.mojang.renderpearl.api.textures.GpuTexture createTexture(java.lang.String, int, com.mojang.renderpearl.api.GpuFormat, int, int, int, int);
+  public abstract com.mojang.renderpearl.api.textures.GpuTextureView createTextureView(com.mojang.renderpearl.api.textures.GpuTexture);
+  public abstract com.mojang.renderpearl.api.textures.GpuTextureView createTextureView(com.mojang.renderpearl.api.textures.GpuTexture, int, int);
+  public abstract com.mojang.renderpearl.api.buffers.GpuBuffer createBuffer(java.util.function.Supplier<java.lang.String>, int, long);
+  public abstract com.mojang.renderpearl.api.buffers.GpuBuffer createBuffer(java.util.function.Supplier<java.lang.String>, int, java.nio.ByteBuffer);
+  public abstract java.util.List<java.lang.String> getLastDebugMessages();
+  public abstract boolean isDebuggingEnabled();
+  public abstract java.util.concurrent.CompletableFuture<com.mojang.renderpearl.api.pipeline.CompiledRenderPipeline$Pending> compilePipeline(com.mojang.renderpearl.api.pipeline.RenderPipeline, com.mojang.renderpearl.api.pipeline.ShaderSource, java.util.concurrent.Executor);
+  public abstract void close();
+  public abstract com.mojang.renderpearl.api.commands.GpuQueryPool createTimestampQueryPool(int);
+  public abstract com.mojang.renderpearl.api.device.DeviceInfo getDeviceInfo();
+}
+=== com/mojang/renderpearl/api/commands/CommandEncoder
+Compiled from "CommandEncoder.java"
+public interface com.mojang.renderpearl.api.commands.CommandEncoder {
+  public abstract void submit();
+  public abstract com.mojang.renderpearl.api.buffers.TransientMemory transientMemory();
+  public default com.mojang.renderpearl.api.commands.RenderPass createRenderPass(java.util.function.Supplier<java.lang.String>, com.mojang.renderpearl.api.textures.GpuTextureView, java.util.Optional<org.joml.Vector4fc>);
+  public default com.mojang.renderpearl.api.commands.RenderPass createRenderPass(java.util.function.Supplier<java.lang.String>, com.mojang.renderpearl.api.textures.GpuTextureView, java.util.Optional<org.joml.Vector4fc>, com.mojang.renderpearl.api.textures.GpuTextureView, java.util.OptionalDouble);
+  public default com.mojang.renderpearl.api.commands.RenderPass createRenderPass(java.util.function.Supplier<java.lang.String>, com.mojang.renderpearl.api.textures.GpuTextureView, java.util.Optional<org.joml.Vector4fc>, com.mojang.renderpearl.api.textures.GpuTextureView, java.util.OptionalDouble, com.mojang.renderpearl.api.commands.RenderPass$RenderArea);
+  public abstract com.mojang.renderpearl.api.commands.RenderPass createRenderPass(com.mojang.renderpearl.api.commands.RenderPassDescriptor);
+  public abstract void clearColorTexture(com.mojang.renderpearl.api.textures.GpuTexture, org.joml.Vector4fc);
+  public abstract void clearColorAndDepthTextures(com.mojang.renderpearl.api.textures.GpuTexture, org.joml.Vector4fc, com.mojang.renderpearl.api.textures.GpuTexture, double);
+  public abstract void clearColorAndDepthTextures(com.mojang.renderpearl.api.textures.GpuTexture, org.joml.Vector4fc, com.mojang.renderpearl.api.textures.GpuTexture, double, int, int, int, int, int);
+  public abstract void clearDepthTexture(com.mojang.renderpearl.api.textures.GpuTexture, double);
+  public abstract void clearStencilTexture(com.mojang.renderpearl.api.textures.GpuTexture, int);
+  public abstract void writeToBuffer(com.mojang.renderpearl.api.buffers.GpuBufferSlice, java.nio.ByteBuffer);
+  public abstract void copyToBuffer(com.mojang.renderpearl.api.buffers.GpuBufferSlice, com.mojang.renderpearl.api.buffers.GpuBufferSlice);
+  public abstract void writeToTexture(com.mojang.renderpearl.api.textures.GpuTexture, com.mojang.blaze3d.platform.NativeImage);
+  public abstract void writeToTexture(com.mojang.renderpearl.api.textures.GpuTexture, com.mojang.blaze3d.platform.NativeImage, int, int, int, int);
+  public abstract void writeToTexture(com.mojang.renderpearl.api.textures.GpuTexture, java.nio.ByteBuffer, int, int, int, int, int, int);
+  public abstract void copyBufferToTexture(com.mojang.renderpearl.api.buffers.GpuBufferSlice, int, int, int, int, com.mojang.renderpearl.api.textures.GpuTexture, int, int, int, int, int, int);
+  public abstract void copyTextureToBuffer(com.mojang.renderpearl.api.textures.GpuTexture, com.mojang.renderpearl.api.buffers.GpuBuffer, long, java.lang.Runnable, int);
+  public abstract void copyTextureToBuffer(com.mojang.renderpearl.api.textures.GpuTexture, com.mojang.renderpearl.api.buffers.GpuBuffer, long, java.lang.Runnable, int, int, int, int, int);
+  public abstract void copyTextureToTexture(com.mojang.renderpearl.api.textures.GpuTexture, com.mojang.renderpearl.api.textures.GpuTexture, int, int, int, int, int, int, int);
+  public abstract com.mojang.renderpearl.api.commands.GpuFence createFence();
+  public abstract void writeTimestamp(com.mojang.renderpearl.api.commands.GpuQueryPool, int);
+}
+=== com/mojang/renderpearl/api/commands/RenderPass
+Compiled from "RenderPass.java"
+public interface com.mojang.renderpearl.api.commands.RenderPass extends com.mojang.renderpearl.util.UncheckedAutoCloseable {
+  public static final int MAX_VERTEX_BUFFERS;
+  public static final int INDIRECT_DRAW_SIZE;
+  public static final int INDIRECT_INDEXED_DRAW_SIZE;
+  public abstract void pushDebugGroup(java.util.function.Supplier<java.lang.String>);
+  public abstract void popDebugGroup();
+  public abstract void writeTimestamp(com.mojang.renderpearl.api.commands.GpuQueryPool, int);
+  public abstract void setPipeline(com.mojang.renderpearl.api.pipeline.CompiledRenderPipeline);
+  public abstract void setUniform(java.lang.String, com.mojang.renderpearl.api.textures.GpuTextureView, com.mojang.renderpearl.api.textures.GpuSampler);
+  public abstract void setUniform(java.lang.String, com.mojang.renderpearl.api.buffers.GpuBuffer);
+  public abstract void setUniform(java.lang.String, com.mojang.renderpearl.api.buffers.GpuBufferSlice);
+  public abstract void pushConstants(java.nio.ByteBuffer);
+  public abstract void setViewport(int, int, int, int);
+  public abstract void enableScissor(int, int, int, int);
+  public abstract void disableScissor();
+  public abstract void setVertexBuffer(int, com.mojang.renderpearl.api.buffers.GpuBufferSlice);
+  public abstract void setIndexBuffer(com.mojang.renderpearl.api.buffers.GpuBuffer, com.mojang.renderpearl.api.pipeline.IndexType);
+  public abstract void drawIndexed(int, int, int, int, int);
+  public abstract void multiDrawIndexed(java.nio.IntBuffer, int, int, int);
+  public abstract void multiDrawIndexed(org.lwjgl.PointerBuffer, java.nio.IntBuffer, java.nio.IntBuffer, int);
+  public abstract void drawIndexedIndirect(com.mojang.renderpearl.api.buffers.GpuBufferSlice, int);
+  public abstract <T> void drawMultipleIndexed(java.util.Collection<com.mojang.renderpearl.api.commands.RenderPass$Draw<T>>, com.mojang.renderpearl.api.buffers.GpuBuffer, com.mojang.renderpearl.api.pipeline.IndexType, java.util.Collection<java.lang.String>, T);
+  public abstract void draw(int, int, int, int);
+  public abstract void multiDraw(java.nio.IntBuffer, int, int, int);
+  public abstract void multiDraw(java.nio.IntBuffer, java.nio.IntBuffer, int);
+  public abstract void drawIndirect(com.mojang.renderpearl.api.buffers.GpuBufferSlice, int);
+}
+=== net/minecraft/client/renderer/state/gui/GuiElementRenderState
+Compiled from "GuiElementRenderState.java"
+public interface net.minecraft.client.renderer.state.gui.GuiElementRenderState extends net.minecraft.client.renderer.state.gui.ScreenArea {
+  public abstract void buildVertices(com.mojang.blaze3d.vertex.VertexConsumer);
+  public abstract com.mojang.renderpearl.api.pipeline.RenderPipeline pipeline();
+  public abstract net.minecraft.client.gui.render.TextureSetup textureSetup();
+  public abstract net.minecraft.client.gui.navigation.ScreenRectangle scissorArea();
+}
+=== net/minecraft/client/renderer/state/gui/ColoredRectangleRenderState
+Compiled from "ColoredRectangleRenderState.java"
+public final class net.minecraft.client.renderer.state.gui.ColoredRectangleRenderState extends java.lang.Record implements net.minecraft.client.renderer.state.gui.GuiElementRenderState {
+  public net.minecraft.client.renderer.state.gui.ColoredRectangleRenderState(com.mojang.renderpearl.api.pipeline.RenderPipeline, net.minecraft.client.gui.render.TextureSetup, org.joml.Matrix3x2fc, int, int, int, int, int, int, net.minecraft.client.gui.navigation.ScreenRectangle);
+  public net.minecraft.client.renderer.state.gui.ColoredRectangleRenderState(com.mojang.renderpearl.api.pipeline.RenderPipeline, net.minecraft.client.gui.render.TextureSetup, org.joml.Matrix3x2fc, int, int, int, int, int, int, net.minecraft.client.gui.navigation.ScreenRectangle, net.minecraft.client.gui.navigation.ScreenRectangle);
+  public void buildVertices(com.mojang.blaze3d.vertex.VertexConsumer);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public com.mojang.renderpearl.api.pipeline.RenderPipeline pipeline();
+  public net.minecraft.client.gui.render.TextureSetup textureSetup();
+  public org.joml.Matrix3x2fc pose();
+  public int x0();
+  public int y0();
+  public int x1();
+  public int y1();
+  public int col1();
+  public int col2();
+  public net.minecraft.client.gui.navigation.ScreenRectangle scissorArea();
+  public net.minecraft.client.gui.navigation.ScreenRectangle bounds();
+}
+=== net/minecraft/client/renderer/state/gui/pip/PictureInPictureRenderState
+Compiled from "PictureInPictureRenderState.java"
+public interface net.minecraft.client.renderer.state.gui.pip.PictureInPictureRenderState extends net.minecraft.client.renderer.state.gui.ScreenArea {
+  public static final org.joml.Matrix3x2fc IDENTITY_POSE;
+  public abstract int x0();
+  public abstract int x1();
+  public abstract int y0();
+  public abstract int y1();
+  public abstract float scale();
+  public default org.joml.Matrix3x2fc pose();
+  public abstract net.minecraft.client.gui.navigation.ScreenRectangle scissorArea();
+  public static net.minecraft.client.gui.navigation.ScreenRectangle getBounds(int, int, int, int, net.minecraft.client.gui.navigation.ScreenRectangle);
+  public static net.minecraft.client.gui.navigation.ScreenRectangle getBounds(int, int, int, int, org.joml.Matrix3x2fc, net.minecraft.client.gui.navigation.ScreenRectangle);
+}
+=== net/minecraft/client/gui/render/pip/PictureInPictureRenderer
+Compiled from "PictureInPictureRenderer.java"
+public abstract class net.minecraft.client.gui.render.pip.PictureInPictureRenderer<T extends net.minecraft.client.renderer.state.gui.pip.PictureInPictureRenderState> implements java.lang.AutoCloseable {
+  public net.minecraft.client.gui.render.pip.PictureInPictureRenderer();
+  public void prepare(T, net.minecraft.client.renderer.state.gui.GuiRenderState, net.minecraft.client.renderer.feature.FeatureRenderDispatcher, int);
+  public void close();
+  public abstract java.lang.Class<T> getRenderStateClass();
+  public boolean canBeReusedFor(T, int, int);
+}
+=== net/minecraft/client/gui/render/TextureSetup
+Compiled from "TextureSetup.java"
+public final class net.minecraft.client.gui.render.TextureSetup extends java.lang.Record {
+  public net.minecraft.client.gui.render.TextureSetup(com.mojang.renderpearl.api.textures.GpuTextureView, com.mojang.renderpearl.api.textures.GpuTextureView, com.mojang.renderpearl.api.textures.GpuTextureView, com.mojang.renderpearl.api.textures.GpuSampler, com.mojang.renderpearl.api.textures.GpuSampler, com.mojang.renderpearl.api.textures.GpuSampler);
+  public static net.minecraft.client.gui.render.TextureSetup singleTexture(com.mojang.renderpearl.api.textures.GpuTextureView, com.mojang.renderpearl.api.textures.GpuSampler);
+  public static net.minecraft.client.gui.render.TextureSetup singleTextureWithLightmap(com.mojang.renderpearl.api.textures.GpuTextureView, com.mojang.renderpearl.api.textures.GpuSampler);
+  public static net.minecraft.client.gui.render.TextureSetup doubleTexture(com.mojang.renderpearl.api.textures.GpuTextureView, com.mojang.renderpearl.api.textures.GpuSampler, com.mojang.renderpearl.api.textures.GpuTextureView, com.mojang.renderpearl.api.textures.GpuSampler);
+  public static net.minecraft.client.gui.render.TextureSetup noTexture();
+  public int getSortKey();
+  public static void updateSortKeySeed();
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public com.mojang.renderpearl.api.textures.GpuTextureView texure0();
+  public com.mojang.renderpearl.api.textures.GpuTextureView texure1();
+  public com.mojang.renderpearl.api.textures.GpuTextureView texure2();
+  public com.mojang.renderpearl.api.textures.GpuSampler sampler0();
+  public com.mojang.renderpearl.api.textures.GpuSampler sampler1();
+  public com.mojang.renderpearl.api.textures.GpuSampler sampler2();
+}
+=== net/neoforged/neoforge/client/event/RegisterPictureInPictureRenderersEvent
+Compiled from "RegisterPictureInPictureRenderersEvent.java"
+public final class net.neoforged.neoforge.client.event.RegisterPictureInPictureRenderersEvent extends net.neoforged.bus.api.Event implements net.neoforged.fml.event.IModBusEvent {
+  public net.neoforged.neoforge.client.event.RegisterPictureInPictureRenderersEvent(java.util.List<net.neoforged.neoforge.client.gui.PictureInPictureRendererRegistration<?>>);
+  public <T extends net.minecraft.client.renderer.state.gui.pip.PictureInPictureRenderState> void register(java.lang.Class<T>, java.util.function.Supplier<net.minecraft.client.gui.render.pip.PictureInPictureRenderer<T>>);
+}
+=== net/neoforged/neoforge/client/event/RegisterRenderPipelinesEvent
+Compiled from "RegisterRenderPipelinesEvent.java"
+public class net.neoforged.neoforge.client.event.RegisterRenderPipelinesEvent extends net.neoforged.bus.api.Event implements net.neoforged.fml.event.IModBusEvent {
+  public net.neoforged.neoforge.client.event.RegisterRenderPipelinesEvent(net.neoforged.neoforge.client.event.RegisterRenderPipelinesEvent$Registrar);
+  public void registerPipeline(com.mojang.renderpearl.api.pipeline.RenderPipeline);
+  public void registerOptionalPipeline(com.mojang.renderpearl.api.pipeline.RenderPipeline);
+  public void registerOitPipelineSet(net.minecraft.client.renderer.oit.OitPipelineSet);
+}
