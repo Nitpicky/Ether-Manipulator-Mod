@@ -1,4 +1,4 @@
-net/minecraft/client/renderer/texture/atlas/AtlasManager|net/minecraft/client/resources/model/AtlasManager|net/minecraft/data/AtlasIds|net/minecraft/client/resources/model/sprite/SpriteGetter
-/(.*AtlasManager|AtlasIds|.*SpriteGetter|.*Sheets|ModelBakery)$
-net/minecraft/client/renderer/feature/FlameFeatureRenderer#buildGroup net/minecraft/client/renderer/feature/ItemFeatureRenderer#prepareMainSubmit
-net/minecraft/client/Minecraft#.*(tlas|prite|Materials).* net/minecraft/core/component/DataComponents#SWING.* net/minecraft/client/resources/model/ModelBakery#.*FIRE.*
+net/minecraft/client/renderer/rendertype/RenderType net/minecraft/client/renderer/rendertype/RenderSetup.* net/minecraft/client/resources/model/geometry/BakedQuad\$MaterialInfo net/minecraft/client/resources/model/sprite/SpriteId
+/(.*rendertype/.*|.*RenderPipelines)$
+net/minecraft/client/renderer/feature/FlameFeatureRenderer#prepare
+net/minecraft/client/renderer/rendertype/RenderTypes#lambda.* net/minecraft/client/renderer/RenderPipelines#.*GLINT.*
