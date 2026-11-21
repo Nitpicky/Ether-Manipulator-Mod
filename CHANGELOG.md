@@ -3,6 +3,11 @@
 Versions are MAJOR.FEATURE.PATCH. A version that isn't marked as a release rolls into the
 next release's notes.
 
+## 1.0.3
+
+### Changes
+- Lock-On holds while your aim stays within a block of the target.
+
 ## 1.0.2 (release)
 
 ### Sets

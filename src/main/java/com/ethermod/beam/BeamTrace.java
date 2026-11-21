@@ -56,8 +56,15 @@ public final class BeamTrace {
         return best != null ? best : block;
     }
 
-    /** Same cone as the server's Lock-On (BeamCastHelper). */
-    private static final double LOCK_COS = Math.cos(Math.toRadians(12));
+    /** How far off a locked creature's hitbox the aim may stray before Lock-On lets go, in blocks. */
+    public static final double LOCK_MARGIN = 1.0;
+
+    /** The aim ray passes within {@link #LOCK_MARGIN} of this hitbox, inside the range. */
+    public static boolean nearAim(
+            net.minecraft.world.phys.AABB box, Vec3 eye, Vec3 look, double range) {
+        var grown = box.inflate(LOCK_MARGIN);
+        return grown.contains(eye) || grown.clip(eye, eye.add(look.scale(range))).isPresent();
+    }
 
     /**
      * Lock-On: the creature the server says the beam holds, while it stays inside the lock cone and
@@ -72,9 +79,8 @@ public final class BeamTrace {
         Vec3 eye = player.getEyePosition(pt);
         Vec3 centre =
                 e.getPosition(pt).add(0, e.getBbHeight() / 2, 0);
-        Vec3 to = centre.subtract(eye);
-        if (to.length() > range || to.normalize().dot(player.getViewVector(pt)) <= LOCK_COS)
-            return null;
+        var box = e.getBoundingBox().move(e.getPosition(pt).subtract(e.position()));
+        if (!nearAim(box, eye, player.getViewVector(pt), range)) return null;
         var wall =
                 player.level()
                         .clip(

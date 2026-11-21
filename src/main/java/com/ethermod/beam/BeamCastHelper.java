@@ -145,16 +145,14 @@ public final class BeamCastHelper {
 
         // --- Foliage-aware block ray-cast ------------------------------------
         Vec3 hitPos = castThroughFoliage(level, player, eye, look, range);
-        // --- Entity: Lock-On keeps the last target inside a small cone ---------
+        // --- Entity: Lock-On keeps the last target while the aim passes within a block of it ---
         LivingEntity target = null;
         Vec3 targetPoint = null;
         if (Traits.has(tool, "plasmic.lock_on")
                 && state.level() >= 2
                 && level.getEntity(state.targetId) instanceof LivingEntity locked
                 && locked.isAlive()) {
-            Vec3 to = locked.getBoundingBox().getCenter().subtract(eye);
-            if (to.length() <= range
-                    && to.normalize().dot(look) > Math.cos(Math.toRadians(12))
+            if (BeamTrace.nearAim(locked.getBoundingBox(), eye, look, range)
                     && player.hasLineOfSight(locked)) {
                 target = locked;
                 targetPoint = locked.getBoundingBox().getCenter();
