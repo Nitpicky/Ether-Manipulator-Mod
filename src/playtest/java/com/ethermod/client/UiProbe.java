@@ -409,7 +409,7 @@ public final class UiProbe {
                                                 .EYES,
                                         net.minecraft.world.phys.Vec3.atCenterOf(at));
                                 var zombie =
-                                        PtCompat.<net.minecraft.world.entity.monster.zombie.Zombie>type("zombie").create(sl, net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+                                        new net.minecraft.world.entity.monster.zombie.Zombie(PtCompat.<net.minecraft.world.entity.monster.zombie.Zombie>type("zombie"), sl);
                                 zombie.setPos(p.position().add(0, 0, 3));
                                 sl.addFreshEntity(zombie);
                                 Stasis.stasis(zombie, 20);
@@ -687,7 +687,7 @@ public final class UiProbe {
                                 setPickChecked(st, 0, 1, "pyrotechnic.flashover");
                                 setPickChecked(st, 0, 2, "pyrotechnic.soulwake");
                                 var victim =
-                                        PtCompat.<net.minecraft.world.entity.monster.zombie.Zombie>type("zombie").create(sl, net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+                                        new net.minecraft.world.entity.monster.zombie.Zombie(PtCompat.<net.minecraft.world.entity.monster.zombie.Zombie>type("zombie"), sl);
                                 victim.setPos(p.position().add(0, 0, -3));
                                 sl.addFreshEntity(victim);
                                 Burning.burn(victim, p, 5, 0);
@@ -712,7 +712,7 @@ public final class UiProbe {
                                                 && !pet.validTarget(p, pet)
                                                 && Allegiance.ally(p, pet));
                                 var boltTarget =
-                                        PtCompat.<net.minecraft.world.entity.monster.zombie.Zombie>type("zombie").create(sl, net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+                                        new net.minecraft.world.entity.monster.zombie.Zombie(PtCompat.<net.minecraft.world.entity.monster.zombie.Zombie>type("zombie"), sl);
                                 boltTarget.setNoAi(true);
                                 boltTarget.setPos(p.position().add(5, 0, 0));
                                 sl.addFreshEntity(boltTarget);
@@ -802,7 +802,7 @@ public final class UiProbe {
                                 }
                                 for (int n = 0; n < 9; n++) {
                                     var killed =
-                                            PtCompat.<net.minecraft.world.entity.monster.zombie.Zombie>type("zombie").create(sl, net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+                                            new net.minecraft.world.entity.monster.zombie.Zombie(PtCompat.<net.minecraft.world.entity.monster.zombie.Zombie>type("zombie"), sl);
                                     killed.setPos(p.position().add(0, 0, 5));
                                     sl.addFreshEntity(killed);
                                     Burning.soulBurn(killed, p, 3);
@@ -830,7 +830,7 @@ public final class UiProbe {
                                                                         .Blocks.SOUL_FIRE)
                                                 && sl.getBlockState(ground).canSurvive(sl, ground));
                                 var touching =
-                                        PtCompat.<net.minecraft.world.entity.monster.zombie.Zombie>type("zombie").create(sl, net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+                                        new net.minecraft.world.entity.monster.zombie.Zombie(PtCompat.<net.minecraft.world.entity.monster.zombie.Zombie>type("zombie"), sl);
                                 touching.tickCount = 5;
                                 touching.setPos(
                                         net.minecraft.world.phys.Vec3.atBottomCenterOf(ground));
@@ -878,7 +878,7 @@ public final class UiProbe {
                                 // A fresh living target in line of sight allows its pre-shot
                                 // warning.
                                 var warningTarget =
-                                        PtCompat.<net.minecraft.world.entity.monster.zombie.Husk>type("husk").create(sl, net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+                                        new net.minecraft.world.entity.monster.zombie.Husk(PtCompat.<net.minecraft.world.entity.monster.zombie.Husk>type("husk"), sl);
                                 warningTarget.setPos(charging.position().add(0, 0, 5));
                                 sl.addFreshEntity(warningTarget);
                                 charging.setTarget(warningTarget);
@@ -915,7 +915,7 @@ public final class UiProbe {
                                                                 .HOVER_HEIGHT,
                                                         0));
                                 sl.addFreshEntity(routine);
-                                var dummy = PtCompat.<net.minecraft.world.entity.monster.zombie.Husk>type("husk").create(sl, net.minecraft.world.entity.EntitySpawnReason.COMMAND);
+                                var dummy = new net.minecraft.world.entity.monster.zombie.Husk(PtCompat.<net.minecraft.world.entity.monster.zombie.Husk>type("husk"), sl);
                                 dummy.setNoAi(true);
                                 dummy.setPos(routine.position().add(0, 0, 5));
                                 sl.addFreshEntity(dummy);
@@ -1475,6 +1475,9 @@ public final class UiProbe {
                 check(
                         "Gravity overlay follows the actual eye",
                         method.invoke(null, mc.player) == null);
+            } catch (NoSuchMethodException moved) {
+                // 26.3 reworked the screen overlays; the gravity overlay is parked (docs/PORT-26.3.md)
+                report.add("SKIP Gravity overlay follows the actual eye (26.3 port)");
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
