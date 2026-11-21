@@ -35,6 +35,7 @@ next release's notes.
 - Jumping as you fire no longer catches your own shot.
 - Animals flee from the beam, and tamed wolves join in on what you hit with it or shoot.
 - Pasting a set that matches your current build no longer hides it until you click another set.
+- Alt + scroll no longer also switches mode when you scroll right as you press Alt.
 
 ## 1.0.1 (release)
 
