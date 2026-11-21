@@ -1,4 +1,4 @@
 net/minecraft/client/renderer/GameRenderer
-/.*client/renderer/GameRenderer$
-net/minecraft/client/renderer/GameRenderer#getFov net/minecraft/client/renderer/GameRenderer#renderItemInHand
-net/minecraft/client/renderer/GameRenderer#.*(Fov|Hand|Projection).*
+/.*client/renderer/(GameRenderer|Projection)$
+net/minecraft/client/renderer/GameRenderer#renderLevel net/minecraft/client/renderer/GameRenderer#extract net/minecraft/client/renderer/GameRenderer#render
+net/minecraft/client/Camera#.*(ov|FOV).* net/minecraft/client/renderer/state/level/CameraRenderState#.*
