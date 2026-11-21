@@ -201,7 +201,11 @@ public final class Loadouts {
                 return;
             }
         int index = add(stack, name, build);
-        if (index >= 0) handle(player, LOAD, index, "");
+        if (index < 0) return;
+        handle(player, LOAD, index, "");
+        // Loading can stop early (the build is already on, or the player is in combat), and then
+        // it sends nothing: the new set must still reach the client.
+        Manipulator.sync(player);
     }
 
     /**
