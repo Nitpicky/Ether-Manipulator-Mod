@@ -135,6 +135,11 @@ public final class TempBlocks {
                     level.setBlock(p, Blocks.AIR.defaultBlockState(), 2);
                 boolean stillThere = level.getBlockState(p).is(t.placed().getBlock());
                 if (!stillThere) {
+                    // broken Frost Walker ice turns to water over solid ground: a bridge never does
+                    if (t.placed().is(Blocks.FROSTED_ICE)
+                            && t.restore().isAir()
+                            && level.getBlockState(p).is(Blocks.WATER))
+                        level.setBlock(p, Blocks.AIR.defaultBlockState(), 3);
                     level.destroyBlockProgress(t.crackId(), p, -1);
                     PendingReverts.remove(level, p);
                     if (bridgeIds != null) bridgeIds.remove(p);
