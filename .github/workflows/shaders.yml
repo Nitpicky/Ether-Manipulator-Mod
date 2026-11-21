@@ -39,6 +39,9 @@ jobs:
           MC=26.3
           mkdir -p out
           { for slug in sodium iris; do echo "== $slug for $MC"; curl -fsSL -A ethermod-ci "https://api.modrinth.com/v2/project/$slug/version?game_versions=%5B%22$MC%22%5D" | jq -r '.[] | .version_number + " " + (.loaders|join(",")) + " " + .version_type + " " + .date_published'; done
+            echo "== iris, any game version"; curl -fsSL -A ethermod-ci "https://api.modrinth.com/v2/project/iris/version?loaders=%5B%22neoforge%22%5D" | jq -r '.[0:8][] | .version_number + " " + (.game_versions|join(",")) + " " + .date_published'
+            echo "== sodium neoforge builds: iris/neoforge constraints"
+            curl -fsSL -A ethermod-ci "https://api.modrinth.com/v2/project/sodium/version?loaders=%5B%22neoforge%22%5D&game_versions=%5B%22$MC%22%5D" | jq -r '.[] | .version_number + " " + (.files[]|select(.primary)|.url)' | while read -r v u; do curl -fsSL -o /tmp/s.jar "$u"; echo "-- $v"; unzip -p /tmp/s.jar META-INF/neoforge.mods.toml | grep -A3 -E 'modId *= *"(iris|neoforge)"' | grep -E 'modId|versionRange|type'; done
             echo "== neoforge versions"; curl -fsSL https://maven.neoforged.net/releases/net/neoforged/neoforge/maven-metadata.xml | grep -o '<version>26\.3[^<]*' | tail -15; } > out/versions.txt 2>&1 || true
           cat out/versions.txt
           get() { # slug, loader filter: newest build (Sodium's last release predates NeoForge 26.3.0.115)
