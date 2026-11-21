@@ -457,6 +457,10 @@ public final class KGifTour {
         glide("set0", 14);
         waitT(8);
         click();
+        waitT(20);
+        glide("fav0", 10); // 1.0.2: favourite the set with its heart
+        waitT(6);
+        click();
         waitT(24);
         away(10);
         waitT(10);
