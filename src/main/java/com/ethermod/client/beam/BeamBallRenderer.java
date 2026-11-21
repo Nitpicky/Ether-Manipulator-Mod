@@ -166,10 +166,10 @@ public class BeamBallRenderer extends EntityRenderer<BeamBallEntity> {
             ps.translate(blockAt.x, blockAt.y, blockAt.z);
             ps.mulPose(com.mojang.math.Axis.YP.rotationDegrees(entity.getYRot()));
             ps.mulPose(com.mojang.math.Axis.XP.rotationDegrees(entity.getXRot()));
-            // Steady Hand: while the throw charges the block turns see-through, so the landing
-            // ghost and the spot behind it show
-            if (aimingThrow(entity))
-                drawGhostBlock(ps, buf, entity.getCarried(), THROW_ALPHA, light, sharedFaces(entity));
+            // Blocks you hold are see-through for you, so they don't hide what you aim at (and,
+            // with Steady Hand, the landing ghost); everyone else sees them solid
+            if (heldByViewer(entity))
+                drawGhostBlock(ps, buf, entity.getCarried(), HELD_ALPHA, light, sharedFaces(entity));
             else drawBlock(ps, buf, entity.getCarried(), Vec3.ZERO, time, 1.0f, light);
             ps.popPose();
         }
@@ -347,15 +347,12 @@ public class BeamBallRenderer extends EntityRenderer<BeamBallEntity> {
         ps.popPose();
     }
 
-    /** How visible a held Mass Driver block stays while a Steady Hand throw charges. */
-    private static final float THROW_ALPHA = 0.35f;
+    /** How visible a held Mass Driver block stays for the player holding it. */
+    private static final float HELD_ALPHA = 0.6f;
 
-    /** A held Mass Driver block whose owner is charging a throw with Steady Hand. */
-    private static boolean aimingThrow(BeamBallEntity e) {
-        return e.isMassHeld()
-                && e.getOwner() instanceof net.minecraft.world.entity.player.Player p
-                && p.isUsingItem()
-                && com.ethermod.trait.Traits.has(p.getMainHandItem(), "tectonic.steady_hand");
+    /** A Mass Driver block held by the player watching. */
+    private static boolean heldByViewer(BeamBallEntity e) {
+        return e.isMassHeld() && e.getOwner() != null && e.getOwner() == Minecraft.getInstance().player;
     }
 
     /** The carried block, see-through ({@code alpha}), at the current pose. */

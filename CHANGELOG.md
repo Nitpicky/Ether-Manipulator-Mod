@@ -21,7 +21,7 @@ next release's notes.
 ### Changes
 - New mod icon.
 - Bank Shot: each ricochet resets the shot's range.
-- Steady Hand: held blocks turn see-through while a throw charges, and the landing preview is fainter.
+- Mass Driver: blocks you hold are see-through for you, and the Steady Hand landing preview is fainter.
 - Mass Driver: lighter glow around held blocks.
 - Mass Driver: every throw shows its arc while charging.
 - Gravity Shift: no fall damage while shifted.
@@ -34,6 +34,7 @@ next release's notes.
 - Growth no longer breaks grass and flowers.
 - Jumping as you fire no longer catches your own shot.
 - Animals flee from the beam, and tamed wolves join in on what you hit with it or shoot.
+- Pasting a set that matches your current build no longer hides it until you click another set.
 
 ## 1.0.1 (release)
 
