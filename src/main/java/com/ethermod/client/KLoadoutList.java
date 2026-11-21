@@ -277,7 +277,6 @@ final class KLoadoutList {
                         : null,
                 List.of(label(Lang.tr("gui.ethermod.save_set"), add.text())));
         int px = x0 + (BUTTON_W - 10) / 2, py = BUTTON_Y + (BUTTON_H - 10) / 2 + addLook.dy();
-        if (addLook.shadow()) hollowPlus(g, px + 1, py + 1, addLook.shadowColour());
         hollowPlus(g, px, py, addLook.icon());
 
         Palette copy = flashing("copy-code", ui) ? flashPalette : button("copy");
@@ -335,11 +334,10 @@ final class KLoadoutList {
         icon(g, "trash", x3, delLook);
     }
 
-    /** A 10x10 sprite centred in a bottom-row button, with its drop shadow when resting. */
+    /** A 10x10 sprite centred in a bottom-row button. */
     private static void icon(GuiGraphics g, String name, int x, KUi.Look look) {
         var r = new Raster(BUTTON_W, BUTTON_H);
         int ix = (BUTTON_W - 10) / 2, iy = (BUTTON_H - 10) / 2 + look.dy();
-        if (look.shadow()) r.sprite(name, ix + 1, iy + 1, look.shadowColour());
         r.sprite(name, ix, iy, look.icon());
         raster(g, r, x, BUTTON_Y);
     }
