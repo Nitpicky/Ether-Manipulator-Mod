@@ -3,6 +3,12 @@
 Versions are MAJOR.FEATURE.PATCH. A version that isn't marked as a release rolls into the
 next release's notes.
 
+## 1.0.2
+
+### Changes
+- Mods list: new mod icon.
+- Commands: `/ethermod set_module`, `set_build`, `export_build` (shareable build codes like `1GABA2HAAA`) and `set_color`.
+
 ## 1.0.1 (release)
 
 ### Changes

@@ -392,5 +392,11 @@
   "ethermod.configuration.extra_foliage": "Extra begroeiingsblokken",
   "ethermod.configuration.extra_crops": "Extra gewassen",
   "ethermod.configuration.title": "Ethermanipulator-instellingen",
-  "subtitles.ethermod.stasis.ding": "Stasis tikt"
+  "subtitles.ethermod.stasis.ding": "Stasis tikt",
+  "command.ethermod.set": "Ethermanipulator ingesteld voor %s speler(s)",
+  "command.ethermod.build_code": "Build van %s: %s",
+  "command.ethermod.bad_module": "Onbekende module: %s",
+  "command.ethermod.bad_choice": "Keuzes zijn A of B, niet %s",
+  "command.ethermod.bad_code": "Geen geldige buildcode bij: %s",
+  "command.ethermod.bad_colour": "Geen hexkleur: %s"
 }
