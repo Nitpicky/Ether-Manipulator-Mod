@@ -9,6 +9,12 @@ next release's notes.
 - Mods list: new mod icon.
 - Commands: `/ethermod set_module`, `set_build`, `export_build` (shareable build codes like `1GABA2HAAA`) and `set_color`.
 
+### Fixes
+- Lock-On: the beam now visibly stays on the locked creature.
+
+### Tuning
+- Bank Shot: each ricochet resets the shot's range.
+
 ## 1.0.1 (release)
 
 ### Changes
