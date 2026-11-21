@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(BaseFireBlock.class)
 public abstract class OwnedFireMixin {
     @Inject(method = "entityInside", at = @At("HEAD"))
-    private void mm$owned(BlockState state, Level level, BlockPos pos, Entity e, CallbackInfo ci) {
+    private void mm$owned(BlockState state, Level level, BlockPos pos, Entity e, net.minecraft.world.entity.InsideBlockEffectApplier effects, boolean intersects, CallbackInfo ci) {
         if (level instanceof net.minecraft.server.level.ServerLevel sl)
             com.ethermod.trait.OwnedFire.burnFromOwnedFire(sl, pos, e);
     }

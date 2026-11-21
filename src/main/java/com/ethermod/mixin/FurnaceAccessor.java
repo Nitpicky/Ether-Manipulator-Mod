@@ -8,12 +8,12 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 /** Pyrotechnics' Forge Heart fuels furnaces directly. */
 @Mixin(AbstractFurnaceBlockEntity.class)
 public interface FurnaceAccessor {
-    @Accessor("litTime")
+    @Accessor("litTimeRemaining")
     int ethermod$getLitTime();
 
-    @Accessor("litTime")
+    @Accessor("litTimeRemaining")
     void ethermod$setLitTime(int ticks);
 
-    @Accessor("litDuration")
+    @Accessor("litTotalTime")
     void ethermod$setLitDuration(int ticks);
 }

@@ -17,11 +17,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(ServerPlayer.class)
 public abstract class ServerPlayerMixin {
 
-    @Inject(method = "drop(Z)Z", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "drop(Z)V", at = @At("HEAD"), cancellable = true)
     private void ethermod$noDropWhileSummoned(
-            boolean fullStack, CallbackInfoReturnable<Boolean> cir) {
+            boolean fullStack, org.spongepowered.asm.mixin.injection.callback.CallbackInfo ci) {
         if (Manipulator.isSummoned((ServerPlayer) (Object) this)) {
-            cir.setReturnValue(false);
+            ci.cancel();
         }
     }
 }

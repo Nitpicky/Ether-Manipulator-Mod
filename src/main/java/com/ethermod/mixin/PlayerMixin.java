@@ -104,6 +104,7 @@ public abstract class PlayerMixin {
     private void ethermod$veilEntityOpen(
             net.minecraft.world.entity.Entity target,
             net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.Vec3 location,
             CallbackInfoReturnable<net.minecraft.world.InteractionResult> cir,
             @com.llamalad7.mixinextras.sugar.Share("veil")
                     com.llamalad7.mixinextras.sugar.ref.LocalRef<Player> previous) {
@@ -114,6 +115,7 @@ public abstract class PlayerMixin {
     private void ethermod$veilEntityClose(
             net.minecraft.world.entity.Entity target,
             net.minecraft.world.InteractionHand hand,
+            net.minecraft.world.phys.Vec3 location,
             CallbackInfoReturnable<net.minecraft.world.InteractionResult> cir,
             @com.llamalad7.mixinextras.sugar.Share("veil")
                     com.llamalad7.mixinextras.sugar.ref.LocalRef<Player> previous) {
