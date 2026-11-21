@@ -1,0 +1,142 @@
+/home/runner/.gradle/caches/modules-2/files-2.1/curse.maven/geckolib-388172/8893169/196231506b89da06925c087f9b8bc5fd12ebea16/geckolib-388172-8893169.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/io.github.llamalad7/mixinextras-neoforge/0.5.5/26f2905a37afd203c3da1d6a2e164472a7531b41/mixinextras-neoforge-0.5.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.accesstransformers/at-parser/11.0.2/64aae57d6d26d69543c5275181fe6971707a4e16/at-parser-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/earlydisplay/12.0.16/efa2e56115d22853d10524874a7bbb64555c2a28/earlydisplay-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/12.0.16/edbb2ee8211a867215970bc15ae9c354fa56dc09/loader-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarMetadata/0.5.3/ff40c1cd721d07615d825c5bbf27705b2e3258ed/JarJarMetadata-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarSelector/0.5.3/6b845aab8d5c8e721b4e3cd30f97722b7f8044b1/JarJarSelector-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/accesstransformers/11.0.2/25dcb69c78b16669935f0ab91dff830ce192379d/accesstransformers-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/bus/8.0.5/5b2d33285ab5d1554e9798ad98c40d6ea3868bd5/bus-8.0.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/mergetool/2.0.7/793b18456e92c4a7f66d9b5d8bf7a9c1c7a20b20/mergetool-2.0.7-api.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar
+=== LIST /.*(AvatarState|ClientAvatar.*|ScreenEffect.*)$
+net/minecraft/client/entity/ClientAvatarEntity
+net/minecraft/client/entity/ClientAvatarState
+net/minecraft/client/renderer/ScreenEffectRenderer
+net/neoforged/neoforge/client/CustomBlockScreenEffectRenderer
+net/neoforged/neoforge/client/event/ExtractBlockScreenEffectEvent
+net/neoforged/neoforge/client/event/ExtractBlockScreenEffectEvent$OverlayType
+=== CODE net/minecraft/client/renderer/GameRenderer bobView
+  private void bobView(net.minecraft.client.renderer.state.level.CameraRenderState, com.mojang.blaze3d.vertex.PoseStack);
+    Code:
+         0: aload_1
+         1: getfield      #740                // Field net/minecraft/client/renderer/state/level/CameraRenderState.entityRenderState:Lnet/minecraft/client/renderer/state/level/CameraEntityRenderState;
+         4: getfield      #817                // Field net/minecraft/client/renderer/state/level/CameraEntityRenderState.isPlayer:Z
+         7: ifeq          117
+        10: aload_1
+        11: getfield      #740                // Field net/minecraft/client/renderer/state/level/CameraRenderState.entityRenderState:Lnet/minecraft/client/renderer/state/level/CameraEntityRenderState;
+        14: getfield      #820                // Field net/minecraft/client/renderer/state/level/CameraEntityRenderState.backwardsInterpolatedWalkDistance:F
+        17: fstore_3
+        18: aload_1
+        19: getfield      #740                // Field net/minecraft/client/renderer/state/level/CameraRenderState.entityRenderState:Lnet/minecraft/client/renderer/state/level/CameraEntityRenderState;
+        22: getfield      #823                // Field net/minecraft/client/renderer/state/level/CameraEntityRenderState.bob:F
+        25: fstore        4
+        27: aload_2
+        28: fload_3
+        29: ldc_w         #781                // float 3.1415927f
+        32: fmul
+        33: f2d
+        34: invokestatic  #787                // Method net/minecraft/util/Mth.sin:(D)F
+        37: fload         4
+        39: fmul
+        40: ldc_w         #824                // float 0.5f
+        43: fmul
+        44: fload_3
+        45: ldc_w         #781                // float 3.1415927f
+        48: fmul
+        49: f2d
+        50: invokestatic  #827                // Method net/minecraft/util/Mth.cos:(D)F
+        53: fload         4
+        55: fmul
+        56: invokestatic  #831                // Method java/lang/Math.abs:(F)F
+        59: fneg
+        60: fconst_0
+        61: invokevirtual #835                // Method com/mojang/blaze3d/vertex/PoseStack.translate:(FFF)V
+        64: aload_2
+        65: getstatic     #767                // Field com/mojang/math/Axis.ZP:Lcom/mojang/math/Axis;
+        68: fload_3
+        69: ldc_w         #781                // float 3.1415927f
+        72: fmul
+        73: f2d
+        74: invokestatic  #787                // Method net/minecraft/util/Mth.sin:(D)F
+        77: fload         4
+        79: fmul
+        80: ldc_w         #836                // float 3.0f
+        83: fmul
+        84: invokevirtual #774                // Method com/mojang/blaze3d/vertex/PoseStack.rotateDegrees:(Lcom/mojang/math/Axis;F)V
+        87: aload_2
+        88: getstatic     #839                // Field com/mojang/math/Axis.XP:Lcom/mojang/math/Axis;
+        91: fload_3
+        92: ldc_w         #781                // float 3.1415927f
+        95: fmul
+        96: ldc_w         #840                // float 0.2f
+        99: fsub
+       100: f2d
+       101: invokestatic  #827                // Method net/minecraft/util/Mth.cos:(D)F
+       104: fload         4
+       106: fmul
+       107: invokestatic  #831                // Method java/lang/Math.abs:(F)F
+       110: ldc_w         #841                // float 5.0f
+       113: fmul
+       114: invokevirtual #774                // Method com/mojang/blaze3d/vertex/PoseStack.rotateDegrees:(Lcom/mojang/math/Axis;F)V
+       117: return
+=== SIG net/minecraft/client/player/AbstractClientPlayer .*vatar.*
+  private final net.minecraft.client.entity.ClientAvatarState clientAvatarState;
+  public net.minecraft.client.entity.ClientAvatarState avatarState();
+=== SIG net/minecraft/world/entity/player/Player .*(alkDist|ob).*
+  private java.util.Optional<net.minecraft.core.GlobalPos> lastDeathLocation;
+  protected boolean isImmobile();
+  public com.mojang.datafixers.util.Either<net.minecraft.world.entity.player.Player$BedSleepingProblem, net.minecraft.util.Unit> startSleepInBed(net.minecraft.world.level.block.AbstractBedBlock, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.attribute.BedRule, net.minecraft.core.BlockPos);
+  public java.util.Optional<net.minecraft.core.GlobalPos> getLastDeathLocation();
+  public void setLastDeathLocation(java.util.Optional<net.minecraft.core.GlobalPos>);
+  public boolean isMobilityRestricted();
+  private static void lambda$addAdditionalSaveData$0(net.minecraft.world.level.storage.ValueOutput, net.minecraft.core.GlobalPos);
+=== net/neoforged/neoforge/client/event/ExtractBlockScreenEffectEvent
+Compiled from "ExtractBlockScreenEffectEvent.java"
+public class net.neoforged.neoforge.client.event.ExtractBlockScreenEffectEvent extends net.neoforged.bus.api.Event implements net.neoforged.bus.api.ICancellableEvent {
+  public net.neoforged.neoforge.client.event.ExtractBlockScreenEffectEvent(net.minecraft.client.player.LocalPlayer, net.minecraft.client.renderer.state.level.PlayerRenderState, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, net.minecraft.client.Camera, float, float, net.neoforged.neoforge.client.event.ExtractBlockScreenEffectEvent$OverlayType);
+  public net.minecraft.client.player.LocalPlayer getPlayer();
+  public net.minecraft.client.renderer.state.level.PlayerRenderState getPlayerRenderState();
+  public net.minecraft.core.BlockPos getPos();
+  public net.minecraft.world.level.block.state.BlockState getState();
+  public net.minecraft.client.Camera getCamera();
+  public float getWorldPartialTick();
+  public float getPlayerPartialTick();
+  public net.neoforged.neoforge.client.event.ExtractBlockScreenEffectEvent$OverlayType getOverlayType();
+  public void setCustomRenderer(net.neoforged.neoforge.client.CustomBlockScreenEffectRenderer);
+  public void setCanceled(boolean);
+}
+=== net/neoforged/neoforge/client/event/ExtractBlockScreenEffectEvent$OverlayType
+Compiled from "ExtractBlockScreenEffectEvent.java"
+public final class net.neoforged.neoforge.client.event.ExtractBlockScreenEffectEvent$OverlayType extends java.lang.Enum<net.neoforged.neoforge.client.event.ExtractBlockScreenEffectEvent$OverlayType> {
+  public static final net.neoforged.neoforge.client.event.ExtractBlockScreenEffectEvent$OverlayType FIRE;
+  public static final net.neoforged.neoforge.client.event.ExtractBlockScreenEffectEvent$OverlayType BLOCK;
+  public static final net.neoforged.neoforge.client.event.ExtractBlockScreenEffectEvent$OverlayType WATER;
+  public static net.neoforged.neoforge.client.event.ExtractBlockScreenEffectEvent$OverlayType[] values();
+  public static net.neoforged.neoforge.client.event.ExtractBlockScreenEffectEvent$OverlayType valueOf(java.lang.String);
+}
+=== net/minecraft/client/renderer/state/level/CameraRenderState
+Compiled from "CameraRenderState.java"
+public class net.minecraft.client.renderer.state.level.CameraRenderState {
+  public net.minecraft.core.BlockPos blockPos;
+  public net.minecraft.world.phys.Vec3 pos;
+  public float xRot;
+  public float yRot;
+  public boolean initialized;
+  public boolean isPanoramicMode;
+  public boolean isFrustumCaptured;
+  public boolean isFirstPerson;
+  public boolean smartCull;
+  public org.joml.Quaternionf orientation;
+  public float cameraEntityPartialTicks;
+  public net.minecraft.client.renderer.culling.Frustum cullFrustum;
+  public net.minecraft.world.level.material.FogType fogType;
+  public net.minecraft.client.renderer.fog.FogData fogData;
+  public float hudFov;
+  public float depthFar;
+  public org.joml.Matrix4f projectionMatrix;
+  public org.joml.Matrix4f viewRotationMatrix;
+  public net.minecraft.client.renderer.state.level.CameraEntityRenderState entityRenderState;
+  public net.minecraft.client.renderer.state.level.CameraRenderState();
+}
