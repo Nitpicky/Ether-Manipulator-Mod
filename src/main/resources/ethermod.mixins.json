@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "PlayerMixin",
+    "LivingHandMixin",
     "ServerPlayerMixin",
     "FireBlockMixin",
     "FurnaceAccessor",

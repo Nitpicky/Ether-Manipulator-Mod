@@ -23,15 +23,12 @@ public abstract class FluidPocketMixin {
         }
     }
 
-    @Inject(method = "canSpreadTo", at = @At("HEAD"), cancellable = true)
-    private void mm$air(
+    /** Fluids never flow into a temporary air pocket (every spread checks this). */
+    @Inject(method = "canHoldSpecificFluid", at = @At("HEAD"), cancellable = true)
+    private static void mm$air(
             BlockGetter level,
-            BlockPos from,
-            BlockState fromState,
-            Direction direction,
             BlockPos to,
             BlockState toState,
-            FluidState state,
             Fluid fluid,
             CallbackInfoReturnable<Boolean> cir) {
         if (level instanceof net.minecraft.server.level.ServerLevel sl

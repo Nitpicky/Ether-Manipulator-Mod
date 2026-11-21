@@ -81,19 +81,6 @@ public abstract class PlayerMixin {
         }
     }
 
-    @Inject(method = "getItemBySlot", at = @At("HEAD"), cancellable = true)
-    private void ethermod$virtualHand(EquipmentSlot slot, CallbackInfoReturnable<ItemStack> cir) {
-        if (slot != EquipmentSlot.MAINHAND) return;
-        Player self = (Player) (Object) this;
-        if (Manipulator.isSummoned(self)) {
-            // inside a block/entity interaction the Manipulator is invisible: an empty hand
-            cir.setReturnValue(
-                    com.ethermod.manipulator.ManipulatorVeil.veiled(self)
-                            ? ItemStack.EMPTY
-                            : Manipulator.stack(self));
-        }
-    }
-
     /**
      * Entity interactions (item frames, allays, villagers, horses, modded display entities...) run
      * with the main hand reading as empty while the Manipulator is summoned, so none of them can
@@ -120,25 +107,5 @@ public abstract class PlayerMixin {
             @com.llamalad7.mixinextras.sugar.Share("veil")
                     com.llamalad7.mixinextras.sugar.ref.LocalRef<Player> previous) {
         com.ethermod.manipulator.ManipulatorVeil.close(previous.get());
-    }
-
-    /**
-     * Under a veil the "empty" main hand is really the hidden hotbar slot, and a block or entity that
-     * gives its item to an empty hand (armor stand, allay, a pedestal) would overwrite the item in it.
-     * What it gives goes into the inventory instead (dropped when full), and clearing the hand
-     * clears nothing.
-     */
-    @Inject(method = "setItemSlot", at = @At("HEAD"), cancellable = true)
-    private void ethermod$veiledHandWrite(
-            EquipmentSlot slot,
-            ItemStack stack,
-            org.spongepowered.asm.mixin.injection.callback.CallbackInfo ci) {
-        if (slot != EquipmentSlot.MAINHAND) return;
-        Player self = (Player) (Object) this;
-        if (!com.ethermod.manipulator.ManipulatorVeil.veiled(self)) return;
-        ci.cancel();
-        // the server is authoritative over the inventory and syncs it; the client just skips
-        if (!stack.isEmpty() && !self.level().isClientSide())
-            self.getInventory().placeItemBackInInventory(stack, net.minecraft.util.Prediction.SERVER_ONLY);
     }
 }
