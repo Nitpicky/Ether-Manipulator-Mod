@@ -3,6 +3,11 @@
 Versions are MAJOR.FEATURE.PATCH. A version that isn't marked as a release rolls into the
 next release's notes.
 
+## 1.0.3
+
+### Fixes
+- Animals flee from the beam, and tamed wolves join in on what you hit with it or shoot.
+
 ## 1.0.2 (release)
 
 ### Sets
