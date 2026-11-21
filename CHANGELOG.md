@@ -24,6 +24,7 @@ next release's notes.
 - Steady Hand: held blocks turn see-through while a throw charges.
 - Gravity Shift: no fall damage while shifted.
 - Clearer Zipline description.
+- New mod description in the Mods list.
 
 ### Fixes
 - Lock-On now visibly holds the beam on its target.
