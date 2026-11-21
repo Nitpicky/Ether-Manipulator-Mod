@@ -1,4 +1,4 @@
-com/mojang/renderpearl/backend/opengl/GlRenderPass
-/.*(RenderPass|SharedConstants)[^/]*$
-com/mojang/renderpearl/backend/opengl/GlRenderPass#<clinit>
-net/minecraft/SharedConstants#.*(IDE|DEBUG_VALID|VALID).* com/mojang/renderpearl/backend/opengl/GlRenderPass#.*
+com/mojang/renderpearl/frontend/FrontendRenderPass
+/.*renderpearl/frontend/[^/]*$
+com/mojang/renderpearl/frontend/FrontendRenderPass#drawIndexed com/mojang/renderpearl/frontend/FrontendRenderPass#<init>
+com/mojang/renderpearl/frontend/FrontendRenderPass#.*
