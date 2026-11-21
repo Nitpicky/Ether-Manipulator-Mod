@@ -3,6 +3,11 @@
 Versions are MAJOR.FEATURE.PATCH. A version that isn't marked as a release rolls into the
 next release's notes.
 
+## 1.0.2
+
+### Changes
+- Mods list: new mod icon.
+
 ## 1.0.1 (release)
 
 ### Changes
