@@ -24,15 +24,17 @@ jobs:
           java-version: '25'
       - uses: gradle/actions/setup-gradle@v5
       - name: Install virtual display
-        run: sudo apt-get update -q && sudo apt-get install -y -q xvfb libgl1-mesa-dri libglx-mesa0 pulseaudio jq
+        run: sudo apt-get update -q && sudo apt-get install -y -q xvfb libgl1-mesa-dri libglx-mesa0 mesa-vulkan-drivers libvulkan1 pulseaudio jq
       - name: Download Sodium, Iris and the shader pack
         env:
           PACK: ${{ github.event.inputs.pack }}
         run: |
           set -e
           mkdir -p runs/client/mods runs/client/shaderpacks runs/client/config
+          MC=26.3
+          for slug in sodium iris; do echo "== $slug for $MC"; curl -fsSL -A ethermod-ci "https://api.modrinth.com/v2/project/$slug/version?game_versions=%5B%22$MC%22%5D" | jq -r '.[] | .version_number + " " + (.loaders|join(",")) + " " + .version_type'; done
           get() { # slug, loader filter
-            curl -fsSL -A "ethermod-ci" "https://api.modrinth.com/v2/project/$1/version?loaders=%5B%22$2%22%5D&game_versions=%5B%221.21.1%22%5D" \
+            curl -fsSL -A "ethermod-ci" "https://api.modrinth.com/v2/project/$1/version?loaders=%5B%22$2%22%5D&game_versions=%5B%22$MC%22%5D" \
               | jq -r '[.[] | select(.version_type=="release")][0] // .[0] | .files[] | select(.primary) | .url + " " + .filename'
           }
           read -r url name <<< "$(get sodium neoforge)"; curl -fsSL -o "runs/client/mods/$name" "$url"; echo "Sodium: $name"
@@ -49,7 +51,7 @@ jobs:
           MESA_GL_VERSION_OVERRIDE: '4.5'
           MESA_GLSL_VERSION_OVERRIDE: '450'
         run: |
-          xvfb-run -a -s '-screen 0 1280x720x24' timeout 1500 ./gradlew runClient -Pplaytest -PmodelShots -PcloudTest ${VARIANT:+"-PfxVariant=$VARIANT"} --no-daemon || true
+          xvfb-run -a -s '-screen 0 1280x720x24 +extension GLX +render -ac' timeout 1500 ./gradlew runClient -Pplaytest -PmodelShots -PcloudTest ${VARIANT:+"-PfxVariant=$VARIANT"} --no-daemon || true
           grep -i -E 'iris|shader' runs/client/logs/latest.log | head -40 || true
       - name: Publish shots
         if: always()
@@ -67,6 +69,7 @@ jobs:
           git worktree add /tmp/pr origin/playtest-results
           cd /tmp/pr && git checkout -B playtest-results
           D="shaders/${PACK}${VARIANT:+-$VARIANT}"
+          case "$GITHUB_REF_NAME" in port/*) D="port/$SHA/$D" ;; esac
           rm -rf "$D" && mkdir -p "$D"
           cp $GITHUB_WORKSPACE/out/* "$D"/ 2>/dev/null || true
           git add -A
