@@ -1,0 +1,96 @@
+== sodium for 26.3
+mc26.3-0.9.3-beta.5-neoforge neoforge beta 2026-11-12T01:12:30.162066Z
+mc26.3-0.9.3-beta.5-fabric fabric beta 2026-11-12T01:12:30.154674Z
+mc26.3-0.9.3-beta.4-neoforge neoforge beta 2026-11-08T03:54:24.510506Z
+mc26.3-0.9.3-beta.4-fabric fabric beta 2026-11-08T03:54:24.496862Z
+mc26.3-0.9.3-beta.3-fabric fabric beta 2026-11-07T02:07:28.269034Z
+mc26.3-0.9.3-beta.3-neoforge neoforge beta 2026-11-07T02:07:28.204186Z
+mc26.3-0.9.3-beta.2-fabric fabric beta 2026-11-07T01:34:13.438886Z
+mc26.3-0.9.3-beta.2-neoforge neoforge beta 2026-11-07T01:34:13.436565Z
+mc26.3-0.9.3-beta.1-fabric fabric beta 2026-10-15T17:51:44.107526Z
+mc26.3-0.9.3-beta.1-neoforge neoforge beta 2026-10-15T17:51:44.019537Z
+mc26.3-0.9.3-alpha.1-neoforge neoforge alpha 2026-09-20T21:27:09.277251Z
+mc26.3-0.9.3-alpha.1-fabric fabric alpha 2026-09-20T21:27:07.494280Z
+mc26.3-0.9.2-neoforge neoforge release 2026-09-15T16:04:10.867760Z
+mc26.3-0.9.2-fabric fabric release 2026-09-15T15:57:23.369305Z
+== iris for 26.3
+1.11.7+26.3-neoforge neoforge release 2026-09-30T02:58:24.095409Z
+1.11.7+26.3-fabric fabric release 2026-09-30T02:57:43.801379Z
+1.11.6+26.3-fabric fabric release 2026-09-15T18:18:28.462406Z
+1.11.5+26.3-fabric fabric release 2026-09-15T16:20:05.133518Z
+== iris, any game version
+1.11.7+26.3-neoforge 26.3 2026-09-30T02:58:24.095409Z
+1.10.8+1.21.11-neoforge 1.21.11 2026-09-29T16:32:21.504362Z
+1.11.4+26.2-neoforge 26.2 2026-09-13T00:03:35.369049Z
+1.11.4+26.1-neoforge 26.1,26.1.1,26.1.2 2026-09-13T00:01:49.834738Z
+1.11.3+26.1-neoforge 26.1,26.1.1,26.1.2 2026-08-03T20:53:13.090140Z
+1.11.2+26.1-neoforge 26.1,26.1.1,26.1.2 2026-07-09T21:32:34.684301Z
+1.11.2+26.2-neoforge 26.2 2026-07-08T21:12:40.237323Z
+1.8.14-beta.1+1.21.1-neoforge 1.21.1 2026-06-13T15:57:14.116693Z
+== sodium neoforge builds: iris/neoforge constraints
+-- mc26.3-0.9.3-beta.5-neoforge
+modId = "neoforge"
+type = "required"
+versionRange = "[26.1.2.10-beta,)"
+modId = "iris"
+type = "incompatible"
+versionRange = "(,1.12.1)"
+-- mc26.3-0.9.3-beta.4-neoforge
+modId = "neoforge"
+type = "required"
+versionRange = "[26.1.2.10-beta,)"
+modId = "iris"
+type = "incompatible"
+versionRange = "(,1.11.8)"
+-- mc26.3-0.9.3-beta.3-neoforge
+modId = "neoforge"
+type = "required"
+versionRange = "[26.1.2.10-beta,)"
+-- mc26.3-0.9.3-beta.2-neoforge
+modId = "neoforge"
+type = "required"
+versionRange = "[26.1.2.10-beta,)"
+-- mc26.3-0.9.3-beta.1-neoforge
+modId = "neoforge"
+type = "required"
+versionRange = "[26.1.2.10-beta,)"
+-- mc26.3-0.9.3-alpha.1-neoforge
+modId = "neoforge"
+type = "required"
+versionRange = "[26.1.2.10-beta,)"
+-- mc26.3-0.9.2-neoforge
+modId = "neoforge"
+type = "required"
+versionRange = "[26.1.2.10-beta,)"
+== neoforge versions
+<version>26.3.0.101
+<version>26.3.0.102
+<version>26.3.0.103
+<version>26.3.0.104
+<version>26.3.0.105
+<version>26.3.0.106
+<version>26.3.0.107
+<version>26.3.0.108
+<version>26.3.0.109
+<version>26.3.0.110
+<version>26.3.0.111
+<version>26.3.0.112
+<version>26.3.0.113
+<version>26.3.0.114
+<version>26.3.0.115
+== runs/client/mods/iris-neoforge-1.11.7+mc26.3.jar
+[[dependencies.iris]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.3.9-beta,)"
+ordering = "NONE"
+side = "CLIENT"
+
+== runs/client/mods/sodium-neoforge-0.9.3-beta.5+mc26.3.jar
+[[dependencies.sodium]]
+modId = "neoforge"
+type = "required"
+versionRange = "[26.1.2.10-beta,)"
+ordering = "NONE"
+side = "BOTH"
+
