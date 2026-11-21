@@ -1,0 +1,321 @@
+/home/runner/.gradle/caches/modules-2/files-2.1/curse.maven/geckolib-388172/8893169/196231506b89da06925c087f9b8bc5fd12ebea16/geckolib-388172-8893169.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/io.github.llamalad7/mixinextras-neoforge/0.5.5/26f2905a37afd203c3da1d6a2e164472a7531b41/mixinextras-neoforge-0.5.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.accesstransformers/at-parser/11.0.2/64aae57d6d26d69543c5275181fe6971707a4e16/at-parser-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/earlydisplay/12.0.16/efa2e56115d22853d10524874a7bbb64555c2a28/earlydisplay-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/12.0.16/edbb2ee8211a867215970bc15ae9c354fa56dc09/loader-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarMetadata/0.5.3/ff40c1cd721d07615d825c5bbf27705b2e3258ed/JarJarMetadata-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarSelector/0.5.3/6b845aab8d5c8e721b4e3cd30f97722b7f8044b1/JarJarSelector-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/accesstransformers/11.0.2/25dcb69c78b16669935f0ab91dff830ce192379d/accesstransformers-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/bus/8.0.5/5b2d33285ab5d1554e9798ad98c40d6ea3868bd5/bus-8.0.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/mergetool/2.0.7/793b18456e92c4a7f66d9b5d8bf7a9c1c7a20b20/mergetool-2.0.7-api.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar
+=== LIST /(.*rendertype/.*|.*RenderPipelines)$
+net/minecraft/client/renderer/RenderPipelines
+net/minecraft/client/renderer/rendertype/LayeringTransform
+net/minecraft/client/renderer/rendertype/PreparedRenderType
+net/minecraft/client/renderer/rendertype/PreparedRenderType$Texture
+net/minecraft/client/renderer/rendertype/RenderSetup
+net/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty
+net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder
+net/minecraft/client/renderer/rendertype/RenderSetup$TextureBinding
+net/minecraft/client/renderer/rendertype/RenderType
+net/minecraft/client/renderer/rendertype/RenderTypes
+net/minecraft/client/renderer/rendertype/TextureTransform
+net/minecraft/client/renderer/rendertype/TextureTransform$OffsetTextureTransform
+net/minecraft/client/renderer/rendertype/package-info
+net/neoforged/neoforge/client/NeoForgeRenderPipelines
+=== CODE net/minecraft/client/renderer/feature/FlameFeatureRenderer prepare
+  private void prepare(net.minecraft.client.renderer.feature.FlameFeatureRenderer$Submit, com.mojang.blaze3d.vertex.VertexConsumer, net.minecraft.client.renderer.texture.TextureAtlasSprite, net.minecraft.client.renderer.texture.TextureAtlasSprite);
+    Code:
+         0: aload_1
+         1: invokevirtual #68                 // Method net/minecraft/client/renderer/feature/FlameFeatureRenderer$Submit.pose:()Lcom/mojang/blaze3d/vertex/PoseStack$Pose;
+         4: astore        5
+         6: aload_1
+         7: invokevirtual #72                 // Method net/minecraft/client/renderer/feature/FlameFeatureRenderer$Submit.entityRenderState:()Lnet/minecraft/client/renderer/entity/state/EntityRenderState;
+        10: astore        6
+        12: aload         6
+        14: getfield      #76                 // Field net/minecraft/client/renderer/entity/state/EntityRenderState.boundingBoxWidth:F
+        17: ldc           #82                 // float 1.4f
+        19: fmul
+        20: fstore        7
+        22: aload         5
+        24: fload         7
+        26: fload         7
+        28: fload         7
+        30: invokevirtual #83                 // Method com/mojang/blaze3d/vertex/PoseStack$Pose.scale:(FFF)V
+        33: ldc           #89                 // float 0.5f
+        35: fstore        8
+        37: fconst_0
+        38: fstore        9
+        40: aload         6
+        42: getfield      #90                 // Field net/minecraft/client/renderer/entity/state/EntityRenderState.boundingBoxHeight:F
+        45: fload         7
+        47: fdiv
+        48: fstore        10
+        50: fconst_0
+        51: fstore        11
+        53: aload         5
+        55: aload_1
+        56: invokevirtual #93                 // Method net/minecraft/client/renderer/feature/FlameFeatureRenderer$Submit.rotation:()Lorg/joml/Quaternionf;
+        59: invokevirtual #97                 // Method com/mojang/blaze3d/vertex/PoseStack$Pose.rotate:(Lorg/joml/Quaternionfc;)V
+        62: aload         5
+        64: fconst_0
+        65: fconst_0
+        66: ldc           #101                // float 0.3f
+        68: fload         10
+        70: f2i
+        71: i2f
+        72: ldc           #102                // float 0.02f
+        74: fmul
+        75: fsub
+        76: invokevirtual #103                // Method com/mojang/blaze3d/vertex/PoseStack$Pose.translate:(FFF)Lorg/joml/Matrix4f;
+        79: pop
+        80: fconst_0
+        81: fstore        12
+        83: iconst_0
+        84: istore        13
+        86: aload         6
+        88: getfield      #107                // Field net/minecraft/client/renderer/entity/state/EntityRenderState.lightCoords:I
+        91: bipush        15
+        93: invokestatic  #113                // Method net/minecraft/util/LightCoordsUtil.withBlock:(II)I
+        96: istore        14
+        98: fload         10
+       100: fconst_0
+       101: fcmpl
+       102: ifle          295
+       105: iload         13
+       107: iconst_2
+       108: irem
+       109: ifne          116
+       112: aload_3
+       113: goto          118
+       116: aload         4
+       118: astore        15
+       120: aload         15
+       122: invokevirtual #119                // Method net/minecraft/client/renderer/texture/TextureAtlasSprite.getU0:()F
+       125: fstore        16
+       127: aload         15
+       129: invokevirtual #125                // Method net/minecraft/client/renderer/texture/TextureAtlasSprite.getV0:()F
+       132: fstore        17
+       134: aload         15
+       136: invokevirtual #128                // Method net/minecraft/client/renderer/texture/TextureAtlasSprite.getU1:()F
+       139: fstore        18
+       141: aload         15
+       143: invokevirtual #131                // Method net/minecraft/client/renderer/texture/TextureAtlasSprite.getV1:()F
+       146: fstore        19
+       148: iload         13
+       150: iconst_2
+       151: idiv
+       152: iconst_2
+       153: irem
+       154: ifne          169
+       157: fload         18
+       159: fstore        20
+       161: fload         16
+       163: fstore        18
+       165: fload         20
+       167: fstore        16
+       169: aload         5
+       171: aload_2
+       172: fload         8
+       174: fneg
+       175: fconst_0
+       176: fsub
+       177: fconst_0
+       178: fload         11
+       180: fsub
+       181: fload         12
+       183: fload         18
+       185: fload         19
+       187: iload         14
+       189: invokestatic  #134                // Method fireVertex:(Lcom/mojang/blaze3d/vertex/PoseStack$Pose;Lcom/mojang/blaze3d/vertex/VertexConsumer;FFFFFI)V
+       192: aload         5
+       194: aload_2
+       195: fload         8
+       197: fconst_0
+       198: fsub
+       199: fconst_0
+       200: fload         11
+       202: fsub
+       203: fload         12
+       205: fload         16
+       207: fload         19
+       209: iload         14
+       211: invokestatic  #134                // Method fireVertex:(Lcom/mojang/blaze3d/vertex/PoseStack$Pose;Lcom/mojang/blaze3d/vertex/VertexConsumer;FFFFFI)V
+       214: aload         5
+       216: aload_2
+       217: fload         8
+       219: fconst_0
+       220: fsub
+       221: ldc           #82                 // float 1.4f
+       223: fload         11
+       225: fsub
+       226: fload         12
+       228: fload         16
+       230: fload         17
+       232: iload         14
+       234: invokestatic  #134                // Method fireVertex:(Lcom/mojang/blaze3d/vertex/PoseStack$Pose;Lcom/mojang/blaze3d/vertex/VertexConsumer;FFFFFI)V
+       237: aload         5
+       239: aload_2
+       240: fload         8
+       242: fneg
+       243: fconst_0
+       244: fsub
+       245: ldc           #82                 // float 1.4f
+       247: fload         11
+       249: fsub
+       250: fload         12
+       252: fload         18
+       254: fload         17
+       256: iload         14
+       258: invokestatic  #134                // Method fireVertex:(Lcom/mojang/blaze3d/vertex/PoseStack$Pose;Lcom/mojang/blaze3d/vertex/VertexConsumer;FFFFFI)V
+       261: fload         10
+       263: ldc           #138                // float 0.45f
+       265: fsub
+       266: fstore        10
+       268: fload         11
+       270: ldc           #138                // float 0.45f
+       272: fsub
+       273: fstore        11
+       275: fload         8
+       277: ldc           #139                // float 0.9f
+       279: fmul
+       280: fstore        8
+       282: fload         12
+       284: ldc           #140                // float 0.03f
+       286: fsub
+       287: fstore        12
+       289: iinc          13, 1
+       292: goto          98
+       295: return
+=== SIG net/minecraft/client/renderer/rendertype/RenderTypes lambda.*
+  private static com.mojang.renderpearl.api.textures.GpuSampler lambda$createMovingBlockSetup$0();
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$35(net.minecraft.resources.Identifier);
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$34(net.minecraft.resources.Identifier);
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$33(net.minecraft.resources.Identifier);
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$32(net.minecraft.resources.Identifier);
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$31(net.minecraft.resources.Identifier);
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$30(net.minecraft.resources.Identifier);
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$29(net.minecraft.resources.Identifier);
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$28(net.minecraft.resources.Identifier);
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$27(net.minecraft.resources.Identifier);
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$26(net.minecraft.resources.Identifier);
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$25(net.minecraft.resources.Identifier);
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$24(net.minecraft.resources.Identifier);
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$23(net.minecraft.resources.Identifier, java.lang.Boolean);
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$22(net.minecraft.resources.Identifier);
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$21(net.minecraft.resources.Identifier, java.lang.Boolean);
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$20(net.minecraft.resources.Identifier, java.lang.Boolean);
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$19(net.minecraft.resources.Identifier);
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$18(net.minecraft.resources.Identifier);
+  private static net.minecraft.client.renderer.rendertype.RenderType lambda$static$17(net.minecraft.resources.Identifier);
+grep: write error: Broken pipe
+=== SIG net/minecraft/client/renderer/RenderPipelines .*GLINT.*
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet GLINT_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline$Snippet GLINT_SPECIAL_SNIPPET;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ARMOR_CUTOUT_NO_CULL_GLINT;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ENTITY_SOLID_GLINT;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ITEM_CUTOUT_GLINT;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ITEM_CUTOUT_GLINT_SPECIAL;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ITEM_TRANSLUCENT_GLINT;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline ITEM_TRANSLUCENT_GLINT_SPECIAL;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_ITEM_GLINT;
+  public static final net.minecraft.client.renderer.oit.OitPipelineSet OIT_ITEM_GLINT_SPECIAL;
+  public static final com.mojang.renderpearl.api.pipeline.RenderPipeline GLINT;
+=== net/minecraft/client/renderer/rendertype/RenderType
+Compiled from "RenderType.java"
+public class net.minecraft.client.renderer.rendertype.RenderType {
+  public static final int BIG_BUFFER_SIZE;
+  public static final int SMALL_BUFFER_SIZE;
+  public static final int TRANSIENT_BUFFER_SIZE;
+  public static net.minecraft.client.renderer.rendertype.RenderType create(java.lang.String, net.minecraft.client.renderer.rendertype.RenderSetup);
+  public java.lang.String toString();
+  public boolean hasBlending();
+  public net.minecraft.client.renderer.rendertype.PreparedRenderType prepare();
+  public com.mojang.renderpearl.api.vertex.VertexFormat format();
+  public com.mojang.renderpearl.api.pipeline.PrimitiveTopology primitiveTopology();
+  public java.util.Optional<net.minecraft.client.renderer.rendertype.RenderType> outline();
+  public boolean isOutline();
+  public com.mojang.renderpearl.api.pipeline.RenderPipeline pipeline();
+  public boolean affectsCrumbling();
+  public boolean canConsolidateConsecutiveGeometry();
+  public boolean sortOnUpload();
+  public boolean forceSolidModelPhase();
+}
+=== net/minecraft/client/renderer/rendertype/RenderSetup
+Compiled from "RenderSetup.java"
+public final class net.minecraft.client.renderer.rendertype.RenderSetup {
+  public java.lang.String toString();
+  public static net.minecraft.client.renderer.rendertype.RenderSetup$RenderSetupBuilder builder(com.mojang.renderpearl.api.pipeline.RenderPipeline);
+  public java.util.List<net.minecraft.client.renderer.rendertype.PreparedRenderType$Texture> prepareTextures(net.minecraft.client.renderer.texture.TextureManager, com.mojang.blaze3d.systems.SamplerCache, com.mojang.renderpearl.api.textures.GpuTextureView, com.mojang.renderpearl.api.textures.GpuTextureView);
+}
+=== net/minecraft/client/renderer/rendertype/RenderSetup$OutlineProperty
+Compiled from "RenderSetup.java"
+public final class net.minecraft.client.renderer.rendertype.RenderSetup$OutlineProperty extends java.lang.Enum<net.minecraft.client.renderer.rendertype.RenderSetup$OutlineProperty> {
+  public static final net.minecraft.client.renderer.rendertype.RenderSetup$OutlineProperty NONE;
+  public static final net.minecraft.client.renderer.rendertype.RenderSetup$OutlineProperty IS_OUTLINE;
+  public static final net.minecraft.client.renderer.rendertype.RenderSetup$OutlineProperty AFFECTS_OUTLINE;
+  public static net.minecraft.client.renderer.rendertype.RenderSetup$OutlineProperty[] values();
+  public static net.minecraft.client.renderer.rendertype.RenderSetup$OutlineProperty valueOf(java.lang.String);
+  public java.lang.String toString();
+}
+=== net/minecraft/client/renderer/rendertype/RenderSetup$RenderSetupBuilder
+Compiled from "RenderSetup.java"
+public class net.minecraft.client.renderer.rendertype.RenderSetup$RenderSetupBuilder {
+  public net.minecraft.client.renderer.rendertype.RenderSetup$RenderSetupBuilder withTexture(java.lang.String, net.minecraft.resources.Identifier);
+  public net.minecraft.client.renderer.rendertype.RenderSetup$RenderSetupBuilder withTexture(java.lang.String, net.minecraft.resources.Identifier, java.util.function.Supplier<com.mojang.renderpearl.api.textures.GpuSampler>);
+  public net.minecraft.client.renderer.rendertype.RenderSetup$RenderSetupBuilder useLightmap();
+  public net.minecraft.client.renderer.rendertype.RenderSetup$RenderSetupBuilder useOverlay();
+  public net.minecraft.client.renderer.rendertype.RenderSetup$RenderSetupBuilder affectsCrumbling();
+  public net.minecraft.client.renderer.rendertype.RenderSetup$RenderSetupBuilder sortOnUpload();
+  public net.minecraft.client.renderer.rendertype.RenderSetup$RenderSetupBuilder setLayeringTransform(net.minecraft.client.renderer.rendertype.LayeringTransform);
+  public net.minecraft.client.renderer.rendertype.RenderSetup$RenderSetupBuilder setTextureTransform(net.minecraft.client.renderer.rendertype.TextureTransform);
+  public net.minecraft.client.renderer.rendertype.RenderSetup$RenderSetupBuilder setOutline(net.minecraft.client.renderer.rendertype.RenderSetup$OutlineProperty);
+  public net.minecraft.client.renderer.rendertype.RenderSetup$RenderSetupBuilder setOutline(net.minecraft.client.renderer.rendertype.RenderSetup$OutlineProperty, java.lang.String);
+  public net.minecraft.client.renderer.rendertype.RenderSetup$RenderSetupBuilder setOitPipelines(net.minecraft.client.renderer.oit.OitPipelineSet);
+  public net.minecraft.client.renderer.rendertype.RenderSetup$RenderSetupBuilder withForcedSolidModelPhase();
+  public net.minecraft.client.renderer.rendertype.RenderSetup createRenderSetup();
+}
+=== net/minecraft/client/renderer/rendertype/RenderSetup$TextureBinding
+Compiled from "RenderSetup.java"
+final class net.minecraft.client.renderer.rendertype.RenderSetup$TextureBinding extends java.lang.Record {
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.resources.Identifier location();
+  public java.util.function.Supplier<com.mojang.renderpearl.api.textures.GpuSampler> sampler();
+}
+=== net/minecraft/client/resources/model/geometry/BakedQuad$MaterialInfo
+Compiled from "BakedQuad.java"
+public final class net.minecraft.client.resources.model.geometry.BakedQuad$MaterialInfo extends java.lang.Record {
+  public net.minecraft.client.resources.model.geometry.BakedQuad$MaterialInfo(net.minecraft.client.renderer.texture.TextureAtlasSprite, net.minecraft.client.renderer.chunk.ChunkSectionLayer, net.minecraft.client.renderer.rendertype.RenderType, net.minecraft.client.renderer.rendertype.RenderType, net.minecraft.client.renderer.rendertype.RenderType, int, net.minecraft.core.Direction, int);
+  public net.minecraft.client.resources.model.geometry.BakedQuad$MaterialInfo(net.minecraft.client.renderer.texture.TextureAtlasSprite, net.minecraft.client.renderer.chunk.ChunkSectionLayer, net.minecraft.client.renderer.rendertype.RenderType, net.minecraft.client.renderer.rendertype.RenderType, net.minecraft.client.renderer.rendertype.RenderType, int, net.minecraft.core.Direction, int, boolean);
+  public static net.minecraft.client.resources.model.geometry.BakedQuad$MaterialInfo of(net.minecraft.client.resources.model.sprite.Material$Baked, com.mojang.blaze3d.platform.Transparency, int, net.minecraft.core.Direction, int);
+  public static net.minecraft.client.resources.model.geometry.BakedQuad$MaterialInfo of(net.minecraft.client.resources.model.sprite.Material$Baked, com.mojang.blaze3d.platform.Transparency, int, net.minecraft.core.Direction, int, boolean);
+  public boolean isTinted();
+  public int flags();
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.client.renderer.texture.TextureAtlasSprite sprite();
+  public net.minecraft.client.renderer.chunk.ChunkSectionLayer layer();
+  public net.minecraft.client.renderer.rendertype.RenderType itemRenderType();
+  public net.minecraft.client.renderer.rendertype.RenderType itemGlintRenderType();
+  public net.minecraft.client.renderer.rendertype.RenderType itemGlintSpecialRenderType();
+  public int tintIndex();
+  public net.minecraft.core.Direction shadeDirectionOverride();
+  public int lightEmission();
+  public boolean ambientOcclusion();
+}
+=== net/minecraft/client/resources/model/sprite/SpriteId
+Compiled from "SpriteId.java"
+public final class net.minecraft.client.resources.model.sprite.SpriteId extends java.lang.Record {
+  public net.minecraft.client.resources.model.sprite.SpriteId(net.minecraft.resources.Identifier, net.minecraft.resources.Identifier);
+  public net.minecraft.client.renderer.rendertype.RenderType renderType(java.util.function.Function<net.minecraft.resources.Identifier, net.minecraft.client.renderer.rendertype.RenderType>);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.resources.Identifier atlasLocation();
+  public net.minecraft.resources.Identifier texture();
+}
