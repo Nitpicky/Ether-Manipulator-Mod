@@ -1,0 +1,61 @@
+/home/runner/.gradle/caches/modules-2/files-2.1/curse.maven/geckolib-388172/8893169/196231506b89da06925c087f9b8bc5fd12ebea16/geckolib-388172-8893169.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/io.github.llamalad7/mixinextras-neoforge/0.5.5/26f2905a37afd203c3da1d6a2e164472a7531b41/mixinextras-neoforge-0.5.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.accesstransformers/at-parser/11.0.2/64aae57d6d26d69543c5275181fe6971707a4e16/at-parser-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/earlydisplay/12.0.16/efa2e56115d22853d10524874a7bbb64555c2a28/earlydisplay-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/12.0.16/edbb2ee8211a867215970bc15ae9c354fa56dc09/loader-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarMetadata/0.5.3/ff40c1cd721d07615d825c5bbf27705b2e3258ed/JarJarMetadata-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarSelector/0.5.3/6b845aab8d5c8e721b4e3cd30f97722b7f8044b1/JarJarSelector-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/accesstransformers/11.0.2/25dcb69c78b16669935f0ab91dff830ce192379d/accesstransformers-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/bus/8.0.5/5b2d33285ab5d1554e9798ad98c40d6ea3868bd5/bus-8.0.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/mergetool/2.0.7/793b18456e92c4a7f66d9b5d8bf7a9c1c7a20b20/mergetool-2.0.7-api.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar
+=== LIST /net/neoforged/neoforge/common/loot/.*$
+=== CODE net/neoforged/neoforge/common/loot/LootModifier codecStart
+  protected static <T extends net.neoforged.neoforge.common.loot.LootModifier> com.mojang.datafixers.Products$P2<com.mojang.serialization.codecs.RecordCodecBuilder$Mu<T>, java.util.Optional<net.minecraft.core.Holder<net.minecraft.world.level.storage.loot.predicates.LootItemCondition>>, java.lang.Integer> codecStart(com.mojang.serialization.codecs.RecordCodecBuilder$Instance<T>);
+    Code:
+         0: aload_0
+         1: getstatic     #1                  // Field net/minecraft/world/level/storage/loot/predicates/LootItemCondition.CODEC:Lcom/mojang/serialization/Codec;
+         4: ldc           #7                  // String condition
+         6: invokeinterface #9,  2            // InterfaceMethod com/mojang/serialization/Codec.optionalFieldOf:(Ljava/lang/String;)Lcom/mojang/serialization/MapCodec;
+        11: invokedynamic #15,  0             // InvokeDynamic #0:apply:()Ljava/util/function/Function;
+        16: invokevirtual #19                 // Method com/mojang/serialization/MapCodec.forGetter:(Ljava/util/function/Function;)Lcom/mojang/serialization/codecs/RecordCodecBuilder;
+        19: getstatic     #25                 // Field com/mojang/serialization/Codec.INT:Lcom/mojang/serialization/codecs/PrimitiveCodec;
+        22: ldc           #29                 // String priority
+        24: sipush        1000
+        27: invokestatic  #33                 // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+        30: invokeinterface #39,  3           // InterfaceMethod com/mojang/serialization/codecs/PrimitiveCodec.optionalFieldOf:(Ljava/lang/String;Ljava/lang/Object;)Lcom/mojang/serialization/MapCodec;
+        35: invokedynamic #44,  0             // InvokeDynamic #1:apply:()Ljava/util/function/Function;
+        40: invokevirtual #19                 // Method com/mojang/serialization/MapCodec.forGetter:(Ljava/util/function/Function;)Lcom/mojang/serialization/codecs/RecordCodecBuilder;
+        43: invokevirtual #45                 // Method com/mojang/serialization/codecs/RecordCodecBuilder$Instance.group:(Lcom/mojang/datafixers/kinds/App;Lcom/mojang/datafixers/kinds/App;)Lcom/mojang/datafixers/Products$P2;
+        46: areturn
+=== SIG net/neoforged/neoforge/common/loot/LootModifier .*
+  protected final java.util.Optional<net.minecraft.core.Holder<net.minecraft.world.level.storage.loot.predicates.LootItemCondition>> condition;
+  protected final int priority;
+  protected static <T extends net.neoforged.neoforge.common.loot.LootModifier> com.mojang.datafixers.Products$P2<com.mojang.serialization.codecs.RecordCodecBuilder$Mu<T>, java.util.Optional<net.minecraft.core.Holder<net.minecraft.world.level.storage.loot.predicates.LootItemCondition>>, java.lang.Integer> codecStart(com.mojang.serialization.codecs.RecordCodecBuilder$Instance<T>);
+  protected net.neoforged.neoforge.common.loot.LootModifier(java.util.Optional<net.minecraft.core.Holder<net.minecraft.world.level.storage.loot.predicates.LootItemCondition>>, int);
+  public final it.unimi.dsi.fastutil.objects.ObjectArrayList<net.minecraft.world.item.ItemStack> apply(it.unimi.dsi.fastutil.objects.ObjectArrayList<net.minecraft.world.item.ItemStack>, net.minecraft.world.level.storage.loot.LootContext);
+  public int priority();
+  protected abstract it.unimi.dsi.fastutil.objects.ObjectArrayList<net.minecraft.world.item.ItemStack> doApply(it.unimi.dsi.fastutil.objects.ObjectArrayList<net.minecraft.world.item.ItemStack>, net.minecraft.world.level.storage.loot.LootContext);
+  private static java.lang.Integer lambda$codecStart$1(net.neoforged.neoforge.common.loot.LootModifier);
+  private static java.util.Optional lambda$codecStart$0(net.neoforged.neoforge.common.loot.LootModifier);
+=== net/neoforged/neoforge/common/loot/IGlobalLootModifier
+Compiled from "IGlobalLootModifier.java"
+public interface net.neoforged.neoforge.common.loot.IGlobalLootModifier {
+  public static final com.mojang.serialization.Codec<net.neoforged.neoforge.common.loot.IGlobalLootModifier> DIRECT_CODEC;
+  public static final com.mojang.serialization.Codec<java.util.Optional<net.neoforged.neoforge.common.conditions.WithConditions<net.neoforged.neoforge.common.loot.IGlobalLootModifier>>> CONDITIONAL_CODEC;
+  public static final int DEFAULT_PRIORITY;
+  public abstract it.unimi.dsi.fastutil.objects.ObjectArrayList<net.minecraft.world.item.ItemStack> apply(it.unimi.dsi.fastutil.objects.ObjectArrayList<net.minecraft.world.item.ItemStack>, net.minecraft.world.level.storage.loot.LootContext);
+  public abstract com.mojang.serialization.MapCodec<? extends net.neoforged.neoforge.common.loot.IGlobalLootModifier> codec();
+  public abstract int priority();
+}
+=== net/neoforged/neoforge/common/loot/LootTableIdCondition
+Compiled from "LootTableIdCondition.java"
+public class net.neoforged.neoforge.common.loot.LootTableIdCondition implements net.minecraft.world.level.storage.loot.predicates.LootItemCondition {
+  public static final com.mojang.serialization.MapCodec<net.neoforged.neoforge.common.loot.LootTableIdCondition> CODEC;
+  public static final net.minecraft.resources.Identifier UNKNOWN_LOOT_TABLE;
+  public com.mojang.serialization.MapCodec<? extends net.minecraft.world.level.storage.loot.predicates.LootItemCondition> codec();
+  public boolean test(net.minecraft.world.level.storage.loot.LootContext);
+  public static net.neoforged.neoforge.common.loot.LootTableIdCondition$Builder builder(net.minecraft.resources.Identifier);
+  public boolean test(java.lang.Object);
+}
