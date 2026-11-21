@@ -1,0 +1,126 @@
+[21Nov2026 07:52:15.192] [main/INFO] [net.neoforged.fml.startup.Entrypoint/]: JVM Uptime at startup: 78ms
+[21Nov2026 07:52:15.205] [main/INFO] [net.neoforged.fml.loading.FMLLoader/]: Starting FancyModLoader version 12.0.16 (CLIENT in DEV)
+[21Nov2026 07:52:15.205] [main/INFO] [net.neoforged.fml.loading.FMLLoader/]: Game directory: /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/runs/client
+[21Nov2026 07:52:15.240] [main/INFO] [net.neoforged.fml.loading.EarlyServiceDiscovery/]: Found 3 early service jars (out of 101) in 15ms
+[21Nov2026 07:52:15.241] [main/INFO] [net.neoforged.fml.loading.FMLLoader/]: Loading FML Early Services:
+[21Nov2026 07:52:15.241] [main/INFO] [net.neoforged.fml.loading.FMLLoader/]:  - /home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/earlydisplay/12.0.16/efa2e56115d22853d10524874a7bbb64555c2a28/earlydisplay-12.0.16.jar
+[21Nov2026 07:52:15.241] [main/INFO] [net.neoforged.fml.loading.FMLLoader/]:  - /home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/12.0.16/edbb2ee8211a867215970bc15ae9c354fa56dc09/loader-12.0.16.jar
+[21Nov2026 07:52:15.242] [main/INFO] [net.neoforged.fml.loading.FMLLoader/]:  - mods/sodium-neoforge-0.9.2+mc26.3.jar
+[21Nov2026 07:52:15.248] [main/INFO] [net.neoforged.fml.loading.ImmediateWindowHandler/]: Running graphics bootstrap plugin sodium
+[21Nov2026 07:52:15.250] [main/INFO] [Sodium-GraphicsAdapterProbe/]: Searching for graphics cards...
+[21Nov2026 07:52:15.407] [main/INFO] [Sodium-GraphicsAdapterProbe/]: Found graphics adapter: LinuxPciAdapterInfo[vendor=UNKNOWN, name=Device 1111, pciVendorId=0x1d0f, pciDeviceId=0x1111]
+[21Nov2026 07:52:15.412] [main/WARN] [Sodium-Workarounds/]: Sodium has applied one or more workarounds to prevent crashes or other issues on your system: [NO_ERROR_CONTEXT_UNSUPPORTED]
+[21Nov2026 07:52:15.412] [main/WARN] [Sodium-Workarounds/]: This is not necessarily an issue, but it may result in certain features or optimizations being disabled. You can sometimes fix these issues by upgrading your graphics driver.
+[21Nov2026 07:52:15.413] [main/INFO] [net.neoforged.fml.loading.ImmediateWindowHandler/]: Loading ImmediateWindowProvider fmlearlywindow
+[21Nov2026 07:52:15.418] [main/INFO] [EARLYDISPLAY/]: Detected CI environment, disabling ELS
+[21Nov2026 07:52:15.418] [main/INFO] [net.neoforged.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider fmlearlywindow cannot run in the current environment, disabling
+[21Nov2026 07:52:15.453] [ForkJoinPool.commonPool-worker-2/INFO] [net.neoforged.fml.loading.moddiscovery.locators.GameLocator/]: Detected a joined NeoForge and Minecraft configuration. Applying filtering...
+[21Nov2026 07:52:15.548] [ForkJoinPool.commonPool-worker-2/INFO] [net.neoforged.fml.loading.moddiscovery.locators.InDevFolderLocator/CORE]: Got mod coordinates ethermod%%/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/classes/java/main:ethermod%%/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/resources/main:ethermod%%/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/classes/java/playtest:ethermod%%/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/resources/playtest from env
+[21Nov2026 07:52:15.682] [ForkJoinPool.commonPool-worker-2/INFO] [net.neoforged.fml.loading.moddiscovery.locators.JarInJarDependencyLocator/]: Found 6 dependencies adding them to mods collection
+[21Nov2026 07:52:15.685] [ForkJoinPool.commonPool-worker-2/INFO] [net.neoforged.fml.loading.moddiscovery.ModDiscoverer/]: 
+     Mod List:
+		Name Version (Mod Id)
+
+		Ether Manipulator 1.0.1+26.3 (ethermod)
+		GeckoLib 5 5.5.6 (geckolib)
+		Iris 1.11.7+mc26.3 (iris)
+		Minecraft 26.3 (minecraft)
+		NeoForge 26.3.0.115 (neoforge)
+		Sodium 0.9.2+mc26.3 (sodium)
+[21Nov2026 07:52:15.987] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.17.5+mixin.0.8.7/cef8519a91129d0c21fa03bb9378f0e8ca810e5/sponge-mixin-0.17.5+mixin.0.8.7.jar Service=FML Env=CLIENT
+[21Nov2026 07:52:16.012] [main/INFO] [net.neoforged.fml.loading.FMLLoader/]: Loading FML Plugins:
+[21Nov2026 07:52:16.013] [main/INFO] [net.neoforged.fml.loading.FMLLoader/]:  - mods/iris-neoforge-1.11.7+mc26.3.jar > antlr4-runtime-4.13.1.jar
+[21Nov2026 07:52:16.014] [main/INFO] [net.neoforged.fml.loading.FMLLoader/]:  - mods/iris-neoforge-1.11.7+mc26.3.jar > jcpp-1.4.14.jar
+[21Nov2026 07:52:16.014] [main/INFO] [net.neoforged.fml.loading.FMLLoader/]:  - /home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar > net.neoforged.neoforge-coremods-26.3.0.115.jar
+[21Nov2026 07:52:16.015] [main/INFO] [net.neoforged.fml.loading.FMLLoader/]:  - mods/iris-neoforge-1.11.7+mc26.3.jar > glsl-transformer-3.0.0-pre3.jar
+[21Nov2026 07:52:16.121] [main/INFO] [net.neoforged.fml.loading.FMLLoader/]: Building game content classloader:
+ - ethermod (composite(folder(/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/classes/java/main), folder(/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/resources/main), folder(/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/classes/java/playtest)))
+ - geckolib (jar(/home/runner/.gradle/caches/modules-2/files-2.1/curse.maven/geckolib-388172/8893169/196231506b89da06925c087f9b8bc5fd12ebea16/geckolib-388172-8893169.jar))
+ - iris (jar(mods/iris-neoforge-1.11.7+mc26.3.jar))
+ - minecraft (composite(filtered(jar(/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar)), filtered(jar(/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar))))
+ - mixinextras.neoforge (jar(/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar > mixinextras-neoforge-0.5.5.jar))
+ - neoforge (composite(filtered(jar(/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar))))
+ - net.neoforged.fml.generated (empty(VirtualJar/net.neoforged.fml.generated))
+ - sodium (jar(mods/sodium-neoforge-0.9.2+mc26.3.jar > net.caffeinemc.sodium-neoforge-0.9.2+mc26.3-mod.jar))
+[21Nov2026 07:52:16.137] [main/INFO] [net.neoforged.fml.loading.FMLLoader/]: Built game content classloader in 32ms
+[21Nov2026 07:52:16.183] [main/INFO] [net.neoforged.fml.loading.mixin.MixinFacade/]: Mixin config sodium-frapi.mixins.json from jar(mods/sodium-neoforge-0.9.2+mc26.3.jar) > jar(mods/sodium-neoforge-0.9.2+mc26.3.jar > net.caffeinemc.sodium-neoforge-0.9.2+mc26.3-mod.jar) not applied as required mod 'fabric_renderer_api_v1' is missing
+[21Nov2026 07:52:16.217] [main/INFO] [Sodium/]: Loaded configuration file for Sodium: 37 options available, 1 override(s) found
+[21Nov2026 07:52:16.232] [main/WARN] [mixin/]: Reference map 'iris.refmap.json' for mixins.iris.json could not be read. If this is a development environment you can ignore this message
+[21Nov2026 07:52:16.233] [main/WARN] [mixin/]: Reference map 'iris.refmap.json' for mixins.iris.vertexformat.json could not be read. If this is a development environment you can ignore this message
+[21Nov2026 07:52:16.233] [main/WARN] [mixin/]: Reference map 'iris.refmap.json' for mixins.iris.compat.sodium.json could not be read. If this is a development environment you can ignore this message
+[21Nov2026 07:52:16.370] [main/WARN] [Sodium/]: Force-disabling mixin 'features.render.world.sky.LevelRendererMixin' as rule 'mixin.features.render.world.sky' (added by mods [iris]) disables it and children
+[21Nov2026 07:52:16.655] [main/WARN] [mixin/]: Error loading class: com/portingdeadmods/cable_facades/events/GameClientEvents$2 (java.lang.ClassNotFoundException: com.portingdeadmods.cable_facades.events.GameClientEvents$2)
+[21Nov2026 07:52:16.656] [main/WARN] [mixin/]: Error loading class: com/direwolf20/justdirethings/client/renderers/OurRenderTypes (java.lang.ClassNotFoundException: com.direwolf20.justdirethings.client.renderers.OurRenderTypes)
+[21Nov2026 07:52:16.656] [main/WARN] [mixin/]: Error loading class: mekanism/client/render/lib/effect/BillboardingEffectRenderer (java.lang.ClassNotFoundException: mekanism.client.render.lib.effect.BillboardingEffectRenderer)
+[21Nov2026 07:52:16.658] [main/WARN] [mixin/]: Error loading class: blusunrize/immersiveengineering/client/utils/IEGLShaders (java.lang.ClassNotFoundException: blusunrize.immersiveengineering.client.utils.IEGLShaders)
+[21Nov2026 07:52:16.935] [main/INFO] [MixinExtras|Service/]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.5.5).
+[21Nov2026 07:52:18.243] [Datafixer Bootstrap #0/INFO] [com.mojang.datafixers.DataFixerBuilder/]: 310 Datafixer optimizations took 388 milliseconds
+[21Nov2026 07:52:22.186] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, location] and [teleport, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[21Nov2026 07:52:22.188] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, location] and [teleport, targets] with inputs: [0.1 -0.5 .9, 0 0 0]
+[21Nov2026 07:52:22.191] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, destination] and [teleport, targets] with inputs: [Player, 0123, @e, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[21Nov2026 07:52:22.192] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, targets] and [teleport, destination] with inputs: [Player, 0123, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[21Nov2026 07:52:22.195] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, targets, location] and [teleport, targets, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[21Nov2026 07:52:22.227] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [time, set, time] and [time, set, timemarker] with inputs: [0, 0s, 0d, 0t]
+[21Nov2026 07:52:22.229] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [time, set, timemarker] and [time, set, time] with inputs: [012]
+[21Nov2026 07:52:22.231] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [time, of, clock, set, time] and [time, of, clock, set, timemarker] with inputs: [0, 0s, 0d, 0t]
+[21Nov2026 07:52:22.232] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [time, of, clock, set, timemarker] and [time, of, clock, set, time] with inputs: [012]
+[21Nov2026 07:52:22.305] [modloading-worker-3/INFO] [net.neoforged.neoforge.common.NeoForgeMod/NEOFORGE-MOD]: NeoForge mod loading, version 26.3.0.115, for MC 26.3
+[21Nov2026 07:52:22.406] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: The mod ethermod uses the @OnlyIn annotation; the runtime member-stripping behaviour of this annotation is no longer present, which may lead to issues if that behaviour was relied upon
+[21Nov2026 07:52:22.409] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.PlaytestBootstrap
+[21Nov2026 07:52:22.409] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.ClientReload
+[21Nov2026 07:52:22.409] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.PhotonicGlow
+[21Nov2026 07:52:22.409] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.ModeWheel
+[21Nov2026 07:52:22.409] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.beam.ModuleMarkers
+[21Nov2026 07:52:22.410] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.beam.BeamRenderState
+[21Nov2026 07:52:22.410] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.beam.OreSense
+[21Nov2026 07:52:22.410] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.beam.BeamCurve
+[21Nov2026 07:52:22.410] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.beam.BlockGlow
+[21Nov2026 07:52:22.410] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.beam.LeftClickFx
+[21Nov2026 07:52:22.410] [modloading-worker-1/WARN] [Iris/]: Found fine program match for neoforge:pipeline/entity_unlit_translucent: ENTITIES_TRANSLUCENT
+[21Nov2026 07:52:22.410] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.beam.BeamAudio
+[21Nov2026 07:52:22.413] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.beam.BeamRenderer
+[21Nov2026 07:52:22.414] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.beam.BeamImpact
+[21Nov2026 07:52:22.414] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.beam.MuzzleEvents
+[21Nov2026 07:52:22.414] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.beam.Muzzle
+[21Nov2026 07:52:22.415] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.beam.ElementFx
+[21Nov2026 07:52:22.415] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.beam.BeamBallRenderer
+[21Nov2026 07:52:22.415] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.beam.PrismRope
+[21Nov2026 07:52:22.415] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.beam.LightBeacon
+[21Nov2026 07:52:22.415] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.beam.BeamFx
+[21Nov2026 07:52:22.415] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.beam.MassPreview
+[21Nov2026 07:52:22.415] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.ManipulatorItemRenderer
+[21Nov2026 07:52:22.415] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.ManipulatorTintLayer
+[21Nov2026 07:52:22.415] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.ClientCacheReset
+[21Nov2026 07:52:22.415] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.ManipulatorClientExtensions
+[21Nov2026 07:52:22.415] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.event.ClientInputHandler
+[21Nov2026 07:52:22.416] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.event.ManipulatorKeys
+[21Nov2026 07:52:22.416] [modloading-worker-2/INFO] [ethermod/]: Ether Manipulator initialised.
+[21Nov2026 07:52:22.416] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.BodyTextures
+[21Nov2026 07:52:22.419] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.Fx
+[21Nov2026 07:52:22.419] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.ClientSideHooks
+[21Nov2026 07:52:22.419] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.ManipulatorItemModel
+[21Nov2026 07:52:22.419] [modloading-worker-3/ERROR] [net.neoforged.neoforge.common.OnlyInWarningsHandler/]: @OnlyIn used on class com.ethermod.client.ManipulatorHud
+[21Nov2026 07:52:22.813] [Render thread/INFO] [com.mojang.authlib.services.MinecraftServicesDiscoveryService/]: Environment: Environment[discoveryUrl=https://discovery.minecraftservices.com/minecraft/client, name=PROD]
+[21Nov2026 07:52:22.828] [Render thread/INFO] [net.minecraft.client.Minecraft/]: Setting user: Dev
+[21Nov2026 07:52:22.979] [Render thread/INFO] [Sodium/]: Setting exclusive fullscreen to true by default, as the user is not on Windows and the language cannot be guessed.
+[21Nov2026 07:52:22.999] [Render thread/INFO] [net.minecraft.client.Minecraft/]: Backend library: LWJGL version 3.4.3+4
+[21Nov2026 07:52:23.034] [Render thread/INFO] [com.mojang.blaze3d.platform.SdlDebug/]: SDL [SYSTEM]: App name: Minecraft
+[21Nov2026 07:52:23.035] [Render thread/INFO] [com.mojang.blaze3d.platform.SdlDebug/]: SDL [SYSTEM]: App version: 26.3
+[21Nov2026 07:52:23.035] [Render thread/INFO] [com.mojang.blaze3d.platform.SdlDebug/]: SDL [SYSTEM]: App ID: com.mojang.minecraft
+[21Nov2026 07:52:23.035] [Render thread/INFO] [com.mojang.blaze3d.platform.SdlDebug/]: SDL [SYSTEM]: SDL revision: SDL-3.4.14--128-NOTFOUND
+[21Nov2026 07:52:23.199] [ForkJoinPool.commonPool-worker-2/WARN] [Iris/]: [Iris Update Check] This version doesn't have an update index, skipping.
+[21Nov2026 07:52:28.461] [Render thread/ERROR] [net.minecraft.client.Minecraft/]: Failed to create backend OpenGL
+com.mojang.renderpearl.api.device.BackendCreationException: Failed to create window for OpenGL context: Couldn't find matching GLX visual
+	at TRANSFORMER/minecraft@26.3/com.mojang.renderpearl.backend.opengl.GlDevice.<init>(GlDevice.java:77) ~[minecraft-patched-26.3.0.115.jar:?]
+	at TRANSFORMER/minecraft@26.3/com.mojang.renderpearl.backend.opengl.GlBackend.createDevice(GlBackend.java:75) ~[minecraft-patched-26.3.0.115.jar:?]
+	at TRANSFORMER/minecraft@26.3/net.minecraft.client.Minecraft.<init>(Minecraft.java:497) [minecraft-patched-26.3.0.115.jar:?]
+	at TRANSFORMER/minecraft@26.3/net.minecraft.client.main.Main.main(Main.java:282) [minecraft-patched-26.3.0.115.jar:?]
+	at net.neoforged.fml.startup.Client.main(Client.java:19) [loader-12.0.16.jar:12.0]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[?:?]
+	at net.neoforged.devlaunch.Main.main(Main.java:57) [DevLaunch-1.0.2.jar:?]
+[21Nov2026 07:52:28.487] [Render thread/INFO] [com.mojang.renderpearl.backend.vulkan.VulkanBackend/]: Enabling optional FeatureSet [Wireframe]
+[21Nov2026 07:52:28.487] [Render thread/INFO] [com.mojang.renderpearl.backend.vulkan.VulkanBackend/]: Enabling optional FeatureSet [EXT MultiDraw]
+[21Nov2026 07:52:28.487] [Render thread/INFO] [com.mojang.renderpearl.backend.vulkan.VulkanBackend/]: Optional FeatureSet [NV Diagnostic Checkpoint] not supported
+[21Nov2026 07:52:28.487] [Render thread/INFO] [com.mojang.renderpearl.backend.vulkan.VulkanBackend/]: Enabling optional FeatureSet [Calibrated Timestamps]
+[21Nov2026 07:52:28.487] [Render thread/INFO] [com.mojang.renderpearl.backend.vulkan.VulkanBackend/]: Optional FeatureSet [AMD Buffer Marker] not supported
