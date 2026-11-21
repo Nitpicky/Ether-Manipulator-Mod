@@ -28,6 +28,7 @@ PASS control badge0 found
 PASS control badge1 found
 PASS control badge2 found
 PASS control set0 found
+PASS control fav0 found
 PASS control 330.0,120.0 found
 PASS control 40.0,43.0 found
 PASS control 330.0,120.0 found
