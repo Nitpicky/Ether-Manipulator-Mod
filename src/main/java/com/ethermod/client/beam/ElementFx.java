@@ -124,8 +124,9 @@ final class ElementFx {
             var q = new org.joml.Quaternionf()
                     .rotateY((float) Math.toRadians(ball.getYRot()))
                     .rotateX((float) Math.toRadians(ball.getXRot()));
-            shell(vc, m, p, q, 0.53f, r, g, b, 0.10f + 0.08f * br);
-            shell(vc, m, p, q, 0.56f, r, g, b, 0.05f * br);
+            // kept light: the block must stay readable through it
+            shell(vc, m, p, q, 0.53f, r, g, b, 0.04f + 0.03f * br);
+            shell(vc, m, p, q, 0.56f, r, g, b, 0.02f * br);
             if (ball.massOffset().equals(net.minecraft.core.BlockPos.ZERO))
                 BeamFx.prism(vc, m, nozzle.subtract(cam), p, BeamFx.PX * 0.2f, 0.785, r, g, b, 0.14f + 0.08f * br);
         }

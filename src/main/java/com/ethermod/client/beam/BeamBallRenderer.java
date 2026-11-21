@@ -383,6 +383,25 @@ public class BeamBallRenderer extends EntityRenderer<BeamBallEntity> {
         ps.pushPose();
         ps.translate(-0.5, -0.5, -0.5);
         var data = net.neoforged.neoforge.client.model.data.ModelData.EMPTY;
+        // depth first, drawn at once: then the see-through pass only shows the front-most faces
+        // (its own back faces and the blocks behind it stay hidden)
+        quads(ps, buf.getBuffer(GhostRenderTypes.DEPTH_ONLY), state, model, data, hidden, r, g, b, light);
+        if (buf instanceof MultiBufferSource.BufferSource source) source.endBatch(GhostRenderTypes.DEPTH_ONLY);
+        quads(ps, vc, state, model, data, hidden, r, g, b, light);
+        ps.popPose();
+    }
+
+    private static void quads(
+            PoseStack ps,
+            VertexConsumer vc,
+            net.minecraft.world.level.block.state.BlockState state,
+            net.minecraft.client.resources.model.BakedModel model,
+            net.neoforged.neoforge.client.model.data.ModelData data,
+            java.util.Set<net.minecraft.core.Direction> hidden,
+            float r,
+            float g,
+            float b,
+            int light) {
         for (var rt : model.getRenderTypes(state, net.minecraft.util.RandomSource.create(42), data))
             for (int d = -1; d < 6; d++) {
                 var dir = d < 0 ? null : net.minecraft.core.Direction.from3DDataValue(d);
@@ -402,7 +421,6 @@ public class BeamBallRenderer extends EntityRenderer<BeamBallEntity> {
                             net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY);
                 }
             }
-        ps.popPose();
     }
 
     /** The sides of a held block that touch another block of the same formation. */
