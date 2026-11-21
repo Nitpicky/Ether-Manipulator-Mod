@@ -369,7 +369,8 @@ final class KTierPanel {
         g.pose().translate(0, 0, 2);
         double edge = KPanelFx.waveEdge(age);
         if (age >= .2 && age < .88) {
-            additive(g, 85, y + edge + .65, 144, .7, pal.accent());
+            // flush with the revealed rows (0..floor(edge)), so no dark row opens above the line
+            additive(g, 85, y + Math.floor(edge) + .65, 144, .7, pal.accent());
         }
         for (double yy = -4 + (ui.now * 7.5) % 4; yy < 39; yy += 4) {
             double distance = yy + .6 - edge,
