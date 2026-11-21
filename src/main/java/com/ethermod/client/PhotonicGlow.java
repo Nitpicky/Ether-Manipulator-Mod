@@ -172,10 +172,7 @@ public final class PhotonicGlow {
                 y1 = Math.min(Mth.floor(y + LUMINANCE) >> 4, level.getMaxSectionY()),
                 z0 = Mth.floor(z - LUMINANCE) >> 4,
                 z1 = Mth.floor(z + LUMINANCE) >> 4;
-        for (int sx = x0; sx <= x1; sx++)
-            for (int sy = y0; sy <= y1; sy++)
-                for (int sz = z0; sz <= z1; sz++)
-                    ((com.ethermod.mixin.LevelRendererInvoker) mc.levelRenderer).ethermod$setSectionDirty(sx, sy, sz, true);
+        level.setSectionRangeDirty(x0, y0, z0, x1, y1, z1);
     }
 
     /** Forgets every source (level change, disconnect); the next level rebuilds its own sections. */
@@ -210,8 +207,8 @@ public final class PhotonicGlow {
         return best;
     }
 
-    /** LevelRenderer.getLightColor: the packed light with its block part raised to the glow. */
-    public static int lightColor(BlockAndTintGetter getter, BlockPos pos, int packed) {
+    /** LightCoordsUtil.getLightCoords: the packed light with its block part raised to the glow. */
+    public static int lightColor(net.minecraft.world.level.BlockAndLightGetter getter, BlockPos pos, int packed) {
         Snapshot s = snapshot;
         if (s == null) return packed;
         // another world drawn through the same method (a mod's preview scene) has no glow

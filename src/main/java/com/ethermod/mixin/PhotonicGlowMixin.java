@@ -18,15 +18,15 @@ import org.spongepowered.asm.mixin.injection.At;
  * LevelRenderer.getLightColor(level, state, pos) for every non-emissive block that is not a full
  * opaque cube), so it needs no Sodium-specific mixin. Cosmetic: skipped if it cannot apply.
  */
-@Mixin(LevelRenderer.class)
+@Mixin(net.minecraft.util.LightCoordsUtil.class)
 public abstract class PhotonicGlowMixin {
     @ModifyReturnValue(
             method =
-                    "getLightColor(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)I",
+                    "getLightCoords(Lnet/minecraft/util/LightCoordsUtil$BrightnessGetter;Lnet/minecraft/world/level/BlockAndLightGetter;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)I",
             at = @At("RETURN"),
             require = 0)
     private static int mm$photonicGlow(
-            int packed, BlockAndTintGetter level, BlockState state, BlockPos pos) {
+            int packed, net.minecraft.util.LightCoordsUtil.BrightnessGetter brightness, net.minecraft.world.level.BlockAndLightGetter level, BlockState state, BlockPos pos) {
         return PhotonicGlow.lightColor(level, pos, packed);
     }
 }

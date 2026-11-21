@@ -27,7 +27,6 @@
     "ChargeMovementMixin",
     "FlightEquipmentMixin",
     "GravityCameraMixin",
-    "LevelRendererInvoker",
     "PhotonicGlowEntityMixin",
     "PhotonicGlowMixin",
     "RenderStateEntityMixin",

@@ -5,7 +5,6 @@ import com.ethermod.trait.Traits;
 
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
 import org.spongepowered.asm.mixin.Final;
@@ -32,17 +31,13 @@ public abstract class ChargeArmTremblerMixin {
     @Unique private static final float[] AMP = {0.003f, 0.007f, 0.012f, 0.02f};
 
     @Inject(
-            method = "setupAnim(Lnet/minecraft/world/entity/LivingEntity;FFFFF)V",
+            method = "setupAnim(Lnet/minecraft/client/renderer/entity/state/HumanoidRenderState;)V",
             at = @At("TAIL"),
             require = 0)
     private void mm$chargeTremble(
-            LivingEntity entity,
-            float limbSwing,
-            float limbSwingAmount,
-            float ageInTicks,
-            float netHeadYaw,
-            float headPitch,
-            CallbackInfo ci) {
+            net.minecraft.client.renderer.entity.state.HumanoidRenderState state, CallbackInfo ci) {
+        Object entity = com.ethermod.client.RenderStateEntities.of(state);
+        float ageInTicks = state.ageInTicks;
         if (!(entity instanceof Player p)
                 || !p.isUsingItem()
                 || !(p.getUseItem().getItem() instanceof EtherManipulatorItem)) return;

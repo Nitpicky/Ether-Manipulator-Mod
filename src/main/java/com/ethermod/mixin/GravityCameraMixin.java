@@ -25,6 +25,10 @@ public abstract class GravityCameraMixin {
 
     @Shadow private Vec3 position;
 
+    @Shadow private Entity entity;
+
+    @Shadow private boolean detached;
+
     @Unique
     private void mm$align(Player p, float partial) {
         var align = MovementPhysics.viewRotation(p, partial);
@@ -38,29 +42,17 @@ public abstract class GravityCameraMixin {
     /** Whether the zoom hook below already turned the camera during this setup. */
     @Unique private boolean mm$aligned;
 
-    @Inject(method = "setup", at = @At("HEAD"), require = 0)
-    private void mm$begin(
-            BlockGetter level,
-            Entity entity,
-            boolean detached,
-            boolean reversed,
-            float partial,
-            CallbackInfo ci) {
+    @Inject(method = "alignWithEntity", at = @At("HEAD"), require = 0)
+    private void mm$begin(float partial, CallbackInfo ci) {
         mm$aligned = false;
     }
 
     // Vanilla zoom must test terrain from the rotated eye and along the rotated view.
     @Inject(
-            method = "setup",
+            method = "alignWithEntity",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Camera;getMaxZoom(F)F"),
             require = 0)
-    private void mm$thirdPerson(
-            BlockGetter level,
-            Entity entity,
-            boolean detached,
-            boolean reversed,
-            float partial,
-            CallbackInfo ci) {
+    private void mm$thirdPerson(float partial, CallbackInfo ci) {
         if (entity instanceof Player p && MovementPhysics.isTurning(p)) {
             mm$align(p, partial);
             mm$aligned = true;
@@ -74,14 +66,8 @@ public abstract class GravityCameraMixin {
      * chose) is kept in the camera's own frame and carried over to the turned eye. Terrain is not
      * re-tested along the turned view in that case.
      */
-    @Inject(method = "setup", at = @At("TAIL"), require = 0)
-    private void mm$finish(
-            BlockGetter level,
-            Entity entity,
-            boolean detached,
-            boolean reversed,
-            float partial,
-            CallbackInfo ci) {
+    @Inject(method = "alignWithEntity", at = @At("TAIL"), require = 0)
+    private void mm$finish(float partial, CallbackInfo ci) {
         boolean aligned = mm$aligned;
         mm$aligned = false;
         if (aligned || !(entity instanceof Player p) || !MovementPhysics.isTurning(p)) return;

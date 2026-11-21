@@ -52,7 +52,7 @@ public abstract class ChargeMovementMixin {
 
     /** Charging the Manipulator (with Skirmisher, or a hold mode) does not slow the player. */
     @ModifyExpressionValue(
-            method = "aiStep",
+            method = "modifyInput",
             at =
                     @At(
                             value = "INVOKE",
