@@ -18,9 +18,10 @@ PASS Module switch retains tank
 PASS Reload waits 15s at Prototype
 PASS Crucible grows the shared tank
 PASS Seedbank grows the shared tank
-PASS Set code of the build: 1HB2FB3BB
+PASS Set code of the build: S_1HB2FB3BB
 PASS Set code round trip
-PASS Bad set codes are refused (7/7)
+PASS Bad set codes are refused (8/8)
+PASS Old codes without the prefix still read
 PASS Bad pasted code adds no set
 PASS Pasted code adds a set
 PASS Pasted set keeps the build
