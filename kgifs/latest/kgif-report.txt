@@ -23,6 +23,7 @@ PASS control apply-colour found
 PASS control dye0 found
 PASS control 330.0,120.0 found
 PASS control save found
+PASS control set0 found
 PASS control badge0 found
 PASS control badge1 found
 PASS control badge2 found
