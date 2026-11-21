@@ -15,6 +15,7 @@ next release's notes.
 
 ### Tuning
 - Bank Shot: each ricochet resets the shot's range.
+- Steady Hand: held blocks turn see-through while a throw charges.
 
 ## 1.0.1 (release)
 
