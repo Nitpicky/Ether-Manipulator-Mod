@@ -18,20 +18,6 @@ PASS Module switch retains tank
 PASS Reload waits 15s at Prototype
 PASS Crucible grows the shared tank
 PASS Seedbank grows the shared tank
-PASS Set code of the build: S_1HB2FB3BB
-PASS Set code round trip
-PASS Bad set codes are refused (8/8)
-PASS Old codes without the prefix still read
-PASS Bad pasted code adds no set
-PASS Pasted code adds a set
-PASS Pasted set keeps the build
-PASS More than seven Sets fit
-PASS Extra Sets removed
-PASS Set icons follow the first Module
-PASS Moving a set reorders the list
-PASS A chosen icon is kept
-PASS A set can be a favourite
-PASS A favourite can be unmarked
 PASS Frost spends water
 PASS Ignite/Lava costs
 PASS Vacuum removed
