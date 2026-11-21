@@ -1,0 +1,205 @@
+/home/runner/.gradle/caches/modules-2/files-2.1/curse.maven/geckolib-388172/8893169/196231506b89da06925c087f9b8bc5fd12ebea16/geckolib-388172-8893169.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/io.github.llamalad7/mixinextras-neoforge/0.5.5/26f2905a37afd203c3da1d6a2e164472a7531b41/mixinextras-neoforge-0.5.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.accesstransformers/at-parser/11.0.2/64aae57d6d26d69543c5275181fe6971707a4e16/at-parser-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/earlydisplay/12.0.16/efa2e56115d22853d10524874a7bbb64555c2a28/earlydisplay-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/12.0.16/edbb2ee8211a867215970bc15ae9c354fa56dc09/loader-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarMetadata/0.5.3/ff40c1cd721d07615d825c5bbf27705b2e3258ed/JarJarMetadata-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarSelector/0.5.3/6b845aab8d5c8e721b4e3cd30f97722b7f8044b1/JarJarSelector-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/accesstransformers/11.0.2/25dcb69c78b16669935f0ab91dff830ce192379d/accesstransformers-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/bus/8.0.5/5b2d33285ab5d1554e9798ad98c40d6ea3868bd5/bus-8.0.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/mergetool/2.0.7/793b18456e92c4a7f66d9b5d8bf7a9c1c7a20b20/mergetool-2.0.7-api.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar
+=== LIST /.*/(PictureInPictureRenderer)$
+net/minecraft/client/gui/render/pip/PictureInPictureRenderer
+=== CODE net/minecraft/client/gui/render/pip/PictureInPictureRenderer prepare
+  public void prepare(T, net.minecraft.client.renderer.state.gui.GuiRenderState, net.minecraft.client.renderer.feature.FeatureRenderDispatcher, int);
+    Code:
+         0: aload_1
+         1: invokeinterface #46,  1           // InterfaceMethod net/minecraft/client/renderer/state/gui/pip/PictureInPictureRenderState.x1:()I
+         6: aload_1
+         7: invokeinterface #52,  1           // InterfaceMethod net/minecraft/client/renderer/state/gui/pip/PictureInPictureRenderState.x0:()I
+        12: isub
+        13: iload         4
+        15: imul
+        16: istore        5
+        18: aload_1
+        19: invokeinterface #55,  1           // InterfaceMethod net/minecraft/client/renderer/state/gui/pip/PictureInPictureRenderState.y1:()I
+        24: aload_1
+        25: invokeinterface #58,  1           // InterfaceMethod net/minecraft/client/renderer/state/gui/pip/PictureInPictureRenderState.y0:()I
+        30: isub
+        31: iload         4
+        33: imul
+        34: istore        6
+        36: aload_0
+        37: getfield      #61                 // Field texture:Lcom/mojang/renderpearl/api/textures/GpuTexture;
+        40: ifnull        73
+        43: aload_0
+        44: getfield      #61                 // Field texture:Lcom/mojang/renderpearl/api/textures/GpuTexture;
+        47: iconst_0
+        48: invokeinterface #65,  2           // InterfaceMethod com/mojang/renderpearl/api/textures/GpuTexture.getWidth:(I)I
+        53: iload         5
+        55: if_icmpne     73
+        58: aload_0
+        59: getfield      #61                 // Field texture:Lcom/mojang/renderpearl/api/textures/GpuTexture;
+        62: iconst_0
+        63: invokeinterface #71,  2           // InterfaceMethod com/mojang/renderpearl/api/textures/GpuTexture.getHeight:(I)I
+        68: iload         6
+        70: if_icmpeq     77
+        73: iconst_1
+        74: goto          78
+        77: iconst_0
+        78: istore        7
+        80: iload         7
+        82: ifne          102
+        85: aload_0
+        86: aload_1
+        87: invokevirtual #74                 // Method textureIsReadyToBlit:(Lnet/minecraft/client/renderer/state/gui/pip/PictureInPictureRenderState;)Z
+        90: ifeq          102
+        93: aload_0
+        94: aload_1
+        95: aload_2
+        96: invokevirtual #78                 // Method blitTexture:(Lnet/minecraft/client/renderer/state/gui/pip/PictureInPictureRenderState;Lnet/minecraft/client/renderer/state/gui/GuiRenderState;)V
+        99: goto          338
+       102: aload_0
+       103: iload         7
+       105: iload         5
+       107: iload         6
+       109: invokevirtual #82                 // Method prepareTexturesAndProjection:(ZII)V
+       112: invokestatic  #86                 // Method com/mojang/blaze3d/systems/RenderSystem.getModelViewStack:()Lorg/joml/Matrix4fStack;
+       115: astore        8
+       117: aload         8
+       119: invokevirtual #92                 // Method org/joml/Matrix4fStack.pushMatrix:()Lorg/joml/Matrix4fStack;
+       122: pop
+       123: new           #97                 // class com/mojang/blaze3d/vertex/PoseStack
+       126: dup
+       127: invokespecial #99                 // Method com/mojang/blaze3d/vertex/PoseStack."<init>":()V
+       130: astore        9
+       132: aload         9
+       134: iload         5
+       136: i2f
+       137: fconst_2
+       138: fdiv
+       139: aload_0
+       140: iload         6
+       142: iload         4
+       144: invokevirtual #100                // Method getTranslateY:(II)F
+       147: fconst_0
+       148: invokevirtual #104                // Method com/mojang/blaze3d/vertex/PoseStack.translate:(FFF)V
+       151: iload         4
+       153: i2f
+       154: aload_1
+       155: invokeinterface #108,  1          // InterfaceMethod net/minecraft/client/renderer/state/gui/pip/PictureInPictureRenderState.scale:()F
+       160: fmul
+       161: fstore        10
+       163: aload         9
+       165: fload         10
+       167: fload         10
+       169: fload         10
+       171: fneg
+       172: invokevirtual #112                // Method com/mojang/blaze3d/vertex/PoseStack.scale:(FFF)V
+       175: aload_0
+       176: aload_1
+       177: aload         9
+       179: aload_0
+       180: getfield      #42                 // Field submitNodeStorage:Lnet/minecraft/client/renderer/SubmitNodeStorage;
+       183: invokevirtual #114                // Method renderToTexture:(Lnet/minecraft/client/renderer/state/gui/pip/PictureInPictureRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;)V
+       186: aload_3
+       187: aload_0
+       188: getfield      #42                 // Field submitNodeStorage:Lnet/minecraft/client/renderer/SubmitNodeStorage;
+       191: invokevirtual #118                // Method net/minecraft/client/renderer/feature/FeatureRenderDispatcher.prepareFrame:(Lnet/minecraft/client/renderer/SubmitNodeStorage;)Lnet/minecraft/client/renderer/feature/FeatureRenderDispatcher$PreparedFrame;
+       194: astore        11
+       196: invokestatic  #124                // Method com/mojang/blaze3d/systems/RenderSystem.getDevice:()Lcom/mojang/renderpearl/api/device/GpuDevice;
+       199: invokeinterface #128,  1          // InterfaceMethod com/mojang/renderpearl/api/device/GpuDevice.createCommandEncoder:()Lcom/mojang/renderpearl/api/commands/CommandEncoder;
+       204: invokedynamic #134,  0            // InvokeDynamic #1:get:()Ljava/util/function/Supplier;
+       209: aload_0
+       210: getfield      #138                // Field textureView:Lcom/mojang/renderpearl/api/textures/GpuTextureView;
+       213: invokestatic  #142                // Method java/util/Optional.empty:()Ljava/util/Optional;
+       216: aload_0
+       217: getfield      #148                // Field depthTextureView:Lcom/mojang/renderpearl/api/textures/GpuTextureView;
+       220: invokestatic  #151                // Method java/util/OptionalDouble.empty:()Ljava/util/OptionalDouble;
+       223: invokeinterface #156,  6          // InterfaceMethod com/mojang/renderpearl/api/commands/CommandEncoder.createRenderPass:(Ljava/util/function/Supplier;Lcom/mojang/renderpearl/api/textures/GpuTextureView;Ljava/util/Optional;Lcom/mojang/renderpearl/api/textures/GpuTextureView;Ljava/util/OptionalDouble;)Lcom/mojang/renderpearl/api/commands/RenderPass;
+       228: astore        12
+       230: aload         12
+       232: invokestatic  #162                // Method com/mojang/blaze3d/systems/RenderSystem.bindDefaultUniforms:(Lcom/mojang/renderpearl/api/commands/RenderPass;)V
+       235: aload         12
+       237: aload         11
+       239: invokestatic  #166                // Method net/minecraft/client/renderer/feature/FeatureRenderDispatcher.renderAllFeatures:(Lcom/mojang/renderpearl/api/commands/RenderPass;Lnet/minecraft/client/renderer/feature/FeatureRenderDispatcher$PreparedFrame;)V
+       242: aload         12
+       244: ifnull        286
+       247: aload         12
+       249: invokeinterface #170,  1          // InterfaceMethod com/mojang/renderpearl/api/commands/RenderPass.close:()V
+       254: goto          286
+       257: astore        13
+       259: aload         12
+       261: ifnull        283
+       264: aload         12
+       266: invokeinterface #170,  1          // InterfaceMethod com/mojang/renderpearl/api/commands/RenderPass.close:()V
+       271: goto          283
+       274: astore        14
+       276: aload         13
+       278: aload         14
+       280: invokevirtual #177                // Method java/lang/Throwable.addSuppressed:(Ljava/lang/Throwable;)V
+       283: aload         13
+       285: athrow
+       286: aload         11
+       288: ifnull        326
+       291: aload         11
+       293: invokevirtual #181                // Method net/minecraft/client/renderer/feature/FeatureRenderDispatcher$PreparedFrame.close:()V
+       296: goto          326
+       299: astore        12
+       301: aload         11
+       303: ifnull        323
+       306: aload         11
+       308: invokevirtual #181                // Method net/minecraft/client/renderer/feature/FeatureRenderDispatcher$PreparedFrame.close:()V
+       311: goto          323
+       314: astore        13
+       316: aload         12
+       318: aload         13
+       320: invokevirtual #177                // Method java/lang/Throwable.addSuppressed:(Ljava/lang/Throwable;)V
+       323: aload         12
+       325: athrow
+       326: aload         8
+       328: invokevirtual #184                // Method org/joml/Matrix4fStack.popMatrix:()Lorg/joml/Matrix4fStack;
+       331: pop
+       332: aload_0
+       333: aload_1
+       334: aload_2
+       335: invokevirtual #78                 // Method blitTexture:(Lnet/minecraft/client/renderer/state/gui/pip/PictureInPictureRenderState;Lnet/minecraft/client/renderer/state/gui/GuiRenderState;)V
+       338: return
+      Exception table:
+         from    to  target type
+           230   242   257   Class java/lang/Throwable
+           264   271   274   Class java/lang/Throwable
+           196   286   299   Class java/lang/Throwable
+           306   311   314   Class java/lang/Throwable
+=== SIG net/minecraft/client/gui/render/pip/PictureInPictureRenderer .*
+  private com.mojang.renderpearl.api.textures.GpuTexture texture;
+  private com.mojang.renderpearl.api.textures.GpuTextureView textureView;
+  private com.mojang.renderpearl.api.textures.GpuTexture depthTexture;
+  private com.mojang.renderpearl.api.textures.GpuTextureView depthTextureView;
+  private final net.minecraft.client.renderer.Projection projection;
+  private final net.minecraft.client.renderer.ProjectionMatrixBuffer projectionMatrixBuffer;
+  private final net.minecraft.client.renderer.SubmitNodeStorage submitNodeStorage;
+  public net.minecraft.client.gui.render.pip.PictureInPictureRenderer();
+  public void prepare(T, net.minecraft.client.renderer.state.gui.GuiRenderState, net.minecraft.client.renderer.feature.FeatureRenderDispatcher, int);
+  protected void blitTexture(T, net.minecraft.client.renderer.state.gui.GuiRenderState);
+  private void prepareTexturesAndProjection(boolean, int, int);
+  protected boolean textureIsReadyToBlit(T);
+  protected float getTranslateY(int, int);
+  public void close();
+  public abstract java.lang.Class<T> getRenderStateClass();
+  protected abstract void renderToTexture(T, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector);
+  protected abstract java.lang.String getTextureLabel();
+  public boolean canBeReusedFor(T, int, int);
+  private java.lang.String lambda$prepareTexturesAndProjection$1();
+  private java.lang.String lambda$prepareTexturesAndProjection$0();
+=== net/minecraft/client/gui/render/pip/PictureInPictureRenderer
+Compiled from "PictureInPictureRenderer.java"
+public abstract class net.minecraft.client.gui.render.pip.PictureInPictureRenderer<T extends net.minecraft.client.renderer.state.gui.pip.PictureInPictureRenderState> implements java.lang.AutoCloseable {
+  public net.minecraft.client.gui.render.pip.PictureInPictureRenderer();
+  public void prepare(T, net.minecraft.client.renderer.state.gui.GuiRenderState, net.minecraft.client.renderer.feature.FeatureRenderDispatcher, int);
+  public void close();
+  public abstract java.lang.Class<T> getRenderStateClass();
+  public boolean canBeReusedFor(T, int, int);
+}
