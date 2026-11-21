@@ -1,5 +1,4 @@
-com/mojang/renderpearl/frontend/FrontendGpuDevice
-/.*renderpearl/frontend/FrontendGpuDevice$
-com/mojang/renderpearl/frontend/FrontendGpuDevice#<clinit>
-com/mojang/renderpearl/frontend/FrontendGpuDevice#.*VALID.*
-
+net/minecraft/client/gui/components/events/ContainerEventHandler
+/.*client/MouseHandler.*$
+net/minecraft/client/MouseHandler#onButton
+net/minecraft/client/gui/screens/Screen#mouse.* net/minecraft/client/gui/components/events/GuiEventListener#mouse.*
