@@ -1,0 +1,80 @@
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by net.rubygrapefruit.platform.internal.NativeLibraryLoader in an unnamed module (file:/home/runner/.gradle/wrapper/dists/gradle-9.2.1-bin/2t0n5ozlw9xmuyvbp7dnzaxug/gradle-9.2.1/lib/native-platform-0.22-milestone-29.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.2.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Creating Minecraft artifacts without recompilation.
+
+> Task :createMinecraftArtifacts UP-TO-DATE
+
+> Task :compileJava
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/main/java/com/ethermod/trait/TraitEffects.java:81: warning: [removal] ORES in Blocks has been deprecated and marked for removal
+        if (!state.is(Tags.Blocks.ORES) || !Traits.has(tool, "tectonic.vein_miner")) return;
+                                 ^
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/main/java/com/ethermod/client/beam/OreSense.java:59: warning: [removal] ORES in Blocks has been deprecated and marked for removal
+                if (!mc.level.getBlockState(p).is(Tags.Blocks.ORES)) continue;
+                                                             ^
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/main/java/com/ethermod/client/KDyePalette.java:112: error: cannot find symbol
+                                                                    .getDescription()
+                                                                    ^
+  symbol:   method getDescription()
+  location: class Item
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/main/java/com/ethermod/client/BlazelingModel.java:18: error: no suitable constructor found for EntityModel(no arguments)
+    public BlazelingModel(ModelPart root) {
+                                          ^
+    constructor EntityModel.EntityModel(ModelPart) is not applicable
+      (actual and formal argument lists differ in length)
+    constructor EntityModel.EntityModel(ModelPart,Function<Identifier,RenderType>) is not applicable
+      (actual and formal argument lists differ in length)
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/main/java/com/ethermod/entity/SoulBlazeling.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+2 errors
+2 warnings
+
+> Task :compileJava FAILED
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_3-1795224316323.json
+
+[Incubating] Problems report is available at: file:///home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler output below.
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/main/java/com/ethermod/client/BlazelingModel.java:18: error: no suitable constructor found for EntityModel(no arguments)
+      public BlazelingModel(ModelPart root) {
+                                            ^
+      constructor EntityModel.EntityModel(ModelPart) is not applicable
+        (actual and formal argument lists differ in length)
+      constructor EntityModel.EntityModel(ModelPart,Function<Identifier,RenderType>) is not applicable
+        (actual and formal argument lists differ in length)
+  Note: Recompile with -Xlint:deprecation for details.
+  Note: /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/main/java/com/ethermod/entity/SoulBlazeling.java uses unchecked or unsafe operations.
+  Note: Recompile with -Xlint:unchecked for details.
+  Note: Some input files use or override a deprecated API.
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/main/java/com/ethermod/trait/TraitEffects.java:81: warning: [removal] ORES in Blocks has been deprecated and marked for removal
+          if (!state.is(Tags.Blocks.ORES) || !Traits.has(tool, "tectonic.vein_miner")) return;
+                                   ^
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/main/java/com/ethermod/client/beam/OreSense.java:59: warning: [removal] ORES in Blocks has been deprecated and marked for removal
+                  if (!mc.level.getBlockState(p).is(Tags.Blocks.ORES)) continue;
+                                                               ^
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/main/java/com/ethermod/client/KDyePalette.java:112: error: cannot find symbol
+                                                                      .getDescription()
+                                                                      ^
+    symbol:   method getDescription()
+    location: class Item
+  2 errors
+  2 warnings
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to generate a Build Scan (powered by Develocity).
+
+BUILD FAILED in 12s
+2 actionable tasks: 1 executed, 1 up-to-date
