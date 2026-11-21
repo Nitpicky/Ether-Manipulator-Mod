@@ -1,4 +1,4 @@
-net/minecraft/client/renderer/GameRenderer
-/.*client/renderer/(GameRenderer|Projection)$
-net/minecraft/client/renderer/GameRenderer#renderLevel net/minecraft/client/renderer/GameRenderer#extract net/minecraft/client/renderer/GameRenderer#render
-net/minecraft/client/Camera#.*(ov|FOV).* net/minecraft/client/renderer/state/level/CameraRenderState#.*
+net/minecraft/client/Camera
+/.*client/Camera$
+net/minecraft/client/Camera#calculateHudFov
+net/minecraft/client/Camera#.*hud.*
