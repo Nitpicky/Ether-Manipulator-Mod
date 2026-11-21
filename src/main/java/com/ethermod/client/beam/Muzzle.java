@@ -70,19 +70,44 @@ public final class Muzzle {
         Vector4f a = new Vector4f(px, py, pz, 1f).mul(pose);
         Vector4f b = new Vector4f(px, py, pz - BARREL_PROBE, 1f).mul(pose);
         if (firstPersonView) {
-            // the hand is drawn in view space with the plain FOV option (no sprint or Speed widening)
+            // 26.3: the hand is drawn in view space with the camera's hud FOV (70, narrowed under
+            // water or while dying), never the FOV option
             var mc = net.minecraft.client.Minecraft.getInstance();
             var window = mc.getWindow();
             float aspect = window.getWidth() / (float) Math.max(1, window.getHeight());
             Matrix4f handProj =
                     new Matrix4f()
                             .perspective(
-                                    (float) Math.toRadians(mc.options.fov().get()), aspect, 0.05f, 1000f);
+                                    (float) Math.toRadians(hudFov(mc)), aspect, 0.05f, 1000f);
             float[] sa = project(handProj, a), sb = project(handProj, b);
             if (sa == null || sb == null) return;
             firstPerson = new Sample(sa[0], sa[1], sa[2], sb[0], sb[1], sb[2], frame, true);
         } else if (renderingPlayer >= 0)
             thirdPerson.put(renderingPlayer, new Sample(a.x, a.y, a.z, b.x, b.y, b.z, frame, false));
+    }
+
+    private static java.lang.reflect.Field hudFovField;
+    private static boolean hudFovLooked;
+
+    /** The camera's private hud FOV (what the hand is drawn with), or vanilla's 70 if unreadable. */
+    private static float hudFov(net.minecraft.client.Minecraft mc) {
+        if (!hudFovLooked) {
+            hudFovLooked = true;
+            try {
+                hudFovField = net.minecraft.client.Camera.class.getDeclaredField("hudFov");
+                hudFovField.setAccessible(true);
+            } catch (Throwable e) {
+                hudFovField = null;
+            }
+        }
+        try {
+            if (hudFovField != null) {
+                float f = hudFovField.getFloat(mc.gameRenderer.mainCamera());
+                if (f > 1 && f < 179) return f;
+            }
+        } catch (Throwable ignored) {
+        }
+        return 70f;
     }
 
     private static float[] project(Matrix4f proj, Vector4f view) {

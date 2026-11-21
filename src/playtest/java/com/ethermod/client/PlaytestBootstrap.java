@@ -299,6 +299,9 @@ public final class PlaytestBootstrap {
             // ---- Mining the stone block straight ahead -------------------------
             case 70 -> opts.keyAttack.setDown(true);
             case 78 -> shot(mc, "02_mining_first_person");
+            case 88 -> opts.fov().set(110); // the hand keeps its own FOV: the beam must stay on the nozzle
+            case 92 -> shot(mc, "02b_mining_fov110");
+            case 94 -> opts.fov().set(70);
             case 100 -> shot(mc, "03_mining_later");
             case 160 -> {
                 opts.keyAttack.setDown(false);

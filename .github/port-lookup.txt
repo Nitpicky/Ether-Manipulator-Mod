@@ -1,4 +1,4 @@
-net/minecraft/client/Camera
-/.*client/Camera$
-net/minecraft/client/Camera#calculateHudFov
-net/minecraft/client/Camera#.*hud.*
+net/minecraft/client/MouseHandler
+/.*client/MouseHandler$
+net/minecraft/client/MouseHandler#getScaledXPos
+net/minecraft/client/MouseHandler#.*(pos|Pos|ignore).*
