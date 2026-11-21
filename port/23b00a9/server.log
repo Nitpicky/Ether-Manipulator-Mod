@@ -1,0 +1,263 @@
+Downloading https://services.gradle.org/distributions/gradle-9.2.1-bin.zip
+............10%.............20%.............30%.............40%.............50%.............60%.............70%.............80%.............90%.............100%
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by net.rubygrapefruit.platform.internal.NativeLibraryLoader in an unnamed module (file:/home/runner/.gradle/wrapper/dists/gradle-9.2.1-bin/2t0n5ozlw9xmuyvbp7dnzaxug/gradle-9.2.1/lib/native-platform-0.22-milestone-29.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+
+Welcome to Gradle 9.2.1!
+
+Here are the highlights of this release:
+ - Windows ARM support
+ - Improved publishing APIs
+ - Better guidance for dependency verification failures
+
+For more details see https://docs.gradle.org/9.2.1/release-notes.html
+
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.2.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Creating Minecraft artifacts without recompilation.
+
+> Task :createMinecraftArtifacts
+Loaded 135 artifacts from /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/tmp/createMinecraftArtifacts/nfrt_artifact_manifest.properties
+[1m*** Started working on [4mdownloadManifest[23;0m[23;0m
+  ↓ https://piston-meta.mojang.com/mc/game/version_manifest_v2.json
+ [1m[92m✓[23;0m Completed [4mdownloadManifest[23;0m in 0.19s
+[1m*** Started working on [4mdownloadJson[23;0m[23;0m
+  ↓ https://piston-meta.mojang.com/mc/game/version_manifest_v2.json
+  ↓ https://piston-meta.mojang.com/v1/packages/ead839cbccf0ddf013c3f935f2840080b5cb0d26/26.3.json
+ [1m[92m✓[23;0m Completed [4mdownloadJson[23;0m in 0.03s
+[1m*** Started working on [4mdownloadServer[23;0m[23;0m
+[1m*** Started working on [4mdownloadClient[23;0m[23;0m
+  ↓ https://piston-data.mojang.com/v1/objects/33680f5f2ac32864d6d7cf5e56a705fdb3e05f4c/server.jar
+  ↓ https://piston-data.mojang.com/v1/objects/e877b6a07acd633fb3bb475002175cec036e7b87/client.jar
+ [1m[92m✓[23;0m Completed [4mdownloadClient[23;0m in 0.63s
+ [1m[92m✓[23;0m Completed [4mdownloadServer[23;0m in 0.71s
+[1m*** Started working on [4mpreProcessJar[23;0m[23;0m
+ ↳ Running external tool net.neoforged.installertools:installertools:4.0.17:fatjar
+ [1m[92m✓[23;0m Completed [4mpreProcessJar[23;0m in 2.06s
+[1m*** Started working on [4mbinaryPatch[23;0m[23;0m
+  [33mWARNING: [23;0mnet.neoforged.installertools:binarypatcher:4.0.17:fatjar is not present in the artifact manifest
+  ↓ https://maven.neoforged.net/releases/net/neoforged/installertools/binarypatcher/4.0.17/binarypatcher-4.0.17-fatjar.jar
+ ↳ Running external tool net.neoforged.installertools:binarypatcher:4.0.17:fatjar
+ [1m[92m✓[23;0m Completed [4mbinaryPatch[23;0m in 2.64s
+[1m*** Started working on [4mcopyUnpatchedClasses[23;0m[23;0m
+ [1m[92m✓[23;0m Completed [4mcopyUnpatchedClasses[23;0m in 1.99s
+[1m*** Started working on [4mapplyDevTransforms[23;0m[23;0m
+ ↳ Running external tool net.neoforged.installertools:installertools:4.0.12:fatjar
+ [1m[92m✓[23;0m Completed [4mapplyDevTransforms[23;0m in 2.21s
+Total runtime: 10.32s
+
+
+> Task :compileJava
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/main/java/com/ethermod/trait/TraitEffects.java:81: warning: [removal] ORES in Blocks has been deprecated and marked for removal
+        if (!state.is(Tags.Blocks.ORES) || !Traits.has(tool, "tectonic.vein_miner")) return;
+                                 ^
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/main/java/com/ethermod/entity/SoulBlazeling.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+> Task :processResources
+> Task :classes
+
+> Task :downloadAssets
+Loaded 135 artifacts from /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/tmp/downloadAssets/nfrt_artifact_manifest.properties
+Downloading asset index 34
+Using Minecraft asset root: /home/runner/.gradle/caches/neoformruntime/assets
+  ↓ https://piston-meta.mojang.com/v1/packages/f3df28b441565ca4e5deb9cda856d90df62e1433/34.json
+100/5149 downloads
+200/5149 downloads
+300/5149 downloads
+400/5149 downloads
+500/5149 downloads
+600/5149 downloads
+700/5149 downloads
+800/5149 downloads
+900/5149 downloads
+1000/5149 downloads
+1100/5149 downloads
+1200/5149 downloads
+1300/5149 downloads
+1400/5149 downloads
+1500/5149 downloads
+1600/5149 downloads
+1700/5149 downloads
+1800/5149 downloads
+1900/5149 downloads
+2000/5149 downloads
+2100/5149 downloads
+2200/5149 downloads
+2300/5149 downloads
+2400/5149 downloads
+2500/5149 downloads
+2600/5149 downloads
+2700/5149 downloads
+2800/5149 downloads
+2900/5149 downloads
+3000/5149 downloads
+3100/5149 downloads
+3200/5149 downloads
+3300/5149 downloads
+3400/5149 downloads
+3500/5149 downloads
+3600/5149 downloads
+3700/5149 downloads
+3800/5149 downloads
+3900/5149 downloads
+4000/5149 downloads
+4100/5149 downloads
+4200/5149 downloads
+4300/5149 downloads
+4400/5149 downloads
+4500/5149 downloads
+4600/5149 downloads
+4700/5149 downloads
+4800/5149 downloads
+4900/5149 downloads
+5000/5149 downloads
+5100/5149 downloads
+Downloaded 5149 files with a total size of 465 MiB
+
+> Task :prepareServerRun
+
+> Task :runServer
+2026-11-21T00:19:58.840971885Z main WARN Advanced terminal features are not available in this environment
+[00:19:58] [main/INFO] [ne.ne.fm.st.Entrypoint/]: JVM Uptime at startup: 74ms
+[00:19:58] [main/INFO] [ne.ne.fm.lo.FMLLoader/]: Starting FancyModLoader version 12.0.16 (DEDICATED_SERVER in DEV)
+[00:19:58] [main/INFO] [ne.ne.fm.lo.FMLLoader/]: Game directory: /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/runs/server
+[00:19:59] [main/INFO] [ne.ne.fm.lo.EarlyServiceDiscovery/]: Found 2 early service jars (out of 99) in 11ms
+[00:19:59] [main/INFO] [ne.ne.fm.lo.FMLLoader/]: Loading FML Early Services:
+[00:19:59] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - /home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/earlydisplay/12.0.16/efa2e56115d22853d10524874a7bbb64555c2a28/earlydisplay-12.0.16.jar
+[00:19:59] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - /home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/12.0.16/edbb2ee8211a867215970bc15ae9c354fa56dc09/loader-12.0.16.jar
+[00:19:59] [main/INFO] [ne.ne.fm.lo.ImmediateWindowHandler/]: Not loading early display in headless mode.
+[00:19:59] [main/INFO] [ne.ne.fm.lo.mo.lo.GameLocator/]: Detected a joined NeoForge and Minecraft configuration. Applying filtering...
+[00:19:59] [main/INFO] [ne.ne.fm.lo.mo.lo.InDevFolderLocator/CORE]: Got mod coordinates ethermod%%/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/classes/java/main:ethermod%%/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/resources/main from env
+[00:19:59] [main/INFO] [ne.ne.fm.lo.mo.lo.JarInJarDependencyLocator/]: Found 2 dependencies adding them to mods collection
+[00:19:59] [main/INFO] [ne.ne.fm.lo.mo.ModDiscoverer/]: 
+     Mod List:
+		Name Version (Mod Id)
+
+		Ether Manipulator 1.0.1+26.3 (ethermod)
+		GeckoLib 5 5.5.6 (geckolib)
+		Minecraft 26.3 (minecraft)
+		NeoForge 26.3.0.115 (neoforge)
+[00:19:59] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.17.5+mixin.0.8.7/cef8519a91129d0c21fa03bb9378f0e8ca810e5/sponge-mixin-0.17.5+mixin.0.8.7.jar Service=FML Env=SERVER
+[00:19:59] [main/INFO] [ne.ne.fm.lo.FMLLoader/]: Loading FML Plugins:
+[00:19:59] [main/INFO] [ne.ne.fm.lo.FMLLoader/]:  - /home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar > net.neoforged.neoforge-coremods-26.3.0.115.jar
+[00:19:59] [main/INFO] [ne.ne.fm.lo.FMLLoader/]: Building game content classloader:
+ - ethermod (composite(folder(/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/classes/java/main), folder(/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/resources/main)))
+ - geckolib (jar(/home/runner/.gradle/caches/modules-2/files-2.1/curse.maven/geckolib-388172/8893169/196231506b89da06925c087f9b8bc5fd12ebea16/geckolib-388172-8893169.jar))
+ - minecraft (composite(filtered(jar(/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar)), filtered(jar(/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar))))
+ - mixinextras.neoforge (jar(/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar > mixinextras-neoforge-0.5.5.jar))
+ - neoforge (composite(filtered(jar(/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar))))
+ - net.neoforged.fml.generated (empty(VirtualJar/net.neoforged.fml.generated))
+[00:19:59] [main/INFO] [ne.ne.fm.lo.FMLLoader/]: Built game content classloader in 31ms
+[00:20:00] [main/INFO] [MixinExtras|Service/]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.5.5).
+[00:20:00] [main/FATAL] [mixin/]: Mixin apply for mod ethermod failed ethermod.mixins.json:PlayerMixin from mod ethermod -> net.minecraft.world.entity.player.Player: org.spongepowered.asm.mixin.injection.throwables.InvalidInjectionException Critical injection failure: @Inject annotation on ethermod$virtualHand could not find any targets matching 'getItemBySlot' in net/minecraft/world/entity/player/Player. No refMap loaded. [INJECT_PREPARE Applicator Phase -> ethermod.mixins.json:PlayerMixin from mod ethermod -> Prepare Injections -> handler$zzg000$ethermod$virtualHand(Lnet/minecraft/world/entity/EquipmentSlot;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V -> Parse ->  -> Validate Targets]
+org.spongepowered.asm.mixin.injection.throwables.InvalidInjectionException: Critical injection failure: @Inject annotation on ethermod$virtualHand could not find any targets matching 'getItemBySlot' in net/minecraft/world/entity/player/Player. No refMap loaded. [INJECT_PREPARE Applicator Phase -> ethermod.mixins.json:PlayerMixin from mod ethermod -> Prepare Injections -> handler$zzg000$ethermod$virtualHand(Lnet/minecraft/world/entity/EquipmentSlot;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V -> Parse ->  -> Validate Targets]
+	at org.spongepowered.asm.mixin.injection.selectors.TargetSelectors.validate(TargetSelectors.java:423) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.injection.struct.InjectionInfo.readAnnotation(InjectionInfo.java:364) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.injection.struct.InjectionInfo.<init>(InjectionInfo.java:340) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.injection.struct.InjectionInfo.<init>(InjectionInfo.java:331) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.injection.struct.CallbackInjectionInfo.<init>(CallbackInjectionInfo.java:48) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[?:?] {}
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[?:?] {}
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:483) ~[?:?] {}
+	at org.spongepowered.asm.mixin.injection.struct.InjectionInfo$InjectorEntry.create(InjectionInfo.java:196) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.injection.struct.InjectionInfo.parse(InjectionInfo.java:659) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinTargetContext.prepareInjections(MixinTargetContext.java:1391) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinApplicatorStandard.prepareInjections(MixinApplicatorStandard.java:811) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinApplicatorStandard.lambda$runApplicatorPass$1(MixinApplicatorStandard.java:303) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinApplicatorStandard.processMixins(MixinApplicatorStandard.java:381) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinApplicatorStandard.runApplicatorPass(MixinApplicatorStandard.java:300) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinApplicatorStandard.apply(MixinApplicatorStandard.java:240) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.TargetClassContext.apply(TargetClassContext.java:437) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.TargetClassContext.applyMixins(TargetClassContext.java:418) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinProcessor.applyMixins(MixinProcessor.java:351) [sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinTransformer.transformClass(MixinTransformer.java:253) [sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at net.neoforged.fml.loading.mixin.FMLMixinClassProcessor.processClass(FMLMixinClassProcessor.java:86) [loader-12.0.16.jar:12.0] {}
+	at net.neoforged.fml.classloading.transformation.ClassTransformer.transform(ClassTransformer.java:96) [loader-12.0.16.jar:12.0] {}
+	at net.neoforged.fml.classloading.transformation.TransformingClassLoader.maybeTransformClassBytes(TransformingClassLoader.java:47) [loader-12.0.16.jar:12.0] {}
+	at net.neoforged.fml.classloading.ModuleClassLoader.readerToClass(ModuleClassLoader.java:224) [loader-12.0.16.jar:12.0] {}
+	at net.neoforged.fml.classloading.ModuleClassLoader.loadClass(ModuleClassLoader.java:245) [loader-12.0.16.jar:12.0] {}
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:490) [?:?] {}
+	at TRANSFORMER/minecraft@26.3/net.minecraft.server.Bootstrap.bootStrap(Bootstrap.java:51) [minecraft-patched-26.3.0.115.jar:?] {}
+	at TRANSFORMER/minecraft@26.3/net.minecraft.server.Main.main(Main.java:114) [minecraft-patched-26.3.0.115.jar:?] {}
+	at net.neoforged.fml.startup.Server.main(Server.java:19) [loader-12.0.16.jar:12.0] {}
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[?:?] {}
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[?:?] {}
+	at net.neoforged.devlaunch.Main.main(Main.java:57) [DevLaunch-1.0.2.jar:?] {}
+[00:20:00] [main/ERROR] [minecraft/Main]: Failed to start the minecraft server
+org.spongepowered.asm.mixin.transformer.throwables.MixinTransformerError: An unexpected critical error was encountered
+	at org.spongepowered.asm.mixin.transformer.MixinProcessor.applyMixins(MixinProcessor.java:380) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinTransformer.transformClass(MixinTransformer.java:253) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at net.neoforged.fml.loading.mixin.FMLMixinClassProcessor.processClass(FMLMixinClassProcessor.java:86) ~[loader-12.0.16.jar:12.0] {}
+	at net.neoforged.fml.classloading.transformation.ClassTransformer.transform(ClassTransformer.java:96) ~[loader-12.0.16.jar:12.0] {}
+	at net.neoforged.fml.classloading.transformation.TransformingClassLoader.maybeTransformClassBytes(TransformingClassLoader.java:47) ~[loader-12.0.16.jar:12.0] {}
+	at net.neoforged.fml.classloading.ModuleClassLoader.readerToClass(ModuleClassLoader.java:224) ~[loader-12.0.16.jar:12.0] {}
+	at net.neoforged.fml.classloading.ModuleClassLoader.loadClass(ModuleClassLoader.java:245) ~[loader-12.0.16.jar:12.0] {}
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:490) ~[?:?] {}
+	at TRANSFORMER/minecraft@26.3/net.minecraft.server.Bootstrap.bootStrap(Bootstrap.java:51) ~[minecraft-patched-26.3.0.115.jar:?] {}
+	at TRANSFORMER/minecraft@26.3/net.minecraft.server.Main.main(Main.java:114) [minecraft-patched-26.3.0.115.jar:?] {}
+	at net.neoforged.fml.startup.Server.main(Server.java:19) [loader-12.0.16.jar:12.0] {}
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[?:?] {}
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[?:?] {}
+	at net.neoforged.devlaunch.Main.main(Main.java:57) [DevLaunch-1.0.2.jar:?] {}
+Caused by: org.spongepowered.asm.mixin.throwables.MixinApplyError: Mixin [ethermod.mixins.json:PlayerMixin from mod ethermod] from phase [DEFAULT] in config [ethermod.mixins.json] FAILED during APPLY
+	at org.spongepowered.asm.mixin.transformer.MixinProcessor.handleMixinError(MixinProcessor.java:685) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinProcessor.handleMixinApplyError(MixinProcessor.java:636) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinProcessor.applyMixins(MixinProcessor.java:367) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	... 13 more
+Caused by: org.spongepowered.asm.mixin.injection.throwables.InvalidInjectionException: Critical injection failure: @Inject annotation on ethermod$virtualHand could not find any targets matching 'getItemBySlot' in net/minecraft/world/entity/player/Player. No refMap loaded. [INJECT_PREPARE Applicator Phase -> ethermod.mixins.json:PlayerMixin from mod ethermod -> Prepare Injections -> handler$zzg000$ethermod$virtualHand(Lnet/minecraft/world/entity/EquipmentSlot;Lorg/spongepowered/asm/mixin/injection/callback/CallbackInfoReturnable;)V -> Parse ->  -> Validate Targets]
+	at org.spongepowered.asm.mixin.injection.selectors.TargetSelectors.validate(TargetSelectors.java:423) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.injection.struct.InjectionInfo.readAnnotation(InjectionInfo.java:364) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.injection.struct.InjectionInfo.<init>(InjectionInfo.java:340) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.injection.struct.InjectionInfo.<init>(InjectionInfo.java:331) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.injection.struct.CallbackInjectionInfo.<init>(CallbackInjectionInfo.java:48) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62) ~[?:?] {}
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[?:?] {}
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:483) ~[?:?] {}
+	at org.spongepowered.asm.mixin.injection.struct.InjectionInfo$InjectorEntry.create(InjectionInfo.java:196) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.injection.struct.InjectionInfo.parse(InjectionInfo.java:659) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinTargetContext.prepareInjections(MixinTargetContext.java:1391) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinApplicatorStandard.prepareInjections(MixinApplicatorStandard.java:811) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinApplicatorStandard.lambda$runApplicatorPass$1(MixinApplicatorStandard.java:303) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinApplicatorStandard.processMixins(MixinApplicatorStandard.java:381) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinApplicatorStandard.runApplicatorPass(MixinApplicatorStandard.java:300) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinApplicatorStandard.apply(MixinApplicatorStandard.java:240) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.TargetClassContext.apply(TargetClassContext.java:437) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.TargetClassContext.applyMixins(TargetClassContext.java:418) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	at org.spongepowered.asm.mixin.transformer.MixinProcessor.applyMixins(MixinProcessor.java:351) ~[sponge-mixin-0.17.5+mixin.0.8.7.jar:0.17.5+mixin.0.8.7] {}
+	... 13 more
+[00:20:00] [main/INFO] [ne.ne.fm.lo.FMLLoader/]: Closing FML Loader 177515d1
+[00:20:00] [main/INFO] [ne.ne.fm.ModLoader/]: Clearing ModLoader
+net.neoforged.fml.startup.FatalStartupException: Couldn't find Minecraft server thread. Startup likely failed.
+	at net.neoforged.fml.startup.Server.main(Server.java:23)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at net.neoforged.devlaunch.Main.main(Main.java:57)
+
+> Task :runServer FAILED
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run-1795220346954.json
+
+[Incubating] Problems report is available at: file:///home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':runServer'.
+> Process 'command '/usr/lib/jvm/temurin-25-jdk-amd64/bin/java'' finished with non-zero exit value 1
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to generate a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 1m
+6 actionable tasks: 6 executed
