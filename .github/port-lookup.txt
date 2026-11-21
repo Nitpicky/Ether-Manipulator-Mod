@@ -1,4 +1,4 @@
 net/minecraft/world/entity/Entity$
 /(LivingEntity)$
 net/minecraft/world/entity/LivingEntity#hurtServer
-net/minecraft/world/entity/LivingEntity#.*(nvulnerab|lastHurt|hurtServer).*
+net/minecraft/world/entity/LivingEntity#.*(nvulnerab|lastHurt|hurtServer).*|.*Cooldown.*
