@@ -98,13 +98,13 @@ final class KUi {
     }
 
     /**
-     * A button drawn from one hue ramp: tinted fill (step 1), lit bevel top-left (4), corners (3)
-     * and dark bevel bottom-right (2). Its icon takes the lit step too.
+     * A button drawn from one hue ramp: dark fill (step 0), lit bevel top-left (4), corners (3)
+     * and dark bevel bottom-right (2). Its icon takes step 5.
      */
     void rampControl(
             GuiGraphics g, String key, int x, int y, int w, int h, Palette r, Runnable action, List<Component> tip) {
         int[] c = r.ramp();
-        g.fill(x, y, x + w, y + h, c[1]);
+        g.fill(x, y, x + w, y + h, c[0]);
         g.fill(x, y, x + w - 1, y + 1, c[4]);
         g.fill(x, y + 1, x + 1, y + h - 1, c[4]);
         g.fill(x + 1, y + h - 1, x + w, y + h, c[2]);

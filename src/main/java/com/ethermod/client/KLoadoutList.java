@@ -270,7 +270,7 @@ final class KLoadoutList {
                         }
                         : null,
                 List.of(label(Lang.tr("gui.ethermod.save_set"), add.text())));
-        hollowPlus(g, x0 + (BUTTON_W - 10) / 2, BUTTON_Y + 2, add.accent());
+        hollowPlus(g, x0 + (BUTTON_W - 10) / 2, BUTTON_Y + 2, add.text());
 
         Palette copy = flashing("copy-code", ui) ? flashPalette : button("copy");
         ui.rampControl(
@@ -288,7 +288,7 @@ final class KLoadoutList {
                                         ? Lang.tr("gui.ethermod.copy_set")
                                         : Lang.tr("gui.ethermod.copy_build"),
                                 copy.text())));
-        icon(g, "copy", x1, copy.accent());
+        icon(g, "copy", x1, copy.text());
 
         Palette paste = flashing("paste-code", ui) ? flashPalette : room ? button("paste") : off;
         ui.rampControl(
@@ -301,7 +301,7 @@ final class KLoadoutList {
                 paste,
                 room ? () -> paste(ui, list) : null,
                 List.of(label(Lang.tr("gui.ethermod.paste_set"), paste.text())));
-        icon(g, "paste", x2, paste.accent());
+        icon(g, "paste", x2, paste.text());
 
         Palette del = button("delete");
         ui.rampControl(
@@ -324,7 +324,7 @@ final class KLoadoutList {
                         label(
                                 selectedSet < 0 ? Lang.tr("gui.ethermod.clear_build") : Lang.tr("gui.ethermod.delete_set"),
                                 del.text())));
-        icon(g, "trash", x3, del.accent());
+        icon(g, "trash", x3, del.text());
     }
 
     /** A 10x10 sprite centred in a bottom-row button. */
