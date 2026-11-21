@@ -758,7 +758,9 @@ public final class UiProbe {
                                                     .get()
                                                     .create(sl, net.minecraft.world.entity.EntitySpawnReason.COMMAND);
                                     lethal.setOwner(pet);
-                                    lethal.setPos(boltTarget.position());
+                                    lethal.setPos(boltTarget.position().add(-1, 1, 0));
+                                    // a bolt in flight, as the Blazeling fires them
+                                    lethal.setDeltaMovement(0.5, 0, 0);
                                     sl.addFreshEntity(lethal);
                                     method.invoke(
                                             lethal,
