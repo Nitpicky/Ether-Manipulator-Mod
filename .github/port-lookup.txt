@@ -1,4 +1,4 @@
-net/minecraft/world/level/block/BonemealSource net/minecraft/world/level/storage/loot/LootContext net/minecraft/world/level/block/entity/BlockEntity
-/(BonemealSource.*)$
-net/minecraft/world/item/BoneMealItem#growCrop
-# r10
+net/minecraft/util/Prediction net/minecraft/advancements/DisplayInfo net/minecraft/world/entity/WalkAnimationState net/minecraft/advancements/AdvancementNode net/minecraft/client/gui/screens/advancements/AdvancementTab
+/(Prediction|.*TreeNodePosition.*|.*AdvancementTree.*)$
+net/minecraft/world/entity/LivingEntity#tick net/minecraft/world/entity/LivingEntity#calculateEntityAnimation
+# r11
