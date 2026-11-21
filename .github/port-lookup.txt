@@ -1,4 +1,4 @@
-net/minecraft/client/gui/components/events/ContainerEventHandler
-/.*client/MouseHandler.*$
-net/minecraft/client/MouseHandler#onButton
-net/minecraft/client/gui/screens/Screen#mouse.* net/minecraft/client/gui/components/events/GuiEventListener#mouse.*
+net/minecraft/client/renderer/GameRenderer
+/.*client/renderer/GameRenderer$
+net/minecraft/client/renderer/GameRenderer#getFov net/minecraft/client/renderer/GameRenderer#renderItemInHand
+net/minecraft/client/renderer/GameRenderer#.*(Fov|Hand|Projection).*
