@@ -11,6 +11,7 @@ next release's notes.
 
 ### Fixes
 - Lock-On: the beam now visibly stays on the locked creature.
+- Shots: jumping as you fire no longer catches your own shot (Water stopped the jump, Frost lost its bridge).
 
 ### Tuning
 - Bank Shot: each ricochet resets the shot's range.
