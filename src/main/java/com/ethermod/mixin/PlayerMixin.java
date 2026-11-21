@@ -137,6 +137,6 @@ public abstract class PlayerMixin {
         ci.cancel();
         // the server is authoritative over the inventory and syncs it; the client just skips
         if (!stack.isEmpty() && !self.level().isClientSide())
-            self.getInventory().placeItemBackInInventory(stack);
+            self.getInventory().placeItemBackInInventory(stack, net.minecraft.util.Prediction.SERVER_ONLY);
     }
 }

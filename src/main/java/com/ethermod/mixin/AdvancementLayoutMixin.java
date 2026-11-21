@@ -53,7 +53,7 @@ public abstract class AdvancementLayoutMixin {
     @Unique
     private static void place(AdvancementNode root, String name, int x, int y) {
         var node = find(root, "manipulator/" + name);
-        if (node != null) node.holder().value().display().ifPresent(d -> d.setLocation(x, y));
+        if (node != null) node.setLocation(x, y);
     }
 
     @Unique
