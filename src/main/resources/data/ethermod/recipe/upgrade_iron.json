@@ -7,15 +7,9 @@
     "I  "
   ],
   "key": {
-    "I": {
-      "item": "minecraft:iron_ingot"
-    },
-    "B": {
-      "item": "minecraft:iron_block"
-    },
-    "G": {
-      "item": "minecraft:amethyst_shard"
-    }
+    "I": "minecraft:iron_ingot",
+    "B": "minecraft:iron_block",
+    "G": "minecraft:amethyst_shard"
   },
   "result": {
     "id": "ethermod:upgrade_iron",

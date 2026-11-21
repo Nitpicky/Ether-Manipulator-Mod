@@ -7,15 +7,9 @@
     "I  "
   ],
   "key": {
-    "I": {
-      "item": "minecraft:gold_ingot"
-    },
-    "B": {
-      "item": "minecraft:gold_block"
-    },
-    "G": {
-      "item": "minecraft:diamond"
-    }
+    "I": "minecraft:gold_ingot",
+    "B": "minecraft:gold_block",
+    "G": "minecraft:diamond"
   },
   "result": {
     "id": "ethermod:upgrade_diamond",
