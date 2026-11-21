@@ -1,0 +1,676 @@
+/home/runner/.gradle/caches/modules-2/files-2.1/curse.maven/geckolib-388172/8893169/196231506b89da06925c087f9b8bc5fd12ebea16/geckolib-388172-8893169.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/io.github.llamalad7/mixinextras-neoforge/0.5.5/26f2905a37afd203c3da1d6a2e164472a7531b41/mixinextras-neoforge-0.5.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.accesstransformers/at-parser/11.0.2/64aae57d6d26d69543c5275181fe6971707a4e16/at-parser-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/earlydisplay/12.0.16/efa2e56115d22853d10524874a7bbb64555c2a28/earlydisplay-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/12.0.16/edbb2ee8211a867215970bc15ae9c354fa56dc09/loader-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarMetadata/0.5.3/ff40c1cd721d07615d825c5bbf27705b2e3258ed/JarJarMetadata-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarSelector/0.5.3/6b845aab8d5c8e721b4e3cd30f97722b7f8044b1/JarJarSelector-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/accesstransformers/11.0.2/25dcb69c78b16669935f0ab91dff830ce192379d/accesstransformers-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/bus/8.0.5/5b2d33285ab5d1554e9798ad98c40d6ea3868bd5/bus-8.0.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/mergetool/2.0.7/793b18456e92c4a7f66d9b5d8bf7a9c1c7a20b20/mergetool-2.0.7-api.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar
+=== LIST /.*/(AbstractSoundInstance)$
+net/minecraft/client/resources/sounds/AbstractSoundInstance
+=== CODE net/minecraft/client/player/LocalPlayer aiStep
+  public void aiStep();
+    Code:
+         0: aload_0
+         1: getfield      #1098               // Field sprintTriggerTime:I
+         4: ifle          17
+         7: aload_0
+         8: dup
+         9: getfield      #1098               // Field sprintTriggerTime:I
+        12: iconst_1
+        13: isub
+        14: putfield      #1098               // Field sprintTriggerTime:I
+        17: aload_0
+        18: getfield      #80                 // Field minecraft:Lnet/minecraft/client/Minecraft;
+        21: getfield      #439                // Field net/minecraft/client/Minecraft.gui:Lnet/minecraft/client/gui/Gui;
+        24: invokevirtual #547                // Method net/minecraft/client/gui/Gui.screen:()Lnet/minecraft/client/gui/screens/Screen;
+        27: instanceof    #1101               // class net/minecraft/client/gui/screens/LevelLoadingScreen
+        30: ifne          56
+        33: aload_0
+        34: aload_0
+        35: invokevirtual #1103               // Method getActivePortalLocalTransition:()Lnet/minecraft/world/level/block/Portal$Transition;
+        38: getstatic     #1107               // Field net/minecraft/world/level/block/Portal$Transition.CONFUSION:Lnet/minecraft/world/level/block/Portal$Transition;
+        41: if_acmpne     48
+        44: iconst_1
+        45: goto          49
+        48: iconst_0
+        49: invokevirtual #1113               // Method handlePortalTransitionEffect:(Z)V
+        52: aload_0
+        53: invokevirtual #1116               // Method processPortalCooldown:()V
+        56: aload_0
+        57: invokevirtual #1119               // Method tickSpinningEffect:()V
+        60: aload_0
+        61: getfield      #54                 // Field input:Lnet/minecraft/client/player/ClientInput;
+        64: getfield      #237                // Field net/minecraft/client/player/ClientInput.keyPresses:Lnet/minecraft/world/entity/player/Input;
+        67: invokevirtual #987                // Method net/minecraft/world/entity/player/Input.jump:()Z
+        70: istore_1
+        71: aload_0
+        72: getfield      #54                 // Field input:Lnet/minecraft/client/player/ClientInput;
+        75: getfield      #237                // Field net/minecraft/client/player/ClientInput.keyPresses:Lnet/minecraft/world/entity/player/Input;
+        78: invokevirtual #955                // Method net/minecraft/world/entity/player/Input.shift:()Z
+        81: istore_2
+        82: aload_0
+        83: getfield      #54                 // Field input:Lnet/minecraft/client/player/ClientInput;
+        86: invokevirtual #1122               // Method net/minecraft/client/player/ClientInput.hasForwardImpulse:()Z
+        89: istore_3
+        90: aload_0
+        91: invokevirtual #475                // Method getAbilities:()Lnet/minecraft/world/entity/player/Abilities;
+        94: astore        4
+        96: aload_0
+        97: aload         4
+        99: getfield      #495                // Field net/minecraft/world/entity/player/Abilities.flying:Z
+       102: ifne          157
+       105: aload_0
+       106: invokevirtual #1125               // Method isSwimming:()Z
+       109: ifne          157
+       112: aload_0
+       113: invokevirtual #254                // Method isPassenger:()Z
+       116: ifne          157
+       119: aload_0
+       120: getstatic     #1128               // Field net/minecraft/world/entity/Pose.CROUCHING:Lnet/minecraft/world/entity/Pose;
+       123: invokevirtual #1131               // Method canPlayerFitWithinBlocksAndEntitiesWhen:(Lnet/minecraft/world/entity/Pose;)Z
+       126: ifeq          157
+       129: aload_0
+       130: invokevirtual #1135               // Method isShiftKeyDown:()Z
+       133: ifne          153
+       136: aload_0
+       137: invokevirtual #1138               // Method isSleeping:()Z
+       140: ifne          157
+       143: aload_0
+       144: getstatic     #1059               // Field net/minecraft/world/entity/Pose.STANDING:Lnet/minecraft/world/entity/Pose;
+       147: invokevirtual #1131               // Method canPlayerFitWithinBlocksAndEntitiesWhen:(Lnet/minecraft/world/entity/Pose;)Z
+       150: ifne          157
+       153: iconst_1
+       154: goto          158
+       157: iconst_0
+       158: putfield      #958                // Field crouching:Z
+       161: aload_0
+       162: getfield      #54                 // Field input:Lnet/minecraft/client/player/ClientInput;
+       165: invokevirtual #1141               // Method net/minecraft/client/player/ClientInput.tick:()V
+       168: aload_0
+       169: aload_0
+       170: getfield      #54                 // Field input:Lnet/minecraft/client/player/ClientInput;
+       173: invokestatic  #2223               // Method net/neoforged/neoforge/client/ClientHooks.onMovementInputUpdate:(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/client/player/ClientInput;)V
+       176: aload_0
+       177: getfield      #80                 // Field minecraft:Lnet/minecraft/client/Minecraft;
+       180: invokevirtual #1142               // Method net/minecraft/client/Minecraft.getTutorial:()Lnet/minecraft/client/tutorial/Tutorial;
+       183: aload_0
+       184: getfield      #54                 // Field input:Lnet/minecraft/client/player/ClientInput;
+       187: invokevirtual #1146               // Method net/minecraft/client/tutorial/Tutorial.onInput:(Lnet/minecraft/client/player/ClientInput;)V
+       190: iconst_0
+       191: istore        5
+       193: aload_0
+       194: getfield      #1152               // Field autoJumpTime:I
+       197: ifle          220
+       200: aload_0
+       201: dup
+       202: getfield      #1152               // Field autoJumpTime:I
+       205: iconst_1
+       206: isub
+       207: putfield      #1152               // Field autoJumpTime:I
+       210: iconst_1
+       211: istore        5
+       213: aload_0
+       214: getfield      #54                 // Field input:Lnet/minecraft/client/player/ClientInput;
+       217: invokevirtual #1155               // Method net/minecraft/client/player/ClientInput.makeJump:()V
+       220: aload_0
+       221: getfield      #1158               // Field noPhysics:Z
+       224: ifne          362
+       227: aload_0
+       228: invokevirtual #254                // Method isPassenger:()Z
+       231: ifne          362
+       234: aload_0
+       235: aload_0
+       236: invokevirtual #301                // Method getX:()D
+       239: aload_0
+       240: invokevirtual #1161               // Method getBbWidth:()F
+       243: f2d
+       244: ldc2_w        #1164               // double 0.35d
+       247: dmul
+       248: dsub
+       249: aload_0
+       250: invokevirtual #315                // Method getZ:()D
+       253: aload_0
+       254: invokevirtual #1161               // Method getBbWidth:()F
+       257: f2d
+       258: ldc2_w        #1164               // double 0.35d
+       261: dmul
+       262: dadd
+       263: invokevirtual #1166               // Method moveTowardsClosestSpace:(DD)V
+       266: aload_0
+       267: aload_0
+       268: invokevirtual #301                // Method getX:()D
+       271: aload_0
+       272: invokevirtual #1161               // Method getBbWidth:()F
+       275: f2d
+       276: ldc2_w        #1164               // double 0.35d
+       279: dmul
+       280: dsub
+       281: aload_0
+       282: invokevirtual #315                // Method getZ:()D
+       285: aload_0
+       286: invokevirtual #1161               // Method getBbWidth:()F
+       289: f2d
+       290: ldc2_w        #1164               // double 0.35d
+       293: dmul
+       294: dsub
+       295: invokevirtual #1166               // Method moveTowardsClosestSpace:(DD)V
+       298: aload_0
+       299: aload_0
+       300: invokevirtual #301                // Method getX:()D
+       303: aload_0
+       304: invokevirtual #1161               // Method getBbWidth:()F
+       307: f2d
+       308: ldc2_w        #1164               // double 0.35d
+       311: dmul
+       312: dadd
+       313: aload_0
+       314: invokevirtual #315                // Method getZ:()D
+       317: aload_0
+       318: invokevirtual #1161               // Method getBbWidth:()F
+       321: f2d
+       322: ldc2_w        #1164               // double 0.35d
+       325: dmul
+       326: dsub
+       327: invokevirtual #1166               // Method moveTowardsClosestSpace:(DD)V
+       330: aload_0
+       331: aload_0
+       332: invokevirtual #301                // Method getX:()D
+       335: aload_0
+       336: invokevirtual #1161               // Method getBbWidth:()F
+       339: f2d
+       340: ldc2_w        #1164               // double 0.35d
+       343: dmul
+       344: dadd
+       345: aload_0
+       346: invokevirtual #315                // Method getZ:()D
+       349: aload_0
+       350: invokevirtual #1161               // Method getBbWidth:()F
+       353: f2d
+       354: ldc2_w        #1164               // double 0.35d
+       357: dmul
+       358: dadd
+       359: invokevirtual #1166               // Method moveTowardsClosestSpace:(DD)V
+       362: iload_2
+       363: ifne          393
+       366: aload_0
+       367: invokevirtual #1170               // Method isSlowDueToUsingItem:()Z
+       370: ifeq          380
+       373: aload_0
+       374: invokevirtual #254                // Method isPassenger:()Z
+       377: ifeq          393
+       380: aload_0
+       381: getfield      #54                 // Field input:Lnet/minecraft/client/player/ClientInput;
+       384: getfield      #237                // Field net/minecraft/client/player/ClientInput.keyPresses:Lnet/minecraft/world/entity/player/Input;
+       387: invokevirtual #1173               // Method net/minecraft/world/entity/player/Input.backward:()Z
+       390: ifeq          398
+       393: aload_0
+       394: iconst_0
+       395: putfield      #1098               // Field sprintTriggerTime:I
+       398: aload_0
+       399: invokevirtual #1176               // Method canStartSprinting:()Z
+       402: ifeq          465
+       405: iload_3
+       406: ifne          447
+       409: aload_0
+       410: getfield      #1098               // Field sprintTriggerTime:I
+       413: ifle          424
+       416: aload_0
+       417: iconst_1
+       418: invokevirtual #1179               // Method setSprinting:(Z)V
+       421: goto          447
+       424: aload_0
+       425: aload_0
+       426: getfield      #80                 // Field minecraft:Lnet/minecraft/client/Minecraft;
+       429: getfield      #366                // Field net/minecraft/client/Minecraft.options:Lnet/minecraft/client/Options;
+       432: invokevirtual #1182               // Method net/minecraft/client/Options.sprintWindow:()Lnet/minecraft/client/OptionInstance;
+       435: invokevirtual #376                // Method net/minecraft/client/OptionInstance.get:()Ljava/lang/Object;
+       438: checkcast     #5                  // class java/lang/Integer
+       441: invokevirtual #1185               // Method java/lang/Integer.intValue:()I
+       444: putfield      #1098               // Field sprintTriggerTime:I
+       447: aload_0
+       448: getfield      #54                 // Field input:Lnet/minecraft/client/player/ClientInput;
+       451: getfield      #237                // Field net/minecraft/client/player/ClientInput.keyPresses:Lnet/minecraft/world/entity/player/Input;
+       454: invokevirtual #1188               // Method net/minecraft/world/entity/player/Input.sprint:()Z
+       457: ifeq          465
+       460: aload_0
+       461: iconst_1
+       462: invokevirtual #1179               // Method setSprinting:(Z)V
+       465: aload_0
+       466: invokevirtual #386                // Method isSprinting:()Z
+       469: ifeq          506
+       472: aload_0
+       473: invokevirtual #1125               // Method isSwimming:()Z
+       476: ifeq          494
+       479: aload_0
+       480: invokevirtual #1191               // Method shouldStopSwimSprinting:()Z
+       483: ifeq          506
+       486: aload_0
+       487: iconst_0
+       488: invokevirtual #1179               // Method setSprinting:(Z)V
+       491: goto          506
+       494: aload_0
+       495: invokevirtual #1194               // Method shouldStopRunSprinting:()Z
+       498: ifeq          506
+       501: aload_0
+       502: iconst_0
+       503: invokevirtual #1179               // Method setSprinting:(Z)V
+       506: iconst_0
+       507: istore        6
+       509: aload_0
+       510: invokevirtual #2226               // Method mayFly:()Z
+       513: ifeq          661
+       516: aload_0
+       517: getfield      #80                 // Field minecraft:Lnet/minecraft/client/Minecraft;
+       520: getfield      #1200               // Field net/minecraft/client/Minecraft.gameMode:Lnet/minecraft/client/multiplayer/MultiPlayerGameMode;
+       523: invokevirtual #1204               // Method net/minecraft/client/multiplayer/MultiPlayerGameMode.isSpectator:()Z
+       526: ifeq          553
+       529: aload         4
+       531: getfield      #495                // Field net/minecraft/world/entity/player/Abilities.flying:Z
+       534: ifne          661
+       537: aload         4
+       539: iconst_1
+       540: putfield      #495                // Field net/minecraft/world/entity/player/Abilities.flying:Z
+       543: iconst_1
+       544: istore        6
+       546: aload_0
+       547: invokevirtual #1209               // Method onUpdateAbilities:()V
+       550: goto          661
+       553: iload_1
+       554: ifne          661
+       557: aload_0
+       558: getfield      #54                 // Field input:Lnet/minecraft/client/player/ClientInput;
+       561: getfield      #237                // Field net/minecraft/client/player/ClientInput.keyPresses:Lnet/minecraft/world/entity/player/Input;
+       564: invokevirtual #987                // Method net/minecraft/world/entity/player/Input.jump:()Z
+       567: ifeq          661
+       570: iload         5
+       572: ifne          661
+       575: aload_0
+       576: getfield      #1212               // Field jumpTriggerTime:I
+       579: ifne          591
+       582: aload_0
+       583: bipush        7
+       585: putfield      #1212               // Field jumpTriggerTime:I
+       588: goto          661
+       591: aload_0
+       592: invokevirtual #1125               // Method isSwimming:()Z
+       595: ifne          661
+       598: aload_0
+       599: invokevirtual #1215               // Method getVehicle:()Lnet/minecraft/world/entity/Entity;
+       602: ifnull        612
+       605: aload_0
+       606: invokevirtual #1218               // Method jumpableVehicle:()Lnet/minecraft/world/entity/PlayerRideableJumping;
+       609: ifnull        661
+       612: aload         4
+       614: aload         4
+       616: getfield      #495                // Field net/minecraft/world/entity/player/Abilities.flying:Z
+       619: ifne          626
+       622: iconst_1
+       623: goto          627
+       626: iconst_0
+       627: putfield      #495                // Field net/minecraft/world/entity/player/Abilities.flying:Z
+=== CODE net/minecraft/client/Camera update
+  public void update(net.minecraft.client.DeltaTracker);
+    Code:
+         0: aload_0
+         1: getfield      #109                // Field minecraft:Lnet/minecraft/client/Minecraft;
+         4: getfield      #142                // Field net/minecraft/client/Minecraft.options:Lnet/minecraft/client/Options;
+         7: invokevirtual #146                // Method net/minecraft/client/Options.getEffectiveRenderDistance:()I
+        10: bipush        16
+        12: imul
+        13: i2f
+        14: fstore_2
+        15: aload_0
+        16: fload_2
+        17: ldc           #154                // float 4.0f
+        19: fmul
+        20: aload_0
+        21: getfield      #109                // Field minecraft:Lnet/minecraft/client/Minecraft;
+        24: getfield      #142                // Field net/minecraft/client/Minecraft.options:Lnet/minecraft/client/Options;
+        27: invokevirtual #155                // Method net/minecraft/client/Options.cloudRange:()Lnet/minecraft/client/OptionInstance;
+        30: invokevirtual #159                // Method net/minecraft/client/OptionInstance.get:()Ljava/lang/Object;
+        33: checkcast     #165                // class java/lang/Integer
+        36: invokevirtual #167                // Method java/lang/Integer.intValue:()I
+        39: bipush        16
+        41: imul
+        42: i2f
+        43: invokestatic  #170                // Method java/lang/Math.max:(FF)F
+        46: putfield      #176                // Field depthFar:F
+        49: aload_0
+        50: getfield      #109                // Field minecraft:Lnet/minecraft/client/Minecraft;
+        53: getfield      #179                // Field net/minecraft/client/Minecraft.player:Lnet/minecraft/client/player/LocalPlayer;
+        56: astore_3
+        57: aload_3
+        58: ifnull        182
+        61: aload_0
+        62: getfield      #113                // Field level:Lnet/minecraft/world/level/Level;
+        65: ifnull        182
+        68: aload_0
+        69: getfield      #117                // Field entity:Lnet/minecraft/world/entity/Entity;
+        72: ifnonnull     80
+        75: aload_0
+        76: aload_3
+        77: invokevirtual #183                // Method setEntity:(Lnet/minecraft/world/entity/Entity;)V
+        80: aload_0
+        81: aload_1
+        82: invokevirtual #187                // Method getCameraEntityPartialTicks:(Lnet/minecraft/client/DeltaTracker;)F
+        85: fstore        4
+        87: aload_0
+        88: fload         4
+        90: invokevirtual #191                // Method alignWithEntity:(F)V
+        93: aload_0
+        94: aload_0
+        95: fload         4
+        97: invokevirtual #195                // Method calculateFov:(F)F
+       100: putfield      #199                // Field fov:F
+       103: aload_0
+       104: aload_0
+       105: fload         4
+       107: invokevirtual #202                // Method calculateHudFov:(F)F
+       110: putfield      #205                // Field hudFov:F
+       113: aload_0
+       114: aload_0
+       115: aload_0
+       116: getfield      #79                 // Field cachedViewRotMatrix:Lorg/joml/Matrix4f;
+       119: invokevirtual #208                // Method getViewRotationMatrix:(Lorg/joml/Matrix4f;)Lorg/joml/Matrix4f;
+       122: aload_0
+       123: invokevirtual #212                // Method createProjectionMatrixForCulling:()Lorg/joml/Matrix4f;
+       126: aload_0
+       127: getfield      #13                 // Field position:Lnet/minecraft/world/phys/Vec3;
+       130: invokevirtual #216                // Method prepareCullFrustum:(Lorg/joml/Matrix4fc;Lorg/joml/Matrix4f;Lnet/minecraft/world/phys/Vec3;)V
+       133: aload_0
+       134: getfield      #109                // Field minecraft:Lnet/minecraft/client/Minecraft;
+       137: invokevirtual #220                // Method net/minecraft/client/Minecraft.getWindow:()Lcom/mojang/blaze3d/platform/Window;
+       140: invokevirtual #224                // Method com/mojang/blaze3d/platform/Window.getWidth:()I
+       143: i2f
+       144: fstore        5
+       146: aload_0
+       147: getfield      #109                // Field minecraft:Lnet/minecraft/client/Minecraft;
+       150: invokevirtual #220                // Method net/minecraft/client/Minecraft.getWindow:()Lcom/mojang/blaze3d/platform/Window;
+       153: invokevirtual #229                // Method com/mojang/blaze3d/platform/Window.getHeight:()I
+       156: i2f
+       157: fstore        6
+       159: aload_0
+       160: ldc           #232                // float 0.05f
+       162: aload_0
+       163: getfield      #176                // Field depthFar:F
+       166: aload_0
+       167: getfield      #199                // Field fov:F
+       170: fload         5
+       172: fload         6
+       174: invokevirtual #233                // Method setupPerspective:(FFFFF)V
+       177: aload_0
+       178: iconst_1
+       179: putfield      #237                // Field initialized:Z
+       182: return
+=== CODE net/minecraft/util/LightCoordsUtil getLightCoords
+  public static int getLightCoords(net.minecraft.world.level.BlockAndLightGetter, net.minecraft.core.BlockPos);
+    Code:
+         0: getstatic     #48                 // Field net/minecraft/util/LightCoordsUtil$BrightnessGetter.DEFAULT:Lnet/minecraft/util/LightCoordsUtil$BrightnessGetter;
+         3: aload_0
+         4: aload_0
+         5: aload_1
+         6: invokeinterface #54,  2           // InterfaceMethod net/minecraft/world/level/BlockAndLightGetter.getBlockState:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/block/state/BlockState;
+        11: aload_1
+        12: invokestatic  #60                 // Method getLightCoords:(Lnet/minecraft/util/LightCoordsUtil$BrightnessGetter;Lnet/minecraft/world/level/BlockAndLightGetter;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)I
+        15: ireturn
+  public static int getLightCoords(net.minecraft.util.LightCoordsUtil$BrightnessGetter, net.minecraft.world.level.BlockAndLightGetter, net.minecraft.world.level.block.state.BlockState, net.minecraft.core.BlockPos);
+    Code:
+         0: aload_2
+         1: invokevirtual #64                 // Method net/minecraft/world/level/block/state/BlockState.emissiveRendering:()Z
+         4: ifeq          10
+         7: ldc           #70                 // int 15728880
+         9: ireturn
+        10: aload_0
+        11: aload_1
+        12: aload_3
+        13: invokeinterface #71,  3           // InterfaceMethod net/minecraft/util/LightCoordsUtil$BrightnessGetter.packedBrightness:(Lnet/minecraft/world/level/BlockAndLightGetter;Lnet/minecraft/core/BlockPos;)I
+        18: istore        4
+        20: iload         4
+        22: invokestatic  #35                 // Method block:(I)I
+        25: istore        5
+        27: aload_2
+        28: aload_1
+        29: aload_3
+        30: invokevirtual #141                // Method net/minecraft/world/level/block/state/BlockState.getLightEmission:(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)I
+        33: istore        6
+        35: iload         5
+        37: iload         6
+        39: if_icmpge     52
+        42: iload         4
+        44: iload         6
+        46: invokestatic  #79                 // Method withBlock:(II)I
+        49: goto          54
+        52: iload         4
+        54: ireturn
+}
+=== CODE net/minecraft/client/player/LocalPlayer modifyInput
+  private net.minecraft.world.phys.Vec2 modifyInput(net.minecraft.world.phys.Vec2);
+    Code:
+         0: aload_1
+         1: invokevirtual #1009               // Method net/minecraft/world/phys/Vec2.lengthSquared:()F
+         4: fconst_0
+         5: fcmpl
+         6: ifne          11
+         9: aload_1
+        10: areturn
+        11: aload_1
+        12: ldc_w         #1011               // float 0.98f
+        15: invokevirtual #1012               // Method net/minecraft/world/phys/Vec2.scale:(F)Lnet/minecraft/world/phys/Vec2;
+        18: astore_2
+        19: aload_0
+        20: invokevirtual #769                // Method isUsingItem:()Z
+        23: ifeq          42
+        26: aload_0
+        27: invokevirtual #254                // Method isPassenger:()Z
+        30: ifne          42
+        33: aload_2
+        34: aload_0
+        35: invokevirtual #1016               // Method itemUseSpeedMultiplier:()F
+        38: invokevirtual #1012               // Method net/minecraft/world/phys/Vec2.scale:(F)Lnet/minecraft/world/phys/Vec2;
+        41: astore_2
+        42: aload_0
+        43: invokevirtual #1019               // Method isMovingSlowly:()Z
+        46: ifeq          64
+        49: aload_0
+        50: getstatic     #1022               // Field net/minecraft/world/entity/ai/attributes/Attributes.SNEAKING_SPEED:Lnet/minecraft/core/Holder;
+        53: invokevirtual #1028               // Method getAttributeValue:(Lnet/minecraft/core/Holder;)D
+        56: d2f
+        57: fstore_3
+        58: aload_2
+        59: fload_3
+        60: invokevirtual #1012               // Method net/minecraft/world/phys/Vec2.scale:(F)Lnet/minecraft/world/phys/Vec2;
+        63: astore_2
+        64: aload_2
+        65: invokestatic  #1032               // Method modifyInputSpeedForSquareMovement:(Lnet/minecraft/world/phys/Vec2;)Lnet/minecraft/world/phys/Vec2;
+        68: areturn
+=== SIG net/minecraft/client/renderer/LevelRenderer .*[Ss]ection.*
+  private final net.minecraft.client.renderer.SectionOcclusionGraph sectionOcclusionGraph;
+  private final it.unimi.dsi.fastutil.objects.ObjectArrayList<net.minecraft.client.renderer.chunk.SectionRenderDispatcher$RenderSection> visibleSections;
+  private final it.unimi.dsi.fastutil.objects.ObjectArrayList<net.minecraft.client.renderer.chunk.SectionRenderDispatcher$RenderSection> nearbyVisibleSections;
+  private net.minecraft.client.renderer.chunk.SectionRenderDispatcher sectionRenderDispatcher;
+  private void addMainPass(com.mojang.blaze3d.framegraph.FrameGraphBuilder, net.minecraft.client.renderer.feature.FeatureRenderDispatcher$PreparedFrame, com.mojang.renderpearl.api.buffers.GpuBufferSlice, net.minecraft.client.renderer.chunk.ChunkSectionsToRender, boolean);
+  private void executeSolid(net.minecraft.client.renderer.chunk.ChunkSectionsToRender, net.minecraft.client.renderer.feature.FeatureRenderDispatcher$PreparedFrame, com.mojang.renderpearl.api.commands.RenderPass);
+  private void executeOit(net.minecraft.client.renderer.chunk.ChunkSectionsToRender, net.minecraft.client.renderer.feature.FeatureRenderDispatcher$PreparedFrame);
+  private void executeClassicTransparency(net.minecraft.client.renderer.chunk.ChunkSectionsToRender, net.minecraft.client.renderer.feature.FeatureRenderDispatcher$PreparedFrame, com.mojang.renderpearl.api.commands.RenderPass);
+  private int extractSectionDrawGroups(boolean, java.util.List<net.minecraft.client.renderer.DynamicGpuData$ChunkSectionInfo>, java.util.Map<net.minecraft.client.renderer.chunk.ChunkSectionLayer, java.util.List<net.minecraft.client.renderer.LevelRenderer$ChunkDrawGroup>>);
+  public net.minecraft.client.renderer.chunk.ChunkSectionsToRender prepareChunkRenders(org.joml.Matrix4fc, boolean);
+  public void removeTransientBlocksInSection(long, long);
+  public net.minecraft.client.renderer.chunk.ChunkSectionsToRender prepareChunkRendersIndirect(org.joml.Matrix4fc, boolean);
+  private void compileSections(net.minecraft.client.renderer.state.level.CameraRenderState);
+  private void scheduleTranslucentSectionResort(net.minecraft.world.phys.Vec3);
+  private void scheduleResort(net.minecraft.client.renderer.chunk.SectionRenderDispatcher$RenderSection, net.minecraft.client.renderer.chunk.TranslucencyPointOfView, net.minecraft.world.phys.Vec3, boolean, boolean);
+  public void clearVisibleSections();
+  public boolean hasRenderedAllSections();
+  public boolean isSectionCompiledAndVisible(net.minecraft.core.BlockPos, long);
+  public net.minecraft.client.renderer.chunk.SectionRenderDispatcher sectionRenderDispatcher();
+  public it.unimi.dsi.fastutil.objects.ObjectArrayList<net.minecraft.client.renderer.chunk.SectionRenderDispatcher$RenderSection> visibleSections();
+=== SIG net/minecraft/client/renderer/entity/EntityRenderer .*Light.*
+  public final int getPackedLightCoords(T, float);
+  protected int getSkyLightLevel(T, net.minecraft.core.BlockPos);
+  protected int getBlockLightLevel(T, net.minecraft.core.BlockPos);
+=== SIG net/minecraft/client/resources/sounds/AbstractSoundInstance volume
+  protected float volume;
+=== SIG net/minecraft/client/player/LocalPlayer .*(Closest|Space|moveTowards).*
+  private void moveTowardsClosestSpace(double, double);
+=== SIG net/minecraft/client/Camera .*(Zoom|setup|alignWith|setPosition|move|Detached|detached).*
+  private boolean detached;
+  private void alignWithEntity(float);
+  private float getMaxZoom(float);
+  private void setupPerspective(float, float, float, float, float);
+  private void setupOrtho(float, float, float, float, boolean);
+  protected void move(float, float, float);
+  protected void setPosition(double, double, double);
+  protected void setPosition(net.minecraft.world.phys.Vec3);
+  public boolean isDetached();
+=== net/minecraft/client/player/LocalPlayer
+Compiled from "LocalPlayer.java"
+public class net.minecraft.client.player.LocalPlayer extends net.minecraft.client.player.AbstractClientPlayer {
+  public static final org.slf4j.Logger LOGGER;
+  public final net.minecraft.client.multiplayer.ClientPacketListener connection;
+  public net.minecraft.client.player.ClientInput input;
+  public int experienceDisplayStartTick;
+  public float yBob;
+  public float xBob;
+  public float yBobO;
+  public float xBobO;
+  public float portalEffectIntensity;
+  public float oPortalEffectIntensity;
+  public net.minecraft.client.player.LocalPlayer(net.minecraft.client.Minecraft, net.minecraft.client.multiplayer.ClientLevel, net.minecraft.client.multiplayer.ClientPacketListener, net.minecraft.stats.StatsCounter, net.minecraft.client.ClientRecipeBook, net.minecraft.world.entity.player.Input, boolean, net.minecraft.client.multiplayer.chat.ChatAbilities, net.minecraft.client.player.ItemActivation);
+  public void heal(float);
+  public boolean startRiding(net.minecraft.world.entity.Entity, boolean, boolean);
+  public void removeVehicle();
+  public float getViewYRot(float);
+  public void tick();
+  public void displayItemActivation(net.minecraft.world.item.ItemStack);
+  public void resetItemActivation();
+  public net.minecraft.client.player.ItemActivation itemActivation();
+  public void itemUsed(net.minecraft.world.InteractionHand);
+  public net.minecraft.client.player.FirstPersonHandsAndItems firstPersonHandsAndItems();
+  public void sendChanges();
+  public float getCurrentMood();
+  public void respawn();
+  public void closeContainer();
+  public void clientSideCloseContainer();
+  public void hurtTo(float);
+  public void onUpdateAbilities();
+  public void setReducedDebugInfo(boolean);
+  public boolean isLocalPlayer();
+  public boolean isSuppressingSlidingDownLadder();
+  public boolean canSpawnSprintParticle();
+  public void sendOpenInventory();
+  public net.minecraft.stats.StatsCounter getStats();
+  public net.minecraft.client.ClientRecipeBook getRecipeBook();
+  public void removeRecipeHighlight(net.minecraft.world.item.crafting.display.RecipeDisplayId);
+  public net.minecraft.server.permissions.PermissionSet permissions();
+  public void setPermissions(net.minecraft.server.permissions.PermissionSet);
+  public net.minecraft.client.multiplayer.chat.ChatAbilities chatAbilities();
+  public void refreshChatAbilities();
+  public void sendSystemMessage(net.minecraft.network.chat.Component);
+  public void sendOverlayMessage(net.minecraft.network.chat.Component);
+  public void setExperienceValues(float, int, int);
+  public void handleEntityEvent(byte);
+  public void setShowDeathScreen(boolean);
+  public boolean shouldShowDeathScreen();
+  public void setDoLimitedCrafting(boolean);
+  public boolean getDoLimitedCrafting();
+  public void playSound(net.minecraft.sounds.SoundEvent, float, float);
+  public void startUsingItem(net.minecraft.world.InteractionHand);
+  public boolean isUsingItem();
+  public void stopUsingItem();
+  public net.minecraft.world.InteractionHand getUsedItemHand();
+  public void onSyncedDataUpdated(net.minecraft.network.syncher.EntityDataAccessor<?>);
+  public net.minecraft.world.entity.PlayerRideableJumping jumpableVehicle();
+  public float getJumpRidingScale();
+  public boolean isTextFilteringEnabled();
+  public void openTextEdit(net.minecraft.world.level.block.entity.SignBlockEntity, net.minecraft.world.level.block.entity.SignTextSlot);
+  public void openMinecartCommandBlock(net.minecraft.world.entity.vehicle.minecart.MinecartCommandBlock);
+  public void openCommandBlock(net.minecraft.world.level.block.entity.CommandBlockEntity);
+  public void openStructureBlock(net.minecraft.world.level.block.entity.StructureBlockEntity);
+  public void openTestBlock(net.minecraft.world.level.block.entity.TestBlockEntity);
+  public void openTestInstanceBlock(net.minecraft.world.level.block.entity.TestInstanceBlockEntity);
+  public void openJigsawBlock(net.minecraft.world.level.block.entity.JigsawBlockEntity);
+  public void openDialog(net.minecraft.core.Holder<net.minecraft.server.dialog.Dialog>);
+  public void openItemGui(net.minecraft.world.item.ItemStack, net.minecraft.world.InteractionHand);
+  public void crit(net.minecraft.world.entity.Entity);
+  public void magicCrit(net.minecraft.world.entity.Entity);
+  public boolean isShiftKeyDown();
+  public boolean isCrouching();
+  public boolean isMovingSlowly();
+  public void applyInput();
+  public void resetPos();
+  public void aiStep();
+  public net.minecraft.world.level.block.Portal$Transition getActivePortalLocalTransition();
+  public float getSpinningEffectAngle(float);
+  public void rideTick();
+  public boolean isHandsBusy();
+  public void move(net.minecraft.world.entity.MoverType, net.minecraft.world.phys.Vec3);
+  public boolean isAutoJumpEnabled();
+  public boolean shouldRotateWithMinecart();
+  public float getWaterVision();
+  public void onGameModeChanged(net.minecraft.world.level.GameType);
+  public boolean isUnderWater();
+  public net.minecraft.world.phys.Vec3 getRopeHoldPosition(float);
+  public void updateTutorialInventoryAction(net.minecraft.world.item.ItemStack, net.minecraft.world.item.ItemStack, net.minecraft.world.inventory.ClickAction);
+  public float getVisualRotationYInDegrees();
+  public void handleCreativeModeItemDrop(net.minecraft.world.item.ItemStack);
+  public boolean canDropItems();
+  public net.minecraft.util.TickThrottler getDropSpamThrottler();
+  public net.minecraft.world.entity.player.Input getLastSentInput();
+  public net.minecraft.world.phys.HitResult raycastHitResult(float, net.minecraft.world.entity.Entity);
+  public void setActivePostEffects(java.util.List<net.minecraft.resources.Identifier>);
+  public java.util.List<net.minecraft.resources.Identifier> getActivePostEffects();
+}
+=== net/minecraft/client/model/HumanoidModel
+Compiled from "HumanoidModel.java"
+public class net.minecraft.client.model.HumanoidModel<T extends net.minecraft.client.renderer.entity.state.HumanoidRenderState> extends net.minecraft.client.model.EntityModel<T> implements net.minecraft.client.model.ArmedModel<T>, net.minecraft.client.model.HeadedModel {
+  public static final net.minecraft.client.model.geom.builders.MeshTransformer BABY_TRANSFORMER;
+  public static final float OVERLAY_SCALE;
+  public static final float HAT_OVERLAY_SCALE;
+  public static final float LEGGINGS_OVERLAY_SCALE;
+  public static final float TOOT_HORN_XROT_BASE;
+  public static final float TOOT_HORN_YROT_BASE;
+  public final net.minecraft.client.model.geom.ModelPart head;
+  public final net.minecraft.client.model.geom.ModelPart hat;
+  public final net.minecraft.client.model.geom.ModelPart body;
+  public final net.minecraft.client.model.geom.ModelPart rightArm;
+  public final net.minecraft.client.model.geom.ModelPart leftArm;
+  public final net.minecraft.client.model.geom.ModelPart rightLeg;
+  public final net.minecraft.client.model.geom.ModelPart leftLeg;
+  public net.minecraft.client.model.HumanoidModel(net.minecraft.client.model.geom.ModelPart);
+  public net.minecraft.client.model.HumanoidModel(net.minecraft.client.model.geom.ModelPart, java.util.function.Function<net.minecraft.resources.Identifier, net.minecraft.client.renderer.rendertype.RenderType>);
+  public static net.minecraft.client.model.geom.builders.MeshDefinition createMesh(net.minecraft.client.model.geom.builders.CubeDeformation, float);
+  public static net.minecraft.client.renderer.entity.ArmorModelSet<net.minecraft.client.model.geom.builders.MeshDefinition> createArmorMeshSet(net.minecraft.client.model.geom.builders.CubeDeformation, net.minecraft.client.model.geom.builders.CubeDeformation);
+  public static net.minecraft.client.renderer.entity.ArmorModelSet<net.minecraft.client.model.geom.builders.MeshDefinition> createBabyArmorMeshSet(net.minecraft.client.model.geom.builders.CubeDeformation, net.minecraft.client.model.geom.builders.CubeDeformation, net.minecraft.client.model.geom.PartPose);
+  public void setupAnim(T);
+  public void translateToHand(net.minecraft.client.renderer.entity.state.HumanoidRenderState, net.minecraft.world.entity.HumanoidArm, com.mojang.blaze3d.vertex.PoseStack);
+  public net.minecraft.client.model.geom.ModelPart getArm(net.minecraft.world.entity.HumanoidArm);
+  public net.minecraft.client.model.geom.ModelPart getHead();
+  public void setupAnim(java.lang.Object);
+  public void translateToHand(net.minecraft.client.renderer.entity.state.EntityRenderState, net.minecraft.world.entity.HumanoidArm, com.mojang.blaze3d.vertex.PoseStack);
+}
+=== net/minecraft/util/LightCoordsUtil
+Compiled from "LightCoordsUtil.java"
+public class net.minecraft.util.LightCoordsUtil {
+  public static final int FULL_BRIGHT;
+  public static final int FULL_SKY;
+  public net.minecraft.util.LightCoordsUtil();
+  public static int pack(int, int);
+  public static int block(int);
+  public static int sky(int);
+  public static int withBlock(int, int);
+  public static int smoothPack(int, int);
+  public static int smoothBlock(int);
+  public static int smoothSky(int);
+  public static int addSmoothBlockEmission(int, float);
+  public static int max(int, int);
+  public static int lightCoordsWithEmission(int, int);
+  public static int smoothBlend(int, int, int, int);
+  public static int smoothWeightedBlend(int, int, int, int, float, float, float, float);
+  public static int getLightCoords(net.minecraft.world.level.BlockAndLightGetter, net.minecraft.core.BlockPos);
+  public static int getLightCoords(net.minecraft.util.LightCoordsUtil$BrightnessGetter, net.minecraft.world.level.BlockAndLightGetter, net.minecraft.world.level.block.state.BlockState, net.minecraft.core.BlockPos);
+}
