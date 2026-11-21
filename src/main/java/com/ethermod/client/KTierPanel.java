@@ -360,11 +360,7 @@ final class KTierPanel {
 
     /** Smooth moving scanlines are drawn last and clipped inside the panel frame. */
     private void drawScanlines(GuiGraphicsExtractor g, Palette pal, int y, double age) {
-        g.enableScissor(
-                ui.left + Math.round(85 * ui.scale),
-                ui.top + Math.round((y + 1) * ui.scale),
-                ui.left + Math.round(229 * ui.scale),
-                ui.top + Math.round((y + 39) * ui.scale));
+        g.enableScissor(85, y + 1, 229, y + 39); // pose-relative on 26.3
         g.pose().pushMatrix();
         g.nextStratum();
         double edge = KPanelFx.waveEdge(age);

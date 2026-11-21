@@ -18,5 +18,11 @@ public final class EtherModClient {
 
     public EtherModClient(IEventBus modEventBus, ModContainer container) {
         SideHooks.install(new ClientSideHooks());
+        // 26.3: Item.initializeClient is gone; the arm pose hooks are registered here.
+        modEventBus.addListener(
+                (net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent e) ->
+                        e.registerItem(
+                                ManipulatorClientExtensions.INSTANCE,
+                                com.ethermod.registry.ModItems.ETHER_MANIPULATOR.get()));
     }
 }

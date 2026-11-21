@@ -56,11 +56,8 @@ final class KGrid {
             bake(ui, density, tw, th, pitch, bg, accent);
             gridTexture.upload();
         }
-        g.enableScissor(
-                ui.left + Math.round(3 * ui.scale),
-                ui.top + Math.round(3 * ui.scale),
-                ui.left + Math.round((UpgradeScreen.W - 3) * ui.scale),
-                ui.top + Math.round((UpgradeScreen.H - 3) * ui.scale));
+        // 26.3: the scissor goes through the current pose (already at the frame's origin and scale)
+        g.enableScissor(3, 3, UpgradeScreen.W - 3, UpgradeScreen.H - 3);
         g.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, GRID_TEXTURE, 0, 0, 0, 0, UpgradeScreen.W, UpgradeScreen.H, tw, th, tw, th);
         g.disableScissor();
     }
