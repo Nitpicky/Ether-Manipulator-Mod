@@ -1,4 +1,4 @@
-com/mojang/renderpearl/frontend/FrontendRenderPass
-/.*renderpearl/frontend/FrontendRenderPass$
-com/mojang/renderpearl/frontend/FrontendRenderPass#validateDraw
-com/mojang/renderpearl/frontend/FrontendRenderPass#validat.*
+com/mojang/renderpearl/frontend/FrontendGpuDevice
+/.*renderpearl/frontend/FrontendGpuDevice$
+com/mojang/renderpearl/frontend/FrontendGpuDevice#<clinit>
+com/mojang/renderpearl/frontend/FrontendGpuDevice#.*VALID.*
