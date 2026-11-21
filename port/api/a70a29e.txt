@@ -1,0 +1,787 @@
+/home/runner/.gradle/caches/modules-2/files-2.1/curse.maven/geckolib-388172/8893169/196231506b89da06925c087f9b8bc5fd12ebea16/geckolib-388172-8893169.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/io.github.llamalad7/mixinextras-neoforge/0.5.5/26f2905a37afd203c3da1d6a2e164472a7531b41/mixinextras-neoforge-0.5.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.accesstransformers/at-parser/11.0.2/64aae57d6d26d69543c5275181fe6971707a4e16/at-parser-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/earlydisplay/12.0.16/efa2e56115d22853d10524874a7bbb64555c2a28/earlydisplay-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/12.0.16/edbb2ee8211a867215970bc15ae9c354fa56dc09/loader-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarMetadata/0.5.3/ff40c1cd721d07615d825c5bbf27705b2e3258ed/JarJarMetadata-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarSelector/0.5.3/6b845aab8d5c8e721b4e3cd30f97722b7f8044b1/JarJarSelector-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/accesstransformers/11.0.2/25dcb69c78b16669935f0ab91dff830ce192379d/accesstransformers-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/bus/8.0.5/5b2d33285ab5d1554e9798ad98c40d6ea3868bd5/bus-8.0.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/mergetool/2.0.7/793b18456e92c4a7f66d9b5d8bf7a9c1c7a20b20/mergetool-2.0.7-api.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar
+=== LIST /(.*Blaze.*|.*/model/[a-z]*/[A-Za-z]*Model|.*/DefaultVertexFormat|.*/RenderTypes)$
+com/mojang/blaze3d/Blaze3D
+com/mojang/blaze3d/vertex/DefaultVertexFormat
+net/minecraft/client/model/ambient/BatModel
+net/minecraft/client/model/effects/EvokerFangsModel
+net/minecraft/client/model/effects/SpinAttackEffectModel
+net/minecraft/client/model/monster/blaze/BlazeModel
+net/minecraft/client/model/npc/BabyVillagerModel
+net/minecraft/client/model/npc/VillagerModel
+net/minecraft/client/model/player/PlayerCapeModel
+net/minecraft/client/model/player/PlayerEarsModel
+net/minecraft/client/model/player/PlayerModel
+net/minecraft/client/renderer/entity/BlazeRenderer
+net/minecraft/client/renderer/rendertype/RenderTypes
+net/minecraft/client/resources/model/cuboid/CuboidModel
+net/minecraft/client/resources/model/cuboid/MissingCuboidModel
+net/minecraft/world/entity/monster/Blaze
+net/minecraft/world/entity/monster/Blaze$BlazeAttackGoal
+net/neoforged/neoforge/client/model/block/CompositeBlockModel
+net/neoforged/neoforge/client/model/block/CustomUnbakedBlockStateModel
+net/neoforged/neoforge/client/model/item/DynamicFluidContainerModel
+net/neoforged/neoforge/client/model/item/TrimmedArmorModel
+net/neoforged/neoforge/client/model/obj/ObjModel
+net/neoforged/neoforge/client/model/standalone/SimpleUnbakedStandaloneModel
+net/neoforged/neoforge/client/model/standalone/UnbakedStandaloneModel
+=== CODE net/minecraft/client/gui/render/pip/OversizedItemRenderer renderToTexture
+  protected void renderToTexture(net.minecraft.client.renderer.state.gui.pip.OversizedItemRenderState, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector);
+    Code:
+         0: aload_2
+         1: fconst_1
+         2: ldc           #19                 // float -1.0f
+         4: ldc           #19                 // float -1.0f
+         6: invokevirtual #20                 // Method com/mojang/blaze3d/vertex/PoseStack.scale:(FFF)V
+         9: aload_1
+        10: invokevirtual #26                 // Method net/minecraft/client/renderer/state/gui/pip/OversizedItemRenderState.guiItemRenderState:()Lnet/minecraft/client/renderer/state/gui/GuiItemRenderState;
+        13: astore        4
+        15: aload         4
+        17: invokevirtual #30                 // Method net/minecraft/client/renderer/state/gui/GuiItemRenderState.oversizedItemBounds:()Lnet/minecraft/client/gui/navigation/ScreenRectangle;
+        20: astore        5
+        22: aload         5
+        24: invokestatic  #36                 // Method java/util/Objects.requireNonNull:(Ljava/lang/Object;)Ljava/lang/Object;
+        27: pop
+        28: aload         5
+        30: invokevirtual #42                 // Method net/minecraft/client/gui/navigation/ScreenRectangle.left:()I
+        33: aload         5
+        35: invokevirtual #48                 // Method net/minecraft/client/gui/navigation/ScreenRectangle.right:()I
+        38: iadd
+        39: i2f
+        40: fconst_2
+        41: fdiv
+        42: fstore        6
+        44: aload         5
+        46: invokevirtual #51                 // Method net/minecraft/client/gui/navigation/ScreenRectangle.top:()I
+        49: aload         5
+        51: invokevirtual #54                 // Method net/minecraft/client/gui/navigation/ScreenRectangle.bottom:()I
+        54: iadd
+        55: i2f
+        56: fconst_2
+        57: fdiv
+        58: fstore        7
+        60: aload         4
+        62: invokevirtual #57                 // Method net/minecraft/client/renderer/state/gui/GuiItemRenderState.x:()I
+        65: i2f
+        66: ldc           #62                 // float 8.0f
+        68: fadd
+        69: fstore        8
+        71: aload         4
+        73: invokevirtual #63                 // Method net/minecraft/client/renderer/state/gui/GuiItemRenderState.y:()I
+        76: i2f
+        77: ldc           #62                 // float 8.0f
+        79: fadd
+        80: fstore        9
+        82: aload_2
+        83: fload         8
+        85: fload         6
+        87: fsub
+        88: ldc           #66                 // float 16.0f
+        90: fdiv
+        91: fload         7
+        93: fload         9
+        95: fsub
+        96: ldc           #66                 // float 16.0f
+        98: fdiv
+        99: fconst_0
+       100: invokevirtual #67                 // Method com/mojang/blaze3d/vertex/PoseStack.translate:(FFF)V
+       103: aload         4
+       105: invokevirtual #70                 // Method net/minecraft/client/renderer/state/gui/GuiItemRenderState.itemStackRenderState:()Lnet/minecraft/client/renderer/item/TrackingItemStackRenderState;
+       108: astore        10
+       110: aload         10
+       112: invokevirtual #74                 // Method net/minecraft/client/renderer/item/TrackingItemStackRenderState.usesBlockLight:()Z
+       115: ifne          122
+       118: iconst_1
+       119: goto          123
+       122: iconst_0
+       123: istore        11
+       125: iload         11
+       127: ifeq          148
+       130: invokestatic  #80                 // Method net/minecraft/client/Minecraft.getInstance:()Lnet/minecraft/client/Minecraft;
+       133: getfield      #86                 // Field net/minecraft/client/Minecraft.gameRenderer:Lnet/minecraft/client/renderer/GameRenderer;
+       136: invokevirtual #90                 // Method net/minecraft/client/renderer/GameRenderer.lighting:()Lcom/mojang/blaze3d/platform/Lighting;
+       139: getstatic     #96                 // Field com/mojang/blaze3d/platform/Lighting$Entry.ITEMS_FLAT:Lcom/mojang/blaze3d/platform/Lighting$Entry;
+       142: invokevirtual #102                // Method com/mojang/blaze3d/platform/Lighting.setupFor:(Lcom/mojang/blaze3d/platform/Lighting$Entry;)V
+       145: goto          163
+       148: invokestatic  #80                 // Method net/minecraft/client/Minecraft.getInstance:()Lnet/minecraft/client/Minecraft;
+       151: getfield      #86                 // Field net/minecraft/client/Minecraft.gameRenderer:Lnet/minecraft/client/renderer/GameRenderer;
+       154: invokevirtual #90                 // Method net/minecraft/client/renderer/GameRenderer.lighting:()Lcom/mojang/blaze3d/platform/Lighting;
+       157: getstatic     #108                // Field com/mojang/blaze3d/platform/Lighting$Entry.ITEMS_3D:Lcom/mojang/blaze3d/platform/Lighting$Entry;
+       160: invokevirtual #102                // Method com/mojang/blaze3d/platform/Lighting.setupFor:(Lcom/mojang/blaze3d/platform/Lighting$Entry;)V
+       163: aload         10
+       165: aload_2
+       166: aload_3
+       167: ldc           #113                // int 15728880
+       169: getstatic     #114                // Field net/minecraft/client/renderer/texture/OverlayTexture.NO_OVERLAY:I
+       172: iconst_0
+       173: invokevirtual #122                // Method net/minecraft/client/renderer/item/TrackingItemStackRenderState.submit:(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;III)V
+       176: aload_0
+       177: aload         10
+       179: invokevirtual #126                // Method net/minecraft/client/renderer/item/TrackingItemStackRenderState.getModelIdentity:()Ljava/lang/Object;
+       182: putfield      #13                 // Field modelOnTextureIdentity:Ljava/lang/Object;
+       185: return
+  protected void renderToTexture(net.minecraft.client.renderer.state.gui.pip.PictureInPictureRenderState, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: checkcast     #17                 // class net/minecraft/client/renderer/state/gui/pip/OversizedItemRenderState
+         5: aload_2
+         6: aload_3
+         7: invokevirtual #145                // Method renderToTexture:(Lnet/minecraft/client/renderer/state/gui/pip/OversizedItemRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;)V
+        10: return
+=== CODE com/geckolib/renderer/GeoItemRenderer submit
+  public void submit(com.geckolib.renderer.base.GeoRenderState, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int);
+    Code:
+         0: aload_1
+         1: getstatic     #278                // Field com/geckolib/constant/DataTickets.OUTLINE_COLOR:Lcom/geckolib/constant/dataticket/OverridingDataTicket;
+         4: iload         4
+         6: invokestatic  #191                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+         9: invokeinterface #141,  3          // InterfaceMethod com/geckolib/renderer/base/GeoRenderState.addGeckolibData:(Lcom/geckolib/constant/dataticket/DataTicket;Ljava/lang/Object;)V
+        14: aload_0
+        15: aload_1
+        16: aload_2
+        17: aload_3
+        18: invokestatic  #24                 // Method net/minecraft/client/Minecraft.getInstance:()Lnet/minecraft/client/Minecraft;
+        21: getfield      #282                // Field net/minecraft/client/Minecraft.levelRenderer:Lnet/minecraft/client/renderer/LevelRenderer;
+        24: getfield      #286                // Field net/minecraft/client/renderer/LevelRenderer.levelRenderState:Lnet/minecraft/client/renderer/state/level/LevelRenderState;
+        27: getfield      #292                // Field net/minecraft/client/renderer/state/level/LevelRenderState.cameraRenderState:Lnet/minecraft/client/renderer/state/level/CameraRenderState;
+        30: aconst_null
+        31: invokevirtual #298                // Method performRenderPass:(Lcom/geckolib/renderer/base/GeoRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;Lnet/minecraft/client/renderer/state/level/CameraRenderState;Ljava/util/List;)V
+        34: return
+=== CODE com/geckolib/renderer/GeoItemRenderer captureDefaultRenderState
+  public void captureDefaultRenderState(T, com.geckolib.renderer.GeoItemRenderer$RenderData, com.geckolib.renderer.base.GeoRenderState, float);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: aload_2
+         3: aload_3
+         4: fload         4
+         6: invokespecial #131                // InterfaceMethod com/geckolib/renderer/base/GeoRenderer.captureDefaultRenderState:(Lcom/geckolib/animatable/GeoAnimatable;Ljava/lang/Object;Lcom/geckolib/renderer/base/GeoRenderState;F)V
+         9: aload_2
+        10: getfield      #119                // Field com/geckolib/renderer/GeoItemRenderer$RenderData.itemStack:Lnet/minecraft/world/item/ItemStack;
+        13: astore        5
+        15: aload_3
+        16: getstatic     #137                // Field CURRENT_ITEM:Lcom/geckolib/constant/dataticket/DataTicket;
+        19: aload_1
+        20: invokeinterface #141,  3          // InterfaceMethod com/geckolib/renderer/base/GeoRenderState.addGeckolibData:(Lcom/geckolib/constant/dataticket/DataTicket;Ljava/lang/Object;)V
+        25: aload_3
+        26: getstatic     #147                // Field com/geckolib/constant/DataTickets.ITEM_RENDER_PERSPECTIVE:Lcom/geckolib/constant/dataticket/DataTicket;
+        29: aload_2
+        30: getfield      #152                // Field com/geckolib/renderer/GeoItemRenderer$RenderData.renderPerspective:Lnet/minecraft/world/item/ItemDisplayContext;
+        33: invokeinterface #141,  3          // InterfaceMethod com/geckolib/renderer/base/GeoRenderState.addGeckolibData:(Lcom/geckolib/constant/dataticket/DataTicket;Ljava/lang/Object;)V
+        38: aload_3
+        39: getstatic     #156                // Field com/geckolib/constant/DataTickets.IS_ENCHANTED:Lcom/geckolib/constant/dataticket/DataTicket;
+        42: aload         5
+        44: invokevirtual #159                // Method net/minecraft/world/item/ItemStack.isEnchanted:()Z
+        47: invokestatic  #165                // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+        50: invokeinterface #141,  3          // InterfaceMethod com/geckolib/renderer/base/GeoRenderState.addGeckolibData:(Lcom/geckolib/constant/dataticket/DataTicket;Ljava/lang/Object;)V
+        55: aload_3
+        56: getstatic     #171                // Field com/geckolib/constant/DataTickets.IS_STACKABLE:Lcom/geckolib/constant/dataticket/DataTicket;
+        59: aload         5
+        61: invokevirtual #174                // Method net/minecraft/world/item/ItemStack.isStackable:()Z
+        64: invokestatic  #165                // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+        67: invokeinterface #141,  3          // InterfaceMethod com/geckolib/renderer/base/GeoRenderState.addGeckolibData:(Lcom/geckolib/constant/dataticket/DataTicket;Ljava/lang/Object;)V
+        72: aload_3
+        73: getstatic     #177                // Field com/geckolib/constant/DataTickets.MAX_USE_DURATION:Lcom/geckolib/constant/dataticket/DataTicket;
+        76: invokestatic  #180                // Method com/geckolib/util/ClientUtil.getClientPlayer:()Lnet/minecraft/world/entity/player/Player;
+        79: ifnull        93
+        82: aload         5
+        84: invokestatic  #180                // Method com/geckolib/util/ClientUtil.getClientPlayer:()Lnet/minecraft/world/entity/player/Player;
+        87: invokevirtual #186                // Method net/minecraft/world/item/ItemStack.getUseDuration:(Lnet/minecraft/world/entity/LivingEntity;)I
+        90: goto          95
+        93: ldc           #190                // int 72000
+        95: invokestatic  #191                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+        98: invokeinterface #141,  3          // InterfaceMethod com/geckolib/renderer/base/GeoRenderState.addGeckolibData:(Lcom/geckolib/constant/dataticket/DataTicket;Ljava/lang/Object;)V
+       103: aload_3
+       104: getstatic     #196                // Field com/geckolib/constant/DataTickets.MAX_DURABILITY:Lcom/geckolib/constant/dataticket/DataTicket;
+       107: aload         5
+       109: invokevirtual #199                // Method net/minecraft/world/item/ItemStack.getMaxDamage:()I
+       112: invokestatic  #191                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+       115: invokeinterface #141,  3          // InterfaceMethod com/geckolib/renderer/base/GeoRenderState.addGeckolibData:(Lcom/geckolib/constant/dataticket/DataTicket;Ljava/lang/Object;)V
+       120: aload_3
+       121: getstatic     #203                // Field com/geckolib/constant/DataTickets.REMAINING_DURABILITY:Lcom/geckolib/constant/dataticket/DataTicket;
+       124: aload         5
+       126: invokevirtual #206                // Method net/minecraft/world/item/ItemStack.isDamageableItem:()Z
+       129: ifeq          146
+       132: aload         5
+       134: invokevirtual #199                // Method net/minecraft/world/item/ItemStack.getMaxDamage:()I
+       137: aload         5
+       139: invokevirtual #209                // Method net/minecraft/world/item/ItemStack.getDamageValue:()I
+       142: isub
+       143: goto          147
+       146: iconst_1
+       147: invokestatic  #191                // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+       150: invokeinterface #141,  3          // InterfaceMethod com/geckolib/renderer/base/GeoRenderState.addGeckolibData:(Lcom/geckolib/constant/dataticket/DataTicket;Ljava/lang/Object;)V
+       155: aload_1
+       156: checkcast     #212                // class com/geckolib/animatable/GeoAnimatable
+       159: invokeinterface #214,  1          // InterfaceMethod com/geckolib/animatable/GeoAnimatable.getAnimatableInstanceCache:()Lcom/geckolib/animatable/instance/AnimatableInstanceCache;
+       164: aload_3
+       165: getstatic     #218                // Field com/geckolib/constant/DataTickets.ANIMATABLE_INSTANCE_ID:Lcom/geckolib/constant/dataticket/DataTicket;
+       168: ldc2_w        #221                // long -1l
+       171: invokestatic  #223                // Method java/lang/Long.valueOf:(J)Ljava/lang/Long;
+       174: invokeinterface #228,  3          // InterfaceMethod com/geckolib/renderer/base/GeoRenderState.getOrDefaultGeckolibData:(Lcom/geckolib/constant/dataticket/DataTicket;Ljava/lang/Object;)Ljava/lang/Object;
+       179: checkcast     #224                // class java/lang/Long
+       182: invokevirtual #232                // Method java/lang/Long.longValue:()J
+       185: invokevirtual #236                // Method com/geckolib/animatable/instance/AnimatableInstanceCache.getManagerForId:(J)Lcom/geckolib/animatable/manager/AnimatableManager;
+       188: getstatic     #147                // Field com/geckolib/constant/DataTickets.ITEM_RENDER_PERSPECTIVE:Lcom/geckolib/constant/dataticket/DataTicket;
+       191: aload_2
+       192: getfield      #152                // Field com/geckolib/renderer/GeoItemRenderer$RenderData.renderPerspective:Lnet/minecraft/world/item/ItemDisplayContext;
+       195: invokevirtual #242                // Method com/geckolib/animatable/manager/AnimatableManager.setAnimatableData:(Lcom/geckolib/constant/dataticket/DataTicket;Ljava/lang/Object;)V
+       198: return
+  public void captureDefaultRenderState(com.geckolib.animatable.GeoAnimatable, java.lang.Object, com.geckolib.renderer.base.GeoRenderState, float);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: checkcast     #325                // class net/minecraft/world/item/Item
+         5: aload_2
+         6: checkcast     #120                // class com/geckolib/renderer/GeoItemRenderer$RenderData
+         9: aload_3
+        10: fload         4
+        12: invokevirtual #335                // Method captureDefaultRenderState:(Lnet/minecraft/world/item/Item;Lcom/geckolib/renderer/GeoItemRenderer$RenderData;Lcom/geckolib/renderer/base/GeoRenderState;F)V
+        15: return
+=== SIG net/minecraft/client/Minecraft get[A-Za-z]*
+  public java.lang.String getLaunchedVersion();
+  public net.minecraft.world.level.storage.LevelStorageSource getLevelSource();
+  public int getFps();
+  public long getFrameTimeNs();
+  public net.minecraft.client.sounds.MusicManager getMusicManager();
+  private java.util.Optional<net.minecraft.core.Holder<net.minecraft.server.dialog.Dialog>> getQuickActionsDialog();
+  public net.minecraft.client.telemetry.ClientTelemetryManager getTelemetryManager();
+  public net.minecraft.util.profiling.metrics.profiling.MetricsRecorder getMetricsRecorder();
+  public double getGpuUtilization();
+  public net.minecraft.client.multiplayer.ProfileKeyPairManager getProfileKeyPairManager();
+  public net.minecraft.client.multiplayer.ClientPacketListener getConnection();
+  public static net.minecraft.client.Minecraft getInstance();
+  public net.minecraft.client.multiplayer.ServerData getCurrentServer();
+  public net.minecraft.client.server.IntegratedServer getSingleplayerServer();
+  public net.minecraft.client.User getUser();
+  public com.mojang.authlib.services.ProfileResult getProfileResult();
+  public com.mojang.authlib.GameProfile getGameProfile();
+  public java.net.Proxy getProxy();
+  public net.minecraft.client.renderer.texture.TextureManager getTextureManager();
+  public net.minecraft.client.renderer.ShaderManager getShaderManager();
+grep: write error: Broken pipe
+=== SIG com/geckolib/renderer/GeoItemRenderer .*
+  public static final com.geckolib.constant.dataticket.DataTicket<net.minecraft.world.item.Item> CURRENT_ITEM;
+  protected final com.geckolib.renderer.layer.GeoRenderLayersContainer<T, com.geckolib.renderer.GeoItemRenderer$RenderData, com.geckolib.renderer.base.GeoRenderState> renderLayers;
+  protected final com.geckolib.model.GeoModel<T> model;
+  protected float scaleWidth;
+  protected float scaleHeight;
+  protected boolean useEntityGuiLighting;
+  public <I extends T> com.geckolib.renderer.GeoItemRenderer(I);
+  public com.geckolib.renderer.GeoItemRenderer(com.geckolib.model.GeoModel<T>);
+  public com.geckolib.renderer.GeoItemRenderer(net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher, net.minecraft.client.model.geom.EntityModelSet, com.geckolib.model.GeoModel<T>);
+  public com.geckolib.renderer.GeoItemRenderer<T> useAlternateGuiLighting();
+  public void setupLightingForGuiRender();
+  public com.geckolib.model.GeoModel<T> getGeoModel();
+  public java.util.List<com.geckolib.renderer.layer.GeoRenderLayer<T, com.geckolib.renderer.GeoItemRenderer$RenderData, com.geckolib.renderer.base.GeoRenderState>> getRenderLayers();
+  public com.geckolib.renderer.GeoItemRenderer<T> withRenderLayer(java.util.function.Function<? super com.geckolib.renderer.GeoItemRenderer<T>, com.geckolib.renderer.layer.GeoRenderLayer<T, com.geckolib.renderer.GeoItemRenderer$RenderData, com.geckolib.renderer.base.GeoRenderState>>);
+  public com.geckolib.renderer.GeoItemRenderer<T> withRenderLayer(com.geckolib.renderer.layer.GeoRenderLayer<T, com.geckolib.renderer.GeoItemRenderer$RenderData, com.geckolib.renderer.base.GeoRenderState>);
+  public com.geckolib.renderer.GeoItemRenderer<T> withScale(float);
+  public com.geckolib.renderer.GeoItemRenderer<T> withScale(float, float);
+  public long getInstanceId(T, com.geckolib.renderer.GeoItemRenderer$RenderData);
+  public void captureDefaultRenderState(T, com.geckolib.renderer.GeoItemRenderer$RenderData, com.geckolib.renderer.base.GeoRenderState, float);
+  public void preRenderPass(com.geckolib.renderer.base.RenderPassInfo<com.geckolib.renderer.base.GeoRenderState>, net.minecraft.client.renderer.SubmitNodeCollector);
+=== SIG com/geckolib/renderer/layer/GeoRenderLayer .*
+  protected final com.geckolib.renderer.base.GeoRenderer<T, O, R> renderer;
+  public com.geckolib.renderer.layer.GeoRenderLayer(com.geckolib.renderer.base.GeoRenderer<T, O, R>);
+  public com.geckolib.model.GeoModel<T> getGeoModel();
+  public com.geckolib.cache.model.BakedGeoModel getDefaultBakedModel(com.geckolib.renderer.base.GeoRenderState);
+  public com.geckolib.renderer.base.GeoRenderer<T, O, R> getRenderer();
+  protected net.minecraft.resources.Identifier getTextureResource(R);
+  public void addRenderData(T, O, R, float);
+  public void preRender(com.geckolib.renderer.base.RenderPassInfo<R>, net.minecraft.client.renderer.SubmitNodeCollector);
+  public void submitRenderTask(com.geckolib.renderer.base.RenderPassInfo<R>, net.minecraft.client.renderer.SubmitNodeCollector);
+  public void addPerBoneRender(com.geckolib.renderer.base.RenderPassInfo<R>, java.util.function.BiConsumer<com.geckolib.cache.model.GeoBone, com.geckolib.renderer.base.PerBoneRender<R>>);
+=== SIG com/geckolib/model/GeoModel .*
+  public com.geckolib.model.GeoModel();
+  public abstract net.minecraft.resources.Identifier getModelResource(com.geckolib.renderer.base.GeoRenderState);
+  public abstract net.minecraft.resources.Identifier getTextureResource(com.geckolib.renderer.base.GeoRenderState);
+  public abstract net.minecraft.resources.Identifier getAnimationResource(T);
+  public net.minecraft.resources.Identifier[] getAnimationResourceFallbacks(T);
+  public void addAdditionalStateData(T, java.lang.Object, com.geckolib.renderer.base.GeoRenderState);
+  public com.geckolib.cache.model.BakedGeoModel getBakedModel(net.minecraft.resources.Identifier);
+  public com.geckolib.cache.animation.Animation getBakedAnimation(T, java.lang.String) throws java.lang.RuntimeException;
+=== SIG com/geckolib/animatable/GeoAnimatable .*
+  public abstract void registerControllers(com.geckolib.animatable.manager.AnimatableManager$ControllerRegistrar);
+  public abstract com.geckolib.animatable.instance.AnimatableInstanceCache getAnimatableInstanceCache();
+  public default com.geckolib.animatable.instance.AnimatableInstanceCache animatableCacheOverride();
+=== SIG net/minecraft/client/renderer/entity/layers/RenderLayer .*
+  private final net.minecraft.client.renderer.entity.RenderLayerParent<S, M> renderer;
+  public net.minecraft.client.renderer.entity.layers.RenderLayer(net.minecraft.client.renderer.entity.RenderLayerParent<S, M>);
+  protected static <S extends net.minecraft.client.renderer.entity.state.LivingEntityRenderState> void coloredCutoutModelCopyLayerRender(net.minecraft.client.model.Model<? super S>, net.minecraft.resources.Identifier, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int, S, int, int);
+  protected static <S extends net.minecraft.client.renderer.entity.state.LivingEntityRenderState> void renderColoredCutoutModel(net.minecraft.client.model.Model<? super S>, net.minecraft.resources.Identifier, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int, S, int, int);
+  public M getParentModel();
+  public abstract void submit(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int, S, float, float);
+=== SIG net/minecraft/client/gui/GuiGraphicsExtractor [a-zA-Z]*[iI]tem[a-zA-Z]*
+  public void item(net.minecraft.world.item.ItemStack, int, int);
+  public void item(net.minecraft.world.item.ItemStack, int, int, int);
+  public void item(net.minecraft.world.entity.LivingEntity, net.minecraft.world.item.ItemStack, int, int, int);
+  private void item(net.minecraft.world.entity.LivingEntity, net.minecraft.world.level.Level, net.minecraft.world.item.ItemStack, int, int, int);
+  public void fakeItem(net.minecraft.world.item.ItemStack, int, int);
+  public void fakeItem(net.minecraft.world.item.ItemStack, int, int, int);
+  public void itemDecorations(net.minecraft.client.gui.Font, net.minecraft.world.item.ItemStack, int, int);
+  public void itemDecorations(net.minecraft.client.gui.Font, net.minecraft.world.item.ItemStack, int, int, java.lang.String);
+  private void itemBar(net.minecraft.world.item.ItemStack, int, int);
+  private void itemCount(net.minecraft.client.gui.Font, net.minecraft.world.item.ItemStack, int, int, java.lang.String);
+  private void itemCooldown(net.minecraft.world.item.ItemStack, int, int);
+=== SIG com/geckolib/renderer/base/GeoRenderer .*
+  public default int getRenderColor(T, O, float);
+  public default int getPackedOverlay(T, O, float, float);
+  public default float getMotionAnimThreshold(T);
+  public default net.minecraft.client.renderer.rendertype.RenderType getRenderType(R, net.minecraft.resources.Identifier);
+  public default void addRenderData(T, O, R, float);
+  public default void setMolangQueryValues(T, O, R, float);
+  public default void performRenderPass(R, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.CameraRenderState);
+  public default void performRenderPass(R, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.CameraRenderState, java.util.List<com.geckolib.renderer.base.RenderPassInfo$BoneUpdater<R>>);
+  public default void preRenderPass(com.geckolib.renderer.base.RenderPassInfo<R>, net.minecraft.client.renderer.SubmitNodeCollector);
+  public default void scaleModelForRender(com.geckolib.renderer.base.RenderPassInfo<R>, float, float);
+  public default void adjustRenderPose(com.geckolib.renderer.base.RenderPassInfo<R>);
+  public default void adjustModelBonesForRender(com.geckolib.renderer.base.RenderPassInfo<R>, com.geckolib.renderer.base.BoneSnapshots);
+  public default void submitRenderTasks(com.geckolib.renderer.base.RenderPassInfo<R>, net.minecraft.client.renderer.OrderedSubmitNodeCollector, net.minecraft.client.renderer.rendertype.RenderType);
+  public default void postRenderPass(com.geckolib.renderer.base.RenderPassInfo<R>, net.minecraft.client.renderer.SubmitNodeCollector);
+  private static void lambda$submitRenderTasks$0(com.geckolib.renderer.base.RenderPassInfo, int, int, int, com.mojang.blaze3d.vertex.PoseStack$Pose, com.mojang.blaze3d.vertex.VertexConsumer);
+  private static void lambda$submitRenderTasks$1(com.geckolib.renderer.base.RenderPassInfo, com.mojang.blaze3d.vertex.VertexConsumer, int, int, int);
+=== SIG com/geckolib/renderer/base/GeoRendererInternals .*
+  public abstract com.geckolib.model.GeoModel<T> getGeoModel();
+  public default java.util.List<com.geckolib.renderer.layer.GeoRenderLayer<T, O, R>> getRenderLayers();
+  public abstract int getRenderColor(T, O, float);
+  public abstract int getPackedOverlay(T, O, float, float);
+  public default long getInstanceId(T, O);
+  public default net.minecraft.resources.Identifier getTextureLocation(R);
+  public default void captureDefaultRenderState(T, O, R, float);
+  public abstract R createRenderState(T, O);
+  public abstract void addRenderData(T, O, R, float);
+  public abstract void setMolangQueryValues(T, O, R, float);
+  public default R fillRenderState(T, O, R, float);
+  public default void preApplyRenderLayers(com.geckolib.renderer.base.RenderPassInfo<R>, net.minecraft.client.renderer.SubmitNodeCollector);
+  public default void applyRenderLayers(com.geckolib.renderer.base.RenderPassInfo<R>, net.minecraft.client.renderer.SubmitNodeCollector);
+  public default void applyAnimationControllers(com.geckolib.renderer.base.RenderPassInfo<R>, com.geckolib.renderer.base.BoneSnapshots);
+  public default void submitPerBoneRenderTasks(com.geckolib.renderer.base.RenderPassInfo<R>, net.minecraft.client.renderer.SubmitNodeCollector);
+  public default void submitMissingModelRender(com.geckolib.renderer.base.RenderPassInfo<R>, net.minecraft.client.renderer.OrderedSubmitNodeCollector);
+  public abstract void fireCompileRenderLayersEvent();
+  public abstract void fireCompileRenderStateEvent(T, O, R, float);
+  public abstract boolean firePreRenderEvent(com.geckolib.renderer.base.RenderPassInfo<R>, net.minecraft.client.renderer.SubmitNodeCollector);
+  private static void lambda$submitMissingModelRender$0(com.geckolib.renderer.base.RenderPassInfo, com.mojang.blaze3d.vertex.PoseStack$Pose, com.mojang.blaze3d.vertex.VertexConsumer);
+=== SIG net/minecraft/client/renderer/rendertype/RenderTypes .*
+  static final java.util.function.BiFunction<net.minecraft.resources.Identifier, java.lang.Boolean, net.minecraft.client.renderer.rendertype.RenderType> OUTLINE;
+  private static final net.minecraft.client.renderer.rendertype.RenderType SOLID_MOVING_BLOCK;
+  private static final net.minecraft.client.renderer.rendertype.RenderType CUTOUT_MOVING_BLOCK;
+  private static final net.minecraft.client.renderer.rendertype.RenderType TRANSLUCENT_MOVING_BLOCK;
+  private static final java.util.function.Function<net.minecraft.resources.Identifier, net.minecraft.client.renderer.rendertype.RenderType> ARMOR_CUTOUT_NO_CULL;
+  private static final java.util.function.Function<net.minecraft.resources.Identifier, net.minecraft.client.renderer.rendertype.RenderType> ARMOR_CUTOUT_NO_CULL_GLINT;
+  private static final java.util.function.Function<net.minecraft.resources.Identifier, net.minecraft.client.renderer.rendertype.RenderType> ARMOR_TRIM;
+  private static final java.util.function.Function<net.minecraft.resources.Identifier, net.minecraft.client.renderer.rendertype.RenderType> ARMOR_TRIM_DECAL;
+  private static final java.util.function.Function<net.minecraft.resources.Identifier, net.minecraft.client.renderer.rendertype.RenderType> WOLF_ARMOR_CRACKS;
+  private static final java.util.function.Function<net.minecraft.resources.Identifier, net.minecraft.client.renderer.rendertype.RenderType> ENTITY_SOLID;
+  private static final java.util.function.Function<net.minecraft.resources.Identifier, net.minecraft.client.renderer.rendertype.RenderType> ENTITY_SOLID_GLINT;
+  private static final java.util.function.Function<net.minecraft.resources.Identifier, net.minecraft.client.renderer.rendertype.RenderType> ENTITY_SOLID_Z_OFFSET_FORWARD;
+  private static final java.util.function.Function<net.minecraft.resources.Identifier, net.minecraft.client.renderer.rendertype.RenderType> ENTITY_CUTOUT_CULL;
+  private static final java.util.function.BiFunction<net.minecraft.resources.Identifier, java.lang.Boolean, net.minecraft.client.renderer.rendertype.RenderType> ENTITY_CUTOUT;
+  private static final java.util.function.BiFunction<net.minecraft.resources.Identifier, java.lang.Boolean, net.minecraft.client.renderer.rendertype.RenderType> ENTITY_CUTOUT_Z_OFFSET;
+  private static final java.util.function.BiFunction<net.minecraft.resources.Identifier, net.minecraft.resources.Identifier, net.minecraft.client.renderer.rendertype.RenderType> ENTITY_CUTOUT_DISSOLVE;
+  private static final java.util.function.Function<net.minecraft.resources.Identifier, net.minecraft.client.renderer.rendertype.RenderType> ENTITY_TRANSLUCENT_CULL;
+  private static final java.util.function.Function<net.minecraft.resources.Identifier, net.minecraft.client.renderer.rendertype.RenderType> ITEM_CUTOUT;
+  private static final java.util.function.Function<net.minecraft.resources.Identifier, net.minecraft.client.renderer.rendertype.RenderType> ITEM_CUTOUT_GLINT;
+  private static final java.util.function.Function<net.minecraft.resources.Identifier, net.minecraft.client.renderer.rendertype.RenderType> ITEM_CUTOUT_GLINT_SPECIAL;
+grep: write error: Broken pipe
+=== com/mojang/renderpearl/api/GpuFormat
+Compiled from "GpuFormat.java"
+public final class com.mojang.renderpearl.api.GpuFormat extends java.lang.Enum<com.mojang.renderpearl.api.GpuFormat> {
+  public static final com.mojang.renderpearl.api.GpuFormat R8_UNORM;
+  public static final com.mojang.renderpearl.api.GpuFormat R8_SNORM;
+  public static final com.mojang.renderpearl.api.GpuFormat RG8_UNORM;
+  public static final com.mojang.renderpearl.api.GpuFormat RG8_SNORM;
+  public static final com.mojang.renderpearl.api.GpuFormat RGB8_UNORM;
+  public static final com.mojang.renderpearl.api.GpuFormat RGB8_SNORM;
+  public static final com.mojang.renderpearl.api.GpuFormat RGBA8_UNORM;
+  public static final com.mojang.renderpearl.api.GpuFormat RGBA8_SNORM;
+  public static final com.mojang.renderpearl.api.GpuFormat R16_UNORM;
+  public static final com.mojang.renderpearl.api.GpuFormat R16_SNORM;
+  public static final com.mojang.renderpearl.api.GpuFormat RG16_UNORM;
+  public static final com.mojang.renderpearl.api.GpuFormat RG16_SNORM;
+  public static final com.mojang.renderpearl.api.GpuFormat RGB16_UNORM;
+  public static final com.mojang.renderpearl.api.GpuFormat RGB16_SNORM;
+  public static final com.mojang.renderpearl.api.GpuFormat RGBA16_UNORM;
+  public static final com.mojang.renderpearl.api.GpuFormat RGBA16_SNORM;
+  public static final com.mojang.renderpearl.api.GpuFormat R8_UINT;
+  public static final com.mojang.renderpearl.api.GpuFormat R8_SINT;
+  public static final com.mojang.renderpearl.api.GpuFormat RG8_UINT;
+  public static final com.mojang.renderpearl.api.GpuFormat RG8_SINT;
+  public static final com.mojang.renderpearl.api.GpuFormat RGB8_UINT;
+  public static final com.mojang.renderpearl.api.GpuFormat RGB8_SINT;
+  public static final com.mojang.renderpearl.api.GpuFormat RGBA8_UINT;
+  public static final com.mojang.renderpearl.api.GpuFormat RGBA8_SINT;
+  public static final com.mojang.renderpearl.api.GpuFormat R16_UINT;
+  public static final com.mojang.renderpearl.api.GpuFormat R16_SINT;
+  public static final com.mojang.renderpearl.api.GpuFormat RG16_UINT;
+  public static final com.mojang.renderpearl.api.GpuFormat RG16_SINT;
+  public static final com.mojang.renderpearl.api.GpuFormat RGB16_UINT;
+  public static final com.mojang.renderpearl.api.GpuFormat RGB16_SINT;
+  public static final com.mojang.renderpearl.api.GpuFormat RGBA16_UINT;
+  public static final com.mojang.renderpearl.api.GpuFormat RGBA16_SINT;
+  public static final com.mojang.renderpearl.api.GpuFormat R32_UINT;
+  public static final com.mojang.renderpearl.api.GpuFormat R32_SINT;
+  public static final com.mojang.renderpearl.api.GpuFormat RG32_UINT;
+  public static final com.mojang.renderpearl.api.GpuFormat RG32_SINT;
+  public static final com.mojang.renderpearl.api.GpuFormat RGB32_UINT;
+  public static final com.mojang.renderpearl.api.GpuFormat RGB32_SINT;
+  public static final com.mojang.renderpearl.api.GpuFormat RGBA32_UINT;
+  public static final com.mojang.renderpearl.api.GpuFormat RGBA32_SINT;
+  public static final com.mojang.renderpearl.api.GpuFormat R16_FLOAT;
+  public static final com.mojang.renderpearl.api.GpuFormat RG16_FLOAT;
+  public static final com.mojang.renderpearl.api.GpuFormat RGB16_FLOAT;
+  public static final com.mojang.renderpearl.api.GpuFormat RGBA16_FLOAT;
+  public static final com.mojang.renderpearl.api.GpuFormat R32_FLOAT;
+  public static final com.mojang.renderpearl.api.GpuFormat RG32_FLOAT;
+  public static final com.mojang.renderpearl.api.GpuFormat RGB32_FLOAT;
+  public static final com.mojang.renderpearl.api.GpuFormat RGBA32_FLOAT;
+  public static final com.mojang.renderpearl.api.GpuFormat RGB10A2_UNORM;
+  public static final com.mojang.renderpearl.api.GpuFormat RGB10A2_UINT;
+  public static final com.mojang.renderpearl.api.GpuFormat RG11B10_FLOAT;
+  public static final com.mojang.renderpearl.api.GpuFormat D32_FLOAT;
+  public static final com.mojang.renderpearl.api.GpuFormat D32_FLOAT_S8_UINT;
+  public static final com.mojang.renderpearl.api.GpuFormat D24_UNORM_S8_UINT;
+  public static final com.mojang.renderpearl.api.GpuFormat D16_UNORM;
+  public static final com.mojang.renderpearl.api.GpuFormat S8_UINT;
+  public static com.mojang.renderpearl.api.GpuFormat[] values();
+  public static com.mojang.renderpearl.api.GpuFormat valueOf(java.lang.String);
+  public int blockSize();
+  public int byteAlignment();
+  public com.mojang.renderpearl.api.GpuFormat$ComponentType componentType();
+  public int componentCount();
+  public boolean hasColorAspect();
+  public boolean hasDepthAspect();
+  public boolean hasStencilAspect();
+}
+=== com/mojang/renderpearl/api/textures/GpuTexture
+Compiled from "GpuTexture.java"
+public interface com.mojang.renderpearl.api.textures.GpuTexture extends com.mojang.renderpearl.util.UncheckedAutoCloseable {
+  public static final int USAGE_COPY_DST;
+  public static final int USAGE_COPY_SRC;
+  public static final int USAGE_TEXTURE_BINDING;
+  public static final int USAGE_RENDER_ATTACHMENT;
+  public static final int USAGE_CUBEMAP_COMPATIBLE;
+  public abstract int getWidth(int);
+  public abstract int getHeight(int);
+  public abstract int getDepthOrLayers();
+  public abstract int getMipLevels();
+  public abstract com.mojang.renderpearl.api.GpuFormat getFormat();
+  public abstract int usage();
+  public abstract java.lang.String getLabel();
+  public abstract boolean isClosed();
+}
+=== com/mojang/renderpearl/api/textures/GpuTextureView
+Compiled from "GpuTextureView.java"
+public interface com.mojang.renderpearl.api.textures.GpuTextureView extends com.mojang.renderpearl.util.UncheckedAutoCloseable {
+  public abstract boolean isClosed();
+  public abstract com.mojang.renderpearl.api.textures.GpuTexture texture();
+  public abstract int baseMipLevel();
+  public abstract int mipLevels();
+  public abstract int getWidth(int);
+  public abstract int getHeight(int);
+}
+=== com/mojang/renderpearl/api/pipeline/CompareOp
+Compiled from "CompareOp.java"
+public final class com.mojang.renderpearl.api.pipeline.CompareOp extends java.lang.Enum<com.mojang.renderpearl.api.pipeline.CompareOp> {
+  public static final com.mojang.renderpearl.api.pipeline.CompareOp ALWAYS_PASS;
+  public static final com.mojang.renderpearl.api.pipeline.CompareOp LESS_THAN;
+  public static final com.mojang.renderpearl.api.pipeline.CompareOp LESS_THAN_OR_EQUAL;
+  public static final com.mojang.renderpearl.api.pipeline.CompareOp EQUAL;
+  public static final com.mojang.renderpearl.api.pipeline.CompareOp NOT_EQUAL;
+  public static final com.mojang.renderpearl.api.pipeline.CompareOp GREATER_THAN_OR_EQUAL;
+  public static final com.mojang.renderpearl.api.pipeline.CompareOp GREATER_THAN;
+  public static final com.mojang.renderpearl.api.pipeline.CompareOp NEVER_PASS;
+  public static com.mojang.renderpearl.api.pipeline.CompareOp[] values();
+  public static com.mojang.renderpearl.api.pipeline.CompareOp valueOf(java.lang.String);
+}
+=== com/mojang/blaze3d/systems/SamplerCache
+Compiled from "SamplerCache.java"
+public class com.mojang.blaze3d.systems.SamplerCache {
+  public com.mojang.blaze3d.systems.SamplerCache();
+  public void initialize();
+  public com.mojang.renderpearl.api.textures.GpuSampler getSampler(com.mojang.renderpearl.api.textures.AddressMode, com.mojang.renderpearl.api.textures.AddressMode, com.mojang.renderpearl.api.textures.FilterMode, com.mojang.renderpearl.api.textures.FilterMode, boolean);
+  public com.mojang.renderpearl.api.textures.GpuSampler getClampToEdge(com.mojang.renderpearl.api.textures.FilterMode);
+  public com.mojang.renderpearl.api.textures.GpuSampler getClampToEdge(com.mojang.renderpearl.api.textures.FilterMode, boolean);
+  public com.mojang.renderpearl.api.textures.GpuSampler getRepeat(com.mojang.renderpearl.api.textures.FilterMode);
+  public com.mojang.renderpearl.api.textures.GpuSampler getRepeat(com.mojang.renderpearl.api.textures.FilterMode, boolean);
+  public void close();
+}
+=== com/mojang/renderpearl/api/textures/FilterMode
+Compiled from "FilterMode.java"
+public final class com.mojang.renderpearl.api.textures.FilterMode extends java.lang.Enum<com.mojang.renderpearl.api.textures.FilterMode> {
+  public static final com.mojang.renderpearl.api.textures.FilterMode NEAREST;
+  public static final com.mojang.renderpearl.api.textures.FilterMode LINEAR;
+  public static com.mojang.renderpearl.api.textures.FilterMode[] values();
+  public static com.mojang.renderpearl.api.textures.FilterMode valueOf(java.lang.String);
+}
+=== net/minecraft/client/renderer/texture/TextureManager
+Compiled from "TextureManager.java"
+public class net.minecraft.client.renderer.texture.TextureManager implements net.minecraft.server.packs.resources.PreparableReloadListener,java.lang.AutoCloseable {
+  public net.minecraft.client.renderer.texture.TextureManager(net.minecraft.server.packs.resources.ResourceManager);
+  public void registerAndLoad(net.minecraft.resources.Identifier, net.minecraft.client.renderer.texture.ReloadableTexture);
+  public void registerForNextReload(net.minecraft.resources.Identifier);
+  public void register(net.minecraft.resources.Identifier, net.minecraft.client.renderer.texture.AbstractTexture);
+  public net.minecraft.client.renderer.texture.AbstractTexture getTexture(net.minecraft.resources.Identifier);
+  public void tick();
+  public void release(net.minecraft.resources.Identifier);
+  public void close();
+  public java.util.concurrent.CompletableFuture<java.lang.Void> reload(net.minecraft.server.packs.resources.PreparableReloadListener$SharedState, java.util.concurrent.Executor, net.minecraft.server.packs.resources.PreparableReloadListener$PreparationBarrier, java.util.concurrent.Executor);
+  public void dumpAllSheets(java.nio.file.Path);
+}
+=== net/minecraft/client/renderer/texture/AbstractTexture
+Compiled from "AbstractTexture.java"
+public abstract class net.minecraft.client.renderer.texture.AbstractTexture implements java.lang.AutoCloseable {
+  public net.minecraft.client.renderer.texture.AbstractTexture();
+  public void close();
+  public com.mojang.renderpearl.api.textures.GpuTexture getTexture();
+  public com.mojang.renderpearl.api.textures.GpuTextureView getTextureView();
+  public com.mojang.renderpearl.api.textures.GpuSampler getSampler();
+}
+=== com/mojang/blaze3d/platform/Lighting$Entry
+Compiled from "Lighting.java"
+public final class com.mojang.blaze3d.platform.Lighting$Entry extends java.lang.Enum<com.mojang.blaze3d.platform.Lighting$Entry> {
+  public static final com.mojang.blaze3d.platform.Lighting$Entry LEVEL;
+  public static final com.mojang.blaze3d.platform.Lighting$Entry ITEMS_FLAT;
+  public static final com.mojang.blaze3d.platform.Lighting$Entry ITEMS_3D;
+  public static final com.mojang.blaze3d.platform.Lighting$Entry ENTITY_IN_UI;
+  public static final com.mojang.blaze3d.platform.Lighting$Entry PLAYER_SKIN;
+  public static com.mojang.blaze3d.platform.Lighting$Entry[] values();
+  public static com.mojang.blaze3d.platform.Lighting$Entry valueOf(java.lang.String);
+}
+=== com/geckolib/renderer/base/RenderPassInfo$BonePositionListener
+Compiled from "RenderPassInfo.java"
+public interface com.geckolib.renderer.base.RenderPassInfo$BonePositionListener {
+  public abstract void accept(net.minecraft.world.phys.Vec3, net.minecraft.world.phys.Vec3, net.minecraft.world.phys.Vec3);
+}
+=== com/geckolib/renderer/base/RenderPassInfo$BoneUpdater
+Compiled from "RenderPassInfo.java"
+public interface com.geckolib.renderer.base.RenderPassInfo$BoneUpdater<R extends com.geckolib.renderer.base.GeoRenderState> {
+  public abstract void run(com.geckolib.renderer.base.RenderPassInfo<R>, com.geckolib.renderer.base.BoneSnapshots);
+}
+=== com/geckolib/cache/model/BakedGeoModel
+Compiled from "BakedGeoModel.java"
+public class com.geckolib.cache.model.BakedGeoModel {
+  public com.geckolib.cache.model.BakedGeoModel(com.geckolib.cache.model.GeoBone[], java.util.Map<java.lang.String, com.geckolib.cache.model.GeoLocator>, com.geckolib.cache.model.ModelProperties, java.util.function.Supplier<java.util.Map<java.lang.String, com.geckolib.cache.model.GeoBone>>);
+  public com.geckolib.cache.model.BakedGeoModel(com.geckolib.cache.model.GeoBone[], java.util.Map<java.lang.String, com.geckolib.cache.model.GeoLocator>, com.geckolib.cache.model.ModelProperties);
+  public com.geckolib.cache.model.GeoBone[] topLevelBones();
+  public java.util.Map<java.lang.String, com.geckolib.cache.model.GeoLocator> locators();
+  public com.geckolib.cache.model.ModelProperties properties();
+  public java.util.function.Supplier<java.util.Map<java.lang.String, com.geckolib.cache.model.GeoBone>> boneLookup();
+  public java.util.Optional<com.geckolib.cache.model.GeoBone> getBone(java.lang.String);
+  public java.util.Optional<com.geckolib.cache.model.GeoLocator> getLocator(java.lang.String);
+  public boolean isMissingno();
+  public <R extends com.geckolib.renderer.base.GeoRenderState> void render(com.geckolib.renderer.base.RenderPassInfo<R>, com.mojang.blaze3d.vertex.VertexConsumer, int, int, int);
+}
+=== net/minecraft/world/item/component/SwingAnimation
+Compiled from "SwingAnimation.java"
+public final class net.minecraft.world.item.component.SwingAnimation extends java.lang.Record {
+  public static final net.minecraft.world.item.component.SwingAnimation DEFAULT;
+  public static final com.mojang.serialization.Codec<net.minecraft.world.item.component.SwingAnimation> CODEC;
+  public static final net.minecraft.network.codec.StreamCodec<io.netty.buffer.ByteBuf, net.minecraft.world.item.component.SwingAnimation> STREAM_CODEC;
+  public net.minecraft.world.item.component.SwingAnimation(net.minecraft.world.item.SwingAnimationType, int);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.world.item.SwingAnimationType type();
+  public int duration();
+}
+=== com/mojang/blaze3d/vertex/PoseStack
+Compiled from "PoseStack.java"
+public class com.mojang.blaze3d.vertex.PoseStack {
+  public com.mojang.blaze3d.vertex.PoseStack();
+  public void translate(double, double, double);
+  public void translate(float, float, float);
+  public void translate(net.minecraft.world.phys.Vec3);
+  public void scale(float, float, float);
+  public void rotate(org.joml.Quaternionfc);
+  public void rotate(com.mojang.math.Axis, float);
+  public void rotateDegrees(com.mojang.math.Axis, float);
+  public void rotateAround(org.joml.Quaternionfc, float, float, float);
+  public void pushPose();
+  public void popPose();
+  public com.mojang.blaze3d.vertex.PoseStack$Pose last();
+  public boolean isEmpty();
+  public void setIdentity();
+  public void mulPose(org.joml.Matrix4fc);
+  public void mulPose(com.mojang.math.Transformation);
+}
+=== com/mojang/blaze3d/vertex/PoseStack$Pose
+Compiled from "PoseStack.java"
+public final class com.mojang.blaze3d.vertex.PoseStack$Pose {
+  public com.mojang.blaze3d.vertex.PoseStack$Pose();
+  public void set(com.mojang.blaze3d.vertex.PoseStack$Pose);
+  public org.joml.Matrix4f pose();
+  public org.joml.Matrix3f normal();
+  public org.joml.Vector3f transformNormal(org.joml.Vector3fc, org.joml.Vector3f);
+  public org.joml.Vector3f transformNormal(float, float, float, org.joml.Vector3f);
+  public org.joml.Matrix4f translate(float, float, float);
+  public void scale(float, float, float);
+  public void rotate(org.joml.Quaternionfc);
+  public void rotate(com.mojang.math.Axis, float);
+  public void rotateDegrees(com.mojang.math.Axis, float);
+  public void rotateAround(org.joml.Quaternionfc, float, float, float);
+  public void setIdentity();
+  public void mulPose(org.joml.Matrix4fc);
+  public void mulPose(com.mojang.math.Transformation);
+  public com.mojang.blaze3d.vertex.PoseStack$Pose copy();
+}
+=== net/minecraft/client/gui/render/pip/OversizedItemRenderer
+Compiled from "OversizedItemRenderer.java"
+public class net.minecraft.client.gui.render.pip.OversizedItemRenderer extends net.minecraft.client.gui.render.pip.PictureInPictureRenderer<net.minecraft.client.renderer.state.gui.pip.OversizedItemRenderState> {
+  public net.minecraft.client.gui.render.pip.OversizedItemRenderer();
+  public boolean usedOnThisFrame();
+  public void resetUsedOnThisFrame();
+  public void invalidateTexture();
+  public java.lang.Class<net.minecraft.client.renderer.state.gui.pip.OversizedItemRenderState> getRenderStateClass();
+  public void blitTexture(net.minecraft.client.renderer.state.gui.pip.OversizedItemRenderState, net.minecraft.client.renderer.state.gui.GuiRenderState);
+  public boolean textureIsReadyToBlit(net.minecraft.client.renderer.state.gui.pip.OversizedItemRenderState);
+  public boolean textureIsReadyToBlit(net.minecraft.client.renderer.state.gui.pip.PictureInPictureRenderState);
+  public void blitTexture(net.minecraft.client.renderer.state.gui.pip.PictureInPictureRenderState, net.minecraft.client.renderer.state.gui.GuiRenderState);
+}
+=== net/minecraft/client/renderer/state/gui/pip/OversizedItemRenderState
+Compiled from "OversizedItemRenderState.java"
+public final class net.minecraft.client.renderer.state.gui.pip.OversizedItemRenderState extends java.lang.Record implements net.minecraft.client.renderer.state.gui.pip.PictureInPictureRenderState {
+  public net.minecraft.client.renderer.state.gui.pip.OversizedItemRenderState(net.minecraft.client.renderer.state.gui.GuiItemRenderState, int, int, int, int);
+  public float scale();
+  public org.joml.Matrix3x2fc pose();
+  public net.minecraft.client.gui.navigation.ScreenRectangle scissorArea();
+  public net.minecraft.client.gui.navigation.ScreenRectangle bounds();
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.client.renderer.state.gui.GuiItemRenderState guiItemRenderState();
+  public int x0();
+  public int y0();
+  public int x1();
+  public int y1();
+}
+=== net/minecraft/client/renderer/item/ItemStackRenderState$LayerRenderState
+Compiled from "ItemStackRenderState.java"
+public class net.minecraft.client.renderer.item.ItemStackRenderState$LayerRenderState {
+  public static final java.util.function.Supplier<org.joml.Vector3fc[]> NO_EXTENTS_SUPPLIER;
+  public static final int[] EMPTY_TINTS;
+  public net.minecraft.client.renderer.item.ItemStackRenderState$LayerRenderState(net.minecraft.client.renderer.item.ItemStackRenderState);
+  public void clear();
+  public void setQuads(net.minecraft.client.resources.model.geometry.ItemQuads);
+  public void setUsesBlockLight(boolean);
+  public void setExtents(java.util.function.Supplier<org.joml.Vector3fc[]>);
+  public void setParticleMaterial(net.minecraft.client.resources.model.sprite.Material$Baked);
+  public void setItemTransform(net.minecraft.client.resources.model.cuboid.ItemTransform);
+  public void setLocalTransform(org.joml.Matrix4fc);
+  public <T> void setupSpecialModel(net.minecraft.client.renderer.special.SpecialModelRenderer<T>, T);
+  public void setFoilType(net.minecraft.client.renderer.item.ItemStackRenderState$FoilType);
+  public it.unimi.dsi.fastutil.ints.IntList tintLayers();
+}
+=== com/geckolib/renderer/internal/GeckolibItemSpecialRenderer
+Compiled from "GeckolibItemSpecialRenderer.java"
+public class com.geckolib.renderer.internal.GeckolibItemSpecialRenderer<T extends net.minecraft.world.item.Item & com.geckolib.animatable.GeoAnimatable> implements net.minecraft.client.renderer.special.SpecialModelRenderer<com.geckolib.renderer.internal.GeckolibItemSpecialRenderer$RenderData<T>> {
+  public com.geckolib.renderer.internal.GeckolibItemSpecialRenderer();
+  public void submit(com.geckolib.renderer.internal.GeckolibItemSpecialRenderer$RenderData<T>, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int, int, boolean, int);
+  public void getExtents(java.util.function.Consumer<org.joml.Vector3fc>);
+  public com.geckolib.renderer.internal.GeckolibItemSpecialRenderer$RenderData<T> extractArgument(net.minecraft.world.item.ItemStack, net.minecraft.client.renderer.item.ItemStackRenderState, net.minecraft.world.item.ItemDisplayContext, net.minecraft.client.multiplayer.ClientLevel, net.minecraft.world.entity.ItemOwner);
+  public com.geckolib.renderer.internal.GeckolibItemSpecialRenderer$RenderData<T> extractArgument(net.minecraft.world.item.ItemStack);
+  public java.lang.Object extractArgument(net.minecraft.world.item.ItemStack);
+  public void submit(java.lang.Object, com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, int, int, boolean, int);
+}
+=== net/minecraft/core/ClientAsset$Texture
+Compiled from "ClientAsset.java"
+public interface net.minecraft.core.ClientAsset$Texture extends net.minecraft.core.ClientAsset {
+  public abstract net.minecraft.resources.Identifier texturePath();
+}
+=== net/minecraft/world/entity/player/PlayerModelType
+Compiled from "PlayerModelType.java"
+public final class net.minecraft.world.entity.player.PlayerModelType extends java.lang.Enum<net.minecraft.world.entity.player.PlayerModelType> implements net.minecraft.util.StringRepresentable {
+  public static final net.minecraft.world.entity.player.PlayerModelType SLIM;
+  public static final net.minecraft.world.entity.player.PlayerModelType WIDE;
+  public static final com.mojang.serialization.Codec<net.minecraft.world.entity.player.PlayerModelType> CODEC;
+  public static final net.minecraft.network.codec.StreamCodec<io.netty.buffer.ByteBuf, net.minecraft.world.entity.player.PlayerModelType> STREAM_CODEC;
+  public static net.minecraft.world.entity.player.PlayerModelType[] values();
+  public static net.minecraft.world.entity.player.PlayerModelType valueOf(java.lang.String);
+  public static net.minecraft.world.entity.player.PlayerModelType byLegacyServicesName(java.lang.String);
+  public java.lang.String getSerializedName();
+}
+=== net/minecraft/client/multiplayer/PlayerInfo
+Compiled from "PlayerInfo.java"
+public class net.minecraft.client.multiplayer.PlayerInfo {
+  public net.minecraft.client.multiplayer.PlayerInfo(com.mojang.authlib.GameProfile, boolean);
+  public com.mojang.authlib.GameProfile getProfile();
+  public net.minecraft.network.chat.RemoteChatSession getChatSession();
+  public net.minecraft.network.chat.SignedMessageValidator getMessageValidator();
+  public boolean hasVerifiableChat();
+  public net.minecraft.world.level.GameType getGameMode();
+  public int getLatency();
+  public net.minecraft.world.entity.player.PlayerSkin getSkin();
+  public net.minecraft.world.scores.PlayerTeam getTeam();
+  public void setTabListDisplayName(net.minecraft.network.chat.Component);
+  public net.minecraft.network.chat.Component getTabListDisplayName();
+  public void setShowHat(boolean);
+  public boolean showHat();
+  public void setTabListOrder(int);
+  public int getTabListOrder();
+}
+=== net/minecraft/client/renderer/entity/state/EntityRenderState$ShadowPiece
+Compiled from "EntityRenderState.java"
+public final class net.minecraft.client.renderer.entity.state.EntityRenderState$ShadowPiece extends java.lang.Record {
+  public net.minecraft.client.renderer.entity.state.EntityRenderState$ShadowPiece(float, float, float, net.minecraft.world.phys.shapes.VoxelShape, float);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public float relativeX();
+  public float relativeY();
+  public float relativeZ();
+  public net.minecraft.world.phys.shapes.VoxelShape shapeBelow();
+  public float alpha();
+}
+=== com/mojang/blaze3d/vertex/VertexConsumer
+Compiled from "VertexConsumer.java"
+public interface com.mojang.blaze3d.vertex.VertexConsumer extends net.neoforged.neoforge.client.extensions.IVertexConsumerExtension {
+  public abstract com.mojang.blaze3d.vertex.VertexConsumer addVertex(float, float, float);
+  public abstract com.mojang.blaze3d.vertex.VertexConsumer setColor(int, int, int, int);
+  public abstract com.mojang.blaze3d.vertex.VertexConsumer setColor(int);
+  public abstract com.mojang.blaze3d.vertex.VertexConsumer setUv(float, float);
+  public abstract com.mojang.blaze3d.vertex.VertexConsumer setUv1(int, int);
+  public abstract com.mojang.blaze3d.vertex.VertexConsumer setUv2(int, int);
+  public abstract com.mojang.blaze3d.vertex.VertexConsumer setUv3(float, float);
+  public abstract com.mojang.blaze3d.vertex.VertexConsumer setNormal(float, float, float);
+  public abstract com.mojang.blaze3d.vertex.VertexConsumer setLineWidth(float);
+  public default void addVertex(float, float, float, int, float, float, int, int, float, float, float);
+  public default com.mojang.blaze3d.vertex.VertexConsumer setColor(float, float, float, float);
+  public default com.mojang.blaze3d.vertex.VertexConsumer setLight(int);
+  public default com.mojang.blaze3d.vertex.VertexConsumer setOverlay(int);
+  public default void putBlockBakedQuad(float, float, float, net.minecraft.client.resources.model.geometry.BakedQuad, com.mojang.blaze3d.vertex.QuadInstance);
+  public default void putBakedQuad(com.mojang.blaze3d.vertex.PoseStack$Pose, net.minecraft.client.resources.model.geometry.BakedQuad, com.mojang.blaze3d.vertex.QuadInstance);
+  public default void putBakedQuadWithGlint(com.mojang.blaze3d.vertex.PoseStack$Pose, net.minecraft.client.resources.model.geometry.BakedQuad, com.mojang.blaze3d.vertex.QuadInstance, com.mojang.blaze3d.vertex.PoseStack$Pose);
+  public default com.mojang.blaze3d.vertex.VertexConsumer addVertex(org.joml.Vector3fc);
+  public default com.mojang.blaze3d.vertex.VertexConsumer addVertex(com.mojang.blaze3d.vertex.PoseStack$Pose, org.joml.Vector3fc);
+  public default com.mojang.blaze3d.vertex.VertexConsumer addVertex(com.mojang.blaze3d.vertex.PoseStack$Pose, float, float, float);
+  public default com.mojang.blaze3d.vertex.VertexConsumer addVertex(org.joml.Matrix4fc, float, float, float);
+  public default com.mojang.blaze3d.vertex.VertexConsumer addVertexWith2DPose(org.joml.Matrix3x2fc, float, float);
+  public default com.mojang.blaze3d.vertex.VertexConsumer setNormal(com.mojang.blaze3d.vertex.PoseStack$Pose, float, float, float);
+  public default com.mojang.blaze3d.vertex.VertexConsumer setNormal(com.mojang.blaze3d.vertex.PoseStack$Pose, org.joml.Vector3fc);
+}
+=== net/minecraft/client/model/geom/builders/LayerDefinition
+Compiled from "LayerDefinition.java"
+public class net.minecraft.client.model.geom.builders.LayerDefinition {
+  public net.minecraft.client.model.geom.builders.LayerDefinition apply(net.minecraft.client.model.geom.builders.MeshTransformer);
+  public net.minecraft.client.model.geom.ModelPart bakeRoot();
+  public static net.minecraft.client.model.geom.builders.LayerDefinition create(net.minecraft.client.model.geom.builders.MeshDefinition, int, int);
+}
+=== net/minecraft/client/model/monster/blaze/BlazeModel
+Compiled from "BlazeModel.java"
+public class net.minecraft.client.model.monster.blaze.BlazeModel extends net.minecraft.client.model.EntityModel<net.minecraft.client.renderer.entity.state.LivingEntityRenderState> {
+  public net.minecraft.client.model.monster.blaze.BlazeModel(net.minecraft.client.model.geom.ModelPart);
+  public static net.minecraft.client.model.geom.builders.LayerDefinition createBodyLayer();
+  public void setupAnim(net.minecraft.client.renderer.entity.state.LivingEntityRenderState);
+  public void setupAnim(java.lang.Object);
+}
