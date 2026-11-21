@@ -150,7 +150,7 @@
   "gui.ethermod.colour_custom_hint": "Odemkni všechny ostatní barvy.",
   "gui.ethermod.sets": "Sady",
   "gui.ethermod.set_default": "Sada %s",
-  "gui.ethermod.save_set": "Uložit sadu",
+  "gui.ethermod.save_set": "Přidat aktuální sadu",
   "gui.ethermod.clear_build": "Vyčistit aktuální sestavu",
   "gui.ethermod.delete_set": "Smazat vybranou sadu",
   "gui.ethermod.copy_set": "Kopírovat kód sady",

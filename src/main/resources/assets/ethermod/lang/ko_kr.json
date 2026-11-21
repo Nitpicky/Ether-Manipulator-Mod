@@ -150,7 +150,7 @@
   "gui.ethermod.colour_custom_hint": "다른 모든 색상을 해금하세요.",
   "gui.ethermod.sets": "세트",
   "gui.ethermod.set_default": "세트 %s",
-  "gui.ethermod.save_set": "세트 저장",
+  "gui.ethermod.save_set": "현재 세트 추가",
   "gui.ethermod.clear_build": "현재 구성 비우기",
   "gui.ethermod.delete_set": "선택한 세트 삭제",
   "gui.ethermod.copy_set": "세트 코드 복사",

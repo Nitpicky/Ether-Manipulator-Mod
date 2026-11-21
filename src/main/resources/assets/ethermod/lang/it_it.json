@@ -150,7 +150,7 @@
   "gui.ethermod.colour_custom_hint": "Sblocca tutti gli altri colori.",
   "gui.ethermod.sets": "Set",
   "gui.ethermod.set_default": "Set %s",
-  "gui.ethermod.save_set": "Salva set",
+  "gui.ethermod.save_set": "Aggiungi il set attuale",
   "gui.ethermod.clear_build": "Svuota la configurazione attuale",
   "gui.ethermod.delete_set": "Elimina il set selezionato",
   "gui.ethermod.copy_set": "Copia codice del set",

@@ -11,6 +11,7 @@ next release's notes.
 - Sets: copy and paste set codes.
 - Sets: no more 7-set limit, the list now scrolls.
 - Sets: new panel buttons.
+- Sets: the picked set keeps your trait changes.
 - Sets: shown as tiles with a playstyle icon; right-click a set to change its icon.
 - Sets: hold and drag a set to reorder the list.
 - Sets: mark favourites with the heart, then switch between them with Alt + scroll.

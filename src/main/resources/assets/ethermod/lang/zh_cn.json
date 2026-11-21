@@ -150,7 +150,7 @@
   "gui.ethermod.colour_custom_hint": "解锁其他所有颜色。",
   "gui.ethermod.sets": "套装",
   "gui.ethermod.set_default": "套装%s",
-  "gui.ethermod.save_set": "保存套装",
+  "gui.ethermod.save_set": "添加当前套装",
   "gui.ethermod.clear_build": "清空当前配置",
   "gui.ethermod.delete_set": "删除所选套装",
   "gui.ethermod.copy_set": "复制套装代码",

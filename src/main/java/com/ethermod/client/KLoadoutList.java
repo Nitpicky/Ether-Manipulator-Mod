@@ -237,6 +237,25 @@ final class KLoadoutList {
         send(new TraitPayloads.Loadout(Loadouts.DELETE, index, ""));
     }
 
+    /** The build as it was last frame, to see the player change it. */
+    private ListTag lastBuild;
+
+    /**
+     * The picked set follows the build: when the build changes away from the picked set's (a trait
+     * or Module changed by hand), the set is saved over. Loading a set doesn't count, because the
+     * build then wasn't equal to the picked set the frame before.
+     */
+    private void autosave(KUi ui) {
+        ListTag now = currentBuild(ui).copy();
+        int sel = selectedIndex();
+        if (lastBuild != null && sel >= 0 && !now.equals(lastBuild) && shown.get(sel).build().equals(lastBuild)) {
+            var e = shown.get(sel);
+            replace(sel, new Loadouts.Entry(e.name(), now, e.icon(), e.favorite()), ui);
+            send(new TraitPayloads.Loadout(Loadouts.OVERWRITE, sel, ""));
+        }
+        lastBuild = now;
+    }
+
     private static ListTag currentBuild(KUi ui) {
         return ui.stack
                 .getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY)
@@ -432,6 +451,7 @@ final class KLoadoutList {
         if (renaming >= list.size()) cancelRename();
         setScroll = Math.clamp(setScroll, 0, maxScroll(list.size()));
         followHold(ui);
+        autosave(ui);
         double dt = lastFrame < 0 ? 1 : Math.min(.1, ui.now - lastFrame);
         lastFrame = ui.now;
         double glide = 1 - Math.exp(-GLIDE * dt);

@@ -150,7 +150,7 @@
   "gui.ethermod.colour_custom_hint": "Ontgrendel alle andere kleuren.",
   "gui.ethermod.sets": "Sets",
   "gui.ethermod.set_default": "Set %s",
-  "gui.ethermod.save_set": "Set opslaan",
+  "gui.ethermod.save_set": "Huidige set toevoegen",
   "gui.ethermod.clear_build": "Huidige opbouw wissen",
   "gui.ethermod.delete_set": "Geselecteerde set verwijderen",
   "gui.ethermod.copy_set": "Setcode kopiëren",

@@ -150,7 +150,7 @@
   "gui.ethermod.colour_custom_hint": "他のすべての色を解放してください。",
   "gui.ethermod.sets": "セット",
   "gui.ethermod.set_default": "セット%s",
-  "gui.ethermod.save_set": "セットを保存",
+  "gui.ethermod.save_set": "現在のセットを追加",
   "gui.ethermod.clear_build": "現在の構成をクリア",
   "gui.ethermod.delete_set": "選択したセットを削除",
   "gui.ethermod.copy_set": "セットコードをコピー",

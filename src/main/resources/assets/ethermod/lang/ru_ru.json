@@ -150,7 +150,7 @@
   "gui.ethermod.colour_custom_hint": "Откройте все остальные цвета.",
   "gui.ethermod.sets": "Наборы",
   "gui.ethermod.set_default": "Набор %s",
-  "gui.ethermod.save_set": "Сохранить набор",
+  "gui.ethermod.save_set": "Добавить текущий набор",
   "gui.ethermod.clear_build": "Очистить текущую сборку",
   "gui.ethermod.delete_set": "Удалить выбранный набор",
   "gui.ethermod.copy_set": "Копировать код набора",
