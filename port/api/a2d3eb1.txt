@@ -1,0 +1,495 @@
+/home/runner/.gradle/caches/modules-2/files-2.1/curse.maven/geckolib-388172/8893169/196231506b89da06925c087f9b8bc5fd12ebea16/geckolib-388172-8893169.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/io.github.llamalad7/mixinextras-neoforge/0.5.5/26f2905a37afd203c3da1d6a2e164472a7531b41/mixinextras-neoforge-0.5.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.accesstransformers/at-parser/11.0.2/64aae57d6d26d69543c5275181fe6971707a4e16/at-parser-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/earlydisplay/12.0.16/efa2e56115d22853d10524874a7bbb64555c2a28/earlydisplay-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/12.0.16/edbb2ee8211a867215970bc15ae9c354fa56dc09/loader-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarMetadata/0.5.3/ff40c1cd721d07615d825c5bbf27705b2e3258ed/JarJarMetadata-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarSelector/0.5.3/6b845aab8d5c8e721b4e3cd30f97722b7f8044b1/JarJarSelector-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/accesstransformers/11.0.2/25dcb69c78b16669935f0ab91dff830ce192379d/accesstransformers-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/bus/8.0.5/5b2d33285ab5d1554e9798ad98c40d6ea3868bd5/bus-8.0.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/mergetool/2.0.7/793b18456e92c4a7f66d9b5d8bf7a9c1c7a20b20/mergetool-2.0.7-api.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar
+=== LIST /.*/(ServerGamePacketListenerImpl)$
+net/minecraft/server/network/ServerGamePacketListenerImpl
+=== CODE net/minecraft/server/network/ServerGamePacketListenerImpl handlePlayerPositionChange
+  private void handlePlayerPositionChange(double, double, double, float, float, boolean, boolean);
+    Code:
+         0: dload_1
+         1: invokestatic  #774                // Method clampHorizontal:(D)D
+         4: dstore        11
+         6: dload_3
+         7: invokestatic  #776                // Method clampVertical:(D)D
+        10: dstore        13
+        12: dload         5
+        14: invokestatic  #774                // Method clampHorizontal:(D)D
+        17: dstore        15
+        19: fload         7
+        21: invokestatic  #780                // Method net/minecraft/util/Mth.wrapDegrees:(F)F
+        24: fstore        17
+        26: fload         8
+        28: invokestatic  #780                // Method net/minecraft/util/Mth.wrapDegrees:(F)F
+        31: fstore        18
+        33: aload_0
+        34: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+        37: invokevirtual #500                // Method net/minecraft/server/level/ServerPlayer.isPassenger:()Z
+        40: ifeq          95
+        43: aload_0
+        44: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+        47: aload_0
+        48: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+        51: invokevirtual #451                // Method net/minecraft/server/level/ServerPlayer.getX:()D
+        54: aload_0
+        55: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+        58: invokevirtual #457                // Method net/minecraft/server/level/ServerPlayer.getY:()D
+        61: aload_0
+        62: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+        65: invokevirtual #463                // Method net/minecraft/server/level/ServerPlayer.getZ:()D
+        68: fload         17
+        70: fload         18
+        72: invokevirtual #486                // Method net/minecraft/server/level/ServerPlayer.absSnapTo:(DDDFF)V
+        75: aload_0
+        76: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+        79: invokevirtual #672                // Method net/minecraft/server/level/ServerPlayer.level:()Lnet/minecraft/server/level/ServerLevel;
+        82: invokevirtual #872                // Method net/minecraft/server/level/ServerLevel.getChunkSource:()Lnet/minecraft/server/level/ServerChunkCache;
+        85: aload_0
+        86: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+        89: invokevirtual #876                // Method net/minecraft/server/level/ServerChunkCache.move:(Lnet/minecraft/server/level/ServerPlayer;)V
+        92: goto          1196
+        95: aload_0
+        96: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+        99: invokevirtual #451                // Method net/minecraft/server/level/ServerPlayer.getX:()D
+       102: dstore        19
+       104: aload_0
+       105: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+       108: invokevirtual #457                // Method net/minecraft/server/level/ServerPlayer.getY:()D
+       111: dstore        21
+       113: aload_0
+       114: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+       117: invokevirtual #463                // Method net/minecraft/server/level/ServerPlayer.getZ:()D
+       120: dstore        23
+       122: dload         11
+       124: aload_0
+       125: getfield      #471                // Field firstGoodX:D
+       128: dsub
+       129: dstore        25
+       131: dload         13
+       133: aload_0
+       134: getfield      #473                // Field firstGoodY:D
+       137: dsub
+       138: dstore        27
+       140: dload         15
+       142: aload_0
+       143: getfield      #475                // Field firstGoodZ:D
+       146: dsub
+       147: dstore        29
+       149: aload_0
+       150: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+       153: invokevirtual #2451               // Method net/minecraft/server/level/ServerPlayer.getDeltaMovement:()Lnet/minecraft/world/phys/Vec3;
+       156: invokevirtual #786                // Method net/minecraft/world/phys/Vec3.lengthSqr:()D
+       159: dstore        31
+       161: dload         25
+       163: dload         25
+       165: dmul
+       166: dload         27
+       168: dload         27
+       170: dmul
+       171: dadd
+       172: dload         29
+       174: dload         29
+       176: dmul
+       177: dadd
+       178: dstore        33
+       180: aload_0
+       181: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+       184: invokevirtual #497                // Method net/minecraft/server/level/ServerPlayer.isSleeping:()Z
+       187: ifeq          229
+       190: dload         33
+       192: dconst_1
+       193: dcmpl
+       194: ifle          1196
+       197: aload_0
+       198: aload_0
+       199: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+       202: invokevirtual #451                // Method net/minecraft/server/level/ServerPlayer.getX:()D
+       205: aload_0
+       206: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+       209: invokevirtual #457                // Method net/minecraft/server/level/ServerPlayer.getY:()D
+       212: aload_0
+       213: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+       216: invokevirtual #463                // Method net/minecraft/server/level/ServerPlayer.getZ:()D
+       219: fload         17
+       221: fload         18
+       223: invokevirtual #2454               // Method teleport:(DDDFF)V
+       226: goto          1196
+       229: aload_0
+       230: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+       233: invokevirtual #2457               // Method net/minecraft/server/level/ServerPlayer.isFallFlying:()Z
+       236: istore        35
+       238: aload_0
+       239: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+       242: invokevirtual #672                // Method net/minecraft/server/level/ServerPlayer.level:()Lnet/minecraft/server/level/ServerLevel;
+       245: astore        36
+       247: aload         36
+       249: invokevirtual #2461               // Method net/minecraft/server/level/ServerLevel.tickRateManager:()Lnet/minecraft/world/TickRateManager;
+       252: invokevirtual #2466               // Method net/minecraft/world/TickRateManager.runsNormally:()Z
+       255: ifeq          441
+       258: aload_0
+       259: dup
+       260: getfield      #490                // Field receivedMovePacketCount:I
+       263: iconst_1
+       264: iadd
+       265: putfield      #490                // Field receivedMovePacketCount:I
+       268: aload_0
+       269: getfield      #490                // Field receivedMovePacketCount:I
+       272: aload_0
+       273: getfield      #492                // Field knownMovePacketCount:I
+       276: isub
+       277: istore        37
+       279: iload         37
+       281: iconst_5
+       282: if_icmple     311
+       285: getstatic     #511                // Field LOGGER:Lorg/slf4j/Logger;
+       288: ldc_w         #2468               // String {} is sending move packets too frequently ({} packets since last tick)
+       291: aload_0
+       292: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+       295: invokevirtual #517                // Method net/minecraft/server/level/ServerPlayer.getPlainTextName:()Ljava/lang/String;
+       298: iload         37
+       300: invokestatic  #2473               // Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+       303: invokeinterface #1586,  4         // InterfaceMethod org/slf4j/Logger.debug:(Ljava/lang/String;Ljava/lang/Object;Ljava/lang/Object;)V
+       308: iconst_1
+       309: istore        37
+       311: aload_0
+       312: iload         35
+       314: invokevirtual #2477               // Method shouldCheckPlayerMovement:(Z)Z
+       317: ifeq          441
+       320: iload         35
+       322: ifeq          331
+       325: ldc_w         #2478               // float 300.0f
+       328: goto          334
+       331: ldc_w         #2479               // float 100.0f
+       334: fstore        38
+       336: dload         33
+       338: dload         31
+       340: dsub
+       341: fload         38
+       343: iload         37
+       345: i2f
+       346: fmul
+       347: f2d
+       348: dcmpl
+       349: ifle          441
+       352: getstatic     #511                // Field LOGGER:Lorg/slf4j/Logger;
+       355: ldc_w         #2481               // String {} moved too quickly! {},{},{}
+       358: iconst_4
+       359: anewarray     #795                // class java/lang/Object
+       362: dup
+       363: iconst_0
+       364: aload_0
+       365: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+       368: invokevirtual #517                // Method net/minecraft/server/level/ServerPlayer.getPlainTextName:()Ljava/lang/String;
+       371: aastore
+       372: dup
+       373: iconst_1
+       374: dload         25
+       376: invokestatic  #800                // Method java/lang/Double.valueOf:(D)Ljava/lang/Double;
+       379: aastore
+       380: dup
+       381: iconst_2
+       382: dload         27
+       384: invokestatic  #800                // Method java/lang/Double.valueOf:(D)Ljava/lang/Double;
+       387: aastore
+       388: dup
+       389: iconst_3
+       390: dload         29
+       392: invokestatic  #800                // Method java/lang/Double.valueOf:(D)Ljava/lang/Double;
+       395: aastore
+       396: invokeinterface #803,  3          // InterfaceMethod org/slf4j/Logger.warn:(Ljava/lang/String;[Ljava/lang/Object;)V
+       401: aload_0
+       402: aload_0
+       403: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+       406: invokevirtual #451                // Method net/minecraft/server/level/ServerPlayer.getX:()D
+       409: aload_0
+       410: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+       413: invokevirtual #457                // Method net/minecraft/server/level/ServerPlayer.getY:()D
+       416: aload_0
+       417: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+       420: invokevirtual #463                // Method net/minecraft/server/level/ServerPlayer.getZ:()D
+       423: aload_0
+       424: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+       427: invokevirtual #479                // Method net/minecraft/server/level/ServerPlayer.getYRot:()F
+       430: aload_0
+       431: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+       434: invokevirtual #482                // Method net/minecraft/server/level/ServerPlayer.getXRot:()F
+       437: invokevirtual #2454               // Method teleport:(DDDFF)V
+       440: return
+       441: aload_0
+       442: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+       445: invokevirtual #2482               // Method net/minecraft/server/level/ServerPlayer.getBoundingBox:()Lnet/minecraft/world/phys/AABB;
+       448: astore        37
+       450: dload         11
+       452: aload_0
+       453: getfield      #584                // Field lastGoodX:D
+       456: dsub
+       457: dstore        25
+       459: dload         13
+       461: aload_0
+       462: getfield      #586                // Field lastGoodY:D
+       465: dsub
+       466: dstore        27
+       468: dload         15
+       470: aload_0
+       471: getfield      #588                // Field lastGoodZ:D
+       474: dsub
+       475: dstore        29
+       477: dload         27
+       479: dconst_0
+       480: dcmpl
+       481: ifle          488
+       484: iconst_1
+       485: goto          489
+       488: iconst_0
+       489: istore        38
+       491: aload_0
+       492: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+       495: invokevirtual #2483               // Method net/minecraft/server/level/ServerPlayer.onGround:()Z
+       498: ifeq          518
+       501: iload         9
+       503: ifne          518
+       506: iload         38
+       508: ifeq          518
+       511: aload_0
+       512: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+       515: invokevirtual #2486               // Method net/minecraft/server/level/ServerPlayer.jumpFromGround:()V
+       518: aload_0
+       519: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+       522: getfield      #2487               // Field net/minecraft/server/level/ServerPlayer.verticalCollisionBelow:Z
+       525: istore        39
+       527: iload         9
+       529: ifeq          541
+       532: iload         39
+       534: ifne          541
+       537: aload_0
+       538: invokevirtual #2490               // Method forceSendPlayerSupportBlocks:()V
+       541: aload_0
+       542: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+       545: getstatic     #834                // Field net/minecraft/world/entity/MoverType.PLAYER:Lnet/minecraft/world/entity/MoverType;
+       548: new           #755                // class net/minecraft/world/phys/Vec3
+       551: dup
+       552: dload         25
+       554: dload         27
+       556: dload         29
+       558: invokespecial #837                // Method net/minecraft/world/phys/Vec3."<init>":(DDD)V
+       561: invokevirtual #2491               // Method net/minecraft/server/level/ServerPlayer.move:(Lnet/minecraft/world/entity/MoverType;Lnet/minecraft/world/phys/Vec3;)V
+       564: dload         27
+       566: dstore        40
+       568: dload         11
+       570: aload_0
+       571: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+       574: invokevirtual #451                // Method net/minecraft/server/level/ServerPlayer.getX:()D
+       577: dsub
+       578: dstore        25
+       580: dload         13
+       582: aload_0
+       583: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+       586: invokevirtual #457                // Method net/minecraft/server/level/ServerPlayer.getY:()D
+       589: dsub
+       590: dstore        27
+       592: dload         27
+       594: ldc2_w        #842                // double -0.5d
+       597: dcmpl
+       598: ifgt          610
+       601: dload         27
+       603: ldc2_w        #844                // double 0.5d
+       606: dcmpg
+       607: ifge          613
+       610: dconst_0
+       611: dstore        27
+       613: dload         15
+       615: aload_0
+       616: getfield      #318                // Field player:Lnet/minecraft/server/level/ServerPlayer;
+       619: invokevirtual #463                // Method net/minecraft/server/level/ServerPlayer.getZ:()D
+       622: dsub
+       623: dstore        29
+       625: dload         25
+       627: dload         25
+=== SIG net/minecraft/server/network/ServerGamePacketListenerImpl .*[Ff]loat.*
+  private boolean clientIsFloating;
+  private boolean clientVehicleIsFloating;
+  private static boolean containsInvalidValues(double, double, double, float, float);
+  private void handlePlayerPositionChange(double, double, double, float, float, boolean, boolean);
+  public void teleport(double, double, double, float, float);
+=== net/minecraft/server/level/ServerPlayer
+Compiled from "ServerPlayer.java"
+public class net.minecraft.server.level.ServerPlayer extends net.minecraft.world.entity.player.Player {
+  public static final double BLOCK_INTERACTION_DISTANCE_VERIFICATION_BUFFER;
+  public static final double ENTITY_INTERACTION_DISTANCE_VERIFICATION_BUFFER;
+  public static final int ENDER_PEARL_TICKET_RADIUS;
+  public static final java.lang.String ENDER_PEARLS_TAG;
+  public static final java.lang.String ENDER_PEARL_DIMENSION_TAG;
+  public static final java.lang.String TAG_DIMENSION;
+  public net.minecraft.server.network.ServerGamePacketListenerImpl connection;
+  public final net.minecraft.server.level.ServerPlayerGameMode gameMode;
+  public boolean seenCredits;
+  public final java.lang.Object object;
+  public boolean wonGame;
+  public net.minecraft.server.level.ServerPlayer(net.minecraft.server.MinecraftServer, net.minecraft.server.level.ServerLevel, com.mojang.authlib.GameProfile, net.minecraft.server.level.ClientInformation);
+  public net.minecraft.core.BlockPos adjustSpawnLocation(net.minecraft.server.level.ServerLevel, net.minecraft.core.BlockPos);
+  public void loadAndSpawnParentVehicle(net.minecraft.world.level.storage.ValueInput);
+  public void loadAndSpawnEnderPearls(net.minecraft.world.level.storage.ValueInput);
+  public void setExperiencePoints(int);
+  public void setExperienceLevels(int);
+  public void giveExperienceLevels(int);
+  public void onEnchantmentPerformed(net.minecraft.world.item.ItemStack, int);
+  public void initInventoryMenu();
+  public void onEnterCombat();
+  public void onLeaveCombat();
+  public void onInsideBlock(net.minecraft.world.level.block.state.BlockState);
+  public void tick();
+  public void doTick();
+  public void handleShoulderEntities();
+  public boolean setEntityOnShoulder(net.minecraft.nbt.CompoundTag);
+  public void resetFallDistance();
+  public void trackStartFallingPosition();
+  public void trackEnteredOrExitedLavaOnVehicle();
+  public void die(net.minecraft.world.damagesource.DamageSource);
+  public void awardKillScore(net.minecraft.world.entity.Entity, net.minecraft.world.damagesource.DamageSource);
+  public boolean hurtServer(net.minecraft.server.level.ServerLevel, net.minecraft.world.damagesource.DamageSource, float);
+  public boolean canHarmPlayer(net.minecraft.world.entity.player.Player);
+  public net.minecraft.world.level.portal.TeleportTransition findRespawnPositionAndUseSpawnBlock(boolean, net.minecraft.world.level.portal.TeleportTransition$PostTeleportTransition);
+  public boolean isReceivingWaypoints();
+  public void sendPostEffects();
+  public boolean addPostEffect(net.minecraft.resources.Identifier);
+  public boolean clearPostEffects();
+  public java.util.List<net.minecraft.resources.Identifier> getPostEffects();
+  public boolean removePostEffect(net.minecraft.resources.Identifier);
+  public void showEndCredits();
+  public net.minecraft.server.level.ServerPlayer teleport(net.minecraft.world.level.portal.TeleportTransition);
+  public void forceSetRotation(float, boolean, float, boolean);
+  public boolean broadcastToPlayer(net.minecraft.server.level.ServerPlayer);
+  public void take(net.minecraft.world.entity.Entity, int);
+  public com.mojang.datafixers.util.Either<net.minecraft.world.entity.player.Player$BedSleepingProblem, net.minecraft.util.Unit> startSleepInBed(net.minecraft.world.level.block.AbstractBedBlock, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.attribute.BedRule, net.minecraft.core.BlockPos);
+  public boolean startSleeping(net.minecraft.core.BlockPos);
+  public void stopSleepInBed(boolean, boolean);
+  public boolean isInvulnerableTo(net.minecraft.server.level.ServerLevel, net.minecraft.world.damagesource.DamageSource);
+  public void onExplosionHit(net.minecraft.world.entity.Entity);
+  public void openTextEdit(net.minecraft.world.level.block.entity.SignBlockEntity, net.minecraft.world.level.block.entity.SignTextSlot);
+  public void openDialog(net.minecraft.core.Holder<net.minecraft.server.dialog.Dialog>);
+  public java.util.OptionalInt openMenu(net.minecraft.world.MenuProvider);
+  public java.util.OptionalInt openMenu(net.minecraft.world.MenuProvider, java.util.function.Consumer<net.minecraft.network.RegistryFriendlyByteBuf>);
+  public void sendMerchantOffers(int, net.minecraft.world.item.trading.MerchantOffers, int, int, boolean, boolean);
+  public void openHorseInventory(net.minecraft.world.entity.animal.equine.AbstractHorse, net.minecraft.world.Container);
+  public void openNautilusInventory(net.minecraft.world.entity.animal.nautilus.AbstractNautilus, net.minecraft.world.Container);
+  public void openItemGui(net.minecraft.world.item.ItemStack, net.minecraft.world.InteractionHand);
+  public void openCommandBlock(net.minecraft.world.level.block.entity.CommandBlockEntity);
+  public void closeContainer();
+  public void doCloseContainer();
+  public void rideTick();
+  public void checkMovementStatistics(double, double, double);
+  public void checkRidingStatistics(double, double, double);
+  public void awardStat(net.minecraft.stats.Stat<?>, int);
+  public void resetStat(net.minecraft.stats.Stat<?>);
+  public int awardRecipes(java.util.Collection<net.minecraft.world.item.crafting.RecipeHolder<?>>);
+  public void triggerRecipeCrafted(net.minecraft.world.item.crafting.RecipeHolder<?>, java.util.List<net.minecraft.world.item.ItemStack>);
+  public void awardRecipesByKey(java.util.List<net.minecraft.resources.ResourceKey<net.minecraft.world.item.crafting.Recipe<?>>>);
+  public int resetRecipes(java.util.Collection<net.minecraft.world.item.crafting.RecipeHolder<?>>);
+  public void jumpFromGround();
+  public void giveExperiencePoints(int);
+  public void disconnect();
+  public boolean hasDisconnected();
+  public void resetSentInfo();
+  public void lookAt(net.minecraft.commands.arguments.EntityAnchorArgument$Anchor, net.minecraft.world.phys.Vec3);
+  public void lookAt(net.minecraft.commands.arguments.EntityAnchorArgument$Anchor, net.minecraft.world.entity.Entity, net.minecraft.commands.arguments.EntityAnchorArgument$Anchor);
+  public void restoreFrom(net.minecraft.server.level.ServerPlayer, boolean);
+  public void teleportTo(double, double, double);
+  public void teleportRelative(double, double, double);
+  public boolean teleportTo(net.minecraft.server.level.ServerLevel, double, double, double, java.util.Set<net.minecraft.world.entity.Relative>, float, float, boolean);
+  public void snapTo(double, double, double);
+  public void crit(net.minecraft.world.entity.Entity);
+  public void magicCrit(net.minecraft.world.entity.Entity);
+  public void onUpdateAbilities();
+  public net.minecraft.server.level.ServerLevel level();
+  public boolean setGameMode(net.minecraft.world.level.GameType);
+  public net.minecraft.world.level.GameType gameMode();
+  public net.minecraft.commands.CommandSource commandSource();
+  public net.minecraft.commands.CommandSourceStack createCommandSourceStack();
+  public void sendSystemMessage(net.minecraft.network.chat.Component);
+  public void sendOverlayMessage(net.minecraft.network.chat.Component);
+  public void sendBuildLimitMessage(boolean, int);
+  public void sendSpawnProtectionMessage(net.minecraft.core.BlockPos);
+  public void sendSystemMessage(net.minecraft.network.chat.Component, boolean);
+  public void sendChatMessage(net.minecraft.network.chat.OutgoingChatMessage, boolean, net.minecraft.network.chat.ChatType$Bound);
+  public java.lang.String getIpAddress();
+  public void updateOptions(net.minecraft.server.level.ClientInformation);
+  public net.minecraft.server.level.ClientInformation clientInformation();
+  public boolean canChatInColor();
+  public net.minecraft.world.entity.player.ChatVisiblity getChatVisibility();
+  public int requestedViewDistance();
+  public void sendServerStatus(net.minecraft.network.protocol.status.ServerStatus);
+  public net.minecraft.server.permissions.PermissionSet permissions();
+  public void resetLastActionTime();
+  public net.minecraft.stats.ServerStatsCounter getStats();
+  public net.minecraft.stats.ServerRecipeBook getRecipeBook();
+  public net.minecraft.world.entity.Entity getCamera();
+  public void setCamera(net.minecraft.world.entity.Entity);
+  public long getLastActionTime();
+  public net.minecraft.network.chat.Component getTabListDisplayName();
+  public int getTabListOrder();
+  public boolean isChangingDimension();
+  public void hasChangedDimension();
+  public net.minecraft.server.PlayerAdvancements getAdvancements();
+  public net.minecraft.server.level.ServerPlayer$RespawnConfig getRespawnConfig();
+  public void copyRespawnPosition(net.minecraft.server.level.ServerPlayer);
+  public void setRespawnPosition(net.minecraft.server.level.ServerPlayer$RespawnConfig, boolean);
+  public net.minecraft.core.SectionPos getLastSectionPos();
+  public void setLastSectionPos(net.minecraft.core.SectionPos);
+  public net.minecraft.server.level.ChunkTrackingView getChunkTrackingView();
+  public void setChunkTrackingView(net.minecraft.server.level.ChunkTrackingView);
+  public net.minecraft.world.entity.item.ItemEntity drop(net.minecraft.world.item.ItemStack, boolean, net.minecraft.util.Prediction);
+  public net.minecraft.server.network.TextFilter getTextFilter();
+  public void setServerLevel(net.minecraft.server.level.ServerLevel);
+  public boolean isTextFilteringEnabled();
+  public boolean shouldFilterMessageTo(net.minecraft.server.level.ServerPlayer);
+  public boolean mayInteract(net.minecraft.server.level.ServerLevel, net.minecraft.core.BlockPos);
+  public void drop(boolean);
+  public void handleExtraItemsCreatedOnUse(net.minecraft.world.item.ItemStack);
+  public boolean allowsListing();
+  public net.minecraft.world.entity.monster.warden.WardenSpawnTracker getWardenSpawnTracker();
+  public void setSpawnExtraParticlesOnFall(boolean);
+  public void onItemPickup(net.minecraft.world.entity.item.ItemEntity);
+  public void setChatSession(net.minecraft.network.chat.RemoteChatSession);
+  public net.minecraft.network.chat.RemoteChatSession getChatSession();
+  public void indicateDamage(double, double);
+  public boolean startRiding(net.minecraft.world.entity.Entity, boolean, boolean);
+  public void removeVehicle();
+  public net.minecraft.network.protocol.game.CommonPlayerSpawnInfo createCommonSpawnInfo(net.minecraft.server.level.ServerLevel);
+  public void setRaidOmenPosition(net.minecraft.core.BlockPos);
+  public void clearRaidOmenPosition();
+  public net.minecraft.core.BlockPos getRaidOmenPosition();
+  public net.minecraft.world.phys.Vec3 getKnownMovement();
+  public net.minecraft.world.phys.Vec3 getKnownSpeed();
+  public void setKnownMovement(net.minecraft.world.phys.Vec3);
+  public void onEquippedItemBroken(net.minecraft.world.item.ItemStack, net.minecraft.world.entity.EquipmentSlot);
+  public net.minecraft.world.entity.player.Input getLastClientInput();
+  public void setLastClientInput(net.minecraft.world.entity.player.Input);
+  public net.minecraft.world.phys.Vec3 getLastClientMoveIntent();
+  public void registerEnderPearl(net.minecraft.world.entity.projectile.throwableitemprojectile.ThrownEnderpearl);
+  public void deregisterEnderPearl(net.minecraft.world.entity.projectile.throwableitemprojectile.ThrownEnderpearl);
+  public java.util.Set<net.minecraft.world.entity.projectile.throwableitemprojectile.ThrownEnderpearl> getEnderPearls();
+  public net.minecraft.nbt.CompoundTag getShoulderEntityLeft();
+  public net.minecraft.nbt.CompoundTag getShoulderEntityRight();
+  public long registerAndUpdateEnderPearlTicket(net.minecraft.world.entity.projectile.throwableitemprojectile.ThrownEnderpearl);
+  public static long placeEnderPearlTicket(net.minecraft.server.level.ServerLevel, net.minecraft.world.level.ChunkPos);
+  public void requestDebugSubscriptions(java.util.Set<net.minecraft.util.debug.DebugSubscription<?>>);
+  public java.util.Set<net.minecraft.util.debug.DebugSubscription<?>> debugSubscriptions();
+  public void swingAndResetAttackStrength(net.minecraft.world.InteractionHand, net.minecraft.world.item.component.SwingAnimation, boolean);
+  public java.lang.String getLanguage();
+  public net.minecraft.network.chat.Component getTabListHeader();
+  public net.minecraft.network.chat.Component getTabListFooter();
+  public void setTabListHeader(net.minecraft.network.chat.Component);
+  public void setTabListFooter(net.minecraft.network.chat.Component);
+  public void setTabListHeaderFooter(net.minecraft.network.chat.Component, net.minecraft.network.chat.Component);
+  public void refreshTabListName();
+  public net.minecraft.world.level.Level level();
+  public net.minecraft.world.entity.Entity teleport(net.minecraft.world.level.portal.TeleportTransition);
+}
