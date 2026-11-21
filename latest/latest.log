@@ -1,22 +1,22 @@
-[21Nov2026 18:01:16.409] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--width, 1280, --height, 720, --launchTarget, forgeclientdev, --version, 21.1.265, --assetIndex, asset-index, --assetsDir, /home/runner/.gradle/caches/minecraft/assets, --gameDir, ., --fml.fmlVersion, 4.0.45, --fml.mcVersion, 1.21.1, --fml.neoForgeVersion, 21.1.265, --fml.neoFormVersion, 20240808.144430]
-[21Nov2026 18:01:16.412] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: JVM identified as Eclipse Adoptium OpenJDK 64-Bit Server VM 21.0.13+9-LTS
-[21Nov2026 18:01:16.413] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 11.0.5+main.901c6ea8 starting: java version 21.0.13 by Eclipse Adoptium; OS Linux arch amd64 version 7.0.0-1020-azure
-[21Nov2026 18:01:16.533] [main/INFO] [net.neoforged.fml.loading.ImmediateWindowHandler/]: Loading ImmediateWindowProvider fmlearlywindow
-[21Nov2026 18:01:16.684] [main/INFO] [EARLYDISPLAY/]: Trying GL version 4.6
-[21Nov2026 18:01:16.715] [main/INFO] [EARLYDISPLAY/]: Trying GL version 4.5
-[21Nov2026 18:01:16.745] [main/INFO] [EARLYDISPLAY/]: Requested GL version 4.5 got version 4.5
-[21Nov2026 18:01:16.857] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.7 Source=union:/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.16.4+mixin.0.8.7/26d01f0567ab46e9ca0d2ed89d0ecc11aadbd433/sponge-mixin-0.16.4+mixin.0.8.7.jar%23130!/ Service=ModLauncher Env=CLIENT
-[21Nov2026 18:01:16.972] [pool-2-thread-1/INFO] [EARLYDISPLAY/]: GL info: llvmpipe (LLVM 21.1.8, 256 bits) GL version 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3, Mesa
-[21Nov2026 18:01:17.122] [main/INFO] [net.neoforged.fml.loading.moddiscovery.ModDiscoverer/SCAN]: Found mod file "neoforge-21.1.265.jar" [locator: neoforge devenv provider ([/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/.gradle/repositories/ng_dummy_ng/net/neoforged/neoforge/21.1.265/neoforge-21.1.265.jar])]
-[21Nov2026 18:01:17.174] [main/INFO] [net.neoforged.fml.loading.moddiscovery.ModDiscoverer/SCAN]: Found mod file "neoforge-21.1.265.jar" [locator: neoforge devenv provider ([/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/.gradle/repositories/ng_dummy_ng/net/neoforged/neoforge/21.1.265/neoforge-21.1.265.jar])]
-[21Nov2026 18:01:17.198] [main/INFO] [net.neoforged.fml.loading.moddiscovery.ModDiscoverer/SCAN]: Found mod file "playtest" [locator: userdev mods and services, reader: mod manifest]
-[21Nov2026 18:01:17.212] [main/INFO] [net.neoforged.fml.loading.moddiscovery.ModDiscoverer/SCAN]: Found mod file "neoforge-21.1.265.jar" [locator: userdev mods and services, reader: mod manifest]
-[21Nov2026 18:01:17.216] [main/INFO] [net.neoforged.fml.loading.moddiscovery.ModDiscoverer/SCAN]: Found mod file "geckolib-neoforge-1.21.1-4.9.3.jar" [locator: userdev mods and services, reader: mod manifest]
-[21Nov2026 18:01:17.226] [main/INFO] [net.neoforged.fml.loading.moddiscovery.ModDiscoverer/SCAN]: Found gamelibrary file "mixinextras-neoforge-0.5.5.jar" [locator: userdev mods and services, reader: mod manifest]
-[21Nov2026 18:01:17.359] [main/WARN] [net.neoforged.jarjar.selection.JarSelector/]: Attempted to select a dependency jar for JarJar which was passed in as source: library:mixinextras.neoforge. Using Mod File: /home/runner/.gradle/caches/modules-2/files-2.1/io.github.llamalad7/mixinextras-neoforge/0.5.5/26f2905a37afd203c3da1d6a2e164472a7531b41/mixinextras-neoforge-0.5.5.jar
-[21Nov2026 18:01:17.360] [main/INFO] [net.neoforged.fml.loading.moddiscovery.locators.JarInJarDependencyLocator/]: Found 1 dependencies adding them to mods collection
-[21Nov2026 18:01:17.361] [main/INFO] [net.neoforged.fml.loading.moddiscovery.ModDiscoverer/SCAN]: Found library file "net.neoforged.neoforge-coremods-21.1.265.jar" [parent: neoforge-21.1.265.jar, locator: jarinjar, reader: mod manifest]
-[21Nov2026 18:01:17.363] [main/INFO] [net.neoforged.fml.loading.moddiscovery.ModDiscoverer/]: 
+[21Nov2026 18:09:41.024] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--width, 1280, --height, 720, --launchTarget, forgeclientdev, --version, 21.1.265, --assetIndex, asset-index, --assetsDir, /home/runner/.gradle/caches/minecraft/assets, --gameDir, ., --fml.fmlVersion, 4.0.45, --fml.mcVersion, 1.21.1, --fml.neoForgeVersion, 21.1.265, --fml.neoFormVersion, 20240808.144430]
+[21Nov2026 18:09:41.026] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: JVM identified as Eclipse Adoptium OpenJDK 64-Bit Server VM 21.0.13+9-LTS
+[21Nov2026 18:09:41.029] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 11.0.5+main.901c6ea8 starting: java version 21.0.13 by Eclipse Adoptium; OS Linux arch amd64 version 7.0.0-1020-azure
+[21Nov2026 18:09:41.096] [main/INFO] [net.neoforged.fml.loading.ImmediateWindowHandler/]: Loading ImmediateWindowProvider fmlearlywindow
+[21Nov2026 18:09:41.202] [main/INFO] [EARLYDISPLAY/]: Trying GL version 4.6
+[21Nov2026 18:09:41.224] [main/INFO] [EARLYDISPLAY/]: Trying GL version 4.5
+[21Nov2026 18:09:41.245] [main/INFO] [EARLYDISPLAY/]: Requested GL version 4.5 got version 4.5
+[21Nov2026 18:09:41.295] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.7 Source=union:/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.16.4+mixin.0.8.7/26d01f0567ab46e9ca0d2ed89d0ecc11aadbd433/sponge-mixin-0.16.4+mixin.0.8.7.jar%23130!/ Service=ModLauncher Env=CLIENT
+[21Nov2026 18:09:41.344] [pool-2-thread-1/INFO] [EARLYDISPLAY/]: GL info: llvmpipe (LLVM 21.1.8, 256 bits) GL version 4.5 (Core Profile) Mesa 26.0.8-1ubuntu0.3, Mesa
+[21Nov2026 18:09:41.438] [main/INFO] [net.neoforged.fml.loading.moddiscovery.ModDiscoverer/SCAN]: Found mod file "neoforge-21.1.265.jar" [locator: neoforge devenv provider ([/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/.gradle/repositories/ng_dummy_ng/net/neoforged/neoforge/21.1.265/neoforge-21.1.265.jar])]
+[21Nov2026 18:09:41.457] [main/INFO] [net.neoforged.fml.loading.moddiscovery.ModDiscoverer/SCAN]: Found mod file "neoforge-21.1.265.jar" [locator: neoforge devenv provider ([/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/.gradle/repositories/ng_dummy_ng/net/neoforged/neoforge/21.1.265/neoforge-21.1.265.jar])]
+[21Nov2026 18:09:41.501] [main/INFO] [net.neoforged.fml.loading.moddiscovery.ModDiscoverer/SCAN]: Found mod file "playtest" [locator: userdev mods and services, reader: mod manifest]
+[21Nov2026 18:09:41.512] [main/INFO] [net.neoforged.fml.loading.moddiscovery.ModDiscoverer/SCAN]: Found mod file "neoforge-21.1.265.jar" [locator: userdev mods and services, reader: mod manifest]
+[21Nov2026 18:09:41.518] [main/INFO] [net.neoforged.fml.loading.moddiscovery.ModDiscoverer/SCAN]: Found mod file "geckolib-neoforge-1.21.1-4.9.3.jar" [locator: userdev mods and services, reader: mod manifest]
+[21Nov2026 18:09:41.528] [main/INFO] [net.neoforged.fml.loading.moddiscovery.ModDiscoverer/SCAN]: Found gamelibrary file "mixinextras-neoforge-0.5.5.jar" [locator: userdev mods and services, reader: mod manifest]
+[21Nov2026 18:09:41.612] [main/WARN] [net.neoforged.jarjar.selection.JarSelector/]: Attempted to select a dependency jar for JarJar which was passed in as source: library:mixinextras.neoforge. Using Mod File: /home/runner/.gradle/caches/modules-2/files-2.1/io.github.llamalad7/mixinextras-neoforge/0.5.5/26f2905a37afd203c3da1d6a2e164472a7531b41/mixinextras-neoforge-0.5.5.jar
+[21Nov2026 18:09:41.613] [main/INFO] [net.neoforged.fml.loading.moddiscovery.locators.JarInJarDependencyLocator/]: Found 1 dependencies adding them to mods collection
+[21Nov2026 18:09:41.613] [main/INFO] [net.neoforged.fml.loading.moddiscovery.ModDiscoverer/SCAN]: Found library file "net.neoforged.neoforge-coremods-21.1.265.jar" [parent: neoforge-21.1.265.jar, locator: jarinjar, reader: mod manifest]
+[21Nov2026 18:09:41.614] [main/INFO] [net.neoforged.fml.loading.moddiscovery.ModDiscoverer/]: 
      Mod List:
 		Name Version (Mod Id)
 
@@ -24,26 +24,26 @@
 		GeckoLib 4 4.9.3 (geckolib)
 		Minecraft 1.21.1 (minecraft)
 		NeoForge 21.1.265 (neoforge)
-[21Nov2026 18:01:18.108] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
-[21Nov2026 18:01:18.112] [main/INFO] [mixin/]: Compatibility level set to JAVA_21
-[21Nov2026 18:01:18.132] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgeclientdev' with arguments [--version, 21.1.265, --gameDir, ., --assetsDir, /home/runner/.gradle/caches/minecraft/assets, --width, 1280, --height, 720, --assetIndex, asset-index]
-[21Nov2026 18:01:18.204] [main/WARN] [mixin/]: Reference map 'geckolib.refmap.json' for geckolib.mixins.json could not be read. If this is a development environment you can ignore this message
-[21Nov2026 18:01:20.521] [Datafixer Bootstrap/INFO] [com.mojang.datafixers.DataFixerBuilder/]: 229 Datafixer optimizations took 412 milliseconds
-[21Nov2026 18:01:20.798] [pool-7-thread-1/INFO] [MixinExtras|Service/]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.5.5).
-[21Nov2026 18:01:26.828] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, location] and [teleport, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
-[21Nov2026 18:01:26.830] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, location] and [teleport, targets] with inputs: [0.1 -0.5 .9, 0 0 0]
-[21Nov2026 18:01:26.833] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, destination] and [teleport, targets] with inputs: [Player, 0123, @e, dd12be42-52a9-4a91-a8a1-11c01849e498]
-[21Nov2026 18:01:26.834] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, targets] and [teleport, destination] with inputs: [Player, 0123, dd12be42-52a9-4a91-a8a1-11c01849e498]
-[21Nov2026 18:01:26.835] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, targets, location] and [teleport, targets, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
-[21Nov2026 18:01:26.972] [Render thread/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/.gradle/repositories/ng_dummy_ng/net/neoforged/neoforge/21.1.265/neoforge-21.1.265.jar%23183!/assets/.mcassetsroot' uses unexpected schema
-[21Nov2026 18:01:26.972] [Render thread/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/.gradle/repositories/ng_dummy_ng/net/neoforged/neoforge/21.1.265/neoforge-21.1.265.jar%23183!/data/.mcassetsroot' uses unexpected schema
-[21Nov2026 18:01:26.997] [Render thread/INFO] [com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService/]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
-[21Nov2026 18:01:27.009] [Render thread/INFO] [net.minecraft.client.Minecraft/]: Setting user: Dev
-[21Nov2026 18:01:27.093] [Render thread/INFO] [net.minecraft.client.Minecraft/]: Backend library: LWJGL version 3.3.3+5
-[21Nov2026 18:01:27.494] [modloading-worker-0/INFO] [net.neoforged.neoforge.common.NeoForgeMod/NEOFORGE-MOD]: NeoForge mod loading, version 21.1.265, for MC 1.21.1
-[21Nov2026 18:01:27.565] [modloading-worker-0/INFO] [ethermod/]: Ether Manipulator initialised.
-[21Nov2026 18:01:28.484] [Render thread/INFO] [net.neoforged.neoforge.gametest.GameTestHooks/]: Enabled Gametest Namespaces: []
-[21Nov2026 18:01:28.675] [Render thread/ERROR] [com.mojang.text2speech.Narrator/]: Error while loading the narrator
+[21Nov2026 18:09:41.985] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
+[21Nov2026 18:09:41.989] [main/INFO] [mixin/]: Compatibility level set to JAVA_21
+[21Nov2026 18:09:42.006] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgeclientdev' with arguments [--version, 21.1.265, --gameDir, ., --assetsDir, /home/runner/.gradle/caches/minecraft/assets, --width, 1280, --height, 720, --assetIndex, asset-index]
+[21Nov2026 18:09:42.032] [main/WARN] [mixin/]: Reference map 'geckolib.refmap.json' for geckolib.mixins.json could not be read. If this is a development environment you can ignore this message
+[21Nov2026 18:09:43.428] [Datafixer Bootstrap/INFO] [com.mojang.datafixers.DataFixerBuilder/]: 229 Datafixer optimizations took 247 milliseconds
+[21Nov2026 18:09:43.584] [pool-7-thread-1/INFO] [MixinExtras|Service/]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.5.5).
+[21Nov2026 18:09:47.204] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, location] and [teleport, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[21Nov2026 18:09:47.206] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, location] and [teleport, targets] with inputs: [0.1 -0.5 .9, 0 0 0]
+[21Nov2026 18:09:47.208] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, destination] and [teleport, targets] with inputs: [Player, 0123, @e, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[21Nov2026 18:09:47.209] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, targets] and [teleport, destination] with inputs: [Player, 0123, dd12be42-52a9-4a91-a8a1-11c01849e498]
+[21Nov2026 18:09:47.210] [main/WARN] [net.minecraft.commands.Commands/]: Ambiguity between arguments [teleport, targets, location] and [teleport, targets, destination] with inputs: [0.1 -0.5 .9, 0 0 0]
+[21Nov2026 18:09:47.313] [Render thread/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/.gradle/repositories/ng_dummy_ng/net/neoforged/neoforge/21.1.265/neoforge-21.1.265.jar%23183!/assets/.mcassetsroot' uses unexpected schema
+[21Nov2026 18:09:47.313] [Render thread/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/.gradle/repositories/ng_dummy_ng/net/neoforged/neoforge/21.1.265/neoforge-21.1.265.jar%23183!/data/.mcassetsroot' uses unexpected schema
+[21Nov2026 18:09:47.329] [Render thread/INFO] [com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService/]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[21Nov2026 18:09:47.339] [Render thread/INFO] [net.minecraft.client.Minecraft/]: Setting user: Dev
+[21Nov2026 18:09:47.403] [Render thread/INFO] [net.minecraft.client.Minecraft/]: Backend library: LWJGL version 3.3.3+5
+[21Nov2026 18:09:47.680] [modloading-worker-0/INFO] [net.neoforged.neoforge.common.NeoForgeMod/NEOFORGE-MOD]: NeoForge mod loading, version 21.1.265, for MC 1.21.1
+[21Nov2026 18:09:47.743] [modloading-worker-0/INFO] [ethermod/]: Ether Manipulator initialised.
+[21Nov2026 18:09:48.334] [Render thread/INFO] [net.neoforged.neoforge.gametest.GameTestHooks/]: Enabled Gametest Namespaces: []
+[21Nov2026 18:09:48.503] [Render thread/ERROR] [com.mojang.text2speech.Narrator/]: Error while loading the narrator
 com.mojang.text2speech.Narrator$InitializeException: Failed to load library flite
 	at MC-BOOTSTRAP/text2speech@1.17.9/com.mojang.text2speech.NarratorLinux$FliteLibrary.loadNative(NarratorLinux.java:69) ~[text2speech-1.17.9.jar%23114!/:?]
 	at MC-BOOTSTRAP/text2speech@1.17.9/com.mojang.text2speech.NarratorLinux.<init>(NarratorLinux.java:18) ~[text2speech-1.17.9.jar%23114!/:?]
@@ -153,13 +153,13 @@ Native library (linux-x86-64/libflite.so) not found in resource path (/home/runn
 		at MC-BOOTSTRAP/cpw.mods.modlauncher@11.0.5/cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:23) [modlauncher-11.0.5.jar%23118!/:?]
 		at cpw.mods.bootstraplauncher@2.0.2/cpw.mods.bootstraplauncher.BootstrapLauncher.run(BootstrapLauncher.java:210) [bootstraplauncher-2.0.2.jar:?]
 		at cpw.mods.bootstraplauncher@2.0.2/cpw.mods.bootstraplauncher.BootstrapLauncher.main(BootstrapLauncher.java:69) [bootstraplauncher-2.0.2.jar:?]
-[21Nov2026 18:01:28.727] [Render thread/INFO] [net.minecraft.server.packs.resources.ReloadableResourceManager/]: Reloading ResourceManager: vanilla, mod_resources, mod/geckolib, mod/ethermod, mod/neoforge
-[21Nov2026 18:01:29.107] [Worker-Main-3/INFO] [net.minecraft.client.gui.font.providers.UnihexProvider/]: Found unifont_all_no_pua-15.1.05.hex, loading
-[21Nov2026 18:01:29.350] [Worker-Main-2/INFO] [net.minecraft.client.gui.font.providers.UnihexProvider/]: Found unifont_jp_patch-15.1.05.hex, loading
-[21Nov2026 18:01:29.764] [Worker-Main-1/WARN] [net.minecraft.client.renderer.texture.SpriteLoader/]: Texture ethermod:item/module_icon_pyrotechnic with size 20x20 limits mip level from 4 to 2
-[21Nov2026 18:01:32.008] [Render thread/WARN] [net.minecraft.client.sounds.SoundEngine/]: Missing sound for event: minecraft:item.goat_horn.play
-[21Nov2026 18:01:32.012] [Render thread/WARN] [net.minecraft.client.sounds.SoundEngine/]: Missing sound for event: minecraft:entity.goat.screaming.horn_break
-[21Nov2026 18:01:32.019] [Render thread/ERROR] [net.minecraft.client.sounds.SoundEngine/SOUNDS]: Error starting SoundSystem. Turning off sounds & music
+[21Nov2026 18:09:48.524] [Render thread/INFO] [net.minecraft.server.packs.resources.ReloadableResourceManager/]: Reloading ResourceManager: vanilla, mod_resources, mod/geckolib, mod/ethermod, mod/neoforge
+[21Nov2026 18:09:48.894] [Worker-Main-2/INFO] [net.minecraft.client.gui.font.providers.UnihexProvider/]: Found unifont_all_no_pua-15.1.05.hex, loading
+[21Nov2026 18:09:49.223] [Worker-Main-2/INFO] [net.minecraft.client.gui.font.providers.UnihexProvider/]: Found unifont_jp_patch-15.1.05.hex, loading
+[21Nov2026 18:09:49.223] [Worker-Main-3/WARN] [net.minecraft.client.renderer.texture.SpriteLoader/]: Texture ethermod:item/module_icon_pyrotechnic with size 20x20 limits mip level from 4 to 2
+[21Nov2026 18:09:50.464] [Render thread/WARN] [net.minecraft.client.sounds.SoundEngine/]: Missing sound for event: minecraft:item.goat_horn.play
+[21Nov2026 18:09:50.464] [Render thread/WARN] [net.minecraft.client.sounds.SoundEngine/]: Missing sound for event: minecraft:entity.goat.screaming.horn_break
+[21Nov2026 18:09:50.476] [Render thread/ERROR] [net.minecraft.client.sounds.SoundEngine/SOUNDS]: Error starting SoundSystem. Turning off sounds & music
 java.lang.IllegalStateException: Failed to open OpenAL device
 	at TRANSFORMER/minecraft@1.21.1/com.mojang.blaze3d.audio.Library.openDeviceOrFallback(Library.java:207) ~[neoforge-21.1.265.jar%23183!/:?]
 	at TRANSFORMER/minecraft@1.21.1/com.mojang.blaze3d.audio.Library.init(Library.java:74) ~[neoforge-21.1.265.jar%23183!/:?]
@@ -193,175 +193,174 @@ java.lang.IllegalStateException: Failed to open OpenAL device
 	at MC-BOOTSTRAP/cpw.mods.modlauncher@11.0.5/cpw.mods.modlauncher.BootstrapLaunchConsumer.accept(BootstrapLaunchConsumer.java:23) [modlauncher-11.0.5.jar%23118!/:?]
 	at cpw.mods.bootstraplauncher@2.0.2/cpw.mods.bootstraplauncher.BootstrapLauncher.run(BootstrapLauncher.java:210) [bootstraplauncher-2.0.2.jar:?]
 	at cpw.mods.bootstraplauncher@2.0.2/cpw.mods.bootstraplauncher.BootstrapLauncher.main(BootstrapLauncher.java:69) [bootstraplauncher-2.0.2.jar:?]
-[21Nov2026 18:01:32.281] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 1024x512x4 minecraft:textures/atlas/blocks.png-atlas
-[21Nov2026 18:01:32.308] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 256x256x4 minecraft:textures/atlas/signs.png-atlas
-[21Nov2026 18:01:32.308] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x512x4 minecraft:textures/atlas/shield_patterns.png-atlas
-[21Nov2026 18:01:32.310] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x512x4 minecraft:textures/atlas/banner_patterns.png-atlas
-[21Nov2026 18:01:32.312] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 1024x1024x4 minecraft:textures/atlas/armor_trims.png-atlas
-[21Nov2026 18:01:32.321] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 256x256x4 minecraft:textures/atlas/chest.png-atlas
-[21Nov2026 18:01:32.322] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 128x64x4 minecraft:textures/atlas/decorated_pot.png-atlas
-[21Nov2026 18:01:32.322] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x256x4 minecraft:textures/atlas/beds.png-atlas
-[21Nov2026 18:01:32.323] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x256x4 minecraft:textures/atlas/shulker_boxes.png-atlas
-[21Nov2026 18:01:32.427] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x256x0 minecraft:textures/atlas/particles.png-atlas
-[21Nov2026 18:01:32.429] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x256x0 minecraft:textures/atlas/paintings.png-atlas
-[21Nov2026 18:01:32.430] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 256x128x0 minecraft:textures/atlas/mob_effects.png-atlas
-[21Nov2026 18:01:32.430] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 64x64x0 minecraft:textures/atlas/map_decorations.png-atlas
-[21Nov2026 18:01:32.431] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 1024x512x0 minecraft:textures/atlas/gui.png-atlas
-[21Nov2026 18:01:32.480] [Render thread/WARN] [net.minecraft.client.renderer.ShaderInstance/]: Shader rendertype_entity_translucent_emissive could not find sampler named Sampler2 in the specified shader program.
-[21Nov2026 18:01:32.576] [Render thread/INFO] [net.neoforged.neoforge.client.entity.animation.json.AnimationLoader/]: Loaded 0 entity animations
-[21Nov2026 18:01:35.792] [Render thread/INFO] [net.minecraft.world.item.crafting.RecipeManager/]: Loaded 1293 recipes
-[21Nov2026 18:01:35.987] [Render thread/INFO] [net.minecraft.advancements.AdvancementTree/]: Loaded 1421 advancements
-[21Nov2026 18:01:36.621] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Starting integrated minecraft server version 1.21.1
-[21Nov2026 18:01:36.622] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Generating keypair
-[21Nov2026 18:01:37.619] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Preparing start region for dimension minecraft:overworld
-[21Nov2026 18:01:37.704] [progressListener/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 2%
-[21Nov2026 18:01:37.987] [Server thread/INFO] [net.neoforged.neoforge.server.permission.PermissionAPI/]: Successfully initialized permission handler neoforge:default_handler
-[21Nov2026 18:01:38.024] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Changing view distance to 12, from 10
-[21Nov2026 18:01:38.024] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Changing simulation distance to 12, from 0
-[21Nov2026 18:01:38.402] [progressListener/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 2%
-[21Nov2026 18:01:38.403] [progressListener/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Time elapsed: 700 ms
-[21Nov2026 18:01:39.070] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: Dev[local:E:545dfaca] logged in with entity id 1 at (5.5, -60.0, 0.5)
-[21Nov2026 18:01:39.166] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Dev joined the game
-[21Nov2026 18:01:39.794] [Render thread/INFO] [net.minecraft.client.gui.components.ChatComponent/]: [System] [CHAT] You carry an Ether Manipulator. Press R to summon it, K to open its traits.
-[21Nov2026 18:01:39.807] [Render thread/INFO] [net.minecraft.advancements.AdvancementTree/]: Loaded 2 advancements
-[21Nov2026 18:01:43.064] [Render thread/INFO] [net.minecraft.advancements.AdvancementTree/]: Loaded 29 advancements
-[21Nov2026 18:01:43.927] [Render thread/INFO] [ethermod/]: [autotest] shot 01_idle_first_person
-[21Nov2026 18:01:44.803] [Render thread/INFO] [ethermod/]: [autotest] shot 02_mining_first_person
-[21Nov2026 18:01:45.933] [Render thread/INFO] [ethermod/]: [autotest] shot 03_mining_later
-[21Nov2026 18:01:48.900] [Render thread/INFO] [ethermod/]: [autotest] PASS mining: stone ahead broke after 12 ticks of beam
-[21Nov2026 18:01:48.901] [Render thread/INFO] [ethermod/]: [autotest] PASS crystal after mining: e99f20 (want e99f20)
-[21Nov2026 18:01:48.901] [Server thread/INFO] [ethermod/]: [autotest] PASS drops: mined stone gave cobblestone (empty hotbar slot selected: false)
-[21Nov2026 18:01:50.145] [Render thread/INFO] [ethermod/]: [autotest] shot 04_beam_side_view
-[21Nov2026 18:01:51.185] [Render thread/INFO] [ethermod/]: [autotest] shot 05_beam_side_view_later
-[21Nov2026 18:01:53.147] [Render thread/INFO] [ethermod/]: [autotest] shot 06_combat_level1
-[21Nov2026 18:01:55.404] [Render thread/INFO] [ethermod/]: [autotest] shot 07_combat_ramped
-[21Nov2026 18:01:56.650] [Render thread/INFO] [ethermod/]: [autotest] shot 08_orb_charge_phase1
-[21Nov2026 18:01:58.148] [Render thread/INFO] [ethermod/]: [autotest] shot 09_orb_charge_full
-[21Nov2026 18:01:58.491] [Render thread/INFO] [ethermod/]: [autotest] shot 10_orb_fired
-[21Nov2026 18:01:58.491] [Render thread/INFO] [ethermod/]: [autotest] PASS crystal after an Energy orb: 20c1e9 (want 20c1e9)
-[21Nov2026 18:02:00.661] [Render thread/INFO] [ethermod/]: [autotest] shot 11_orb_charge_side_view
-[21Nov2026 18:02:00.803] [Render thread/INFO] [ethermod/]: [autotest] shot 12_orb_fired_side_view
-[21Nov2026 18:02:01.903] [Render thread/INFO] [ethermod/]: [autotest] shot 13_trait_screen
-[21Nov2026 18:02:02.084] [Render thread/INFO] [ethermod/]: [autotest] shot 13b_colours_tab
-[21Nov2026 18:02:02.221] [Render thread/INFO] [ethermod/]: [autotest] shot 13c_loadouts_tab
-[21Nov2026 18:02:04.712] [Render thread/INFO] [ethermod/]: [autotest] shot 15_custom_colour_sweep
-[21Nov2026 18:02:04.832] [Render thread/INFO] [ethermod/]: [autotest] PASS colour: orbs follow the mode (20c1e9), the beam is Plasmic orange (true)
-[21Nov2026 18:02:05.204] [Render thread/INFO] [ethermod/]: [autotest] shot 16_custom_colour_model
-[21Nov2026 18:02:06.095] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Dev has made the advancement [Stone Age]
-[21Nov2026 18:02:06.174] [Render thread/INFO] [net.minecraft.client.gui.components.ChatComponent/]: [System] [CHAT] Dev has made the advancement [Stone Age]
-[21Nov2026 18:02:06.177] [Render thread/INFO] [net.minecraft.advancements.AdvancementTree/]: Loaded 47 advancements
-[21Nov2026 18:02:06.894] [Render thread/INFO] [ethermod/]: [autotest] shot 17_sneak_beam
-[21Nov2026 18:02:07.109] [Render thread/INFO] [ethermod/]: [autotest] PASS sneak beam, no water near: grass ahead is now block.minecraft.dirt_path (beamActive=true, sneaking=true, hit=net.minecraft.world.phys.BlockHitResult@1532b1d)
-[21Nov2026 18:02:08.499] [Render thread/INFO] [ethermod/]: [autotest] PASS sneak beam, water near: grass ahead is now block.minecraft.farmland
-[21Nov2026 18:02:08.953] [Render thread/INFO] [net.minecraft.advancements.AdvancementTree/]: Loaded 49 advancements
-[21Nov2026 18:02:09.503] [Render thread/INFO] [ethermod/]: [autotest] PASS swing: a sword still swings with the Manipulator put away
-[21Nov2026 18:02:09.505] [Render thread/INFO] [ethermod/]: [autotest] shot 14_sword_swing
-[21Nov2026 18:02:09.825] [Render thread/INFO] [net.minecraft.advancements.AdvancementTree/]: Loaded 58 advancements
-[21Nov2026 18:02:11.015] [Render thread/INFO] [ethermod/]: [autotest] shot 18_beam_water_front
-[21Nov2026 18:02:11.318] [Render thread/INFO] [ethermod/]: [autotest] shot 19_beam_water_first_person
-[21Nov2026 18:02:13.921] [Render thread/INFO] [ethermod/]: [autotest] shot 20a_frost_charging
-[21Nov2026 18:02:15.221] [Render thread/INFO] [ethermod/]: [autotest] PASS frost: charged shard laid an ice bridge over the trench (10/10 blocks)
-[21Nov2026 18:02:15.222] [Render thread/INFO] [ethermod/]: [autotest] shot 20_frost_bridge
-[21Nov2026 18:02:16.918] [Render thread/INFO] [ethermod/]: [autotest] PASS water: a tap placed a water source like a bucket
-[21Nov2026 18:02:16.920] [Render thread/INFO] [ethermod/]: [autotest] shot 21_water_tap
-[21Nov2026 18:02:17.388] [Render thread/INFO] [ethermod/]: [autotest] PASS colour: crystal switched to the Lava colour (ff7020)
-[21Nov2026 18:02:17.906] [Render thread/INFO] [ethermod/]: [autotest] shot 22_lava_mode_crystal
-[21Nov2026 18:02:21.659] [Render thread/INFO] [ethermod/]: [autotest] shot 23a_growth_charging
-[21Nov2026 18:02:23.390] [Render thread/INFO] [ethermod/]: [autotest] shot 23_pollen_cloud
-[21Nov2026 18:02:27.176] [Render thread/INFO] [ethermod/]: [autotest] shot 24_light_bounce
-[21Nov2026 18:02:28.293] [Render thread/INFO] [ethermod/]: [autotest] shot 25_tether_rope
-[21Nov2026 18:02:28.711] [Render thread/INFO] [ethermod/]: [autotest] PASS tether: the hook reeled the player up (3.7 blocks)
-[21Nov2026 18:02:29.800] [Render thread/INFO] [ethermod/]: [autotest] shot 26_gust_grenade_latched
-[21Nov2026 18:02:31.208] [Render thread/INFO] [ethermod/]: [autotest] shot 26b_gust_grenade_burst
-[21Nov2026 18:02:31.511] [Server thread/INFO] [ethermod/]: [autotest] PASS gust: right click threw a grenade that burst (bursts 1, pig hurt true)
-[21Nov2026 18:02:31.562] [Render thread/INFO] [net.minecraft.advancements.AdvancementTree/]: Loaded 94 advancements
-[21Nov2026 18:02:31.919] [Render thread/INFO] [ethermod/]: [autotest] tether: aiming at the pig 12.0 blocks out, pitch 5.6
-[21Nov2026 18:02:32.011] [Render thread/INFO] [ethermod/]: [autotest] tether: aiming at the pig 12.0 blocks out, pitch 5.6
-[21Nov2026 18:02:32.640] [Server thread/INFO] [ethermod/]: [autotest] tether pig v=0.60 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
-[21Nov2026 18:02:32.641] [Server thread/INFO] [ethermod/]: [autotest] tether pig at 10.8
-[21Nov2026 18:02:32.817] [Server thread/INFO] [ethermod/]: [autotest] tether pig v=0.60 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
-[21Nov2026 18:02:32.817] [Server thread/INFO] [ethermod/]: [autotest] tether pig at 8.4
-[21Nov2026 18:02:32.904] [Render thread/INFO] [ethermod/]: [autotest] shot 27_tether_pull
-[21Nov2026 18:02:33.002] [Server thread/INFO] [ethermod/]: [autotest] tether pig v=0.60 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
-[21Nov2026 18:02:33.002] [Server thread/INFO] [ethermod/]: [autotest] tether pig at 6.1
-[21Nov2026 18:02:33.222] [Server thread/INFO] [ethermod/]: [autotest] tether pig v=0.59 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
-[21Nov2026 18:02:33.222] [Server thread/INFO] [ethermod/]: [autotest] tether pig at 3.8
-[21Nov2026 18:02:33.395] [Server thread/INFO] [ethermod/]: [autotest] tether pig v=0.48 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=false full=false
-[21Nov2026 18:02:33.395] [Server thread/INFO] [ethermod/]: [autotest] tether pig at 1.7
-[21Nov2026 18:02:33.617] [Server thread/INFO] [ethermod/]: [autotest] PASS tether: a right click tap reeled the hooked pig from 12 to 0.7 blocks (pig pulled 12.2)
-[21Nov2026 18:02:34.194] [Render thread/INFO] [net.minecraft.advancements.AdvancementTree/]: Loaded 97 advancements
-[21Nov2026 18:02:34.910] [Render thread/INFO] [ethermod/]: [autotest] shot 28_light_beacon
-[21Nov2026 18:02:34.911] [Render thread/INFO] [ethermod/]: [autotest] PASS light: the Beacon lights where it lands (1 light blocks)
-[21Nov2026 18:02:34.911] [Render thread/INFO] [ethermod/]: [autotest] PASS mining is Beam-only: 20 ticks of left click in Light mode left the stone
-[21Nov2026 18:02:34.912] [Render thread/INFO] [ethermod/]: [autotest] PASS Photonic glow: the player is a moving light source (1 sources, glow 14.8, block light at the eyes 14)
-[21Nov2026 18:02:34.913] [Server thread/INFO] [ethermod/]: [autotest] PASS Photonic glow places no light block over the player
-[21Nov2026 18:02:36.550] [Render thread/INFO] [ethermod/]: [autotest] PASS light: the Beacon's light goes with it (0 left [], 0 were there before)
-[21Nov2026 18:02:37.210] [Render thread/INFO] [ethermod/]: [autotest] shot 29_harvest
-[21Nov2026 18:02:37.661] [Render thread/INFO] [net.minecraft.advancements.AdvancementTree/]: Loaded 99 advancements
-[21Nov2026 18:02:37.665] [Server thread/INFO] [ethermod/]: [autotest] PASS growth: left click harvested 9 of 9 ripe wheat
-[21Nov2026 18:02:39.414] [Server thread/INFO] [ethermod/]: [autotest] PASS mass driver: left click lifted the stone
-[21Nov2026 18:02:40.747] [Render thread/INFO] [ethermod/]: [autotest] shot 30_mass_throw
-[21Nov2026 18:02:41.147] [Server thread/INFO] [ethermod/]: [autotest] PASS mass driver: right click threw the carried stone
-[21Nov2026 18:02:42.906] [Server thread/INFO] [ethermod/]: [autotest] zipline after the first sneaking hook: [anchor=true partner=-1 stuck=true at 88, -55, 6] hook=none riding=false using=false crouch=true
-[21Nov2026 18:02:43.999] [Server thread/INFO] [ethermod/]: [autotest] zipline after the second sneaking hook: [anchor=true partner=105 stuck=true at 88, -55, 6] [anchor=true partner=103 stuck=true at 102, -55, 6] hook=none riding=false using=false crouch=true
-[21Nov2026 18:02:44.413] [Server thread/INFO] [ethermod/]: [autotest] zipline right click on the rope: [anchor=true partner=105 stuck=true at 88, -55, 6] [anchor=true partner=103 stuck=true at 102, -55, 6] hook=none riding=true using=true crouch=false
-[21Nov2026 18:02:45.193] [Server thread/INFO] [ethermod/]: [autotest] zipline while riding: [anchor=true partner=105 stuck=true at 88, -55, 6] [anchor=true partner=103 stuck=true at 102, -55, 6] hook=none riding=true using=true crouch=false
-[21Nov2026 18:02:45.427] [Render thread/INFO] [ethermod/]: [autotest] PASS zipline: right click aimed at the rope rides it (riding=true, rose 3.0 blocks)
-[21Nov2026 18:02:53.286] [Server thread/INFO] [ethermod/]: [autotest] PASS gems: chests/shipwreck_treasure gave sirenite 92/400, other gems 0
-[21Nov2026 18:02:53.313] [Server thread/INFO] [ethermod/]: [autotest] PASS gems: chests/underwater_ruin_big gave sirenite 151/400, other gems 0
-[21Nov2026 18:02:53.344] [Server thread/INFO] [ethermod/]: [autotest] PASS gems: chests/ruined_portal gave gehennite 400/400, other gems 0
-[21Nov2026 18:02:53.350] [Server thread/INFO] [ethermod/]: [autotest] PASS gems: chests/nether_bridge gave gehennite 50/400, other gems 0
-[21Nov2026 18:02:53.360] [Server thread/INFO] [ethermod/]: [autotest] PASS gems: chests/abandoned_mineshaft gave stratite 34/400, other gems 0
-[21Nov2026 18:02:53.404] [Server thread/INFO] [ethermod/]: [autotest] PASS gems: chests/trial_chambers/reward gave zephyrite 64/400, other gems 0
-[21Nov2026 18:02:53.411] [Server thread/INFO] [ethermod/]: [autotest] PASS gems: chests/jungle_temple gave quetzalite 108/400, other gems 0
-[21Nov2026 18:02:53.421] [Server thread/INFO] [ethermod/]: [autotest] PASS gems: chests/desert_pyramid gave atenite 41/400, other gems 0
-[21Nov2026 18:02:53.443] [Server thread/INFO] [ethermod/]: [autotest] PASS gems: chests/stronghold_library gave oculite 38/400, other gems 0
-[21Nov2026 18:02:53.471] [Server thread/INFO] [ethermod/]: [autotest] PASS gems: chests/end_city_treasure gave oculite 249/400, other gems 0
-[21Nov2026 18:02:53.479] [Server thread/INFO] [ethermod/]: [autotest] PASS gems: buried treasure held exactly one gem in 100/100
-[21Nov2026 18:02:53.480] [Server thread/INFO] [ethermod/]: [autotest] PASS advancements: 22/22 in the Manipulator tab
-[21Nov2026 18:02:53.480] [Server thread/INFO] [ethermod/]: [autotest] PASS advancements: summoning earns the root
-[21Nov2026 18:02:53.482] [Server thread/INFO] [ethermod/]: [autotest] PASS advancements: only holding a Sirenite earns nothing yet
-[21Nov2026 18:02:53.484] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Dev has made the advancement [Feathered Serpent]
-[21Nov2026 18:02:53.484] [Server thread/INFO] [ethermod/]: [autotest] PASS gems: using a Quetzalite unlocks the Botanic Module (before false)
-[21Nov2026 18:02:53.484] [Server thread/INFO] [ethermod/]: [autotest] PASS advancements: unlocking the Botanic Module earns Feathered Serpent only
-[21Nov2026 18:02:53.484] [Server thread/INFO] [ethermod/]: [autotest] PASS gems: the Module items are gone
-[21Nov2026 18:02:53.487] [Server thread/INFO] [ethermod/]: [autotest] PASS recipes: upgrade_iron is gem between two blocks, ingot fins top right and bottom left
-[21Nov2026 18:02:53.487] [Server thread/INFO] [ethermod/]: [autotest] PASS recipes: upgrade_diamond is gem between two blocks, ingot fins top right and bottom left
-[21Nov2026 18:02:53.513] [Render thread/INFO] [net.minecraft.client.gui.components.ChatComponent/]: [System] [CHAT] Dev has made the advancement [Feathered Serpent]
-[21Nov2026 18:02:53.514] [Render thread/INFO] [net.minecraft.advancements.AdvancementTree/]: Loaded 99 advancements
-[21Nov2026 18:02:53.548] [Server thread/INFO] [ethermod/]: [autotest] PASS gems: placed desert_pyramid, 4 chests, 1 with atenite: 0,0,-2+gem -2,0,0 2,0,0 0,0,2
-[21Nov2026 18:02:53.639] [Server thread/INFO] [ethermod/]: [autotest] PASS gems: placed jungle_pyramid, 4 chests, 1 with quetzalite: 2,-3,-10+gem+sticky 1,-3,-3 2,-2,-3 -4,-2,-1
-[21Nov2026 18:02:53.877] [Render thread/INFO] [net.minecraft.advancements.AdvancementTree/]: Loaded 100 advancements
-[21Nov2026 18:02:54.416] [Render thread/INFO] [ethermod/]: [autotest] shot 35_gem_glint
-[21Nov2026 18:02:54.839] [Render thread/INFO] [ethermod/]: [autotest] ADV manipulator/root at 0.0 9.0
-[21Nov2026 18:02:54.839] [Render thread/INFO] [ethermod/]: [autotest] ADV manipulator/atenite at 1.0 7.0
-[21Nov2026 18:02:54.839] [Render thread/INFO] [ethermod/]: [autotest] ADV manipulator/calibrated at 1.0 9.0
-[21Nov2026 18:02:54.839] [Render thread/INFO] [ethermod/]: [autotest] ADV manipulator/augmented at 2.0 9.0
-[21Nov2026 18:02:54.839] [Render thread/INFO] [ethermod/]: [autotest] ADV manipulator/oculite at 1.0 8.0
-[21Nov2026 18:02:54.839] [Render thread/INFO] [ethermod/]: [autotest] ADV manipulator/sirenite at 1.0 2.0
-[21Nov2026 18:02:54.839] [Render thread/INFO] [ethermod/]: [autotest] ADV manipulator/zephyrite at 1.0 5.0
-[21Nov2026 18:02:54.839] [Render thread/INFO] [ethermod/]: [autotest] ADV manipulator/gehennite at 1.0 3.0
-[21Nov2026 18:02:54.839] [Render thread/INFO] [ethermod/]: [autotest] ADV manipulator/stratite at 1.0 4.0
-[21Nov2026 18:02:54.839] [Render thread/INFO] [ethermod/]: [autotest] ADV manipulator/quetzalite at 1.0 6.0
-[21Nov2026 18:02:54.839] [Render thread/INFO] [ethermod/]: [autotest] ADV manipulator/dye at 1.0 10.0
-[21Nov2026 18:02:54.839] [Render thread/INFO] [ethermod/]: [autotest] ADV manipulator/spectrum at 2.0 10.0
-[21Nov2026 18:02:55.040] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Saving and pausing game...
-[21Nov2026 18:02:55.067] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[mm_autotest]'/minecraft:overworld
-[21Nov2026 18:02:55.094] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[mm_autotest]'/minecraft:the_nether
-[21Nov2026 18:02:55.094] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[mm_autotest]'/minecraft:the_end
-[21Nov2026 18:02:55.207] [Render thread/INFO] [ethermod/]: [autotest] shot 36_advancements
-[21Nov2026 18:02:55.406] [Render thread/INFO] [ethermod/]: [autotest] shot 36b_advancements_bottom
-[21Nov2026 18:02:59.497] [Render thread/INFO] [net.minecraft.client.Minecraft/]: Stopping!
-[21Nov2026 18:02:59.543] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: Dev lost connection: Disconnected
-[21Nov2026 18:02:59.543] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Dev left the game
-[21Nov2026 18:02:59.564] [Server thread/INFO] [net.minecraft.server.network.ServerCommonPacketListenerImpl/]: Stopping singleplayer server as player logged out
-[21Nov2026 18:02:59.608] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Stopping server
-[21Nov2026 18:02:59.609] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving players
-[21Nov2026 18:02:59.609] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving worlds
-[21Nov2026 18:03:00.363] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[mm_autotest]'/minecraft:overworld
-[21Nov2026 18:03:00.532] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[mm_autotest]'/minecraft:the_nether
-[21Nov2026 18:03:00.537] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[mm_autotest]'/minecraft:the_end
-[21Nov2026 18:03:00.549] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (mm_autotest): All chunks are saved
-[21Nov2026 18:03:00.550] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
-[21Nov2026 18:03:00.550] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
-[21Nov2026 18:03:00.550] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage: All dimensions are saved
+[21Nov2026 18:09:50.579] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 1024x512x4 minecraft:textures/atlas/blocks.png-atlas
+[21Nov2026 18:09:50.591] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 256x256x4 minecraft:textures/atlas/signs.png-atlas
+[21Nov2026 18:09:50.591] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x512x4 minecraft:textures/atlas/shield_patterns.png-atlas
+[21Nov2026 18:09:50.592] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x512x4 minecraft:textures/atlas/banner_patterns.png-atlas
+[21Nov2026 18:09:50.593] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 1024x1024x4 minecraft:textures/atlas/armor_trims.png-atlas
+[21Nov2026 18:09:50.598] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 256x256x4 minecraft:textures/atlas/chest.png-atlas
+[21Nov2026 18:09:50.598] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 128x64x4 minecraft:textures/atlas/decorated_pot.png-atlas
+[21Nov2026 18:09:50.599] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x256x4 minecraft:textures/atlas/beds.png-atlas
+[21Nov2026 18:09:50.599] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x256x4 minecraft:textures/atlas/shulker_boxes.png-atlas
+[21Nov2026 18:09:50.658] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x256x0 minecraft:textures/atlas/particles.png-atlas
+[21Nov2026 18:09:50.660] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 512x256x0 minecraft:textures/atlas/paintings.png-atlas
+[21Nov2026 18:09:50.661] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 256x128x0 minecraft:textures/atlas/mob_effects.png-atlas
+[21Nov2026 18:09:50.661] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 64x64x0 minecraft:textures/atlas/map_decorations.png-atlas
+[21Nov2026 18:09:50.661] [Render thread/INFO] [net.minecraft.client.renderer.texture.TextureAtlas/]: Created: 1024x512x0 minecraft:textures/atlas/gui.png-atlas
+[21Nov2026 18:09:50.684] [Render thread/WARN] [net.minecraft.client.renderer.ShaderInstance/]: Shader rendertype_entity_translucent_emissive could not find sampler named Sampler2 in the specified shader program.
+[21Nov2026 18:09:50.749] [Render thread/INFO] [net.neoforged.neoforge.client.entity.animation.json.AnimationLoader/]: Loaded 0 entity animations
+[21Nov2026 18:09:53.548] [Render thread/INFO] [net.minecraft.world.item.crafting.RecipeManager/]: Loaded 1293 recipes
+[21Nov2026 18:09:53.665] [Render thread/INFO] [net.minecraft.advancements.AdvancementTree/]: Loaded 1421 advancements
+[21Nov2026 18:09:54.154] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Starting integrated minecraft server version 1.21.1
+[21Nov2026 18:09:54.154] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Generating keypair
+[21Nov2026 18:09:54.774] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Preparing start region for dimension minecraft:overworld
+[21Nov2026 18:09:54.988] [progressListener/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 2%
+[21Nov2026 18:09:55.046] [Server thread/INFO] [net.neoforged.neoforge.server.permission.PermissionAPI/]: Successfully initialized permission handler neoforge:default_handler
+[21Nov2026 18:09:55.095] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Changing view distance to 12, from 10
+[21Nov2026 18:09:55.095] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Changing simulation distance to 12, from 0
+[21Nov2026 18:09:55.342] [progressListener/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Preparing spawn area: 51%
+[21Nov2026 18:09:55.343] [progressListener/INFO] [net.minecraft.server.level.progress.LoggerChunkProgressListener/]: Time elapsed: 521 ms
+[21Nov2026 18:09:55.845] [Server thread/INFO] [net.minecraft.server.players.PlayerList/]: Dev[local:E:c3e1ea14] logged in with entity id 1 at (9.5, -60.0, -8.5)
+[21Nov2026 18:09:55.951] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Dev joined the game
+[21Nov2026 18:09:56.491] [Render thread/INFO] [net.minecraft.client.gui.components.ChatComponent/]: [System] [CHAT] You carry an Ether Manipulator. Press R to summon it, K to open its traits.
+[21Nov2026 18:09:56.500] [Render thread/INFO] [net.minecraft.advancements.AdvancementTree/]: Loaded 2 advancements
+[21Nov2026 18:09:59.482] [Render thread/INFO] [net.minecraft.advancements.AdvancementTree/]: Loaded 29 advancements
+[21Nov2026 18:10:00.413] [Render thread/INFO] [ethermod/]: [autotest] shot 01_idle_first_person
+[21Nov2026 18:10:01.295] [Render thread/INFO] [ethermod/]: [autotest] shot 02_mining_first_person
+[21Nov2026 18:10:02.416] [Render thread/INFO] [ethermod/]: [autotest] shot 03_mining_later
+[21Nov2026 18:10:05.418] [Render thread/INFO] [ethermod/]: [autotest] PASS mining: stone ahead broke after 12 ticks of beam
+[21Nov2026 18:10:05.419] [Render thread/INFO] [ethermod/]: [autotest] PASS crystal after mining: e99f20 (want e99f20)
+[21Nov2026 18:10:05.419] [Server thread/INFO] [ethermod/]: [autotest] PASS drops: mined stone gave cobblestone (empty hotbar slot selected: false)
+[21Nov2026 18:10:06.668] [Render thread/INFO] [ethermod/]: [autotest] shot 04_beam_side_view
+[21Nov2026 18:10:07.669] [Render thread/INFO] [ethermod/]: [autotest] shot 05_beam_side_view_later
+[21Nov2026 18:10:09.662] [Render thread/INFO] [ethermod/]: [autotest] shot 06_combat_level1
+[21Nov2026 18:10:11.914] [Render thread/INFO] [ethermod/]: [autotest] shot 07_combat_ramped
+[21Nov2026 18:10:13.150] [Render thread/INFO] [ethermod/]: [autotest] shot 08_orb_charge_phase1
+[21Nov2026 18:10:14.651] [Render thread/INFO] [ethermod/]: [autotest] shot 09_orb_charge_full
+[21Nov2026 18:10:14.993] [Render thread/INFO] [ethermod/]: [autotest] shot 10_orb_fired
+[21Nov2026 18:10:14.993] [Render thread/INFO] [ethermod/]: [autotest] PASS crystal after an Energy orb: 20c1e9 (want 20c1e9)
+[21Nov2026 18:10:17.152] [Render thread/INFO] [ethermod/]: [autotest] shot 11_orb_charge_side_view
+[21Nov2026 18:10:17.308] [Render thread/INFO] [ethermod/]: [autotest] shot 12_orb_fired_side_view
+[21Nov2026 18:10:18.403] [Render thread/INFO] [ethermod/]: [autotest] shot 13_trait_screen
+[21Nov2026 18:10:18.563] [Render thread/INFO] [ethermod/]: [autotest] shot 13b_colours_tab
+[21Nov2026 18:10:18.703] [Render thread/INFO] [ethermod/]: [autotest] shot 13c_loadouts_tab
+[21Nov2026 18:10:21.205] [Render thread/INFO] [ethermod/]: [autotest] shot 15_custom_colour_sweep
+[21Nov2026 18:10:21.297] [Render thread/INFO] [ethermod/]: [autotest] PASS colour: orbs follow the mode (20c1e9), the beam is Plasmic orange (true)
+[21Nov2026 18:10:21.694] [Render thread/INFO] [ethermod/]: [autotest] shot 16_custom_colour_model
+[21Nov2026 18:10:22.462] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Dev has made the advancement [Stone Age]
+[21Nov2026 18:10:22.517] [Render thread/INFO] [net.minecraft.client.gui.components.ChatComponent/]: [System] [CHAT] Dev has made the advancement [Stone Age]
+[21Nov2026 18:10:22.518] [Render thread/INFO] [net.minecraft.advancements.AdvancementTree/]: Loaded 47 advancements
+[21Nov2026 18:10:23.397] [Render thread/INFO] [ethermod/]: [autotest] shot 17_sneak_beam
+[21Nov2026 18:10:23.613] [Render thread/INFO] [ethermod/]: [autotest] PASS sneak beam, no water near: grass ahead is now block.minecraft.dirt_path (beamActive=true, sneaking=true, hit=net.minecraft.world.phys.BlockHitResult@6ec36f78)
+[21Nov2026 18:10:24.997] [Render thread/INFO] [ethermod/]: [autotest] PASS sneak beam, water near: grass ahead is now block.minecraft.farmland
+[21Nov2026 18:10:25.461] [Render thread/INFO] [net.minecraft.advancements.AdvancementTree/]: Loaded 49 advancements
+[21Nov2026 18:10:26.004] [Render thread/INFO] [ethermod/]: [autotest] PASS swing: a sword still swings with the Manipulator put away
+[21Nov2026 18:10:26.005] [Render thread/INFO] [ethermod/]: [autotest] shot 14_sword_swing
+[21Nov2026 18:10:26.270] [Render thread/INFO] [net.minecraft.advancements.AdvancementTree/]: Loaded 58 advancements
+[21Nov2026 18:10:27.528] [Render thread/INFO] [ethermod/]: [autotest] shot 18_beam_water_front
+[21Nov2026 18:10:27.833] [Render thread/INFO] [ethermod/]: [autotest] shot 19_beam_water_first_person
+[21Nov2026 18:10:30.400] [Render thread/INFO] [ethermod/]: [autotest] shot 20a_frost_charging
+[21Nov2026 18:10:31.713] [Render thread/INFO] [ethermod/]: [autotest] PASS frost: charged shard laid an ice bridge over the trench (10/10 blocks)
+[21Nov2026 18:10:31.714] [Render thread/INFO] [ethermod/]: [autotest] shot 20_frost_bridge
+[21Nov2026 18:10:33.412] [Render thread/INFO] [ethermod/]: [autotest] PASS water: a tap placed a water source like a bucket
+[21Nov2026 18:10:33.412] [Render thread/INFO] [ethermod/]: [autotest] shot 21_water_tap
+[21Nov2026 18:10:33.898] [Render thread/INFO] [ethermod/]: [autotest] PASS colour: crystal switched to the Lava colour (ff7020)
+[21Nov2026 18:10:34.395] [Render thread/INFO] [ethermod/]: [autotest] shot 22_lava_mode_crystal
+[21Nov2026 18:10:38.144] [Render thread/INFO] [ethermod/]: [autotest] shot 23a_growth_charging
+[21Nov2026 18:10:39.903] [Render thread/INFO] [ethermod/]: [autotest] shot 23_pollen_cloud
+[21Nov2026 18:10:43.649] [Render thread/INFO] [ethermod/]: [autotest] shot 24_light_bounce
+[21Nov2026 18:10:44.815] [Render thread/INFO] [ethermod/]: [autotest] shot 25_tether_rope
+[21Nov2026 18:10:45.194] [Render thread/INFO] [ethermod/]: [autotest] PASS tether: the hook reeled the player up (1.8 blocks)
+[21Nov2026 18:10:46.315] [Render thread/INFO] [ethermod/]: [autotest] shot 26_gust_grenade_latched
+[21Nov2026 18:10:47.712] [Render thread/INFO] [ethermod/]: [autotest] shot 26b_gust_grenade_burst
+[21Nov2026 18:10:47.995] [Server thread/INFO] [ethermod/]: [autotest] PASS gust: right click threw a grenade that burst (bursts 1, pig hurt true)
+[21Nov2026 18:10:48.030] [Render thread/INFO] [net.minecraft.advancements.AdvancementTree/]: Loaded 94 advancements
+[21Nov2026 18:10:48.405] [Render thread/INFO] [ethermod/]: [autotest] tether: aiming at the pig 13.0 blocks out, pitch 5.1
+[21Nov2026 18:10:48.513] [Render thread/INFO] [ethermod/]: [autotest] tether: aiming at the pig 13.0 blocks out, pitch 5.1
+[21Nov2026 18:10:49.098] [Server thread/INFO] [ethermod/]: [autotest] tether pig v=0.60 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
+[21Nov2026 18:10:49.098] [Server thread/INFO] [ethermod/]: [autotest] tether pig at 12.4
+[21Nov2026 18:10:49.296] [Server thread/INFO] [ethermod/]: [autotest] tether pig v=0.60 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
+[21Nov2026 18:10:49.297] [Server thread/INFO] [ethermod/]: [autotest] tether pig at 10.0
+[21Nov2026 18:10:49.416] [Render thread/INFO] [ethermod/]: [autotest] shot 27_tether_pull
+[21Nov2026 18:10:49.509] [Server thread/INFO] [ethermod/]: [autotest] tether pig v=0.60 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
+[21Nov2026 18:10:49.510] [Server thread/INFO] [ethermod/]: [autotest] tether pig at 7.1
+[21Nov2026 18:10:49.703] [Server thread/INFO] [ethermod/]: [autotest] tether pig v=0.60 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
+[21Nov2026 18:10:49.703] [Server thread/INFO] [ethermod/]: [autotest] tether pig at 5.3
+[21Nov2026 18:10:49.900] [Server thread/INFO] [ethermod/]: [autotest] tether pig v=0.58 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
+[21Nov2026 18:10:49.900] [Server thread/INFO] [ethermod/]: [autotest] tether pig at 3.1
+[21Nov2026 18:10:50.120] [Server thread/INFO] [ethermod/]: [autotest] PASS tether: a right click tap reeled the hooked pig from 12 to 0.6 blocks (pig pulled 12.6)
+[21Nov2026 18:10:50.662] [Render thread/INFO] [net.minecraft.advancements.AdvancementTree/]: Loaded 97 advancements
+[21Nov2026 18:10:51.408] [Render thread/INFO] [ethermod/]: [autotest] shot 28_light_beacon
+[21Nov2026 18:10:51.408] [Render thread/INFO] [ethermod/]: [autotest] PASS light: the Beacon lights where it lands (2 light blocks)
+[21Nov2026 18:10:51.408] [Render thread/INFO] [ethermod/]: [autotest] PASS mining is Beam-only: 20 ticks of left click in Light mode left the stone
+[21Nov2026 18:10:51.410] [Render thread/INFO] [ethermod/]: [autotest] PASS Photonic glow: the player is a moving light source (1 sources, glow 14.7, block light at the eyes 14)
+[21Nov2026 18:10:51.411] [Server thread/INFO] [ethermod/]: [autotest] PASS Photonic glow places no light block over the player
+[21Nov2026 18:10:53.042] [Render thread/INFO] [ethermod/]: [autotest] PASS light: the Beacon's light goes with it (0 left [], 0 were there before)
+[21Nov2026 18:10:53.721] [Render thread/INFO] [ethermod/]: [autotest] shot 29_harvest
+[21Nov2026 18:10:54.166] [Server thread/INFO] [ethermod/]: [autotest] PASS growth: left click harvested 9 of 9 ripe wheat
+[21Nov2026 18:10:55.896] [Server thread/INFO] [ethermod/]: [autotest] PASS mass driver: left click lifted the stone
+[21Nov2026 18:10:57.251] [Render thread/INFO] [ethermod/]: [autotest] shot 30_mass_throw
+[21Nov2026 18:10:57.652] [Server thread/INFO] [ethermod/]: [autotest] PASS mass driver: right click threw the carried stone
+[21Nov2026 18:10:59.414] [Server thread/INFO] [ethermod/]: [autotest] zipline after the first sneaking hook: [anchor=true partner=-1 stuck=true at 92, -55, -3] hook=none riding=false using=false crouch=true
+[21Nov2026 18:11:00.498] [Server thread/INFO] [ethermod/]: [autotest] zipline after the second sneaking hook: [anchor=true partner=101 stuck=true at 92, -55, -3] [anchor=true partner=99 stuck=true at 106, -55, -3] hook=none riding=false using=false crouch=true
+[21Nov2026 18:11:00.909] [Server thread/INFO] [ethermod/]: [autotest] zipline right click on the rope: [anchor=true partner=101 stuck=true at 92, -55, -3] [anchor=true partner=99 stuck=true at 106, -55, -3] hook=none riding=true using=true crouch=false
+[21Nov2026 18:11:01.698] [Server thread/INFO] [ethermod/]: [autotest] zipline while riding: [anchor=true partner=101 stuck=true at 92, -55, -3] [anchor=true partner=99 stuck=true at 106, -55, -3] hook=none riding=true using=true crouch=false
+[21Nov2026 18:11:01.892] [Render thread/INFO] [ethermod/]: [autotest] PASS zipline: right click aimed at the rope rides it (riding=true, rose 3.0 blocks)
+[21Nov2026 18:11:09.786] [Server thread/INFO] [ethermod/]: [autotest] PASS gems: chests/shipwreck_treasure gave sirenite 92/400, other gems 0
+[21Nov2026 18:11:09.801] [Server thread/INFO] [ethermod/]: [autotest] PASS gems: chests/underwater_ruin_big gave sirenite 151/400, other gems 0
+[21Nov2026 18:11:09.827] [Server thread/INFO] [ethermod/]: [autotest] PASS gems: chests/ruined_portal gave gehennite 400/400, other gems 0
+[21Nov2026 18:11:09.830] [Server thread/INFO] [ethermod/]: [autotest] PASS gems: chests/nether_bridge gave gehennite 50/400, other gems 0
+[21Nov2026 18:11:09.836] [Server thread/INFO] [ethermod/]: [autotest] PASS gems: chests/abandoned_mineshaft gave stratite 34/400, other gems 0
+[21Nov2026 18:11:09.848] [Server thread/INFO] [ethermod/]: [autotest] PASS gems: chests/trial_chambers/reward gave zephyrite 64/400, other gems 0
+[21Nov2026 18:11:09.854] [Server thread/INFO] [ethermod/]: [autotest] PASS gems: chests/jungle_temple gave quetzalite 108/400, other gems 0
+[21Nov2026 18:11:09.861] [Server thread/INFO] [ethermod/]: [autotest] PASS gems: chests/desert_pyramid gave atenite 41/400, other gems 0
+[21Nov2026 18:11:09.873] [Server thread/INFO] [ethermod/]: [autotest] PASS gems: chests/stronghold_library gave oculite 38/400, other gems 0
+[21Nov2026 18:11:09.885] [Server thread/INFO] [ethermod/]: [autotest] PASS gems: chests/end_city_treasure gave oculite 249/400, other gems 0
+[21Nov2026 18:11:09.888] [Server thread/INFO] [ethermod/]: [autotest] PASS gems: buried treasure held exactly one gem in 100/100
+[21Nov2026 18:11:09.889] [Server thread/INFO] [ethermod/]: [autotest] PASS advancements: 22/22 in the Manipulator tab
+[21Nov2026 18:11:09.890] [Server thread/INFO] [ethermod/]: [autotest] PASS advancements: summoning earns the root
+[21Nov2026 18:11:09.891] [Server thread/INFO] [ethermod/]: [autotest] PASS advancements: only holding a Sirenite earns nothing yet
+[21Nov2026 18:11:09.892] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Dev has made the advancement [Feathered Serpent]
+[21Nov2026 18:11:09.894] [Server thread/INFO] [ethermod/]: [autotest] PASS gems: using a Quetzalite unlocks the Botanic Module (before false)
+[21Nov2026 18:11:09.894] [Server thread/INFO] [ethermod/]: [autotest] PASS advancements: unlocking the Botanic Module earns Feathered Serpent only
+[21Nov2026 18:11:09.894] [Server thread/INFO] [ethermod/]: [autotest] PASS gems: the Module items are gone
+[21Nov2026 18:11:09.895] [Server thread/INFO] [ethermod/]: [autotest] PASS recipes: upgrade_iron is gem between two blocks, ingot fins top right and bottom left
+[21Nov2026 18:11:09.895] [Server thread/INFO] [ethermod/]: [autotest] PASS recipes: upgrade_diamond is gem between two blocks, ingot fins top right and bottom left
+[21Nov2026 18:11:09.910] [Render thread/INFO] [net.minecraft.client.gui.components.ChatComponent/]: [System] [CHAT] Dev has made the advancement [Feathered Serpent]
+[21Nov2026 18:11:09.911] [Render thread/INFO] [net.minecraft.advancements.AdvancementTree/]: Loaded 97 advancements
+[21Nov2026 18:11:09.949] [Server thread/INFO] [ethermod/]: [autotest] PASS gems: placed desert_pyramid, 4 chests, 1 with atenite: 0,0,-2+gem -2,0,0 2,0,0 0,0,2
+[21Nov2026 18:11:10.018] [Server thread/INFO] [ethermod/]: [autotest] PASS gems: placed jungle_pyramid, 4 chests, 1 with quetzalite: -2,-3,-1+gem+sticky -3,-3,6 -2,-2,6 -8,-2,8
+[21Nov2026 18:11:10.288] [Render thread/INFO] [net.minecraft.advancements.AdvancementTree/]: Loaded 98 advancements
+[21Nov2026 18:11:10.912] [Render thread/INFO] [ethermod/]: [autotest] shot 35_gem_glint
+[21Nov2026 18:11:11.325] [Render thread/INFO] [ethermod/]: [autotest] ADV manipulator/root at 0.0 9.0
+[21Nov2026 18:11:11.325] [Render thread/INFO] [ethermod/]: [autotest] ADV manipulator/gehennite at 1.0 3.0
+[21Nov2026 18:11:11.325] [Render thread/INFO] [ethermod/]: [autotest] ADV manipulator/stratite at 1.0 4.0
+[21Nov2026 18:11:11.326] [Render thread/INFO] [ethermod/]: [autotest] ADV manipulator/atenite at 1.0 7.0
+[21Nov2026 18:11:11.326] [Render thread/INFO] [ethermod/]: [autotest] ADV manipulator/zephyrite at 1.0 5.0
+[21Nov2026 18:11:11.326] [Render thread/INFO] [ethermod/]: [autotest] ADV manipulator/calibrated at 1.0 9.0
+[21Nov2026 18:11:11.326] [Render thread/INFO] [ethermod/]: [autotest] ADV manipulator/augmented at 2.0 9.0
+[21Nov2026 18:11:11.326] [Render thread/INFO] [ethermod/]: [autotest] ADV manipulator/sirenite at 1.0 2.0
+[21Nov2026 18:11:11.326] [Render thread/INFO] [ethermod/]: [autotest] ADV manipulator/quetzalite at 1.0 6.0
+[21Nov2026 18:11:11.326] [Render thread/INFO] [ethermod/]: [autotest] ADV manipulator/oculite at 1.0 8.0
+[21Nov2026 18:11:11.326] [Render thread/INFO] [ethermod/]: [autotest] ADV manipulator/dye at 1.0 10.0
+[21Nov2026 18:11:11.326] [Render thread/INFO] [ethermod/]: [autotest] ADV manipulator/spectrum at 2.0 10.0
+[21Nov2026 18:11:11.456] [Server thread/INFO] [net.minecraft.client.server.IntegratedServer/]: Saving and pausing game...
+[21Nov2026 18:11:11.478] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[mm_autotest]'/minecraft:overworld
+[21Nov2026 18:11:11.503] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[mm_autotest]'/minecraft:the_end
+[21Nov2026 18:11:11.506] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[mm_autotest]'/minecraft:the_nether
+[21Nov2026 18:11:11.774] [Render thread/INFO] [ethermod/]: [autotest] shot 36_advancements
+[21Nov2026 18:11:11.894] [Render thread/INFO] [ethermod/]: [autotest] shot 36b_advancements_bottom
+[21Nov2026 18:11:16.007] [Render thread/INFO] [net.minecraft.client.Minecraft/]: Stopping!
+[21Nov2026 18:11:16.059] [Server thread/INFO] [net.minecraft.server.network.ServerGamePacketListenerImpl/]: Dev lost connection: Disconnected
+[21Nov2026 18:11:16.060] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Dev left the game
+[21Nov2026 18:11:16.071] [Server thread/INFO] [net.minecraft.server.network.ServerCommonPacketListenerImpl/]: Stopping singleplayer server as player logged out
+[21Nov2026 18:11:16.127] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Stopping server
+[21Nov2026 18:11:16.129] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving players
+[21Nov2026 18:11:16.130] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving worlds
+[21Nov2026 18:11:16.880] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[mm_autotest]'/minecraft:overworld
+[21Nov2026 18:11:16.931] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[mm_autotest]'/minecraft:the_end
+[21Nov2026 18:11:16.934] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: Saving chunks for level 'ServerLevel[mm_autotest]'/minecraft:the_nether
+[21Nov2026 18:11:16.946] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (mm_autotest): All chunks are saved
+[21Nov2026 18:11:16.946] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[21Nov2026 18:11:16.946] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[21Nov2026 18:11:16.946] [Server thread/INFO] [net.minecraft.server.MinecraftServer/]: ThreadedAnvilChunkStorage: All dimensions are saved
