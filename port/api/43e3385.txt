@@ -1,0 +1,92 @@
+/home/runner/.gradle/caches/modules-2/files-2.1/curse.maven/geckolib-388172/8893169/196231506b89da06925c087f9b8bc5fd12ebea16/geckolib-388172-8893169.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/io.github.llamalad7/mixinextras-neoforge/0.5.5/26f2905a37afd203c3da1d6a2e164472a7531b41/mixinextras-neoforge-0.5.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.accesstransformers/at-parser/11.0.2/64aae57d6d26d69543c5275181fe6971707a4e16/at-parser-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/earlydisplay/12.0.16/efa2e56115d22853d10524874a7bbb64555c2a28/earlydisplay-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/12.0.16/edbb2ee8211a867215970bc15ae9c354fa56dc09/loader-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarMetadata/0.5.3/ff40c1cd721d07615d825c5bbf27705b2e3258ed/JarJarMetadata-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarSelector/0.5.3/6b845aab8d5c8e721b4e3cd30f97722b7f8044b1/JarJarSelector-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/accesstransformers/11.0.2/25dcb69c78b16669935f0ab91dff830ce192379d/accesstransformers-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/bus/8.0.5/5b2d33285ab5d1554e9798ad98c40d6ea3868bd5/bus-8.0.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/mergetool/2.0.7/793b18456e92c4a7f66d9b5d8bf7a9c1c7a20b20/mergetool-2.0.7-api.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar
+=== LIST /(.*LootModifier.*|.*loot/.*Neo.*)$
+net/minecraft/commands/arguments/ResourceOrIdArgument$LootModifierArgument
+net/neoforged/neoforge/common/data/GlobalLootModifierProvider
+net/neoforged/neoforge/common/loot/AddTableLootModifier
+net/neoforged/neoforge/common/loot/IGlobalLootModifier
+net/neoforged/neoforge/common/loot/LootModifier
+net/neoforged/neoforge/common/loot/LootModifierManager
+net/neoforged/neoforge/common/loot/NeoForgeLootContextParams
+=== CODE net/neoforged/neoforge/common/loot/LootModifierManager apply
+  protected void apply(java.util.Map<net.minecraft.resources.Identifier, net.neoforged.neoforge.common.loot.IGlobalLootModifier>, net.minecraft.server.packs.resources.ResourceManager, net.minecraft.util.profiling.ProfilerFiller);
+    Code:
+         0: invokestatic  #54                 // Method com/google/common/collect/ImmutableBiMap.builder:()Lcom/google/common/collect/ImmutableBiMap$Builder;
+         3: astore        4
+         5: aload_1
+         6: invokeinterface #58,  1           // InterfaceMethod java/util/Map.entrySet:()Ljava/util/Set;
+        11: invokeinterface #64,  1           // InterfaceMethod java/util/Set.iterator:()Ljava/util/Iterator;
+        16: astore        5
+        18: aload         5
+        20: invokeinterface #70,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+        25: ifeq          69
+        28: aload         5
+        30: invokeinterface #76,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+        35: checkcast     #80                 // class java/util/Map$Entry
+        38: astore        6
+        40: aload         4
+        42: aload         6
+        44: invokeinterface #82,  1           // InterfaceMethod java/util/Map$Entry.getKey:()Ljava/lang/Object;
+        49: checkcast     #12                 // class net/minecraft/resources/Identifier
+        52: aload         6
+        54: invokeinterface #85,  1           // InterfaceMethod java/util/Map$Entry.getValue:()Ljava/lang/Object;
+        59: checkcast     #2                  // class net/neoforged/neoforge/common/loot/IGlobalLootModifier
+        62: invokevirtual #88                 // Method com/google/common/collect/ImmutableBiMap$Builder.put:(Ljava/lang/Object;Ljava/lang/Object;)Lcom/google/common/collect/ImmutableBiMap$Builder;
+        65: pop
+        66: goto          18
+        69: aload_0
+        70: aload         4
+        72: invokevirtual #94                 // Method com/google/common/collect/ImmutableBiMap$Builder.build:()Lcom/google/common/collect/ImmutableBiMap;
+        75: putfield      #41                 // Field registeredLootModifiers:Lcom/google/common/collect/BiMap;
+        78: aload_0
+        79: aload_0
+        80: getfield      #41                 // Field registeredLootModifiers:Lcom/google/common/collect/BiMap;
+        83: invokeinterface #97,  1           // InterfaceMethod com/google/common/collect/BiMap.values:()Ljava/util/Set;
+        88: invokeinterface #102,  1          // InterfaceMethod java/util/Set.stream:()Ljava/util/stream/Stream;
+        93: invokedynamic #106,  0            // InvokeDynamic #0:applyAsInt:()Ljava/util/function/ToIntFunction;
+        98: invokestatic  #110                // InterfaceMethod java/util/Comparator.comparingInt:(Ljava/util/function/ToIntFunction;)Ljava/util/Comparator;
+       101: invokeinterface #116,  2          // InterfaceMethod java/util/stream/Stream.sorted:(Ljava/util/Comparator;)Ljava/util/stream/Stream;
+       106: invokeinterface #122,  1          // InterfaceMethod java/util/stream/Stream.toList:()Ljava/util/List;
+       111: putfield      #50                 // Field sortedModifiers:Ljava/util/List;
+       114: return
+  protected void apply(java.lang.Object, net.minecraft.server.packs.resources.ResourceManager, net.minecraft.util.profiling.ProfilerFiller);
+    Code:
+         0: aload_0
+         1: aload_1
+         2: checkcast     #59                 // class java/util/Map
+         5: aload_2
+         6: aload_3
+         7: invokevirtual #133                // Method apply:(Ljava/util/Map;Lnet/minecraft/server/packs/resources/ResourceManager;Lnet/minecraft/util/profiling/ProfilerFiller;)V
+        10: return
+=== CODE net/neoforged/neoforge/common/loot/LootModifierManager prepare
+=== CODE net/neoforged/neoforge/common/loot/LootModifierManager <clinit>
+=== SIG  
+=== net/neoforged/neoforge/common/loot/LootModifierManager
+Compiled from "LootModifierManager.java"
+public class net.neoforged.neoforge.common.loot.LootModifierManager extends net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener<net.neoforged.neoforge.common.loot.IGlobalLootModifier> {
+  public static final org.apache.logging.log4j.Logger LOGGER;
+  public net.neoforged.neoforge.common.loot.LootModifierManager();
+  public java.lang.Iterable<net.neoforged.neoforge.common.loot.IGlobalLootModifier> getSortedModifiers();
+  public net.minecraft.resources.Identifier getId(net.neoforged.neoforge.common.loot.IGlobalLootModifier);
+  public net.neoforged.neoforge.common.loot.IGlobalLootModifier getModifier(net.minecraft.resources.Identifier);
+}
+=== net/neoforged/neoforge/common/loot/IGlobalLootModifier
+Compiled from "IGlobalLootModifier.java"
+public interface net.neoforged.neoforge.common.loot.IGlobalLootModifier {
+  public static final com.mojang.serialization.Codec<net.neoforged.neoforge.common.loot.IGlobalLootModifier> DIRECT_CODEC;
+  public static final com.mojang.serialization.Codec<java.util.Optional<net.neoforged.neoforge.common.conditions.WithConditions<net.neoforged.neoforge.common.loot.IGlobalLootModifier>>> CONDITIONAL_CODEC;
+  public static final int DEFAULT_PRIORITY;
+  public abstract it.unimi.dsi.fastutil.objects.ObjectArrayList<net.minecraft.world.item.ItemStack> apply(it.unimi.dsi.fastutil.objects.ObjectArrayList<net.minecraft.world.item.ItemStack>, net.minecraft.world.level.storage.loot.LootContext);
+  public abstract com.mojang.serialization.MapCodec<? extends net.neoforged.neoforge.common.loot.IGlobalLootModifier> codec();
+  public abstract int priority();
+}
