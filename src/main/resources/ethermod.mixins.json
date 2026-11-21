@@ -28,6 +28,7 @@
     "FlightEquipmentMixin",
     "GemGlintMixin",
     "GravityCameraMixin",
+    "NoUseDipMixin",
     "PhotonicGlowEntityMixin",
     "PhotonicGlowMixin",
     "RenderStateEntityMixin",

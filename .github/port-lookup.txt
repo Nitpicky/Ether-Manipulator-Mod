@@ -1,4 +1,4 @@
-net/minecraft/client/renderer/state/level/PlayerRenderState net/minecraft/client/renderer/state/level/PlayerRenderState\$BlockOverlay net/minecraft/client/player/FirstPersonHandsAndItems
-/.*(Overlay|Bob).*$
-net/minecraft/client/player/FirstPersonHandsAndItems#itemUsed net/minecraft/client/renderer/state/level/PlayerRenderState#extract
-net/minecraft/client/player/FirstPersonHandsAndItems#.* net/minecraft/client/renderer/state/level/PlayerRenderState#.* net/minecraft/client/renderer/GameRenderer#.*(ob|Bob|Overlay).*
+net/neoforged/neoforge/client/event/ExtractBlockScreenEffectEvent.* net/minecraft/client/renderer/state/level/CameraRenderState
+/.*(AvatarState|ClientAvatar.*|ScreenEffect.*)$
+net/minecraft/client/renderer/GameRenderer#bobView
+net/minecraft/client/player/AbstractClientPlayer#.*vatar.* net/minecraft/world/entity/player/Player#.*(alkDist|ob).*
