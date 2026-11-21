@@ -11,6 +11,7 @@ next release's notes.
 
 ### Fixes
 - Lock-On: the beam now visibly stays on the locked creature.
+- Growth: no longer bone-meals grass, ferns and tall flowers (it broke them and spilled items).
 - Shots: jumping as you fire no longer catches your own shot (Water stopped the jump, Frost lost its bridge).
 
 ### Tuning
