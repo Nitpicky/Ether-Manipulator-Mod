@@ -1,4 +1,4 @@
-net/minecraft/client/Camera net/minecraft/client/entity/ClientAvatarState net/minecraft/client/renderer/state/level/CameraEntityRenderState
-/.*(Destruction|Destroy|Crumbl).*$
-net/minecraft/client/Camera#update net/minecraft/client/entity/ClientAvatarState#tick
-net/minecraft/client/renderer/LevelRenderer#.*(estr|rack|Progress).* net/minecraft/client/Camera#.*
+net/minecraft/client/renderer/state/level/LevelRenderState
+/.*BlockStateBase$
+net/minecraft/client/player/AbstractClientPlayer#aiStep net/minecraft/client/renderer/LevelRenderer#submitBlockDestroyAnimation
+net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase#isViewBlocking net/minecraft/client/multiplayer/ClientLevel#.*(estr|Progress).* net/minecraft/client/renderer/LevelRenderer#.*(estr|Progress|Destr).*
