@@ -1,0 +1,91 @@
+/home/runner/.gradle/caches/modules-2/files-2.1/curse.maven/geckolib-388172/8893169/196231506b89da06925c087f9b8bc5fd12ebea16/geckolib-388172-8893169.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/io.github.llamalad7/mixinextras-neoforge/0.5.5/26f2905a37afd203c3da1d6a2e164472a7531b41/mixinextras-neoforge-0.5.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.accesstransformers/at-parser/11.0.2/64aae57d6d26d69543c5275181fe6971707a4e16/at-parser-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/earlydisplay/12.0.16/efa2e56115d22853d10524874a7bbb64555c2a28/earlydisplay-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/12.0.16/edbb2ee8211a867215970bc15ae9c354fa56dc09/loader-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarMetadata/0.5.3/ff40c1cd721d07615d825c5bbf27705b2e3258ed/JarJarMetadata-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarSelector/0.5.3/6b845aab8d5c8e721b4e3cd30f97722b7f8044b1/JarJarSelector-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/accesstransformers/11.0.2/25dcb69c78b16669935f0ab91dff830ce192379d/accesstransformers-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/bus/8.0.5/5b2d33285ab5d1554e9798ad98c40d6ea3868bd5/bus-8.0.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/mergetool/2.0.7/793b18456e92c4a7f66d9b5d8bf7a9c1c7a20b20/mergetool-2.0.7-api.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar
+=== CODE  
+=== SIG net/minecraft/world/entity/player/Player maybeBackOffFromEdge
+  protected net.minecraft.world.phys.Vec3 maybeBackOffFromEdge(net.minecraft.world.phys.Vec3, net.minecraft.world.entity.MoverType);
+=== SIG net/minecraft/world/entity/player/Player canPlayerFitWithinBlocksAndEntitiesWhen
+  protected boolean canPlayerFitWithinBlocksAndEntitiesWhen(net.minecraft.world.entity.Pose);
+=== SIG net/minecraft/world/entity/player/Player travel
+  public void travel(net.minecraft.world.phys.Vec3);
+=== SIG net/minecraft/world/entity/player/Player causeFoodExhaustion
+  public void causeFoodExhaustion(float);
+=== SIG net/minecraft/world/entity/player/Player tryToStartFallFlying
+  public boolean tryToStartFallFlying();
+=== SIG net/minecraft/world/entity/player/Player getItemBySlot
+=== SIG net/minecraft/world/entity/player/Player interactOn
+  public net.minecraft.world.InteractionResult interactOn(net.minecraft.world.entity.Entity, net.minecraft.world.InteractionHand, net.minecraft.world.phys.Vec3);
+=== SIG net/minecraft/world/entity/player/Player setItemSlot
+=== SIG net/minecraft/server/level/ServerPlayer drop
+  public net.minecraft.world.entity.item.ItemEntity drop(net.minecraft.world.item.ItemStack, boolean, net.minecraft.util.Prediction);
+  public void drop(boolean);
+=== SIG net/minecraft/world/level/block/FireBlock tick
+  protected void tick(net.minecraft.world.level.block.state.BlockState, net.minecraft.server.level.ServerLevel, net.minecraft.core.BlockPos, net.minecraft.util.RandomSource);
+=== SIG net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity litTime
+=== SIG net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity litDuration
+=== SIG net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity litTimeRemaining
+  private int litTimeRemaining;
+=== SIG net/minecraft/world/level/block/entity/AbstractFurnaceBlockEntity litTotalTime
+  private int litTotalTime;
+=== SIG net/minecraft/world/entity/Entity makeBoundingBox
+  protected final net.minecraft.world.phys.AABB makeBoundingBox();
+  protected net.minecraft.world.phys.AABB makeBoundingBox(net.minecraft.world.phys.Vec3);
+=== SIG net/minecraft/world/entity/Entity getEyePosition
+  public final net.minecraft.world.phys.Vec3 getEyePosition();
+  public final net.minecraft.world.phys.Vec3 getEyePosition(float);
+=== SIG net/minecraft/world/entity/Entity getViewVector
+  public final net.minecraft.world.phys.Vec3 getViewVector(float);
+=== SIG net/minecraft/world/entity/Entity getLookAngle
+  public net.minecraft.world.phys.Vec3 getLookAngle();
+=== SIG net/minecraft/world/entity/Entity collide
+  private net.minecraft.world.phys.Vec3 collide(net.minecraft.world.phys.Vec3);
+=== SIG net/minecraft/world/entity/Entity move
+  public void move(net.minecraft.world.entity.MoverType, net.minecraft.world.phys.Vec3);
+=== SIG net/minecraft/world/entity/Entity lavaHurt
+  public void lavaHurt();
+=== SIG net/minecraft/world/entity/LivingEntity calculateEntityAnimation
+  public void calculateEntityAnimation(boolean);
+=== SIG net/minecraft/world/entity/LivingEntity jumpFromGround
+  public void jumpFromGround();
+=== SIG net/minecraft/world/entity/LivingEntity updateFallFlying
+  protected void updateFallFlying();
+=== SIG net/minecraft/server/network/ServerGamePacketListenerImpl handleMovePlayer
+  public void handleMovePlayer(net.minecraft.network.protocol.game.ServerboundMovePlayerPacket);
+=== SIG net/minecraft/server/network/ServerGamePacketListenerImpl clientIsFloating
+  private boolean clientIsFloating;
+=== SIG net/minecraft/server/network/ServerGamePacketListenerImpl tick
+  public void tick();
+=== SIG net/minecraft/advancements/TreeNodePosition run
+  public static void run(net.minecraft.advancements.AdvancementNode);
+=== SIG net/minecraft/world/level/block/SoulFireBlock canSurvive
+  protected boolean canSurvive(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.LevelReader, net.minecraft.core.BlockPos);
+=== SIG net/minecraft/world/level/material/FlowingFluid getFlow
+  public net.minecraft.world.phys.Vec3 getFlow(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.level.material.FluidState);
+=== SIG net/minecraft/world/level/material/FlowingFluid canSpreadTo
+=== SIG net/minecraft/world/level/block/BaseFireBlock entityInside
+  protected void entityInside(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.entity.Entity, net.minecraft.world.entity.InsideBlockEffectApplier, boolean);
+=== SIG net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase useItemOn
+  public net.minecraft.world.InteractionResult useItemOn(net.minecraft.world.item.ItemStack, net.minecraft.world.level.Level, net.minecraft.world.entity.player.Player, net.minecraft.world.InteractionHand, net.minecraft.world.phys.BlockHitResult);
+=== SIG net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase useWithoutItem
+  public net.minecraft.world.InteractionResult useWithoutItem(net.minecraft.world.level.Level, net.minecraft.world.entity.player.Player, net.minecraft.world.phys.BlockHitResult);
+=== net/minecraft/world/level/block/BaseFireBlock
+Compiled from "BaseFireBlock.java"
+public abstract class net.minecraft.world.level.block.BaseFireBlock extends net.minecraft.world.level.block.Block {
+  public net.minecraft.world.level.block.BaseFireBlock(net.minecraft.world.level.block.state.BlockBehaviour$Properties, float);
+  public net.minecraft.world.level.block.state.BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext);
+  public static net.minecraft.world.level.block.state.BlockState getState(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos);
+  public void animateTick(net.minecraft.world.level.block.state.BlockState, net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.util.RandomSource);
+  public static void fireIgnite(net.minecraft.world.entity.Entity);
+  public void spawnDestroyByEntityParticles(net.minecraft.world.level.Level, net.minecraft.world.entity.Entity, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState);
+  public net.minecraft.world.level.block.state.BlockState playerWillDestroy(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, net.minecraft.world.entity.player.Player);
+  public static boolean canBePlacedAt(net.minecraft.world.level.Level, net.minecraft.core.BlockPos, net.minecraft.core.Direction);
+}
