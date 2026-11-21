@@ -8,7 +8,7 @@ import java.nio.file.*;
 import java.util.*;
 import java.util.function.*;
 import net.minecraft.client.*;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
@@ -37,7 +37,7 @@ public final class KGifTour {
     /** The K screen with a virtual mouse. */
     static final class Screen extends TraitScreen {
         @Override
-        public void render(GuiGraphics g, int x, int y, float pt) {
+        public void extractRenderState(GuiGraphicsExtractor g, int x, int y, float pt) {
             super.render(g, (int) Math.round(vx), (int) Math.round(vy), pt);
         }
     }
@@ -355,7 +355,7 @@ public final class KGifTour {
                     for (DyeColor d : DyeColor.values())
                         if (d != DyeColor.LIME)
                             ManipulatorColors.unlock(st, true, d.getTextureDiffuseColor() & 0xffffff);
-                    p.getInventory().add(new ItemStack(Items.LIME_DYE));
+                    p.getInventory().add(new ItemStack(PtCompat.item("lime_dye")));
                 });
         open("4_colours");
         waitT(14);
@@ -452,7 +452,7 @@ public final class KGifTour {
     public static void step(Minecraft mc) {
         tick++;
         UpgradeScreen.showTooltips = tooltips;
-        mc.getToasts().clear();
+        mc.gui.toastManager().clear();
         if (tick < 20) return;
         if (!built) {
             built = true;

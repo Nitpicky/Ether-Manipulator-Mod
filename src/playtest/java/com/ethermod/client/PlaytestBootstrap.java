@@ -13,7 +13,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.LevelSettings;
 import net.minecraft.world.level.WorldDataConfiguration;
@@ -63,7 +62,7 @@ public final class PlaytestBootstrap {
         mc.options.onboardAccessibility = false;
 
         if (mc.level == null || mc.player == null) {
-            if (!worldRequested && mc.gui.screen() != null && mc.getOverlay() == null) {
+            if (!worldRequested && mc.gui.screen() != null && mc.gui.overlay() == null) {
                 if (!(mc.gui.screen() instanceof TitleScreen)) {
                     mc.gui.setScreen(new TitleScreen());
                     return;
@@ -94,10 +93,8 @@ public final class PlaytestBootstrap {
                 new LevelSettings(
                         WORLD,
                         GameType.SURVIVAL,
-                        false,
-                        Difficulty.PEACEFUL,
+                        new LevelSettings.DifficultySettings(Difficulty.PEACEFUL, false, false),
                         true,
-                        new GameRules(),
                         WorldDataConfiguration.DEFAULT);
         mc.createWorldOpenFlows()
                 .createFreshLevel(
@@ -105,8 +102,8 @@ public final class PlaytestBootstrap {
                         settings,
                         new WorldOptions(1L, false, false),
                         access ->
-                                access.registryOrThrow(Registries.WORLD_PRESET)
-                                        .getHolderOrThrow(WorldPresets.FLAT)
+                                access.lookupOrThrow(Registries.WORLD_PRESET)
+                                        .getOrThrow(WorldPresets.FLAT)
                                         .value()
                                         .createWorldDimensions(),
                         new TitleScreen());
@@ -135,8 +132,7 @@ public final class PlaytestBootstrap {
             case 232 -> mc.options.keyAttack.setDown(true);
             case 260 -> shot(mc, "07b_clouds_fancy");
             case 262 -> {
-                mc.options.graphicsMode().set(net.minecraft.client.GraphicsStatus.FABULOUS);
-                mc.levelRenderer.allChanged();
+                mc.options.improvedTransparency().set(true);
             }
             case 290 -> shot(mc, "07c_clouds_fabulous");
             // ---- Ore Sense (Tectonic grandmaster): ores near the player glow through the
@@ -144,8 +140,7 @@ public final class PlaytestBootstrap {
             // so the shader run shows whether it survives
             case 292 -> {
                 mc.options.keyAttack.setDown(false);
-                mc.options.graphicsMode().set(net.minecraft.client.GraphicsStatus.FANCY);
-                mc.levelRenderer.allChanged();
+                mc.options.improvedTransparency().set(false);
                 server(
                         mc,
                         (s, p) -> {
@@ -343,7 +338,7 @@ public final class PlaytestBootstrap {
                                     (dropped ? "PASS" : "FAIL")
                                             + " drops: mined stone gave cobblestone (empty hotbar"
                                             + " slot selected: "
-                                            + p.getInventory().getSelected().isEmpty()
+                                            + p.getInventory().getSelectedItem().isEmpty()
                                             + ")");
                         });
             }
@@ -436,7 +431,7 @@ public final class PlaytestBootstrap {
                             mc,
                             (s, p) -> {
                                 int slot = -1;
-                                var inv = p.getInventory().items;
+                                var inv = p.getInventory().getNonEquipmentItems();
                                 for (int i = 0; i < inv.size(); i++)
                                     if (inv.get(i).is(net.minecraft.world.item.Items.EMERALD)) {
                                         slot = i;
@@ -590,9 +585,9 @@ public final class PlaytestBootstrap {
                                 Manipulator.setSummoned(p, false);
                                 run(s, "item replace entity @p hotbar.0 with iron_sword");
                             });
-            case 570 -> mc.player.swing(InteractionHand.MAIN_HAND);
+            case 570 -> mc.player.swing(InteractionHand.MAIN_HAND, net.minecraft.world.item.component.SwingAnimation.DEFAULT, true);
             case 572 -> {
-                boolean swinging = mc.player.swinging || mc.player.getAttackAnim(0) > 0;
+                boolean swinging = mc.player.isSwinging();
                 log(
                         (swinging ? "PASS" : "FAIL")
                                 + " swing: a sword still swings with the Manipulator put away");
@@ -906,7 +901,7 @@ public final class PlaytestBootstrap {
                 // the Photonic glow follows the player on the client: a light source, no light block
                 boolean source = PhotonicGlow.isSource(mc.player.getId());
                 BlockPos eye = BlockPos.containing(mc.player.getEyePosition());
-                int lit = (net.minecraft.client.renderer.LevelRenderer.getLightColor(mc.level, eye) & 0xFFFF) >> 4;
+                int lit = net.minecraft.util.LightCoordsUtil.block(net.minecraft.util.LightCoordsUtil.getLightCoords(mc.level, eye));
                 double glow = PhotonicGlow.level(eye.getX() + 0.5, eye.getY() + 0.5, eye.getZ() + 0.5);
                 log(
                         (source && glow >= 13 && lit >= 13 ? "PASS" : "FAIL")
@@ -1099,11 +1094,11 @@ public final class PlaytestBootstrap {
             // the advancement tab's layout (gems and Module challenges on top, upgrade line, dyes last)
             case 1478 -> {
                 var adv = mc.player.connection.getAdvancements();
-                var root = adv.getTree().get(net.minecraft.resources.Identifier.fromNamespaceAndPath("ethermod", "manipulator/root"));
+                var root = adv.tree().get(net.minecraft.resources.Identifier.fromNamespaceAndPath("ethermod", "manipulator/root"));
                 mc.gui.setScreen(new net.minecraft.client.gui.screens.advancements.AdvancementsScreen(adv));
                 if (root != null) adv.setSelectedTab(root.holder(), true);
                 // the mouse off the window, so no tooltip covers the tree
-                org.lwjgl.glfw.GLFW.glfwSetCursorPos(mc.getWindow().getWindow(), 0, 0);
+                org.lwjgl.sdl.SDLMouse.SDL_WarpMouseInWindow(mc.getWindow().handle(), 0, 0);
                 if (root != null) logAdvancements(root);
             }
             case 1486 -> shot(mc, "36_advancements");
@@ -1118,7 +1113,7 @@ public final class PlaytestBootstrap {
     /** Logs where each advancement of the tab sits (x, y in tree cells). */
     private static void logAdvancements(net.minecraft.advancements.AdvancementNode n) {
         n.holder().value().display().ifPresent(d -> com.ethermod.EtherMod.LOGGER.info(
-                "[autotest] ADV {} at {} {}", n.holder().id().getPath(), d.getX(), d.getY()));
+                "[autotest] ADV {} at {} {}", n.holder().id().getPath(), n.x(), n.y()));
         for (var c : n.children()) logAdvancements(c);
     }
 
@@ -1126,7 +1121,7 @@ public final class PlaytestBootstrap {
     private static void aimAtPig(Minecraft mc) {
         net.minecraft.world.entity.Entity best = null;
         for (var e : mc.level.entitiesForRendering())
-            if (e instanceof net.minecraft.world.entity.animal.Pig pig && pig.isAlive() && pig.deathTime == 0
+            if (e instanceof net.minecraft.world.entity.animal.pig.Pig pig && pig.isAlive() && pig.deathTime == 0
                     && (best == null || e.distanceToSqr(mc.player) < best.distanceToSqr(mc.player))) best = e;
         if (best == null) {
             log("tether: no pig to aim at");
@@ -1140,7 +1135,7 @@ public final class PlaytestBootstrap {
     /** Views the scene from the "mmcam" armor stand, or back from the player. */
     private static void sideCamera(Minecraft mc, boolean on) {
         // hide the HUD and first-person hand while looking from the stand
-        mc.options.hideGui = on;
+        if (mc.gui.hud.isHidden() != on) mc.gui.hud.toggle();
         if (!on) {
             mc.setCameraEntity(mc.player);
             return;
@@ -1221,20 +1216,17 @@ public final class PlaytestBootstrap {
                 net.minecraft.resources.Identifier.fromNamespaceAndPath("ethermod", "module_hydraulic")).isEmpty();
         log((noModules ? "PASS" : "FAIL") + " gems: the Module items are gone");
         for (String[] r : new String[][] {{"upgrade_iron", "minecraft:iron_block", "minecraft:amethyst_shard", "minecraft:iron_ingot"}, {"upgrade_diamond", "minecraft:gold_block", "minecraft:diamond", "minecraft:gold_ingot"}}) {
-            var rec = s.getRecipeManager().byKey(net.minecraft.resources.Identifier.fromNamespaceAndPath("ethermod", r[0]));
-            boolean ok = rec.isPresent() && rec.get().value().getIngredients().size() == 9
-                    && rec.get().value().getIngredients().get(3).test(new net.minecraft.world.item.ItemStack(
-                            net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.Identifier.parse(r[1]))))
-                    && rec.get().value().getIngredients().get(2).test(new net.minecraft.world.item.ItemStack(
-                            net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.Identifier.parse(r[3]))))
-                    && rec.get().value().getIngredients().get(6).test(new net.minecraft.world.item.ItemStack(
-                            net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.Identifier.parse(r[3]))))
-                    && rec.get().value().getIngredients().get(4).test(new net.minecraft.world.item.ItemStack(
-                            net.minecraft.core.registries.BuiltInRegistries.ITEM.get(net.minecraft.resources.Identifier.parse(r[2]))))
-                    && rec.get().value().getIngredients().get(0).isEmpty();
+            var rec = s.getRecipeManager().byKey(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.RECIPE, net.minecraft.resources.Identifier.fromNamespaceAndPath("ethermod", r[0])));
+            boolean ok = false;
+            if (rec.isPresent() && rec.get().value() instanceof net.minecraft.world.item.crafting.ShapedRecipe shaped) {
+                var ing = shaped.getIngredients();
+                java.util.function.BiPredicate<Integer, String> has = (k, id) -> net.minecraft.world.item.crafting.Ingredient.testOptionalIngredient(
+                        ing.get(k), new net.minecraft.world.item.ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(net.minecraft.resources.Identifier.parse(id))));
+                ok = ing.size() == 9 && has.test(3, r[1]) && has.test(2, r[3]) && has.test(6, r[3]) && has.test(4, r[2]) && ing.get(0).isEmpty();
+            }
             log((ok ? "PASS" : "FAIL") + " recipes: " + r[0] + " is gem between two blocks, ingot fins top right and bottom left");
         }
-        p.getInventory().clearOrCountMatchingItems(st -> com.ethermod.registry.ModItems.GEMS.values().stream().anyMatch(g -> st.is(g.get())), -1, p.inventoryMenu.getCraftSlots());
+        p.getInventory().clearOrCountMatchingItems(st -> com.ethermod.registry.ModItems.GEMS.values().stream().anyMatch(g -> st.is(g.get())), false, -1, p.inventoryMenu.getCraftSlots());
     }
 
     /** Rolls each gem's structure chest 400 times: the gem must show up, and only that structure's gem. */
@@ -1318,10 +1310,10 @@ public final class PlaytestBootstrap {
         log((pass ? "PASS" : "FAIL") + " gems: placed " + structure + ", " + chests + " chests, " + withGem + " with " + gem + ":" + where);
     }
 
-    private static net.minecraft.world.entity.monster.Husk husk(ServerPlayer p, String tag) {
+    private static net.minecraft.world.entity.monster.zombie.Husk husk(ServerPlayer p, String tag) {
         return p.level()
                 .getEntitiesOfClass(
-                        net.minecraft.world.entity.monster.Husk.class,
+                        net.minecraft.world.entity.monster.zombie.Husk.class,
                         p.getBoundingBox().inflate(32),
                         h -> h.getTags().contains(tag))
                 .stream()
@@ -1377,10 +1369,10 @@ public final class PlaytestBootstrap {
     /** The closest the reeled pig came to the player. */
     private static double tetherClosest = 99;
 
-    private static List<net.minecraft.world.entity.animal.Pig> pigs(ServerPlayer p) {
+    private static List<net.minecraft.world.entity.animal.pig.Pig> pigs(ServerPlayer p) {
         return p.level()
                 .getEntitiesOfClass(
-                        net.minecraft.world.entity.animal.Pig.class,
+                        net.minecraft.world.entity.animal.pig.Pig.class,
                         p.getBoundingBox().inflate(24));
     }
 
@@ -1461,8 +1453,8 @@ public final class PlaytestBootstrap {
     }
 
     private static void shot(Minecraft mc, String name) {
-        mc.gui.getChat().clearMessages(false);
-        mc.getToasts().clear();
+        mc.gui.hud.getChat().clearMessages(false);
+        mc.gui.toastManager().clear();
         Consumer<net.minecraft.network.chat.Component> sink = c -> {};
         Screenshot.grab(mc.gameDirectory, "mm_" + name + ".png", mc.gameRenderer.mainRenderTarget(), sink);
         log("shot " + name);

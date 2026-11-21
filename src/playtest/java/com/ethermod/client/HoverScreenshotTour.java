@@ -4,7 +4,7 @@ import com.ethermod.item.ManipulatorStage;
 import com.ethermod.manipulator.Manipulator;
 import com.ethermod.trait.*;
 import net.minecraft.client.*;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import java.nio.file.*;
 import java.util.*;
 
@@ -19,7 +19,7 @@ public final class HoverScreenshotTour {
         catch(Exception e){throw new RuntimeException(e);}
     }
     static class Screen extends TraitScreen {
-        @Override public void render(GuiGraphics g,int x,int y,float pt) {
+        @Override public void extractRenderState(GuiGraphicsExtractor g, int x, int y, float pt) {
             int[] target=switch(phase){case 1->new int[]{152,40};case 2->new int[]{196,40};case 3->new int[]{130,31};default->new int[]{-10,-10};};
             int left=(int)field(this,UpgradeScreen.class,"left"),top=(int)field(this,UpgradeScreen.class,"top");
             float scale=(float)field(this,UpgradeScreen.class,"uiScale");
@@ -50,7 +50,7 @@ public final class HoverScreenshotTour {
             var p=pixels(mc);restingII=sample(p,67,18);restingIII=sample(p,110,18);
             check("Choice, badge and active Common share dark fill",sample(p,42,7)==sample(p,8,11)&&sample(p,42,7)==sample(p,65,17));
             var panels=(Object[])field(mc.gui.screen(),UpgradeScreen.class,"panels");var image=(com.mojang.blaze3d.platform.NativeImage)field(panels[0],panels[0].getClass(),"image");
-            boolean exact=true;for(int i=0;i<p.length;i++){int rgb=p[i],abgr=image.getPixelRGBA(i%146,i/146);int restored=(abgr&0xff00ff00)|((abgr&255)<<16)|((abgr>>16)&255);if(rgb!=restored){exact=false;break;}}
+            boolean exact=true;for(int i=0;i<p.length;i++){int rgb=p[i],restored=image.getPixel(i%146,i/146);if(rgb!=restored){exact=false;break;}}
             check("Full RGB bytes survive panel texture upload",exact);screenshot(mc,"hover-01-rest");phase=1;
         }
         if(tick==160){var p=pixels(mc);check("Common II numeral brightens",sample(p,67,18)!=restingII);boolean intact=true;for(int y=18;y<23;y++)intact&=sample(p,67,y)==sample(p,67,18);check("Common II numeral survives hover fill",intact);screenshot(mc,"hover-02-common-II");phase=2;}

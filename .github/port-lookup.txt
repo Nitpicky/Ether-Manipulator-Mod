@@ -1,4 +1,4 @@
-net/minecraft/world/level/gamerules/GameRules net/minecraft/world/entity/player/Input net/minecraft/util/LightCoordsUtil net/minecraft/world/level/LevelSettings net/minecraft/advancements/AdvancementTree net/minecraft/world/level/levelgen/presets/WorldPreset net/minecraft/world/level/levelgen/presets/WorldPresets net/minecraft/world/item/crafting/ShapedRecipe net/minecraft/world/item/crafting/Recipe net/minecraft/world/item/crafting/Ingredient net/minecraft/client/Camera net/minecraft/world/level/Level net/minecraft/server/level/ServerLevel net/minecraft/client/gui/screens/worldselection/CreateWorldScreen net/minecraft/client/gui/screens/worldselection/WorldOpenFlows net/minecraft/world/level/WorldDataConfiguration
-/.*/(LevelLightEngine|LightTexture|ClockManager|WorldClock[A-Za-z]*|Clock[A-Za-z]*)$
-net/minecraft/client/Camera#setup
-net/minecraft/world/level/gamerules/GameRules#[A-Z_]+
+net/minecraft/client/gui/Hud net/minecraft/world/level/LevelSettings\$DifficultySettings net/minecraft/world/level/storage/TagValueInput org/lwjgl/sdl/SDLMouse
+/.*/(ChatComponent)$
+net/minecraft/client/gui/Hud#getChat
+net/minecraft/client/gui/Hud#.*[Cc]hat.*
