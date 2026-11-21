@@ -1391,19 +1391,14 @@ public final class UiProbe {
         if (tick == 214) {
             try {
                 java.lang.reflect.Field f;
-                try {
-                    f = net.minecraft.client.renderer.LevelRenderer.class.getDeclaredField("destroyingBlocks");
-                } catch (NoSuchFieldException moved) {
-                    // 26.3 keeps the crack overlays elsewhere: not checked for now
-                    report.add("SKIP Soul fire sends no mining-crack overlay (26.3 port)");
-                    f = null;
-                }
+                // 26.3 keeps the crack overlays on the client level
+                f = net.minecraft.client.multiplayer.ClientLevel.class.getDeclaredField("destroyingBlocks");
                 if (f != null) {
                 f.setAccessible(true);
                 var blocks =
                         (it.unimi.dsi.fastutil.ints.Int2ObjectMap<
                                         net.minecraft.server.level.BlockDestructionProgress>)
-                                f.get(mc.levelRenderer);
+                                f.get(mc.level);
                 check(
                         "Soul fire sends no mining-crack overlay",
                         noCrackFire != null
@@ -1561,10 +1556,22 @@ public final class UiProbe {
                                             && walker.walkAnimation.speed() > .1);
                         }
                         var eye = MovementPhysics.eye(p, 0);
+                        var cameraType = mc.options.getCameraType();
                         for (boolean front : new boolean[] {false, true}) {
-                            // 26.3: Camera.setup is gone (the camera follows a DeltaTracker); not checked for now
-                            report.add("SKIP third person camera check " + down + " front=" + front + " (26.3 port)");
+                            // 26.3: a camera follows the game's DeltaTracker and the camera option
+                            mc.options.setCameraType(
+                                    front
+                                            ? net.minecraft.client.CameraType.THIRD_PERSON_FRONT
+                                            : net.minecraft.client.CameraType.THIRD_PERSON_BACK);
+                            var cam = new net.minecraft.client.Camera();
+                            cam.setLevel(mc.level);
+                            cam.setEntity(p);
+                            cam.update(mc.getDeltaTracker());
+                            check(
+                                    "Third person stays outside head " + down + " front=" + front,
+                                    cam.position().distanceTo(eye) > 3.5);
                         }
+                        mc.options.setCameraType(cameraType);
                         var edgeMethod =
                                 net.minecraft.world.entity.player.Player.class.getDeclaredMethod(
                                         "maybeBackOffFromEdge",

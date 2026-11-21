@@ -138,7 +138,7 @@ public final class ClientMobility {
             var moved = p.position().subtract(p.xo, p.yo, p.zo);
             double h = MovementPhysics.local(p, moved).horizontalDistance();
             // 26.3: the walk distance lives in the avatar state; vanilla has already added the
-            // world-horizontal part this tick, so add the difference (bob keeps vanilla's: TODO port)
+            // world-horizontal part this tick, so add the difference (the bob: GravityBobMixin)
             p.avatarState().addWalkDistance((float) (h - moved.horizontalDistance()) * .6f);
         }
         boolean jump = mc.gui.screen() == null && mc.options.keyJump.isDown();

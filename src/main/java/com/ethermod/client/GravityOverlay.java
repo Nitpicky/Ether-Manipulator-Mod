@@ -35,12 +35,13 @@ public final class GravityOverlay {
                             ((i & 1) == 0 ? -.4 : .4) * player.getBbWidth(),
                             ((i & 2) == 0 ? -.05 : .05) * player.getScale(),
                             ((i & 4) == 0 ? -.4 : .4) * player.getBbWidth());
-            BlockPos pos =
-                    BlockPos.containing(
-                            eye.add(com.ethermod.trait.MovementPhysics.orientView(player, offset, 0)));
+            Vec3 at = eye.add(com.ethermod.trait.MovementPhysics.orientView(player, offset, 0));
+            BlockPos pos = BlockPos.containing(at);
             var state = player.level().getBlockState(pos);
             if (state.getRenderShape() != net.minecraft.world.level.block.RenderShape.INVISIBLE
-                    && state.isViewBlocking(player.level(), pos)) return state;
+                    && state.isViewBlocking(
+                            player.level(), pos, net.minecraft.world.phys.AABB.ofSize(at, 1e-3, 1e-3, 1e-3)))
+                return state;
         }
         return null;
     }

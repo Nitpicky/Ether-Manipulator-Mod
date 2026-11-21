@@ -27,6 +27,7 @@
     "ChargeMovementMixin",
     "FlightEquipmentMixin",
     "GemGlintMixin",
+    "GravityBobMixin",
     "GravityCameraMixin",
     "NoUseDipMixin",
     "PhotonicGlowEntityMixin",
