@@ -27,7 +27,7 @@ next release's notes.
 - New mod description in the Mods list.
 
 ### Fixes
-- Lock-On now visibly holds the beam on its target.
+- Lock-On now visibly holds the beam on its target, and keeps it while your aim stays within a block of it.
 - Growth no longer breaks grass and flowers.
 - Jumping as you fire no longer catches your own shot.
 
