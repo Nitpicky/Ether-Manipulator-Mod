@@ -1,7 +1,7 @@
 shot 01_idle_first_person
 shot 02_mining_first_person
 shot 03_mining_later
-PASS mining: stone ahead broke after 12 ticks of beam
+PASS mining: stone ahead broke after 13 ticks of beam
 PASS crystal after mining: e99f20 (want e99f20)
 PASS drops: mined stone gave cobblestone (empty hotbar slot selected: false)
 shot 04_beam_side_view
@@ -21,7 +21,7 @@ shot 15_custom_colour_sweep
 PASS colour: orbs follow the mode (20c1e9), the beam is Plasmic orange (true)
 shot 16_custom_colour_model
 shot 17_sneak_beam
-PASS sneak beam, no water near: grass ahead is now block.minecraft.dirt_path (beamActive=true, sneaking=true, hit=net.minecraft.world.phys.BlockHitResult@445944ea)
+PASS sneak beam, no water near: grass ahead is now block.minecraft.dirt_path (beamActive=true, sneaking=true, hit=net.minecraft.world.phys.BlockHitResult@226e4e59)
 PASS sneak beam, water near: grass ahead is now block.minecraft.farmland
 PASS swing: a sword still swings with the Manipulator put away
 shot 14_sword_swing
@@ -38,7 +38,7 @@ shot 23a_growth_charging
 shot 23_pollen_cloud
 shot 24_light_bounce
 shot 25_tether_rope
-PASS tether: the hook reeled the player up (2.2 blocks)
+PASS tether: the hook reeled the player up (2.1 blocks)
 shot 26_gust_grenade_latched
 shot 26b_gust_grenade_burst
 PASS gust: right click threw a grenade that burst (bursts 1, pig hurt true)
@@ -67,11 +67,11 @@ PASS growth: left click harvested 9 of 9 ripe wheat
 PASS mass driver: left click lifted the stone
 shot 30_mass_throw
 PASS mass driver: right click threw the carried stone
-zipline after the first sneaking hook: [anchor=true partner=-1 stuck=true at 73, -55, 10] hook=none riding=false using=false crouch=true
-zipline after the second sneaking hook: [anchor=true partner=103 stuck=true at 73, -55, 10] [anchor=true partner=101 stuck=true at 87, -55, 10] hook=none riding=false using=false crouch=true
-zipline right click on the rope: [anchor=true partner=103 stuck=true at 73, -55, 10] [anchor=true partner=101 stuck=true at 87, -55, 10] hook=none riding=true using=true crouch=false
-zipline while riding: [anchor=true partner=103 stuck=true at 73, -55, 10] [anchor=true partner=101 stuck=true at 87, -55, 10] hook=none riding=true using=true crouch=false
-PASS zipline: right click aimed at the rope rides it (riding=true, rose 3.1 blocks)
+zipline after the first sneaking hook: [anchor=true partner=-1 stuck=true at 85, -55, 9] hook=none riding=false using=false crouch=true
+zipline after the second sneaking hook: [anchor=true partner=102 stuck=true at 85, -55, 9] [anchor=true partner=100 stuck=true at 99, -55, 9] hook=none riding=false using=false crouch=true
+zipline right click on the rope: [anchor=true partner=102 stuck=true at 85, -55, 9] [anchor=true partner=100 stuck=true at 99, -55, 9] hook=none riding=true using=true crouch=false
+zipline while riding: [anchor=true partner=102 stuck=true at 85, -55, 9] [anchor=true partner=100 stuck=true at 99, -55, 9] hook=none riding=true using=true crouch=false
+PASS zipline: right click aimed at the rope rides it (riding=true, rose 3.0 blocks)
 PASS gems: chests/shipwreck_treasure gave sirenite 92/400, other gems 0
 PASS gems: chests/underwater_ruin_big gave sirenite 151/400, other gems 0
 PASS gems: chests/ruined_portal gave gehennite 400/400, other gems 0
@@ -92,7 +92,7 @@ PASS gems: the Module items are gone
 PASS recipes: upgrade_iron is gem between two blocks, ingot fins top right and bottom left
 PASS recipes: upgrade_diamond is gem between two blocks, ingot fins top right and bottom left
 PASS gems: placed desert_pyramid, 4 chests, 1 with atenite: 0,0,-2+gem -2,0,0 2,0,0 0,0,2
-PASS gems: placed jungle_pyramid, 4 chests, 1 with quetzalite: -6,-2,1 -4,-3,6 3,-3,7+gem+sticky -4,-2,7
+PASS gems: placed jungle_pyramid, 4 chests, 1 with quetzalite: 6,-3,3+gem+sticky 5,-3,10 6,-2,10 0,-2,12
 shot 35_gem_glint
 shot 36_advancements
 shot 36b_advancements_bottom
