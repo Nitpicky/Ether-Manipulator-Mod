@@ -1,4 +1,4 @@
-net/neoforged/neoforge/common/loot/LootModifierManager net/neoforged/neoforge/common/loot/IGlobalLootModifier
-/(.*LootModifier.*|.*loot/.*Neo.*)$
-net/neoforged/neoforge/common/loot/LootModifierManager#apply net/neoforged/neoforge/common/loot/LootModifierManager#prepare net/neoforged/neoforge/common/loot/LootModifierManager#<clinit>
+com/mojang/blaze3d/systems/RenderSystem com/mojang/blaze3d/pipeline/RenderPipeline com/mojang/blaze3d/pipeline/RenderPipeline\$Builder com/mojang/blaze3d/pipeline/BlendFunction com/mojang/blaze3d/pipeline/RenderTarget com/mojang/blaze3d/pipeline/TextureTarget com/mojang/blaze3d/systems/GpuDevice com/mojang/blaze3d/systems/CommandEncoder com/mojang/blaze3d/systems/RenderPass com/mojang/blaze3d/vertex/BufferBuilder com/mojang/blaze3d/vertex/Tesselator com/mojang/blaze3d/vertex/VertexConsumer com/mojang/blaze3d/vertex/DefaultVertexFormat com/mojang/blaze3d/vertex/MeshData net/minecraft/client/renderer/RenderPipelines net/minecraft/client/renderer/rendertype/RenderType net/minecraft/client/renderer/rendertype/RenderTypes net/minecraft/client/renderer/rendertype/RenderSetup.* net/neoforged/neoforge/client/event/RenderLevelStageEvent.* net/minecraft/client/renderer/SubmitNodeCollector net/minecraft/client/renderer/MultiBufferSource.* net/minecraft/client/renderer/LevelRenderer
+/^(com/mojang/blaze3d|com/mojang/renderpearl|net/minecraft/client/renderer/rendertype|net/neoforged/neoforge/client/event|net/minecraft/client/renderer/state|net/minecraft/client/renderer/feature)/[^$]*$
+#
 #
