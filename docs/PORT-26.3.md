@@ -52,5 +52,5 @@ The playtest, shader and K-screen workflows don't run on `port/**` by themselves
 - `shaders.yml` on this branch: Sodium (input `sodium`, default 0.9.3-beta.3, the last one that
   accepts Iris 1.11.7) + Iris + a pack, OpenGL through EGL (`SDL_VIDEO_FORCE_EGL`), dev draw
   validation off (`-Dneoforge.disableBlaze3DValidation=true`, Iris fails it). Shots land in
-  `port/<sha>/shaders/<pack>/`. Terrain shows as flat yellow squares there: a CI software-GL issue
+  `port/<sha>/shaders/<pack>/`. Terrain shows as flat yellow squares there: most likely a CI software-GL issue
   with the pack, not the mod.
