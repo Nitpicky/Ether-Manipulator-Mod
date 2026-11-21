@@ -1,0 +1,106 @@
+/home/runner/.gradle/caches/modules-2/files-2.1/curse.maven/geckolib-388172/8893169/196231506b89da06925c087f9b8bc5fd12ebea16/geckolib-388172-8893169.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/io.github.llamalad7/mixinextras-neoforge/0.5.5/26f2905a37afd203c3da1d6a2e164472a7531b41/mixinextras-neoforge-0.5.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.accesstransformers/at-parser/11.0.2/64aae57d6d26d69543c5275181fe6971707a4e16/at-parser-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/earlydisplay/12.0.16/efa2e56115d22853d10524874a7bbb64555c2a28/earlydisplay-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/12.0.16/edbb2ee8211a867215970bc15ae9c354fa56dc09/loader-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarMetadata/0.5.3/ff40c1cd721d07615d825c5bbf27705b2e3258ed/JarJarMetadata-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarSelector/0.5.3/6b845aab8d5c8e721b4e3cd30f97722b7f8044b1/JarJarSelector-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/accesstransformers/11.0.2/25dcb69c78b16669935f0ab91dff830ce192379d/accesstransformers-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/bus/8.0.5/5b2d33285ab5d1554e9798ad98c40d6ea3868bd5/bus-8.0.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/mergetool/2.0.7/793b18456e92c4a7f66d9b5d8bf7a9c1c7a20b20/mergetool-2.0.7-api.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar
+=== LIST /.*renderpearl/frontend/[^/]*$
+com/mojang/renderpearl/frontend/FrontendCommandEncoder
+com/mojang/renderpearl/frontend/FrontendGpuDevice
+com/mojang/renderpearl/frontend/FrontendGpuSurface
+com/mojang/renderpearl/frontend/FrontendRenderPass
+com/mojang/renderpearl/frontend/FrontendRenderPipeline
+com/mojang/renderpearl/frontend/TracyGpuProfiler
+com/mojang/renderpearl/frontend/package-info
+=== CODE com/mojang/renderpearl/frontend/FrontendRenderPass drawIndexed
+  public void drawIndexed(int, int, int, int, int);
+    Code:
+         0: aload_0
+         1: getfield      #75                 // Field isClosed:Z
+         4: ifeq          17
+         7: new           #78                 // class java/lang/IllegalStateException
+        10: dup
+        11: ldc           #80                 // String Can\'t use a closed render pass
+        13: invokespecial #82                 // Method java/lang/IllegalStateException."<init>":(Ljava/lang/String;)V
+        16: athrow
+        17: iload         5
+        19: ifeq          43
+        22: aload_0
+        23: getfield      #48                 // Field deviceFeatures:Lcom/mojang/renderpearl/api/device/DeviceFeatures;
+        26: invokevirtual #303                // Method com/mojang/renderpearl/api/device/DeviceFeatures.nonZeroFirstInstance:()Z
+        29: ifne          43
+        32: new           #308                // class java/lang/UnsupportedOperationException
+        35: dup
+        36: ldc_w         #310                // String firstInstance must be zero on when device does not support nonZeroFirstInstance
+        39: invokespecial #312                // Method java/lang/UnsupportedOperationException."<init>":(Ljava/lang/String;)V
+        42: athrow
+        43: aload_0
+        44: invokestatic  #313                // InterfaceMethod java/util/List.of:()Ljava/util/List;
+        47: iconst_0
+        48: iconst_1
+        49: invokevirtual #316                // Method validateDraw:(Ljava/util/Collection;ZZ)V
+        52: aload_0
+        53: getfield      #28                 // Field backend:Lcom/mojang/renderpearl/backend/api/RenderPassBackend;
+        56: iload_1
+        57: iload_2
+        58: iload_3
+        59: iload         4
+        61: iload         5
+        63: invokeinterface #320,  6          // InterfaceMethod com/mojang/renderpearl/backend/api/RenderPassBackend.drawIndexed:(IIIII)V
+        68: return
+=== CODE com/mojang/renderpearl/frontend/FrontendRenderPass <init>
+=== SIG com/mojang/renderpearl/frontend/FrontendRenderPass .*
+  private final com.mojang.renderpearl.backend.api.RenderPassBackend backend;
+  private final com.mojang.renderpearl.backend.api.GpuDeviceBackend device;
+  private final com.mojang.renderpearl.api.device.DeviceFeatures deviceFeatures;
+  private final com.mojang.renderpearl.api.device.DeviceLimits deviceLimits;
+  private final java.lang.Runnable onFinish;
+  private final com.mojang.renderpearl.api.commands.RenderPass$RenderArea renderArea;
+  private final java.util.List<com.mojang.renderpearl.api.commands.RenderPassDescriptor$Attachment<java.util.Optional<org.joml.Vector4fc>>> colorAttachments;
+  private final boolean hasDepthAttachment;
+  private boolean isClosed;
+  private int pushedDebugGroups;
+  private com.mojang.renderpearl.frontend.FrontendRenderPipeline boundPipeline;
+  private final com.mojang.renderpearl.api.buffers.GpuBufferSlice[] vertexBuffers;
+  protected com.mojang.renderpearl.api.buffers.GpuBuffer indexBuffer;
+  protected final java.util.HashMap<java.lang.String, java.lang.Object> uniforms;
+  private boolean constantsPushed;
+  static final boolean $assertionsDisabled;
+  public com.mojang.renderpearl.frontend.FrontendRenderPass(com.mojang.renderpearl.backend.api.RenderPassBackend, com.mojang.renderpearl.backend.api.GpuDeviceBackend, java.util.List<com.mojang.renderpearl.api.commands.RenderPassDescriptor$Attachment<java.util.Optional<org.joml.Vector4fc>>>, boolean, java.lang.Runnable, com.mojang.renderpearl.api.commands.RenderPass$RenderArea);
+  public void pushDebugGroup(java.util.function.Supplier<java.lang.String>);
+  public void popDebugGroup();
+  public void writeTimestamp(com.mojang.renderpearl.api.commands.GpuQueryPool, int);
+=== com/mojang/renderpearl/frontend/FrontendRenderPass
+Compiled from "FrontendRenderPass.java"
+public class com.mojang.renderpearl.frontend.FrontendRenderPass implements com.mojang.renderpearl.api.commands.RenderPass,com.mojang.renderpearl.api.commands.RenderPass$UniformUploader {
+  public com.mojang.renderpearl.frontend.FrontendRenderPass(com.mojang.renderpearl.backend.api.RenderPassBackend, com.mojang.renderpearl.backend.api.GpuDeviceBackend, java.util.List<com.mojang.renderpearl.api.commands.RenderPassDescriptor$Attachment<java.util.Optional<org.joml.Vector4fc>>>, boolean, java.lang.Runnable, com.mojang.renderpearl.api.commands.RenderPass$RenderArea);
+  public void pushDebugGroup(java.util.function.Supplier<java.lang.String>);
+  public void popDebugGroup();
+  public void writeTimestamp(com.mojang.renderpearl.api.commands.GpuQueryPool, int);
+  public void setPipeline(com.mojang.renderpearl.api.pipeline.CompiledRenderPipeline);
+  public void setUniform(java.lang.String, com.mojang.renderpearl.api.textures.GpuTextureView, com.mojang.renderpearl.api.textures.GpuSampler);
+  public void setUniform(java.lang.String, com.mojang.renderpearl.api.buffers.GpuBuffer);
+  public void setUniform(java.lang.String, com.mojang.renderpearl.api.buffers.GpuBufferSlice);
+  public void pushConstants(java.nio.ByteBuffer);
+  public void setViewport(int, int, int, int);
+  public void enableScissor(int, int, int, int);
+  public void disableScissor();
+  public void setVertexBuffer(int, com.mojang.renderpearl.api.buffers.GpuBufferSlice);
+  public void setIndexBuffer(com.mojang.renderpearl.api.buffers.GpuBuffer, com.mojang.renderpearl.api.pipeline.IndexType);
+  public void drawIndexed(int, int, int, int, int);
+  public void multiDrawIndexed(java.nio.IntBuffer, int, int, int);
+  public void multiDrawIndexed(org.lwjgl.PointerBuffer, java.nio.IntBuffer, java.nio.IntBuffer, int);
+  public void drawIndexedIndirect(com.mojang.renderpearl.api.buffers.GpuBufferSlice, int);
+  public <T> void drawMultipleIndexed(java.util.Collection<com.mojang.renderpearl.api.commands.RenderPass$Draw<T>>, com.mojang.renderpearl.api.buffers.GpuBuffer, com.mojang.renderpearl.api.pipeline.IndexType, java.util.Collection<java.lang.String>, T);
+  public void draw(int, int, int, int);
+  public void multiDraw(java.nio.IntBuffer, int, int, int);
+  public void multiDraw(java.nio.IntBuffer, java.nio.IntBuffer, int);
+  public void drawIndirect(com.mojang.renderpearl.api.buffers.GpuBufferSlice, int);
+  public void close();
+}
