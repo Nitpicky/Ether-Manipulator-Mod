@@ -304,9 +304,15 @@ final class KLoadoutList {
         dragBar(ui.my, ui);
     }
 
-    private void drawBar(GuiGraphics g, KUi ui, int size) {
+    /** The thumb's drawn top: it glides to its step like the tiles do. */
+    private double thumbAt = -1;
+
+    private void drawBar(GuiGraphics g, KUi ui, int size, double glide) {
         g.fill(BAR_X, LIST_Y, BAR_X + BAR_W, LIST_Y + GRID_H, a().insetShadow());
-        int y = thumbY(size, setScroll), h = thumbH(size);
+        int target = thumbY(size, setScroll), h = thumbH(size);
+        thumbAt = thumbAt < 0 ? target : thumbAt + (target - thumbAt) * glide;
+        if (Math.abs(target - thumbAt) < .3) thumbAt = target;
+        int y = (int) Math.round(thumbAt);
         boolean live = maxScroll(size) > 0;
         Palette pal = live ? p() : a();
         ui.rampControl(g, "scrollbar", BAR_X, y, BAR_W, h, pal, null, List.of());
@@ -468,7 +474,7 @@ final class KLoadoutList {
                         false);
             }
         }
-        drawBar(g, ui, list.size());
+        drawBar(g, ui, list.size(), glide);
         if (dragging) {
             // The held set rides above everything, kept inside the panel, with a 1px shadow.
             int i = tokens.indexOf(held);
