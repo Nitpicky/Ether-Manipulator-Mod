@@ -7,8 +7,8 @@ issueTrackerURL="https://www.curseforge.com/minecraft/mc-mods/ether-manipulator/
 modId="ethermod"
 version="${mod_version}"
 displayName="Ether Manipulator"
-# Shown in the Mods list (400x400 PNG at the jar root).
-logoFile="ethermod_logo.png"
+# Square icon in the Mods list (400x400 PNG at the jar root).
+iconFile="ethermod_logo.png"
 authors="Woomwoomed"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/ether-manipulator"
 description='''
