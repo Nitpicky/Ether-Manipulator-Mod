@@ -1,4 +1,4 @@
-net/minecraft/client/renderer/state/level/LevelRenderState
-/.*BlockStateBase$
-net/minecraft/client/player/AbstractClientPlayer#aiStep net/minecraft/client/renderer/LevelRenderer#submitBlockDestroyAnimation
-net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase#isViewBlocking net/minecraft/client/multiplayer/ClientLevel#.*(estr|Progress).* net/minecraft/client/renderer/LevelRenderer#.*(estr|Progress|Destr).*
+com/mojang/renderpearl/backend/opengl/GlRenderPass
+/.*(RenderPass|SharedConstants)[^/]*$
+com/mojang/renderpearl/backend/opengl/GlRenderPass#<clinit>
+net/minecraft/SharedConstants#.*(IDE|DEBUG_VALID|VALID).* com/mojang/renderpearl/backend/opengl/GlRenderPass#.*
