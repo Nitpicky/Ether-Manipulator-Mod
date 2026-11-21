@@ -56,7 +56,7 @@ jobs:
             runs/client/logs/latest.log
           if-no-files-found: warn
       - name: Publish screenshots to the playtest-results branch
-        if: always() && github.event_name == 'push'
+        if: always() && (github.event_name == 'push' || startsWith(github.ref_name, 'port/'))
         run: |
           mkdir -p out
           cp runs/client/screenshots/mm_*.png out/ 2>/dev/null || true
@@ -72,9 +72,12 @@ jobs:
           else
             git worktree add --detach /tmp/pr && cd /tmp/pr && git checkout --orphan playtest-results && git rm -rqf .
           fi
-          rm -rf latest && mkdir -p latest "$SHA"
-          cp $GITHUB_WORKSPACE/out/* latest/ 2>/dev/null || true
-          cp $GITHUB_WORKSPACE/out/* "$SHA"/ 2>/dev/null || true
+          case "$GITHUB_REF_NAME" in
+            port/*) mkdir -p "port/$SHA/playtest" && cp $GITHUB_WORKSPACE/out/* "port/$SHA/playtest/" 2>/dev/null || true ;;
+            *) rm -rf latest && mkdir -p latest "$SHA"
+               cp $GITHUB_WORKSPACE/out/* latest/ 2>/dev/null || true
+               cp $GITHUB_WORKSPACE/out/* "$SHA"/ 2>/dev/null || true ;;
+          esac
           git add -A
           git commit -qm "Playtest results for $SHA" || true
-          git push -q origin playtest-results
+          for i in 1 2 3 4 5; do git push -q origin playtest-results && break; git pull -q --rebase origin playtest-results; sleep $((i*3)); done
