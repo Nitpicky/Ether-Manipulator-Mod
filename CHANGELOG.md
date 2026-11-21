@@ -15,6 +15,7 @@ next release's notes.
 - Shots: jumping as you fire no longer catches your own shot (Water stopped the jump, Frost lost its bridge).
 
 ### Tuning
+- Gravity Shift: no fall damage while gravity is shifted.
 - Bank Shot: each ricochet resets the shot's range.
 - Steady Hand: held blocks turn see-through while a throw charges.
 
