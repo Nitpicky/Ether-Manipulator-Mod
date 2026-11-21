@@ -1,7 +1,7 @@
 shot 01_idle_first_person
 shot 02_mining_first_person
 shot 03_mining_later
-PASS mining: stone ahead broke after 13 ticks of beam
+PASS mining: stone ahead broke after 11 ticks of beam
 PASS crystal after mining: e99f20 (want e99f20)
 PASS drops: mined stone gave cobblestone (empty hotbar slot selected: false)
 shot 04_beam_side_view
@@ -21,7 +21,7 @@ shot 15_custom_colour_sweep
 PASS colour: orbs follow the mode (20c1e9), the beam is Plasmic orange (true)
 shot 16_custom_colour_model
 shot 17_sneak_beam
-PASS sneak beam, no water near: grass ahead is now block.minecraft.dirt_path (beamActive=true, sneaking=true, hit=net.minecraft.world.phys.BlockHitResult@226e4e59)
+PASS sneak beam, no water near: grass ahead is now block.minecraft.dirt_path (beamActive=true, sneaking=true, hit=net.minecraft.world.phys.BlockHitResult@e888636)
 PASS sneak beam, water near: grass ahead is now block.minecraft.farmland
 PASS swing: a sword still swings with the Manipulator put away
 shot 14_sword_swing
@@ -38,28 +38,28 @@ shot 23a_growth_charging
 shot 23_pollen_cloud
 shot 24_light_bounce
 shot 25_tether_rope
-PASS tether: the hook reeled the player up (2.1 blocks)
+PASS tether: the hook reeled the player up (2.0 blocks)
 shot 26_gust_grenade_latched
 shot 26b_gust_grenade_burst
 PASS gust: right click threw a grenade that burst (bursts 1, pig hurt true)
-tether: aiming at the pig 12.0 blocks out, pitch 5.6
-tether: aiming at the pig 12.0 blocks out, pitch 5.6
+tether: aiming at the pig 13.0 blocks out, pitch 5.1
+tether: aiming at the pig 13.0 blocks out, pitch 5.1
 tether pig v=0.60 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
-tether pig at 10.8
+tether pig at 11.8
 tether pig v=0.60 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
-tether pig at 8.4
+tether pig at 10.0
 shot 27_tether_pull
 tether pig v=0.60 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
-tether pig at 6.1
-tether pig v=0.59 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
-tether pig at 3.8
-tether pig v=0.48 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=false full=false
-tether pig at 1.7
-PASS tether: a right click tap reeled the hooked pig from 12 to 0.7 blocks (pig pulled 12.2)
+tether pig at 7.1
+tether pig v=0.60 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=true
+tether pig at 5.3
+tether pig v=0.53 onGround=false hook=stuck=true hooked=pig hookAt=-1 reeling=true full=false
+tether pig at 2.6
+PASS tether: a right click tap reeled the hooked pig from 12 to 1.1 blocks (pig pulled 12.2)
 shot 28_light_beacon
-PASS light: the Beacon lights where it lands (1 light blocks)
+PASS light: the Beacon lights where it lands (2 light blocks)
 PASS mining is Beam-only: 20 ticks of left click in Light mode left the stone
-PASS Photonic glow: the player is a moving light source (1 sources, glow 14.8, block light at the eyes 14)
+PASS Photonic glow: the player is a moving light source (1 sources, glow 14.6, block light at the eyes 14)
 PASS Photonic glow places no light block over the player
 PASS light: the Beacon's light goes with it (0 left [], 0 were there before)
 shot 29_harvest
@@ -67,11 +67,11 @@ PASS growth: left click harvested 9 of 9 ripe wheat
 PASS mass driver: left click lifted the stone
 shot 30_mass_throw
 PASS mass driver: right click threw the carried stone
-zipline after the first sneaking hook: [anchor=true partner=-1 stuck=true at 85, -55, 9] hook=none riding=false using=false crouch=true
-zipline after the second sneaking hook: [anchor=true partner=102 stuck=true at 85, -55, 9] [anchor=true partner=100 stuck=true at 99, -55, 9] hook=none riding=false using=false crouch=true
-zipline right click on the rope: [anchor=true partner=102 stuck=true at 85, -55, 9] [anchor=true partner=100 stuck=true at 99, -55, 9] hook=none riding=true using=true crouch=false
-zipline while riding: [anchor=true partner=102 stuck=true at 85, -55, 9] [anchor=true partner=100 stuck=true at 99, -55, 9] hook=none riding=true using=true crouch=false
-PASS zipline: right click aimed at the rope rides it (riding=true, rose 3.0 blocks)
+zipline after the first sneaking hook: [anchor=true partner=-1 stuck=true at 89, -55, -1] hook=none riding=false using=false crouch=true
+zipline after the second sneaking hook: [anchor=true partner=101 stuck=true at 89, -55, -1] [anchor=true partner=99 stuck=true at 103, -55, -1] hook=none riding=false using=false crouch=true
+zipline right click on the rope: [anchor=true partner=101 stuck=true at 89, -55, -1] [anchor=true partner=99 stuck=true at 103, -55, -1] hook=none riding=true using=true crouch=false
+zipline while riding: [anchor=true partner=101 stuck=true at 89, -55, -1] [anchor=true partner=99 stuck=true at 103, -55, -1] hook=none riding=true using=true crouch=false
+PASS zipline: right click aimed at the rope rides it (riding=true, rose 3.1 blocks)
 PASS gems: chests/shipwreck_treasure gave sirenite 92/400, other gems 0
 PASS gems: chests/underwater_ruin_big gave sirenite 151/400, other gems 0
 PASS gems: chests/ruined_portal gave gehennite 400/400, other gems 0
@@ -92,7 +92,7 @@ PASS gems: the Module items are gone
 PASS recipes: upgrade_iron is gem between two blocks, ingot fins top right and bottom left
 PASS recipes: upgrade_diamond is gem between two blocks, ingot fins top right and bottom left
 PASS gems: placed desert_pyramid, 4 chests, 1 with atenite: 0,0,-2+gem -2,0,0 2,0,0 0,0,2
-PASS gems: placed jungle_pyramid, 4 chests, 1 with quetzalite: 6,-3,3+gem+sticky 5,-3,10 6,-2,10 0,-2,12
+PASS gems: placed jungle_pyramid, 4 chests, 1 with quetzalite: 1,-3,-3+gem+sticky 0,-3,4 1,-2,4 -5,-2,6
 shot 35_gem_glint
 shot 36_advancements
 shot 36b_advancements_bottom
