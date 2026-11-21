@@ -108,8 +108,8 @@ final class KDyePalette {
                                             label(
                                                     Lang.tr(
                                                             "gui.ethermod.requires_item",
-                                                            net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(net.minecraft.resources.Identifier.withDefaultNamespace(DYES[k - 1].getName() + "_dye"))
-                                                                    .getDescription()
+                                                            new net.minecraft.world.item.ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM.getValue(net.minecraft.resources.Identifier.withDefaultNamespace(DYES[k - 1].getName() + "_dye")))
+                                                                    .getHoverName()
                                                                     .getString()),
                                                     colour))
                                     : List.<Component>of();

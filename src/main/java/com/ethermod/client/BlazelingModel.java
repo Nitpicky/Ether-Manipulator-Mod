@@ -16,6 +16,7 @@ public final class BlazelingModel extends EntityModel<LivingEntityRenderState> {
     private final ModelPart[] rods = new ModelPart[3];
 
     public BlazelingModel(ModelPart root) {
+        super(root);
         this.root = root;
         head = root.getChild("head");
         for (int i = 0; i < 3; i++) rods[i] = root.getChild("rod_" + i);
