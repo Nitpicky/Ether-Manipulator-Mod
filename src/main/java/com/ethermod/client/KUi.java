@@ -101,11 +101,17 @@ final class KUi {
     String pressedKey;
 
     /** How a ramp button's icon should be drawn: its colour and a 1px drop while pressed. */
-    record Look(int icon, int dy) {}
+    record Look(int icon, int dy, boolean shadow) {
+        /** A drop shadow like the UI text's: the icon colour at a quarter brightness. */
+        int shadowColour() {
+            return 0xff000000 | ((icon & 0xfcfcfc) >> 2);
+        }
+    }
 
     /**
      * A button drawn from one hue ramp: dark fill (step 0), lit bevel top-left (4), corners (3) and
-     * dark bevel bottom-right (2), icon on step 5. Hovered: fill 1, icon 6. Pressed: the bevel
+     * dark bevel bottom-right (2), icon on step 5 with a drop shadow. Hovered: fill 1, icon 6, no
+     * shadow. Pressed: the bevel
      * sinks (light and dark edges swap), fill 2, icon 6 one pixel lower.
      */
     Look rampControl(
@@ -122,7 +128,7 @@ final class KUi {
         g.fill(x + w - 1, y, x + w, y + 1, c[3]);
         g.fill(x, y + h - 1, x + 1, y + h, c[3]);
         if (action != null || !tip.isEmpty()) hit(key, x, y, w, h, action, tip, c[4], false);
-        return new Look(over ? c[6] : c[5], down ? 1 : 0);
+        return new Look(over ? c[6] : c[5], down ? 1 : 0, !over);
     }
 
     void hover(

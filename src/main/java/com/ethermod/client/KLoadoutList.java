@@ -31,10 +31,11 @@ import java.util.Optional;
  */
 final class KLoadoutList {
     // Layout (K-window units). Content is 70px wide inside the panel's 2px padding: the rows and
-    // a 4px scrollbar 2px apart, then four 16x14 buttons with 2px gaps under them. Seven 12px rows
-    // with 2px gaps fill 35..130, leaving 2px above the title band's end and above the buttons.
+    // a 4px scrollbar 2px apart, then four 16x16 buttons with 2px gaps under them. The title keeps
+    // 2px margins all round (text shadow included); seven 12px rows with 2px gaps fill 33..128,
+    // then 2px, the buttons (131..146) and the panel's 2px bottom padding.
     static final int PANEL_X = 236, PANEL_W = 76, X = 239, ROW_W = 64, BAR_X = 305, BAR_W = 4;
-    static final int LIST_Y = 35, BUTTON_Y = 133, BUTTON_W = 16, BUTTON_H = 14, GAP = 2;
+    static final int LIST_Y = 33, BUTTON_Y = 131, BUTTON_W = 16, BUTTON_H = 16, GAP = 2;
     /** Rows shown at once; the rest scroll. */
     static final int VISIBLE = 7;
     private static final int CHIP = 5, CHIP_GAP = 2, CHIP_STEP = CHIP + CHIP_GAP;
@@ -275,7 +276,9 @@ final class KLoadoutList {
                         }
                         : null,
                 List.of(label(Lang.tr("gui.ethermod.save_set"), add.text())));
-        hollowPlus(g, x0 + (BUTTON_W - 10) / 2, BUTTON_Y + 2 + addLook.dy(), addLook.icon());
+        int px = x0 + (BUTTON_W - 10) / 2, py = BUTTON_Y + (BUTTON_H - 10) / 2 + addLook.dy();
+        if (addLook.shadow()) hollowPlus(g, px + 1, py + 1, addLook.shadowColour());
+        hollowPlus(g, px, py, addLook.icon());
 
         Palette copy = flashing("copy-code", ui) ? flashPalette : button("copy");
         var copyLook = ui.rampControl(
@@ -332,10 +335,12 @@ final class KLoadoutList {
         icon(g, "trash", x3, delLook);
     }
 
-    /** A 10x10 sprite centred in a bottom-row button. */
+    /** A 10x10 sprite centred in a bottom-row button, with its drop shadow when resting. */
     private static void icon(GuiGraphics g, String name, int x, KUi.Look look) {
         var r = new Raster(BUTTON_W, BUTTON_H);
-        r.sprite(name, (BUTTON_W - 10) / 2, (BUTTON_H - 10) / 2 + look.dy(), look.icon());
+        int ix = (BUTTON_W - 10) / 2, iy = (BUTTON_H - 10) / 2 + look.dy();
+        if (look.shadow()) r.sprite(name, ix + 1, iy + 1, look.shadowColour());
+        r.sprite(name, ix, iy, look.icon());
         raster(g, r, x, BUTTON_Y);
     }
 
