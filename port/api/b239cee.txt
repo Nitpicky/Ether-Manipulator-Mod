@@ -1,0 +1,231 @@
+/home/runner/.gradle/caches/modules-2/files-2.1/curse.maven/geckolib-388172/8893169/196231506b89da06925c087f9b8bc5fd12ebea16/geckolib-388172-8893169.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/io.github.llamalad7/mixinextras-neoforge/0.5.5/26f2905a37afd203c3da1d6a2e164472a7531b41/mixinextras-neoforge-0.5.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.accesstransformers/at-parser/11.0.2/64aae57d6d26d69543c5275181fe6971707a4e16/at-parser-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/earlydisplay/12.0.16/efa2e56115d22853d10524874a7bbb64555c2a28/earlydisplay-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/12.0.16/edbb2ee8211a867215970bc15ae9c354fa56dc09/loader-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarMetadata/0.5.3/ff40c1cd721d07615d825c5bbf27705b2e3258ed/JarJarMetadata-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarSelector/0.5.3/6b845aab8d5c8e721b4e3cd30f97722b7f8044b1/JarJarSelector-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/accesstransformers/11.0.2/25dcb69c78b16669935f0ab91dff830ce192379d/accesstransformers-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/bus/8.0.5/5b2d33285ab5d1554e9798ad98c40d6ea3868bd5/bus-8.0.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/mergetool/2.0.7/793b18456e92c4a7f66d9b5d8bf7a9c1c7a20b20/mergetool-2.0.7-api.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar
+=== LIST /.*(Destruction|Destroy|Crumbl).*$
+com/mojang/renderpearl/backend/vulkan/Destroyable
+com/mojang/renderpearl/backend/vulkan/DestructionQueue
+com/mojang/renderpearl/backend/vulkan/DestructionQueue$Destroyer
+net/minecraft/advancements/triggers/BeeNestDestroyedTrigger
+net/minecraft/advancements/triggers/BeeNestDestroyedTrigger$TriggerInstance
+net/minecraft/client/particle/TerrainParticle$CrumblingProvider
+net/minecraft/client/renderer/feature/ModelFeatureRenderer$CrumblingOverlay
+net/minecraft/network/protocol/game/ClientboundBlockDestructionPacket
+net/minecraft/server/level/BlockDestructionProgress
+net/neoforged/neoforge/event/entity/living/LivingDestroyBlockEvent
+net/neoforged/neoforge/event/entity/player/PlayerDestroyItemEvent
+=== CODE net/minecraft/client/Camera update
+  public void update(net.minecraft.client.DeltaTracker);
+    Code:
+         0: aload_0
+         1: getfield      #109                // Field minecraft:Lnet/minecraft/client/Minecraft;
+         4: getfield      #142                // Field net/minecraft/client/Minecraft.options:Lnet/minecraft/client/Options;
+         7: invokevirtual #146                // Method net/minecraft/client/Options.getEffectiveRenderDistance:()I
+        10: bipush        16
+        12: imul
+        13: i2f
+        14: fstore_2
+        15: aload_0
+        16: fload_2
+        17: ldc           #154                // float 4.0f
+        19: fmul
+        20: aload_0
+        21: getfield      #109                // Field minecraft:Lnet/minecraft/client/Minecraft;
+        24: getfield      #142                // Field net/minecraft/client/Minecraft.options:Lnet/minecraft/client/Options;
+        27: invokevirtual #155                // Method net/minecraft/client/Options.cloudRange:()Lnet/minecraft/client/OptionInstance;
+        30: invokevirtual #159                // Method net/minecraft/client/OptionInstance.get:()Ljava/lang/Object;
+        33: checkcast     #165                // class java/lang/Integer
+        36: invokevirtual #167                // Method java/lang/Integer.intValue:()I
+        39: bipush        16
+        41: imul
+        42: i2f
+        43: invokestatic  #170                // Method java/lang/Math.max:(FF)F
+        46: putfield      #176                // Field depthFar:F
+        49: aload_0
+        50: getfield      #109                // Field minecraft:Lnet/minecraft/client/Minecraft;
+        53: getfield      #179                // Field net/minecraft/client/Minecraft.player:Lnet/minecraft/client/player/LocalPlayer;
+        56: astore_3
+        57: aload_3
+        58: ifnull        182
+        61: aload_0
+        62: getfield      #113                // Field level:Lnet/minecraft/world/level/Level;
+        65: ifnull        182
+        68: aload_0
+        69: getfield      #117                // Field entity:Lnet/minecraft/world/entity/Entity;
+        72: ifnonnull     80
+        75: aload_0
+        76: aload_3
+        77: invokevirtual #183                // Method setEntity:(Lnet/minecraft/world/entity/Entity;)V
+        80: aload_0
+        81: aload_1
+        82: invokevirtual #187                // Method getCameraEntityPartialTicks:(Lnet/minecraft/client/DeltaTracker;)F
+        85: fstore        4
+        87: aload_0
+        88: fload         4
+        90: invokevirtual #191                // Method alignWithEntity:(F)V
+        93: aload_0
+        94: aload_0
+        95: fload         4
+        97: invokevirtual #195                // Method calculateFov:(F)F
+       100: putfield      #199                // Field fov:F
+       103: aload_0
+       104: aload_0
+       105: fload         4
+       107: invokevirtual #202                // Method calculateHudFov:(F)F
+       110: putfield      #205                // Field hudFov:F
+       113: aload_0
+       114: aload_0
+       115: aload_0
+       116: getfield      #79                 // Field cachedViewRotMatrix:Lorg/joml/Matrix4f;
+       119: invokevirtual #208                // Method getViewRotationMatrix:(Lorg/joml/Matrix4f;)Lorg/joml/Matrix4f;
+       122: aload_0
+       123: invokevirtual #212                // Method createProjectionMatrixForCulling:()Lorg/joml/Matrix4f;
+       126: aload_0
+       127: getfield      #13                 // Field position:Lnet/minecraft/world/phys/Vec3;
+       130: invokevirtual #216                // Method prepareCullFrustum:(Lorg/joml/Matrix4fc;Lorg/joml/Matrix4f;Lnet/minecraft/world/phys/Vec3;)V
+       133: aload_0
+       134: getfield      #109                // Field minecraft:Lnet/minecraft/client/Minecraft;
+       137: invokevirtual #220                // Method net/minecraft/client/Minecraft.getWindow:()Lcom/mojang/blaze3d/platform/Window;
+       140: invokevirtual #224                // Method com/mojang/blaze3d/platform/Window.getWidth:()I
+       143: i2f
+       144: fstore        5
+       146: aload_0
+       147: getfield      #109                // Field minecraft:Lnet/minecraft/client/Minecraft;
+       150: invokevirtual #220                // Method net/minecraft/client/Minecraft.getWindow:()Lcom/mojang/blaze3d/platform/Window;
+       153: invokevirtual #229                // Method com/mojang/blaze3d/platform/Window.getHeight:()I
+       156: i2f
+       157: fstore        6
+       159: aload_0
+       160: ldc           #232                // float 0.05f
+       162: aload_0
+       163: getfield      #176                // Field depthFar:F
+       166: aload_0
+       167: getfield      #199                // Field fov:F
+       170: fload         5
+       172: fload         6
+       174: invokevirtual #233                // Method setupPerspective:(FFFFF)V
+       177: aload_0
+       178: iconst_1
+       179: putfield      #237                // Field initialized:Z
+       182: return
+=== CODE net/minecraft/client/entity/ClientAvatarState tick
+  public void tick(net.minecraft.world.phys.Vec3, net.minecraft.world.phys.Vec3);
+    Code:
+         0: aload_0
+         1: aload_0
+         2: getfield      #18                 // Field walkDist:F
+         5: putfield      #22                 // Field walkDistO:F
+         8: aload_0
+         9: aload_2
+        10: putfield      #13                 // Field deltaMovementOnPreviousTick:Lnet/minecraft/world/phys/Vec3;
+        13: aload_0
+        14: aload_1
+        15: invokevirtual #25                 // Method moveCloak:(Lnet/minecraft/world/phys/Vec3;)V
+        18: return
+=== SIG net/minecraft/client/renderer/LevelRenderer .*(estr|rack|Progress).*
+  private void submitBlockDestroyAnimation(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.LevelRenderState);
+=== SIG net/minecraft/client/Camera .*
+  public static final float PROJECTION_Z_NEAR;
+  private static final float DEFAULT_CAMERA_DISTANCE;
+  private static final org.joml.Vector3fc FORWARDS;
+  private static final org.joml.Vector3fc UP;
+  private static final org.joml.Vector3fc LEFT;
+  public static final float BASE_HUD_FOV;
+  private boolean initialized;
+  private net.minecraft.world.level.Level level;
+  private net.minecraft.world.entity.Entity entity;
+  private net.minecraft.world.phys.Vec3 position;
+  private final net.minecraft.core.BlockPos$MutableBlockPos blockPosition;
+  private final org.joml.Vector3f forwards;
+  private final org.joml.Vector3f panoramicForwards;
+  private final org.joml.Vector3f up;
+  private final org.joml.Vector3f left;
+  private float xRot;
+  private float yRot;
+  private float roll;
+  private final org.joml.Quaternionf rotation;
+  private boolean detached;
+grep: write error: Broken pipe
+=== net/minecraft/client/Camera
+Compiled from "Camera.java"
+public class net.minecraft.client.Camera implements net.minecraft.world.waypoints.TrackedWaypoint$Camera {
+  public static final float PROJECTION_Z_NEAR;
+  public static final float BASE_HUD_FOV;
+  public net.minecraft.client.Camera();
+  public void tick();
+  public void update(net.minecraft.client.DeltaTracker);
+  public float getCameraEntityPartialTicks(net.minecraft.client.DeltaTracker);
+  public void extractRenderState(net.minecraft.client.renderer.state.level.CameraRenderState, net.minecraft.client.DeltaTracker);
+  public net.minecraft.client.renderer.culling.Frustum getCullFrustum();
+  public net.minecraft.client.renderer.culling.Frustum getCapturedFrustum();
+  public void captureFrustum();
+  public void killFrustum();
+  public boolean isPanoramicMode();
+  public float getFov();
+  public net.minecraft.world.phys.Vec3 position();
+  public net.minecraft.core.BlockPos blockPosition();
+  public float xRot();
+  public float yRot();
+  public float yaw();
+  public org.joml.Quaternionf rotation();
+  public org.joml.Matrix4f getViewRotationMatrix(org.joml.Matrix4f);
+  public org.joml.Matrix4f getViewRotationProjectionMatrix(org.joml.Matrix4f);
+  public net.minecraft.world.entity.Entity entity();
+  public void setEntity(net.minecraft.world.entity.Entity);
+  public boolean isInitialized();
+  public boolean isDetached();
+  public net.minecraft.world.attribute.EnvironmentAttributeProbe attributeProbe();
+  public net.minecraft.client.Camera$NearPlane getNearPlane(float);
+  public net.minecraft.world.level.material.FogType getFluidInCamera();
+  public org.joml.Vector3fc forwardVector();
+  public org.joml.Vector3fc panoramicForwards();
+  public org.joml.Vector3fc upVector();
+  public org.joml.Vector3fc leftVector();
+  public void reset();
+  public void setLevel(net.minecraft.client.multiplayer.ClientLevel);
+  public void enablePanoramicMode();
+  public void disablePanoramicMode();
+  public float getRoll();
+  public net.minecraft.world.level.block.state.BlockState getBlockAtCamera();
+}
+=== net/minecraft/client/entity/ClientAvatarState
+Compiled from "ClientAvatarState.java"
+public class net.minecraft.client.entity.ClientAvatarState {
+  public net.minecraft.client.entity.ClientAvatarState();
+  public void tick(net.minecraft.world.phys.Vec3, net.minecraft.world.phys.Vec3);
+  public void addWalkDistance(float);
+  public net.minecraft.world.phys.Vec3 deltaMovementOnPreviousTick();
+  public double getInterpolatedCloakX(float);
+  public double getInterpolatedCloakY(float);
+  public double getInterpolatedCloakZ(float);
+  public void updateBob(float);
+  public void resetBob();
+  public float getInterpolatedBob(float);
+  public float getBackwardsInterpolatedWalkDistance(float);
+  public float getInterpolatedWalkDistance(float);
+}
+=== net/minecraft/client/renderer/state/level/CameraEntityRenderState
+Compiled from "CameraEntityRenderState.java"
+public class net.minecraft.client.renderer.state.level.CameraEntityRenderState {
+  public float hurtTime;
+  public int hurtDuration;
+  public float deathTime;
+  public boolean isSleeping;
+  public boolean isLiving;
+  public boolean isPlayer;
+  public boolean isDeadOrDying;
+  public boolean doesMobEffectBlockSky;
+  public float hurtDir;
+  public float backwardsInterpolatedWalkDistance;
+  public float bob;
+  public boolean preventFlinch;
+  public net.minecraft.client.renderer.state.level.CameraEntityRenderState();
+}
