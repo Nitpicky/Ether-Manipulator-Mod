@@ -31,9 +31,10 @@ import java.util.Optional;
  */
 final class KLoadoutList {
     // Layout (K-window units). Content is 70px wide inside the panel's 2px padding: the rows and
-    // a 4px scrollbar 2px apart, then four 16x14 buttons with 2px gaps under them.
+    // a 4px scrollbar 2px apart, then four 16x14 buttons with 2px gaps under them. Seven 12px rows
+    // with 2px gaps fill 35..130, leaving 2px above the title band's end and above the buttons.
     static final int PANEL_X = 236, PANEL_W = 76, X = 239, ROW_W = 64, BAR_X = 305, BAR_W = 4;
-    static final int LIST_Y = 33, BUTTON_Y = 133, BUTTON_W = 16, BUTTON_H = 14, GAP = 2;
+    static final int LIST_Y = 35, BUTTON_Y = 133, BUTTON_W = 16, BUTTON_H = 14, GAP = 2;
     /** Rows shown at once; the rest scroll. */
     static final int VISIBLE = 7;
     private static final int CHIP = 5, CHIP_GAP = 2, CHIP_STEP = CHIP + CHIP_GAP;
@@ -175,8 +176,11 @@ final class KLoadoutList {
         g.pose().popPose();
     }
 
-    static int setRowHeight(int row) { return row < 2 ? 14 : 13; }
-    static int setRowY(int row) { return LIST_Y + row * 14 + Math.min(row, 2); }
+    /** Every row is the same height with the panel's usual 2px gap between rows. */
+    static final int ROW_H = 12, ROW_GAP = 2;
+
+    static int setRowHeight(int row) { return ROW_H; }
+    static int setRowY(int row) { return LIST_Y + row * (ROW_H + ROW_GAP); }
 
     /**
      * A Module chip drawn like the Module's Badge: its bright outline (step 4) with cut corners on
