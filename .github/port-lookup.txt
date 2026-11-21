@@ -1,4 +1,4 @@
 com/mojang/renderpearl/frontend/FrontendRenderPass
-/.*renderpearl/frontend/[^/]*$
-com/mojang/renderpearl/frontend/FrontendRenderPass#drawIndexed com/mojang/renderpearl/frontend/FrontendRenderPass#<init>
-com/mojang/renderpearl/frontend/FrontendRenderPass#.*
+/.*renderpearl/frontend/FrontendRenderPass$
+com/mojang/renderpearl/frontend/FrontendRenderPass#validateDraw
+com/mojang/renderpearl/frontend/FrontendRenderPass#validat.*
