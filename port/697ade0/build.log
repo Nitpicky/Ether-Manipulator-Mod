@@ -1,0 +1,1957 @@
+Downloading https://services.gradle.org/distributions/gradle-9.2.1-bin.zip
+............10%.............20%.............30%.............40%.............50%.............60%.............70%.............80%.............90%.............100%
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by net.rubygrapefruit.platform.internal.NativeLibraryLoader in an unnamed module (file:/home/runner/.gradle/wrapper/dists/gradle-9.2.1-bin/2t0n5ozlw9xmuyvbp7dnzaxug/gradle-9.2.1/lib/native-platform-0.22-milestone-29.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+
+Welcome to Gradle 9.2.1!
+
+Here are the highlights of this release:
+ - Windows ARM support
+ - Improved publishing APIs
+ - Better guidance for dependency verification failures
+
+For more details see https://docs.gradle.org/9.2.1/release-notes.html
+
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.2.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Creating Minecraft artifacts without recompilation.
+
+> Task :createMinecraftArtifacts
+Loaded 135 artifacts from /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/tmp/createMinecraftArtifacts/nfrt_artifact_manifest.properties
+[1m*** Started working on [4mdownloadManifest[23;0m[23;0m
+  ↓ https://piston-meta.mojang.com/mc/game/version_manifest_v2.json
+ [1m[92m✓[23;0m Completed [4mdownloadManifest[23;0m in 0.31s
+[1m*** Started working on [4mdownloadJson[23;0m[23;0m
+  ↓ https://piston-meta.mojang.com/mc/game/version_manifest_v2.json
+  ↓ https://piston-meta.mojang.com/v1/packages/ead839cbccf0ddf013c3f935f2840080b5cb0d26/26.3.json
+ [1m[92m✓[23;0m Completed [4mdownloadJson[23;0m in 0.05s
+[1m*** Started working on [4mdownloadClient[23;0m[23;0m
+[1m*** Started working on [4mdownloadServer[23;0m[23;0m
+  ↓ https://piston-data.mojang.com/v1/objects/e877b6a07acd633fb3bb475002175cec036e7b87/client.jar
+  ↓ https://piston-data.mojang.com/v1/objects/33680f5f2ac32864d6d7cf5e56a705fdb3e05f4c/server.jar
+ [1m[92m✓[23;0m Completed [4mdownloadClient[23;0m in 0.64s
+ [1m[92m✓[23;0m Completed [4mdownloadServer[23;0m in 0.75s
+[1m*** Started working on [4mpreProcessJar[23;0m[23;0m
+ ↳ Running external tool net.neoforged.installertools:installertools:4.0.17:fatjar
+ [1m[92m✓[23;0m Completed [4mpreProcessJar[23;0m in 2.58s
+[1m*** Started working on [4mbinaryPatch[23;0m[23;0m
+  [33mWARNING: [23;0mnet.neoforged.installertools:binarypatcher:4.0.17:fatjar is not present in the artifact manifest
+  ↓ https://maven.neoforged.net/releases/net/neoforged/installertools/binarypatcher/4.0.17/binarypatcher-4.0.17-fatjar.jar
+ ↳ Running external tool net.neoforged.installertools:binarypatcher:4.0.17:fatjar
+ [1m[92m✓[23;0m Completed [4mbinaryPatch[23;0m in 3.01s
+[1m*** Started working on [4mcopyUnpatchedClasses[23;0m[23;0m
+ [1m[92m✓[23;0m Completed [4mcopyUnpatchedClasses[23;0m in 2.42s
+[1m*** Started working on [4mapplyDevTransforms[23;0m[23;0m
+ ↳ Running external tool net.neoforged.installertools:installertools:4.0.12:fatjar
+ [1m[92m✓[23;0m Completed [4mapplyDevTransforms[23;0m in 2.67s
+Total runtime: 12.58s
+
+
+> Task :compileJava
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/main/java/com/ethermod/trait/TraitEffects.java:81: warning: [removal] ORES in Blocks has been deprecated and marked for removal
+        if (!state.is(Tags.Blocks.ORES) || !Traits.has(tool, "tectonic.vein_miner")) return;
+                                 ^
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+Note: /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/main/java/com/ethermod/entity/SoulBlazeling.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+1 warning
+
+> Task :processResources
+> Task :classes
+> Task :jarJar NO-SOURCE
+> Task :jar
+> Task :assemble
+> Task :compileTestJava NO-SOURCE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :test NO-SOURCE
+> Task :check UP-TO-DATE
+> Task :build
+
+> Task :compilePlaytestJava FAILED
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/HoverScreenshotTour.java:7: error: cannot find symbol
+import net.minecraft.client.gui.GuiGraphics;
+                               ^
+  symbol:   class GuiGraphics
+  location: package net.minecraft.client.gui
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/HoverScreenshotTour.java:21: error: cannot find symbol
+    static class Screen extends TraitScreen {
+                                ^
+  symbol:   class TraitScreen
+  location: class HoverScreenshotTour
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/HoverScreenshotTour.java:22: error: cannot find symbol
+        @Override public void render(GuiGraphics g,int x,int y,float pt) {
+                                     ^
+  symbol:   class GuiGraphics
+  location: class Screen
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:11: error: cannot find symbol
+import net.minecraft.client.gui.GuiGraphics;
+                               ^
+  symbol:   class GuiGraphics
+  location: package net.minecraft.client.gui
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:38: error: cannot find symbol
+    static final class Screen extends TraitScreen {
+                                      ^
+  symbol:   class TraitScreen
+  location: class KGifTour
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:40: error: cannot find symbol
+        public void render(GuiGraphics g, int x, int y, float pt) {
+                           ^
+  symbol:   class GuiGraphics
+  location: class Screen
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:16: error: cannot find symbol
+import net.minecraft.world.level.GameRules;
+                                ^
+  symbol:   class GameRules
+  location: package net.minecraft.world.level
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1321: error: cannot find symbol
+    private static net.minecraft.world.entity.monster.Husk husk(ServerPlayer p, String tag) {
+                                                     ^
+  symbol:   class Husk
+  location: package net.minecraft.world.entity.monster
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1380: error: cannot find symbol
+    private static List<net.minecraft.world.entity.animal.Pig> pigs(ServerPlayer p) {
+                                                         ^
+  symbol:   class Pig
+  location: package net.minecraft.world.entity.animal
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:17: error: WalkProbe is not abstract and does not override abstract method gameMode() in Player
+    private static final class WalkProbe extends net.minecraft.world.entity.player.Player {
+                         ^
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:21: error: constructor Player in class Player cannot be applied to given types;
+            super(
+            ^
+  required: Level,GameProfile
+  found:    Level,BlockPos,int,GameProfile
+  reason: actual and formal argument lists differ in length
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:116: error: cannot find symbol
+                                        p.getServer().getPlayerList().op(p.getGameProfile());
+                                         ^
+  symbol:   method getServer()
+  location: variable p of type ServerPlayer
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:135: error: cannot find symbol
+                                        p.level().setDayTime(18000);
+                                                 ^
+  symbol:   method setDayTime(int)
+  location: class ServerLevel
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:139: error: cannot find symbol
+                                                        net.minecraft.world.level.GameRules
+                                                                                 ^
+  symbol:   class GameRules
+  location: package net.minecraft.world.level
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:141: error: cannot find symbol
+                                                .set(false, p.getServer());
+                                                             ^
+  symbol:   method getServer()
+  location: variable p of type ServerPlayer
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:145: error: cannot find symbol
+                                                        net.minecraft.world.level.GameRules
+                                                                                 ^
+  symbol:   class GameRules
+  location: package net.minecraft.world.level
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:147: error: cannot find symbol
+                                                .set(false, p.getServer());
+                                                             ^
+  symbol:   method getServer()
+  location: variable p of type ServerPlayer
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:151: error: no suitable method found for create(ServerLevel)
+                                                        .create(p.level());
+                                                        ^
+    method EntityType.create(ServerLevel,@org.jspecify.annotations.Nullable PostSpawnProcessor<SoulBlazeling>,BlockPos,EntitySpawnReason,boolean,boolean) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(Level,EntitySpawnReason) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(Level,EntitySpawnRequest) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(ValueInput,Level,EntitySpawnRequest) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(EntityType<?>,ValueInput,Level,EntitySpawnReason) is not applicable
+      (actual and formal argument lists differ in length)
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:157: error: cannot find symbol
+                                                    net.minecraft.world.entity.EntityType.HUSK
+                                                                                         ^
+  symbol:   variable HUSK
+  location: class EntityType
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:196: error: cannot find symbol
+                                    p.getServer().getPlayerList().op(p.getGameProfile());
+                                     ^
+  symbol:   method getServer()
+  location: variable p of type ServerPlayer
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:264: error: no suitable method found for teleportTo(ServerLevel,double,int,double,Set<Object>,int,int)
+                                    p.teleportTo(
+                                     ^
+    method ServerPlayer.teleportTo(double,double,double) is not applicable
+      (actual and formal argument lists differ in length)
+    method ServerPlayer.teleportTo(ServerLevel,double,double,double,Set<Relative>,float,float,boolean) is not applicable
+      (actual and formal argument lists differ in length)
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:276: error: cannot find symbol
+                mc.setScreen(new TraitScreen());
+                                 ^
+  symbol:   class TraitScreen
+  location: class UiProbe
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:283: error: cannot find symbol
+                            mc.getMainRenderTarget(),
+                              ^
+  symbol:   method getMainRenderTarget()
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:414: error: cannot find symbol
+                                        net.minecraft.world.entity.EntityType.ZOMBIE.create(sl);
+                                                                             ^
+  symbol:   variable ZOMBIE
+  location: class EntityType
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:432: error: no suitable method found for create(ServerLevel)
+                                                .create(sl);
+                                                ^
+    method EntityType.create(ServerLevel,@org.jspecify.annotations.Nullable PostSpawnProcessor<LightDecoy>,BlockPos,EntitySpawnReason,boolean,boolean) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(Level,EntitySpawnReason) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(Level,EntitySpawnRequest) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(ValueInput,Level,EntitySpawnRequest) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(EntityType<?>,ValueInput,Level,EntitySpawnReason) is not applicable
+      (actual and formal argument lists differ in length)
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:539: error: cannot find symbol
+                                var lifted = net.minecraft.world.entity.EntityType.PIG.create(sl);
+                                                                                  ^
+  symbol:   variable PIG
+  location: class EntityType
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:574: error: cannot find symbol
+                                    var stasisPig = net.minecraft.world.entity.EntityType.PIG.create(sl);
+                                                                                         ^
+  symbol:   variable PIG
+  location: class EntityType
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:692: error: cannot find symbol
+                                        net.minecraft.world.entity.EntityType.ZOMBIE.create(sl);
+                                                                             ^
+  symbol:   variable ZOMBIE
+  location: class EntityType
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:709: error: bad operand types for binary operator '=='
+                                                        == sl.getGameTime()
+                                                        ^
+  first type:  Optional<Long>
+  second type: long
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:717: error: cannot find symbol
+                                        net.minecraft.world.entity.EntityType.ZOMBIE.create(sl);
+                                                                             ^
+  symbol:   variable ZOMBIE
+  location: class EntityType
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:733: error: cannot find symbol
+                                                                .SmallFireball
+                                                                ^
+  symbol:   class SmallFireball
+  location: package net.minecraft.world.entity.projectile
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:761: error: no suitable method found for create(ServerLevel)
+                                                    .create(sl);
+                                                    ^
+    method EntityType.create(ServerLevel,@org.jspecify.annotations.Nullable PostSpawnProcessor<SoulBolt>,BlockPos,EntitySpawnReason,boolean,boolean) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(Level,EntitySpawnReason) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(Level,EntitySpawnRequest) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(ValueInput,Level,EntitySpawnRequest) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(EntityType<?>,ValueInput,Level,EntitySpawnReason) is not applicable
+      (actual and formal argument lists differ in length)
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:782: error: no suitable method found for create(ServerLevel)
+                                                    .create(sl);
+                                                    ^
+    method EntityType.create(ServerLevel,@org.jspecify.annotations.Nullable PostSpawnProcessor<SoulBolt>,BlockPos,EntitySpawnReason,boolean,boolean) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(Level,EntitySpawnReason) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(Level,EntitySpawnRequest) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(ValueInput,Level,EntitySpawnRequest) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(EntityType<?>,ValueInput,Level,EntitySpawnReason) is not applicable
+      (actual and formal argument lists differ in length)
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:807: error: cannot find symbol
+                                            net.minecraft.world.entity.EntityType.ZOMBIE.create(sl);
+                                                                                 ^
+  symbol:   variable ZOMBIE
+  location: class EntityType
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:835: error: cannot find symbol
+                                        net.minecraft.world.entity.EntityType.ZOMBIE.create(sl);
+                                                                             ^
+  symbol:   variable ZOMBIE
+  location: class EntityType
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:876: error: no suitable method found for create(ServerLevel)
+                                                .create(sl);
+                                                ^
+    method EntityType.create(ServerLevel,@org.jspecify.annotations.Nullable PostSpawnProcessor<SoulBlazeling>,BlockPos,EntitySpawnReason,boolean,boolean) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(Level,EntitySpawnReason) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(Level,EntitySpawnRequest) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(ValueInput,Level,EntitySpawnRequest) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(EntityType<?>,ValueInput,Level,EntitySpawnReason) is not applicable
+      (actual and formal argument lists differ in length)
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:883: error: cannot find symbol
+                                        net.minecraft.world.entity.EntityType.HUSK.create(sl);
+                                                                             ^
+  symbol:   variable HUSK
+  location: class EntityType
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:902: error: no suitable method found for create(ServerLevel)
+                                                .create(sl);
+                                                ^
+    method EntityType.create(ServerLevel,@org.jspecify.annotations.Nullable PostSpawnProcessor<SoulBlazeling>,BlockPos,EntitySpawnReason,boolean,boolean) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(Level,EntitySpawnReason) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(Level,EntitySpawnRequest) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(ValueInput,Level,EntitySpawnRequest) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(EntityType<?>,ValueInput,Level,EntitySpawnReason) is not applicable
+      (actual and formal argument lists differ in length)
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:920: error: cannot find symbol
+                                var dummy = net.minecraft.world.entity.EntityType.HUSK.create(sl);
+                                                                                 ^
+  symbol:   variable HUSK
+  location: class EntityType
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:963: error: no suitable method found for create(ServerLevel)
+                                                .create(sl);
+                                                ^
+    method EntityType.create(ServerLevel,@org.jspecify.annotations.Nullable PostSpawnProcessor<SoulBlazeling>,BlockPos,EntitySpawnReason,boolean,boolean) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(Level,EntitySpawnReason) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(Level,EntitySpawnRequest) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(ValueInput,Level,EntitySpawnRequest) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(EntityType<?>,ValueInput,Level,EntitySpawnReason) is not applicable
+      (actual and formal argument lists differ in length)
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:998: error: no suitable method found for create(ServerLevel)
+                                                .create(sl);
+                                                ^
+    method EntityType.create(ServerLevel,@org.jspecify.annotations.Nullable PostSpawnProcessor<SoulBlazeling>,BlockPos,EntitySpawnReason,boolean,boolean) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(Level,EntitySpawnReason) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(Level,EntitySpawnRequest) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(ValueInput,Level,EntitySpawnRequest) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(EntityType<?>,ValueInput,Level,EntitySpawnReason) is not applicable
+      (actual and formal argument lists differ in length)
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1009: error: incompatible types: CompoundTag cannot be converted to ValueOutput
+                                pet.saveWithoutId(savedPet);
+                                                  ^
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1013: error: no suitable method found for create(ServerLevel)
+                                                .create(sl);
+                                                ^
+    method EntityType.create(ServerLevel,@org.jspecify.annotations.Nullable PostSpawnProcessor<SoulBlazeling>,BlockPos,EntitySpawnReason,boolean,boolean) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(Level,EntitySpawnReason) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(Level,EntitySpawnRequest) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(ValueInput,Level,EntitySpawnRequest) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(EntityType<?>,ValueInput,Level,EntitySpawnReason) is not applicable
+      (actual and formal argument lists differ in length)
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1061: error: cannot find symbol
+        if (tick == 70) mc.setScreen(new TraitScreen());
+                                         ^
+  symbol:   class TraitScreen
+  location: class UiProbe
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1067: error: cannot find symbol
+                        mc.getMainRenderTarget(),
+                          ^
+  symbol:   method getMainRenderTarget()
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1119: error: cannot find symbol
+            mc.setScreen(null);
+              ^
+  symbol:   method setScreen(<null>)
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1342: error: no suitable method found for teleportTo(ServerLevel,double,double,double,Set<Object>,float,float)
+                                p.teleportTo(
+                                 ^
+    method ServerPlayer.teleportTo(double,double,double) is not applicable
+      (actual and formal argument lists differ in length)
+    method ServerPlayer.teleportTo(ServerLevel,double,double,double,Set<Relative>,float,float,boolean) is not applicable
+      (actual and formal argument lists differ in length)
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1411: error: cannot find symbol
+            var root = com.ethermod.client.BlazelingModel.layer().bakeRoot();
+                                          ^
+  symbol:   class BlazelingModel
+  location: package com.ethermod.client
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1412: error: cannot find symbol
+            var model = new com.ethermod.client.BlazelingModel(root);
+                                               ^
+  symbol:   class BlazelingModel
+  location: package com.ethermod.client
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1428: error: no suitable method found for create(ClientLevel)
+            var testPet = com.ethermod.registry.ModEntities.SOUL_BLAZELING.get().create(mc.level);
+                                                                                ^
+    method EntityType.create(ServerLevel,@org.jspecify.annotations.Nullable PostSpawnProcessor<SoulBlazeling>,BlockPos,EntitySpawnReason,boolean,boolean) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(Level,EntitySpawnReason) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(Level,EntitySpawnRequest) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(ValueInput,Level,EntitySpawnRequest) is not applicable
+      (actual and formal argument lists differ in length)
+    method EntityType.create(EntityType<?>,ValueInput,Level,EntitySpawnReason) is not applicable
+      (actual and formal argument lists differ in length)
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1432: error: cannot find symbol
+                            instanceof com.ethermod.client.BlazelingRenderer);
+                                                          ^
+  symbol:   class BlazelingRenderer
+  location: package com.ethermod.client
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1436: error: cannot find symbol
+            var camera = mc.gameRenderer.getMainCamera();
+                                        ^
+  symbol:   method getMainCamera()
+  location: variable gameRenderer of type GameRenderer
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1455: error: cannot find symbol
+                        mc.gameDirectory, "gravity-frame.png", mc.getMainRenderTarget(), c -> {});
+                                                                 ^
+  symbol:   method getMainRenderTarget()
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1564: error: cannot find symbol
+                            cam.setup(mc.level, p, true, front, 0);
+                               ^
+  symbol:   method setup(ClientLevel,LocalPlayer,boolean,boolean,int)
+  location: variable cam of type Camera
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1567: error: cannot find symbol
+                                    cam.getPosition().distanceTo(eye) > 3.5);
+                                       ^
+  symbol:   method getPosition()
+  location: variable cam of type Camera
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1576: error: cannot find symbol
+                        p.input.shiftKeyDown = true;
+                               ^
+  symbol:   variable shiftKeyDown
+  location: variable input of type ClientInput
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1591: error: cannot find symbol
+                        p.input.shiftKeyDown = false;
+                               ^
+  symbol:   variable shiftKeyDown
+  location: variable input of type ClientInput
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1603: error: cannot find symbol
+                            ClientMobility.tick(
+                            ^
+  symbol:   variable ClientMobility
+  location: class UiProbe
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1608: error: cannot find symbol
+                            ClientMobility.tick(
+                            ^
+  symbol:   variable ClientMobility
+  location: class UiProbe
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1614: error: cannot find symbol
+                            ClientMobility.tick(
+                            ^
+  symbol:   variable ClientMobility
+  location: class UiProbe
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1630: error: method update in class WalkAnimationState cannot be applied to given types;
+                    p.walkAnimation.update(0, 1);
+                                   ^
+  required: float,float,float
+  found:    int,int
+  reason: actual and formal argument lists differ in length
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1645: error: method update in class WalkAnimationState cannot be applied to given types;
+                        p.walkAnimation.update(0, 1);
+                                       ^
+  required: float,float,float
+  found:    int,int
+  reason: actual and formal argument lists differ in length
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/HoverScreenshotTour.java:22: error: method does not override or implement a method from a supertype
+        @Override public void render(GuiGraphics g,int x,int y,float pt) {
+        ^
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/HoverScreenshotTour.java:24: error: cannot find symbol
+            int left=(int)field(this,UpgradeScreen.class,"left"),top=(int)field(this,UpgradeScreen.class,"top");
+                                     ^
+  symbol:   class UpgradeScreen
+  location: class Screen
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/HoverScreenshotTour.java:24: error: cannot find symbol
+            int left=(int)field(this,UpgradeScreen.class,"left"),top=(int)field(this,UpgradeScreen.class,"top");
+                                                                                     ^
+  symbol:   class UpgradeScreen
+  location: class Screen
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/HoverScreenshotTour.java:25: error: cannot find symbol
+            float scale=(float)field(this,UpgradeScreen.class,"uiScale");
+                                          ^
+  symbol:   class UpgradeScreen
+  location: class Screen
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/HoverScreenshotTour.java:26: error: non-static variable super cannot be referenced from a static context
+            super.render(g,left+Math.round(target[0]*scale),top+Math.round(target[1]*scale),pt);
+            ^
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/HoverScreenshotTour.java:30: error: cannot find symbol
+        var panels=(Object[])field(mc.screen,UpgradeScreen.class,"panels");
+                                     ^
+  symbol:   variable screen
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/HoverScreenshotTour.java:30: error: cannot find symbol
+        var panels=(Object[])field(mc.screen,UpgradeScreen.class,"panels");
+                                             ^
+  symbol:   class UpgradeScreen
+  location: class HoverScreenshotTour
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/HoverScreenshotTour.java:34: error: cannot find symbol
+    static void screenshot(Minecraft mc,String name){net.minecraft.client.Screenshot.grab(mc.gameDirectory,name+".png",mc.getMainRenderTarget(),c->{});}
+                                                                                                                         ^
+  symbol:   method getMainRenderTarget()
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/HoverScreenshotTour.java:48: error: cannot find symbol
+        if(tick==25)mc.setScreen(new Screen());
+                      ^
+  symbol:   method setScreen(Screen)
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/HoverScreenshotTour.java:52: error: cannot find symbol
+            var panels=(Object[])field(mc.screen,UpgradeScreen.class,"panels");var image=(com.mojang.blaze3d.platform.NativeImage)field(panels[0],panels[0].getClass(),"image");
+                                         ^
+  symbol:   variable screen
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/HoverScreenshotTour.java:52: error: cannot find symbol
+            var panels=(Object[])field(mc.screen,UpgradeScreen.class,"panels");var image=(com.mojang.blaze3d.platform.NativeImage)field(panels[0],panels[0].getClass(),"image");
+                                                 ^
+  symbol:   class UpgradeScreen
+  location: class HoverScreenshotTour
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/HoverScreenshotTour.java:53: error: cannot find symbol
+            boolean exact=true;for(int i=0;i<p.length;i++){int rgb=p[i],abgr=image.getPixelRGBA(i%146,i/146);int restored=(abgr&0xff00ff00)|((abgr&255)<<16)|((abgr>>16)&255);if(rgb!=restored){exact=false;break;}}
+                                                                                  ^
+  symbol:   method getPixelRGBA(int,int)
+  location: variable image of type NativeImage
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:39: error: method does not override or implement a method from a supertype
+        @Override
+        ^
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:41: error: non-static variable super cannot be referenced from a static context
+            super.render(g, (int) Math.round(vx), (int) Math.round(vy), pt);
+            ^
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:77: error: cannot find symbol
+        if (!(mc.screen instanceof UpgradeScreen s)) return null;
+                ^
+  symbol:   variable screen
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:77: error: cannot find symbol
+        if (!(mc.screen instanceof UpgradeScreen s)) return null;
+                                   ^
+  symbol:   class UpgradeScreen
+  location: class KGifTour
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:78: error: cannot find symbol
+        int left = (int) field(s, UpgradeScreen.class, "left"), top = (int) field(s, UpgradeScreen.class, "top");
+                                  ^
+  symbol:   class UpgradeScreen
+  location: class KGifTour
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:78: error: cannot find symbol
+        int left = (int) field(s, UpgradeScreen.class, "left"), top = (int) field(s, UpgradeScreen.class, "top");
+                                                                                     ^
+  symbol:   class UpgradeScreen
+  location: class KGifTour
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:79: error: cannot find symbol
+        float scale = (float) field(s, UpgradeScreen.class, "uiScale");
+                                       ^
+  symbol:   class UpgradeScreen
+  location: class KGifTour
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:81: error: cannot find symbol
+        var hits = new ArrayList<>((List<Object>) field(s, UpgradeScreen.class, "hits"));
+                                                           ^
+  symbol:   class UpgradeScreen
+  location: class KGifTour
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:93: error: cannot find symbol
+        var s = mc.screen;
+                  ^
+  symbol:   variable screen
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:94: error: cannot find symbol
+        int left = (int) field(s, UpgradeScreen.class, "left"), top = (int) field(s, UpgradeScreen.class, "top");
+                                  ^
+  symbol:   class UpgradeScreen
+  location: class KGifTour
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:94: error: cannot find symbol
+        int left = (int) field(s, UpgradeScreen.class, "left"), top = (int) field(s, UpgradeScreen.class, "top");
+                                                                                     ^
+  symbol:   class UpgradeScreen
+  location: class KGifTour
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:95: error: cannot find symbol
+        float scale = (float) field(s, UpgradeScreen.class, "uiScale");
+                                       ^
+  symbol:   class UpgradeScreen
+  location: class KGifTour
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:139: error: cannot find symbol
+                    mc.setScreen(new Screen());
+                      ^
+  symbol:   method setScreen(Screen)
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:152: error: cannot find symbol
+                    mc.setScreen(null);
+                      ^
+  symbol:   method setScreen(<null>)
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:194: error: cannot find symbol
+                () -> mc.screen.mouseClicked(vx, vy, button),
+                        ^
+  symbol:   variable screen
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:196: error: cannot find symbol
+                    if (i == 1) mc.screen.mouseReleased(vx, vy, button);
+                                  ^
+  symbol:   variable screen
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:209: error: cannot find symbol
+                () -> mc.screen.mouseClicked(vx, vy, 0),
+                        ^
+  symbol:   variable screen
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:215: error: cannot find symbol
+                        mc.screen.mouseDragged(vx, vy, 0, sx, sy);
+                          ^
+  symbol:   variable screen
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:216: error: cannot find symbol
+                    } else if (i == n) mc.screen.mouseReleased(vx, vy, 0);
+                                         ^
+  symbol:   variable screen
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:238: error: cannot find symbol
+                    mc.screen.mouseClicked(vx, vy, 0);
+                      ^
+  symbol:   variable screen
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:246: error: cannot find symbol
+                        mc.screen.mouseDragged(vx, vy, 0, vx - px, vy - py);
+                          ^
+  symbol:   variable screen
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:247: error: cannot find symbol
+                    } else if (i == n) mc.screen.mouseReleased(vx, vy, 0);
+                                         ^
+  symbol:   variable screen
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:358: error: cannot find symbol
+                    p.getInventory().add(new ItemStack(Items.LIME_DYE));
+                                                            ^
+  symbol:   variable LIME_DYE
+  location: class Items
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:454: error: cannot find symbol
+        UpgradeScreen.showTooltips = tooltips;
+        ^
+  symbol:   variable UpgradeScreen
+  location: class KGifTour
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:455: error: cannot find symbol
+        mc.getToasts().clear();
+          ^
+  symbol:   method getToasts()
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:469: error: cannot find symbol
+        if (scene != null && mc.screen instanceof UpgradeScreen s && tick % 2 == 0) {
+                               ^
+  symbol:   variable screen
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:469: error: cannot find symbol
+        if (scene != null && mc.screen instanceof UpgradeScreen s && tick % 2 == 0) {
+                                                  ^
+  symbol:   class UpgradeScreen
+  location: class KGifTour
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:473: error: cannot find symbol
+                int left = (int) field(s, UpgradeScreen.class, "left"), top = (int) field(s, UpgradeScreen.class, "top");
+                                          ^
+  symbol:   class UpgradeScreen
+  location: class KGifTour
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:473: error: cannot find symbol
+                int left = (int) field(s, UpgradeScreen.class, "left"), top = (int) field(s, UpgradeScreen.class, "top");
+                                                                                             ^
+  symbol:   class UpgradeScreen
+  location: class KGifTour
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:474: error: cannot find symbol
+                float scale = (float) field(s, UpgradeScreen.class, "uiScale");
+                                               ^
+  symbol:   class UpgradeScreen
+  location: class KGifTour
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:485: error: cannot find symbol
+            net.minecraft.client.Screenshot.grab(mc.gameDirectory, name, mc.getMainRenderTarget(), c -> {});
+                                                                           ^
+  symbol:   method getMainRenderTarget()
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PairScreenshotTour.java:50: error: cannot find symbol
+        net.minecraft.client.Screenshot.grab(mc.gameDirectory, name + ".png", mc.getMainRenderTarget(), c -> {});
+                                                                                ^
+  symbol:   method getMainRenderTarget()
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PairScreenshotTour.java:56: error: cannot find symbol
+        if (tick == 25 || tick == 155 || tick == 285 || tick == 415 || tick == 545) mc.setScreen(new TraitScreen());
+                                                                                                     ^
+  symbol:   class TraitScreen
+  location: class PairScreenshotTour
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PairScreenshotTour.java:66: error: cannot find symbol
+        if (tick == 660 && mc.screen instanceof UpgradeScreen screen) {
+                             ^
+  symbol:   variable screen
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PairScreenshotTour.java:66: error: cannot find symbol
+        if (tick == 660 && mc.screen instanceof UpgradeScreen screen) {
+                                                ^
+  symbol:   class UpgradeScreen
+  location: class PairScreenshotTour
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PairScreenshotTour.java:67: error: cannot find symbol
+            try { var f = UpgradeScreen.class.getDeclaredField("picker"); f.setAccessible(true); f.setInt(screen, 0); }
+                          ^
+  symbol:   class UpgradeScreen
+  location: class PairScreenshotTour
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:66: error: cannot find symbol
+            if (!worldRequested && mc.screen != null && mc.getOverlay() == null) {
+                                     ^
+  symbol:   variable screen
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:66: error: cannot find symbol
+            if (!worldRequested && mc.screen != null && mc.getOverlay() == null) {
+                                                          ^
+  symbol:   method getOverlay()
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:67: error: cannot find symbol
+                if (!(mc.screen instanceof TitleScreen)) {
+                        ^
+  symbol:   variable screen
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:68: error: cannot find symbol
+                    mc.setScreen(new TitleScreen());
+                      ^
+  symbol:   method setScreen(TitleScreen)
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:76: error: cannot find symbol
+        if (mc.screen != null && t < 0) return; // still on the loading screen
+              ^
+  symbol:   variable screen
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:89: error: cannot find symbol
+            mc.createWorldOpenFlows().openWorld(WORLD, () -> mc.setScreen(new TitleScreen()));
+                                                               ^
+  symbol:   method setScreen(TitleScreen)
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:100: error: cannot find symbol
+                        new GameRules(),
+                            ^
+  symbol:   class GameRules
+  location: class PlaytestBootstrap
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:108: error: cannot find symbol
+                                access.registryOrThrow(Registries.WORLD_PRESET)
+                                      ^
+  symbol:   method registryOrThrow(ResourceKey<Registry<WorldPreset>>)
+  location: variable access of type Provider
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:138: error: cannot find symbol
+                mc.options.graphicsMode().set(net.minecraft.client.GraphicsStatus.FABULOUS);
+                                                                  ^
+  symbol:   class GraphicsStatus
+  location: package net.minecraft.client
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:138: error: cannot find symbol
+                mc.options.graphicsMode().set(net.minecraft.client.GraphicsStatus.FABULOUS);
+                          ^
+  symbol:   method graphicsMode()
+  location: variable options of type Options
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:139: error: cannot find symbol
+                mc.levelRenderer.allChanged();
+                                ^
+  symbol:   method allChanged()
+  location: variable levelRenderer of type LevelRenderer
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:147: error: cannot find symbol
+                mc.options.graphicsMode().set(net.minecraft.client.GraphicsStatus.FANCY);
+                                                                  ^
+  symbol:   class GraphicsStatus
+  location: package net.minecraft.client
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:147: error: cannot find symbol
+                mc.options.graphicsMode().set(net.minecraft.client.GraphicsStatus.FANCY);
+                          ^
+  symbol:   method graphicsMode()
+  location: variable options of type Options
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:148: error: cannot find symbol
+                mc.levelRenderer.allChanged();
+                                ^
+  symbol:   method allChanged()
+  location: variable levelRenderer of type LevelRenderer
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:189: error: cannot find symbol
+                double glow = PhotonicGlow.level(eye.getX() + 0.5, eye.getY() + 0.5, eye.getZ() + 0.5);
+                              ^
+  symbol:   variable PhotonicGlow
+  location: class PlaytestBootstrap
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:194: error: cannot find symbol
+                                + PhotonicGlow.sourceCount() + " sources)");
+                                  ^
+  symbol:   variable PhotonicGlow
+  location: class PlaytestBootstrap
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:200: error: cannot find symbol
+                        (PhotonicGlow.sourceCount() == 0 ? "PASS" : "FAIL")
+                         ^
+  symbol:   variable PhotonicGlow
+  location: class PlaytestBootstrap
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:346: error: cannot find symbol
+                                            + p.getInventory().getSelected().isEmpty()
+                                                              ^
+  symbol:   method getSelected()
+  location: class Inventory
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:416: error: cannot find symbol
+            case 410 -> mc.setScreen(new TraitScreen());
+                                         ^
+  symbol:   class TraitScreen
+  location: class PlaytestBootstrap
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:419: error: cannot find symbol
+                TraitScreen.debugTab(1);
+                ^
+  symbol:   variable TraitScreen
+  location: class PlaytestBootstrap
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:420: error: cannot find symbol
+                mc.setScreen(new TraitScreen());
+                                 ^
+  symbol:   class TraitScreen
+  location: class PlaytestBootstrap
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:424: error: cannot find symbol
+                TraitScreen.debugTab(2);
+                ^
+  symbol:   variable TraitScreen
+  location: class PlaytestBootstrap
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:425: error: cannot find symbol
+                mc.setScreen(new TraitScreen());
+                                 ^
+  symbol:   class TraitScreen
+  location: class PlaytestBootstrap
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:429: error: cannot find symbol
+                TraitScreen.debugTab(0);
+                ^
+  symbol:   variable TraitScreen
+  location: class PlaytestBootstrap
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:430: error: cannot find symbol
+                mc.setScreen(null);
+                  ^
+  symbol:   method setScreen(<null>)
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:439: error: items has private access in Inventory
+                                var inv = p.getInventory().items;
+                                                          ^
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:528: error: package com.ethermod.client.beam does not exist
+                                + com.ethermod.client.beam.BeamRenderState.beamActive
+                                                          ^
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:593: error: method swing in class LivingEntity cannot be applied to given types;
+            case 570 -> mc.player.swing(InteractionHand.MAIN_HAND);
+                                 ^
+  required: InteractionHand,SwingAnimation,boolean
+  found:    InteractionHand
+  reason: actual and formal argument lists differ in length
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:595: error: cannot find symbol
+                boolean swinging = mc.player.swinging || mc.player.getAttackAnim(0) > 0;
+                                            ^
+  symbol:   variable swinging
+  location: variable player of type LocalPlayer
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:595: error: cannot find symbol
+                boolean swinging = mc.player.swinging || mc.player.getAttackAnim(0) > 0;
+                                                                  ^
+  symbol:   method getAttackAnim(int)
+  location: variable player of type LocalPlayer
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:907: error: cannot find symbol
+                boolean source = PhotonicGlow.isSource(mc.player.getId());
+                                 ^
+  symbol:   variable PhotonicGlow
+  location: class PlaytestBootstrap
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:909: error: cannot find symbol
+                int lit = (net.minecraft.client.renderer.LevelRenderer.getLightColor(mc.level, eye) & 0xFFFF) >> 4;
+                                                                      ^
+  symbol:   method getLightColor(ClientLevel,BlockPos)
+  location: class LevelRenderer
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:910: error: cannot find symbol
+                double glow = PhotonicGlow.level(eye.getX() + 0.5, eye.getY() + 0.5, eye.getZ() + 0.5);
+                              ^
+  symbol:   variable PhotonicGlow
+  location: class PlaytestBootstrap
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:914: error: cannot find symbol
+                                + PhotonicGlow.sourceCount() + " sources, glow "
+                                  ^
+  symbol:   variable PhotonicGlow
+  location: class PlaytestBootstrap
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1096: error: cannot find symbol
+            case 1460 -> mc.setScreen(new net.minecraft.client.gui.screens.inventory.InventoryScreen(mc.player));
+                           ^
+  symbol:   method setScreen(InventoryScreen)
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1098: error: cannot find symbol
+            case 1474 -> mc.setScreen(null);
+                           ^
+  symbol:   method setScreen(<null>)
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1102: error: cannot find symbol
+                var root = adv.getTree().get(net.minecraft.resources.Identifier.fromNamespaceAndPath("ethermod", "manipulator/root"));
+                              ^
+  symbol:   method getTree()
+  location: variable adv of type ClientAdvancements
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1103: error: cannot find symbol
+                mc.setScreen(new net.minecraft.client.gui.screens.advancements.AdvancementsScreen(adv));
+                  ^
+  symbol:   method setScreen(AdvancementsScreen)
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1106: error: package org.lwjgl.glfw does not exist
+                org.lwjgl.glfw.GLFW.glfwSetCursorPos(mc.getWindow().getWindow(), 0, 0);
+                              ^
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1106: error: cannot find symbol
+                org.lwjgl.glfw.GLFW.glfwSetCursorPos(mc.getWindow().getWindow(), 0, 0);
+                                                                   ^
+  symbol:   method getWindow()
+  location: class Window
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1110: error: cannot find symbol
+            case 1487 -> mc.screen.mouseDragged(0, 0, 0, 0, -400); // scroll to the bottom rows
+                           ^
+  symbol:   variable screen
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1112: error: cannot find symbol
+            case 1492 -> mc.setScreen(null);
+                           ^
+  symbol:   method setScreen(<null>)
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1121: error: cannot find symbol
+                "[autotest] ADV {} at {} {}", n.holder().id().getPath(), d.getX(), d.getY()));
+                                                                          ^
+  symbol:   method getX()
+  location: variable d of type DisplayInfo
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1121: error: cannot find symbol
+                "[autotest] ADV {} at {} {}", n.holder().id().getPath(), d.getX(), d.getY()));
+                                                                                    ^
+  symbol:   method getY()
+  location: variable d of type DisplayInfo
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1129: error: cannot find symbol
+            if (e instanceof net.minecraft.world.entity.animal.Pig pig && pig.isAlive() && pig.deathTime == 0
+                                                              ^
+  symbol:   class Pig
+  location: package net.minecraft.world.entity.animal
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1143: error: cannot find symbol
+        mc.options.hideGui = on;
+                  ^
+  symbol:   variable hideGui
+  location: variable options of type Options
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1224: error: incompatible types: Identifier cannot be converted to ResourceKey<Recipe<?>>
+            var rec = s.getRecipeManager().byKey(net.minecraft.resources.Identifier.fromNamespaceAndPath("ethermod", r[0]));
+                                                                                                        ^
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1226: error: no suitable constructor found for ItemStack(Optional<Reference<Item>>)
+                    && rec.get().value().getIngredients().get(3).test(new net.minecraft.world.item.ItemStack(
+                                                                      ^
+    constructor ItemStack.ItemStack(ItemLike) is not applicable
+      (argument mismatch; Optional<Reference<Item>> cannot be converted to ItemLike)
+    constructor ItemStack.ItemStack(Holder<Item>) is not applicable
+      (argument mismatch; Optional<Reference<Item>> cannot be converted to Holder<Item>)
+    constructor ItemStack.ItemStack(@org.jspecify.annotations.Nullable Void) is not applicable
+      (argument mismatch; Optional<Reference<Item>> cannot be converted to Void)
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1228: error: no suitable constructor found for ItemStack(Optional<Reference<Item>>)
+                    && rec.get().value().getIngredients().get(2).test(new net.minecraft.world.item.ItemStack(
+                                                                      ^
+    constructor ItemStack.ItemStack(ItemLike) is not applicable
+      (argument mismatch; Optional<Reference<Item>> cannot be converted to ItemLike)
+    constructor ItemStack.ItemStack(Holder<Item>) is not applicable
+      (argument mismatch; Optional<Reference<Item>> cannot be converted to Holder<Item>)
+    constructor ItemStack.ItemStack(@org.jspecify.annotations.Nullable Void) is not applicable
+      (argument mismatch; Optional<Reference<Item>> cannot be converted to Void)
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1230: error: no suitable constructor found for ItemStack(Optional<Reference<Item>>)
+                    && rec.get().value().getIngredients().get(6).test(new net.minecraft.world.item.ItemStack(
+                                                                      ^
+    constructor ItemStack.ItemStack(ItemLike) is not applicable
+      (argument mismatch; Optional<Reference<Item>> cannot be converted to ItemLike)
+    constructor ItemStack.ItemStack(Holder<Item>) is not applicable
+      (argument mismatch; Optional<Reference<Item>> cannot be converted to Holder<Item>)
+    constructor ItemStack.ItemStack(@org.jspecify.annotations.Nullable Void) is not applicable
+      (argument mismatch; Optional<Reference<Item>> cannot be converted to Void)
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1232: error: no suitable constructor found for ItemStack(Optional<Reference<Item>>)
+                    && rec.get().value().getIngredients().get(4).test(new net.minecraft.world.item.ItemStack(
+                                                                      ^
+    constructor ItemStack.ItemStack(ItemLike) is not applicable
+      (argument mismatch; Optional<Reference<Item>> cannot be converted to ItemLike)
+    constructor ItemStack.ItemStack(Holder<Item>) is not applicable
+      (argument mismatch; Optional<Reference<Item>> cannot be converted to Holder<Item>)
+    constructor ItemStack.ItemStack(@org.jspecify.annotations.Nullable Void) is not applicable
+      (argument mismatch; Optional<Reference<Item>> cannot be converted to Void)
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1237: error: method clearOrCountMatchingItems in class Inventory cannot be applied to given types;
+        p.getInventory().clearOrCountMatchingItems(st -> com.ethermod.registry.ModItems.GEMS.values().stream().anyMatch(g -> st.is(g.get())), -1, p.inventoryMenu.getCraftSlots());
+                        ^
+  required: Predicate<ItemStack>,boolean,int,Container
+  found:    (st)->com.[...]t())),int,CraftingContainer
+  reason: actual and formal argument lists differ in length
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1237: error: incompatible types: int cannot be converted to boolean
+        p.getInventory().clearOrCountMatchingItems(st -> com.ethermod.registry.ModItems.GEMS.values().stream().anyMatch(g -> st.is(g.get())), -1, p.inventoryMenu.getCraftSlots());
+                                                                                                                                              ^
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1324: error: cannot find symbol
+                        net.minecraft.world.entity.monster.Husk.class,
+                                                          ^
+  symbol:   class Husk
+  location: package net.minecraft.world.entity.monster
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1326: error: cannot find symbol
+                        h -> h.getTags().contains(tag))
+                              ^
+  symbol:   method getTags()
+  location: variable h of type Entity
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1383: error: cannot find symbol
+                        net.minecraft.world.entity.animal.Pig.class,
+                                                         ^
+  symbol:   class Pig
+  location: package net.minecraft.world.entity.animal
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1464: error: cannot find symbol
+        mc.gui.getChat().clearMessages(false);
+              ^
+  symbol:   method getChat()
+  location: variable gui of type Gui
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1465: error: cannot find symbol
+        mc.getToasts().clear();
+          ^
+  symbol:   method getToasts()
+  location: variable mc of type Minecraft
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1467: error: cannot find symbol
+        Screenshot.grab(mc.gameDirectory, "mm_" + name + ".png", mc.getMainRenderTarget(), sink);
+                                                                   ^
+  symbol:   method getMainRenderTarget()
+  location: variable mc of type Minecraft
+Note: /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+169 errors
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_2-1795221293443.json
+
+[Incubating] Problems report is available at: file:///home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compilePlaytestJava'.
+> Compilation failed; see the compiler output below.
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:21: error: constructor Player in class Player cannot be applied to given types;
+              super(
+              ^
+    required: Level,GameProfile
+    found:    Level,BlockPos,int,GameProfile
+    reason: actual and formal argument lists differ in length
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1630: error: method update in class WalkAnimationState cannot be applied to given types;
+                      p.walkAnimation.update(0, 1);
+                                     ^
+    required: float,float,float
+    found:    int,int
+    reason: actual and formal argument lists differ in length
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1645: error: method update in class WalkAnimationState cannot be applied to given types;
+                          p.walkAnimation.update(0, 1);
+                                         ^
+    required: float,float,float
+    found:    int,int
+    reason: actual and formal argument lists differ in length
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:593: error: method swing in class LivingEntity cannot be applied to given types;
+              case 570 -> mc.player.swing(InteractionHand.MAIN_HAND);
+                                   ^
+    required: InteractionHand,SwingAnimation,boolean
+    found:    InteractionHand
+    reason: actual and formal argument lists differ in length
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1237: error: method clearOrCountMatchingItems in class Inventory cannot be applied to given types;
+          p.getInventory().clearOrCountMatchingItems(st -> com.ethermod.registry.ModItems.GEMS.values().stream().anyMatch(g -> st.is(g.get())), -1, p.inventoryMenu.getCraftSlots());
+                          ^
+    required: Predicate<ItemStack>,boolean,int,Container
+    found:    (st)->com.[...]t())),int,CraftingContainer
+    reason: actual and formal argument lists differ in length
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:151: error: no suitable method found for create(ServerLevel)
+                                                          .create(p.level());
+                                                          ^
+      method EntityType.create(ServerLevel,@org.jspecify.annotations.Nullable PostSpawnProcessor<SoulBlazeling>,BlockPos,EntitySpawnReason,boolean,boolean) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(Level,EntitySpawnReason) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(Level,EntitySpawnRequest) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(ValueInput,Level,EntitySpawnRequest) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(EntityType<?>,ValueInput,Level,EntitySpawnReason) is not applicable
+        (actual and formal argument lists differ in length)
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:264: error: no suitable method found for teleportTo(ServerLevel,double,int,double,Set<Object>,int,int)
+                                      p.teleportTo(
+                                       ^
+      method ServerPlayer.teleportTo(double,double,double) is not applicable
+        (actual and formal argument lists differ in length)
+      method ServerPlayer.teleportTo(ServerLevel,double,double,double,Set<Relative>,float,float,boolean) is not applicable
+        (actual and formal argument lists differ in length)
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:432: error: no suitable method found for create(ServerLevel)
+                                                  .create(sl);
+                                                  ^
+      method EntityType.create(ServerLevel,@org.jspecify.annotations.Nullable PostSpawnProcessor<LightDecoy>,BlockPos,EntitySpawnReason,boolean,boolean) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(Level,EntitySpawnReason) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(Level,EntitySpawnRequest) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(ValueInput,Level,EntitySpawnRequest) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(EntityType<?>,ValueInput,Level,EntitySpawnReason) is not applicable
+        (actual and formal argument lists differ in length)
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:761: error: no suitable method found for create(ServerLevel)
+                                                      .create(sl);
+                                                      ^
+      method EntityType.create(ServerLevel,@org.jspecify.annotations.Nullable PostSpawnProcessor<SoulBolt>,BlockPos,EntitySpawnReason,boolean,boolean) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(Level,EntitySpawnReason) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(Level,EntitySpawnRequest) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(ValueInput,Level,EntitySpawnRequest) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(EntityType<?>,ValueInput,Level,EntitySpawnReason) is not applicable
+        (actual and formal argument lists differ in length)
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:782: error: no suitable method found for create(ServerLevel)
+                                                      .create(sl);
+                                                      ^
+      method EntityType.create(ServerLevel,@org.jspecify.annotations.Nullable PostSpawnProcessor<SoulBolt>,BlockPos,EntitySpawnReason,boolean,boolean) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(Level,EntitySpawnReason) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(Level,EntitySpawnRequest) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(ValueInput,Level,EntitySpawnRequest) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(EntityType<?>,ValueInput,Level,EntitySpawnReason) is not applicable
+        (actual and formal argument lists differ in length)
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:876: error: no suitable method found for create(ServerLevel)
+                                                  .create(sl);
+                                                  ^
+      method EntityType.create(ServerLevel,@org.jspecify.annotations.Nullable PostSpawnProcessor<SoulBlazeling>,BlockPos,EntitySpawnReason,boolean,boolean) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(Level,EntitySpawnReason) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(Level,EntitySpawnRequest) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(ValueInput,Level,EntitySpawnRequest) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(EntityType<?>,ValueInput,Level,EntitySpawnReason) is not applicable
+        (actual and formal argument lists differ in length)
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:902: error: no suitable method found for create(ServerLevel)
+                                                  .create(sl);
+                                                  ^
+      method EntityType.create(ServerLevel,@org.jspecify.annotations.Nullable PostSpawnProcessor<SoulBlazeling>,BlockPos,EntitySpawnReason,boolean,boolean) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(Level,EntitySpawnReason) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(Level,EntitySpawnRequest) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(ValueInput,Level,EntitySpawnRequest) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(EntityType<?>,ValueInput,Level,EntitySpawnReason) is not applicable
+        (actual and formal argument lists differ in length)
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:963: error: no suitable method found for create(ServerLevel)
+                                                  .create(sl);
+                                                  ^
+      method EntityType.create(ServerLevel,@org.jspecify.annotations.Nullable PostSpawnProcessor<SoulBlazeling>,BlockPos,EntitySpawnReason,boolean,boolean) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(Level,EntitySpawnReason) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(Level,EntitySpawnRequest) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(ValueInput,Level,EntitySpawnRequest) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(EntityType<?>,ValueInput,Level,EntitySpawnReason) is not applicable
+        (actual and formal argument lists differ in length)
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:998: error: no suitable method found for create(ServerLevel)
+                                                  .create(sl);
+                                                  ^
+      method EntityType.create(ServerLevel,@org.jspecify.annotations.Nullable PostSpawnProcessor<SoulBlazeling>,BlockPos,EntitySpawnReason,boolean,boolean) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(Level,EntitySpawnReason) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(Level,EntitySpawnRequest) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(ValueInput,Level,EntitySpawnRequest) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(EntityType<?>,ValueInput,Level,EntitySpawnReason) is not applicable
+        (actual and formal argument lists differ in length)
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1013: error: no suitable method found for create(ServerLevel)
+                                                  .create(sl);
+                                                  ^
+      method EntityType.create(ServerLevel,@org.jspecify.annotations.Nullable PostSpawnProcessor<SoulBlazeling>,BlockPos,EntitySpawnReason,boolean,boolean) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(Level,EntitySpawnReason) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(Level,EntitySpawnRequest) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(ValueInput,Level,EntitySpawnRequest) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(EntityType<?>,ValueInput,Level,EntitySpawnReason) is not applicable
+        (actual and formal argument lists differ in length)
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1342: error: no suitable method found for teleportTo(ServerLevel,double,double,double,Set<Object>,float,float)
+                                  p.teleportTo(
+                                   ^
+      method ServerPlayer.teleportTo(double,double,double) is not applicable
+        (actual and formal argument lists differ in length)
+      method ServerPlayer.teleportTo(ServerLevel,double,double,double,Set<Relative>,float,float,boolean) is not applicable
+        (actual and formal argument lists differ in length)
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1428: error: no suitable method found for create(ClientLevel)
+              var testPet = com.ethermod.registry.ModEntities.SOUL_BLAZELING.get().create(mc.level);
+                                                                                  ^
+      method EntityType.create(ServerLevel,@org.jspecify.annotations.Nullable PostSpawnProcessor<SoulBlazeling>,BlockPos,EntitySpawnReason,boolean,boolean) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(Level,EntitySpawnReason) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(Level,EntitySpawnRequest) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(ValueInput,Level,EntitySpawnRequest) is not applicable
+        (actual and formal argument lists differ in length)
+      method EntityType.create(EntityType<?>,ValueInput,Level,EntitySpawnReason) is not applicable
+        (actual and formal argument lists differ in length)
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1226: error: no suitable constructor found for ItemStack(Optional<Reference<Item>>)
+                      && rec.get().value().getIngredients().get(3).test(new net.minecraft.world.item.ItemStack(
+                                                                        ^
+      constructor ItemStack.ItemStack(ItemLike) is not applicable
+        (argument mismatch; Optional<Reference<Item>> cannot be converted to ItemLike)
+      constructor ItemStack.ItemStack(Holder<Item>) is not applicable
+        (argument mismatch; Optional<Reference<Item>> cannot be converted to Holder<Item>)
+      constructor ItemStack.ItemStack(@org.jspecify.annotations.Nullable Void) is not applicable
+        (argument mismatch; Optional<Reference<Item>> cannot be converted to Void)
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1228: error: no suitable constructor found for ItemStack(Optional<Reference<Item>>)
+                      && rec.get().value().getIngredients().get(2).test(new net.minecraft.world.item.ItemStack(
+                                                                        ^
+      constructor ItemStack.ItemStack(ItemLike) is not applicable
+        (argument mismatch; Optional<Reference<Item>> cannot be converted to ItemLike)
+      constructor ItemStack.ItemStack(Holder<Item>) is not applicable
+        (argument mismatch; Optional<Reference<Item>> cannot be converted to Holder<Item>)
+      constructor ItemStack.ItemStack(@org.jspecify.annotations.Nullable Void) is not applicable
+        (argument mismatch; Optional<Reference<Item>> cannot be converted to Void)
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1230: error: no suitable constructor found for ItemStack(Optional<Reference<Item>>)
+                      && rec.get().value().getIngredients().get(6).test(new net.minecraft.world.item.ItemStack(
+                                                                        ^
+      constructor ItemStack.ItemStack(ItemLike) is not applicable
+        (argument mismatch; Optional<Reference<Item>> cannot be converted to ItemLike)
+      constructor ItemStack.ItemStack(Holder<Item>) is not applicable
+        (argument mismatch; Optional<Reference<Item>> cannot be converted to Holder<Item>)
+      constructor ItemStack.ItemStack(@org.jspecify.annotations.Nullable Void) is not applicable
+        (argument mismatch; Optional<Reference<Item>> cannot be converted to Void)
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1232: error: no suitable constructor found for ItemStack(Optional<Reference<Item>>)
+                      && rec.get().value().getIngredients().get(4).test(new net.minecraft.world.item.ItemStack(
+                                                                        ^
+      constructor ItemStack.ItemStack(ItemLike) is not applicable
+        (argument mismatch; Optional<Reference<Item>> cannot be converted to ItemLike)
+      constructor ItemStack.ItemStack(Holder<Item>) is not applicable
+        (argument mismatch; Optional<Reference<Item>> cannot be converted to Holder<Item>)
+      constructor ItemStack.ItemStack(@org.jspecify.annotations.Nullable Void) is not applicable
+        (argument mismatch; Optional<Reference<Item>> cannot be converted to Void)
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/HoverScreenshotTour.java:7: error: cannot find symbol
+  import net.minecraft.client.gui.GuiGraphics;
+                                 ^
+    symbol:   class GuiGraphics
+    location: package net.minecraft.client.gui
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/HoverScreenshotTour.java:21: error: cannot find symbol
+      static class Screen extends TraitScreen {
+                                  ^
+    symbol:   class TraitScreen
+    location: class HoverScreenshotTour
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/HoverScreenshotTour.java:22: error: cannot find symbol
+          @Override public void render(GuiGraphics g,int x,int y,float pt) {
+                                       ^
+    symbol:   class GuiGraphics
+    location: class Screen
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:11: error: cannot find symbol
+  import net.minecraft.client.gui.GuiGraphics;
+                                 ^
+    symbol:   class GuiGraphics
+    location: package net.minecraft.client.gui
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:38: error: cannot find symbol
+      static final class Screen extends TraitScreen {
+                                        ^
+    symbol:   class TraitScreen
+    location: class KGifTour
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:40: error: cannot find symbol
+          public void render(GuiGraphics g, int x, int y, float pt) {
+                             ^
+    symbol:   class GuiGraphics
+    location: class Screen
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:16: error: cannot find symbol
+  import net.minecraft.world.level.GameRules;
+                                  ^
+    symbol:   class GameRules
+    location: package net.minecraft.world.level
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1321: error: cannot find symbol
+      private static net.minecraft.world.entity.monster.Husk husk(ServerPlayer p, String tag) {
+                                                       ^
+    symbol:   class Husk
+    location: package net.minecraft.world.entity.monster
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1380: error: cannot find symbol
+      private static List<net.minecraft.world.entity.animal.Pig> pigs(ServerPlayer p) {
+                                                           ^
+    symbol:   class Pig
+    location: package net.minecraft.world.entity.animal
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:139: error: cannot find symbol
+                                                          net.minecraft.world.level.GameRules
+                                                                                   ^
+    symbol:   class GameRules
+    location: package net.minecraft.world.level
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:145: error: cannot find symbol
+                                                          net.minecraft.world.level.GameRules
+                                                                                   ^
+    symbol:   class GameRules
+    location: package net.minecraft.world.level
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:157: error: cannot find symbol
+                                                      net.minecraft.world.entity.EntityType.HUSK
+                                                                                           ^
+    symbol:   variable HUSK
+    location: class EntityType
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:276: error: cannot find symbol
+                  mc.setScreen(new TraitScreen());
+                                   ^
+    symbol:   class TraitScreen
+    location: class UiProbe
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:414: error: cannot find symbol
+                                          net.minecraft.world.entity.EntityType.ZOMBIE.create(sl);
+                                                                               ^
+    symbol:   variable ZOMBIE
+    location: class EntityType
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:539: error: cannot find symbol
+                                  var lifted = net.minecraft.world.entity.EntityType.PIG.create(sl);
+                                                                                    ^
+    symbol:   variable PIG
+    location: class EntityType
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:574: error: cannot find symbol
+                                      var stasisPig = net.minecraft.world.entity.EntityType.PIG.create(sl);
+                                                                                           ^
+    symbol:   variable PIG
+    location: class EntityType
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:692: error: cannot find symbol
+                                          net.minecraft.world.entity.EntityType.ZOMBIE.create(sl);
+                                                                               ^
+    symbol:   variable ZOMBIE
+    location: class EntityType
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:717: error: cannot find symbol
+                                          net.minecraft.world.entity.EntityType.ZOMBIE.create(sl);
+                                                                               ^
+    symbol:   variable ZOMBIE
+    location: class EntityType
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:733: error: cannot find symbol
+                                                                  .SmallFireball
+                                                                  ^
+    symbol:   class SmallFireball
+    location: package net.minecraft.world.entity.projectile
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:807: error: cannot find symbol
+                                              net.minecraft.world.entity.EntityType.ZOMBIE.create(sl);
+                                                                                   ^
+    symbol:   variable ZOMBIE
+    location: class EntityType
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:835: error: cannot find symbol
+                                          net.minecraft.world.entity.EntityType.ZOMBIE.create(sl);
+                                                                               ^
+    symbol:   variable ZOMBIE
+    location: class EntityType
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:883: error: cannot find symbol
+                                          net.minecraft.world.entity.EntityType.HUSK.create(sl);
+                                                                               ^
+    symbol:   variable HUSK
+    location: class EntityType
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:920: error: cannot find symbol
+                                  var dummy = net.minecraft.world.entity.EntityType.HUSK.create(sl);
+                                                                                   ^
+    symbol:   variable HUSK
+    location: class EntityType
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1061: error: cannot find symbol
+          if (tick == 70) mc.setScreen(new TraitScreen());
+                                           ^
+    symbol:   class TraitScreen
+    location: class UiProbe
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1411: error: cannot find symbol
+              var root = com.ethermod.client.BlazelingModel.layer().bakeRoot();
+                                            ^
+    symbol:   class BlazelingModel
+    location: package com.ethermod.client
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1412: error: cannot find symbol
+              var model = new com.ethermod.client.BlazelingModel(root);
+                                                 ^
+    symbol:   class BlazelingModel
+    location: package com.ethermod.client
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1432: error: cannot find symbol
+                              instanceof com.ethermod.client.BlazelingRenderer);
+                                                            ^
+    symbol:   class BlazelingRenderer
+    location: package com.ethermod.client
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1576: error: cannot find symbol
+                          p.input.shiftKeyDown = true;
+                                 ^
+    symbol:   variable shiftKeyDown
+    location: variable input of type ClientInput
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1591: error: cannot find symbol
+                          p.input.shiftKeyDown = false;
+                                 ^
+    symbol:   variable shiftKeyDown
+    location: variable input of type ClientInput
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1603: error: cannot find symbol
+                              ClientMobility.tick(
+                              ^
+    symbol:   variable ClientMobility
+    location: class UiProbe
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1608: error: cannot find symbol
+                              ClientMobility.tick(
+                              ^
+    symbol:   variable ClientMobility
+    location: class UiProbe
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1614: error: cannot find symbol
+                              ClientMobility.tick(
+                              ^
+    symbol:   variable ClientMobility
+    location: class UiProbe
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/HoverScreenshotTour.java:24: error: cannot find symbol
+              int left=(int)field(this,UpgradeScreen.class,"left"),top=(int)field(this,UpgradeScreen.class,"top");
+                                       ^
+    symbol:   class UpgradeScreen
+    location: class Screen
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/HoverScreenshotTour.java:24: error: cannot find symbol
+              int left=(int)field(this,UpgradeScreen.class,"left"),top=(int)field(this,UpgradeScreen.class,"top");
+                                                                                       ^
+    symbol:   class UpgradeScreen
+    location: class Screen
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/HoverScreenshotTour.java:25: error: cannot find symbol
+              float scale=(float)field(this,UpgradeScreen.class,"uiScale");
+                                            ^
+    symbol:   class UpgradeScreen
+    location: class Screen
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/HoverScreenshotTour.java:30: error: cannot find symbol
+          var panels=(Object[])field(mc.screen,UpgradeScreen.class,"panels");
+                                       ^
+    symbol:   variable screen
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/HoverScreenshotTour.java:30: error: cannot find symbol
+          var panels=(Object[])field(mc.screen,UpgradeScreen.class,"panels");
+                                               ^
+    symbol:   class UpgradeScreen
+    location: class HoverScreenshotTour
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/HoverScreenshotTour.java:52: error: cannot find symbol
+              var panels=(Object[])field(mc.screen,UpgradeScreen.class,"panels");var image=(com.mojang.blaze3d.platform.NativeImage)field(panels[0],panels[0].getClass(),"image");
+                                           ^
+    symbol:   variable screen
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/HoverScreenshotTour.java:52: error: cannot find symbol
+              var panels=(Object[])field(mc.screen,UpgradeScreen.class,"panels");var image=(com.mojang.blaze3d.platform.NativeImage)field(panels[0],panels[0].getClass(),"image");
+                                                   ^
+    symbol:   class UpgradeScreen
+    location: class HoverScreenshotTour
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:77: error: cannot find symbol
+          if (!(mc.screen instanceof UpgradeScreen s)) return null;
+                  ^
+    symbol:   variable screen
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:77: error: cannot find symbol
+          if (!(mc.screen instanceof UpgradeScreen s)) return null;
+                                     ^
+    symbol:   class UpgradeScreen
+    location: class KGifTour
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:78: error: cannot find symbol
+          int left = (int) field(s, UpgradeScreen.class, "left"), top = (int) field(s, UpgradeScreen.class, "top");
+                                    ^
+    symbol:   class UpgradeScreen
+    location: class KGifTour
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:78: error: cannot find symbol
+          int left = (int) field(s, UpgradeScreen.class, "left"), top = (int) field(s, UpgradeScreen.class, "top");
+                                                                                       ^
+    symbol:   class UpgradeScreen
+    location: class KGifTour
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:79: error: cannot find symbol
+          float scale = (float) field(s, UpgradeScreen.class, "uiScale");
+                                         ^
+    symbol:   class UpgradeScreen
+    location: class KGifTour
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:81: error: cannot find symbol
+          var hits = new ArrayList<>((List<Object>) field(s, UpgradeScreen.class, "hits"));
+                                                             ^
+    symbol:   class UpgradeScreen
+    location: class KGifTour
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:93: error: cannot find symbol
+          var s = mc.screen;
+                    ^
+    symbol:   variable screen
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:94: error: cannot find symbol
+          int left = (int) field(s, UpgradeScreen.class, "left"), top = (int) field(s, UpgradeScreen.class, "top");
+                                    ^
+    symbol:   class UpgradeScreen
+    location: class KGifTour
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:94: error: cannot find symbol
+          int left = (int) field(s, UpgradeScreen.class, "left"), top = (int) field(s, UpgradeScreen.class, "top");
+                                                                                       ^
+    symbol:   class UpgradeScreen
+    location: class KGifTour
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:95: error: cannot find symbol
+          float scale = (float) field(s, UpgradeScreen.class, "uiScale");
+                                         ^
+    symbol:   class UpgradeScreen
+    location: class KGifTour
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:194: error: cannot find symbol
+                  () -> mc.screen.mouseClicked(vx, vy, button),
+                          ^
+    symbol:   variable screen
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:196: error: cannot find symbol
+                      if (i == 1) mc.screen.mouseReleased(vx, vy, button);
+                                    ^
+    symbol:   variable screen
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:209: error: cannot find symbol
+                  () -> mc.screen.mouseClicked(vx, vy, 0),
+                          ^
+    symbol:   variable screen
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:215: error: cannot find symbol
+                          mc.screen.mouseDragged(vx, vy, 0, sx, sy);
+                            ^
+    symbol:   variable screen
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:216: error: cannot find symbol
+                      } else if (i == n) mc.screen.mouseReleased(vx, vy, 0);
+                                           ^
+    symbol:   variable screen
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:238: error: cannot find symbol
+                      mc.screen.mouseClicked(vx, vy, 0);
+                        ^
+    symbol:   variable screen
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:246: error: cannot find symbol
+                          mc.screen.mouseDragged(vx, vy, 0, vx - px, vy - py);
+                            ^
+    symbol:   variable screen
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:247: error: cannot find symbol
+                      } else if (i == n) mc.screen.mouseReleased(vx, vy, 0);
+                                           ^
+    symbol:   variable screen
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:358: error: cannot find symbol
+                      p.getInventory().add(new ItemStack(Items.LIME_DYE));
+                                                              ^
+    symbol:   variable LIME_DYE
+    location: class Items
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:454: error: cannot find symbol
+          UpgradeScreen.showTooltips = tooltips;
+          ^
+    symbol:   variable UpgradeScreen
+    location: class KGifTour
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:469: error: cannot find symbol
+          if (scene != null && mc.screen instanceof UpgradeScreen s && tick % 2 == 0) {
+                                 ^
+    symbol:   variable screen
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:469: error: cannot find symbol
+          if (scene != null && mc.screen instanceof UpgradeScreen s && tick % 2 == 0) {
+                                                    ^
+    symbol:   class UpgradeScreen
+    location: class KGifTour
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:473: error: cannot find symbol
+                  int left = (int) field(s, UpgradeScreen.class, "left"), top = (int) field(s, UpgradeScreen.class, "top");
+                                            ^
+    symbol:   class UpgradeScreen
+    location: class KGifTour
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:473: error: cannot find symbol
+                  int left = (int) field(s, UpgradeScreen.class, "left"), top = (int) field(s, UpgradeScreen.class, "top");
+                                                                                               ^
+    symbol:   class UpgradeScreen
+    location: class KGifTour
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:474: error: cannot find symbol
+                  float scale = (float) field(s, UpgradeScreen.class, "uiScale");
+                                                 ^
+    symbol:   class UpgradeScreen
+    location: class KGifTour
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PairScreenshotTour.java:56: error: cannot find symbol
+          if (tick == 25 || tick == 155 || tick == 285 || tick == 415 || tick == 545) mc.setScreen(new TraitScreen());
+                                                                                                       ^
+    symbol:   class TraitScreen
+    location: class PairScreenshotTour
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PairScreenshotTour.java:66: error: cannot find symbol
+          if (tick == 660 && mc.screen instanceof UpgradeScreen screen) {
+                               ^
+    symbol:   variable screen
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PairScreenshotTour.java:66: error: cannot find symbol
+          if (tick == 660 && mc.screen instanceof UpgradeScreen screen) {
+                                                  ^
+    symbol:   class UpgradeScreen
+    location: class PairScreenshotTour
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PairScreenshotTour.java:67: error: cannot find symbol
+              try { var f = UpgradeScreen.class.getDeclaredField("picker"); f.setAccessible(true); f.setInt(screen, 0); }
+                            ^
+    symbol:   class UpgradeScreen
+    location: class PairScreenshotTour
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:66: error: cannot find symbol
+              if (!worldRequested && mc.screen != null && mc.getOverlay() == null) {
+                                       ^
+    symbol:   variable screen
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:67: error: cannot find symbol
+                  if (!(mc.screen instanceof TitleScreen)) {
+                          ^
+    symbol:   variable screen
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:76: error: cannot find symbol
+          if (mc.screen != null && t < 0) return; // still on the loading screen
+                ^
+    symbol:   variable screen
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:100: error: cannot find symbol
+                          new GameRules(),
+                              ^
+    symbol:   class GameRules
+    location: class PlaytestBootstrap
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:138: error: cannot find symbol
+                  mc.options.graphicsMode().set(net.minecraft.client.GraphicsStatus.FABULOUS);
+                                                                    ^
+    symbol:   class GraphicsStatus
+    location: package net.minecraft.client
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:147: error: cannot find symbol
+                  mc.options.graphicsMode().set(net.minecraft.client.GraphicsStatus.FANCY);
+                                                                    ^
+    symbol:   class GraphicsStatus
+    location: package net.minecraft.client
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:189: error: cannot find symbol
+                  double glow = PhotonicGlow.level(eye.getX() + 0.5, eye.getY() + 0.5, eye.getZ() + 0.5);
+                                ^
+    symbol:   variable PhotonicGlow
+    location: class PlaytestBootstrap
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:194: error: cannot find symbol
+                                  + PhotonicGlow.sourceCount() + " sources)");
+                                    ^
+    symbol:   variable PhotonicGlow
+    location: class PlaytestBootstrap
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:200: error: cannot find symbol
+                          (PhotonicGlow.sourceCount() == 0 ? "PASS" : "FAIL")
+                           ^
+    symbol:   variable PhotonicGlow
+    location: class PlaytestBootstrap
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:416: error: cannot find symbol
+              case 410 -> mc.setScreen(new TraitScreen());
+                                           ^
+    symbol:   class TraitScreen
+    location: class PlaytestBootstrap
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:419: error: cannot find symbol
+                  TraitScreen.debugTab(1);
+                  ^
+    symbol:   variable TraitScreen
+    location: class PlaytestBootstrap
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:420: error: cannot find symbol
+                  mc.setScreen(new TraitScreen());
+                                   ^
+    symbol:   class TraitScreen
+    location: class PlaytestBootstrap
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:424: error: cannot find symbol
+                  TraitScreen.debugTab(2);
+                  ^
+    symbol:   variable TraitScreen
+    location: class PlaytestBootstrap
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:425: error: cannot find symbol
+                  mc.setScreen(new TraitScreen());
+                                   ^
+    symbol:   class TraitScreen
+    location: class PlaytestBootstrap
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:429: error: cannot find symbol
+                  TraitScreen.debugTab(0);
+                  ^
+    symbol:   variable TraitScreen
+    location: class PlaytestBootstrap
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:595: error: cannot find symbol
+                  boolean swinging = mc.player.swinging || mc.player.getAttackAnim(0) > 0;
+                                              ^
+    symbol:   variable swinging
+    location: variable player of type LocalPlayer
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:907: error: cannot find symbol
+                  boolean source = PhotonicGlow.isSource(mc.player.getId());
+                                   ^
+    symbol:   variable PhotonicGlow
+    location: class PlaytestBootstrap
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:910: error: cannot find symbol
+                  double glow = PhotonicGlow.level(eye.getX() + 0.5, eye.getY() + 0.5, eye.getZ() + 0.5);
+                                ^
+    symbol:   variable PhotonicGlow
+    location: class PlaytestBootstrap
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:914: error: cannot find symbol
+                                  + PhotonicGlow.sourceCount() + " sources, glow "
+                                    ^
+    symbol:   variable PhotonicGlow
+    location: class PlaytestBootstrap
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1110: error: cannot find symbol
+              case 1487 -> mc.screen.mouseDragged(0, 0, 0, 0, -400); // scroll to the bottom rows
+                             ^
+    symbol:   variable screen
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1129: error: cannot find symbol
+              if (e instanceof net.minecraft.world.entity.animal.Pig pig && pig.isAlive() && pig.deathTime == 0
+                                                                ^
+    symbol:   class Pig
+    location: package net.minecraft.world.entity.animal
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1143: error: cannot find symbol
+          mc.options.hideGui = on;
+                    ^
+    symbol:   variable hideGui
+    location: variable options of type Options
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1324: error: cannot find symbol
+                          net.minecraft.world.entity.monster.Husk.class,
+                                                            ^
+    symbol:   class Husk
+    location: package net.minecraft.world.entity.monster
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1383: error: cannot find symbol
+                          net.minecraft.world.entity.animal.Pig.class,
+                                                           ^
+    symbol:   class Pig
+    location: package net.minecraft.world.entity.animal
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:439: error: items has private access in Inventory
+                                  var inv = p.getInventory().items;
+                                                            ^
+  Note: Recompile with -Xlint:unchecked for details.
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/HoverScreenshotTour.java:22: error: method does not override or implement a method from a supertype
+          @Override public void render(GuiGraphics g,int x,int y,float pt) {
+          ^
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:39: error: method does not override or implement a method from a supertype
+          @Override
+          ^
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:116: error: cannot find symbol
+                                          p.getServer().getPlayerList().op(p.getGameProfile());
+                                           ^
+    symbol:   method getServer()
+    location: variable p of type ServerPlayer
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:135: error: cannot find symbol
+                                          p.level().setDayTime(18000);
+                                                   ^
+    symbol:   method setDayTime(int)
+    location: class ServerLevel
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:141: error: cannot find symbol
+                                                  .set(false, p.getServer());
+                                                               ^
+    symbol:   method getServer()
+    location: variable p of type ServerPlayer
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:147: error: cannot find symbol
+                                                  .set(false, p.getServer());
+                                                               ^
+    symbol:   method getServer()
+    location: variable p of type ServerPlayer
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:196: error: cannot find symbol
+                                      p.getServer().getPlayerList().op(p.getGameProfile());
+                                       ^
+    symbol:   method getServer()
+    location: variable p of type ServerPlayer
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:283: error: cannot find symbol
+                              mc.getMainRenderTarget(),
+                                ^
+    symbol:   method getMainRenderTarget()
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1067: error: cannot find symbol
+                          mc.getMainRenderTarget(),
+                            ^
+    symbol:   method getMainRenderTarget()
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1119: error: cannot find symbol
+              mc.setScreen(null);
+                ^
+    symbol:   method setScreen(<null>)
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1436: error: cannot find symbol
+              var camera = mc.gameRenderer.getMainCamera();
+                                          ^
+    symbol:   method getMainCamera()
+    location: variable gameRenderer of type GameRenderer
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1455: error: cannot find symbol
+                          mc.gameDirectory, "gravity-frame.png", mc.getMainRenderTarget(), c -> {});
+                                                                   ^
+    symbol:   method getMainRenderTarget()
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1564: error: cannot find symbol
+                              cam.setup(mc.level, p, true, front, 0);
+                                 ^
+    symbol:   method setup(ClientLevel,LocalPlayer,boolean,boolean,int)
+    location: variable cam of type Camera
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1567: error: cannot find symbol
+                                      cam.getPosition().distanceTo(eye) > 3.5);
+                                         ^
+    symbol:   method getPosition()
+    location: variable cam of type Camera
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/HoverScreenshotTour.java:34: error: cannot find symbol
+      static void screenshot(Minecraft mc,String name){net.minecraft.client.Screenshot.grab(mc.gameDirectory,name+".png",mc.getMainRenderTarget(),c->{});}
+                                                                                                                           ^
+    symbol:   method getMainRenderTarget()
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/HoverScreenshotTour.java:48: error: cannot find symbol
+          if(tick==25)mc.setScreen(new Screen());
+                        ^
+    symbol:   method setScreen(Screen)
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/HoverScreenshotTour.java:53: error: cannot find symbol
+              boolean exact=true;for(int i=0;i<p.length;i++){int rgb=p[i],abgr=image.getPixelRGBA(i%146,i/146);int restored=(abgr&0xff00ff00)|((abgr&255)<<16)|((abgr>>16)&255);if(rgb!=restored){exact=false;break;}}
+                                                                                    ^
+    symbol:   method getPixelRGBA(int,int)
+    location: variable image of type NativeImage
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:139: error: cannot find symbol
+                      mc.setScreen(new Screen());
+                        ^
+    symbol:   method setScreen(Screen)
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:152: error: cannot find symbol
+                      mc.setScreen(null);
+                        ^
+    symbol:   method setScreen(<null>)
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:455: error: cannot find symbol
+          mc.getToasts().clear();
+            ^
+    symbol:   method getToasts()
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:485: error: cannot find symbol
+              net.minecraft.client.Screenshot.grab(mc.gameDirectory, name, mc.getMainRenderTarget(), c -> {});
+                                                                             ^
+    symbol:   method getMainRenderTarget()
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PairScreenshotTour.java:50: error: cannot find symbol
+          net.minecraft.client.Screenshot.grab(mc.gameDirectory, name + ".png", mc.getMainRenderTarget(), c -> {});
+                                                                                  ^
+    symbol:   method getMainRenderTarget()
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:66: error: cannot find symbol
+              if (!worldRequested && mc.screen != null && mc.getOverlay() == null) {
+                                                            ^
+    symbol:   method getOverlay()
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:68: error: cannot find symbol
+                      mc.setScreen(new TitleScreen());
+                        ^
+    symbol:   method setScreen(TitleScreen)
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:89: error: cannot find symbol
+              mc.createWorldOpenFlows().openWorld(WORLD, () -> mc.setScreen(new TitleScreen()));
+                                                                 ^
+    symbol:   method setScreen(TitleScreen)
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:108: error: cannot find symbol
+                                  access.registryOrThrow(Registries.WORLD_PRESET)
+                                        ^
+    symbol:   method registryOrThrow(ResourceKey<Registry<WorldPreset>>)
+    location: variable access of type Provider
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:138: error: cannot find symbol
+                  mc.options.graphicsMode().set(net.minecraft.client.GraphicsStatus.FABULOUS);
+                            ^
+    symbol:   method graphicsMode()
+    location: variable options of type Options
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:139: error: cannot find symbol
+                  mc.levelRenderer.allChanged();
+                                  ^
+    symbol:   method allChanged()
+    location: variable levelRenderer of type LevelRenderer
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:147: error: cannot find symbol
+                  mc.options.graphicsMode().set(net.minecraft.client.GraphicsStatus.FANCY);
+                            ^
+    symbol:   method graphicsMode()
+    location: variable options of type Options
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:148: error: cannot find symbol
+                  mc.levelRenderer.allChanged();
+                                  ^
+    symbol:   method allChanged()
+    location: variable levelRenderer of type LevelRenderer
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:346: error: cannot find symbol
+                                              + p.getInventory().getSelected().isEmpty()
+                                                                ^
+    symbol:   method getSelected()
+    location: class Inventory
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:430: error: cannot find symbol
+                  mc.setScreen(null);
+                    ^
+    symbol:   method setScreen(<null>)
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:595: error: cannot find symbol
+                  boolean swinging = mc.player.swinging || mc.player.getAttackAnim(0) > 0;
+                                                                    ^
+    symbol:   method getAttackAnim(int)
+    location: variable player of type LocalPlayer
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:909: error: cannot find symbol
+                  int lit = (net.minecraft.client.renderer.LevelRenderer.getLightColor(mc.level, eye) & 0xFFFF) >> 4;
+                                                                        ^
+    symbol:   method getLightColor(ClientLevel,BlockPos)
+    location: class LevelRenderer
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1096: error: cannot find symbol
+              case 1460 -> mc.setScreen(new net.minecraft.client.gui.screens.inventory.InventoryScreen(mc.player));
+                             ^
+    symbol:   method setScreen(InventoryScreen)
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1098: error: cannot find symbol
+              case 1474 -> mc.setScreen(null);
+                             ^
+    symbol:   method setScreen(<null>)
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1102: error: cannot find symbol
+                  var root = adv.getTree().get(net.minecraft.resources.Identifier.fromNamespaceAndPath("ethermod", "manipulator/root"));
+                                ^
+    symbol:   method getTree()
+    location: variable adv of type ClientAdvancements
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1103: error: cannot find symbol
+                  mc.setScreen(new net.minecraft.client.gui.screens.advancements.AdvancementsScreen(adv));
+                    ^
+    symbol:   method setScreen(AdvancementsScreen)
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1106: error: cannot find symbol
+                  org.lwjgl.glfw.GLFW.glfwSetCursorPos(mc.getWindow().getWindow(), 0, 0);
+                                                                     ^
+    symbol:   method getWindow()
+    location: class Window
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1112: error: cannot find symbol
+              case 1492 -> mc.setScreen(null);
+                             ^
+    symbol:   method setScreen(<null>)
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1121: error: cannot find symbol
+                  "[autotest] ADV {} at {} {}", n.holder().id().getPath(), d.getX(), d.getY()));
+                                                                            ^
+    symbol:   method getX()
+    location: variable d of type DisplayInfo
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1121: error: cannot find symbol
+                  "[autotest] ADV {} at {} {}", n.holder().id().getPath(), d.getX(), d.getY()));
+                                                                                      ^
+    symbol:   method getY()
+    location: variable d of type DisplayInfo
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1326: error: cannot find symbol
+                          h -> h.getTags().contains(tag))
+                                ^
+    symbol:   method getTags()
+    location: variable h of type Entity
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1464: error: cannot find symbol
+          mc.gui.getChat().clearMessages(false);
+                ^
+    symbol:   method getChat()
+    location: variable gui of type Gui
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1465: error: cannot find symbol
+          mc.getToasts().clear();
+            ^
+    symbol:   method getToasts()
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1467: error: cannot find symbol
+          Screenshot.grab(mc.gameDirectory, "mm_" + name + ".png", mc.getMainRenderTarget(), sink);
+                                                                     ^
+    symbol:   method getMainRenderTarget()
+    location: variable mc of type Minecraft
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:1009: error: incompatible types: CompoundTag cannot be converted to ValueOutput
+                                  pet.saveWithoutId(savedPet);
+                                                    ^
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1224: error: incompatible types: Identifier cannot be converted to ResourceKey<Recipe<?>>
+              var rec = s.getRecipeManager().byKey(net.minecraft.resources.Identifier.fromNamespaceAndPath("ethermod", r[0]));
+                                                                                                          ^
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1237: error: incompatible types: int cannot be converted to boolean
+          p.getInventory().clearOrCountMatchingItems(st -> com.ethermod.registry.ModItems.GEMS.values().stream().anyMatch(g -> st.is(g.get())), -1, p.inventoryMenu.getCraftSlots());
+                                                                                                                                                ^
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:17: error: WalkProbe is not abstract and does not override abstract method gameMode() in Player
+      private static final class WalkProbe extends net.minecraft.world.entity.player.Player {
+                           ^
+  Note: /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java uses unchecked or unsafe operations.
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/HoverScreenshotTour.java:26: error: non-static variable super cannot be referenced from a static context
+              super.render(g,left+Math.round(target[0]*scale),top+Math.round(target[1]*scale),pt);
+              ^
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/KGifTour.java:41: error: non-static variable super cannot be referenced from a static context
+              super.render(g, (int) Math.round(vx), (int) Math.round(vy), pt);
+              ^
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/UiProbe.java:709: error: bad operand types for binary operator '=='
+                                                          == sl.getGameTime()
+                                                          ^
+    first type:  Optional<Long>
+    second type: long
+  Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:528: error: package com.ethermod.client.beam does not exist
+                                  + com.ethermod.client.beam.BeamRenderState.beamActive
+                                                            ^
+  /home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/src/playtest/java/com/ethermod/client/PlaytestBootstrap.java:1106: error: package org.lwjgl.glfw does not exist
+                  org.lwjgl.glfw.GLFW.glfwSetCursorPos(mc.getWindow().getWindow(), 0, 0);
+                                ^
+  169 errors
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to generate a Build Scan (powered by Develocity).
+
+BUILD FAILED in 1m 7s
+5 actionable tasks: 5 executed
