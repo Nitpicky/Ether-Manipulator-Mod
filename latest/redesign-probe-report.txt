@@ -27,6 +27,11 @@ PASS Pasted code adds a set
 PASS Pasted set keeps the build
 PASS More than seven Sets fit
 PASS Extra Sets removed
+PASS Set icons follow the first Module
+PASS Moving a set reorders the list
+PASS A chosen icon is kept
+PASS A set can be a favourite
+PASS A favourite can be unmarked
 PASS Frost spends water
 PASS Ignite/Lava costs
 PASS Vacuum removed
