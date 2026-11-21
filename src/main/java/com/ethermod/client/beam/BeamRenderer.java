@@ -93,16 +93,13 @@ public final class BeamRenderer {
         com.ethermod.client.Fx.beginFrame();
     }
 
-    /** Solid blocks, entities and block entities are drawn: the effects' depth is taken here. */
-    @SubscribeEvent
-    public static void onAfterOpaqueFeatures(RenderLevelStageEvent.AfterOpaqueFeatures event) {
-        if (com.ethermod.client.ShaderCompat.inShadowPass()) return;
-        com.ethermod.client.Fx.captureDepth();
-    }
-
+    /** The level is drawn: take its depth, then record and draw the effects. */
     @SubscribeEvent
     public static void onAfterLevel(RenderLevelStageEvent.AfterLevel event) {
         if (com.ethermod.client.ShaderCompat.inShadowPass()) return;
+        // 26.3: the earlier stages fire inside an open render pass, where no copy may run; the
+        // depth here also holds translucent terrain, which is what the effects should sit behind
+        com.ethermod.client.Fx.captureDepth();
         com.ethermod.client.Fx.drawFrame(event.getModelViewMatrix(), () -> produceWorldFx(event));
     }
 
