@@ -54,40 +54,60 @@ final class MassPreview {
         float pulse = .75f + .25f * (float) Math.sin(time * .25f);
 
         if (player.isUsingItem()) {
-            // the throw: same launch and fall as the server, traced for the formation's anchor
+            // the throw: every held block flies on its own (same launch and fall as the server),
+            // and lands where its own path first meets the world or a block that landed before it
             int ticks = player.getTicksUsingItem();
             int phase = Math.min(2, ticks * 3 / Math.max(1, Traits.chargeTicks(st)));
+            Vec3 launch = player.getLookAngle().scale(OrbMode.MASS.speed(phase)).add(0, .08, 0);
             BeamBallEntity anchor = held.get(0);
             for (var b : held) if (b.massOffset().equals(BlockPos.ZERO)) anchor = b;
-            Vec3 pos = anchor.position();
-            Vec3 v = player.getLookAngle().scale(OrbMode.MASS.speed(phase)).add(0, .08, 0);
-            BlockPos land = null;
-            Direction face = null;
-            for (int i = 0; i < 80 && land == null; i++) {
-                v = v.add(0, -.08, 0);
-                Vec3 next = pos.add(v);
-                var hit =
-                        mc.level.clip(
-                                new ClipContext(pos, next, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player));
-                if (hit.getType() == HitResult.Type.BLOCK) {
-                    land = hit.getBlockPos().relative(hit.getDirection());
-                    face = hit.getDirection();
-                    next = hit.getLocation();
-                }
-                if (i % 2 == 1) dot(vc, m, next.subtract(cam), time + i, .7f * pulse);
-                pos = next;
+            int n = held.size();
+            Vec3[] pos = new Vec3[n], vel = new Vec3[n];
+            BlockPos[] land = new BlockPos[n];
+            for (int k = 0; k < n; k++) {
+                pos[k] = held.get(k).position();
+                vel[k] = launch;
             }
-            if (land == null || !steady) return;
             var spots = new java.util.HashSet<BlockPos>();
-            for (var b : held) {
-                Vec3 rel = b.position().subtract(anchor.position());
-                spots.add(land.offset((int) Math.round(rel.x), (int) Math.round(rel.y), (int) Math.round(rel.z)));
+            int flying = n;
+            for (int i = 0; i < 80 && flying > 0; i++) {
+                for (int k = 0; k < n; k++) {
+                    if (land[k] != null) continue;
+                    vel[k] = vel[k].add(0, -.08, 0);
+                    Vec3 from = pos[k], next = from.add(vel[k]);
+                    var hit =
+                            mc.level.clip(
+                                    new ClipContext(from, next, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player));
+                    BlockPos at = null;
+                    if (hit.getType() == HitResult.Type.BLOCK) {
+                        at = hit.getBlockPos().relative(hit.getDirection());
+                        next = hit.getLocation();
+                    }
+                    // a block that already landed this throw stops the ones behind it
+                    BlockPos was = BlockPos.containing(from);
+                    for (int sIdx = 1; sIdx <= 8; sIdx++) {
+                        BlockPos cell = BlockPos.containing(from.lerp(next, sIdx / 8.0));
+                        if (spots.contains(cell)) {
+                            at = was;
+                            next = Vec3.atCenterOf(was);
+                            break;
+                        }
+                        was = cell;
+                    }
+                    if (held.get(k) == anchor && i % 2 == 1)
+                        dot(vc, m, next.subtract(cam), time + i, .7f * pulse);
+                    pos[k] = next;
+                    if (at != null) {
+                        land[k] = at;
+                        spots.add(at);
+                        flying--;
+                    }
+                }
             }
-            for (var b : held) {
-                Vec3 rel = b.position().subtract(anchor.position());
-                BlockPos at = land.offset((int) Math.round(rel.x), (int) Math.round(rel.y), (int) Math.round(rel.z));
-                ghost(vc, m, cam, at, fits(mc, b.getCarried(), at), pulse, spots);
-            }
+            if (!steady) return;
+            for (int k = 0; k < n; k++)
+                if (land[k] != null)
+                    ghost(vc, m, cam, land[k], fits(mc, held.get(k).getCarried(), land[k]), pulse, spots);
             return;
         }
 
