@@ -3,6 +3,11 @@
 Versions are MAJOR.FEATURE.PATCH. A version that isn't marked as a release rolls into the
 next release's notes.
 
+## 1.0.3
+
+### Changes
+- Set names can be up to 48 characters.
+
 ## 1.0.2 (release)
 
 ### Sets

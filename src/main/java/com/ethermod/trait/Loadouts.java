@@ -26,7 +26,7 @@ public final class Loadouts {
 
     /** Sets one Manipulator can hold: unlimited in play, capped so the item data stays small. */
     public static final int LIMIT = 100;
-    public static final int MAX_NAME = 10;
+    public static final int MAX_NAME = 48;
     private static final String TAG = "mm_loadouts";
 
     public static final int SAVE = 0,
