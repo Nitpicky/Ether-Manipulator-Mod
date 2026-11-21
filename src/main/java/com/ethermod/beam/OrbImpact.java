@@ -92,7 +92,7 @@ final class OrbImpact {
                     TempBlocks.tempBlock(
                             sl,
                             here,
-                            Blocks.PACKED_ICE.defaultBlockState(),
+                            Blocks.FROSTED_ICE.defaultBlockState(),
                             OrbFrost.bridgeTicks(b),
                             true);
             }
@@ -349,14 +349,14 @@ final class OrbImpact {
                     TempBlocks.tempBlock(
                             sl,
                             hitPos,
-                            Blocks.PACKED_ICE.defaultBlockState(),
+                            Blocks.FROSTED_ICE.defaultBlockState(),
                             OrbFrost.bridgeTicks(b),
                             true);
                 } else if (b.mayBuild(front)) {
                     TempBlocks.tempBlock(
                             sl,
                             front,
-                            Blocks.PACKED_ICE.defaultBlockState(),
+                            Blocks.FROSTED_ICE.defaultBlockState(),
                             OrbFrost.bridgeTicks(b),
                             true);
                 }
@@ -370,7 +370,7 @@ final class OrbImpact {
                         TempBlocks.tempBlock(
                                 sl,
                                 p.immutable(),
-                                Blocks.PACKED_ICE.defaultBlockState(),
+                                Blocks.FROSTED_ICE.defaultBlockState(),
                                 OrbFrost.bridgeTicks(b),
                                 true);
                     } else if (sl.getBlockState(p).is(Blocks.LAVA)

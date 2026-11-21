@@ -8,6 +8,9 @@ next release's notes.
 ### Fixes
 - Animals flee from the beam, and tamed wolves join in on what you hit with it or shoot.
 
+### Changes
+- Frost bridges are Frost Walker ice and melt the same way.
+
 ## 1.0.2 (release)
 
 ### Sets

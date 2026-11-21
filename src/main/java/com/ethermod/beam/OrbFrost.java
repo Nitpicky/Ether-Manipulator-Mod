@@ -60,7 +60,7 @@ final class OrbFrost {
             if (b.getOwner() != null && b.getOwner().getBoundingBox().intersects(new AABB(q)))
                 continue;
             if (TempBlocks.tempBlock(
-                    sl, q, Blocks.PACKED_ICE.defaultBlockState(), OrbFrost.bridgeTicks(b), true))
+                    sl, q, Blocks.FROSTED_ICE.defaultBlockState(), OrbFrost.bridgeTicks(b), true))
                 TempBlocks.markBridge(sl, q, b.getUUID());
         }
     }
