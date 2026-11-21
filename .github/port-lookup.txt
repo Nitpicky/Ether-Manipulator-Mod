@@ -1,4 +1,4 @@
-net/minecraft/network/protocol/game/ClientboundSetEntityMotionPacket$
-/(ServerEntity)$
-net/minecraft/server/level/ServerEntity#sendChanges
-net/minecraft/server/level/ServerEntity#.*
+net/minecraft/world/entity/Entity$
+/(LivingEntity)$
+net/minecraft/world/entity/LivingEntity#hurtServer
+net/minecraft/world/entity/LivingEntity#.*(nvulnerab|lastHurt|hurtServer).*
