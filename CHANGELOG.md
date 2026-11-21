@@ -7,6 +7,7 @@ next release's notes.
 
 ### Changes
 - Mods list: new mod icon.
+- Commands: `/ethermod set_module`, `set_build`, `export_build` (shareable build codes like `1GABA2HAAA`) and `set_color`.
 
 ## 1.0.1 (release)
 

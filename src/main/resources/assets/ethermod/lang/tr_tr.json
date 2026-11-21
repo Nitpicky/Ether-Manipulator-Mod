@@ -392,5 +392,11 @@
   "ethermod.configuration.extra_foliage": "Ek bitki örtüsü blokları",
   "ethermod.configuration.extra_crops": "Ek ekinler",
   "ethermod.configuration.title": "Eter Manipülatörü ayarları",
-  "subtitles.ethermod.stasis.ding": "Durağanlık tıkırdıyor"
+  "subtitles.ethermod.stasis.ding": "Durağanlık tıkırdıyor",
+  "command.ethermod.set": "Eter Manipülatörü %s oyuncu için ayarlandı",
+  "command.ethermod.build_code": "%s adlı oyuncunun buildi: %s",
+  "command.ethermod.bad_module": "Bilinmeyen modül: %s",
+  "command.ethermod.bad_choice": "Seçimler A veya B, %s değil",
+  "command.ethermod.bad_code": "Geçersiz build kodu: %s",
+  "command.ethermod.bad_colour": "Geçersiz hex renk: %s"
 }

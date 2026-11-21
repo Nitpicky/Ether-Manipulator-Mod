@@ -392,5 +392,11 @@
   "ethermod.configuration.extra_foliage": "Další bloky vegetace",
   "ethermod.configuration.extra_crops": "Další plodiny",
   "ethermod.configuration.title": "Nastavení Manipulátoru éteru",
-  "subtitles.ethermod.stasis.ding": "Stáze tiká"
+  "subtitles.ethermod.stasis.ding": "Stáze tiká",
+  "command.ethermod.set": "Manipulátor éteru nastaven pro hráče: %s",
+  "command.ethermod.build_code": "Build hráče %s: %s",
+  "command.ethermod.bad_module": "Neznámý modul: %s",
+  "command.ethermod.bad_choice": "Volby jsou A nebo B, ne %s",
+  "command.ethermod.bad_code": "Neplatný kód buildu u: %s",
+  "command.ethermod.bad_colour": "Není hex barva: %s"
 }
