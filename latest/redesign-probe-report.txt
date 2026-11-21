@@ -18,6 +18,20 @@ PASS Module switch retains tank
 PASS Reload waits 15s at Prototype
 PASS Crucible grows the shared tank
 PASS Seedbank grows the shared tank
+PASS Set code of the build: S_1HB2FB3BB
+PASS Set code round trip
+PASS Bad set codes are refused (8/8)
+PASS Old codes without the prefix still read
+PASS Bad pasted code adds no set
+PASS Pasted code adds a set
+PASS Pasted set keeps the build
+PASS More than seven Sets fit
+PASS Extra Sets removed
+PASS Set icons follow the first Module
+PASS Moving a set reorders the list
+PASS A chosen icon is kept
+PASS A set can be a favourite
+PASS A favourite can be unmarked
 PASS Frost spends water
 PASS Ignite/Lava costs
 PASS Vacuum removed
@@ -67,12 +81,12 @@ PASS Retired Gunner/Orbit dropped from old builds
 PASS Seeker is a Kinetic Grandmaster choice
 PASS Replant puts a fresh crop back
 PASS Diving Bell blocks water entry
+PASS Rapids restores natural current
 PASS Energy orb spends the shared tank, Tether does not
 PASS Shared tank reloads in full after the delay
 PASS Three tank traits stack
 PASS Tank never exceeds capacity
 PASS Bellows grows the shared tank
-PASS Rapids restores natural current
 PASS Gravity basis down
 PASS Hook follows aim down
 PASS Skyhook anchors in the air down
