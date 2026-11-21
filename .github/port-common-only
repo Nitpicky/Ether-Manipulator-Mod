@@ -1,1 +1,0 @@
-Present while the client rendering is being rewritten: CI builds and boots the common code only (-PcommonOnly). Delete when the client compiles.
