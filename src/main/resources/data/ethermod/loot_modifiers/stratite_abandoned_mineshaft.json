@@ -1,11 +1,9 @@
 {
   "type": "ethermod:gem",
-  "conditions": [
-    {
-      "condition": "neoforge:loot_table_id",
-      "loot_table_id": "minecraft:chests/abandoned_mineshaft"
-    }
-  ],
+  "condition": {
+    "condition": "neoforge:loot_table_id",
+    "loot_table_id": "minecraft:chests/abandoned_mineshaft"
+  },
   "gem": "ethermod:stratite",
   "chance": 0.1,
   "guarantee_in": [

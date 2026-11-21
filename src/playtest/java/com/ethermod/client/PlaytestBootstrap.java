@@ -360,7 +360,7 @@ public final class PlaytestBootstrap {
                                                 + (y + 0.2)
                                                 + " "
                                                 + (z - 1.0)
-                                                + " {Invisible:1b,NoGravity:1b,CustomName:'\"mmcam\"',Rotation:[90f,5f]}");
+                                                + " {Invisible:1b,NoGravity:1b,CustomName:\"mmcam\",Rotation:[90f,5f]}");
                             });
             case 175 -> {
                 sideCamera(mc, true);

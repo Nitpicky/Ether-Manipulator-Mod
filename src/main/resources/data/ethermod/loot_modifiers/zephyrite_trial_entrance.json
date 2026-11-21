@@ -1,11 +1,9 @@
 {
   "type": "ethermod:gem",
-  "conditions": [
-    {
-      "condition": "neoforge:loot_table_id",
-      "loot_table_id": "minecraft:chests/trial_chambers/entrance"
-    }
-  ],
+  "condition": {
+    "condition": "neoforge:loot_table_id",
+    "loot_table_id": "minecraft:chests/trial_chambers/entrance"
+  },
   "gem": "ethermod:zephyrite",
   "chance": 0.05,
   "guarantee_in": [

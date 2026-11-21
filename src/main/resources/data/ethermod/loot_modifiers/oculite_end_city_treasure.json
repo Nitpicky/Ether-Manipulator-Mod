@@ -1,11 +1,9 @@
 {
   "type": "ethermod:gem",
-  "conditions": [
-    {
-      "condition": "neoforge:loot_table_id",
-      "loot_table_id": "minecraft:chests/end_city_treasure"
-    }
-  ],
+  "condition": {
+    "condition": "neoforge:loot_table_id",
+    "loot_table_id": "minecraft:chests/end_city_treasure"
+  },
   "gem": "ethermod:oculite",
   "chance": 0.6
 }

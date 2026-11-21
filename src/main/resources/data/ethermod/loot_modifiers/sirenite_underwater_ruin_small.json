@@ -1,11 +1,9 @@
 {
   "type": "ethermod:gem",
-  "conditions": [
-    {
-      "condition": "neoforge:loot_table_id",
-      "loot_table_id": "minecraft:chests/underwater_ruin_small"
-    }
-  ],
+  "condition": {
+    "condition": "neoforge:loot_table_id",
+    "loot_table_id": "minecraft:chests/underwater_ruin_small"
+  },
   "gem": "ethermod:sirenite",
   "chance": 0.25,
   "guarantee_in": [

@@ -1,11 +1,9 @@
 {
   "type": "ethermod:gem",
-  "conditions": [
-    {
-      "condition": "neoforge:loot_table_id",
-      "loot_table_id": "minecraft:chests/underwater_ruin_big"
-    }
-  ],
+  "condition": {
+    "condition": "neoforge:loot_table_id",
+    "loot_table_id": "minecraft:chests/underwater_ruin_big"
+  },
   "gem": "ethermod:sirenite",
   "chance": 0.35,
   "guarantee_in": [
