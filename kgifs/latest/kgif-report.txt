@@ -31,5 +31,10 @@ PASS control 330.0,120.0 found
 PASS control 40.0,43.0 found
 PASS control 330.0,120.0 found
 PASS control copy-code found
-PASS control 306.0,40.0 found
+PASS control set4 found
+PASS control fav2 found
+PASS control fav5 found
+PASS control set0 found
+PASS control 307.0,40.0 found
 PASS control 330.0,120.0 found
+PASS control set2 found
