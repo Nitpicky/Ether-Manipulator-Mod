@@ -304,7 +304,7 @@
   "trait.ethermod.gravitic.skyhook": "스카이훅",
   "trait.ethermod.gravitic.skyhook.desc": "빗나간 밧줄 사격이 공중에 고정됩니다.",
   "trait.ethermod.gravitic.zipline": "집라인",
-  "trait.ethermod.gravitic.zipline.desc": "두 면을 탈 수 있는 줄로 잇습니다.",
+  "trait.ethermod.gravitic.zipline.desc": "웅크린 채 두 표면에 갈고리를 걸면 밧줄로 연결된다. 밧줄을 조준하고 우클릭을 누르고 있으면 타고 이동한다.",
   "trait.ethermod.gravitic.gravity_skate": "중력 스케이트",
   "trait.ethermod.gravitic.gravity_skate.desc": "달리면 질주 속도의 두 배까지 가속합니다. 그네 타기와 발사의 탄력이 달리기로 이어집니다.",
   "trait.ethermod.gravitic.airwalk": "공중 걷기",

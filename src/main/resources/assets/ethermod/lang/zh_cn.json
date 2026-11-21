@@ -304,7 +304,7 @@
   "trait.ethermod.gravitic.skyhook": "天钩",
   "trait.ethermod.gravitic.skyhook.desc": "未命中的系索射击会固定在空中。",
   "trait.ethermod.gravitic.zipline": "滑索",
-  "trait.ethermod.gravitic.zipline.desc": "用可乘坐的绳索连接两个表面。",
+  "trait.ethermod.gravitic.zipline.desc": "潜行时钩住两个表面，用绳索将其相连。瞄准绳索并按住右键即可滑行。",
   "trait.ethermod.gravitic.gravity_skate": "重力滑行",
   "trait.ethermod.gravitic.gravity_skate.desc": "奔跑可加速至两倍疾跑速度。摆荡和弹射的势能可延续为奔跑。",
   "trait.ethermod.gravitic.airwalk": "踏空",

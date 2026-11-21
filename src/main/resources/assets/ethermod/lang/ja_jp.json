@@ -304,7 +304,7 @@
   "trait.ethermod.gravitic.skyhook": "スカイフック",
   "trait.ethermod.gravitic.skyhook.desc": "外れたテザーのショットが空中に固定される。",
   "trait.ethermod.gravitic.zipline": "ジップライン",
-  "trait.ethermod.gravitic.zipline.desc": "2つの面を乗れるロープでつなぐ。",
+  "trait.ethermod.gravitic.zipline.desc": "スニークしながら2つの面にフックを掛けるとロープでつながる。ロープに狙いを定めて右クリック長押しで滑走する。",
   "trait.ethermod.gravitic.gravity_skate": "グラビティスケート",
   "trait.ethermod.gravitic.gravity_skate.desc": "走るとダッシュ速度の2倍まで加速する。スイングや飛び出しの勢いがそのまま走りにつながる。",
   "trait.ethermod.gravitic.airwalk": "エアウォーク",

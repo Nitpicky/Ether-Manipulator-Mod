@@ -16,6 +16,7 @@ next release's notes.
 
 ### Tuning
 - Gravity Shift: no fall damage while gravity is shifted.
+- Zipline: description says how to string (sneak) and ride (hold right click) a rope.
 - Bank Shot: each ricochet resets the shot's range.
 - Steady Hand: held blocks turn see-through while a throw charges.
 

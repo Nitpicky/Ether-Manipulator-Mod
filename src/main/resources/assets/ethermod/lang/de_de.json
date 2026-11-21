@@ -304,7 +304,7 @@
   "trait.ethermod.gravitic.skyhook": "Himmelshaken",
   "trait.ethermod.gravitic.skyhook.desc": "Halteseil-Schüsse, die verfehlen, verankern sich in der Luft.",
   "trait.ethermod.gravitic.zipline": "Seilrutsche",
-  "trait.ethermod.gravitic.zipline.desc": "Verbinde zwei Flächen mit einem Seil zum Rutschen.",
+  "trait.ethermod.gravitic.zipline.desc": "Schleiche beim Einhaken zweier Flächen, um sie mit einem Seil zu verbinden. Ziele darauf und halte Rechtsklick, um daran zu fahren.",
   "trait.ethermod.gravitic.gravity_skate": "Schwerkraftgleiten",
   "trait.ethermod.gravitic.gravity_skate.desc": "Laufen beschleunigt bis zum doppelten Sprinttempo. Schwünge und Würfe gehen in den Lauf über.",
   "trait.ethermod.gravitic.airwalk": "Luftgang",
