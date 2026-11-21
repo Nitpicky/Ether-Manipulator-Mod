@@ -150,7 +150,7 @@
   "gui.ethermod.colour_custom_hint": "Lås upp alla andra färger.",
   "gui.ethermod.sets": "Uppsättningar",
   "gui.ethermod.set_default": "Uppsättning %s",
-  "gui.ethermod.save_set": "Lägg till nuvarande uppsättning",
+  "gui.ethermod.save_set": "Lägg till nuvarande bygge som uppsättning",
   "gui.ethermod.clear_build": "Töm nuvarande bygge",
   "gui.ethermod.delete_set": "Ta bort vald uppsättning",
   "gui.ethermod.copy_set": "Kopiera uppsättningskod",
