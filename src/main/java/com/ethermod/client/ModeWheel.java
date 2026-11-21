@@ -62,6 +62,7 @@ public final class ModeWheel {
             }
             ManipulatorHud.hovered = ManipulatorHud.wheelOpen ? pointed(mc) : null;
         } else if (held >= 0) finish(mc);
+        else scrolled = false; // a scroll with the key down but no hold (tool put away) is spent
     }
 
     private static OrbMode pointed(Minecraft mc) {
@@ -75,7 +76,8 @@ public final class ModeWheel {
 
     /** The scroll wheel turned while the key is down: this hold switches sets, not modes. */
     public static void scrolledWhileHeld() {
-        if (held < 0) return;
+        // also before the first tick of the hold: pressing the key and scrolling straight away
+        // must not read as a tap (which steps to the next mode)
         scrolled = true;
         ManipulatorHud.wheelOpen = false;
         ManipulatorHud.hovered = null;
