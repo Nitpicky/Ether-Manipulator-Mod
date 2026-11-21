@@ -17,11 +17,12 @@ public abstract class MovementConnectionMixin {
 
     /** Under shifted gravity a jump is only the vanilla one when the player really jumped. */
     @WrapOperation(
-            method = "handleMovePlayer",
+            method = {"handleMovePlayer", "handlePlayerPositionChange"},
             at =
                     @At(
                             value = "INVOKE",
-                            target = "Lnet/minecraft/server/level/ServerPlayer;jumpFromGround()V"))
+                            target = "Lnet/minecraft/server/level/ServerPlayer;jumpFromGround()V"),
+            require = 0)
     private void mm$localJump(ServerPlayer p, Operation<Void> original) {
         if (com.ethermod.trait.MovementPhysics.down(p) == net.minecraft.core.Direction.DOWN
                 || com.ethermod.trait.MovementPhysics.jump(p)) original.call(p);

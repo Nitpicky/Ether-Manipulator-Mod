@@ -1,4 +1,4 @@
 net/minecraft/server/level/ServerPlayer
 /.*/(ServerGamePacketListenerImpl)$
-net/minecraft/server/network/ServerGamePacketListenerImpl#handleMovePlayer
-net/minecraft/server/level/ServerPlayer#drop.* net/minecraft/server/network/ServerGamePacketListenerImpl#(tick|.*[Jj]ump.*)
+net/minecraft/server/network/ServerGamePacketListenerImpl#handlePlayerPositionChange
+net/minecraft/server/network/ServerGamePacketListenerImpl#.*[Ff]loat.*
