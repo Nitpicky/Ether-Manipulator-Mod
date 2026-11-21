@@ -14,7 +14,7 @@ The playtest, shader and K-screen workflows don't run on `port/**` by themselves
 |---|---|
 | Common (server) code | Compiles. A 26.3 dedicated server boots with the mod. |
 | Data (recipes, loot modifiers) | Converted to the 26.3 formats. |
-| Client (rendering, HUD, screens, input) | Compiles. Not playtested yet. |
+| Client (rendering, HUD, screens, input) | Playtested on CI (Vulkan, lavapipe): gameplay checks 44/44, UI probe 192 pass + 12 parked (SKIP), screenshot tour complete. |
 | GeckoLib 5 model and animations | Compiles. Model and animation moved to `assets/ethermod/geckolib/`. |
 
 ## How the client was rebuilt
@@ -26,6 +26,10 @@ The playtest, shader and K-screen workflows don't run on `port/**` by themselves
 - The Manipulator renders through GeckoLib's item special model (`items/ether_manipulator.json`);
   the renderer comes from `EtherManipulatorItem.createGeoRenderer`.
 - The K-screen turntable is a picture-in-picture renderer (`KModelPip`).
+- Server pushes on a player (tether, zipline, gusts) also send the velocity straight to that
+  player (`util/MotionSync`): `needsSync` alone no longer reaches the player's own client.
+- The hurt cooldown moved to `LivingEntity.damageCooldownTime`; the beam clears it each hit.
+- Loot modifiers take one `condition`, keyed by `type`.
 - `Muzzle` keeps the first-person nozzle on screen (hand FOV = the FOV option) and the third-person
   one as a camera-relative world point.
 
@@ -35,6 +39,7 @@ The playtest, shader and K-screen workflows don't run on `port/**` by themselves
 - LMB swing suppression (the swing state is private now).
 - View bobbing under sideways gravity (walk distance is fixed, the bob is vanilla's).
 - The shader-pack (Iris) path in Fx.
+- Probe checks reported as SKIP: crack overlay, gravity overlay, third-person camera positions.
 
 ## CI helpers (this branch only)
 
