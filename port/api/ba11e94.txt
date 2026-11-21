@@ -1,0 +1,88 @@
+/home/runner/.gradle/caches/modules-2/files-2.1/curse.maven/geckolib-388172/8893169/196231506b89da06925c087f9b8bc5fd12ebea16/geckolib-388172-8893169.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/io.github.llamalad7/mixinextras-neoforge/0.5.5/26f2905a37afd203c3da1d6a2e164472a7531b41/mixinextras-neoforge-0.5.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.accesstransformers/at-parser/11.0.2/64aae57d6d26d69543c5275181fe6971707a4e16/at-parser-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/earlydisplay/12.0.16/efa2e56115d22853d10524874a7bbb64555c2a28/earlydisplay-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/12.0.16/edbb2ee8211a867215970bc15ae9c354fa56dc09/loader-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarMetadata/0.5.3/ff40c1cd721d07615d825c5bbf27705b2e3258ed/JarJarMetadata-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarSelector/0.5.3/6b845aab8d5c8e721b4e3cd30f97722b7f8044b1/JarJarSelector-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/accesstransformers/11.0.2/25dcb69c78b16669935f0ab91dff830ce192379d/accesstransformers-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/bus/8.0.5/5b2d33285ab5d1554e9798ad98c40d6ea3868bd5/bus-8.0.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/mergetool/2.0.7/793b18456e92c4a7f66d9b5d8bf7a9c1c7a20b20/mergetool-2.0.7-api.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar
+=== LIST /.*(RenderPass|SharedConstants)[^/]*$
+com/geckolib/renderer/base/RenderPassInfo
+com/geckolib/renderer/base/RenderPassInfo$BonePositionListener
+com/geckolib/renderer/base/RenderPassInfo$BoneUpdater
+com/mojang/renderpearl/api/commands/RenderPass
+com/mojang/renderpearl/api/commands/RenderPass$Draw
+com/mojang/renderpearl/api/commands/RenderPass$RenderArea
+com/mojang/renderpearl/api/commands/RenderPass$UniformUploader
+com/mojang/renderpearl/api/commands/RenderPassDescriptor
+com/mojang/renderpearl/api/commands/RenderPassDescriptor$Attachment
+com/mojang/renderpearl/api/commands/RenderPassDescriptor$Builder
+com/mojang/renderpearl/backend/api/RenderPassBackend
+com/mojang/renderpearl/backend/opengl/GlRenderPass
+com/mojang/renderpearl/backend/vulkan/VulkanRenderPass
+com/mojang/renderpearl/frontend/FrontendRenderPass
+net/minecraft/SharedConstants
+net/minecraft/client/renderer/oit/OitRenderPassProvider
+net/minecraft/client/renderer/oit/OitRenderPassProvider$Parameters
+net/neoforged/fml/earlydisplay/render/backend/ELSRenderPass
+net/neoforged/fml/earlydisplay/render/backend/opengl/GlRenderPass
+net/neoforged/neoforge/client/loading/earlydisplay/RenderPearlRenderPass
+=== CODE com/mojang/renderpearl/backend/opengl/GlRenderPass <clinit>
+=== SIG net/minecraft/SharedConstants .*(IDE|DEBUG_VALID|VALID).*
+  public static final boolean DEBUG_VALIDATE_RESOURCE_PATH_CASE;
+  public static final boolean DEBUG_DEFAULT_SKIN_OVERRIDE;
+  public static boolean IS_RUNNING_IN_IDE;
+=== SIG com/mojang/renderpearl/backend/opengl/GlRenderPass .*
+  private final com.mojang.renderpearl.backend.opengl.GlCommandEncoder encoder;
+  private final com.mojang.renderpearl.backend.opengl.GlDevice device;
+  private final com.mojang.blaze3d.systems.ScissorState defaultScissorState;
+  protected com.mojang.renderpearl.backend.opengl.GlRenderPipeline pipeline;
+  protected final com.mojang.renderpearl.api.buffers.GpuBufferSlice[] vertexBuffers;
+  protected boolean vertexBufferDirty;
+  protected com.mojang.renderpearl.api.buffers.GpuBuffer indexBuffer;
+  protected com.mojang.renderpearl.api.pipeline.IndexType indexType;
+  protected boolean indexBufferDirty;
+  private final com.mojang.blaze3d.systems.ScissorState scissorState;
+  protected boolean scissorStateDirty;
+  protected final it.unimi.dsi.fastutil.objects.ReferenceList<java.lang.Object> uniforms;
+  protected final it.unimi.dsi.fastutil.booleans.BooleanList dirtyUniforms;
+  protected boolean anyUniformDirty;
+  protected com.mojang.renderpearl.api.buffers.GpuBufferSlice pushConstants;
+  protected boolean pushConstantsDirty;
+  protected final int colorAttachmentCount;
+  public com.mojang.renderpearl.backend.opengl.GlRenderPass(com.mojang.renderpearl.backend.opengl.GlCommandEncoder, com.mojang.renderpearl.backend.opengl.GlDevice, int, com.mojang.blaze3d.systems.ScissorState);
+  public void pushDebugGroup(java.util.function.Supplier<java.lang.String>);
+  public void popDebugGroup();
+=== com/mojang/renderpearl/backend/opengl/GlRenderPass
+Compiled from "GlRenderPass.java"
+class com.mojang.renderpearl.backend.opengl.GlRenderPass implements com.mojang.renderpearl.backend.api.RenderPassBackend {
+  public com.mojang.renderpearl.backend.opengl.GlRenderPass(com.mojang.renderpearl.backend.opengl.GlCommandEncoder, com.mojang.renderpearl.backend.opengl.GlDevice, int, com.mojang.blaze3d.systems.ScissorState);
+  public void pushDebugGroup(java.util.function.Supplier<java.lang.String>);
+  public void popDebugGroup();
+  public void setPipeline(com.mojang.renderpearl.backend.api.BackendRenderPipeline);
+  public void setUniform(int, java.lang.Object);
+  public void pushConstants(java.nio.ByteBuffer);
+  public void setViewport(int, int, int, int);
+  public void enableScissor(int, int, int, int);
+  public void disableScissor();
+  public boolean isScissorEnabled();
+  public int getScissorX();
+  public int getScissorY();
+  public int getScissorWidth();
+  public int getScissorHeight();
+  public void setVertexBuffer(int, com.mojang.renderpearl.api.buffers.GpuBufferSlice);
+  public void setIndexBuffer(com.mojang.renderpearl.api.buffers.GpuBuffer, com.mojang.renderpearl.api.pipeline.IndexType);
+  public void drawIndexed(int, int, int, int, int);
+  public void multiDrawIndexed(java.nio.IntBuffer, int, int, int);
+  public void multiDrawIndexed(org.lwjgl.PointerBuffer, java.nio.IntBuffer, java.nio.IntBuffer, int);
+  public void drawIndexedIndirect(com.mojang.renderpearl.api.buffers.GpuBufferSlice, int);
+  public void draw(int, int, int, int);
+  public void multiDraw(java.nio.IntBuffer, int, int, int);
+  public void multiDraw(java.nio.IntBuffer, java.nio.IntBuffer, int);
+  public void drawIndirect(com.mojang.renderpearl.api.buffers.GpuBufferSlice, int);
+  public void writeTimestamp(com.mojang.renderpearl.api.commands.GpuQueryPool, int);
+}
