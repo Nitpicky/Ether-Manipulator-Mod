@@ -63,9 +63,9 @@ public final class PlaytestBootstrap {
         mc.options.onboardAccessibility = false;
 
         if (mc.level == null || mc.player == null) {
-            if (!worldRequested && mc.screen != null && mc.getOverlay() == null) {
-                if (!(mc.screen instanceof TitleScreen)) {
-                    mc.setScreen(new TitleScreen());
+            if (!worldRequested && mc.gui.screen() != null && mc.getOverlay() == null) {
+                if (!(mc.gui.screen() instanceof TitleScreen)) {
+                    mc.gui.setScreen(new TitleScreen());
                     return;
                 }
                 worldRequested = true;
@@ -73,7 +73,7 @@ public final class PlaytestBootstrap {
             }
             return;
         }
-        if (mc.screen != null && t < 0) return; // still on the loading screen
+        if (mc.gui.screen() != null && t < 0) return; // still on the loading screen
         t++;
         try {
             step(mc);
@@ -86,7 +86,7 @@ public final class PlaytestBootstrap {
     private static void createWorld(Minecraft mc) {
         if (Boolean.getBoolean("ethermod.uiKeepState")
                 && Files.isDirectory(mc.gameDirectory.toPath().resolve("saves").resolve(WORLD))) {
-            mc.createWorldOpenFlows().openWorld(WORLD, () -> mc.setScreen(new TitleScreen()));
+            mc.createWorldOpenFlows().openWorld(WORLD, () -> mc.gui.setScreen(new TitleScreen()));
             return;
         }
 
@@ -413,21 +413,21 @@ public final class PlaytestBootstrap {
             case 405 -> sideCamera(mc, false);
 
             // ---- Trait screen ----------------------------------------------------
-            case 410 -> mc.setScreen(new TraitScreen());
+            case 410 -> mc.gui.setScreen(new TraitScreen());
             case 420 -> shot(mc, "13_trait_screen");
             case 421 -> {
                 TraitScreen.debugTab(1);
-                mc.setScreen(new TraitScreen());
+                mc.gui.setScreen(new TraitScreen());
             }
             case 423 -> shot(mc, "13b_colours_tab");
             case 424 -> {
                 TraitScreen.debugTab(2);
-                mc.setScreen(new TraitScreen());
+                mc.gui.setScreen(new TraitScreen());
             }
             case 426 -> shot(mc, "13c_loadouts_tab");
             case 427 -> {
                 TraitScreen.debugTab(0);
-                mc.setScreen(null);
+                mc.gui.setScreen(null);
             }
 
             // ---- Custom colours, and the glow remembering several blocks -----------
@@ -1093,23 +1093,23 @@ public final class PlaytestBootstrap {
             case 1455 -> server(mc, (s, p) -> {
                 for (String gem : com.ethermod.registry.ModItems.GEMS.keySet()) run(s, "give @p ethermod:" + gem);
             });
-            case 1460 -> mc.setScreen(new net.minecraft.client.gui.screens.inventory.InventoryScreen(mc.player));
+            case 1460 -> mc.gui.setScreen(new net.minecraft.client.gui.screens.inventory.InventoryScreen(mc.player));
             case 1470 -> shot(mc, "35_gem_glint");
-            case 1474 -> mc.setScreen(null);
+            case 1474 -> mc.gui.setScreen(null);
             // the advancement tab's layout (gems and Module challenges on top, upgrade line, dyes last)
             case 1478 -> {
                 var adv = mc.player.connection.getAdvancements();
                 var root = adv.getTree().get(net.minecraft.resources.Identifier.fromNamespaceAndPath("ethermod", "manipulator/root"));
-                mc.setScreen(new net.minecraft.client.gui.screens.advancements.AdvancementsScreen(adv));
+                mc.gui.setScreen(new net.minecraft.client.gui.screens.advancements.AdvancementsScreen(adv));
                 if (root != null) adv.setSelectedTab(root.holder(), true);
                 // the mouse off the window, so no tooltip covers the tree
                 org.lwjgl.glfw.GLFW.glfwSetCursorPos(mc.getWindow().getWindow(), 0, 0);
                 if (root != null) logAdvancements(root);
             }
             case 1486 -> shot(mc, "36_advancements");
-            case 1487 -> mc.screen.mouseDragged(0, 0, 0, 0, -400); // scroll to the bottom rows
+            case 1487 -> mc.gui.screen().mouseDragged(0, 0, 0, 0, -400); // scroll to the bottom rows
             case 1489 -> shot(mc, "36b_advancements_bottom");
-            case 1492 -> mc.setScreen(null);
+            case 1492 -> mc.gui.setScreen(null);
             case 1572 -> finish(mc);
             default -> {}
         }
@@ -1464,7 +1464,7 @@ public final class PlaytestBootstrap {
         mc.gui.getChat().clearMessages(false);
         mc.getToasts().clear();
         Consumer<net.minecraft.network.chat.Component> sink = c -> {};
-        Screenshot.grab(mc.gameDirectory, "mm_" + name + ".png", mc.getMainRenderTarget(), sink);
+        Screenshot.grab(mc.gameDirectory, "mm_" + name + ".png", mc.gameRenderer.mainRenderTarget(), sink);
         log("shot " + name);
     }
 

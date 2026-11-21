@@ -273,14 +273,14 @@ public final class UiProbe {
                                     Manipulator.sync(p);
                                 });
             if (tick == 40 && !Boolean.getBoolean("ethermod.blazelingTest"))
-                mc.setScreen(new TraitScreen());
+                mc.gui.setScreen(new TraitScreen());
             if (tick == 60) {
                 System.out.println("PLAYTEST READY - control handed to player");
                 if (!Boolean.getBoolean("ethermod.noScreenshots"))
                     net.minecraft.client.Screenshot.grab(
                             mc.gameDirectory,
                             "playtest-ready.png",
-                            mc.getMainRenderTarget(),
+                            mc.gameRenderer.mainRenderTarget(),
                             c -> {});
             }
             return;
@@ -1058,13 +1058,13 @@ public final class UiProbe {
                                 p.getPersistentData().putInt("mm_refill_ether", 0);
                                 Manipulator.sync(p);
                             });
-        if (tick == 70) mc.setScreen(new TraitScreen());
+        if (tick == 70) mc.gui.setScreen(new TraitScreen());
         if (tick == 100)
             if (!Boolean.getBoolean("ethermod.noScreenshots"))
                 net.minecraft.client.Screenshot.grab(
                         mc.gameDirectory,
                         "redesign-trees.png",
-                        mc.getMainRenderTarget(),
+                        mc.gameRenderer.mainRenderTarget(),
                         c -> System.out.println(c.getString()));
         if (tick == 140)
             mc.getSingleplayerServer()
@@ -1116,7 +1116,7 @@ public final class UiProbe {
                                         });
                             });
         if (tick == 185) {
-            mc.setScreen(null);
+            mc.gui.setScreen(null);
             mc.getSingleplayerServer()
                     .execute(
                             () -> {
@@ -1433,7 +1433,7 @@ public final class UiProbe {
         }
         if (tick == 215) {
             var player = mc.player;
-            var camera = mc.gameRenderer.getMainCamera();
+            var camera = mc.gameRenderer.mainCamera();
             System.out.println(
                     "GRAVITY VISUAL player="
                             + player.position()
@@ -1452,7 +1452,7 @@ public final class UiProbe {
                             + player.getEyeY());
             if (!Boolean.getBoolean("ethermod.noScreenshots"))
                 net.minecraft.client.Screenshot.grab(
-                        mc.gameDirectory, "gravity-frame.png", mc.getMainRenderTarget(), c -> {});
+                        mc.gameDirectory, "gravity-frame.png", mc.gameRenderer.mainRenderTarget(), c -> {});
             check(
                     "Client gravity received",
                     MovementPhysics.down(mc.player) == net.minecraft.core.Direction.EAST);

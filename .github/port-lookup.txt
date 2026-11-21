@@ -1,4 +1,4 @@
-net/minecraft/client/entity/ClientAvatarState
-/.*/ClientAvatarState$
-net/minecraft/client/player/AbstractClientPlayer#updateBob net/minecraft/client/entity/ClientAvatarState#updateBob net/minecraft/client/entity/ClientAvatarState#tick net/minecraft/client/entity/ClientAvatarState#addWalkDistance net/minecraft/client/player/AbstractClientPlayer#tick
-net/minecraft/client/player/AbstractClientPlayer#.*
+net/minecraft/world/entity/EntityType net/minecraft/client/Camera net/minecraft/client/player/ClientInput net/minecraft/world/entity/WalkAnimationState net/minecraft/world/entity/player/Inventory net/minecraft/client/multiplayer/ClientAdvancements net/minecraft/client/Options net/minecraft/client/gui/Gui net/minecraft/world/item/crafting/RecipeManager com/mojang/blaze3d/platform/NativeImage com/mojang/blaze3d/platform/Window net/minecraft/client/gui/components/toasts/ToastManager net/minecraft/world/entity/player/Player net/minecraft/client/renderer/LevelRenderer net/minecraft/world/entity/Entity net/minecraft/world/entity/LivingEntity net/minecraft/advancements/AdvancementNode net/minecraft/client/gui/components/ChatComponent net/minecraft/world/level/storage/TagValueOutput net/minecraft/world/level/levelgen/WorldOptions net/minecraft/world/item/Items
+/.*(GameRules?|GameRule[A-Za-z]*|/Husk|/Pig|/SmallFireball|/Zombie|ValueOutput|WorldPreset|TreeNodePosition|DisplayInfo|GraphicsPreset|GraphicsStatus|EntitySpawnReason|LightCoordsUtil|ProblemReporter|WorldCreationContext|LevelSettings|Dyes?)$
+net/minecraft/client/gui/Gui#extractRenderState
+net/minecraft/world/entity/player/Player#<init> net/minecraft/world/level/GameRules#<init>

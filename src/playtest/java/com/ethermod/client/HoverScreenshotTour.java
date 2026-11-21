@@ -27,11 +27,11 @@ public final class HoverScreenshotTour {
         }
     }
     static int[] pixels(Minecraft mc) {
-        var panels=(Object[])field(mc.screen,UpgradeScreen.class,"panels");
+        var panels=(Object[])field(mc.gui.screen(),UpgradeScreen.class,"panels");
         return (int[])field(panels[0],panels[0].getClass(),"finalPixels");
     }
     static int sample(int[] p,int x,int y){return p[y*146+x];}
-    static void screenshot(Minecraft mc,String name){net.minecraft.client.Screenshot.grab(mc.gameDirectory,name+".png",mc.getMainRenderTarget(),c->{});}
+    static void screenshot(Minecraft mc,String name){net.minecraft.client.Screenshot.grab(mc.gameDirectory,name+".png",mc.gameRenderer.mainRenderTarget(),c->{});}
     public static void step(Minecraft mc) {
         tick++;
         if(tick==10)mc.getSingleplayerServer().execute(()->{
@@ -45,11 +45,11 @@ public final class HoverScreenshotTour {
             }
             for(int n=0;n<7;n++)Loadouts.handle(p,Loadouts.SAVE,0,"Set "+(n+1));Manipulator.sync(p);
         });
-        if(tick==25)mc.setScreen(new Screen());
+        if(tick==25)mc.gui.setScreen(new Screen());
         if(tick==90){
             var p=pixels(mc);restingII=sample(p,67,18);restingIII=sample(p,110,18);
             check("Choice, badge and active Common share dark fill",sample(p,42,7)==sample(p,8,11)&&sample(p,42,7)==sample(p,65,17));
-            var panels=(Object[])field(mc.screen,UpgradeScreen.class,"panels");var image=(com.mojang.blaze3d.platform.NativeImage)field(panels[0],panels[0].getClass(),"image");
+            var panels=(Object[])field(mc.gui.screen(),UpgradeScreen.class,"panels");var image=(com.mojang.blaze3d.platform.NativeImage)field(panels[0],panels[0].getClass(),"image");
             boolean exact=true;for(int i=0;i<p.length;i++){int rgb=p[i],abgr=image.getPixelRGBA(i%146,i/146);int restored=(abgr&0xff00ff00)|((abgr&255)<<16)|((abgr>>16)&255);if(rgb!=restored){exact=false;break;}}
             check("Full RGB bytes survive panel texture upload",exact);screenshot(mc,"hover-01-rest");phase=1;
         }

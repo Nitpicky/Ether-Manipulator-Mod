@@ -47,13 +47,13 @@ public final class PairScreenshotTour {
         });
     }
     private static void capture(Minecraft mc, String name) {
-        net.minecraft.client.Screenshot.grab(mc.gameDirectory, name + ".png", mc.getMainRenderTarget(), c -> {});
+        net.minecraft.client.Screenshot.grab(mc.gameDirectory, name + ".png", mc.gameRenderer.mainRenderTarget(), c -> {});
         System.out.println("PAIR SCREENSHOT " + name);
     }
     public static void step(Minecraft mc) {
         tick++;
         if (tick == 10) configure(mc, ManipulatorStage.NETHERITE, "plasmic", "kinetic", "hydraulic");
-        if (tick == 25 || tick == 155 || tick == 285 || tick == 415 || tick == 545) mc.setScreen(new TraitScreen());
+        if (tick == 25 || tick == 155 || tick == 285 || tick == 415 || tick == 545) mc.gui.setScreen(new TraitScreen());
         if (tick == 120) capture(mc, "pairs-01-plasmic-kinetic-hydraulic");
         if (tick == 140) configure(mc, ManipulatorStage.NETHERITE, "pyrotechnic", "tectonic", "pneumatic");
         if (tick == 250) capture(mc, "pairs-02-pyrotechnic-tectonic-pneumatic");
@@ -63,7 +63,7 @@ public final class PairScreenshotTour {
         if (tick == 510) capture(mc, "pairs-04-gravitic");
         if (tick == 530) configure(mc, ManipulatorStage.IRON, "plasmic");
         if (tick == 640) capture(mc, "pairs-05-calibrated-locked-panels");
-        if (tick == 660 && mc.screen instanceof UpgradeScreen screen) {
+        if (tick == 660 && mc.gui.screen() instanceof UpgradeScreen screen) {
             try { var f = UpgradeScreen.class.getDeclaredField("picker"); f.setAccessible(true); f.setInt(screen, 0); }
             catch (Exception e) { throw new RuntimeException(e); }
         }

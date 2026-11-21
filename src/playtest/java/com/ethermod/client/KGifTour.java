@@ -74,7 +74,7 @@ public final class KGifTour {
 
     /** Centre of the control with this key, in GUI coordinates, or null. */
     private static double[] centre(Minecraft mc, String k) {
-        if (!(mc.screen instanceof UpgradeScreen s)) return null;
+        if (!(mc.gui.screen() instanceof UpgradeScreen s)) return null;
         int left = (int) field(s, UpgradeScreen.class, "left"), top = (int) field(s, UpgradeScreen.class, "top");
         float scale = (float) field(s, UpgradeScreen.class, "uiScale");
         @SuppressWarnings("unchecked")
@@ -90,7 +90,7 @@ public final class KGifTour {
 
     /** A point given in K-window units (0..320, 0..158), in GUI coordinates. */
     private static double[] local(Minecraft mc, double lx, double ly) {
-        var s = mc.screen;
+        var s = mc.gui.screen();
         int left = (int) field(s, UpgradeScreen.class, "left"), top = (int) field(s, UpgradeScreen.class, "top");
         float scale = (float) field(s, UpgradeScreen.class, "uiScale");
         return new double[] {left + lx * scale, top + ly * scale};
@@ -136,7 +136,7 @@ public final class KGifTour {
                 () -> {
                     vx = -50;
                     vy = -50;
-                    mc.setScreen(new Screen());
+                    mc.gui.setScreen(new Screen());
                 },
                 i -> {
                     if (i == 11) scene = name; // start recording once the screen has settled
@@ -149,7 +149,7 @@ public final class KGifTour {
                 4,
                 () -> {
                     scene = null;
-                    mc.setScreen(null);
+                    mc.gui.setScreen(null);
                 },
                 null);
     }
@@ -191,9 +191,9 @@ public final class KGifTour {
         Minecraft mc = Minecraft.getInstance();
         add(
                 3,
-                () -> mc.screen.mouseClicked(vx, vy, button),
+                () -> mc.gui.screen().mouseClicked(vx, vy, button),
                 i -> {
-                    if (i == 1) mc.screen.mouseReleased(vx, vy, button);
+                    if (i == 1) mc.gui.screen().mouseReleased(vx, vy, button);
                 });
     }
 
@@ -206,14 +206,14 @@ public final class KGifTour {
         Minecraft mc = Minecraft.getInstance();
         add(
                 n + 2,
-                () -> mc.screen.mouseClicked(vx, vy, 0),
+                () -> mc.gui.screen().mouseClicked(vx, vy, 0),
                 i -> {
                     if (i < n) {
                         double sx = dx / n, sy = dy / n;
                         vx += sx;
                         vy += sy;
-                        mc.screen.mouseDragged(vx, vy, 0, sx, sy);
-                    } else if (i == n) mc.screen.mouseReleased(vx, vy, 0);
+                        mc.gui.screen().mouseDragged(vx, vy, 0, sx, sy);
+                    } else if (i == n) mc.gui.screen().mouseReleased(vx, vy, 0);
                 });
     }
 
@@ -235,7 +235,7 @@ public final class KGifTour {
                     var t = local(mc, lx, ly);
                     to[0] = t[0];
                     to[1] = t[1];
-                    mc.screen.mouseClicked(vx, vy, 0);
+                    mc.gui.screen().mouseClicked(vx, vy, 0);
                 },
                 i -> {
                     if (i < n) {
@@ -243,8 +243,8 @@ public final class KGifTour {
                         f = f * f * (3 - 2 * f);
                         vx = from[0] + (to[0] - from[0]) * f;
                         vy = from[1] + (to[1] - from[1]) * f;
-                        mc.screen.mouseDragged(vx, vy, 0, vx - px, vy - py);
-                    } else if (i == n) mc.screen.mouseReleased(vx, vy, 0);
+                        mc.gui.screen().mouseDragged(vx, vy, 0, vx - px, vy - py);
+                    } else if (i == n) mc.gui.screen().mouseReleased(vx, vy, 0);
                 });
     }
 
@@ -466,7 +466,7 @@ public final class KGifTour {
         }
         plan.get(stepIndex).each().accept(stepTick);
         stepTick++;
-        if (scene != null && mc.screen instanceof UpgradeScreen s && tick % 2 == 0) {
+        if (scene != null && mc.gui.screen() instanceof UpgradeScreen s && tick % 2 == 0) {
             if (!cropWritten) {
                 cropWritten = true;
                 int gs = (int) mc.getWindow().getGuiScale();
@@ -482,7 +482,7 @@ public final class KGifTour {
                 }
             }
             String name = String.format("kgif_%s_%04d.png", scene, frame++);
-            net.minecraft.client.Screenshot.grab(mc.gameDirectory, name, mc.getMainRenderTarget(), c -> {});
+            net.minecraft.client.Screenshot.grab(mc.gameDirectory, name, mc.gameRenderer.mainRenderTarget(), c -> {});
             frames.add(name + " " + System.nanoTime());
         }
     }
