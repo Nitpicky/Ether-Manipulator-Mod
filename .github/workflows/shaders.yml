@@ -7,6 +7,9 @@ on:
       pack:
         description: Modrinth slug of the shader pack (none = Sodium + Iris with shaders off)
         default: complementary-reimagined
+      sodium:
+        description: Sodium version (Modrinth version number); empty = newest. Newer betas refuse Iris 1.11.7, the newest Iris for 26.3.
+        default: mc26.3-0.9.3-beta.3-neoforge
       variant:
         description: How effects draw with the pack (client/Fx.VARIANT); empty = the mod's default
         default: ''
@@ -33,6 +36,7 @@ jobs:
       - name: Download Sodium, Iris and the shader pack
         env:
           PACK: ${{ github.event.inputs.pack }}
+          SODIUM: ${{ github.event.inputs.sodium }}
         run: |
           set -e
           mkdir -p runs/client/mods runs/client/shaderpacks runs/client/config
@@ -40,15 +44,13 @@ jobs:
           mkdir -p out
           { for slug in sodium iris; do echo "== $slug for $MC"; curl -fsSL -A ethermod-ci "https://api.modrinth.com/v2/project/$slug/version?game_versions=%5B%22$MC%22%5D" | jq -r '.[] | .version_number + " " + (.loaders|join(",")) + " " + .version_type + " " + .date_published'; done
             echo "== iris, any game version"; curl -fsSL -A ethermod-ci "https://api.modrinth.com/v2/project/iris/version?loaders=%5B%22neoforge%22%5D" | jq -r '.[0:8][] | .version_number + " " + (.game_versions|join(",")) + " " + .date_published'
-            echo "== sodium neoforge builds: iris/neoforge constraints"
-            curl -fsSL -A ethermod-ci "https://api.modrinth.com/v2/project/sodium/version?loaders=%5B%22neoforge%22%5D&game_versions=%5B%22$MC%22%5D" | jq -r '.[] | .version_number + " " + (.files[]|select(.primary)|.url)' | while read -r v u; do curl -fsSL -o /tmp/s.jar "$u"; echo "-- $v"; unzip -p /tmp/s.jar META-INF/neoforge.mods.toml | grep -A3 -E 'modId *= *"(iris|neoforge)"' | grep -E 'modId|versionRange|type'; done
             echo "== neoforge versions"; curl -fsSL https://maven.neoforged.net/releases/net/neoforged/neoforge/maven-metadata.xml | grep -o '<version>26\.3[^<]*' | tail -15; } > out/versions.txt 2>&1 || true
           cat out/versions.txt
           get() { # slug, loader filter: newest build (Sodium's last release predates NeoForge 26.3.0.115)
             curl -fsSL -A "ethermod-ci" "https://api.modrinth.com/v2/project/$1/version?loaders=%5B%22$2%22%5D&game_versions=%5B%22$MC%22%5D" \
-              | jq -r '.[0] | .files[] | select(.primary) | .url + " " + .filename'
+              | jq -r --arg v "${3:-}" '(if $v == "" then .[0] else (map(select(.version_number == $v))[0]) end) | .files[] | select(.primary) | .url + " " + .filename'
           }
-          read -r url name <<< "$(get sodium neoforge)"; curl -fsSL -o "runs/client/mods/$name" "$url"; echo "Sodium: $name"
+          read -r url name <<< "$(get sodium neoforge "$SODIUM")"; curl -fsSL -o "runs/client/mods/$name" "$url"; echo "Sodium: $name"
           read -r url name <<< "$(get iris neoforge)"; curl -fsSL -o "runs/client/mods/$name" "$url"; echo "Iris: $name"
           for j in runs/client/mods/*.jar; do echo "== $j"; unzip -p "$j" META-INF/neoforge.mods.toml | grep -B1 -A5 'modId *= *"neoforge"' ; done >> out/versions.txt || true
           if [ "$PACK" = none ]; then printf 'enableShaders=false\n' > runs/client/config/iris.properties; exit 0; fi
