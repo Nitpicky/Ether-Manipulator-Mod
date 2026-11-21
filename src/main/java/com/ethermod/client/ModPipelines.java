@@ -14,11 +14,15 @@ import net.neoforged.neoforge.client.event.RegisterRenderPipelinesEvent;
 public final class ModPipelines {
     private ModPipelines() {}
 
-    /** GUI colour fill that adds light (the K-screen's glows). */
+    /** GUI colour fill that adds light scaled by its alpha (the K-screen's glows; 1.21's lightning blend). */
     public static final RenderPipeline GUI_ADDITIVE =
             RenderPipeline.builder(RenderPipelines.GUI_SNIPPET)
                     .withLocation(net.minecraft.resources.Identifier.fromNamespaceAndPath(EtherMod.MODID, "pipeline/gui_additive"))
-                    .withColorTargetState(new ColorTargetState(BlendFunction.ADDITIVE))
+                    .withColorTargetState(
+                            new ColorTargetState(
+                                    new BlendFunction(
+                                            com.mojang.renderpearl.api.pipeline.BlendFactor.SRC_ALPHA,
+                                            com.mojang.renderpearl.api.pipeline.BlendFactor.ONE)))
                     .build();
 
     /** Textured GUI quad that inverts what is under it (the HUD's ammo digits). */
