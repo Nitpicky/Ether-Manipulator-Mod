@@ -21,7 +21,8 @@ next release's notes.
 ### Changes
 - New mod icon.
 - Bank Shot: each ricochet resets the shot's range.
-- Steady Hand: held blocks turn see-through while a throw charges.
+- Steady Hand: held blocks turn see-through while a throw charges, and the landing preview is fainter.
+- Mass Driver: every throw shows its arc while charging.
 - Gravity Shift: no fall damage while shifted.
 - Clearer Zipline description.
 - Frost bridges are Frost Walker ice and melt the same way.

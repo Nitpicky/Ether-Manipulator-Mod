@@ -168,7 +168,8 @@ public class BeamBallRenderer extends EntityRenderer<BeamBallEntity> {
             ps.mulPose(com.mojang.math.Axis.XP.rotationDegrees(entity.getXRot()));
             // Steady Hand: while the throw charges the block turns see-through, so the landing
             // ghost and the spot behind it show
-            if (aimingThrow(entity)) drawGhostBlock(ps, buf, entity.getCarried(), THROW_ALPHA, light);
+            if (aimingThrow(entity))
+                drawGhostBlock(ps, buf, entity.getCarried(), THROW_ALPHA, light, sharedFaces(entity));
             else drawBlock(ps, buf, entity.getCarried(), Vec3.ZERO, time, 1.0f, light);
             ps.popPose();
         }
@@ -363,7 +364,8 @@ public class BeamBallRenderer extends EntityRenderer<BeamBallEntity> {
             MultiBufferSource buf,
             net.minecraft.world.level.block.state.BlockState state,
             float alpha,
-            int light) {
+            int light,
+            java.util.Set<net.minecraft.core.Direction> hidden) {
         if (state.getRenderShape() != net.minecraft.world.level.block.RenderShape.MODEL) {
             drawBlock(ps, buf, state, Vec3.ZERO, 0, 1f, light);
             return;
@@ -380,26 +382,42 @@ public class BeamBallRenderer extends EntityRenderer<BeamBallEntity> {
                         alpha);
         ps.pushPose();
         ps.translate(-0.5, -0.5, -0.5);
-        for (var rt :
-                model.getRenderTypes(
-                        state,
-                        net.minecraft.util.RandomSource.create(42),
-                        net.neoforged.neoforge.client.model.data.ModelData.EMPTY))
-            mc.getBlockRenderer()
-                    .getModelRenderer()
-                    .renderModel(
+        var data = net.neoforged.neoforge.client.model.data.ModelData.EMPTY;
+        for (var rt : model.getRenderTypes(state, net.minecraft.util.RandomSource.create(42), data))
+            for (int d = -1; d < 6; d++) {
+                var dir = d < 0 ? null : net.minecraft.core.Direction.from3DDataValue(d);
+                // faces pressed against another held block stay hidden, as in a solid wall
+                if (dir != null && hidden.contains(dir)) continue;
+                for (var quad :
+                        model.getQuads(state, dir, net.minecraft.util.RandomSource.create(42), data, rt)) {
+                    boolean tinted = quad.isTinted();
+                    vc.putBulkData(
                             ps.last(),
-                            vc,
-                            state,
-                            model,
-                            r,
-                            g,
-                            b,
+                            quad,
+                            tinted ? r : 1f,
+                            tinted ? g : 1f,
+                            tinted ? b : 1f,
+                            1f,
                             light,
-                            net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY,
-                            net.neoforged.neoforge.client.model.data.ModelData.EMPTY,
-                            rt);
+                            net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY);
+                }
+            }
         ps.popPose();
+    }
+
+    /** The sides of a held block that touch another block of the same formation. */
+    private static java.util.Set<net.minecraft.core.Direction> sharedFaces(BeamBallEntity e) {
+        var hidden = java.util.EnumSet.noneOf(net.minecraft.core.Direction.class);
+        var level = e.level();
+        var mine = e.massOffset();
+        for (var other :
+                level.getEntitiesOfClass(
+                        BeamBallEntity.class,
+                        e.getBoundingBox().inflate(2),
+                        o -> o != e && o.isMassHeld() && o.getOwner() == e.getOwner()))
+            for (var dir : net.minecraft.core.Direction.values())
+                if (other.massOffset().equals(mine.relative(dir))) hidden.add(dir);
+        return hidden;
     }
 
     /** Passes vertices through with their alpha scaled. */
