@@ -32,12 +32,12 @@ jobs:
           if [ -n "$LIST" ]; then echo "=== LIST $LIST"; grep -E "$LIST" all.txt | grep -v '\$[0-9]' | head -3000; fi
           for c in $(sed -n 3p .github/port-lookup.txt); do
             # line 3: class#method -> bytecode of that method
-            cls=${c%%#*}; meth=${c#*#}
-            echo "=== CODE $cls $meth"; javap -cp "$CP" -c -p "${cls//\//.}" 2>&1 | awk -v m=" $meth(" 'index($0,m){p=1} p&&/^$/{p=0} p' | head -300
+            cls=${c%%#*}; meth=${c#*#}; m=" $meth("; [ "$meth" = "<clinit>" ] && m="static {}"
+            echo "=== CODE $cls $meth"; javap -cp "$CP" -c -p "${cls//\//.}" 2>&1 | awk -v m="$m" 'index($0,m){p=1} p&&/^$/{p=0} p' | head -300
           done
           for c in $(sed -n 4p .github/port-lookup.txt); do
             # line 4: class#method -> every signature of that name, private ones included
-            cls=${c%%#*}; meth=${c#*#}
+            cls=${c%%#*}; meth=${c#*#}; m=" $meth("; [ "$meth" = "<clinit>" ] && m="static {}"
             echo "=== SIG $cls $meth"; javap -cp "$CP" -p "${cls//\//.}" 2>&1 | grep -E "[ .]$meth\(|^ *[a-z].* $meth;" | head -20
           done
           for c in $CLASSES; do
