@@ -1,4 +1,4 @@
-net/minecraft/world/entity/EntityEquipment
-
+net/neoforged/neoforge/common/loot/LootModifierManager net/neoforged/neoforge/common/loot/IGlobalLootModifier
+/(.*LootModifier.*|.*loot/.*Neo.*)$
+net/neoforged/neoforge/common/loot/LootModifierManager#apply net/neoforged/neoforge/common/loot/LootModifierManager#prepare net/neoforged/neoforge/common/loot/LootModifierManager#<clinit>
 #
-net/minecraft/world/entity/LivingEntity#getItemBySlot net/minecraft/world/entity/LivingEntity#setItemSlot net/minecraft/world/entity/Entity#getItemBySlot net/minecraft/world/entity/player/Player#getEquipment net/minecraft/world/level/material/FlowingFluid#can[A-Za-z]* net/minecraft/world/level/material/FlowingFluid#spread[A-Za-z]* net/minecraft/world/level/material/FlowingFluid#get[A-Za-z]*Spread[A-Za-z]* net/minecraft/world/entity/player/Player#equipment net/minecraft/world/entity/LivingEntity#equipment
