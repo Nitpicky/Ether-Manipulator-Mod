@@ -31,7 +31,8 @@ public abstract class ChargeMovementMixin {
                     @At(
                             value = "INVOKE",
                             target =
-                                    "Lnet/minecraft/world/phys/Vec3;add(DDD)Lnet/minecraft/world/phys/Vec3;"))
+                                    "Lnet/minecraft/world/phys/Vec3;add(DDD)Lnet/minecraft/world/phys/Vec3;"),
+            require = 0)
     private net.minecraft.world.phys.Vec3 mm$flyingKeys(
             net.minecraft.world.phys.Vec3 v,
             double x,

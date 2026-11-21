@@ -10,13 +10,8 @@ import org.spongepowered.asm.mixin.injection.At;
 /** Gravitic Flight: the local player can start gliding without an elytra. */
 @Mixin(LocalPlayer.class)
 public abstract class FlightEquipmentMixin {
-    @ModifyExpressionValue(
-            method = "aiStep",
-            at =
-                    @At(
-                            value = "INVOKE",
-                            target =
-                                    "Lnet/minecraft/world/item/ItemStack;canElytraFly(Lnet/minecraft/world/entity/LivingEntity;)Z"))
+    /** 26.3: the elytra check is canGlide(); Flight counts as wings. */
+    @com.llamalad7.mixinextras.injector.ModifyReturnValue(method = "canGlide", at = @At("RETURN"))
     private boolean mm$wings(boolean canFly) {
         return canFly
                 || com.ethermod.trait.Traits.has(
