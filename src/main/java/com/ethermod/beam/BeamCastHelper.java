@@ -318,6 +318,8 @@ public final class BeamCastHelper {
         target.invulnerableTime = 0;
         target.hurt(beamSource(level, player), dmg);
         target.invulnerableTime = 0;
+        // as a melee hit would: tamed wolves join in on what you attack
+        player.setLastHurtMob(target);
         target.setDeltaMovement(incomingVelocity);
         float dealt = Math.max(0, before - target.getHealth());
         com.ethermod.util.MobMemory.of(target)

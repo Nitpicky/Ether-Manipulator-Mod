@@ -17,7 +17,8 @@ public final class TempBlocks {
     /** A block placed for a while (Frost bridges), then put back as it was. */
     public static boolean showsExpiryCracks(
             net.minecraft.world.level.block.state.BlockState state) {
-        return !state.is(net.minecraft.tags.BlockTags.FIRE);
+        return !state.is(net.minecraft.tags.BlockTags.FIRE)
+                && !state.is(Blocks.FROSTED_ICE); // ages like Frost Walker's ice instead
     }
 
     private record TempBlock(
@@ -134,6 +135,11 @@ public final class TempBlocks {
                     level.setBlock(p, Blocks.AIR.defaultBlockState(), 2);
                 boolean stillThere = level.getBlockState(p).is(t.placed().getBlock());
                 if (!stillThere) {
+                    // broken Frost Walker ice turns to water over solid ground: a bridge never does
+                    if (t.placed().is(Blocks.FROSTED_ICE)
+                            && t.restore().isAir()
+                            && level.getBlockState(p).is(Blocks.WATER))
+                        level.setBlock(p, Blocks.AIR.defaultBlockState(), 3);
                     level.destroyBlockProgress(t.crackId(), p, -1);
                     PendingReverts.remove(level, p);
                     if (bridgeIds != null) bridgeIds.remove(p);
@@ -150,6 +156,11 @@ public final class TempBlocks {
                                         .isEmpty())) {
                     // Permafrost: someone is standing on it; it waits for them
                     if (left < 200) level.destroyBlockProgress(t.crackId(), p, -1);
+                    var held = level.getBlockState(p);
+                    if (held.is(Blocks.FROSTED_ICE)
+                            && held.getValue(net.minecraft.world.level.block.FrostedIceBlock.AGE) != 0)
+                        level.setBlock(
+                                p, held.setValue(net.minecraft.world.level.block.FrostedIceBlock.AGE, 0), 2);
                     e.setValue(
                             new TempBlock(
                                     t.placed(),
@@ -169,6 +180,15 @@ public final class TempBlocks {
                     PendingReverts.remove(level, p);
                     if (bridgeIds != null) bridgeIds.remove(p);
                     it.remove();
+                } else if (left <= 200 && t.placed().is(Blocks.FROSTED_ICE)) {
+                    // Frost Walker's melt: the ice cracks through its 4 ages, then is gone
+                    int age = Math.min(3, (int) ((200 - left) * 4 / 200));
+                    var here = level.getBlockState(p);
+                    if (here.getValue(net.minecraft.world.level.block.FrostedIceBlock.AGE) != age)
+                        level.setBlock(
+                                p,
+                                here.setValue(net.minecraft.world.level.block.FrostedIceBlock.AGE, age),
+                                2);
                 } else if (left <= 200 && now % 10 == 0 && showsExpiryCracks(t.placed())) {
                     // cracks grow over the last 10 seconds
                     level.destroyBlockProgress(t.crackId(), p, (int) (9 - left * 9 / 200));

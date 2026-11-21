@@ -92,7 +92,7 @@ final class OrbImpact {
                     TempBlocks.tempBlock(
                             sl,
                             here,
-                            Blocks.PACKED_ICE.defaultBlockState(),
+                            Blocks.FROSTED_ICE.defaultBlockState(),
                             OrbFrost.bridgeTicks(b),
                             true);
             }
@@ -115,6 +115,8 @@ final class OrbImpact {
         ServerLevel sl = (ServerLevel) b.level();
         Entity target = result.getEntity();
         Entity owner = b.getOwner();
+        // as an arrow would: tamed wolves join in on what you shoot
+        if (owner instanceof LivingEntity shooter && target instanceof LivingEntity) shooter.setLastHurtMob(target);
         if (b.getMode() == OrbMode.WATER)
             ProjectileEffects.waterImpact(b, b.traits, result.getLocation());
         if (b.getMode() == OrbMode.WATER
@@ -347,14 +349,14 @@ final class OrbImpact {
                     TempBlocks.tempBlock(
                             sl,
                             hitPos,
-                            Blocks.PACKED_ICE.defaultBlockState(),
+                            Blocks.FROSTED_ICE.defaultBlockState(),
                             OrbFrost.bridgeTicks(b),
                             true);
                 } else if (b.mayBuild(front)) {
                     TempBlocks.tempBlock(
                             sl,
                             front,
-                            Blocks.PACKED_ICE.defaultBlockState(),
+                            Blocks.FROSTED_ICE.defaultBlockState(),
                             OrbFrost.bridgeTicks(b),
                             true);
                 }
@@ -368,7 +370,7 @@ final class OrbImpact {
                         TempBlocks.tempBlock(
                                 sl,
                                 p.immutable(),
-                                Blocks.PACKED_ICE.defaultBlockState(),
+                                Blocks.FROSTED_ICE.defaultBlockState(),
                                 OrbFrost.bridgeTicks(b),
                                 true);
                     } else if (sl.getBlockState(p).is(Blocks.LAVA)

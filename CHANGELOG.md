@@ -24,12 +24,14 @@ next release's notes.
 - Steady Hand: held blocks turn see-through while a throw charges.
 - Gravity Shift: no fall damage while shifted.
 - Clearer Zipline description.
+- Frost bridges are Frost Walker ice and melt the same way.
 - New mod description in the Mods list.
 
 ### Fixes
 - Lock-On now visibly holds the beam on its target, and keeps it while your aim stays within a block of it.
 - Growth no longer breaks grass and flowers.
 - Jumping as you fire no longer catches your own shot.
+- Animals flee from the beam, and tamed wolves join in on what you hit with it or shoot.
 
 ## 1.0.1 (release)
 
