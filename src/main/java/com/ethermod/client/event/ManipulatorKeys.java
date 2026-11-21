@@ -19,8 +19,8 @@ import org.lwjgl.glfw.GLFW;
 
 /**
  * Manipulator keys. R: summon / put away (never blocked) K: open the upgrade screen (works whether
- * or not it's summoned) Left Alt: hold for the orb mode wheel, tap to cycle Sneak + scroll while
- * summoned: cycle orb modes
+ * or not it's summoned) Left Alt: hold for the orb mode wheel, tap to cycle; Alt + scroll: switch
+ * between favourite sets. Sneak + scroll while summoned: cycle orb modes
  *
  * <p>While summoned, the drop and swap-hand keys are swallowed (they'd act on the hidden hotbar
  * item), and changing hotbar slot puts the Manipulator away.
@@ -127,6 +127,12 @@ public class ManipulatorKeys {
             net.neoforged.neoforge.client.event.InputEvent.MouseScrollingEvent event) {
         Minecraft mc = Minecraft.getInstance();
         LocalPlayer player = mc.player;
+        if (player != null && mc.screen == null && ORB_MODE_KEY.isDown() && event.getScrollDeltaY() != 0) {
+            event.setCanceled(true);
+            com.ethermod.client.ModeWheel.scrolledWhileHeld();
+            cycleFavoriteSets(player, event.getScrollDeltaY() < 0 ? 1 : -1);
+            return;
+        }
         if (player == null
                 || !com.ethermod.config.ClientConfig.sneakScroll()
                 || mc.screen != null
@@ -150,6 +156,41 @@ public class ManipulatorKeys {
                                 "message.ethermod.orb_selected", next.title())
                         .withStyle(s -> s.withColor(next.color)),
                 true);
+    }
+
+    /**
+     * Alt + scroll: loads the next (or previous) set marked as a favourite, after the one that
+     * matches the current build. The server says which set loaded, or why it couldn't.
+     */
+    private static void cycleFavoriteSets(LocalPlayer player, int step) {
+        var stack = Manipulator.stack(player);
+        var sets = com.ethermod.trait.Loadouts.list(stack);
+        var favorites = new java.util.ArrayList<Integer>();
+        for (int i = 0; i < sets.size(); i++) if (sets.get(i).favorite()) favorites.add(i);
+        if (favorites.isEmpty()) {
+            player.displayClientMessage(
+                    net.minecraft.network.chat.Component.translatable("message.ethermod.no_favorite_sets")
+                            .withStyle(net.minecraft.ChatFormatting.GRAY),
+                    true);
+            return;
+        }
+        var current =
+                stack.getOrDefault(
+                                net.minecraft.core.component.DataComponents.CUSTOM_DATA,
+                                net.minecraft.world.item.component.CustomData.EMPTY)
+                        .getUnsafe()
+                        .getList("mm_traits", net.minecraft.nbt.Tag.TAG_COMPOUND);
+        int at = -1;
+        for (int k = 0; k < favorites.size(); k++)
+            if (sets.get(favorites.get(k)).build().equals(current)) {
+                at = k;
+                break;
+            }
+        int next = at < 0 ? (step > 0 ? 0 : favorites.size() - 1) : Math.floorMod(at + step, favorites.size());
+        if (next == at) return;
+        ModNetwork.send(
+                new com.ethermod.network.payload.TraitPayloads.Loadout(
+                        com.ethermod.trait.Loadouts.LOAD, favorites.get(next), ""));
     }
 
     /** Predict locally so the hand swaps instantly; the server confirms with a sync. */

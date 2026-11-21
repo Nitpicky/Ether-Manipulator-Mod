@@ -101,6 +101,11 @@ public final class RedesignCommands {
                                                             Manipulator.sync(p);
                                                             return 1;
                                                         }))
+                                .then(BuildCommands.setModule())
+                                .then(BuildCommands.setBuild())
+                                .then(BuildCommands.exportBuild())
+                                .then(BuildCommands.addSet())
+                                .then(BuildCommands.setColor())
                                 .then(
                                         Commands.literal("refill")
                                                 .executes(

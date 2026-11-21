@@ -74,6 +74,13 @@ final class UpgradeVisuals {
         return m == null ? fallback : new Palette(ramp(m), true);
     }
 
+    /** A Set panel button's own fixed ramp ("add", "copy", "paste", "delete"), whatever the theme. */
+    static Palette button(String key) {
+        var all = assets.getAsJsonObject("buttonPalettes");
+        var b = all == null ? null : all.getAsJsonObject(key);
+        return b == null ? UiSettings.p() : new Palette(ramp(b), false);
+    }
+
     static int mix(int a, int b, double t) {
         t = Math.clamp(t, 0, 1);
         int r = 0xff000000;

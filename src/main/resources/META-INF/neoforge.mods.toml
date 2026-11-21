@@ -12,8 +12,9 @@ logoFile="ethermod_logo.png"
 authors="Woomwoomed"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/ether-manipulator"
 description='''
-A Starbound-inspired multitool that replaces every tool: a continuous beam and a charged orb.
-Every player owns one from the start. Summon it with R; equip elemental Modules and progress through Prototype, Calibrated, Augmented and Overclocked Tiers.
+Omnitool with a progression system. Use it, it bends the world to your will!
+One item for every job: its own slot, no durability, kept on death. Press R to take it in hand and K to open its upgrades.
+Find Elemental Gemstones hidden in vanilla structures to unlock Modules, and upgrade it from Prototype to Overclocked.
 '''
 
 [[mixins]]

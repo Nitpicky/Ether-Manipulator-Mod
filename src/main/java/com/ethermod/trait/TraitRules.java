@@ -41,6 +41,7 @@ public final class TraitRules {
     }
 
     public static boolean inCombat(ServerPlayer player) {
+        if (!com.ethermod.config.ServerConfig.combatLock()) return false;
         Long t = LAST_COMBAT.get(player.getUUID());
         return t != null && player.serverLevel().getGameTime() - t < COMBAT_TICKS;
     }

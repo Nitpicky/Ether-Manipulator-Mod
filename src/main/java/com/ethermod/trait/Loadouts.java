@@ -24,7 +24,8 @@ public final class Loadouts {
 
     private Loadouts() {}
 
-    public static final int MAX = 7;
+    /** Sets one Manipulator can hold: unlimited in play, capped so the item data stays small. */
+    public static final int LIMIT = 100;
     public static final int MAX_NAME = 10;
     private static final String TAG = "mm_loadouts";
 
@@ -34,9 +35,22 @@ public final class Loadouts {
             UP = 3,
             DOWN = 4,
             DELETE = 5,
-            OVERWRITE = 6;
+            OVERWRITE = 6,
+            MOVE = 7,
+            ICON = 8,
+            FAVORITE = 9;
 
-    public record Entry(String name, ListTag build) {}
+    /** One saved set: its name, build, chosen icon ("" = suggested, see SetIcons) and favourite mark. */
+    public record Entry(String name, ListTag build, String icon, boolean favorite) {
+        public Entry(String name, ListTag build) {
+            this(name, build, "", false);
+        }
+
+        /** The icon shown: the chosen one, else the one the build suggests. */
+        public String shownIcon() {
+            return SetIcons.of(icon, build);
+        }
+    }
 
     public static List<Entry> list(ItemStack stack) {
         CompoundTag root =
@@ -45,7 +59,12 @@ public final class Loadouts {
         List<Entry> out = new ArrayList<>();
         for (int i = 0; i < l.size(); i++) {
             CompoundTag e = l.getCompound(i);
-            out.add(new Entry(e.getString("name"), e.getList("build", Tag.TAG_COMPOUND)));
+            out.add(
+                    new Entry(
+                            e.getString("name"),
+                            e.getList("build", Tag.TAG_COMPOUND),
+                            e.getString("icon"),
+                            e.getBoolean("fav")));
         }
         return out;
     }
@@ -71,8 +90,8 @@ public final class Loadouts {
         boolean valid = index >= 0 && index < l.size();
         switch (op) {
             case SAVE -> {
-                if (l.size() >= MAX) {
-                    deny(player, "sets_full", MAX);
+                if (l.size() >= LIMIT) {
+                    deny(player, "sets_full", LIMIT);
                     return;
                 }
                 CompoundTag e = new CompoundTag();
@@ -98,6 +117,29 @@ public final class Loadouts {
             case DELETE -> {
                 if (!valid) return;
                 l.remove(index);
+            }
+            case MOVE -> {
+                // [name] holds the place to move to, counted in the list as it is before the move
+                int to;
+                try {
+                    to = Integer.parseInt(name);
+                } catch (NumberFormatException e) {
+                    return;
+                }
+                if (!valid || to < 0 || to >= l.size() || to == index) return;
+                Tag moved = l.remove(index);
+                l.add(to, moved);
+            }
+            case ICON -> {
+                if (!valid) return;
+                if (SetIcons.valid(name)) l.getCompound(index).putString("icon", name);
+                else l.getCompound(index).remove("icon");
+            }
+            case FAVORITE -> {
+                if (!valid) return;
+                var e = l.getCompound(index);
+                if (e.getBoolean("fav")) e.remove("fav");
+                else e.putBoolean("fav", true);
             }
             case LOAD -> {
                 if (!valid) return;
@@ -134,6 +176,51 @@ public final class Loadouts {
         stack.set(DataComponents.CUSTOM_DATA, CustomData.of(root));
         if (op == LOAD) TraitEnchants.refresh(stack, player.registryAccess());
         Manipulator.sync(player);
+    }
+
+    /**
+     * Server: a pasted set code from the K screen. The code is checked before anything changes; a
+     * valid one is added to the end of the list under [name] and loaded like a clicked set.
+     */
+    public static void importCode(ServerPlayer player, String code, String name) {
+        ItemStack stack = Manipulator.stack(player);
+        if (list(stack).size() >= LIMIT) {
+            deny(player, "sets_full", LIMIT);
+            return;
+        }
+        ListTag build;
+        try {
+            build = BuildCode.decode(code, player.registryAccess());
+        } catch (IllegalArgumentException e) {
+            deny(player, "set_code_invalid");
+            return;
+        }
+        for (var id : BuildCode.modules(build))
+            if (!ModuleUnlocks.known(stack, id)) {
+                deny(player, "set_module_unknown");
+                return;
+            }
+        int index = add(stack, name, build);
+        if (index >= 0) handle(player, LOAD, index, "");
+    }
+
+    /**
+     * Adds a set (a stored build, see BuildCode#decode) to the end of the list without loading it.
+     * Returns its index, or -1 when the list is full.
+     */
+    public static int add(ItemStack stack, String name, ListTag build) {
+        CompoundTag root =
+                stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
+        ListTag l = root.getList(TAG, Tag.TAG_COMPOUND);
+        if (l.size() >= LIMIT) return -1;
+        name = clean(name);
+        CompoundTag e = new CompoundTag();
+        e.putString("name", name.isEmpty() ? "#" + (l.size() + 1) : name);
+        e.put("build", build.copy());
+        l.add(e);
+        root.put(TAG, l);
+        stack.set(DataComponents.CUSTOM_DATA, CustomData.of(root));
+        return l.size() - 1;
     }
 
     private static String clean(String s) {

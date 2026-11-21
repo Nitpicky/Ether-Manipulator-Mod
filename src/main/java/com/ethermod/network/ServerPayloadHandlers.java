@@ -119,6 +119,14 @@ final class ServerPayloadHandlers {
                 });
     }
 
+    static void importLoadout(TraitPayloads.ImportLoadout p, IPayloadContext ctx) {
+        ctx.enqueueWork(
+                () -> {
+                    if (ctx.player() instanceof ServerPlayer sp)
+                        com.ethermod.trait.Loadouts.importCode(sp, p.code(), p.name());
+                });
+    }
+
     static void summonToggle(SummonTogglePayload payload, IPayloadContext ctx) {
         ctx.enqueueWork(
                 () -> {

@@ -34,7 +34,7 @@ public class UpgradeScreen extends Screen {
     private final List<KHit> hits = new ArrayList<>();
     private final KUi ui = new KUi(hits);
     private KHit hovered;
-    private String hoverKey = "";
+    private String hoverKey = "", lastSetKey = "";
     private double hoverAt;
     private double lastTime, lastClick;
     private int picker = -1;
@@ -44,12 +44,12 @@ public class UpgradeScreen extends Screen {
     private final KStageButton stageButton = new KStageButton();
     private final KColourPicker colour = new KColourPicker();
     private final KDyePalette dyes = new KDyePalette(() -> colour.open(ui.stack));
-    private final KLoadoutList loadouts = new KLoadoutList();
+    private final KLoadoutList loadouts = new KLoadoutList(audio);
     private final KModulePicker modulePicker = new KModulePicker();
     private final KTierPanel[] panels = {
-        new KTierPanel(0, ui, audio, this::openPicker, loadouts::clearSelection),
-        new KTierPanel(1, ui, audio, this::openPicker, loadouts::clearSelection),
-        new KTierPanel(2, ui, audio, this::openPicker, loadouts::clearSelection)
+        new KTierPanel(0, ui, audio, this::openPicker, () -> {}),
+        new KTierPanel(1, ui, audio, this::openPicker, () -> {}),
+        new KTierPanel(2, ui, audio, this::openPicker, () -> {})
     };
 
     /** Off only for the recorded mod-page GIFs, where a tooltip would be cut by the crop. */
@@ -183,7 +183,6 @@ public class UpgradeScreen extends Screen {
                     picker,
                     () -> {
                         picker = -1;
-                        loadouts.clearSelection();
                     });
             g.pose().popPose();
         }
@@ -244,24 +243,37 @@ public class UpgradeScreen extends Screen {
                 if (button == 1 && h.key().startsWith("badge") && picker < 0 && !colour.isOpen()) {
                     int slot = Integer.parseInt(h.key().substring(5));
                     send(new TraitPayloads.Equip(slot, Optional.empty()));
-                    loadouts.clearSelection();
                     audio.press("delete");
                     return true;
                 }
-                if (button != 0) return true;
-                if (h.key().startsWith("set")
-                        && ui.now - lastClick < .25
-                        && h.key().equals(hoverKey)) {
-                    loadouts.beginRename(Integer.parseInt(h.key().substring(3)), ui);
-                    var rename = loadouts.renameBox();
-                    setFocused(rename);
-                    rename.moveCursorToEnd(false);
-                    rename.setHighlightPos(0);
-                    lastClick = 0;
+                if (h.key().startsWith("set")) {
+                    // A set tile: right click changes its icon, a double click renames it, and
+                    // the left button is held (to drag it) or let go (to pick it).
+                    int index = Integer.parseInt(h.key().substring(3));
+                    if (button == 1) {
+                        loadouts.cycleIcon(index, ui);
+                        return true;
+                    }
+                    if (button != 0) return true;
+                    if (ui.now - lastClick < .25 && h.key().equals(lastSetKey)) {
+                        loadouts.beginRename(index, ui);
+                        var rename = loadouts.renameBox();
+                        setFocused(rename);
+                        rename.moveCursorToEnd(false);
+                        rename.setHighlightPos(0);
+                        lastClick = 0;
+                        return true;
+                    }
+                    lastClick = ui.now;
+                    lastSetKey = h.key();
+                    ui.pressedKey = h.key();
+                    loadouts.press(index, ui);
                     return true;
                 }
+                if (button != 0) return true;
                 lastClick = ui.now;
                 if (h.action() != null) {
+                    ui.pressedKey = h.key();
                     audio.press(h.key());
                     h.action().run();
                 } else if (h.key().startsWith("node")) audio.refused();
@@ -282,18 +294,29 @@ public class UpgradeScreen extends Screen {
             model.drag(dx, dy, uiScale, clock());
             return true;
         }
-        return false;
+        if (loadouts.draggingBar()) {
+            loadouts.dragBar(ly, ui);
+            return true;
+        }
+        return loadouts.holding();
     }
 
     @Override
     public boolean mouseReleased(double x, double y, int b) {
         colour.endDrag();
+        loadouts.releaseBar();
+        if (b == 0) {
+            ui.mx = (int) ((x - left) / uiScale);
+            ui.my = (int) ((y - top) / uiScale);
+            loadouts.release(ui);
+        }
+        ui.pressedKey = null;
         return model.release(clock());
     }
 
     @Override
     public boolean mouseScrolled(double x, double y, double horizontal, double vertical) {
-        if ((x - left) / uiScale >= 235 && picker < 0 && !colour.isOpen()) {
+        if ((x - left) / uiScale >= KLoadoutList.PANEL_X && picker < 0 && !colour.isOpen()) {
             loadouts.scroll(vertical, ui);
             return true;
         }

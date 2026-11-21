@@ -3,6 +3,34 @@
 Versions are MAJOR.FEATURE.PATCH. A version that isn't marked as a release rolls into the
 next release's notes.
 
+## 1.0.2 (release)
+
+### Sets
+- Sets are now tiles with a playstyle icon (right-click to change it).
+- No more 7-set limit.
+- Drag a set to reorder the list.
+- Favourite sets with the heart, then switch between them with Alt + scroll.
+- The picked set saves your trait changes.
+- Copy and paste set codes (`S_1GABA2HAAA`), click-to-copy in chat.
+- New panel buttons and a fuller set tooltip.
+- Sets and traits can be changed in combat (server config `combat_lock` brings the lock back).
+
+### Commands
+- `/ethermod set_module`, `set_build`, `export_build`, `set_color` and `add_set`.
+
+### Changes
+- New mod icon.
+- Bank Shot: each ricochet resets the shot's range.
+- Steady Hand: held blocks turn see-through while a throw charges.
+- Gravity Shift: no fall damage while shifted.
+- Clearer Zipline description.
+- New mod description in the Mods list.
+
+### Fixes
+- Lock-On now visibly holds the beam on its target.
+- Growth no longer breaks grass and flowers.
+- Jumping as you fire no longer catches your own shot.
+
 ## 1.0.1 (release)
 
 ### Changes
