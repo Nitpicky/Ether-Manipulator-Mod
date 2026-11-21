@@ -17,14 +17,14 @@ public final class ModPipelines {
     /** GUI colour fill that adds light (the K-screen's glows). */
     public static final RenderPipeline GUI_ADDITIVE =
             RenderPipeline.builder(RenderPipelines.GUI_SNIPPET)
-                    .withLocation(EtherMod.MODID + ":pipeline/gui_additive")
+                    .withLocation(net.minecraft.resources.Identifier.fromNamespaceAndPath(EtherMod.MODID, "pipeline/gui_additive"))
                     .withColorTargetState(new ColorTargetState(BlendFunction.ADDITIVE))
                     .build();
 
     /** Textured GUI quad that inverts what is under it (the HUD's ammo digits). */
     public static final RenderPipeline GUI_TEXTURED_INVERT =
             RenderPipeline.builder(RenderPipelines.GUI_TEXTURED_SNIPPET)
-                    .withLocation(EtherMod.MODID + ":pipeline/gui_textured_invert")
+                    .withLocation(net.minecraft.resources.Identifier.fromNamespaceAndPath(EtherMod.MODID, "pipeline/gui_textured_invert"))
                     .withColorTargetState(
                             new ColorTargetState(
                                     new BlendFunction(
@@ -58,7 +58,7 @@ public final class ModPipelines {
 
     private static RenderPipeline.Builder fx(String name) {
         return RenderPipeline.builder(RenderPipelines.DEBUG_FILLED_SNIPPET)
-                .withLocation(EtherMod.MODID + ":pipeline/" + name)
+                .withLocation(net.minecraft.resources.Identifier.fromNamespaceAndPath(EtherMod.MODID, "pipeline/" + name))
                 .withVertexBinding(0, com.mojang.blaze3d.vertex.DefaultVertexFormat.POSITION_COLOR)
                 .withPrimitiveTopology(PrimitiveTopology.QUADS)
                 .withCull(false)
@@ -76,7 +76,7 @@ public final class ModPipelines {
     /** Lays the beam layer over the world (premultiplied "over"). */
     public static final RenderPipeline FX_COMPOSITE_OVER =
             RenderPipelines.ENTITY_OUTLINE_BLIT.toBuilder()
-                    .withLocation(EtherMod.MODID + ":pipeline/fx_composite_over")
+                    .withLocation(net.minecraft.resources.Identifier.fromNamespaceAndPath(EtherMod.MODID, "pipeline/fx_composite_over"))
                     .withColorTargetState(
                             new ColorTargetState(
                                     blend(ONE, com.mojang.renderpearl.api.pipeline.BlendFactor.ONE_MINUS_SRC_ALPHA)))
@@ -85,13 +85,13 @@ public final class ModPipelines {
     /** Adds the glow layer onto the world. */
     public static final RenderPipeline FX_COMPOSITE_ADD =
             RenderPipelines.ENTITY_OUTLINE_BLIT.toBuilder()
-                    .withLocation(EtherMod.MODID + ":pipeline/fx_composite_add")
+                    .withLocation(net.minecraft.resources.Identifier.fromNamespaceAndPath(EtherMod.MODID, "pipeline/fx_composite_add"))
                     .withColorTargetState(new ColorTargetState(blend(ONE, ONE)))
                     .build();
 
     private static RenderPipeline.Builder worldTextured(String name, boolean depthWrite) {
         return RenderPipeline.builder(RenderPipelines.GUI_TEXTURED_SNIPPET)
-                .withLocation(EtherMod.MODID + ":pipeline/" + name)
+                .withLocation(net.minecraft.resources.Identifier.fromNamespaceAndPath(EtherMod.MODID, "pipeline/" + name))
                 .withPrimitiveTopology(PrimitiveTopology.QUADS)
                 .withCull(false)
                 .withDepthStencilState(
@@ -119,7 +119,7 @@ public final class ModPipelines {
     /** Ore Sense: coloured boxes seen through everything. */
     public static final RenderPipeline WORLD_XRAY =
             RenderPipeline.builder(RenderPipelines.DEBUG_FILLED_SNIPPET)
-                    .withLocation(EtherMod.MODID + ":pipeline/world_xray")
+                    .withLocation(net.minecraft.resources.Identifier.fromNamespaceAndPath(EtherMod.MODID, "pipeline/world_xray"))
                     .withVertexBinding(0, com.mojang.blaze3d.vertex.DefaultVertexFormat.POSITION_COLOR)
                     .withPrimitiveTopology(PrimitiveTopology.QUADS)
                     .withCull(false)
