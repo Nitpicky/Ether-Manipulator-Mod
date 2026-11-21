@@ -51,7 +51,13 @@ public class EtherManipulatorItem extends Item implements GeoItem {
     private final AnimatableInstanceCache animCache = GeckoLibUtil.createInstanceCache(this);
 
     public EtherManipulatorItem(Item.Properties props) {
-        super(props.stacksTo(1).rarity(Rarity.EPIC));
+        // LMB is the beam: no arm swing with it (26.3 item swing component)
+        super(props.stacksTo(1)
+                .rarity(Rarity.EPIC)
+                .component(
+                        net.minecraft.core.component.DataComponents.ATTACK_ANIMATION,
+                        new net.minecraft.world.item.component.SwingAnimation(
+                                net.minecraft.world.item.SwingAnimationType.NONE, 6)));
 
         // Register for server-side animation syncing (required by GeoItem)
         SingletonGeoAnimatable.registerSyncedAnimatable(this);

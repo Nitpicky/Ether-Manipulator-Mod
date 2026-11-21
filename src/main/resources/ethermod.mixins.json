@@ -26,10 +26,12 @@
     "ChargeArmTremblerMixin",
     "ChargeMovementMixin",
     "FlightEquipmentMixin",
+    "GemGlintMixin",
     "GravityCameraMixin",
     "PhotonicGlowEntityMixin",
     "PhotonicGlowMixin",
     "RenderStateEntityMixin",
+    "SoulFlameRenderMixin",
     "SoundVolumeAccessor"
   ]
 }

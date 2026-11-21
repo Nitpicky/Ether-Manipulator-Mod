@@ -11,6 +11,7 @@ public final class ClientReload {
 
     public static void onReload() {
         BodyTextures.clear();
+        GemGlint.clear();
         UpgradeVisuals.reset();
     }
 }

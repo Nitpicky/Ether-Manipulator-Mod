@@ -94,8 +94,7 @@ public class ClientInputHandler {
             // When holding LMB on a non-attacking item, Minecraft still runs the
             // "swing" animation on the main hand. We reset it every tick so the
             // arm stays still while the beam is firing.
-            // 26.3: the swing state is private now; the port keeps the arm still with the
-            // item's swing animation instead (PORT-26.3.md, open items)
+            // 26.3: the Manipulator's attack animation component is NONE (EtherManipulatorItem)
 
         } else {
             if (wasBeamActive) endLeftClick(signal);
