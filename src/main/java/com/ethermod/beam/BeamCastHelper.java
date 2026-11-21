@@ -304,10 +304,12 @@ public final class BeamCastHelper {
         dmg *= com.ethermod.config.ServerConfig.beamDamage();
         Vec3 incomingVelocity = target.getDeltaMovement();
         float before = target.getHealth();
-        // A continuous beam: ignore the 10-tick invulnerability window.
+        // A continuous beam: ignore the 10-tick invulnerability window (26.3 keeps it in damageCooldownTime).
         target.setInvulnerableTime(0);
+        target.damageCooldownTime = 0;
         target.hurtServer(level, beamSource(level, player), dmg);
         target.setInvulnerableTime(0);
+        target.damageCooldownTime = 0;
         target.setDeltaMovement(incomingVelocity);
         float dealt = Math.max(0, before - target.getHealth());
         com.ethermod.util.MobMemory.of(target)
