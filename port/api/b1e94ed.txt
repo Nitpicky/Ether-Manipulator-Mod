@@ -1,0 +1,181 @@
+/home/runner/.gradle/caches/modules-2/files-2.1/curse.maven/geckolib-388172/8893169/196231506b89da06925c087f9b8bc5fd12ebea16/geckolib-388172-8893169.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/io.github.llamalad7/mixinextras-neoforge/0.5.5/26f2905a37afd203c3da1d6a2e164472a7531b41/mixinextras-neoforge-0.5.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.accesstransformers/at-parser/11.0.2/64aae57d6d26d69543c5275181fe6971707a4e16/at-parser-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/earlydisplay/12.0.16/efa2e56115d22853d10524874a7bbb64555c2a28/earlydisplay-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/12.0.16/edbb2ee8211a867215970bc15ae9c354fa56dc09/loader-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarMetadata/0.5.3/ff40c1cd721d07615d825c5bbf27705b2e3258ed/JarJarMetadata-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarSelector/0.5.3/6b845aab8d5c8e721b4e3cd30f97722b7f8044b1/JarJarSelector-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/accesstransformers/11.0.2/25dcb69c78b16669935f0ab91dff830ce192379d/accesstransformers-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/bus/8.0.5/5b2d33285ab5d1554e9798ad98c40d6ea3868bd5/bus-8.0.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/mergetool/2.0.7/793b18456e92c4a7f66d9b5d8bf7a9c1c7a20b20/mergetool-2.0.7-api.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar
+=== LIST /.*BlockStateBase$
+net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase
+=== CODE net/minecraft/client/player/AbstractClientPlayer aiStep
+  public void aiStep();
+    Code:
+         0: aload_0
+         1: invokevirtual #125                // Method updateBob:()V
+         4: aload_0
+         5: invokespecial #128                // Method net/minecraft/world/entity/player/Player.aiStep:()V
+         8: return
+=== CODE net/minecraft/client/renderer/LevelRenderer submitBlockDestroyAnimation
+  private void submitBlockDestroyAnimation(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.LevelRenderState);
+    Code:
+         0: aload_3
+         1: getfield      #829                // Field net/minecraft/client/renderer/state/level/LevelRenderState.blockBreakingRenderStates:Ljava/util/List;
+         4: invokeinterface #1999,  1         // InterfaceMethod java/util/List.isEmpty:()Z
+         9: ifne          265
+        12: aload_3
+        13: getfield      #655                // Field net/minecraft/client/renderer/state/level/LevelRenderState.cameraRenderState:Lnet/minecraft/client/renderer/state/level/CameraRenderState;
+        16: getfield      #923                // Field net/minecraft/client/renderer/state/level/CameraRenderState.pos:Lnet/minecraft/world/phys/Vec3;
+        19: astore        4
+        21: aload         4
+        23: invokevirtual #1956               // Method net/minecraft/world/phys/Vec3.x:()D
+        26: dstore        5
+        28: aload         4
+        30: invokevirtual #1959               // Method net/minecraft/world/phys/Vec3.y:()D
+        33: dstore        7
+        35: aload         4
+        37: invokevirtual #1962               // Method net/minecraft/world/phys/Vec3.z:()D
+        40: dstore        9
+        42: new           #1610               // class java/util/ArrayList
+        45: dup
+        46: invokespecial #1611               // Method java/util/ArrayList."<init>":()V
+        49: astore        11
+        51: invokestatic  #2005               // InterfaceMethod net/minecraft/util/RandomSource.createThreadLocalInstance:()Lnet/minecraft/util/RandomSource;
+        54: astore        12
+        56: aload_3
+        57: getfield      #829                // Field net/minecraft/client/renderer/state/level/LevelRenderState.blockBreakingRenderStates:Ljava/util/List;
+        60: invokeinterface #1690,  1         // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+        65: astore        13
+        67: aload         13
+        69: invokeinterface #896,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+        74: ifeq          265
+        77: aload         13
+        79: invokeinterface #900,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+        84: checkcast     #2007               // class net/minecraft/client/renderer/state/level/BlockBreakingRenderState
+        87: astore        14
+        89: aload         14
+        91: invokevirtual #2011               // Method net/minecraft/client/renderer/state/level/BlockBreakingRenderState.blockState:()Lnet/minecraft/world/level/block/state/BlockState;
+        94: invokevirtual #2017               // Method net/minecraft/world/level/block/state/BlockState.getRenderShape:()Lnet/minecraft/world/level/block/RenderShape;
+        97: getstatic     #2023               // Field net/minecraft/world/level/block/RenderShape.MODEL:Lnet/minecraft/world/level/block/RenderShape;
+       100: if_acmpne     262
+       103: aload         14
+       105: invokevirtual #2025               // Method net/minecraft/client/renderer/state/level/BlockBreakingRenderState.blockPos:()Lnet/minecraft/core/BlockPos;
+       108: astore        15
+       110: aload_1
+       111: invokevirtual #1986               // Method com/mojang/blaze3d/vertex/PoseStack.pushPose:()V
+       114: aload_1
+       115: aload         15
+       117: invokevirtual #1533               // Method net/minecraft/core/BlockPos.getX:()I
+       120: i2d
+       121: dload         5
+       123: dsub
+       124: aload         15
+       126: invokevirtual #1536               // Method net/minecraft/core/BlockPos.getY:()I
+       129: i2d
+       130: dload         7
+       132: dsub
+       133: aload         15
+       135: invokevirtual #1539               // Method net/minecraft/core/BlockPos.getZ:()I
+       138: i2d
+       139: dload         9
+       141: dsub
+       142: invokevirtual #1990               // Method com/mojang/blaze3d/vertex/PoseStack.translate:(DDD)V
+       145: aload_1
+       146: aload         14
+       148: invokevirtual #2011               // Method net/minecraft/client/renderer/state/level/BlockBreakingRenderState.blockState:()Lnet/minecraft/world/level/block/state/BlockState;
+       151: aload         15
+       153: invokevirtual #2029               // Method net/minecraft/world/level/block/state/BlockState.getOffset:(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/Vec3;
+       156: invokevirtual #2031               // Method com/mojang/blaze3d/vertex/PoseStack.translate:(Lnet/minecraft/world/phys/Vec3;)V
+       159: aload_0
+       160: getfield      #325                // Field modelManager:Lnet/minecraft/client/resources/model/ModelManager;
+       163: invokevirtual #2035               // Method net/minecraft/client/resources/model/ModelManager.getBlockStateModelSet:()Lnet/minecraft/client/renderer/block/BlockStateModelSet;
+       166: aload         14
+       168: invokevirtual #2011               // Method net/minecraft/client/renderer/state/level/BlockBreakingRenderState.blockState:()Lnet/minecraft/world/level/block/state/BlockState;
+       171: invokevirtual #2040               // Method net/minecraft/client/renderer/block/BlockStateModelSet.get:(Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/client/renderer/block/dispatch/BlockStateModel;
+       174: astore        16
+       176: aload         12
+       178: aload         14
+       180: invokevirtual #2011               // Method net/minecraft/client/renderer/state/level/BlockBreakingRenderState.blockState:()Lnet/minecraft/world/level/block/state/BlockState;
+       183: aload         15
+       185: invokevirtual #2044               // Method net/minecraft/world/level/block/state/BlockState.getSeed:(Lnet/minecraft/core/BlockPos;)J
+       188: invokeinterface #2048,  3         // InterfaceMethod net/minecraft/util/RandomSource.setSeed:(J)V
+       193: aload         16
+       195: getstatic     #2054               // Field net/minecraft/client/renderer/block/BlockAndTintGetter.EMPTY:Lnet/minecraft/client/renderer/block/BlockAndTintGetter;
+       198: getstatic     #2057               // Field net/minecraft/core/BlockPos.ZERO:Lnet/minecraft/core/BlockPos;
+       201: aload         14
+       203: invokevirtual #2011               // Method net/minecraft/client/renderer/state/level/BlockBreakingRenderState.blockState:()Lnet/minecraft/world/level/block/state/BlockState;
+       206: aload         12
+       208: aload         11
+       210: invokeinterface #2063,  6         // InterfaceMethod net/minecraft/client/renderer/block/dispatch/BlockStateModel.collectParts:(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/util/RandomSource;Ljava/util/List;)V
+       215: aload_2
+       216: aload_1
+       217: aload         11
+       219: invokestatic  #2067               // InterfaceMethod java/util/List.copyOf:(Ljava/util/Collection;)Ljava/util/List;
+       222: aload         14
+       224: invokevirtual #2070               // Method net/minecraft/client/renderer/state/level/BlockBreakingRenderState.progress:()I
+       227: aload         16
+       229: getstatic     #2054               // Field net/minecraft/client/renderer/block/BlockAndTintGetter.EMPTY:Lnet/minecraft/client/renderer/block/BlockAndTintGetter;
+       232: getstatic     #2057               // Field net/minecraft/core/BlockPos.ZERO:Lnet/minecraft/core/BlockPos;
+       235: aload         14
+       237: invokevirtual #2011               // Method net/minecraft/client/renderer/state/level/BlockBreakingRenderState.blockState:()Lnet/minecraft/world/level/block/state/BlockState;
+       240: iconst_1
+       241: invokeinterface #2074,  5         // InterfaceMethod net/minecraft/client/renderer/block/dispatch/BlockStateModel.hasMaterialFlag:(Lnet/minecraft/client/renderer/block/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z
+       246: invokeinterface #2078,  5         // InterfaceMethod net/minecraft/client/renderer/SubmitNodeCollector.submitBreakingBlockModel:(Lcom/mojang/blaze3d/vertex/PoseStack;Ljava/util/List;IZ)V
+       251: aload         11
+       253: invokeinterface #816,  1          // InterfaceMethod java/util/List.clear:()V
+       258: aload_1
+       259: invokevirtual #1996               // Method com/mojang/blaze3d/vertex/PoseStack.popPose:()V
+       262: goto          67
+       265: return
+=== SIG net/minecraft/world/level/block/state/BlockBehaviour$BlockStateBase isViewBlocking
+  private final net.minecraft.world.level.block.state.BlockBehaviour$StateArgumentPredicate<net.minecraft.world.phys.AABB> isViewBlocking;
+  public boolean isViewBlocking(net.minecraft.world.level.BlockGetter, net.minecraft.core.BlockPos, net.minecraft.world.phys.AABB);
+=== SIG net/minecraft/client/multiplayer/ClientLevel .*(estr|Progress).*
+  private final it.unimi.dsi.fastutil.ints.Int2ObjectMap<net.minecraft.server.level.BlockDestructionProgress> destroyingBlocks;
+  private final it.unimi.dsi.fastutil.longs.Long2ObjectMap<java.util.SortedSet<net.minecraft.server.level.BlockDestructionProgress>> destructionProgress;
+  private void removeBlockBreakingProgress();
+  private void removeProgress(net.minecraft.server.level.BlockDestructionProgress);
+  public it.unimi.dsi.fastutil.longs.Long2ObjectMap<java.util.SortedSet<net.minecraft.server.level.BlockDestructionProgress>> destructionProgress();
+  public void destroyBlockProgress(int, net.minecraft.core.BlockPos, int);
+  public void addDestroyBlockEffect(net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState);
+  private void lambda$addDestroyBlockEffect$0(net.minecraft.core.BlockPos, net.minecraft.world.level.block.state.BlockState, double, double, double, double, double, double);
+  private static java.util.SortedSet lambda$destroyBlockProgress$0(long);
+=== SIG net/minecraft/client/renderer/LevelRenderer .*(estr|Progress|Destr).*
+  private void submitBlockDestroyAnimation(com.mojang.blaze3d.vertex.PoseStack, net.minecraft.client.renderer.SubmitNodeCollector, net.minecraft.client.renderer.state.level.LevelRenderState);
+=== net/minecraft/client/renderer/state/level/LevelRenderState
+Compiled from "LevelRenderState.java"
+public class net.minecraft.client.renderer.state.level.LevelRenderState extends net.neoforged.neoforge.client.renderstate.BaseRenderState {
+  public net.minecraft.client.renderer.state.level.CameraRenderState cameraRenderState;
+  public final net.minecraft.client.renderer.state.level.PlayerRenderState playerRenderState;
+  public final java.util.List<net.minecraft.client.renderer.state.level.SectionUpdateRenderState> sectionUpdateRenderStates;
+  public final java.util.List<net.minecraft.client.renderer.entity.state.EntityRenderState> entityRenderStates;
+  public final java.util.List<net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState> blockEntityRenderStates;
+  public net.minecraft.client.renderer.state.level.BlockOutlineRenderState blockOutlineRenderState;
+  public final java.util.List<net.minecraft.client.renderer.state.level.BlockBreakingRenderState> blockBreakingRenderStates;
+  public final net.minecraft.client.renderer.state.level.WeatherRenderState weatherRenderState;
+  public final net.minecraft.client.renderer.state.level.WorldBorderRenderState worldBorderRenderState;
+  public final net.minecraft.client.renderer.state.level.SkyRenderState skyRenderState;
+  public final net.minecraft.client.renderer.state.level.ParticlesRenderState particlesRenderState;
+  public long gameTime;
+  public float worldPartialTicks;
+  public int lastEntityRenderStateCount;
+  public int cloudColor;
+  public float cloudHeight;
+  public boolean render3dCrosshair;
+  public boolean renderWireframeTerrain;
+  public boolean shouldUseMultiDrawIndirectForTerrain;
+  public java.lang.Runnable playerCompiledSectionCallback;
+  public net.minecraft.client.renderer.state.level.ChunkLoadingRenderState chunkLoadingRenderState;
+  public boolean shouldResetChunkLayerSampler;
+  public boolean shouldShowEntityOutlines;
+  public boolean shouldResetSkyRenderer;
+  public net.neoforged.neoforge.client.CustomSkyboxRenderer customSkyboxRenderer;
+  public net.neoforged.neoforge.client.CustomCloudsRenderer customCloudsRenderer;
+  public net.neoforged.neoforge.client.CustomWeatherEffectRenderer customWeatherEffectRenderer;
+  public net.minecraft.client.renderer.state.level.LevelRenderState();
+  public void reset();
+}
