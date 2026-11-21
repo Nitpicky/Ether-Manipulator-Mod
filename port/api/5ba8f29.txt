@@ -1,0 +1,113 @@
+/home/runner/.gradle/caches/modules-2/files-2.1/curse.maven/geckolib-388172/8893169/196231506b89da06925c087f9b8bc5fd12ebea16/geckolib-388172-8893169.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/io.github.llamalad7/mixinextras-neoforge/0.5.5/26f2905a37afd203c3da1d6a2e164472a7531b41/mixinextras-neoforge-0.5.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.accesstransformers/at-parser/11.0.2/64aae57d6d26d69543c5275181fe6971707a4e16/at-parser-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/earlydisplay/12.0.16/efa2e56115d22853d10524874a7bbb64555c2a28/earlydisplay-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/12.0.16/edbb2ee8211a867215970bc15ae9c354fa56dc09/loader-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarMetadata/0.5.3/ff40c1cd721d07615d825c5bbf27705b2e3258ed/JarJarMetadata-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarSelector/0.5.3/6b845aab8d5c8e721b4e3cd30f97722b7f8044b1/JarJarSelector-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/accesstransformers/11.0.2/25dcb69c78b16669935f0ab91dff830ce192379d/accesstransformers-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/bus/8.0.5/5b2d33285ab5d1554e9798ad98c40d6ea3868bd5/bus-8.0.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/mergetool/2.0.7/793b18456e92c4a7f66d9b5d8bf7a9c1c7a20b20/mergetool-2.0.7-api.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar
+=== LIST /.*/(ChatComponent)$
+net/minecraft/client/gui/components/ChatComponent
+=== CODE net/minecraft/client/gui/Hud getChat
+  public net.minecraft.client.gui.components.ChatComponent getChat();
+    Code:
+         0: aload_0
+         1: getfield      #251                // Field chat:Lnet/minecraft/client/gui/components/ChatComponent;
+         4: areturn
+=== SIG net/minecraft/client/gui/Hud .*[Cc]hat.*
+  private static final net.minecraft.network.chat.Component DEMO_EXPIRED_TEXT;
+  private static final net.minecraft.network.chat.Component SAVING_TEXT;
+  private final net.minecraft.client.gui.components.ChatComponent chat;
+  private net.minecraft.network.chat.Component overlayMessageString;
+  private net.minecraft.network.chat.Component title;
+  private net.minecraft.network.chat.Component subtitle;
+  private void extractChat(net.minecraft.client.gui.GuiGraphicsExtractor, net.minecraft.client.DeltaTracker);
+  public void setNowPlaying(net.minecraft.network.chat.Component);
+  public void setOverlayMessage(net.minecraft.network.chat.Component, boolean);
+  public void setSubtitle(net.minecraft.network.chat.Component);
+  public void setTitle(net.minecraft.network.chat.Component);
+  public net.minecraft.client.gui.components.ChatComponent getChat();
+  private net.minecraft.client.gui.Hud$1DisplayEntry lambda$displayScoreboardSidebar$1(net.minecraft.world.scores.Scoreboard, net.minecraft.network.chat.numbers.NumberFormat, net.minecraft.world.scores.PlayerScoreEntry);
+=== net/minecraft/client/gui/Hud
+Compiled from "Hud.java"
+public class net.minecraft.client.gui.Hud {
+  public static final net.minecraft.resources.Identifier NAUSEA_LOCATION;
+  public static final net.minecraft.resources.Identifier SPYGLASS_SCOPE_LOCATION;
+  public float vignetteBrightness;
+  public int leftHeight;
+  public int rightHeight;
+  public net.minecraft.client.gui.Hud(net.minecraft.client.Minecraft);
+  public void registerReloadListeners(net.minecraft.server.packs.resources.ReloadableResourceManager);
+  public void toggle();
+  public boolean isHidden();
+  public void resetTitleTimes();
+  public void extractRenderState(net.minecraft.client.gui.GuiGraphicsExtractor, net.minecraft.client.DeltaTracker);
+  public void extractDebugOverlay(net.minecraft.client.gui.GuiGraphicsExtractor);
+  public void extractDeferredSubtitles();
+  public static net.minecraft.resources.Identifier getMobEffectSprite(net.minecraft.core.Holder<net.minecraft.world.effect.MobEffect>);
+  public void tick(boolean);
+  public void setNowPlaying(net.minecraft.network.chat.Component);
+  public void setOverlayMessage(net.minecraft.network.chat.Component, boolean);
+  public void setTimes(int, int, int);
+  public void setSubtitle(net.minecraft.network.chat.Component);
+  public void setTitle(net.minecraft.network.chat.Component);
+  public void clearTitles();
+  public net.minecraft.client.gui.components.ChatComponent getChat();
+  public net.minecraft.client.resources.WaypointStyleManager getWaypointStyles();
+  public int getGuiTicks();
+  public net.minecraft.client.gui.Font getFont();
+  public net.minecraft.client.gui.components.spectator.SpectatorGui getSpectatorGui();
+  public net.minecraft.client.gui.components.PlayerTabOverlay getTabList();
+  public void onDisconnected();
+  public net.minecraft.client.gui.components.BossHealthOverlay getBossOverlay();
+  public net.minecraft.client.gui.components.DebugScreenOverlay getDebugOverlay();
+  public void clearCache();
+  public void extractSavingIndicator(net.minecraft.client.gui.GuiGraphicsExtractor, net.minecraft.client.DeltaTracker);
+  public void initModdedOverlays();
+}
+=== net/minecraft/world/level/LevelSettings$DifficultySettings
+Compiled from "LevelSettings.java"
+public final class net.minecraft.world.level.LevelSettings$DifficultySettings extends java.lang.Record {
+  public static final net.minecraft.world.level.LevelSettings$DifficultySettings DEFAULT;
+  public static final com.mojang.serialization.Codec<net.minecraft.world.level.LevelSettings$DifficultySettings> CODEC;
+  public net.minecraft.world.level.LevelSettings$DifficultySettings(net.minecraft.world.Difficulty, boolean, boolean);
+  public final java.lang.String toString();
+  public final int hashCode();
+  public final boolean equals(java.lang.Object);
+  public net.minecraft.world.Difficulty difficulty();
+  public boolean hardcore();
+  public boolean locked();
+}
+=== net/minecraft/world/level/storage/TagValueInput
+Compiled from "TagValueInput.java"
+public class net.minecraft.world.level.storage.TagValueInput implements net.minecraft.world.level.storage.ValueInput {
+  public static net.minecraft.world.level.storage.ValueInput create(net.minecraft.util.ProblemReporter, net.minecraft.core.HolderLookup$Provider, net.minecraft.nbt.CompoundTag);
+  public static net.minecraft.world.level.storage.ValueInput$ValueInputList create(net.minecraft.util.ProblemReporter, net.minecraft.core.HolderLookup$Provider, java.util.List<net.minecraft.nbt.CompoundTag>);
+  public <T> java.util.Optional<T> read(java.lang.String, com.mojang.serialization.Codec<T>);
+  public <T> java.util.Optional<T> read(com.mojang.serialization.MapCodec<T>);
+  public java.util.Optional<net.minecraft.world.level.storage.ValueInput> child(java.lang.String);
+  public net.minecraft.world.level.storage.ValueInput childOrEmpty(java.lang.String);
+  public net.minecraft.world.level.storage.ValueInput rawChildOrEmpty(java.lang.String);
+  public java.util.Optional<net.minecraft.world.level.storage.ValueInput$ValueInputList> childrenList(java.lang.String);
+  public net.minecraft.world.level.storage.ValueInput$ValueInputList childrenListOrEmpty(java.lang.String);
+  public <T> java.util.Optional<net.minecraft.world.level.storage.ValueInput$TypedInputList<T>> list(java.lang.String, com.mojang.serialization.Codec<T>);
+  public <T> net.minecraft.world.level.storage.ValueInput$TypedInputList<T> listOrEmpty(java.lang.String, com.mojang.serialization.Codec<T>);
+  public boolean getBooleanOr(java.lang.String, boolean);
+  public byte getByteOr(java.lang.String, byte);
+  public int getShortOr(java.lang.String, short);
+  public java.util.Optional<java.lang.Integer> getInt(java.lang.String);
+  public int getIntOr(java.lang.String, int);
+  public long getLongOr(java.lang.String, long);
+  public java.util.Optional<java.lang.Long> getLong(java.lang.String);
+  public float getFloatOr(java.lang.String, float);
+  public double getDoubleOr(java.lang.String, double);
+  public java.util.Optional<java.lang.String> getString(java.lang.String);
+  public java.lang.String getStringOr(java.lang.String, java.lang.String);
+  public java.util.Optional<int[]> getIntArray(java.lang.String);
+  public net.minecraft.core.HolderLookup$Provider lookup();
+  public java.util.Set<java.lang.String> keySet();
+}
