@@ -1,0 +1,181 @@
+/home/runner/.gradle/caches/modules-2/files-2.1/curse.maven/geckolib-388172/8893169/196231506b89da06925c087f9b8bc5fd12ebea16/geckolib-388172-8893169.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/io.github.llamalad7/mixinextras-neoforge/0.5.5/26f2905a37afd203c3da1d6a2e164472a7531b41/mixinextras-neoforge-0.5.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.accesstransformers/at-parser/11.0.2/64aae57d6d26d69543c5275181fe6971707a4e16/at-parser-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/earlydisplay/12.0.16/efa2e56115d22853d10524874a7bbb64555c2a28/earlydisplay-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged.fancymodloader/loader/12.0.16/edbb2ee8211a867215970bc15ae9c354fa56dc09/loader-12.0.16.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarMetadata/0.5.3/ff40c1cd721d07615d825c5bbf27705b2e3258ed/JarJarMetadata-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarSelector/0.5.3/6b845aab8d5c8e721b4e3cd30f97722b7f8044b1/JarJarSelector-0.5.3.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/accesstransformers/11.0.2/25dcb69c78b16669935f0ab91dff830ce192379d/accesstransformers-11.0.2.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/bus/8.0.5/5b2d33285ab5d1554e9798ad98c40d6ea3868bd5/bus-8.0.5.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/mergetool/2.0.7/793b18456e92c4a7f66d9b5d8bf7a9c1c7a20b20/mergetool-2.0.7-api.jar
+/home/runner/.gradle/caches/modules-2/files-2.1/net.neoforged/neoforge/26.3.0.115/e3b5ff81f585f0d6fcdd9d7343b7115fa6401a12/neoforge-26.3.0.115-universal.jar
+/home/runner/work/Ether-Manipulator-Mod/Ether-Manipulator-Mod/build/moddev/artifacts/minecraft-patched-26.3.0.115.jar
+=== LIST /(.*AtlasManager|AtlasIds|.*SpriteGetter|.*Sheets|ModelBakery)$
+net/minecraft/client/renderer/Sheets
+net/minecraft/client/resources/model/ModelBakery
+net/minecraft/client/resources/model/sprite/AtlasManager
+net/minecraft/client/resources/model/sprite/SpriteGetter
+net/minecraft/data/AtlasIds
+=== CODE net/minecraft/client/renderer/feature/FlameFeatureRenderer buildGroup
+  protected void buildGroup(net.minecraft.client.renderer.feature.FeatureFrameContext, java.util.List<net.minecraft.client.renderer.feature.FlameFeatureRenderer$Submit>);
+    Code:
+         0: aload_0
+         1: getstatic     #7                  // Field net/minecraft/client/renderer/texture/TextureAtlas.LOCATION_BLOCKS:Lnet/minecraft/resources/Identifier;
+         4: invokestatic  #13                 // Method net/minecraft/client/renderer/rendertype/RenderTypes.entityCutoutCull:(Lnet/minecraft/resources/Identifier;)Lnet/minecraft/client/renderer/rendertype/RenderType;
+         7: invokevirtual #19                 // Method getVertexBuilder:(Lnet/minecraft/client/renderer/rendertype/RenderType;)Lcom/mojang/blaze3d/vertex/VertexConsumer;
+        10: astore_3
+        11: aload_1
+        12: invokevirtual #25                 // Method net/minecraft/client/renderer/feature/FeatureFrameContext.atlasManager:()Lnet/minecraft/client/resources/model/sprite/AtlasManager;
+        15: getstatic     #31                 // Field net/minecraft/client/resources/model/ModelBakery.FIRE_0:Lnet/minecraft/client/resources/model/sprite/SpriteId;
+        18: invokevirtual #37                 // Method net/minecraft/client/resources/model/sprite/AtlasManager.get:(Lnet/minecraft/client/resources/model/sprite/SpriteId;)Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;
+        21: astore        4
+        23: aload_1
+        24: invokevirtual #25                 // Method net/minecraft/client/renderer/feature/FeatureFrameContext.atlasManager:()Lnet/minecraft/client/resources/model/sprite/AtlasManager;
+        27: getstatic     #43                 // Field net/minecraft/client/resources/model/ModelBakery.FIRE_1:Lnet/minecraft/client/resources/model/sprite/SpriteId;
+        30: invokevirtual #37                 // Method net/minecraft/client/resources/model/sprite/AtlasManager.get:(Lnet/minecraft/client/resources/model/sprite/SpriteId;)Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;
+        33: astore        5
+        35: aload_2
+        36: invokeinterface #46,  1           // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+        41: astore        6
+        43: aload         6
+        45: invokeinterface #52,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+        50: ifeq          79
+        53: aload         6
+        55: invokeinterface #58,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+        60: checkcast     #62                 // class net/minecraft/client/renderer/feature/FlameFeatureRenderer$Submit
+        63: astore        7
+        65: aload_0
+        66: aload         7
+        68: aload_3
+        69: aload         4
+        71: aload         5
+        73: invokevirtual #64                 // Method prepare:(Lnet/minecraft/client/renderer/feature/FlameFeatureRenderer$Submit;Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;)V
+        76: goto          43
+        79: return
+=== CODE net/minecraft/client/renderer/feature/ItemFeatureRenderer prepareMainSubmit
+  private void prepareMainSubmit(net.minecraft.client.renderer.feature.ItemFeatureRenderer$Submit);
+    Code:
+         0: aload_0
+         1: getfield      #12                 // Field quadInstance:Lcom/mojang/blaze3d/vertex/QuadInstance;
+         4: aload_1
+         5: invokevirtual #50                 // Method net/minecraft/client/renderer/feature/ItemFeatureRenderer$Submit.lightCoords:()I
+         8: invokevirtual #53                 // Method com/mojang/blaze3d/vertex/QuadInstance.setLightCoords:(I)V
+        11: aload_0
+        12: getfield      #12                 // Field quadInstance:Lcom/mojang/blaze3d/vertex/QuadInstance;
+        15: aload_1
+        16: invokevirtual #57                 // Method net/minecraft/client/renderer/feature/ItemFeatureRenderer$Submit.overlayCoords:()I
+        19: invokevirtual #60                 // Method com/mojang/blaze3d/vertex/QuadInstance.setOverlayCoords:(I)V
+        22: aload_1
+        23: invokevirtual #63                 // Method net/minecraft/client/renderer/feature/ItemFeatureRenderer$Submit.foilType:()Lnet/minecraft/client/renderer/item/ItemStackRenderState$FoilType;
+        26: astore_2
+        27: aload_2
+        28: getstatic     #67                 // Field net/minecraft/client/renderer/item/ItemStackRenderState$FoilType.SPECIAL:Lnet/minecraft/client/renderer/item/ItemStackRenderState$FoilType;
+        31: if_acmpne     48
+        34: aload_1
+        35: invokevirtual #73                 // Method net/minecraft/client/renderer/feature/ItemFeatureRenderer$Submit.displayContext:()Lnet/minecraft/world/item/ItemDisplayContext;
+        38: aload_1
+        39: invokevirtual #77                 // Method net/minecraft/client/renderer/feature/ItemFeatureRenderer$Submit.pose:()Lcom/mojang/blaze3d/vertex/PoseStack$Pose;
+        42: invokestatic  #81                 // Method computeFoilDecalPose:(Lnet/minecraft/world/item/ItemDisplayContext;Lcom/mojang/blaze3d/vertex/PoseStack$Pose;)Lcom/mojang/blaze3d/vertex/PoseStack$Pose;
+        45: goto          49
+        48: aconst_null
+        49: astore_3
+        50: aload_1
+        51: invokevirtual #85                 // Method net/minecraft/client/renderer/feature/ItemFeatureRenderer$Submit.quads:()Ljava/util/List;
+        54: invokeinterface #18,  1           // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+        59: astore        4
+        61: aload         4
+        63: invokeinterface #24,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+        68: ifeq          229
+        71: aload         4
+        73: invokeinterface #30,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+        78: checkcast     #89                 // class net/minecraft/client/resources/model/geometry/BakedQuad
+        81: astore        5
+        83: aload         5
+        85: invokevirtual #91                 // Method net/minecraft/client/resources/model/geometry/BakedQuad.materialInfo:()Lnet/minecraft/client/resources/model/geometry/BakedQuad$MaterialInfo;
+        88: astore        6
+        90: getstatic     #95                 // Field net/minecraft/client/renderer/feature/ItemFeatureRenderer$1.$SwitchMap$net$minecraft$client$renderer$item$ItemStackRenderState$FoilType:[I
+        93: aload_2
+        94: invokevirtual #101                // Method net/minecraft/client/renderer/item/ItemStackRenderState$FoilType.ordinal:()I
+        97: iaload
+        98: tableswitch   { // 1 to 3
+                       1: 134
+                       2: 142
+                       3: 150
+                 default: 124
+            }
+       124: new           #104                // class java/lang/MatchException
+       127: dup
+       128: aconst_null
+       129: aconst_null
+       130: invokespecial #106                // Method java/lang/MatchException."<init>":(Ljava/lang/String;Ljava/lang/Throwable;)V
+       133: athrow
+       134: aload         6
+       136: invokevirtual #109                // Method net/minecraft/client/resources/model/geometry/BakedQuad$MaterialInfo.itemRenderType:()Lnet/minecraft/client/renderer/rendertype/RenderType;
+       139: goto          155
+       142: aload         6
+       144: invokevirtual #115                // Method net/minecraft/client/resources/model/geometry/BakedQuad$MaterialInfo.itemGlintRenderType:()Lnet/minecraft/client/renderer/rendertype/RenderType;
+       147: goto          155
+       150: aload         6
+       152: invokevirtual #118                // Method net/minecraft/client/resources/model/geometry/BakedQuad$MaterialInfo.itemGlintSpecialRenderType:()Lnet/minecraft/client/renderer/rendertype/RenderType;
+       155: astore        7
+       157: aload_0
+       158: getfield      #12                 // Field quadInstance:Lcom/mojang/blaze3d/vertex/QuadInstance;
+       161: aload_1
+       162: invokevirtual #121                // Method net/minecraft/client/renderer/feature/ItemFeatureRenderer$Submit.tintLayers:()[I
+       165: aload         6
+       167: invokestatic  #125                // Method getLayerColorSafe:([ILnet/minecraft/client/resources/model/geometry/BakedQuad$MaterialInfo;)I
+       170: invokevirtual #129                // Method com/mojang/blaze3d/vertex/QuadInstance.setColor:(I)V
+       173: aload_2
+       174: getstatic     #67                 // Field net/minecraft/client/renderer/item/ItemStackRenderState$FoilType.SPECIAL:Lnet/minecraft/client/renderer/item/ItemStackRenderState$FoilType;
+       177: if_acmpne     205
+       180: aload_0
+       181: aload         7
+       183: invokevirtual #132                // Method getVertexBuilder:(Lnet/minecraft/client/renderer/rendertype/RenderType;)Lcom/mojang/blaze3d/vertex/VertexConsumer;
+       186: aload_1
+       187: invokevirtual #77                 // Method net/minecraft/client/renderer/feature/ItemFeatureRenderer$Submit.pose:()Lcom/mojang/blaze3d/vertex/PoseStack$Pose;
+       190: aload         5
+       192: aload_0
+       193: getfield      #12                 // Field quadInstance:Lcom/mojang/blaze3d/vertex/QuadInstance;
+       196: aload_3
+       197: invokeinterface #136,  5          // InterfaceMethod com/mojang/blaze3d/vertex/VertexConsumer.putBakedQuadWithGlint:(Lcom/mojang/blaze3d/vertex/PoseStack$Pose;Lnet/minecraft/client/resources/model/geometry/BakedQuad;Lcom/mojang/blaze3d/vertex/QuadInstance;Lcom/mojang/blaze3d/vertex/PoseStack$Pose;)V
+       202: goto          226
+       205: aload_0
+       206: aload         7
+       208: invokevirtual #132                // Method getVertexBuilder:(Lnet/minecraft/client/renderer/rendertype/RenderType;)Lcom/mojang/blaze3d/vertex/VertexConsumer;
+       211: aload_1
+       212: invokevirtual #77                 // Method net/minecraft/client/renderer/feature/ItemFeatureRenderer$Submit.pose:()Lcom/mojang/blaze3d/vertex/PoseStack$Pose;
+       215: aload         5
+       217: aload_0
+       218: getfield      #12                 // Field quadInstance:Lcom/mojang/blaze3d/vertex/QuadInstance;
+       221: invokeinterface #142,  4          // InterfaceMethod com/mojang/blaze3d/vertex/VertexConsumer.putBakedQuad:(Lcom/mojang/blaze3d/vertex/PoseStack$Pose;Lnet/minecraft/client/resources/model/geometry/BakedQuad;Lcom/mojang/blaze3d/vertex/QuadInstance;)V
+       226: goto          61
+       229: return
+=== SIG net/minecraft/client/Minecraft .*(tlas|prite|Materials).*
+  private final net.minecraft.client.resources.model.sprite.AtlasManager atlasManager;
+  public net.minecraft.client.resources.model.sprite.AtlasManager getAtlasManager();
+=== SIG net/minecraft/core/component/DataComponents SWING.*
+=== SIG net/minecraft/client/resources/model/ModelBakery .*FIRE.*
+  public static final net.minecraft.client.resources.model.sprite.SpriteId FIRE_0;
+  public static final net.minecraft.client.resources.model.sprite.SpriteId FIRE_1;
+=== net/minecraft/client/resources/model/sprite/SpriteGetter
+Compiled from "SpriteGetter.java"
+public interface net.minecraft.client.resources.model.sprite.SpriteGetter {
+  public abstract net.minecraft.client.renderer.texture.TextureAtlasSprite get(net.minecraft.client.resources.model.sprite.SpriteId);
+}
+=== net/minecraft/data/AtlasIds
+Compiled from "AtlasIds.java"
+public class net.minecraft.data.AtlasIds {
+  public static final net.minecraft.resources.Identifier BANNER_PATTERNS;
+  public static final net.minecraft.resources.Identifier BLOCKS;
+  public static final net.minecraft.resources.Identifier ITEMS;
+  public static final net.minecraft.resources.Identifier CHESTS;
+  public static final net.minecraft.resources.Identifier DECORATED_POT;
+  public static final net.minecraft.resources.Identifier GUI;
+  public static final net.minecraft.resources.Identifier MAP_DECORATIONS;
+  public static final net.minecraft.resources.Identifier PAINTINGS;
+  public static final net.minecraft.resources.Identifier PARTICLES;
+  public static final net.minecraft.resources.Identifier SHIELD_PATTERNS;
+  public static final net.minecraft.resources.Identifier SHULKER_BOXES;
+  public static final net.minecraft.resources.Identifier CELESTIALS;
+  public net.minecraft.data.AtlasIds();
+}
